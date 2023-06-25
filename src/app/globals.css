@@ -18,10 +18,27 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /*background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb));*/
+  background: #0D0D0D;
 }
+
+@layer base {
+  :root {
+    --dark-100: #4C4C4C;
+    --dark-300: #333;
+    --dark-700: #0D0D0D;
+    --light-100: #FFFFFF;
+    --light-900: #8D9094;
+    --primary-500: #397DF6;
+    --danger-500: #CC1439;
+  }
+
+}
+
+
+
