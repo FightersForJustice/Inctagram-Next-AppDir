@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { SignUp } from "../../components/SignUp/SignUp";
 import { store } from "redux/store";
 import { Provider } from "react-redux";
 import { SignUp } from "./SignUp/SignUp";
