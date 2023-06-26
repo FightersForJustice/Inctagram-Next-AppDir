@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Modal } from "../../Modal/Modal";
 import { usePostAuthorizationMutation } from "api/auth.api";
+import { useRouter } from "next/navigation";
 
 const schema = yup
   .object({
@@ -20,9 +21,6 @@ const schema = yup
 
 export const SignUpForm = () => {
   const [postAuthorization, res] = usePostAuthorizationMutation();
-  function postAuth() {
-    postAuthorization({ userName: "IuriiIz", email: "george.izot@gmail.com", password: "00000000" });
-  }
   const {
     register,
     handleSubmit,
@@ -30,14 +28,19 @@ export const SignUpForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  useEffect(() => {
+    console.log(res.isSuccess);
+    if (res.isSuccess) setShowModal(true);
+  }, [res.isSuccess]);
+
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-
+  const router = useRouter();
   const onSubmit = (data: any) => {
+    postAuthorization({ userName: data.username, email: data.email, password: data.password });
     setUserEmail(data.email);
-    setShowModal(true);
   };
 
   return (
@@ -155,7 +158,6 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
-          onClick={() => postAuth()}
         />
         <p className={"pb-5"}>Do you have an account?</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"}>
@@ -170,10 +172,3 @@ export const SignUpForm = () => {
     </>
   );
 };
-
-/*type Submit = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};*/
