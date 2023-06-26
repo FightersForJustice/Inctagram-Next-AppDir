@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
 import { Modal } from "../../Modal/Modal";
+import { usePostAuthorizationMutation } from "api/auth.api";
 
 const schema = yup
   .object({
@@ -18,6 +19,10 @@ const schema = yup
   .required();
 
 export const SignUpForm = () => {
+  const [postAuthorization, res] = usePostAuthorizationMutation();
+  function postAuth() {
+    postAuthorization({ userName: "IuriiIz", email: "george.izot@gmail.com", password: "00000000" });
+  }
   const {
     register,
     handleSubmit,
@@ -150,6 +155,7 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
+          onClick={() => postAuth()}
         />
         <p className={"pb-5"}>Do you have an account?</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"}>

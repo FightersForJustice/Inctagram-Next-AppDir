@@ -5,7 +5,7 @@ export let authApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://inctagram-api.vercel.app/api/" }),
   endpoints: (builder) => ({
     postAuthorization: builder.mutation({
-      query: ({ body }: any) => {
+      query: (body) => {
         return {
           url: "auth/registration",
           method: "POST",

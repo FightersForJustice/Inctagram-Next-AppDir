@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { SignUpForm } from "./SignUpForm/SignUpForm";
+import { usePostAuthorizationMutation } from "api/auth.api";
 
 export const SignUp = () => {
   return (
