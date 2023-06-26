@@ -19,6 +19,8 @@ const schema = yup
   })
   .required();
 
+//==изменения== удалена функция Юры для проверки работоспособности API регисрации
+
 export const SignUpForm = () => {
   const [postAuthorization, res] = usePostAuthorizationMutation();
   const {
@@ -28,6 +30,8 @@ export const SignUpForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  //==изменения== для окрыия модалки при успешной регистрации
   useEffect(() => {
     console.log(res.isSuccess);
     if (res.isSuccess) setShowModal(true);
@@ -39,8 +43,11 @@ export const SignUpForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
   const onSubmit = (data: any) => {
+    //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({ userName: data.username, email: data.email, password: data.password });
+
     setUserEmail(data.email);
+    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
   };
 
   return (
@@ -158,6 +165,7 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
+          //==изменения== удален onClick за не надобностью
         />
         <p className={"pb-5"}>Do you have an account?</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"}>
