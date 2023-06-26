@@ -1,13 +1,18 @@
 "use client";
 
 import React from "react";
+import { SignUp } from "../../components/SignUp/SignUp";
+import { store } from "redux/store";
+import { Provider } from "react-redux";
 import { SignUp } from "./SignUp/SignUp";
 
 const SignUpPage = () => {
   return (
-    <div>
-      <SignUp />
-    </div>
+    <Provider store={store}>
+      <div>
+        <SignUp />
+      </div>
+    </Provider>
   );
 };
 

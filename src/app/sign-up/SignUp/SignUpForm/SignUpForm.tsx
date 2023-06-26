@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
+import { Modal } from "../../Modal/Modal";
+import { usePostAuthorizationMutation } from "api/auth.api";
+import { useRouter } from "next/navigation";
 import { Modal } from "../../../../components/Modal/Modal";
 
 const schema = yup
@@ -17,7 +20,10 @@ const schema = yup
   })
   .required();
 
+//==изменения== удалена функция Юры для проверки работоспособности API регисрации
+
 export const SignUpForm = () => {
+  const [postAuthorization, res] = usePostAuthorizationMutation();
   const {
     register,
     handleSubmit,
@@ -25,14 +31,24 @@ export const SignUpForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  //==изменения== для окрыия модалки при успешной регистрации
+  useEffect(() => {
+    console.log(res.isSuccess);
+    if (res.isSuccess) setShowModal(true);
+  }, [res.isSuccess]);
+
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-
+  const router = useRouter();
   const onSubmit = (data: any) => {
+    //==изменения== закидываем данные нового пользоваеля в запрос
+    postAuthorization({ userName: data.username, email: data.email, password: data.password });
+
     setUserEmail(data.email);
-    setShowModal(true);
+    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
   };
 
   return (
@@ -150,6 +166,7 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
+          //==изменения== удален onClick за не надобностью
         />
         <p className={"pb-5"}>Do you have an account?</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"}>
