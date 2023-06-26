@@ -13,16 +13,17 @@ const schema = yup
   .object({
     username: yup.string().min(3).max(30).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(6).max(20).required(),
-    passwordConfirm: yup.string().min(6).required(),
+    password: yup.string().min(6).max(20).required("Password is required"),
+    passwordConfirm: yup
+      .string()
+      .min(6)
+      .max(20)
+      .oneOf([yup.ref("password"), "Your passwords do not match."], "Passwords must match"),
   })
   .required();
 
 export const SignUpForm = () => {
   const [postAuthorization, res] = usePostAuthorizationMutation();
-  function postAuth() {
-    postAuthorization({ userName: "IuriiIz", email: "george.izot@gmail.com", password: "00000000" });
-  }
   const {
     register,
     handleSubmit,
@@ -37,6 +38,8 @@ export const SignUpForm = () => {
 
   const onSubmit = (data: any) => {
     setUserEmail(data.email);
+    console.log({ userName: data.username, email: data.email, password: data.password });
+    postAuthorization({ userName: data.username, email: data.email, password: data.password });
     setShowModal(true);
   };
 
@@ -155,7 +158,6 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
-          onClick={() => postAuth()}
         />
         <p className={"pb-5"}>Do you have an account?</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"}>
