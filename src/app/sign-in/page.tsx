@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import SignIn from "../../components/SignIn/SignIn";
+import SignIn from "./SignIn/SignIn";
 
 const SignInPage = () => {
   return (
