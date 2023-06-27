@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { usePostLoginMutation } from "../../../api/auth.api";
 
 const schema = yup
   .object({
@@ -21,9 +22,11 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   });
   const [showPass, setShowPass] = useState(false);
+  const [postLogin, res] = usePostLoginMutation();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    postLogin({ email: data.email, password: data.password });
+    console.log(res);
   };
 
   return (
@@ -89,11 +92,11 @@ const SignIn = () => {
       <input
         type="submit"
         className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px]"}
-        value={"Sign Up"}
+        value={"Sign In "}
       />
-      <p className={"pb-5"}>Do you have an account?</p>
-      <Link href={"/sign-in"} className={"text-[--primary-500]"}>
-        Sign In
+      <p className={"pb-5"}>Don’t have an account?</p>
+      <Link href={"/sign-up"} className={"text-[--primary-500]"}>
+        Sign Up
       </Link>
     </form>
   );
