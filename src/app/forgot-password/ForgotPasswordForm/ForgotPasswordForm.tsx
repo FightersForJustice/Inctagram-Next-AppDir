@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
+import { usePostPasswordRecoveryMutation } from "../../../api/auth.api";
 
 const schema = yup
   .object({
@@ -24,7 +25,13 @@ const ForgotPasswordForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const [recaptcha, setRecaptcha] = useState("");
 
+  const [recoveryPassword] = usePostPasswordRecoveryMutation();
+
   const onSubmit = (data: any) => {
+    recoveryPassword({
+      email: data.email,
+      recaptcha,
+    });
     setUserEmail(data.email);
     setShowModal(true);
   };
