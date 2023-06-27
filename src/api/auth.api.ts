@@ -1,8 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { headers } from "next/headers";
 
 export let authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://inctagram-api.vercel.app/api/" }),
+  //прикрепляем в хедер запросов тоткен полученный при логинизации (пока что из сешнСореджа)
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://inctagram-api.vercel.app/api/",
+    prepareHeaders: (headers, { getState }) => {
+      const token = sessionStorage.getItem("accessToken");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     postAuthorization: builder.mutation({
       query: (user: { userName: string; email: string; password: string }) => {

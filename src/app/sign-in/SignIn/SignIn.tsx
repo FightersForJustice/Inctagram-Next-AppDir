@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { usePostLoginMutation } from "../../../api/auth.api";
+import { log } from "next/dist/server/typescript/utils";
 
 const schema = yup
   .object({
@@ -24,9 +25,13 @@ const SignIn = () => {
   const [showPass, setShowPass] = useState(false);
   const [postLogin, res] = usePostLoginMutation();
 
-  const onSubmit = (data: any) => {
-    postLogin({ email: data.email, password: data.password });
-    console.log(res);
+  const onSubmit = async (data: any) => {
+    //получение токена при успешной логинизации и запись его в сешнСторедж
+    const response: { data: { accessToken: string } } | any = await postLogin({
+      email: data.email,
+      password: data.password,
+    });
+    if (response.data.accessToken) sessionStorage.setItem("accessToken", response.data.accessToken);
   };
 
   return (
