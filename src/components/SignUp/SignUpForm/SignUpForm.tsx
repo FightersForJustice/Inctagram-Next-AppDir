@@ -18,7 +18,7 @@ const schema = yup
       .string()
       .min(6)
       .max(20)
-      .oneOf([yup.ref("password"), "Your passwords do not match."], "Passwords must match"),
+      .oneOf<any>([yup.ref("password"), "Your passwords do not match."], "Passwords must match"),
   })
   .required();
 
@@ -38,7 +38,6 @@ export const SignUpForm = () => {
 
   const onSubmit = (data: any) => {
     setUserEmail(data.email);
-    console.log({ userName: data.username, email: data.email, password: data.password });
     postAuthorization({ userName: data.username, email: data.email, password: data.password });
     setShowModal(true);
   };
