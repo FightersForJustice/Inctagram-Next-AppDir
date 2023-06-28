@@ -148,7 +148,9 @@ export const SignUpForm = () => {
               />
             )}
             {errors.passwordConfirm && (
-              <p className={"absolute left-[9%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
+              <p className={"absolute left-[9%] text-[--danger-500] text-[14px]"}>
+                {errors?.passwordConfirm?.message?.toString()}
+              </p>
             )}
           </div>
         </div>
