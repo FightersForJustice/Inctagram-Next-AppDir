@@ -78,7 +78,7 @@ const ForgotPasswordForm = () => {
         </Link>
 
         <ReCAPTCHA
-          sitekey="6LeZMdEmAAAAAGfbBHX0aqB6TxWFmvAKeATVq_g0"
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
           onChange={reCaptchaHandler}
           className={"flex justify-center items-center"}
         />
