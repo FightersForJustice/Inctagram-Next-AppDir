@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
-import { Modal } from "../../Modal/Modal";
+import { Modal } from "components/Modal/Modal";
 import { usePostAuthorizationMutation } from "api/auth.api";
 
 const schema = yup
