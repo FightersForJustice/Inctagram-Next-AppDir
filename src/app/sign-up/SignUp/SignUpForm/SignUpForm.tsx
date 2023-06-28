@@ -15,14 +15,17 @@ const schema = yup
     username: yup.string().min(3).max(30).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).max(20).required(),
-    passwordConfirm: yup.string().min(6).required(),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref("password")], "Password mismatch")
+      .min(6)
+      .required(),
   })
   .required();
 
 //==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
 export const SignUpForm = () => {
-  const [postAuthorization, res] = usePostAuthorizationMutation();
   const {
     register,
     handleSubmit,
@@ -31,23 +34,27 @@ export const SignUpForm = () => {
     resolver: yupResolver(schema),
   });
 
-  //==изменения== для окрыия модалки при успешной регистрации
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  const [postAuthorization, res] = usePostAuthorizationMutation();
+
+  //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
     console.log(res.isSuccess);
     if (res.isSuccess) setShowModal(true);
   }, [res.isSuccess]);
 
-  const [showPass, setShowPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const router = useRouter();
   const onSubmit = (data: any) => {
     //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({ userName: data.username, email: data.email, password: data.password });
 
-    setUserEmail(data.email);
     //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
+    setUserEmail(data.email);
+
+    localStorage.setItem("user-email", data.email);
   };
 
   return (

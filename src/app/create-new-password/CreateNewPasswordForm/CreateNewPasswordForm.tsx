@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Image from "next/image";
+import { usePostNewPasswordMutation } from "../../../api/auth.api";
+import { useRouter } from "next/navigation";
 
 const schema = yup
   .object({
     password: yup.string().min(6).max(20).required(),
-    passwordConfirm: yup.string().min(6).required(),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref("password")], "Password mismatch")
+      .min(6)
+      .required(),
   })
   .required();
 
@@ -22,8 +28,18 @@ const CreateNewPasswordForm = () => {
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const router = useRouter();
+
+  const [postNewPassword, res] = usePostNewPasswordMutation();
+
+  useEffect(() => {
+    if (res.isSuccess) {
+      router.push("/sign-in");
+    }
+  }, [res.isSuccess, router]);
 
   const onSubmit = (data: any) => {
+    postNewPassword({ newPassword: data.password, recoveryCode: "хз чо тут" });
     console.log(data);
   };
 
