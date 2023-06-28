@@ -17,14 +17,14 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
   /*background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));*/
-  background: #0D0D0D;
+  background: var(--dark-700);
+  color: var(--light-100);
 }
 
 @layer base {
@@ -36,6 +36,7 @@ body {
     --light-900: #8D9094;
     --primary-500: #397DF6;
     --danger-500: #CC1439;
+    --disabled: rgba(227, 227, 227, 0.1)
   }
 
 }
