@@ -3,7 +3,7 @@
 import React from "react";
 import CreateNewPasswordForm from "./CreateNewPasswordForm/CreateNewPasswordForm";
 import { Provider } from "react-redux";
-import { store } from "../../redux/store";
+import { store } from "../../../redux/store";
 
 const CreateNewPassword = () => {
   return (

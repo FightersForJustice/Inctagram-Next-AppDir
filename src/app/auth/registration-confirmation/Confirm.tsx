@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { usePostRegistrationConfirmationMutation } from "../../../api/auth.api";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type Props = {
   code: string;
@@ -9,9 +10,20 @@ type Props = {
 
 const Confirm: React.FC<Props> = ({ code }) => {
   const [registrationConfirm] = usePostRegistrationConfirmationMutation();
+  const router = useRouter();
 
   useEffect(() => {
-    registrationConfirm({ confirmationCode: String(code) });
+    registrationConfirm({ confirmationCode: String(code) })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        //if error redirect to email-expired page
+        if (err.data.error) {
+          router.push("/email-expired");
+        }
+      });
   }, [code, registrationConfirm]);
 
   return (

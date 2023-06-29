@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Image from "next/image";
-import { usePostNewPasswordMutation } from "../../../api/auth.api";
+import { usePostNewPasswordMutation } from "../../../../api/auth.api";
 import { useRouter } from "next/navigation";
 
 const schema = yup
