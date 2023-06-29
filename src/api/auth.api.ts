@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { headers } from "next/headers";
 
 export let authApi = createApi({
   reducerPath: "authApi",
@@ -118,6 +117,11 @@ export let authApi = createApi({
     }),
   }),
 });
+
+export const StatusCode = {
+  badRequest: 400,
+  unauthorized: 401,
+};
 
 export let {
   usePostAuthorizationMutation,

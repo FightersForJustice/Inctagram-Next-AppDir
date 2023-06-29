@@ -40,7 +40,6 @@ const CreateNewPasswordForm = () => {
 
   const onSubmit = (data: any) => {
     postNewPassword({ newPassword: data.password, recoveryCode: "хз чо тут" });
-    console.log(data);
   };
 
   return (
@@ -122,7 +121,11 @@ const CreateNewPasswordForm = () => {
         Your password must be between 6 and 20 characters
       </p>
 
-      <input type="submit" className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500]`} value={"Send link"} />
+      <input
+        type="submit"
+        className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer`}
+        value={"Send link"}
+      />
     </form>
   );
 };

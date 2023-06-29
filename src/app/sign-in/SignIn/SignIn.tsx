@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { usePostLoginMutation } from "../../../api/auth.api";
-import { log } from "next/dist/server/typescript/utils";
+import { StatusCode, usePostLoginMutation } from "../../../api/auth.api";
 
 const schema = yup
   .object({
@@ -19,6 +18,7 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -27,11 +27,32 @@ const SignIn = () => {
 
   const onSubmit = async (data: any) => {
     //получение токена при успешной логинизации и запись его в сешнСторедж
-    const response: { data: { accessToken: string } } | any = await postLogin({
+    /*try {
+      const response: { data: { accessToken: string } } | any = await postLogin({
+        email: data.email,
+        password: data.password,
+      });
+      if (response.data.accessToken) sessionStorage.setItem("accessToken", response.data.accessToken);
+    } catch (err) {
+      console.log(err);
+    }*/
+    postLogin({
       email: data.email,
       password: data.password,
-    });
-    if (response.data.accessToken) sessionStorage.setItem("accessToken", response.data.accessToken);
+    })
+      .unwrap()
+      .then((response) => {
+        if (response.accessToken) sessionStorage.setItem("accessToken", response.accessToken);
+      })
+      .catch((err) => {
+        if (err.data.statusCode === StatusCode.badRequest) {
+          setError("password", { message: err.data.messages });
+          setError("email", { message: "" });
+        } else if (err.data.statusCode === StatusCode.unauthorized) {
+          setError("password", { message: err.data.messages[0]?.message });
+          setError("email", { message: "" });
+        }
+      });
   };
 
   return (
@@ -48,7 +69,7 @@ const SignIn = () => {
             }`}
           />
           {errors.email && (
-            <p className={"absolute left-[30%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
           )}
         </div>
       </div>
@@ -85,7 +106,7 @@ const SignIn = () => {
             />
           )}
           {errors.password && (
-            <p className={"absolute left-[16%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
           )}
         </div>
       </div>

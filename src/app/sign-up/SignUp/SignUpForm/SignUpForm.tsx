@@ -6,12 +6,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
-import { usePostAuthorizationMutation } from "api/auth.api";
+import { StatusCode, usePostAuthorizationMutation } from "api/auth.api";
 import { Modal } from "../../../../components/Modal/Modal";
 
 const schema = yup
   .object({
-    username: yup.string().min(3).max(30).required(),
+    name: yup.string().min(3).max(30).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).max(20).required(),
     passwordConfirm: yup
@@ -29,6 +29,7 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -48,7 +49,14 @@ export const SignUpForm = () => {
 
   const onSubmit = (data: any) => {
     //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({ userName: data.username, email: data.email, password: data.password });
+    postAuthorization({ userName: data.username, email: data.email, password: data.password })
+      .unwrap()
+      .then(() => {})
+      .catch((err) => {
+        if (err.data.statusCode === StatusCode.badRequest) {
+          setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
+        }
+      });
 
     //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
@@ -65,13 +73,13 @@ export const SignUpForm = () => {
           </div>
           <div className={"relative"}>
             <input
-              {...register("username")}
+              {...register("name")}
               className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.username ? "border-red-700" : ""
+                errors.name ? "border-red-700" : ""
               }`}
             />
-            {errors.username && (
-              <p className={"absolute left-[15%] text-[--danger-500] text-[14px]"}>{errors.username.message}</p>
+            {errors.name && (
+              <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.name.message}</p>
             )}
           </div>
         </div>
@@ -88,7 +96,7 @@ export const SignUpForm = () => {
               }`}
             />
             {errors.email && (
-              <p className={"absolute left-[30%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
             )}
           </div>
         </div>
@@ -125,7 +133,7 @@ export const SignUpForm = () => {
               />
             )}
             {errors.password && (
-              <p className={"absolute left-[16%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
             )}
           </div>
         </div>
@@ -162,7 +170,7 @@ export const SignUpForm = () => {
               />
             )}
             {errors.passwordConfirm && (
-              <p className={"absolute left-[9%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
             )}
           </div>
         </div>
