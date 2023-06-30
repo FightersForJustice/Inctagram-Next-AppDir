@@ -14,7 +14,7 @@ export let authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    postAuthorization: builder.mutation({
+    postAuthorization: builder.mutation<Response, { userName: string; email: string; password: string }>({
       query: (user: { userName: string; email: string; password: string }) => {
         return {
           url: "auth/registration",
@@ -25,7 +25,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postLogin: builder.mutation({
+    postLogin: builder.mutation<Response, { email: string; password: string }>({
       query: (user: { email: string; password: string }) => {
         return {
           url: "auth/login",
@@ -36,7 +36,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postRegistrationConfirmation: builder.mutation({
+    postRegistrationConfirmation: builder.mutation<Response, { confirmationCode: string }>({
       query: (user: { confirmationCode: string }) => {
         return {
           url: "auth/registration-confirmation",
@@ -47,7 +47,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postRegistrationEmailResending: builder.mutation({
+    postRegistrationEmailResending: builder.mutation<Response, { email: string }>({
       query: (user: { email: string }) => {
         return {
           url: "auth/registration-email-resending",
@@ -58,7 +58,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postPasswordRecovery: builder.mutation({
+    postPasswordRecovery: builder.mutation<void, { email: string; recaptcha: string }>({
       query: (user: { email: string; recaptcha: string }) => {
         return {
           url: "auth/password-recovery",
@@ -80,7 +80,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postNewPassword: builder.mutation({
+    postNewPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
       query: (user: { newPassword: string; recoveryCode: string }) => {
         return {
           url: "auth/new-password",
@@ -91,7 +91,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postLogout: builder.mutation({
+    postLogout: builder.mutation<void, void>({
       query: () => {
         return {
           url: "auth/logout",
@@ -99,7 +99,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postUpdateTokens: builder.mutation({
+    postUpdateTokens: builder.mutation<{ accessToken: string }, void>({
       query: () => {
         return {
           url: "auth/update-tokens",
@@ -107,7 +107,7 @@ export let authApi = createApi({
         };
       },
     }),
-    getAuthMe: builder.query({
+    getAuthMe: builder.query<AuthMeResponse, void>({
       query: () => {
         return {
           url: "auth/me",
@@ -117,6 +117,23 @@ export let authApi = createApi({
     }),
   }),
 });
+
+type ResponseMessages = {
+  message: string;
+  field: string;
+};
+
+type Response = {
+  statusCode: number;
+  messages: ResponseMessages[];
+  error: string;
+};
+
+type AuthMeResponse = {
+  userId: number;
+  userName: string;
+  email: string;
+};
 
 export const StatusCode = {
   badRequest: 400,

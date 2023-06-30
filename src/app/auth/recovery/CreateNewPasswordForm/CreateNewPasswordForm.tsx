@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Image from "next/image";
-import { usePostNewPasswordMutation, usePostPasswordCheckRecoveryCodeMutation } from "../../../../api/auth.api";
+import {
+  StatusCode,
+  usePostNewPasswordMutation,
+  usePostPasswordCheckRecoveryCodeMutation,
+} from "../../../../api/auth.api";
 import { useRouter } from "next/navigation";
 
 const schema = yup
@@ -17,15 +21,14 @@ const schema = yup
   })
   .required();
 
-type Props = {
-  recoveryCode: string;
-};
+type Props = {};
 
-const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
+const CreateNewPasswordForm: React.FC<Props> = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -33,17 +36,28 @@ const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [isCodeSuccess, setIsCodeSuccess] = useState(false);
+  const [recoveryCode, setRecoveryCode] = useState("");
   const router = useRouter();
+
+  console.log(recoveryCode);
 
   const [postNewPassword, newPasswordResult] = usePostNewPasswordMutation();
   const [checkCode] = usePostPasswordCheckRecoveryCodeMutation();
 
   useEffect(() => {
-    checkCode({ recoveryCode })
-      .unwrap()
-      .then(() => setIsCodeSuccess(true))
-      .catch((err) => console.log(err));
-  }, []);
+    setRecoveryCode(sessionStorage.getItem("userEmailRecoveryCode")!);
+
+    if (recoveryCode) {
+      checkCode({ recoveryCode })
+        .unwrap()
+        .then(() => setIsCodeSuccess(true))
+        .catch((err) => {
+          if (err.data.statusCode === StatusCode.badRequest) {
+            setError("passwordConfirm", { message: err.data.messages[0]?.message });
+          }
+        });
+    }
+  }, [recoveryCode]);
 
   useEffect(() => {
     if (newPasswordResult.isSuccess) {
@@ -52,7 +66,10 @@ const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
   }, [newPasswordResult.isSuccess, router]);
 
   const onSubmit = (data: any) => {
-    isCodeSuccess && postNewPassword({ newPassword: data.password, recoveryCode });
+    if (isCodeSuccess) {
+      postNewPassword({ newPassword: data.password, recoveryCode });
+      sessionStorage.removeItem("userEmailRecoveryCode");
+    }
   };
 
   return (
@@ -126,7 +143,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
             />
           )}
           {errors.passwordConfirm && (
-            <p className={"absolute left-[9%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
           )}
         </div>
       </div>
@@ -137,7 +154,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
       <input
         type="submit"
         className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer`}
-        value={"Send link"}
+        value={"Create new password"}
       />
     </form>
   );
