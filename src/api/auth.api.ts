@@ -69,7 +69,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postPasswordCheckRecoveryCode: builder.mutation({
+    postPasswordCheckRecoveryCode: builder.mutation<{ email: string }, { recoveryCode: string }>({
       query: (user: { recoveryCode: string }) => {
         return {
           url: "auth/check-recovery-code",

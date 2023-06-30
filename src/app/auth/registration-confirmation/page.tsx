@@ -9,7 +9,7 @@ const RegistrationConfirmation = ({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { code: string };
 }) => {
   return (
     <Provider store={store}>

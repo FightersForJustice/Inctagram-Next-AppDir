@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Image from "next/image";
-import { usePostNewPasswordMutation } from "../../../../api/auth.api";
+import { usePostNewPasswordMutation, usePostPasswordCheckRecoveryCodeMutation } from "../../../../api/auth.api";
 import { useRouter } from "next/navigation";
 
 const schema = yup
@@ -17,7 +17,11 @@ const schema = yup
   })
   .required();
 
-const CreateNewPasswordForm = () => {
+type Props = {
+  recoveryCode: string;
+};
+
+const CreateNewPasswordForm: React.FC<Props> = ({ recoveryCode }) => {
   const {
     register,
     handleSubmit,
@@ -28,18 +32,27 @@ const CreateNewPasswordForm = () => {
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [isCodeSuccess, setIsCodeSuccess] = useState(false);
   const router = useRouter();
 
-  const [postNewPassword, res] = usePostNewPasswordMutation();
+  const [postNewPassword, newPasswordResult] = usePostNewPasswordMutation();
+  const [checkCode] = usePostPasswordCheckRecoveryCodeMutation();
 
   useEffect(() => {
-    if (res.isSuccess) {
+    checkCode({ recoveryCode })
+      .unwrap()
+      .then(() => setIsCodeSuccess(true))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (newPasswordResult.isSuccess) {
       router.push("/sign-in");
     }
-  }, [res.isSuccess, router]);
+  }, [newPasswordResult.isSuccess, router]);
 
   const onSubmit = (data: any) => {
-    postNewPassword({ newPassword: data.password, recoveryCode: "хз чо тут" });
+    isCodeSuccess && postNewPassword({ newPassword: data.password, recoveryCode });
   };
 
   return (
