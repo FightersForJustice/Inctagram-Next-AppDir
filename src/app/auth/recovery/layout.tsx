@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BaseLayout } from "../../components/BaseLayout/BaseLayout";
+import { BaseLayout } from "../../../components/BaseLayout/BaseLayout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

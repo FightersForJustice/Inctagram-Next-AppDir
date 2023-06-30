@@ -6,55 +6,62 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
-import { Modal } from "components/Modal/Modal";
-import { usePostAuthorizationMutation } from "api/auth.api";
-
-import { useRouter } from "next/navigation";
+import { StatusCode, usePostAuthorizationMutation } from "api/auth.api";
+import { Modal } from "../../../../components/Modal/Modal";
 
 const schema = yup
   .object({
-    username: yup.string().min(3).max(30).required(),
+    userName: yup.string().min(3).max(30).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(6).max(20).required("Password is required"),
+    password: yup.string().min(6).max(20).required(),
     passwordConfirm: yup
       .string()
+      .oneOf([yup.ref("password")], "Password mismatch")
       .min(6)
-      .max(20)
-      .oneOf<any>([yup.ref("password"), "Your passwords do not match."], "Passwords must match"),
+      .required(),
   })
   .required();
 
 //==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
 export const SignUpForm = () => {
-  const [postAuthorization, res] = usePostAuthorizationMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  //==изменения== для окрыия модалки при успешной регистрации
-  useEffect(() => {
-    console.log(res.isSuccess);
-    if (res.isSuccess) setShowModal(true);
-  }, [res.isSuccess]);
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const router = useRouter();
+
+  const [postAuthorization, res] = usePostAuthorizationMutation();
+
+  //==изменения== для открытия модалки при успешной регистрации
+  useEffect(() => {
+    console.log(res.isSuccess);
+    if (res.isSuccess) setShowModal(true);
+  }, [res.isSuccess]);
+
   const onSubmit = (data: any) => {
     //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({ userName: data.username, email: data.email, password: data.password });
+    postAuthorization({ userName: data.username, email: data.email, password: data.password })
+      .unwrap()
+      .then(() => {})
+      .catch((err) => {
+        if (err.data.statusCode === StatusCode.badRequest) {
+          setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
+        }
+      });
 
+    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
 
-    postAuthorization({ userName: data.username, email: data.email, password: data.password });
-    setShowModal(true);
+    localStorage.setItem("user-email", data.email);
   };
 
   return (
@@ -66,13 +73,13 @@ export const SignUpForm = () => {
           </div>
           <div className={"relative"}>
             <input
-              {...register("username")}
+              {...register("userName")}
               className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.username ? "border-red-700" : ""
+                errors.userName ? "border-red-700" : ""
               }`}
             />
-            {errors.username && (
-              <p className={"absolute left-[15%] text-[--danger-500] text-[14px]"}>{errors.username.message}</p>
+            {errors.userName && (
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.userName.message}</p>
             )}
           </div>
         </div>
@@ -89,7 +96,7 @@ export const SignUpForm = () => {
               }`}
             />
             {errors.email && (
-              <p className={"absolute left-[30%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.email.message}</p>
             )}
           </div>
         </div>
@@ -126,7 +133,7 @@ export const SignUpForm = () => {
               />
             )}
             {errors.password && (
-              <p className={"absolute left-[16%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.password.message}</p>
             )}
           </div>
         </div>
@@ -163,9 +170,7 @@ export const SignUpForm = () => {
               />
             )}
             {errors.passwordConfirm && (
-              <p className={"absolute left-[9%] text-[--danger-500] text-[14px]"}>
-                {errors?.passwordConfirm?.message?.toString()}
-              </p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.passwordConfirm.message}</p>
             )}
           </div>
         </div>
@@ -189,10 +194,3 @@ export const SignUpForm = () => {
     </>
   );
 };
-
-/*type Submit = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};*/

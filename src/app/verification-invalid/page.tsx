@@ -9,7 +9,7 @@ const VerificationInvalid = () => {
         Looks like the verification link has expired. Not to worry, we can send the link again
       </p>
       <button className={"text-[--light-100] bg-[--primary-500] pt-[6px] pr-[34px] pb-[6px] pl-[34px] mb-[31px]"}>
-        Resent link
+        Resend link
       </button>
       <Image src={"/img/verification.svg"} alt={"verification"} width={473} height={352} />
     </div>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Modal } from "../../../components/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
+import { usePostPasswordRecoveryMutation } from "../../../api/auth.api";
 
 const schema = yup
   .object({
@@ -23,10 +24,23 @@ const ForgotPasswordForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [recaptcha, setRecaptcha] = useState("");
+  const [sendLinkAgain, setSendLinkAgain] = useState(false);
+
+  const [recoveryPassword, res] = usePostPasswordRecoveryMutation();
+
+  useEffect(() => {
+    if (res.isSuccess) {
+      setShowModal(true);
+      setSendLinkAgain(true);
+    }
+  }, [res.isSuccess]);
 
   const onSubmit = (data: any) => {
+    recoveryPassword({
+      email: data.email,
+      recaptcha,
+    });
     setUserEmail(data.email);
-    setShowModal(true);
   };
 
   const reCaptchaHandler = (token: string | null) => {
@@ -57,12 +71,18 @@ const ForgotPasswordForm = () => {
           Enter your email address and we will send you further instructions
         </p>
 
+        {sendLinkAgain && (
+          <p className={"max-w-[90%] text-left ml-5 text-[--light-300] leading-[20px] mb-[20px] text-[15px]"}>
+            The link has been sent by email. If you don’t receive an email send link again
+          </p>
+        )}
+
         <input
           type="submit"
           className={`mb-[24px]  w-[90%] pt-[6px] pb-[6px]  ${
             !recaptcha ? "cursor-not-allowed bg-[--disabled] text-[--disabled]" : "cursor-pointer bg-[--primary-500]"
           }`}
-          value={"Send link"}
+          value={`${sendLinkAgain ? "Send link again" : "Send link"}`}
           disabled={!recaptcha}
         />
 
@@ -71,7 +91,7 @@ const ForgotPasswordForm = () => {
         </Link>
 
         <ReCAPTCHA
-          sitekey="6LeZMdEmAAAAAGfbBHX0aqB6TxWFmvAKeATVq_g0"
+          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
           onChange={reCaptchaHandler}
           className={"flex justify-center items-center"}
         />
