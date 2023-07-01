@@ -14,7 +14,7 @@ export let authApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    postAuthorization: builder.mutation<Response, { userName: string; email: string; password: string }>({
+    postAuthorization: builder.mutation<any, { userName: string; email: string; password: string }>({
       query: (user: { userName: string; email: string; password: string }) => {
         return {
           url: "auth/registration",
@@ -25,7 +25,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postLogin: builder.mutation<Response, { email: string; password: string }>({
+    postLogin: builder.mutation<any, { email: string; password: string }>({
       query: (user: { email: string; password: string }) => {
         return {
           url: "auth/login",
@@ -36,7 +36,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postRegistrationConfirmation: builder.mutation<Response, { confirmationCode: string }>({
+    postRegistrationConfirmation: builder.mutation<any, { confirmationCode: string }>({
       query: (user: { confirmationCode: string }) => {
         return {
           url: "auth/registration-confirmation",
@@ -47,7 +47,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postRegistrationEmailResending: builder.mutation<Response, { email: string }>({
+    postRegistrationEmailResending: builder.mutation<any, { email: string }>({
       query: (user: { email: string }) => {
         return {
           url: "auth/registration-email-resending",
@@ -69,7 +69,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postPasswordCheckRecoveryCode: builder.mutation<{ email: string }, { recoveryCode: string }>({
+    postPasswordCheckRecoveryCode: builder.mutation<any, { recoveryCode: string }>({
       query: (user: { recoveryCode: string }) => {
         return {
           url: "auth/check-recovery-code",
@@ -99,7 +99,7 @@ export let authApi = createApi({
         };
       },
     }),
-    postUpdateTokens: builder.mutation<{ accessToken: string }, void>({
+    postUpdateTokens: builder.mutation<any, void>({
       query: () => {
         return {
           url: "auth/update-tokens",
@@ -107,7 +107,7 @@ export let authApi = createApi({
         };
       },
     }),
-    getAuthMe: builder.query<AuthMeResponse, void>({
+    getAuthMe: builder.query<any, void>({
       query: () => {
         return {
           url: "auth/me",
