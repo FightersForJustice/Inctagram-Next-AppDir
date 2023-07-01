@@ -76,9 +76,12 @@ export const SignUpForm = () => {
               className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.userName ? "border-red-700" : ""
               }`}
+              id={"sign-up-userName"}
             />
             {errors.userName && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.userName.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-userName-error"}>
+                {errors.userName.message}
+              </p>
             )}
           </div>
         </div>
@@ -93,9 +96,12 @@ export const SignUpForm = () => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.email ? "border-red-700" : ""
               }`}
+              id={"sign-up-email"}
             />
             {errors.email && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.email.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-email-error"}>
+                {errors.email.message}
+              </p>
             )}
           </div>
         </div>
@@ -111,6 +117,7 @@ export const SignUpForm = () => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.password ? "border-red-700" : ""
               }`}
+              id={"sign-up-password"}
             />
             {showPass ? (
               <Image
@@ -120,6 +127,7 @@ export const SignUpForm = () => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowPass(!showPass)}
+                id={"sign-up-password-showPassImage-openAye"}
               />
             ) : (
               <Image
@@ -129,10 +137,13 @@ export const SignUpForm = () => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowPass(!showPass)}
+                id={"sign-up-password-showPassImage-closeAye"}
               />
             )}
             {errors.password && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.password.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-password-error"}>
+                {errors.password.message}
+              </p>
             )}
           </div>
         </div>
@@ -148,6 +159,7 @@ export const SignUpForm = () => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.passwordConfirm ? "border-red-700" : ""
               }`}
+              id={"sign-up-passwordConfirm"}
             />
             {showConfirmPass ? (
               <Image
@@ -157,6 +169,7 @@ export const SignUpForm = () => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowConfirmPass(!showConfirmPass)}
+                id={"sign-up-passwordConfirm-showPassImage-openAye"}
               />
             ) : (
               <Image
@@ -166,10 +179,13 @@ export const SignUpForm = () => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowConfirmPass(!showConfirmPass)}
+                id={"sign-up-passwordConfirm-showPassImage-closeAye"}
               />
             )}
             {errors.passwordConfirm && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.passwordConfirm.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-passwordConfirm-error"}>
+                {errors.passwordConfirm.message}
+              </p>
             )}
           </div>
         </div>
@@ -178,16 +194,19 @@ export const SignUpForm = () => {
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           value={"Sign Up"}
-          //==изменения== удален onClick за не надобностью
+          id={"sign-up-submit"}
         />
         <p className={"pb-5"}>Do you have an account?</p>
-        <Link href={"/sign-in"} className={"text-[--primary-500]"}>
+        <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>
           Sign In
         </Link>
       </form>
       {showModal && (
         <Modal title={"Email sent"} onClose={() => setShowModal(false)}>
-          We have sent a link to confirm your email to <span className={"text-blue-300"}>{userEmail}</span>
+          We have sent a link to confirm your email to{" "}
+          <span className={"text-blue-300"} id={"sign-up-modalSuccess-userEmail"}>
+            {userEmail}
+          </span>
         </Modal>
       )}
     </>

@@ -23,7 +23,7 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   });
   const [showPass, setShowPass] = useState(false);
-  const [postLogin, res] = usePostLoginMutation();
+  const [postLogin] = usePostLoginMutation();
 
   const onSubmit = async (data: any) => {
     //получение токена при успешной логинизации и запись его в сешнСторедж
@@ -67,9 +67,12 @@ const SignIn = () => {
             className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
               errors.email ? "border-red-700" : ""
             }`}
+            id={"sign-in-email-input"}
           />
           {errors.email && (
-            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"} id={"sign-in-errors-email-message"}>
+              {errors.email.message}
+            </p>
           )}
         </div>
       </div>
@@ -85,6 +88,7 @@ const SignIn = () => {
             className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
               errors.password ? "border-red-700" : ""
             }`}
+            id={"sign-in-password-input"}
           />
           {showPass ? (
             <Image
@@ -106,12 +110,18 @@ const SignIn = () => {
             />
           )}
           {errors.password && (
-            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"} id={"sign-in-errors-password-message"}>
+              {errors.password.message}
+            </p>
           )}
         </div>
       </div>
 
-      <Link href={"/forgot-password"} className={"flex justify-end mr-[20px] text-[--light-900]"}>
+      <Link
+        href={"/forgot-password"}
+        className={"flex justify-end mr-[20px] text-[--light-900]"}
+        id={"sign-in-link-forgot-password"}
+      >
         Forgot Password
       </Link>
 
@@ -119,9 +129,10 @@ const SignIn = () => {
         type="submit"
         className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px]"}
         value={"Sign In "}
+        id={"sign-in-submit"}
       />
       <p className={"pb-5"}>Don’t have an account?</p>
-      <Link href={"/sign-up"} className={"text-[--primary-500]"}>
+      <Link href={"/sign-up"} className={"text-[--primary-500]"} id={"sign-in-link-sign-up"}>
         Sign Up
       </Link>
     </form>
