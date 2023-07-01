@@ -43,7 +43,6 @@ export const SignUpForm = () => {
 
   //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
-    console.log(res.isSuccess);
     if (res.isSuccess) setShowModal(true);
   }, [res.isSuccess]);
 
