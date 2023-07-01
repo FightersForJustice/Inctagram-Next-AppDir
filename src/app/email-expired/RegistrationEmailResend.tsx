@@ -6,9 +6,13 @@ import { Modal } from "../../components/Modal/Modal";
 const RegistrationEmailResend = () => {
   const [showModal, setShowModal] = useState(false);
   const [resend, res] = usePostRegistrationEmailResendingMutation();
-  const userEmail = localStorage.getItem("user-email");
+  const [userEmail, setUserEmail] = useState("");
+  //const userEmail = localStorage.getItem("user-email");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUserEmail(localStorage.getItem("user-email")!);
+    }
     if (res.isSuccess) setShowModal(true);
   }, [res.isSuccess]);
 
