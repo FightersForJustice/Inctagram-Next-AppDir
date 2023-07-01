@@ -11,6 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    //test build22
     <html lang="en">
       <body className={inter.className}>
         <ReduxProvider>{children}</ReduxProvider>
