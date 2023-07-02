@@ -6,8 +6,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
-import { StatusCode, usePostAuthorizationMutation } from "api/auth.api";
-import { Modal } from "../../../../components/Modal/Modal";
+import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
+import { Modal } from "../../../../../components/Modal/Modal";
+import { signUp } from "../../../../../../content";
+
+type Props = {
+  lang: "en" | "ru";
+};
 
 const schema = yup
   .object({
@@ -24,7 +29,7 @@ const schema = yup
 
 //==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
-export const SignUpForm = () => {
+export const SignUpForm: React.FC<Props> = ({ lang }) => {
   const {
     register,
     handleSubmit,
@@ -68,7 +73,7 @@ export const SignUpForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
         <div className={" mt-7"}>
           <div className={"text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>Username</label>
+            <label>{signUp[lang]?.username}</label>
           </div>
           <div className={"relative"}>
             <input
@@ -85,7 +90,7 @@ export const SignUpForm = () => {
 
         <div className={" mt-[18px]"}>
           <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>Email</label>
+            <label>{signUp[lang]?.email}</label>
           </div>
           <div className={"relative"}>
             <input
@@ -102,7 +107,7 @@ export const SignUpForm = () => {
 
         <div className={" mt-[18px]"}>
           <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>Password</label>
+            <label>{signUp[lang]?.password}</label>
           </div>
           <div className={"relative"}>
             <input
@@ -139,7 +144,7 @@ export const SignUpForm = () => {
 
         <div className={" mt-[18px] mb-[36px]"}>
           <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>Confirm password</label>
+            <label>{signUp[lang]?.passwordConfirm}</label>
           </div>
           <div className={"relative"}>
             <input

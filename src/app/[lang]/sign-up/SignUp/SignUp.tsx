@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { SignUpForm } from "./SignUpForm/SignUpForm";
-import { usePostAuthorizationMutation } from "api/auth.api";
+import { usePostAuthorizationMutation } from "../../../../api/auth.api";
 
-export const SignUp = () => {
+type Props = {
+  lang: "en" | "ru";
+};
+
+export const SignUp: React.FC<Props> = ({ lang }) => {
   return (
     <div className={"bg-[#171717] rounded-md m-auto mt-[24px] max-w-[378px] text-center"}>
       <p className={"pt-[23px]"}>Sign Up</p>
@@ -11,7 +15,7 @@ export const SignUp = () => {
         <Image src={"/img/google.svg"} alt={"google-icon"} width={36} height={36} />
         <Image src={"/img/github.svg"} alt={"github-icon"} width={36} height={36} />
       </div>
-      <SignUpForm />
+      <SignUpForm lang={lang} />
     </div>
   );
 };

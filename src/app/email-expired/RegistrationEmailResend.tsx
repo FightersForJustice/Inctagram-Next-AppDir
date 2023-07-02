@@ -7,7 +7,6 @@ const RegistrationEmailResend = () => {
   const [showModal, setShowModal] = useState(false);
   const [resend, res] = usePostRegistrationEmailResendingMutation();
   const [userEmail, setUserEmail] = useState("");
-  //const userEmail = localStorage.getItem("user-email");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
