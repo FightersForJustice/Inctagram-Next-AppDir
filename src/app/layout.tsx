@@ -2,7 +2,6 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ReduxProvider } from "../components/ReduxProvider/ReduxProvier";
 import { ReactNode } from "react";
-import { defaultLocale } from "../../middleware";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,10 +12,24 @@ export const metadata = {
 
 export default function RootLayout({ children, params }: { children: ReactNode; params: { lang: string } }) {
   return (
-    <html lang={params.lang ?? defaultLocale}>
+    <html lang={params.lang}>
       <body className={inter.className}>
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );
 }
+
+/*
+import { ReactNode } from "react";
+
+type Props = {
+  children: ReactNode;
+};
+
+// Since we have a `not-found.tsx` page on the root, a layout file
+// is required, even if it's just passing children through.
+export default function RootLayout({ children }: Props) {
+  return children;
+}
+*/

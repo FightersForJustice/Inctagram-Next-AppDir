@@ -1,16 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useTransition } from "react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next-intl/client";
 
 export const Header = () => {
-  const [language, setLanguage] = useState(
-    typeof window !== "undefined" && localStorage.getItem("language") ? localStorage.getItem("language") : "en"
-  );
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations("LocaleSwitcher");
+
+  const [language, setLanguage] = useState("");
 
   useEffect(() => {
-    typeof window !== "undefined" && localStorage.setItem("language", language!);
-  }, [language]);
+    if (typeof window !== "undefined") {
+      setLanguage(localStorage.getItem("language")!);
+    }
+  }, []);
+
+  function onSelectChange(event: ChangeEvent<HTMLSelectElement>) {
+    setLanguage(event.currentTarget.value);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("language", event.currentTarget.value);
+    }
+    startTransition(() => {
+      router.replace(`/${event.target.value}${pathname}`);
+    });
+  }
 
   return (
     <div className={"border-b-1 bg-[--dark-700] border-[--dark-300] "}>
@@ -18,14 +36,20 @@ export const Header = () => {
         <Link href={"/"} className={"text-[26px] font-semibold leading-[36px]"}>
           Inctagram
         </Link>
+        {/*<LocaleSwitcher />*/}
         <select
           name="Languages"
           className={
             "bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer"
           }
-          value={language!}
-          onChange={(e) => setLanguage(e.currentTarget.value)}
+          onChange={onSelectChange}
+          value={language}
         >
+          {/*{["en", "ru"].map((cur) => (
+            <option key={cur} value={cur}>
+              {t("locale", { locale: cur })}
+            </option>
+          ))}*/}
           <option value="en" className={"bg-black"}>
             English
           </option>

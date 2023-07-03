@@ -1,0 +1,83 @@
+{
+  "SignUpPage": {
+    "title": "Регистрация",
+    "username": "Имя",
+    "email": "Почта",
+    "password": "Пароль",
+    "passwordConf": "Подтвердить пароль",
+    "btnName": "Регистрация",
+    "question": "Уже существует аккаунт?",
+    "btnBottomName": "Логин"
+  },
+  "SignInPage": {
+    "title": "Логин",
+    "email": "Почта",
+    "password": "Пароль",
+    "forgotPass": "Забыли пароль?",
+    "btnName": "Логин",
+    "question": "Нету аккаунта?",
+    "btnBottomName": "Регистрация"
+  },
+  "VerificationInvalidPage": {
+    "title": "Ссылка для подтверждения почты недействительна",
+    "desc": "Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз",
+    "btnName": "Отправить повторно"
+  },
+  "EmailExpiredPage": {
+    "title": "Срок действия ссылки для подтверждения электронной почты истек",
+    "desc": "Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз",
+    "btnName": "Повторно отправить"
+  },
+  "EmailVerificationPage": {
+    "title": "Поздравляем!",
+    "desc": "Ваша почта была подтверждена успешно",
+    "btnName": "Логин"
+  },
+  "ForgotPasswordPage": {
+    "title": "Восстановление пароля",
+    "email": "Почта",
+    "desc": "Введите адрес электронной почты, и мы вышлем вам дальнейшие инструкции",
+    "btnName": "Отправить ссылку",
+    "linkName": "Логин",
+    "descAfterSend": "Ссылка отправлена по электронной почте. Если вы не получили ссылку для отправки по электронной почте еще раз",
+    "btnNameAfterSend": "Отправить ссылку еще раз",
+    "modal": "Мы отправили ссылку для подтверждения почты на"
+  },
+  "MergerOfAccountsPage": {
+    "title": "Объединение учетных записей",
+    "descBefore": "Пользователь с электронной почтой",
+    "descAfter": "уже есть в системе. Можем ли мы объединить эти аккаунты?",
+    "btnNameYes": "Да, объединить",
+    "btnNameNo": "Нет"
+  },
+  "RecoveryPage": {
+    "title": "Создать новый пароль",
+    "password": "Пароль",
+    "passwordConf": "Подтвердите пароль",
+    "desc": "Ваш пароль должен быть от 6 до 20 символов",
+    "btnName": "Создать пароль"
+  },
+  "RegistrationConfirmationPage": {
+    "title": "Поздравляем!",
+    "desc": "Ваша почта была подтверждена успешно",
+    "btnName": "Логин"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "title": "Dokumentation",
+        "description": "Erfahre mehr über next-intl in der offiziellen Dokumentation.",
+        "href": "https://next-intl-docs.vercel.app/"
+      },
+      "source": {
+        "title": "Quellcode",
+        "description": "Sieh dir den Quellcode dieses Beispiels auf GitHub an.",
+        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-next-13"
+      }
+    }
+  }
+}

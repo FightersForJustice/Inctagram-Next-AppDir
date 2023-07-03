@@ -20,6 +20,7 @@
     "@types/react-google-recaptcha": "^2.1.5",
     "@types/redux-thunk": "^2.1.0",
     "autoprefixer": "10.4.14",
+    "clsx": "^1.2.1",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
     "negotiator": "^0.6.3",

@@ -1,0 +1,87 @@
+{
+  "SignUpPage": {
+    "title": "Sign Up",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "passwordConf": "Password confirmation",
+    "btnName": "Sign Up",
+    "question": "Do you have an account?",
+    "btnBottomName": "Sign In"
+  },
+  "SignInPage": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "forgotPass": "Forgot password?",
+    "btnName": "Sign In",
+    "question": "Don’t have an account?",
+    "btnBottomName": "Sign Up"
+  },
+  "EmailExpiredPage": {
+    "title": "Email verification link expired",
+    "desc": "Looks like the verification link has expired. Not to worry, we can send the link again\n\n",
+    "btnName": "Resend verification link"
+  },
+  "EmailVerificationPage": {
+    "title": "Congratulations!",
+    "desc": "Your email has been confirmed",
+    "btnName": "Sign In"
+  },
+  "ForgotPasswordPage": {
+    "title": "Forgot Password",
+    "email": "Email",
+    "desc": "Enter your email address and we will send you further instructions",
+    "btnName": "Send link",
+    "linkName": "Back to Sign In",
+    "descAfterSend": "The link has been sent by email. If you don’t receive an email send link again",
+    "btnNameAfterSend": "Send link again",
+    "modal": "We have sent a link to confirm your email to"
+  },
+  "MergerOfAccountsPage": {
+    "title": "Merger of Accounts",
+    "descBefore": "The user with email",
+    "descAfter": "is already in the system. Could we merge this accounts?",
+    "btnNameYes": "Yes, merge",
+    "btnNameNo": "No"
+  },
+  "VerificationInvalidPage": {
+    "title": "Email verification link invalid",
+    "desc": "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "btnName": "Resend link"
+  },
+  "RecoveryPage": {
+    "title": "Create New Password",
+    "password": "Password",
+    "passwordConf": "Confirm password",
+    "desc": "Your password must be between 6 and 20 characters",
+    "btnName": "Create new password"
+  },
+  "RegistrationConfirmationPage": {
+    "title": "Congratulations!",
+    "desc": "Your email has been confirmed",
+    "btnName": "Sign In"
+  },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "Please double-check the browser address bar or use the navigation to go to a known page."
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "title": "Docs",
+        "description": "Learn more about next-intl in the official docs.",
+        "href": "https://next-intl-docs.vercel.app/"
+      },
+      "source": {
+        "title": "Source code",
+        "description": "Browse the source code of this example on GitHub.",
+        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-next-13"
+      }
+    }
+  }
+}

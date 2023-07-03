@@ -1,8 +1,13 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, ReactNode } from "react";
 import { NextPage } from "next";
 import { Header } from "../Header/Header";
 
-export const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
+type Props = {
+  title?: string;
+  children: ReactNode;
+};
+
+export const BaseLayout: React.FC<Props> = ({ children, title }: Props) => {
   return (
     <div>
       <Header />
