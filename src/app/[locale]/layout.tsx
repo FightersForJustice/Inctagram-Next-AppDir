@@ -20,7 +20,7 @@ async function getMessages(locale: string) {
 }
 
 export async function generateStaticParams() {
-  return ["en", "de"].map((locale) => ({ locale }));
+  return ["ru", "en"].map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params: { locale } }: Props) {
@@ -43,7 +43,6 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html className="h-full" lang={locale}>
       <body className={clsx(inter.className, "flex h-full flex-col")}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {/*<Navigation />*/}
           {children}
         </NextIntlClientProvider>
       </body>
