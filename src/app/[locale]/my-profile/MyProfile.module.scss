@@ -91,6 +91,10 @@
     display: flex;
     gap: 72px;
     margin-bottom: 23px;
+
+    &__subscriptions, &__subscribers, &__publications {
+      cursor: pointer;
+    }
   }
 
   &__desc {
@@ -111,5 +115,87 @@
     padding: 6px 24px;
     font-size: 16px;
     font-weight: 600;
+  }
+
+  &__title__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+
+
+
+/*-----------modal------------------------*/
+
+.modal {
+  position: relative;
+  margin-bottom: 24px;
+
+
+  &__input {
+    background: transparent;
+    border: 1px solid var(--dark-100, #4C4C4C);
+    padding: 6px 41px;
+    width: 600px;
+    outline: none;
+
+    &::placeholder {
+      color: var(--light-900, #8D9094);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &__left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &__avatar {
+      border-radius: 50%;
+    }
+
+    &__subscribe {
+      background: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &__delete {
+      background: transparent;
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
   }
 }
