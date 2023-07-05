@@ -1,0 +1,28 @@
+.primaryBtn {
+  background: var(--primary-500);
+  color: var(--light-100);
+  padding: 6px 24px;
+  border-radius: 2px;
+  transition: all .2s linear;
+  border: 1px solid var(--primary-700, #2F68CC);
+
+  &:active {
+    background: var(--primary-700, #2F68CC);
+  }
+
+  &:hover {
+    background: var(--primary-100, #73A5FF);
+  }
+
+  &:focus {
+    border-radius: 2px;
+    border: 1px solid var(--primary-700, #2F68CC);
+    background: var(--primary-500, #397DF6);
+  }
+
+  &:disabled {
+    background: var(--primary-900, #234E99);
+    color: var(--light-900);
+    cursor: not-allowed;
+  }
+}

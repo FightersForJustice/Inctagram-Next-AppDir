@@ -1,0 +1,54 @@
+.form {
+    padding-top: 24px;
+    width: 494px;
+    position: relative;
+
+
+    &__label {
+        display: block;
+        color: var(--light-900, #8D9094);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    &__textInput {
+        width: 100%;
+        background: transparent;
+        outline: none;
+        border-radius: 2px;
+        border: 1px solid var(--dark-100, #4C4C4C);
+        padding: 6px 12px;
+        margin-bottom: 24px;
+        transition: all .2s linear;
+
+        &:focus {
+            border: 1px solid var(--primary-500);
+        }
+    }
+
+    &__textarea {
+        resize: none;
+        width: 100%;
+        border-radius: 2px;
+        border: 1px solid var(--dark-100, #4C4C4C);
+        background: var(--dark-500, #171717);
+        min-height: 84px;
+        padding: 5px;
+        color: var(--light-900, #8D9094);
+        font-size: 16px;
+        font-weight: 400;
+        outline: none;
+        transition: all .2s linear;
+
+        &:focus {
+            border: 1px solid var(--primary-500);
+        }
+    }
+
+    &__btn {
+        position: absolute;
+        bottom: -85px;
+        right: 0;
+    }
+}
