@@ -25,7 +25,12 @@ const TabsDemo = () => (
             <div className={s.wrapper}>
                 <div className={s.wrapper__left}>
                     <Image src={"/img/settings-profile/load-avatar.svg"} alt={"load-avatar"} width={192} height={192} className={s.wrapper__image}/>
-                    <TransparentBtn>Add a Profile Photo</TransparentBtn>
+                    <div className={s.wrapper__loadZone}>
+                        <input type="file" className={s.wrapper__inputFile}/>
+                        <div className={s.wrapper__overlay}>
+                            <TransparentBtn >Add a Profile Photo</TransparentBtn>
+                        </div>
+                    </div>
                 </div>
                 <div className={s.wrapper__right}>
                     <SettingsForm />

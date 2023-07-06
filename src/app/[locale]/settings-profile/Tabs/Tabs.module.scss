@@ -136,11 +136,6 @@ input {
 }
 
 
-
-
-
-
-
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -156,5 +151,29 @@ input {
 
   &__image {
     margin-bottom: 24px;
+  }
+
+  &__inputFile {
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__loadZone {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    padding: 2px;
+  }
+
+  &__overlay {
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0 -1px;
+    padding-left: 0;
+    cursor: pointer;
   }
 }

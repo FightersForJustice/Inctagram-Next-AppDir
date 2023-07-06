@@ -51,4 +51,24 @@
         bottom: -85px;
         right: 0;
     }
+
+    &__error {
+        color: red;
+        position: absolute;
+        bottom: 3px;
+        left: 0;
+        font-size: 14px;
+    }
+
+    &__textareaError {
+        color: red;
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        font-size: 14px;
+    }
+
+    &__itemWrapper {
+        position: relative;
+    }
 }
