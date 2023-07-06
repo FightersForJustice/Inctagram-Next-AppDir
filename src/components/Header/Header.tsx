@@ -31,7 +31,7 @@ export const Header = () => {
   }
 
   return (
-    <div className={"border-b-1 bg-[--dark-700] border-[--dark-300] "}>
+    <header className={"border-b-1 bg-[--dark-700] border-[--dark-300] "}>
       <div className={" max-w-[1200px] m-auto h-[60px] flex items-center justify-between"}>
         <Link href={"/"} className={"text-[26px] font-semibold leading-[36px]"}>
           Inctagram
@@ -59,6 +59,6 @@ export const Header = () => {
           </option>
         </select>
       </div>
-    </div>
+    </header>
   );
 };

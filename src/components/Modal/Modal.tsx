@@ -5,12 +5,18 @@ import Image from "next/image";
 type Props = {
   title: string;
   onClose?: () => void;
+  maxWidth?: string;
+  isShowBtnOk?: boolean;
 };
 
-export const Modal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, children }) => {
+export const Modal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, children, maxWidth, isShowBtnOk }) => {
   return (
     <div className={"modal"} onClick={onClose}>
-      <div className={"modal__content"} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={"modal__content"}
+        style={{ maxWidth: maxWidth ? maxWidth : "" }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={"modal__header"}>
           <div className={"modal__title"}>{title}</div>
           <Image
@@ -23,11 +29,13 @@ export const Modal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, chil
           />
         </div>
         <div className={"modal__body"}>{children}</div>
-        <div className={"modal__footer"}>
-          <button className={"modal__btn"} onClick={onClose}>
-            OK
-          </button>
-        </div>
+        {isShowBtnOk && (
+          <div className={"modal__footer"}>
+            <button className={"modal__btn"} onClick={onClose}>
+              OK
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

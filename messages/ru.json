@@ -66,6 +66,9 @@
     "label": "Change language",
     "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"
   },
+  "LocaleLayout": {
+    "title": "next-intl example"
+  },
   "PageLayout": {
     "links": {
       "docs": {

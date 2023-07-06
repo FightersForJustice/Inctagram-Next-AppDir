@@ -1,0 +1,259 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-areas:
+          'menu profile'
+          'menu posts';
+}
+
+.nav {
+  grid-area: menu;
+  height: calc(100vh - 61px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 72px;
+  padding-bottom: 36px;
+  border-right: 1px solid var(--dark-300);
+  width: 190px;
+  position: fixed;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  &__icon {
+    fill: var(--light-100);
+  }
+
+  &__item__active {
+    color: var(--primary-500);
+  }
+
+  &__icon__active {
+    fill: var(--primary-500);
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+  }
+
+
+}
+
+.profile {
+  grid-area: profile;
+  padding-top: 36px;
+  padding-left: 227px;
+  display: flex;
+  justify-content: center;
+  gap: 38px;
+  margin-bottom: 48px;
+
+  &__avatar {
+    border-radius: 50%;
+  }
+
+  &__wrapper {
+    max-width: 830px;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__info {
+    display: flex;
+    gap: 72px;
+    margin-bottom: 23px;
+
+    &__subscriptions, &__subscribers, &__publications {
+      cursor: pointer;
+    }
+  }
+
+  &__desc {
+    max-width: 730px;
+  }
+
+  &__posts {
+    grid-area: posts;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-left: 228px;
+    margin-bottom: 50px;
+  }
+
+  &__btn {
+    background: var(--dark-300);
+    padding: 6px 24px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__title__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+
+/*-----------modal------------------------*/
+
+.modal {
+  position: relative;
+  margin-bottom: 24px;
+
+
+  &__input {
+    background: transparent;
+    border: 1px solid var(--dark-100, #4C4C4C);
+    padding: 6px 41px;
+    width: 600px;
+    outline: none;
+
+    &::placeholder {
+      color: var(--light-900, #8D9094);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &__left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    &__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &__avatar {
+      border-radius: 50%;
+    }
+
+    &__subscribe {
+      background: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &__unsubscribe {
+      background: transparent;
+      border: 1px solid var(--primary-500);
+      color: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &__delete {
+      background: transparent;
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+
+/*-----------delete-modal------------------------*/
+
+.deleteModal {
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 42px;
+  }
+
+  &__avatar {
+    border-radius: 50%;
+  }
+
+  &__text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+  }
+
+  &__text > span {
+    color: red;
+    font-weight: 600;
+  }
+
+  &__btn__yes {
+    border: 1px solid var(--primary-500, #397DF6);
+    background: transparent;
+    padding: 6px 34px;
+    color: var(--primary-500);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__btn__no {
+    background: var(--primary-500);
+    border: 1px solid var(--primary-500, #397DF6);
+    color: var(--light-100);
+    padding: 6px 34px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+}
