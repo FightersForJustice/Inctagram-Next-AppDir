@@ -6,7 +6,7 @@ type Props = {
   title: string;
   onClose?: () => void;
   maxWidth?: string;
-  isShowBtnOk: boolean;
+  isShowBtnOk?: boolean;
 };
 
 export const Modal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, children, maxWidth, isShowBtnOk }) => {
