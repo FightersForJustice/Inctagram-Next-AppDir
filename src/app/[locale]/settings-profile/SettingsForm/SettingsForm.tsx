@@ -28,44 +28,44 @@ export const SettingsForm = () => {
         >
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>Username</label>
-                <input {...register('username', {required: true, maxLength: 10})} className={s.form__textInput}/>
-                {errors.username && <p className={s.form__error}>This field is required</p>}
+                <input {...register('username', {required: true, minLength: 5,  maxLength: 15})} className={s.form__textInput}/>
+                {errors.username && <p className={s.form__error}>Min 5, max 15 symbols</p>}
             </div>
 
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>Firstname</label>
                 <input
-                    {...register('firstname', {required: true, maxLength: 10})}
+                    {...register('firstname', {required: true, minLength: 2,  maxLength: 15})}
                     className={s.form__textInput}
                 />
-                {errors.firstname && <p className={s.form__error}>This field is required</p>}
+                {errors.firstname && <p className={s.form__error}>Min 2, max 15 symbols</p>}
             </div>
 
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>Lastname</label>
                 <input
-                    {...register('lastname', {required: true, maxLength: 10})}
+                    {...register('lastname', {required: true, minLength: 2,  maxLength: 15})}
                     className={s.form__textInput}
                 />
-                {errors.lastname && <p className={s.form__error}>This field is required</p>}
+                {errors.lastname && <p className={s.form__error}>Min 2, max 15 symbols</p>}
             </div>
 
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>City</label>
                 <input
-                    {...register('city', {required: true, maxLength: 10})}
+                    {...register('city', {required: true, minLength: 3,  maxLength: 20})}
                     className={s.form__textInput}
                 />
-                {errors.city && <p className={s.form__error}>This field is required</p>}
+                {errors.city && <p className={s.form__error}>Min 3, max 20 symbols</p>}
             </div>
 
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>About me</label>
                 <textarea
-                    {...register('aboutMe', {required: true, minLength: 10})}
+                    {...register('aboutMe', {required: true, minLength: 10,  maxLength: 100})}
                     className={s.form__textarea}
                 />
-                {errors.aboutMe && <p className={s.form__textareaError}>This field is required</p>}
+                {errors.aboutMe && <p className={s.form__textareaError}>Min 10, max 100 symbols</p>}
             </div>
 
             <div className={s.form__btn}>
