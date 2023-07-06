@@ -1,10 +1,11 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { StatusCode, usePostLoginMutation } from "../../../../api/auth.api";
+import { redirect } from "next/navigation";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -27,19 +28,10 @@ const SignIn: React.FC<Props> = ({ translate }) => {
     resolver: yupResolver(schema),
   });
   const [showPass, setShowPass] = useState(false);
-  const [postLogin, res] = usePostLoginMutation();
+  const [postLogin, { isSuccess }] = usePostLoginMutation();
+  if (isSuccess) redirect("/my-profile");
 
   const onSubmit = async (data: any) => {
-    //получение токена при успешной логинизации и запись его в сешнСторедж
-    /*try {
-      const response: { data: { accessToken: string } } | any = await postLogin({
-        email: data.email,
-        password: data.password,
-      });
-      if (response.data.accessToken) sessionStorage.setItem("accessToken", response.data.accessToken);
-    } catch (err) {
-      console.log(err);
-    }*/
     postLogin({
       email: data.email,
       password: data.password,

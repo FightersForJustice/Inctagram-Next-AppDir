@@ -1,6 +1,9 @@
 "use client";
 
+import { redirect } from "next/navigation";
+
 export default function IndexPage() {
+  redirect("/my-profile");
   return (
     /* <PageLayout title={t("title")}>
       <p className="max-w-[590px]">
@@ -10,6 +13,6 @@ export default function IndexPage() {
         })}
       </p>
     </PageLayout>*/
-    <h1>main page</h1>
+    <h1>main page?</h1>
   );
 }

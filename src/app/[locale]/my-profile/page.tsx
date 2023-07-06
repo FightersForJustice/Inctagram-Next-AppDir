@@ -8,13 +8,19 @@ import { usePathname } from "next-intl/client";
 import { SubscribersModal } from "./SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
 import { SubscriptionsModal } from "./SubscriptionsModal/SubscriptionsModal";
-
+import { useGetProfileQuery } from "../../../api/profile.api";
+import { redirect } from "next/navigation";
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
 
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
+
+  //временное решение пока не решен вопрос с authMe запросом:
+  if (!sessionStorage.getItem("accessToken")) redirect("/sign-in");
+
+  const { data } = useGetProfileQuery();
 
   return (
     <>
@@ -34,7 +40,7 @@ const MyProfile = () => {
             <div className={s.profile__wrapper}>
               <div className={s.profile__title}>
                 <div className={s.profile__title__wrapper}>
-                  <p>URLProfiele</p>
+                  <p>{data?.userName ?? "User Name"}</p>
                   {paidAccount && (
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -80,9 +86,8 @@ const MyProfile = () => {
                 </div>
               </div>
               <p className={s.profile__desc}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                {data?.aboutMe ??
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"}
               </p>
             </div>
           </div>
