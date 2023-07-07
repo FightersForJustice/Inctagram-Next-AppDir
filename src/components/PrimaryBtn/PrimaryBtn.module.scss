@@ -3,25 +3,25 @@
   color: var(--light-100);
   padding: 6px 24px;
   border-radius: 2px;
-  transition: all .2s linear;
-  border: 1px solid var(--primary-700, #2F68CC);
+  transition: all 0.2s linear;
+  border: 1px solid var(--primary-700, #2f68cc);
 
   &:active {
-    background: var(--primary-700, #2F68CC);
+    background: var(--primary-700, #2f68cc);
   }
 
   &:hover {
-    background: var(--primary-100, #73A5FF);
+    background: var(--primary-100, #73a5ff);
   }
 
   &:focus {
     border-radius: 2px;
-    border: 1px solid var(--primary-700, #2F68CC);
-    background: var(--primary-500, #397DF6);
+    border: 1px solid var(--primary-700, #2f68cc);
+    background: var(--primary-500, #397df6);
   }
 
   &:disabled {
-    background: var(--primary-900, #234E99);
+    background: var(--primary-900, #234e99);
     color: var(--light-900);
     cursor: not-allowed;
   }
