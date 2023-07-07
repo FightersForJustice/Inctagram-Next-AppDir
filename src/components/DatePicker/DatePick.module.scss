@@ -1,0 +1,21 @@
+.datePicker {
+
+  &__wrapper {
+    position: relative;
+    margin-top: 24px;
+  }
+
+  &__label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 14px;
+    color: var(--light-900, #8D9094);
+  }
+
+  &__icon {
+    position: absolute;
+    top: 7px;
+    left: 125px;
+  }
+}

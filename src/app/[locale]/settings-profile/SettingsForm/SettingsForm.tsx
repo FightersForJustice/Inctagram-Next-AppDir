@@ -1,6 +1,7 @@
 import {useForm} from 'react-hook-form';
 import s from './SettingsForm.module.scss'
 import {PrimaryBtn} from '../../../../components/PrimaryBtn/PrimaryBtn';
+import {DatePick} from '../../../../components/DatePicker/DatePick';
 
 export const SettingsForm = () => {
     const {
@@ -17,7 +18,6 @@ export const SettingsForm = () => {
             aboutMe: ''
         }
     });
-    console.log(errors)
 
     return (
         <form
@@ -45,10 +45,12 @@ export const SettingsForm = () => {
                 <label className={s.form__label}>Lastname</label>
                 <input
                     {...register('lastname', {required: true, minLength: 2,  maxLength: 15})}
-                    className={s.form__textInput}
+                    className={`${s.form__textInput} ${s.form__lastName}`}
                 />
                 {errors.lastname && <p className={s.form__error}>Min 2, max 15 symbols</p>}
             </div>
+
+            <DatePick />
 
             <div className={s.form__itemWrapper}>
                 <label className={s.form__label}>City</label>

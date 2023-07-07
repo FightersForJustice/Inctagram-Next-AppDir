@@ -32,6 +32,7 @@
     "react-dom": "18.2.0",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.45.0",
+    "react-multi-date-picker": "^4.1.2",
     "react-redux": "^8.1.1",
     "sass": "^1.63.6",
     "tailwindcss": "^3.3.2",
