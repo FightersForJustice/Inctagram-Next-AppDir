@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { SignUpForm } from "./SignUpForm/SignUpForm";
-import { usePostAuthorizationMutation } from "../../../../api/auth.api";
 import { useTranslations } from "next-intl";
 
 type Props = {

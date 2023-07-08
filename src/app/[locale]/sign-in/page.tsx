@@ -4,8 +4,7 @@ import React from "react";
 import Image from "next/image";
 import SignIn from "./SignIn/SignIn";
 import { useTranslations } from "next-intl";
-import { profileApi, useGetProfileQuery } from "../../../api/profile.api";
-import { ApiProvider } from "@reduxjs/toolkit/src/query/react";
+import { useGetProfileQuery } from "../../../api/profile.api";
 
 const SignInPage = () => {
   const t = useTranslations("SignInPage");

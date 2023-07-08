@@ -6,7 +6,7 @@ import s from "./DatePick.module.scss";
 import Image from "next/image";
 
 export const DatePick = () => {
-  const datePickerRef = useRef<HTMLDivElement>();
+  const datePickerRef = useRef<any>();
 
   return (
     <>
@@ -26,11 +26,7 @@ export const DatePick = () => {
             cursor: "pointer",
           }}
         >
-          <button
-            style={{ margin: "5px" }}
-            // @ts-ignore
-            onClick={() => datePickerRef?.current?.closeCalendar()}
-          >
+          <button style={{ margin: "5px" }} onClick={() => datePickerRef?.current?.closeCalendar()}>
             close
           </button>
         </DatePicker>
