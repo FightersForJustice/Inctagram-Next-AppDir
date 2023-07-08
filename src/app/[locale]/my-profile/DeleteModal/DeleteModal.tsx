@@ -9,7 +9,7 @@ type Props = {
 
 export const DeleteModal: React.FC<Props> = ({ setShowDeleteModal }) => {
   return (
-    <Modal title={"Delete Subscriber"} isShowBtnOk={false} maxWidth={"378px"} onClose={() => setShowDeleteModal(false)}>
+    <Modal title={"Delete Subscriber"} isOkBtn={false} width={"378px"} onClose={() => setShowDeleteModal(false)}>
       <div className={s.deleteModal}>
         <div className={s.deleteModal__info}>
           <Image

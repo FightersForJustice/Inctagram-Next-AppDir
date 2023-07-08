@@ -17,12 +17,7 @@ export const SubscribersModal: React.FC<Props> = ({ setShowSubscribersModal }) =
 
   return (
     <>
-      <Modal
-        title={"2 358 Subscribers"}
-        isShowBtnOk={false}
-        maxWidth={"644px"}
-        onClose={() => setShowSubscribersModal(false)}
-      >
+      <Modal title={"2 358 Subscribers"} isOkBtn={false} width={"644px"} onClose={() => setShowSubscribersModal(false)}>
         <div className={s.modal}>
           <input type="text" className={s.modal__input} placeholder={"Search"} />
           <Image className={s.modal__icon} src={"/img/modal/search.svg"} alt={"search"} width={20} height={20} />

@@ -9,7 +9,7 @@ type Props = {
 
 export const UnsubscribeModal: React.FC<Props> = ({ setShowUnsubscribeModal }) => {
   return (
-    <Modal title={"Unsubscribe"} isShowBtnOk={false} maxWidth={"378px"} onClose={() => setShowUnsubscribeModal(false)}>
+    <Modal title={"Unsubscribe"} isOkBtn={false} width={"378px"} onClose={() => setShowUnsubscribeModal(false)}>
       <div className={s.deleteModal}>
         <div className={s.deleteModal__info}>
           <Image

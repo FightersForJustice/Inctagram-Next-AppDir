@@ -15,8 +15,8 @@ export const SubscriptionsModal: React.FC<Props> = ({ setShowSubscriptionsModal 
     <>
       <Modal
         title={"2 218 Subscriptions"}
-        isShowBtnOk={false}
-        maxWidth={"644px"}
+        isOkBtn={false}
+        width={"644px"}
         onClose={() => setShowSubscriptionsModal(false)}
       >
         <div className={s.modal}>

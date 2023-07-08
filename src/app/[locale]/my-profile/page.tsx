@@ -9,7 +9,6 @@ import { SubscribersModal } from "./SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
 import { SubscriptionsModal } from "./SubscriptionsModal/SubscriptionsModal";
 import { useGetProfileQuery } from "../../../api/profile.api";
-import { redirect } from "next/navigation";
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
 
@@ -18,7 +17,7 @@ const MyProfile = () => {
   const pathname = usePathname();
 
   //временное решение пока не решен вопрос с authMe запросом:
-  if (!sessionStorage.getItem("accessToken")) redirect("/sign-in");
+  //Вызывает ошибку при build!!!!!!   if (!sessionStorage.getItem("accessToken")) redirect("/sign-in");
 
   const { data } = useGetProfileQuery();
 

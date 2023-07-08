@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export let profileApi = createApi({
-  reducerPath: "authApi",
+  reducerPath: "profileApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://inctagram-api.vercel.app/api/",
     prepareHeaders: (headers) => {
