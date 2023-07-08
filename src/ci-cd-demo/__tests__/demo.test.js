@@ -1,8 +1,6 @@
-const { add } = require('./../demo');
+const { add } = require("./../demo");
 
-
-
-test('sum', () => {
-    const result = add(2, 3);
-    expect(result).toBe(5);
-  });
+test("sum", () => {
+  const result = add(2, 3);
+  expect(result).toBe(5);
+});

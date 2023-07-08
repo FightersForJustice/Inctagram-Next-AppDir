@@ -13,6 +13,6 @@ export default function IndexPage() {
         })}
       </p>
     </PageLayout>*/
-    <h1>main page?</h1>
+    <h1>main page</h1>
   );
 }

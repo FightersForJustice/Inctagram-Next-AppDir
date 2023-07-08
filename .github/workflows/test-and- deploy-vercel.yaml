@@ -12,13 +12,13 @@ jobs:
   UnitTests:
     name: Tests
     runs-on: ubuntu-latest
-    steps:  
-      - name: Checkout  # клонируем репозиторый
+    steps:
+      - name: Checkout # клонируем репозиторый
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: yarn install 
+        run: yarn install
       - name: Test
-        run: yarn test 
+        run: yarn test
 
   Lint:
     name: ESLint

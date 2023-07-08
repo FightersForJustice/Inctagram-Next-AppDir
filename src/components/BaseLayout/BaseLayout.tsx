@@ -1,5 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from "react";
-import { NextPage } from "next";
+import React, { ReactNode } from "react";
 import { Header } from "../Header/Header";
 
 type Props = {

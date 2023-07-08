@@ -11,10 +11,10 @@
 }
 
 .modal__content {
-    max-width: 400px;
-    background-color: var(--dark-300);
-    border-radius: 5px;
-    border: 1px solid var(--dark-100);
+  width: 400px;
+  background-color: var(--dark-300);
+  border-radius: 5px;
+  border: 1px solid var(--dark-100);
 }
 .modal__header {
     display: flex;
