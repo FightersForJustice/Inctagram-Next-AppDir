@@ -13,7 +13,6 @@ import Link from "next/link";
 
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
-
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
@@ -31,7 +30,7 @@ const MyProfile = () => {
           <div className={s.profile}>
             <div>
               <Image
-                src={"/img/profile/avatar.png"}
+                src={`${data?.avatars[0]?.url ? data.avatars[0].url : "/img/profile/avatar.png"}`}
                 alt={"avatar"}
                 width={204}
                 height={204}

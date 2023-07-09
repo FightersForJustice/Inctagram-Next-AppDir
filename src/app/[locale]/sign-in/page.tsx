@@ -4,13 +4,9 @@ import React from "react";
 import Image from "next/image";
 import SignIn from "./SignIn/SignIn";
 import { useTranslations } from "next-intl";
-import { useGetProfileQuery } from "../../../api/profile.api";
 
 const SignInPage = () => {
   const t = useTranslations("SignInPage");
-  const { data, isLoading } = useGetProfileQuery();
-
-  console.log(data);
 
   return (
     <div className={"bg-[#171717] rounded-md m-auto mt-[36px] max-w-[378px] text-center"}>

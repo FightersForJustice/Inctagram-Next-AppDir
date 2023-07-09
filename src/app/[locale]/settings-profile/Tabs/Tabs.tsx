@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import s from "./Tabs.module.scss";
 import Image from "next/image";
@@ -6,28 +6,71 @@ import { TransparentBtn } from "../../../../components/TransparentBtn/Transparen
 import { SettingsForm } from "../SettingsForm/SettingsForm";
 import { Modal } from "../../../../components/Modal/Modal";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
+import {
+  useDeleteProfileAvatarMutation,
+  useGetProfileQuery,
+  usePostProfileAvatarMutation,
+} from "../../../../api/profile.api";
+import { toast } from "react-toastify";
 
 const TabsDemo = () => {
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
-  const [userImage, setUserImage] = useState<string>("");
-  const [savedUserImage, setSavedUserImage] = useState<string>("");
+  const [userAvatar, setUserAvatar] = useState<string>("");
+  const [loadedAvatar, setLoadedAvatar] = useState("");
+  const [file, setFile] = useState<File>();
 
-  const onSetUserImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const [saveAvatar] = usePostProfileAvatarMutation();
+  const [deleteAvatar] = useDeleteProfileAvatarMutation();
+  const { data } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (data?.avatars.length) {
+      setLoadedAvatar(data?.avatars[0]?.url);
+    }
+  }, [data]);
+
+  const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-
     const file = e.target.files[0];
-    setUserImage(URL.createObjectURL(file));
+
+    setFile(file);
+    setUserAvatar(URL.createObjectURL(file));
   };
 
-  const onSaveUserImage = () => {
-    setSavedUserImage(userImage);
-    setUserImage("");
+  const onSaveUserAvatar = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file, file.name);
+
+      saveAvatar(formData)
+        .unwrap()
+        .then((res) => {
+          setLoadedAvatar(res.avatars[0].url);
+          toast.success("Avatar successfully uploaded");
+        })
+        .catch((err) => {
+          toast.error("Error");
+        });
+    }
+
+    setUserAvatar("");
     setShowAddAvatarModal(false);
   };
 
   const onCloseModal = () => {
-    setUserImage("");
+    setUserAvatar("");
     setShowAddAvatarModal(false);
+  };
+
+  const onDeleteAvatar = () => {
+    deleteAvatar()
+      .unwrap()
+      .then((res) => {
+        setLoadedAvatar("");
+      })
+      .catch((err) => {
+        toast.error("Error");
+      });
   };
 
   return (
@@ -50,7 +93,25 @@ const TabsDemo = () => {
         <Tabs.Content className={s.TabsContent} value="tab1">
           <div className={s.wrapper}>
             <div className={s.wrapper__left}>
-              {savedUserImage ? (
+              <Image
+                src={`${loadedAvatar ? loadedAvatar : "/img/settings-profile/load-avatar.svg"}`}
+                alt={"load-avatar"}
+                width={192}
+                height={192}
+                className={s.wrapper__image}
+              />
+              {loadedAvatar && (
+                <Image
+                  src={"/img/settings-profile/delete.svg"}
+                  alt={"delete"}
+                  width={24}
+                  height={24}
+                  onClick={onDeleteAvatar}
+                  className={s.wrapper__delete}
+                />
+              )}
+
+              {/*{savedUserImage ? (
                 <>
                   <Image
                     src={savedUserImage}
@@ -70,13 +131,13 @@ const TabsDemo = () => {
                 </>
               ) : (
                 <Image
-                  src={"/img/settings-profile/load-avatar.svg"}
+                  src={`${loadedImage ? loadedImage : "/img/settings-profile/load-avatar.svg"}`}
                   alt={"load-avatar"}
                   width={192}
                   height={192}
                   className={s.wrapper__image}
                 />
-              )}
+              )}*/}
               <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>Add a Profile Photo</TransparentBtn>
             </div>
             <div className={s.wrapper__right}>
@@ -111,8 +172,8 @@ const TabsDemo = () => {
       {showAddAvatarModal && (
         <Modal title={"Add a profile photo"} onClose={onCloseModal} width={"492px"} isOkBtn={false}>
           <div className={s.modal}>
-            {userImage ? (
-              <Image src={userImage} alt={"load-avatar"} width={316} height={316} className={s.modal__loadImg} />
+            {userAvatar ? (
+              <Image src={userAvatar} alt={"load-avatar"} width={316} height={316} className={s.modal__loadImg} />
             ) : (
               <Image
                 src={"/img/settings-profile/modal-img.png"}
@@ -122,13 +183,13 @@ const TabsDemo = () => {
                 className={s.modal__img}
               />
             )}
-            {userImage ? (
+            {userAvatar ? (
               <div className={s.modal__saveBtn}>
-                <PrimaryBtn onClick={onSaveUserImage}>Save</PrimaryBtn>
+                <PrimaryBtn onClick={onSaveUserAvatar}>Save</PrimaryBtn>
               </div>
             ) : (
               <div className={s.wrapper__loadZone}>
-                <input type="file" className={s.wrapper__inputFile} onChange={onSetUserImage} />
+                <input type="file" className={s.wrapper__inputFile} onChange={onSetUserAvatar} />
                 <div className={s.wrapper__overlay}>
                   <TransparentBtn>Select from Computer</TransparentBtn>
                 </div>

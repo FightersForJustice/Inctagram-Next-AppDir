@@ -34,12 +34,12 @@ export let profileApi = createApi({
         };
       },
     }),
-    postProfileAvatar: builder.mutation<any, string>({
-      query: (file: string) => {
+    postProfileAvatar: builder.mutation<PostProfileAvatar, FormData>({
+      query: (file: FormData) => {
         return {
           url: "users/profile/avatar",
           method: "POST",
-          body: { file },
+          body: file,
         };
       },
     }),
@@ -51,7 +51,7 @@ export let profileApi = createApi({
         };
       },
     }),
-    deleteProfile: builder.mutation<any, void>({
+    deleteProfile: builder.mutation<void, void>({
       query: () => {
         return {
           url: "users/profile",
@@ -61,6 +61,10 @@ export let profileApi = createApi({
     }),
   }),
 });
+
+export type PostProfileAvatar = {
+  avatars: Avatar[];
+};
 
 export type PutProfileBody = {
   userName: string;
