@@ -9,6 +9,8 @@ import { SubscribersModal } from "./SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
 import { SubscriptionsModal } from "./SubscriptionsModal/SubscriptionsModal";
 import { useGetProfileQuery } from "../../../api/profile.api";
+import Link from "next/link";
+
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
 
@@ -68,7 +70,9 @@ const MyProfile = () => {
                     </svg>
                   )}
                 </div>
-                <button className={s.profile__btn}>Profile Settings</button>
+                <Link href={"/settings-profile"} className={s.profile__btn}>
+                  Profile Settings
+                </Link>
               </div>
               <div className={s.profile__info}>
                 <div className={s.profile__info__subscriptions} onClick={() => setShowSubscriptionsModal(true)}>

@@ -1,18 +1,38 @@
-import React, { useRef } from "react";
-import DatePicker from "react-multi-date-picker";
+import React, { useEffect, useRef, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 
 import s from "./DatePick.module.scss";
 import Image from "next/image";
 
-export const DatePick = () => {
+type Props = {
+  setDate: (date: string) => void;
+};
+
+export const DatePick: React.FC<Props> = ({ setDate }) => {
   const datePickerRef = useRef<any>();
+  const [value, setValue] = useState<DateObject | DateObject[] | null>();
+
+  useEffect(() => {
+    setDate(formatDate(value!));
+  }, [value]);
+
+  function formatDate(date: DateObject | DateObject[] | null) {
+    // @ts-ignore
+    const formattedDate = new Date(date?.toDate?.().toString());
+    const day = ("0" + formattedDate.getDate()).slice(-2);
+    const month = ("0" + (formattedDate.getMonth() + 1)).slice(-2);
+    const year = formattedDate.getFullYear();
+
+    return `${day}.${month}.${year}`;
+  }
 
   return (
     <>
       <div className={s.datePicker__wrapper}>
-        <label className={s.datePicker__label}>Date of birthday</label>
         <DatePicker
+          value={value}
+          onChange={setValue}
           ref={datePickerRef}
           className={"bg-dark"}
           style={{

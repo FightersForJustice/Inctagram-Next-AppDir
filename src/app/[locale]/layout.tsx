@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { createTranslator, NextIntlClientProvider } from "next-intl";
 import { ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +44,18 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   return (
     <html className="h-full" lang={locale}>
       <body className={clsx(inter.className, "flex h-full flex-col")}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

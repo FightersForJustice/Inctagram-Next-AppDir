@@ -98,7 +98,8 @@
   }
 
   &__desc {
-    max-width: 730px;
+    width: 730px;
+    word-break: break-all;
   }
 
   &__posts {

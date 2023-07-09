@@ -62,13 +62,13 @@ export let profileApi = createApi({
   }),
 });
 
-type PutProfileBody = {
+export type PutProfileBody = {
   userName: string;
   firstName: string;
   lastName: string;
   city: string;
   dateOfBirth: Date;
-  aboutMe: string;
+  aboutMe: string | undefined;
 };
 
 export interface GetResponse {

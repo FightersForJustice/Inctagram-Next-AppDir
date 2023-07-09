@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useEffect, useState, useTransition } from "react";
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 
@@ -33,7 +33,7 @@ export const Header = () => {
   return (
     <header className={"border-b-1 bg-[--dark-700] border-[--dark-300] "}>
       <div className={" max-w-[1200px] m-auto h-[60px] flex items-center justify-between"}>
-        <Link href={"/"} className={"text-[26px] font-semibold leading-[36px]"}>
+        <Link href={"/my-profile"} className={"text-[26px] font-semibold leading-[36px]"}>
           Inctagram
         </Link>
         {/*<LocaleSwitcher />*/}
