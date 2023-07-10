@@ -37,6 +37,27 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
+    transition: all .2s linear;
+
+
+    &:hover {
+      color: var(--primary-500);
+    }
+
+    &:focus {
+      outline: none !important;
+      border-radius: 2px;
+      border: 2px solid var(--primary-700, #2F68CC);
+    }
+
+    &:hover > svg {
+      transition: all .2s linear;
+      fill: var(--primary-500) !important;
+    }
+  }
+
+  &__item > svg {
+    fill: var(--light-100)
   }
 
   &__icon {
@@ -45,6 +66,10 @@
 
   &__item__active {
     color: var(--primary-500);
+  }
+
+  &__item__active > svg {
+    fill: var(--primary-500);
   }
 
   &__icon__active {
@@ -56,6 +81,20 @@
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
+    transition: all .2s linear;
+
+    &:hover {
+      color: var(--primary-500);
+    }
+  }
+
+  &__btn > svg {
+    fill: var(--light-100);
+  }
+
+  &__btn:hover > svg {
+    transition: all .2s linear;
+    fill: var(--primary-500);
   }
 
 

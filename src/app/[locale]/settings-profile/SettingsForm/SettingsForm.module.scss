@@ -27,6 +27,17 @@
     &:focus {
       border: 1px solid var(--primary-500);
     }
+
+    &__error {
+      width: 100%;
+      background: transparent;
+      outline: none;
+      border-radius: 2px;
+      padding: 6px 12px;
+      margin-bottom: 24px;
+      transition: all 0.2s linear;
+      border: 1px solid red;
+    }
   }
 
   &__textarea {
@@ -45,6 +56,21 @@
 
     &:focus {
       border: 1px solid var(--primary-500);
+    }
+
+    &__error {
+      resize: none;
+      width: 100%;
+      border-radius: 2px;
+      border: 1px solid red;
+      background: var(--dark-500, #171717);
+      min-height: 84px;
+      padding: 5px;
+      color: var(--light-900, #8d9094);
+      font-size: 16px;
+      font-weight: 400;
+      outline: none;
+      transition: all 0.2s linear;
     }
   }
 

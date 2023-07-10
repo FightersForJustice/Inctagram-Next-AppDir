@@ -61,12 +61,14 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           <div className={"relative"}>
             <input
               {...register("email")}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] mb-[10px] ${
+              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] mb-[15px] ${
                 errors.email ? "border-red-700" : ""
               }`}
             />
             {errors.email && (
-              <p className={"absolute left-[30%] text-[--danger-500] text-[14px]"}>{errors.email.message}</p>
+              <p className={"absolute left-[20px] top-[35px] text-[--danger-500] text-[11px]"}>
+                {errors.email.message}
+              </p>
             )}
           </div>
         </div>

@@ -42,8 +42,6 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
   const [recoveryCode, setRecoveryCode] = useState("");
   const router = useRouter();
 
-  console.log(recoveryCode);
-
   const [postNewPassword, newPasswordResult] = usePostNewPasswordMutation();
   const [checkCode] = usePostPasswordCheckRecoveryCodeMutation();
 
@@ -109,7 +107,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
             />
           )}
           {errors.password && (
-            <p className={"absolute left-[16%] text-[--danger-500] text-[14px]"}>{errors.password.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[11px]"}>{errors.password.message}</p>
           )}
         </div>
       </div>
@@ -146,7 +144,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
             />
           )}
           {errors.passwordConfirm && (
-            <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"}>{errors.passwordConfirm.message}</p>
+            <p className={"absolute left-[5%] text-[--danger-500] text-[11px]"}>{errors.passwordConfirm.message}</p>
           )}
         </div>
       </div>
