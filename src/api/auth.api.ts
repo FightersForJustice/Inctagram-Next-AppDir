@@ -19,9 +19,7 @@ export let authApi = createApi({
         return {
           url: "auth/registration",
           method: "POST",
-          body: {
-            ...user,
-          },
+          body: user,
         };
       },
     }),

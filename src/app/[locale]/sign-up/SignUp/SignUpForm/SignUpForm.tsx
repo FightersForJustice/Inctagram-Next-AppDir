@@ -5,18 +5,40 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import Image from "next/image";
-import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
+import { StatusCode } from "../../../../../api/auth.api";
 import { Modal } from "../../../../../components/Modal/Modal";
 import { SignUpFormSchema } from "../../../../../schemas/SignUpFormSchema";
+import { MutationTrigger } from "@reduxjs/toolkit/src/query/react/buildHooks";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  MutationDefinition,
+} from "@reduxjs/toolkit/query";
+
+//==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
 type Props = {
   lang: "en" | "ru";
   translate: (value: string) => ReactNode;
+  isSuccess: boolean;
+  postAuthorization: MutationTrigger<
+    MutationDefinition<
+      {
+        userName: string;
+        email: string;
+        password: string;
+      },
+      BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>,
+      never,
+      any,
+      "authApi"
+    >
+  >;
 };
 
-//==изменения== удалена функция Юры для проверки работоспособности API регисрации
-
-export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
+export const SignUpForm: React.FC<Props> = ({ lang, translate, isSuccess, postAuthorization }) => {
   const {
     register,
     handleSubmit,
@@ -31,16 +53,14 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
-  const [postAuthorization, res] = usePostAuthorizationMutation();
-
   //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
-    if (res.isSuccess) setShowModal(true);
-  }, [res.isSuccess]);
+    if (isSuccess) setShowModal(true);
+  }, [isSuccess]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SubmitProps) => {
     //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({ userName: data.username, email: data.email, password: data.password })
+    postAuthorization({ userName: data.userName, email: data.email, password: data.password })
       .unwrap()
       .then(() => {})
       .catch((err) => {
@@ -178,10 +198,17 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
         </Link>
       </form>
       {showModal && (
-        <Modal title={"Email sent"} onClose={() => setShowModal(false)}>
+        <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
           We have sent a link to confirm your email to <span className={"text-blue-300"}>{userEmail}</span>
         </Modal>
       )}
     </>
   );
+};
+
+type SubmitProps = {
+  userName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
 };

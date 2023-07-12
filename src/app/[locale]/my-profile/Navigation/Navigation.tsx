@@ -1,25 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Link from "next/link";
 import { Modal } from "../../../../components/Modal/Modal";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
+import { usePostLogoutMutation } from "../../../../api/auth.api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { Loader } from "../../../../components/Loader/Loader";
 
 type Props = {
   pathname: string;
   paidAccount: boolean;
-  showLogoutModal: boolean;
-  setShowLogoutModal: (value: boolean) => void;
-  onLogout: () => void;
 };
 
-export const Navigation: React.FC<Props> = ({
-  pathname,
-  paidAccount,
-  setShowLogoutModal,
-  showLogoutModal,
-  onLogout,
-}) => {
+export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const router = useRouter();
+  const [logout, { isLoading }] = usePostLogoutMutation();
+
+  const onLogout = () => {
+    setShowLogoutModal(false);
+    logout()
+      .unwrap()
+      .then(() => {
+        router.push("/sign-in");
+        toast.success("Logout success");
+      })
+      .catch(() => {
+        toast.error("Logout fail");
+      });
+  };
+
   return (
     <>
       <nav className={s.nav}>
@@ -193,6 +206,7 @@ export const Navigation: React.FC<Props> = ({
           </div>
         </Modal>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };

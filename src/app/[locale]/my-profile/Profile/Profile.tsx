@@ -15,13 +15,6 @@ type Props = {
 export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSubscribersModal, paidAccount }) => {
   const { data, isLoading, isError } = useGetProfileQuery();
 
-  if (isLoading)
-    return (
-      <div className={"ml-[150px] flex justify-end h-[30vh] pt-10"}>
-        <Loader />
-      </div>
-    );
-
   if (isError) {
     toast.error("Auth error");
   }
@@ -104,6 +97,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
         <Image src={"/img/profile/posts/post7.png"} alt={"post1"} width={234} height={228} />
         <Image src={"/img/profile/posts/post8.png"} alt={"post1"} width={234} height={228} />
       </div>
+      {isLoading && <Loader />}
     </>
   );
 };

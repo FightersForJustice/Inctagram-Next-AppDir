@@ -29,43 +29,38 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
       });
   };
 
-  if (isLoading) {
-    return (
-      <div className={"flex justify-center items-center h-[30vh]"}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
-    <Tabs.Content className={s.TabsContent} value="generalInformation">
-      <div className={s.wrapper}>
-        <div className={s.wrapper__left}>
-          <Image
-            src={`${loadedAvatar ? loadedAvatar : "/img/settings-profile/load-avatar.svg"}`}
-            alt={"load-avatar"}
-            width={192}
-            height={192}
-            className={s.wrapper__image}
-            priority={true}
-          />
-          {loadedAvatar && (
+    <>
+      <Tabs.Content className={s.TabsContent} value="generalInformation">
+        <div className={s.wrapper}>
+          <div className={s.wrapper__left}>
             <Image
-              src={"/img/settings-profile/delete.svg"}
-              alt={"delete"}
-              width={24}
-              height={24}
-              onClick={onDeleteAvatar}
-              className={s.wrapper__delete}
+              src={`${loadedAvatar ? loadedAvatar : "/img/settings-profile/load-avatar.svg"}`}
+              alt={"load-avatar"}
+              width={192}
+              height={192}
+              className={s.wrapper__image}
+              priority={true}
             />
-          )}
-          <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>Add a Profile Photo</TransparentBtn>
+            {loadedAvatar && (
+              <Image
+                src={"/img/settings-profile/delete.svg"}
+                alt={"delete"}
+                width={24}
+                height={24}
+                onClick={onDeleteAvatar}
+                className={s.wrapper__delete}
+              />
+            )}
+            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>Add a Profile Photo</TransparentBtn>
+          </div>
+          <div className={s.wrapper__right}>
+            <SettingsForm />
+          </div>
         </div>
-        <div className={s.wrapper__right}>
-          <SettingsForm />
-        </div>
-      </div>
-    </Tabs.Content>
+      </Tabs.Content>
+      {isLoading && <Loader />}
+    </>
   );
 };
 

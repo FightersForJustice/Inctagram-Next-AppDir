@@ -55,14 +55,6 @@ const TabsDemo = () => {
     setShowAddAvatarModal(false);
   };
 
-  if (isLoading) {
-    return (
-      <div className={"flex justify-center items-center h-[30vh]"}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <>
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
@@ -127,6 +119,7 @@ const TabsDemo = () => {
           </div>
         </Modal>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };
