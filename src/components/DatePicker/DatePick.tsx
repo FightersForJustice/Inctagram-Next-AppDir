@@ -7,11 +7,14 @@ import Image from "next/image";
 
 type Props = {
   setDate: (date: string) => void;
+  userBirthday: Date | undefined;
 };
 
-export const DatePick: React.FC<Props> = ({ setDate }) => {
+export const DatePick: React.FC<Props> = ({ setDate, userBirthday }) => {
   const datePickerRef = useRef<any>();
   const [value, setValue] = useState<DateObject | DateObject[] | null>();
+
+  console.log(userBirthday);
 
   useEffect(() => {
     setDate(formatDate(value!));
@@ -31,7 +34,7 @@ export const DatePick: React.FC<Props> = ({ setDate }) => {
     <>
       <div className={s.datePicker__wrapper}>
         <DatePicker
-          value={value}
+          value={userBirthday}
           onChange={setValue}
           ref={datePickerRef}
           className={"bg-dark"}

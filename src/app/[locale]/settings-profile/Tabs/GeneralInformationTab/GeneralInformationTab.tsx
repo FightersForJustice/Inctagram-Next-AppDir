@@ -55,7 +55,7 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
             <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>Add a Profile Photo</TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
-            <SettingsForm />
+            <SettingsForm userBirthday={data?.dateOfBirth} />
           </div>
         </div>
       </Tabs.Content>
