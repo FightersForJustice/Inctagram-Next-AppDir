@@ -3,29 +3,16 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import Link from "next/link";
 import Image from "next/image";
 import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
 import { Modal } from "../../../../../components/Modal/Modal";
+import { SignUpFormSchema } from "../../../../../schemas/SignUpFormSchema";
 
 type Props = {
   lang: "en" | "ru";
   translate: (value: string) => ReactNode;
 };
-
-const schema = yup
-  .object({
-    userName: yup.string().min(3).max(30).required(),
-    email: yup.string().email().required(),
-    password: yup.string().min(6).max(20).required(),
-    passwordConfirm: yup
-      .string()
-      .oneOf([yup.ref("password")], "Password mismatch")
-      .min(6)
-      .required(),
-  })
-  .required();
 
 //==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
@@ -36,7 +23,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     formState: { errors },
     setError,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignUpFormSchema),
   });
 
   const [showPass, setShowPass] = useState(false);

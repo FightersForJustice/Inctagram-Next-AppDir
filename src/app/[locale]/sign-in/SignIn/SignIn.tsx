@@ -1,35 +1,42 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { StatusCode, usePostLoginMutation } from "../../../../api/auth.api";
-import { redirect } from "next/navigation";
+import { StatusCode } from "../../../../api/auth.api";
+import { MutationTrigger } from "@reduxjs/toolkit/src/query/react/buildHooks";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  MutationDefinition,
+} from "@reduxjs/toolkit/query";
+import { SignInSchema } from "../../../../schemas/SignInSchema";
 
 type Props = {
   translate: (value: string) => ReactNode;
+  postLogin: MutationTrigger<
+    MutationDefinition<
+      { email: string; password: string },
+      BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>,
+      never,
+      any,
+      "authApi"
+    >
+  >;
 };
 
-const schema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).max(20).required(),
-  })
-  .required();
-
-const SignIn: React.FC<Props> = ({ translate }) => {
+const SignIn: React.FC<Props> = ({ translate, postLogin }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignInSchema),
   });
   const [showPass, setShowPass] = useState(false);
-  const [postLogin, { isSuccess }] = usePostLoginMutation();
-  if (isSuccess) redirect("/my-profile");
 
   const onSubmit = async (data: any) => {
     postLogin({
@@ -43,10 +50,10 @@ const SignIn: React.FC<Props> = ({ translate }) => {
       .catch((err) => {
         if (err.data.statusCode === StatusCode.badRequest) {
           setError("password", { message: err.data.messages });
-          setError("email", { message: "" });
+          setError("email", { message: err.data.messages });
         } else if (err.data.statusCode === StatusCode.unauthorized) {
           setError("password", { message: err.data.messages[0]?.message });
-          setError("email", { message: "" });
+          setError("email", { message: err.data.messages[0]?.message });
         }
       });
   };

@@ -11,6 +11,7 @@ export let authApi = createApi({
       }
       return headers;
     },
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     postAuthorization: builder.mutation<any, { userName: string; email: string; password: string }>({

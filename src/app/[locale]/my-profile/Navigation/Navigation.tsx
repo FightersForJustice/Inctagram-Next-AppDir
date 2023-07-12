@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import s from "../MyProfile.module.scss";
 import Link from "next/link";
-import { usePostLogoutMutation } from "../../../../api/auth.api";
 import { Modal } from "../../../../components/Modal/Modal";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
@@ -9,17 +8,18 @@ import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 type Props = {
   pathname: string;
   paidAccount: boolean;
+  showLogoutModal: boolean;
+  setShowLogoutModal: (value: boolean) => void;
+  onLogout: () => void;
 };
 
-export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [logout] = usePostLogoutMutation();
-
-  const onLogout = () => {
-    setShowModal(false);
-    logout();
-  };
-
+export const Navigation: React.FC<Props> = ({
+  pathname,
+  paidAccount,
+  setShowLogoutModal,
+  showLogoutModal,
+  onLogout,
+}) => {
   return (
     <>
       <nav className={s.nav}>
@@ -169,7 +169,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
             </li>
           )}
         </ul>
-        <button className={s.nav__btn} onClick={() => setShowModal(true)}>
+        <button className={s.nav__btn} onClick={() => setShowLogoutModal(true)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_12478_5193)">
               <path d="M7 6C7.26522 6 7.51957 5.89464 7.70711 5.70711C7.89464 5.51957 8 5.26522 8 5C8 4.73478 7.89464 4.48043 7.70711 4.29289C7.51957 4.10536 7.26522 4 7 4H5C4.73478 4 4.48043 4.10536 4.29289 4.29289C4.10536 4.48043 4 4.73478 4 5V19C4 19.2652 4.10536 19.5196 4.29289 19.7071C4.48043 19.8946 4.73478 20 5 20H7C7.26522 20 7.51957 19.8946 7.70711 19.7071C7.89464 19.5196 8 19.2652 8 19C8 18.7348 7.89464 18.4804 7.70711 18.2929C7.51957 18.1054 7.26522 18 7 18H6V6H7Z" />
@@ -184,12 +184,12 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
           Log Out
         </button>
       </nav>
-      {showModal && (
-        <Modal title={"Logout"} onClose={() => setShowModal(false)}>
+      {showLogoutModal && (
+        <Modal title={"Logout"} onClose={() => setShowLogoutModal(false)}>
           Do you really want to log out?
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>Yes</TransparentBtn>
-            <PrimaryBtn onClick={() => setShowModal(false)}>No</PrimaryBtn>
+            <PrimaryBtn onClick={() => setShowLogoutModal(false)}>No</PrimaryBtn>
           </div>
         </Modal>
       )}

@@ -6,16 +6,11 @@ import { SettingsForm } from "../../SettingsForm/SettingsForm";
 import * as Tabs from "@radix-ui/react-tabs";
 import { toast } from "react-toastify";
 import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "../../../../../api/profile.api";
-
-type Props = {
-  loadedAvatar: string;
-  setLoadedAvatar: (value: string) => void;
-  setShowAddAvatarModal: (value: boolean) => void;
-};
+import { Loader } from "../../../../../components/Loader/Loader";
 
 export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, setLoadedAvatar, loadedAvatar }) => {
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
-  const { data } = useGetProfileQuery();
+  const { data, isLoading } = useGetProfileQuery();
 
   useEffect(() => {
     if (data?.avatars.length) {
@@ -33,6 +28,14 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
         toast.error("Error");
       });
   };
+
+  if (isLoading) {
+    return (
+      <div className={"flex justify-center items-center h-[30vh]"}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <Tabs.Content className={s.TabsContent} value="generalInformation">
@@ -64,4 +67,10 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
       </div>
     </Tabs.Content>
   );
+};
+
+type Props = {
+  loadedAvatar: string;
+  setLoadedAvatar: (value: string) => void;
+  setShowAddAvatarModal: (value: boolean) => void;
 };

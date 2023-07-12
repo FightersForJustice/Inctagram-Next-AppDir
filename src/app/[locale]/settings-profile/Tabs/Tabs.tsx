@@ -11,6 +11,7 @@ import Avatar from "react-avatar-edit";
 import { dataURLtoFile } from "../../../../utils/dataUrlToFile";
 import { GeneralInformationTab } from "./GeneralInformationTab/GeneralInformationTab";
 import { DevicesTab } from "./DevicesTab/DevicesTab";
+import { Loader } from "../../../../components/Loader/Loader";
 
 const TabsDemo = () => {
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
@@ -19,7 +20,7 @@ const TabsDemo = () => {
   const [loadedAvatar, setLoadedAvatar] = useState("");
   const [file, setFile] = useState<File>();
 
-  const [saveAvatar] = usePostProfileAvatarMutation();
+  const [saveAvatar, { isLoading }] = usePostProfileAvatarMutation();
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -53,6 +54,14 @@ const TabsDemo = () => {
     setCroppedAvatar("");
     setShowAddAvatarModal(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className={"flex justify-center items-center h-[30vh]"}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <>

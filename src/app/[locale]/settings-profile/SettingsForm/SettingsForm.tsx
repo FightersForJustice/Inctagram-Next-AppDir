@@ -5,31 +5,15 @@ import { DatePick } from "../../../../components/DatePicker/DatePick";
 import React, { useState } from "react";
 import { PutProfileBody, usePutProfileMutation } from "../../../../api/profile.api";
 import { StatusCode } from "../../../../api/auth.api";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-
-type FormValues = {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  city: string;
-  aboutMe: string | undefined;
-};
-
-const schema = yup
-  .object({
-    userName: yup.string().min(6).max(30).required(),
-    firstName: yup.string().min(5).max(15).required(),
-    lastName: yup.string().min(5).max(15).required(),
-    city: yup.string().min(3).max(15).required(),
-    aboutMe: yup.string().min(10).max(200),
-  })
-  .required();
+import { Loader } from "../../../../components/Loader/Loader";
+import { GetDefaultValuesForm } from "../../../../utils/GetDefaultValuesForm";
+import { SettingsFormSchema } from "../../../../schemas/SettingsFormSchema";
 
 export const SettingsForm = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [updateProfile] = usePutProfileMutation();
+  const [updateProfile, { isLoading }] = usePutProfileMutation();
 
   const {
     register,
@@ -37,54 +21,42 @@ export const SettingsForm = () => {
     formState: { errors },
     setError,
   } = useForm<FormValues>({
-    defaultValues: async () => {
-      let data;
-      const token = sessionStorage.getItem("accessToken");
-      if (token) {
-        const response = await fetch("https://inctagram-api.vercel.app/api/users/profile", {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        });
-        data = await response.json();
-      }
-
-      return {
-        userName: data?.userName!,
-        firstName: data?.firstName!,
-        lastName: data?.lastName!,
-        city: data?.city!,
-        aboutMe: data?.aboutMe!,
-      };
-    },
-    resolver: yupResolver(schema),
+    defaultValues: GetDefaultValuesForm,
+    resolver: yupResolver(SettingsFormSchema),
   });
 
-  return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        const result: PutProfileBody = {
-          userName: data.userName,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          city: data.city,
-          dateOfBirth: new Date(dateOfBirth),
-          aboutMe: data.aboutMe,
-        };
+  const onSubmit = handleSubmit((data) => {
+    const result: PutProfileBody = {
+      userName: data.userName,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      city: data.city,
+      dateOfBirth: new Date(dateOfBirth),
+      aboutMe: data.aboutMe,
+    };
 
-        updateProfile(result)
-          .unwrap()
-          .then(() => {
-            toast.success("Profile successfully updated");
-          })
-          .catch((err) => {
-            if (err.status === StatusCode.badRequest) {
-              setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
-            }
-          });
-      })}
-      className={s.form}
-    >
+    updateProfile(result)
+      .unwrap()
+      .then(() => {
+        toast.success("Profile successfully updated");
+      })
+      .catch((err) => {
+        if (err.status === StatusCode.badRequest) {
+          setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
+        }
+      });
+  });
+
+  if (isLoading) {
+    return (
+      <div className={"absolute top-[10%] right-[42%]"}>
+        <Loader />
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className={s.form}>
       <div className={s.form__itemWrapper}>
         <label className={s.form__label}>Username</label>
         <input
@@ -140,4 +112,12 @@ export const SettingsForm = () => {
       </div>
     </form>
   );
+};
+
+type FormValues = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  aboutMe: string | undefined;
 };
