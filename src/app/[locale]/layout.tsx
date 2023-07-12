@@ -42,8 +42,8 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   const messages = await getMessages(locale);
 
   return (
-    <html className="h-full" lang={locale}>
-      <body className={clsx(inter.className, "flex h-full flex-col")}>
+    <div className="h-full" lang={locale}>
+      <div className={clsx(inter.className, "flex h-full flex-col")}>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -59,7 +59,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
