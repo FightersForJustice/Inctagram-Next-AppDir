@@ -7,11 +7,15 @@ import { Modal } from "../../../../components/Modal/Modal";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { usePostProfileAvatarMutation } from "../../../../api/profile.api";
 import { toast } from "react-toastify";
-import Avatar from "react-avatar-edit";
 import { dataURLtoFile } from "../../../../utils/dataUrlToFile";
 import { GeneralInformationTab } from "./GeneralInformationTab/GeneralInformationTab";
 import { DevicesTab } from "./DevicesTab/DevicesTab";
 import { Loader } from "../../../../components/Loader/Loader";
+import dynamic from "next/dynamic";
+
+const DynamicCropper = dynamic(() => import("./Cropper/Cropper"), {
+  ssr: false,
+});
 
 const TabsDemo = () => {
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
@@ -84,15 +88,10 @@ const TabsDemo = () => {
           <div className={s.modal}>
             {userAvatar ? (
               <div className={s.modal__loadImg}>
-                <Avatar
-                  width={316}
-                  height={316}
-                  onCrop={(preview) => setCroppedAvatar(preview)}
-                  onClose={() => setUserAvatar("")}
-                  /*onBeforeFileLoad={this.onBeforeFileLoad}*/
-                  imageWidth={400}
-                  imageHeight={400}
-                  src={userAvatar}
+                <DynamicCropper
+                  setUserAvatar={setUserAvatar}
+                  userAvatar={userAvatar}
+                  setCroppedAvatar={setCroppedAvatar}
                 />
               </div>
             ) : (

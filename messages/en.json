@@ -66,6 +66,8 @@
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
   },
+  "SettingsProfilePage": {
+  },
   "LocaleSwitcher": {
     "label": "Change language",
     "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"

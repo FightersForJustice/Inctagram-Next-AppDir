@@ -5,40 +5,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import Image from "next/image";
-import { StatusCode } from "../../../../../api/auth.api";
+import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
 import { Modal } from "../../../../../components/Modal/Modal";
 import { SignUpFormSchema } from "../../../../../schemas/SignUpFormSchema";
-import { MutationTrigger } from "@reduxjs/toolkit/src/query/react/buildHooks";
-import {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-  MutationDefinition,
-} from "@reduxjs/toolkit/query";
+import { Loader } from "../../../../../components/Loader/Loader";
 
 //==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
 type Props = {
   lang: "en" | "ru";
   translate: (value: string) => ReactNode;
-  isSuccess: boolean;
-  postAuthorization: MutationTrigger<
-    MutationDefinition<
-      {
-        userName: string;
-        email: string;
-        password: string;
-      },
-      BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>,
-      never,
-      any,
-      "authApi"
-    >
-  >;
 };
 
-export const SignUpForm: React.FC<Props> = ({ lang, translate, isSuccess, postAuthorization }) => {
+export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
@@ -52,6 +31,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate, isSuccess, postAu
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+
+  const [postAuthorization, { isSuccess, isLoading }] = usePostAuthorizationMutation();
 
   //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
@@ -202,6 +183,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate, isSuccess, postAu
           We have sent a link to confirm your email to <span className={"text-blue-300"}>{userEmail}</span>
         </Modal>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };
