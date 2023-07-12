@@ -62,6 +62,8 @@
     "desc": "Ваша почта была подтверждена успешно",
     "btnName": "Логин"
   },
+  "SettingsProfilePage": {
+  },
   "LocaleSwitcher": {
     "label": "Change language",
     "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"

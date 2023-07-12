@@ -6,6 +6,7 @@ import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePostPasswordRecoveryMutation } from "../../../../api/auth.api";
 import { Modal } from "../../../../components/Modal/Modal";
+import { Loader } from "../../../../components/Loader/Loader";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -30,14 +31,14 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const [recaptcha, setRecaptcha] = useState("");
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
 
-  const [recoveryPassword, res] = usePostPasswordRecoveryMutation();
+  const [recoveryPassword, { isSuccess, isLoading }] = usePostPasswordRecoveryMutation();
 
   useEffect(() => {
-    if (res.isSuccess) {
+    if (isSuccess) {
       setShowModal(true);
       setSendLinkAgain(true);
     }
-  }, [res.isSuccess]);
+  }, [isSuccess]);
 
   const onSubmit = (data: any) => {
     recoveryPassword({
@@ -101,10 +102,11 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         />
       </form>
       {showModal && (
-        <Modal title={"Email sent"} onClose={() => setShowModal(false)}>
+        <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
           {translate("modal")} <span className={"text-blue-300"}>{userEmail}</span>
         </Modal>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };

@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePostRegistrationConfirmationMutation } from "../../../../api/auth.api";
+import { toast } from "react-toastify";
+import { Loader } from "../../../../components/Loader/Loader";
 
 type Props = {
   code: string;
@@ -10,7 +12,7 @@ type Props = {
 };
 
 const Confirm: React.FC<Props> = ({ code, translate }) => {
-  const [registrationConfirm] = usePostRegistrationConfirmationMutation();
+  const [registrationConfirm, { isLoading }] = usePostRegistrationConfirmationMutation();
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const Confirm: React.FC<Props> = ({ code, translate }) => {
         console.log(res);
       })
       .catch((err) => {
-        //if error redirect to email-expired page
+        toast.error("Error confirmation");
         if (err.data.error) {
           router.push("/email-expired");
         }
@@ -38,6 +40,7 @@ const Confirm: React.FC<Props> = ({ code, translate }) => {
         {translate("btnName")}
       </Link>
       <Image src={"/img/congrats.svg"} alt={"congrats"} width={423} height={292} />
+      {isLoading && <Loader />}
     </div>
   );
 };

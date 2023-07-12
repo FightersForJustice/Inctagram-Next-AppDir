@@ -2,6 +2,8 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePostRegistrationEmailResendingMutation } from "../../../api/auth.api";
 import { Modal } from "../../../components/Modal/Modal";
+import { Loader } from "../../../components/Loader/Loader";
+import { toast } from "react-toastify";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -9,18 +11,23 @@ type Props = {
 
 const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
   const [showModal, setShowModal] = useState(false);
-  const [resend, res] = usePostRegistrationEmailResendingMutation();
+  const [resend, { isSuccess, isLoading }] = usePostRegistrationEmailResendingMutation();
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setUserEmail(localStorage.getItem("user-email")!);
     }
-    if (res.isSuccess) setShowModal(true);
-  }, [res.isSuccess]);
+    if (isSuccess) setShowModal(true);
+  }, [isSuccess]);
 
   const onResend = () => {
-    resend({ email: userEmail! });
+    resend({ email: userEmail! })
+      .unwrap()
+      .then()
+      .catch(() => {
+        toast.error("Error");
+      });
   };
 
   return (
@@ -37,10 +44,11 @@ const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
         <Image src={"/img/expired.svg"} alt={"congrats"} width={423} height={292} />
       </div>
       {showModal && (
-        <Modal title={"Email sent"} onClose={() => setShowModal(false)}>
+        <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
           We have sent a link to confirm your email to <span className={"text-blue-300"}>{userEmail}</span>
         </Modal>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };
