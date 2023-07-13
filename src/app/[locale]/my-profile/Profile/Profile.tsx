@@ -36,7 +36,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
         <div className={s.profile__wrapper}>
           <div className={s.profile__title}>
             <div className={s.profile__title__wrapper}>
-              <p>{data?.userName ?? "User Name"}</p>
+              <p id={"profile-userName"}>{data?.userName ?? "User Name"}</p>
               {paidAccount && (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -65,7 +65,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
                 </svg>
               )}
             </div>
-            <Link href={"/settings-profile"} className={s.profile__btn}>
+            <Link href={"/settings-profile"} className={s.profile__btn} id={"profile-link-to-settings-profile"}>
               {t("btnName")}
             </Link>
           </div>
@@ -83,7 +83,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
               <p>{t("publications")}</p>
             </div>
           </div>
-          <p className={s.profile__desc}>
+          <p className={s.profile__desc} id={"profile-aboutMe"}>
             {data?.aboutMe ??
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"}
           </p>

@@ -10,7 +10,6 @@ import { Modal } from "../../../../../components/Modal/Modal";
 import { SignUpFormSchema } from "../../../../../schemas/SignUpFormSchema";
 import { Loader } from "../../../../../components/Loader/Loader";
 
-//==изменения== удалена функция Юры для проверки работоспособности API регисрации
 
 type Props = {
   lang: "en" | "ru";
@@ -69,9 +68,12 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
               className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.userName ? "border-red-700" : ""
               }`}
+              id={"sign-up-userName"}
             />
             {errors.userName && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.userName.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-userName-error"}>
+                {errors.userName.message}
+              </p>
             )}
           </div>
         </div>
@@ -86,9 +88,12 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.email ? "border-red-700" : ""
               }`}
+              id={"sign-up-email"}
             />
             {errors.email && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.email.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-email-error"}>
+                {errors.email.message}
+              </p>
             )}
           </div>
         </div>
@@ -104,6 +109,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.password ? "border-red-700" : ""
               }`}
+              id={"sign-up-password"}
             />
             {showPass ? (
               <Image
@@ -113,6 +119,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowPass(!showPass)}
+                id={"sign-up-password-showPassImage-openAye"}
               />
             ) : (
               <Image
@@ -122,10 +129,13 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowPass(!showPass)}
+                id={"sign-up-password-showPassImage-closeAye"}
               />
             )}
             {errors.password && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.password.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-password-error"}>
+                {errors.password.message}
+              </p>
             )}
           </div>
         </div>
@@ -141,6 +151,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
               className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
                 errors.passwordConfirm ? "border-red-700" : ""
               }`}
+              id={"sign-up-passwordConfirm"}
             />
             {showConfirmPass ? (
               <Image
@@ -150,6 +161,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowConfirmPass(!showConfirmPass)}
+                id={"sign-up-passwordConfirm-showPassImage-openAye"}
               />
             ) : (
               <Image
@@ -159,10 +171,13 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
                 height={30}
                 className={"absolute top-[3px] right-[24px] cursor-pointer"}
                 onClick={() => setShowConfirmPass(!showConfirmPass)}
+                id={"sign-up-passwordConfirm-showPassImage-closeAye"}
               />
             )}
             {errors.passwordConfirm && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"}>{errors.passwordConfirm.message}</p>
+              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-passwordConfirm-error"}>
+                {errors.passwordConfirm.message}
+              </p>
             )}
           </div>
         </div>
@@ -170,17 +185,18 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
         <input
           type="submit"
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
+          id={"sign-up-submit"}
           value={String(translate("btnName"))}
-          //==изменения== удален onClick за не надобностью
+          id={"sign-up-submit"}
         />
         <p className={"pb-5"}>{translate("question")}</p>
-        <Link href={"/sign-in"} className={"text-[--primary-500]"}>
+        <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>
           {translate("btnBottomName")}
         </Link>
       </form>
       {showModal && (
         <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
-          We have sent a link to confirm your email to <span className={"text-blue-300"}>{userEmail}</span>
+          We have sent a link to confirm your email to <span id={"sign-up-modalSuccess-userEmail"} className={"text-blue-300"}>{userEmail}</span>
         </Modal>
       )}
       {isLoading && <Loader />}
