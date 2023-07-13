@@ -1,3 +1,5 @@
+import {randomTextGenerator} from "../../utilits/randomTextGenerator";
+
 describe("settings-profile", () => {
     const userData = {
         baseURL:"http://localhost:3000",
@@ -9,7 +11,6 @@ describe("settings-profile", () => {
         city: "Gdańsk",
         aboutMe: "amma super-progger ",
     }
-
     beforeEach("settings-profile", () => {
         cy.visit("/sign-in");
         cy.get("#sign-in-email-input").type(userData.testEmail)
@@ -17,13 +18,31 @@ describe("settings-profile", () => {
         cy.get("#sign-in-submit").click().wait(5000);
         cy.visit("/settings-profile");
     });
-
-
-    it("checked link to settings-profile", () => {
-        cy.get('input[name="userName"]').invoke('val').should("contain.text", userData.userName)
-        cy.get("settings-profile-firstName").should("contain.value", userData.firstName)
-        cy.get("settings-profile-lastName").should("contain.value", userData.lastName)
-        cy.get("settings-profile-city").should("contain.value", userData.city)
-        cy.get("settings-profile-aboutMe").should("contain.value", userData.aboutMe)
+    it("test values of inputs", () => {
+        cy.get("#settings-profile-userName").should("have.value", userData.userName)
+        cy.get("#settings-profile-firstName").should("have.value", userData.firstName)
+        cy.get("#settings-profile-lastName").should("have.value", userData.lastName)
+        cy.get("#settings-profile-city").should("have.value", userData.city)
+        cy.get("#settings-profile-aboutMe").should("have.value", userData.aboutMe)
+    })
+    it("test post request with new profile info", ()=>{
+        const randomText = randomTextGenerator()
+        cy.get("#settings-profile-userName").clear().type(randomText)
+        cy.get("#settings-profile-firstName").clear().type(randomText)
+        cy.get("#settings-profile-lastName").clear().type(randomText)
+        cy.get("#settings-profile-city").clear().type(randomText)
+        cy.get("#settings-profile-aboutMe").clear().type(randomText)
+        cy.get('.PrimaryBtn_primaryBtn__9Bjnc').click().wait(5000);
+        cy.get("#settings-profile-userName").should("have.value", randomText)
+        cy.get("#settings-profile-firstName").should("have.value", randomText)
+        cy.get("#settings-profile-lastName").should("have.value", randomText)
+        cy.get("#settings-profile-city").should("have.value", randomText)
+        cy.get("#settings-profile-aboutMe").should("have.value", randomText)
+        cy.get("#settings-profile-userName").clear().type(userData.userName)
+        cy.get("#settings-profile-firstName").clear().type(userData.firstName)
+        cy.get("#settings-profile-lastName").clear().type(userData.lastName)
+        cy.get("#settings-profile-city").clear().type(userData.city)
+        cy.get("#settings-profile-aboutMe").clear().type(userData.aboutMe)
+        cy.get('.PrimaryBtn_primaryBtn__9Bjnc').click()
     })
 });

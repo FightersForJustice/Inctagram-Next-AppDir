@@ -5,8 +5,6 @@ describe("profile", () => {
     const baseURL = "http://localhost:3000"
     beforeEach("profile", () => {
         cy.visit("/sign-in");
-
-
         cy.get("#sign-in-email-input").type(testEmail)
         cy.get("#sign-in-password-input").type(testPass)
         cy.get("#sign-in-submit").click().wait(5000);
