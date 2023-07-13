@@ -13,9 +13,10 @@ import { SettingsFormSchema } from "../../../../schemas/SettingsFormSchema";
 
 type Props = {
   userBirthday: Date | undefined;
+  translate: any;
 };
 
-export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
+export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [updateProfile, { isLoading }] = usePutProfileMutation();
 
@@ -55,7 +56,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
     <>
       <form onSubmit={onSubmit} className={s.form}>
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>Username</label>
+          <label className={s.form__label}>{translate("username")}</label>
           <input
             {...register("userName", { required: true, minLength: 5, maxLength: 15 })}
             className={`${errors.userName ? s.form__textInput__error : s.form__textInput}`}
@@ -64,7 +65,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
         </div>
 
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>Firstname</label>
+          <label className={s.form__label}>{translate("firstname")}</label>
           <input
             {...register("firstName", { required: true, minLength: 2, maxLength: 15 })}
             className={`${errors.firstName ? s.form__textInput__error : s.form__textInput}`}
@@ -73,7 +74,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
         </div>
 
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>Lastname</label>
+          <label className={s.form__label}>{translate("lastname")}</label>
           <input
             {...register("lastName", { required: true, minLength: 2, maxLength: 15 })}
             className={`${errors.lastName ? s.form__textInput__error : s.form__textInput}`}
@@ -82,12 +83,12 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
         </div>
 
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>Date of birthday</label>
+          <label className={s.form__label}>{translate("birthday")}</label>
           <DatePick setDate={setDateOfBirth} userBirthday={userBirthday} />
         </div>
 
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>City</label>
+          <label className={s.form__label}>{translate("city")}</label>
           <input
             {...register("city", { required: true, minLength: 3, maxLength: 20 })}
             className={`${errors.city ? s.form__textInput__error : s.form__textInput}`}
@@ -96,7 +97,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
         </div>
 
         <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>About me</label>
+          <label className={s.form__label}>{translate("aboutMe")}</label>
           <textarea
             {...register("aboutMe", { required: true, minLength: 10, maxLength: 100 })}
             className={`${errors.aboutMe ? s.form__textarea__error : s.form__textarea}`}
@@ -105,7 +106,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday }) => {
         </div>
 
         <div className={s.form__btn}>
-          <PrimaryBtn>Save Changes</PrimaryBtn>
+          <PrimaryBtn>{translate("saveBtn")}</PrimaryBtn>
         </div>
       </form>
       {isLoading && <Loader />}

@@ -2,12 +2,15 @@ import React from "react";
 import s from "../Tabs.module.scss";
 import Image from "next/image";
 import * as Tabs from "@radix-ui/react-tabs";
+import { useTranslations } from "next-intl";
 
 export const DevicesTab = () => {
+  const t = useTranslations("SettingsProfilePage.DevicesTab");
+
   return (
     <Tabs.Content className={s.TabsContent} value="devices">
       <div className={s.devices}>
-        <p className={s.devices__title}>This devices</p>
+        <p className={s.devices__title}>{t("title")}</p>
         <div className={s.devices__wrapper}>
           <Image
             src={"/img/settings-profile/chrome.svg"}
@@ -19,12 +22,12 @@ export const DevicesTab = () => {
           <div className={s.devices__content}>
             <p className={s.devices__content__title}>Chrome</p>
             <p className={s.devices__content__address}>IP: 22.345.345.12</p>
-            <p className={s.devices__content__status}>Online</p>
+            <p className={s.devices__content__status}>{t("status")}</p>
           </div>
         </div>
-        <p className={s.devices__active}>Active sessions</p>
+        <p className={s.devices__active}>{t("active")}</p>
         <div>
-          <p className={s.devices__notLogged}>You have not yet logged in from other devices</p>
+          <p className={s.devices__notLogged}>{t("text")}</p>
         </div>
       </div>
     </Tabs.Content>

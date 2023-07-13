@@ -66,27 +66,83 @@
     "title": "Page not found",
     "description": "Please double-check the browser address bar or use the navigation to go to a known page."
   },
-  "SettingsProfilePage": {
-  },
-  "LocaleSwitcher": {
-    "label": "Change language",
-    "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"
-  },
   "LocaleLayout": {
     "title": "next-intl example"
   },
-  "PageLayout": {
-    "links": {
-      "docs": {
-        "title": "Docs",
-        "description": "Learn more about next-intl in the official docs.",
-        "href": "https://next-intl-docs.vercel.app/"
-      },
-      "source": {
-        "title": "Source code",
-        "description": "Browse the source code of this example on GitHub.",
-        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-next-13"
-      }
+  "MyProfilePage": {
+    "subscriptions": "Subscriptions",
+    "subscribers": "Subscribers",
+    "publications": "Publications",
+    "btnName": "Profile Settings",
+    "SubscribersModal": {
+      "title": "Subscribers",
+      "search": "Search",
+      "subBtn": "Subscribe",
+      "deleteBtn": "Delete"
+    },
+    "SubscriptionsModal": {
+      "title": "Subscriptions",
+      "search": "Search",
+      "unsubscribe": "Unsubscribe"
+    },
+    "UnsubscribeModal": {
+      "title": "Unsubscribe",
+      "question": "Do you really want to unsubscribe from this user",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    },
+    "DeleteModal": {
+      "title": "Delete Subscriber",
+      "question": "Do you really want to delete a subscriber",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "create": "Create",
+    "myProfile": "My profile",
+    "messenger": "Messenger",
+    "search": "Search",
+    "favourites": "Favourites",
+    "statistics": "Statistics",
+    "logout": "Log out",
+    "LogoutModal": {
+      "title": "Logout",
+      "question": "Do you really want to log out?",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    }
+  },
+  "SettingsProfilePage": {
+    "GeneralInformationTab": {
+      "titleTab": "General Information",
+      "username": "Username",
+      "firstname": "Firstname",
+      "lastname": "Lastname",
+      "birthday": "Date of birthday",
+      "city": "City",
+      "aboutMe": "About me",
+      "addBtn": "Add a profile photo",
+      "saveBtn": "Save changes"
+    },
+    "DevicesTab": {
+      "titleTab": "Devices",
+      "title": "This device",
+      "status": "Online",
+      "active": "Active sessions",
+      "text": "You have not yet logged in from other devices"
+    },
+    "AccountManagementTab": {
+      "titleTab": "Account Management"
+    },
+    "MyPaymentsTab": {
+      "titleTab": "My Payments"
+    },
+    "AddPhotoModal": {
+      "title": "Add a profile photo",
+      "selectBtn": "Select from a computer",
+      "saveBtn": "Save"
     }
   }
 }

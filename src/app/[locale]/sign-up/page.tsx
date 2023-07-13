@@ -3,10 +3,11 @@
 import React from "react";
 import { SignUp } from "./SignUp/SignUp";
 
-const SignUpPage = ({ params }: { params: { lang: "en" | "ru" } }) => {
+const SignUpPage = ({ params }: { params: { locale: "en" | "ru" } }) => {
+  console.log(params.locale);
   return (
     <div>
-      <SignUp lang={params.lang} />
+      <SignUp lang={params.locale} />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useGetProfileQuery } from "../../../../api/profile.api";
 import { Loader } from "../../../../components/Loader/Loader";
 import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSubscribersModal, paidAccount }) => {
+  const t = useTranslations("MyProfilePage");
   const { data, isLoading, isError } = useGetProfileQuery();
 
   if (isError) {
@@ -64,21 +66,21 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
               )}
             </div>
             <Link href={"/settings-profile"} className={s.profile__btn}>
-              Profile Settings
+              {t("btnName")}
             </Link>
           </div>
           <div className={s.profile__info}>
             <div className={s.profile__info__subscriptions} onClick={() => setShowSubscriptionsModal(true)}>
               <p>2 218</p>
-              <p>Subscriptions</p>
+              <p>{t("subscriptions")}</p>
             </div>
             <div className={s.profile__info__subscribers} onClick={() => setShowSubscribersModal(true)}>
               <p>2 358</p>
-              <p>Subscribers</p>
+              <p>{t("subscribers")}</p>
             </div>
             <div className={s.profile__info__publications}>
               <p>2 764</p>
-              <p>Publications</p>
+              <p>{t("publications")}</p>
             </div>
           </div>
           <p className={s.profile__desc}>

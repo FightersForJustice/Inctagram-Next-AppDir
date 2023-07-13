@@ -62,27 +62,83 @@
     "desc": "Ваша почта была подтверждена успешно",
     "btnName": "Логин"
   },
-  "SettingsProfilePage": {
-  },
-  "LocaleSwitcher": {
-    "label": "Change language",
-    "locale": "{locale, select, ru {Russian} en {English} other {Unknown}}"
-  },
   "LocaleLayout": {
     "title": "next-intl example"
   },
-  "PageLayout": {
-    "links": {
-      "docs": {
-        "title": "Dokumentation",
-        "description": "Erfahre mehr über next-intl in der offiziellen Dokumentation.",
-        "href": "https://next-intl-docs.vercel.app/"
-      },
-      "source": {
-        "title": "Quellcode",
-        "description": "Sieh dir den Quellcode dieses Beispiels auf GitHub an.",
-        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-next-13"
-      }
+  "MyProfilePage": {
+    "subscriptions": "Подписки",
+    "subscribers": "Подписчики",
+    "publications": "Публикации",
+    "btnName": "Настройки профиля",
+    "SubscribersModal": {
+      "title": "Подписчиков",
+      "search": "Поиск",
+      "subBtn": "Подписаться",
+      "deleteBtn": "Удалить"
+    },
+    "SubscriptionsModal": {
+      "title": "Подписок",
+      "search": "Поиск",
+      "unsubscribe": "Отписаться"
+    },
+    "UnsubscribeModal": {
+      "title": "Отписаться",
+      "question": "Вы действительно хотите отписаться от пользователя",
+      "btnYes": "Да",
+      "btnNo": "Нет"
+    },
+    "DeleteModal": {
+      "title": "Удалить подписчика",
+      "question": "Вы действительно хотите удалить подписчика",
+      "btnYes": "Да",
+      "btnNo": "Нет"
+    }
+  },
+  "Navigation": {
+    "home": "Главная",
+    "create": "Создать",
+    "myProfile": "Мой профиль",
+    "messenger": "Мессенджер",
+    "search": "Поиск",
+    "favourites": "Избранное",
+    "statistics": "Статистика",
+    "logout": "Выйти",
+    "LogoutModal": {
+      "title": "Выйти",
+      "question": "Вы действительно хотите выйти?",
+      "btnYes": "Да",
+      "btnNo": "Нет"
+    }
+  },
+  "SettingsProfilePage": {
+    "GeneralInformationTab": {
+      "titleTab": "Общая информация",
+      "username": "Логин",
+      "firstname": "Имя",
+      "lastname": "Фамилия",
+      "birthday": "День рождения",
+      "city": "Город",
+      "aboutMe": "Обо мне",
+      "addBtn": "Добавить фото",
+      "saveBtn": "Сохранить"
+    },
+    "DevicesTab": {
+      "titleTab": "Устройства",
+      "title": "Это устройство",
+      "status": "Онлайн",
+      "active": "Активные сессии",
+      "text": "Вы еще не вошли в систему с других устройств"
+    },
+    "AccountManagementTab": {
+      "titleTab": "Управление"
+    },
+    "MyPaymentsTab": {
+      "titleTab": "Мои платежи"
+    },
+    "AddPhotoModal": {
+      "title": "Добавить фото профиля",
+      "selectBtn": "Выбрать фото",
+      "saveBtn": "Сохранить"
     }
   }
 }

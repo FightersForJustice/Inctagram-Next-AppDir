@@ -8,6 +8,7 @@ import { usePostLogoutMutation } from "../../../../api/auth.api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
+import { useTranslations } from "next-intl";
 
 type Props = {
   pathname: string;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
+  const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const router = useRouter();
@@ -57,7 +59,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              Home
+              {t("home")}
             </Link>
           </li>
           <li>
@@ -82,7 +84,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              Create
+              {t("create")}
             </Link>
           </li>
           <li>
@@ -101,7 +103,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              My Profile
+              {t("myProfile")}
             </Link>
           </li>
           <li>
@@ -122,7 +124,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              Messenger
+              {t("messenger")}
             </Link>
           </li>
           <li>
@@ -140,7 +142,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              Search
+              {t("search")}
             </Link>
           </li>
           <li>
@@ -158,7 +160,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              Favorites
+              {t("favorites")}
             </Link>
           </li>
           {paidAccount && (
@@ -177,7 +179,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                     </clipPath>
                   </defs>
                 </svg>
-                Statistics
+                {t("statistics")}
               </Link>
             </li>
           )}
@@ -194,15 +196,15 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
               </clipPath>
             </defs>
           </svg>
-          Log Out
+          {t("logout")}
         </button>
       </nav>
       {showLogoutModal && (
-        <Modal title={"Logout"} onClose={() => setShowLogoutModal(false)}>
-          Do you really want to log out?
+        <Modal title={t("LogoutModal.question")} onClose={() => setShowLogoutModal(false)}>
+          {t("LogoutModal.question")}
           <div className={s.nav__btn__modal}>
-            <TransparentBtn onClick={onLogout}>Yes</TransparentBtn>
-            <PrimaryBtn onClick={() => setShowLogoutModal(false)}>No</PrimaryBtn>
+            <TransparentBtn onClick={onLogout}>{t("LogoutModal.btnYes")}</TransparentBtn>
+            <PrimaryBtn onClick={() => setShowLogoutModal(false)}>{t("LogoutModal.btnNo")}</PrimaryBtn>
           </div>
         </Modal>
       )}

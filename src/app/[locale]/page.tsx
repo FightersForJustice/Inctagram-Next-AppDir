@@ -1,11 +1,9 @@
 "use client";
 
-import { redirect } from "next/navigation";
-
 export default function IndexPage() {
-  redirect("/my-profile");
+  //redirect("/my-profile");
   return (
-    /* <PageLayout title={t("title")}>
+    /*<PageLayout title={t("title")}>
       <p className="max-w-[590px]">
         {t.rich("description", {
           p: (chunks) => <p className="mt-4">{chunks}</p>,

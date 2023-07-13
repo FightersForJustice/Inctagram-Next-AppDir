@@ -7,12 +7,13 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 
 export const Header = () => {
+  const [language, setLanguage] = useState("en");
+
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
-  const t = useTranslations("LocaleSwitcher");
 
-  const [language, setLanguage] = useState("");
+  const t = useTranslations("LocaleSwitcher");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -43,7 +44,7 @@ export const Header = () => {
             "bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer"
           }
           onChange={onSelectChange}
-          value={language}
+          value={language ? language : "ru"}
         >
           {/*{["en", "ru"].map((cur) => (
             <option key={cur} value={cur}>

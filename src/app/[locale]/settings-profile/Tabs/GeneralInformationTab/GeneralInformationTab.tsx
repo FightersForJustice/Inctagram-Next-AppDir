@@ -7,8 +7,11 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { toast } from "react-toastify";
 import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "../../../../../api/profile.api";
 import { Loader } from "../../../../../components/Loader/Loader";
+import { useTranslations } from "next-intl";
 
 export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, setLoadedAvatar, loadedAvatar }) => {
+  const t = useTranslations("SettingsProfilePage.GeneralInformationTab");
+
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
   const { data, isLoading } = useGetProfileQuery();
 
@@ -52,10 +55,10 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
                 className={s.wrapper__delete}
               />
             )}
-            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>Add a Profile Photo</TransparentBtn>
+            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>{t("addBtn")}</TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
-            <SettingsForm userBirthday={data?.dateOfBirth} />
+            <SettingsForm userBirthday={data?.dateOfBirth} translate={t} />
           </div>
         </div>
       </Tabs.Content>

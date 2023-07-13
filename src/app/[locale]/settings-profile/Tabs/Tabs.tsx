@@ -12,12 +12,15 @@ import { GeneralInformationTab } from "./GeneralInformationTab/GeneralInformatio
 import { DevicesTab } from "./DevicesTab/DevicesTab";
 import { Loader } from "../../../../components/Loader/Loader";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 const DynamicCropper = dynamic(() => import("./Cropper/Cropper"), {
   ssr: false,
 });
 
 const TabsDemo = () => {
+  const t = useTranslations("SettingsProfilePage");
+
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
   const [userAvatar, setUserAvatar] = useState<string>("");
   const [croppedAvatar, setCroppedAvatar] = useState("");
@@ -64,16 +67,16 @@ const TabsDemo = () => {
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
-            General information
+            {t("GeneralInformationTab.titleTab")}
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="devices">
-            Devices
+            {t("DevicesTab.titleTab")}
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="accountManagement">
-            Account Management
+            {t("AccountManagementTab.titleTab")}
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="myPayments">
-            My payments
+            {t("MyPaymentsTab.titleTab")}
           </Tabs.Trigger>
         </Tabs.List>
         <GeneralInformationTab
@@ -84,7 +87,7 @@ const TabsDemo = () => {
         <DevicesTab />
       </Tabs.Root>
       {showAddAvatarModal && (
-        <Modal title={"Add a profile photo"} onClose={onCloseModal} width={"492px"} isOkBtn={false}>
+        <Modal title={t("AddPhotoModal.title")} onClose={onCloseModal} width={"492px"} isOkBtn={false}>
           <div className={s.modal}>
             {userAvatar ? (
               <div className={s.modal__loadImg}>
@@ -105,13 +108,13 @@ const TabsDemo = () => {
             )}
             {userAvatar ? (
               <div className={s.modal__saveBtn}>
-                <PrimaryBtn onClick={onSaveUserAvatar}>Save</PrimaryBtn>
+                <PrimaryBtn onClick={onSaveUserAvatar}>{t("AddPhotoModal.saveBtn")}</PrimaryBtn>
               </div>
             ) : (
               <div className={s.wrapper__loadZone}>
                 <input type="file" className={s.wrapper__inputFile} onChange={onSetUserAvatar} />
                 <div className={s.wrapper__overlay}>
-                  <TransparentBtn>Select from Computer</TransparentBtn>
+                  <TransparentBtn>{t("AddPhotoModal.selectBtn")}</TransparentBtn>
                 </div>
               </div>
             )}
