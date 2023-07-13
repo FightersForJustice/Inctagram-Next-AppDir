@@ -2,7 +2,6 @@
 
 import React, { ChangeEvent, useEffect, useState, useTransition } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 
@@ -12,8 +11,6 @@ export const Header = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
-
-  const t = useTranslations("LocaleSwitcher");
 
   useEffect(() => {
     if (typeof window !== "undefined") {

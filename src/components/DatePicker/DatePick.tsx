@@ -14,8 +14,6 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday }) => {
   const datePickerRef = useRef<any>();
   const [value, setValue] = useState<DateObject | DateObject[] | null>();
 
-  console.log(userBirthday);
-
   useEffect(() => {
     setDate(formatDate(value!));
   }, [value]);

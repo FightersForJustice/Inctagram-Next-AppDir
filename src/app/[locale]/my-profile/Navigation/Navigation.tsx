@@ -160,7 +160,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                   </clipPath>
                 </defs>
               </svg>
-              {t("favorites")}
+              {t("favourites")}
             </Link>
           </li>
           {paidAccount && (
