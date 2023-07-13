@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {StatusCode, usePostLoginMutation} from "../../../../api/auth.api";
+import {StatusCode, useGetAuthMeQuery, usePostLoginMutation} from "../../../../api/auth.api";
 import {SignInSchema} from "../../../../schemas/SignInSchema";
 import {redirect} from "next/navigation";
 import {Loader} from "../../../../components/Loader/Loader";
@@ -22,7 +22,6 @@ const SignIn: React.FC<Props> = ({translate}) => {
         resolver: yupResolver(SignInSchema),
     });
     const [showPass, setShowPass] = useState(false);
-
     const [postLogin, {isSuccess, isLoading}] = usePostLoginMutation();
 
     const onSubmit = async (data: any) => {
@@ -44,6 +43,7 @@ const SignIn: React.FC<Props> = ({translate}) => {
                 }
             });
     };
+
 
     if (isSuccess) redirect("/my-profile");
 

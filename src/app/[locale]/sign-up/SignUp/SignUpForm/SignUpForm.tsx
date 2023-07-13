@@ -187,7 +187,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
           id={"sign-up-submit"}
           value={String(translate("btnName"))}
-          id={"sign-up-submit"}
         />
         <p className={"pb-5"}>{translate("question")}</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>

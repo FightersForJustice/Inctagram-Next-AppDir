@@ -14,7 +14,7 @@ describe("profile", () => {
         cy.get("#profile-aboutMe").should("contain.text", "amma super-progger")
     });
     it("checked link to settings-profile", () => {
-        cy.get("#profile-link-to-settings-profile").click().wait(5000)
-        cy.url().should("eq", `${baseURL}/settings-profile`)
+        cy.get("#profile-link-to-settings-profile").click().wait(10000)
+        cy.url().should("eq", `http://localhost:3000/settings-profile`)
     })
 });
