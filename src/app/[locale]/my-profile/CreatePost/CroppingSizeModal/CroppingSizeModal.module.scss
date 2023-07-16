@@ -1,0 +1,40 @@
+.cropping {
+  &__size {
+    height: 152px;
+    width: 156px;
+    border-radius: 2px;
+    opacity: 0.800000011920929;
+    background: var(--dark-500, #171717);
+    position: absolute;
+    bottom: 50px;
+    left: 11px;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    gap: 12px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+  }
+
+  &__text {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--light-900);
+  }
+
+  &__text__active {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--light-100);
+  }
+
+}

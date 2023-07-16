@@ -1,5 +1,4 @@
-import {randomTextGenerator} from "../../utilits/randomTextGenerator";
-
+import { randomTextGenerator } from "../../utilits/randomTextGenerator";
 
 describe("sign up page flow", () => {
   beforeEach("login", () => {

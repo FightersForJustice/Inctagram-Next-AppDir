@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
+import { CreatePost } from "../CreatePost/CreatePost";
 
 type Props = {
   pathname: string;
@@ -18,6 +19,7 @@ type Props = {
 export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
   const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showCreatePostModal, setShowCreatePostModal] = useState(true);
 
   const router = useRouter();
   const [logout, { isLoading }] = usePostLogoutMutation();
@@ -63,8 +65,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
             </Link>
           </li>
           <li>
-            <Link
-              href={"/create"}
+            <button
               className={`${pathname === "/create" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
             >
               <svg
@@ -85,7 +86,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
                 </defs>
               </svg>
               {t("create")}
-            </Link>
+            </button>
           </li>
           <li>
             <Link
@@ -207,6 +208,9 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>{t("LogoutModal.btnNo")}</PrimaryBtn>
           </div>
         </Modal>
+      )}
+      {showCreatePostModal && (
+        <CreatePost setShowCreatePostModal={setShowCreatePostModal} showCreatePostModal={showCreatePostModal} />
       )}
       {isLoading && <Loader />}
     </>

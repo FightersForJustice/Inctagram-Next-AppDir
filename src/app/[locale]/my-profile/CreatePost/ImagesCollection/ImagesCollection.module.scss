@@ -1,0 +1,39 @@
+.collection {
+  &__container {
+    position: absolute;
+    border-radius: 2px;
+    opacity: 0.800000011920929;
+    background: var(--dark-500, #171717);
+    height: 106px;
+    min-width: 152px;
+    bottom: 50px;
+    right: -387px;
+  }
+
+  &__plusBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+  }
+
+  &__items {
+    display: flex;
+    height: 106px;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 60px;
+    gap: 12px;
+  }
+}
