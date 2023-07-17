@@ -2,16 +2,9 @@ import React, { PropsWithChildren } from "react";
 import Image from "next/image";
 
 import "./FiltersModal.css";
-
-type Props = {
-  title: string;
-  onClose?: () => void;
-  width?: string;
-  buttonName: string;
-  showSecondModal?: () => void;
-  showFourthModal?: () => void;
-  showThirdModal?: () => void;
-};
+import { useUploadPostImageMutation } from "../../api/posts.api";
+import { dataURLtoFile } from "../../utils/dataUrlToFile";
+import { toast } from "react-toastify";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -22,7 +15,27 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   showSecondModal,
   showFourthModal,
   showThirdModal,
+  file,
 }) => {
+  const [uploadPostImage] = useUploadPostImageMutation();
+  const onSendPostImage = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file, file.name);
+
+      // @ts-ignore
+      uploadPostImage(formData)
+        .unwrap()
+        .then((res) => {
+          showFourthModal?.();
+          toast.success("Avatar successfully uploaded");
+        })
+        .catch((err) => {
+          toast.error("Error");
+        });
+    }
+  };
+
   return (
     <div className={"modal"} onClick={onClose}>
       <div className={"modal__content1"} style={{ width }} onClick={(e) => e.stopPropagation()}>
@@ -33,10 +46,10 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
             width={24}
             height={24}
             className={"modal__arrow"}
-            onClick={() => (buttonName === "Publish" ? showThirdModal() : showSecondModal())}
+            onClick={() => (buttonName === "Publish" ? showThirdModal?.() : showSecondModal?.())}
           />
           <div className={"modal__title"}>{title}</div>
-          <button className={"modal__next"} onClick={() => (showFourthModal ? showFourthModal() : showThirdModal()!)}>
+          <button className={"modal__next"} onClick={() => (buttonName === "Next" ? onSendPostImage() : null)}>
             {buttonName}
           </button>
         </div>
@@ -44,4 +57,15 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
       </div>
     </div>
   );
+};
+
+type Props = {
+  title: string;
+  onClose?: () => void;
+  width?: string;
+  buttonName: string;
+  showSecondModal?: () => void;
+  showFourthModal?: () => void;
+  showThirdModal?: () => void;
+  file: File;
 };

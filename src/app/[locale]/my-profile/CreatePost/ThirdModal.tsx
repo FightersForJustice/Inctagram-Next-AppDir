@@ -50,6 +50,7 @@ type Props = {
   setActiveFilter: (value: string) => void;
   activeFilter: string;
   zoomValue: string;
+  file: File;
 };
 
 const ThirdModal: React.FC<Props> = ({
@@ -60,6 +61,7 @@ const ThirdModal: React.FC<Props> = ({
   setActiveFilter,
   activeFilter,
   zoomValue,
+  file,
 }) => {
   const onActiveFilter = (filter: string) => {
     switch (filter) {
@@ -106,6 +108,7 @@ const ThirdModal: React.FC<Props> = ({
       buttonName={"Next"}
       showSecondModal={showSecondModal}
       showFourthModal={showFourthModal}
+      file={file}
     >
       <div className={s.cropping__filters}>
         <div className={s.cropping__filters__wrapper}>

@@ -11,6 +11,7 @@ type Props = {
 };
 
 export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal }) => {
+  const [file, setFile] = useState<File>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
@@ -36,7 +37,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   return (
     <>
       {showCreatePostModal && !postImage && (
-        <FirstModal setShowCreatePostModal={setShowCreatePostModal} setPostImage={setPostImage} />
+        <FirstModal setFile={setFile} setShowCreatePostModal={setShowCreatePostModal} setPostImage={setPostImage} />
       )}
       {postImage && (
         <SecondModal
@@ -58,6 +59,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           setActiveFilter={setActiveFilter}
           activeFilter={activeFilter}
           zoomValue={zoomValue}
+          file={file!}
         />
       )}
       {fourth && (

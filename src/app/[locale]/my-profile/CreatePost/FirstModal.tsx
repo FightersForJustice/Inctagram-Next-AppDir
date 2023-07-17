@@ -8,10 +8,9 @@ import { Modal } from "../../../../components/Modal/Modal";
 type Props = {
   setShowCreatePostModal: (value: boolean) => void;
   setPostImage: (value: string) => void;
+  setFile: (file: File) => void;
 };
-const FirstModal: React.FC<Props> = ({ setShowCreatePostModal, setPostImage }) => {
-  const [file, setFile] = useState<File>();
-
+const FirstModal: React.FC<Props> = ({ setShowCreatePostModal, setPostImage, setFile }) => {
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
