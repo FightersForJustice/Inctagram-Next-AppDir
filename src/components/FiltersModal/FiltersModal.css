@@ -10,11 +10,12 @@
     align-items: center;
 }
 
-.modal__content {
+.modal__content1 {
     width: 400px;
     background-color: var(--dark-300);
     border-radius: 5px;
     border: 1px solid var(--dark-100);
+    padding: 0;
 }
 .modal__header {
     display: flex;
@@ -25,11 +26,15 @@
 .modal__header, modal__footer {
     padding: 12px;
 }
-.modal__body {
+.modal__body1 {
     padding: 0;
     text-align: left;
     font-size: 16px;
     line-height: 24px;
+    height: 504px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .modal__footer {
     display: flex;

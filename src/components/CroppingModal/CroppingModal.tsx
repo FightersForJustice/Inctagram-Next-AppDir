@@ -6,9 +6,18 @@ type Props = {
   title: string;
   onClose?: () => void;
   width?: string;
+  setPostImage: (value: string) => void;
+  showThirdModal: () => void;
 };
 
-export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, children, width }) => {
+export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
+  onClose,
+  title,
+  children,
+  width,
+  setPostImage,
+  showThirdModal,
+}) => {
   return (
     <div className={"modal"} onClick={onClose}>
       <div className={"modal__content"} style={{ width }} onClick={(e) => e.stopPropagation()}>
@@ -19,11 +28,14 @@ export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({ onClose, tit
             width={24}
             height={24}
             className={"modal__arrow"}
+            onClick={() => setPostImage("")}
           />
           <div className={"modal__title"}>{title}</div>
-          <button className={"modal__next"}>Next</button>
+          <button className={"modal__next"} onClick={() => showThirdModal()}>
+            Next
+          </button>
         </div>
-        <div className={"modal__body"}>{children}</div>
+        <div className={"modal__body2"}>{children}</div>
       </div>
     </div>
   );

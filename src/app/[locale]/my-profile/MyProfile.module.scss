@@ -44,11 +44,11 @@
       color: var(--primary-500);
     }
 
-    &:focus {
+   /* &:focus {
       outline: none !important;
       border-radius: 2px;
       border: 2px solid var(--primary-700, #2F68CC);
-    }
+    }*/
 
     &:hover > svg {
       transition: all .2s linear;

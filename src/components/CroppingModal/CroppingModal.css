@@ -25,11 +25,14 @@
 .modal__header, modal__footer {
   padding: 12px;
 }
-.modal__body {
-  padding: 0;
+.modal__body2 {
   text-align: left;
   font-size: 16px;
   line-height: 24px;
+  height: 504px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .modal__footer {
   display: flex;

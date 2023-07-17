@@ -11,18 +11,40 @@
   }
 
   &__select {
-    margin-bottom: 24px;
+
+    position: relative;
+  }
+
+  &__file {
+    opacity: 0;
+    position: relative;
+    z-index: 1;
+    width: 283px;
+    height: 71px;
+    top: -20px;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    right: 35px;
+    width: 214px;
+
   }
 
   &__open {
     margin-bottom: 20px;
 
   }
+
+
 }
 
 .cropping {
   position: relative;
-
+  overflow: hidden;
 
   &__icon1 {
     position: absolute;
@@ -52,11 +74,13 @@
   &__filters {
     display: flex;
     gap: 54px;
+    max-height: 504px;
 
     &__items {
       display: flex;
       flex-wrap: wrap;
-      column-gap: 24px;
+      max-width: 372px;
+      gap: 20px;
       padding-top: 24px;
     }
 
@@ -67,16 +91,80 @@
       gap: 6px;
       cursor: pointer;
       transition: all .2s linear;
+      margin-bottom: 0;
 
       &:hover {
         transform: scale(1.05);
       }
+    }
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    &__image {
+      max-height: 504px;
+    }
+
+    &__smallImage {
+      width: 108px;
+      height: 108px;
     }
   }
 
   &__publication {
     display: flex;
     gap: 54px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 25px;
+      margin-bottom: 25px;
+    }
+
+    &__image {
+      border-radius: 50%;
+      height: 36px;
+      width: 36px;
+    }
+
+    &__text {
+      color: var(--light-900, #8D9094);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &__textarea {
+      border-radius: 2px;
+      border: 1px solid var(--dark-100, #4C4C4C);
+      background: var(--dark-500, #171717);
+      width: 413px;
+      height: 120px;
+      flex-shrink: 0;
+      outline: none;
+      padding: 10px;
+      resize: none;
+    }
+
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    &__box {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 480px;
+      overflow: hidden;
+    }
   }
 
 }

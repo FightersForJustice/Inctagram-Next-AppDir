@@ -67,6 +67,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
           <li>
             <button
               className={`${pathname === "/create" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              onClick={() => setShowCreatePostModal(true)}
             >
               <svg
                 className={`${pathname === "/create" ? `${s.nav__icon__active} ${s.nav__icon}` : `${s.nav__icon}`}`}
