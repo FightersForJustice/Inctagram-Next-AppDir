@@ -14,8 +14,8 @@ export const postsApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    uploadPostImage: builder.mutation<UploadImageResponse, File>({
-      query: (file: File) => {
+    uploadPostImage: builder.mutation<UploadImageResponse, FormData>({
+      query: (file) => {
         return {
           url: "posts/image",
           method: "POST",

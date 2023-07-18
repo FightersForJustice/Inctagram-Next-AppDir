@@ -7,9 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
 import { Modal } from "../../../../../components/Modal/Modal";
-import { SignUpFormSchema } from "../../../../../schemas/SignUpFormSchema";
+import { SignUpFormSchema } from "../../../../../features/schemas/SignUpFormSchema";
 import { Loader } from "../../../../../components/Loader/Loader";
-
 
 type Props = {
   lang: "en" | "ru";
@@ -195,7 +194,10 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
       </form>
       {showModal && (
         <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
-          We have sent a link to confirm your email to <span id={"sign-up-modalSuccess-userEmail"} className={"text-blue-300"}>{userEmail}</span>
+          We have sent a link to confirm your email to{" "}
+          <span id={"sign-up-modalSuccess-userEmail"} className={"text-blue-300"}>
+            {userEmail}
+          </span>
         </Modal>
       )}
       {isLoading && <Loader />}

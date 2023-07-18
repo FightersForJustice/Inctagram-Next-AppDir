@@ -38,7 +38,10 @@ const SecondModal: React.FC<Props> = ({
           width={754}
           height={504}
           className={s.cropping__image}
-          style={{ aspectRatio: aspectRatio.replace(":", "/"), transform: `scale(${+zoomValue / 10})` }}
+          style={{
+            aspectRatio: aspectRatio.replace(":", "/"),
+            transform: `scale(${+zoomValue / 10})`,
+          }}
         />
         <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />

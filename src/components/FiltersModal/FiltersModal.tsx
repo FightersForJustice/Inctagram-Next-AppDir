@@ -3,8 +3,8 @@ import Image from "next/image";
 
 import "./FiltersModal.css";
 import { useUploadPostImageMutation } from "../../api/posts.api";
-import { dataURLtoFile } from "../../utils/dataUrlToFile";
 import { toast } from "react-toastify";
+import { Loader } from "../Loader/Loader";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -16,19 +16,21 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   showFourthModal,
   showThirdModal,
   file,
+  onPublishPost,
 }) => {
-  const [uploadPostImage] = useUploadPostImageMutation();
+  const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
+
   const onSendPostImage = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file, file.name);
 
-      // @ts-ignore
       uploadPostImage(formData)
         .unwrap()
         .then((res) => {
+          localStorage.setItem("uploadId", res.images[0].uploadId);
           showFourthModal?.();
-          toast.success("Avatar successfully uploaded");
+          toast.success("Post image uploaded");
         })
         .catch((err) => {
           toast.error("Error");
@@ -37,25 +39,31 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   };
 
   return (
-    <div className={"modal"} onClick={onClose}>
-      <div className={"modal__content1"} style={{ width }} onClick={(e) => e.stopPropagation()}>
-        <div className={"modal__header"}>
-          <Image
-            src={"/img/create-post/arrow-back.svg"}
-            alt={"arrow-back"}
-            width={24}
-            height={24}
-            className={"modal__arrow"}
-            onClick={() => (buttonName === "Publish" ? showThirdModal?.() : showSecondModal?.())}
-          />
-          <div className={"modal__title"}>{title}</div>
-          <button className={"modal__next"} onClick={() => (buttonName === "Next" ? onSendPostImage() : null)}>
-            {buttonName}
-          </button>
+    <>
+      <div className={"modal"} onClick={onClose}>
+        <div className={"modal__content1"} style={{ width }} onClick={(e) => e.stopPropagation()}>
+          <div className={"modal__header"}>
+            <Image
+              src={"/img/create-post/arrow-back.svg"}
+              alt={"arrow-back"}
+              width={24}
+              height={24}
+              className={"modal__arrow"}
+              onClick={() => (buttonName === "Publish" ? showThirdModal?.() : showSecondModal?.())}
+            />
+            <div className={"modal__title"}>{title}</div>
+            <button
+              className={"modal__next"}
+              onClick={() => (buttonName === "Next" ? onSendPostImage() : onPublishPost?.())}
+            >
+              {buttonName}
+            </button>
+          </div>
+          <div className={"modal__body1"}>{children}</div>
         </div>
-        <div className={"modal__body1"}>{children}</div>
       </div>
-    </div>
+      {isLoading && <Loader />}
+    </>
   );
 };
 
@@ -67,5 +75,6 @@ type Props = {
   showSecondModal?: () => void;
   showFourthModal?: () => void;
   showThirdModal?: () => void;
-  file: File;
+  file?: File;
+  onPublishPost?: () => void;
 };

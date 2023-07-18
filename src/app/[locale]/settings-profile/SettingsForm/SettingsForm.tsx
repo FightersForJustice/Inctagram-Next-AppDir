@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Loader } from "../../../../components/Loader/Loader";
 import { GetDefaultValuesForm } from "../../../../utils/GetDefaultValuesForm";
-import { SettingsFormSchema } from "../../../../schemas/SettingsFormSchema";
+import { SettingsFormSchema } from "../../../../features/schemas/SettingsFormSchema";
 
 type Props = {
   userBirthday: Date | undefined;
@@ -58,7 +58,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("username")}</label>
           <input
-              id={'settings-profile-userName'}
+            id={"settings-profile-userName"}
             {...register("userName", { required: true, minLength: 5, maxLength: 15 })}
             className={`${errors.userName ? s.form__textInput__error : s.form__textInput}`}
           />
@@ -68,7 +68,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("firstname")}</label>
           <input
-              id={'settings-profile-firstName'}
+            id={"settings-profile-firstName"}
             {...register("firstName", { required: true, minLength: 2, maxLength: 15 })}
             className={`${errors.firstName ? s.form__textInput__error : s.form__textInput}`}
           />
@@ -78,7 +78,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("lastname")}</label>
           <input
-              id={'settings-profile-lastName'}
+            id={"settings-profile-lastName"}
             {...register("lastName", { required: true, minLength: 2, maxLength: 15 })}
             className={`${errors.lastName ? s.form__textInput__error : s.form__textInput}`}
           />
@@ -93,7 +93,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("city")}</label>
           <input
-              id={'settings-profile-city'}
+            id={"settings-profile-city"}
             {...register("city", { required: true, minLength: 3, maxLength: 20 })}
             className={`${errors.city ? s.form__textInput__error : s.form__textInput}`}
           />
@@ -103,14 +103,14 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("aboutMe")}</label>
           <textarea
-              id={'settings-profile-aboutMe'}
+            id={"settings-profile-aboutMe"}
             {...register("aboutMe", { required: true, minLength: 10, maxLength: 100 })}
             className={`${errors.aboutMe ? s.form__textarea__error : s.form__textarea}`}
           />
           {errors.aboutMe && <p className={s.form__textareaError}>{errors.aboutMe.message}</p>}
         </div>
 
-        <div className={s.form__btn} id={'settings-profile-btn-container'}>
+        <div className={s.form__btn} id={"settings-profile-btn-container"}>
           <PrimaryBtn>{translate("saveBtn")}</PrimaryBtn>
         </div>
       </form>

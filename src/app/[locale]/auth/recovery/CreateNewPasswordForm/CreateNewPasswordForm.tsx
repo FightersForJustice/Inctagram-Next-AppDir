@@ -10,7 +10,7 @@ import {
   usePostPasswordCheckRecoveryCodeMutation,
 } from "../../../../../api/auth.api";
 import { Loader } from "../../../../../components/Loader/Loader";
-import { CreateNewPasswordFormSchema } from "../../../../../schemas/CreateNewPasswordFormSchema";
+import { CreateNewPasswordFormSchema } from "../../../../../features/schemas/CreateNewPasswordFormSchema";
 
 type Props = {
   translate: (value: string) => ReactNode;
