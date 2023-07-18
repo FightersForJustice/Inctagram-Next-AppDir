@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,8 +6,9 @@ import { useGetProfileQuery } from "../../../../api/profile.api";
 import { Loader } from "../../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import {useGetAuthMeQuery} from "../../../../api/auth.api";
-import {redirect} from "next/navigation";
+import { useGetPostQuery, useGetPostsQuery } from "../../../../api/posts.api";
+import { Post } from "./Post/Post";
+import { Modal } from "../../../../components/Modal/Modal";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -17,11 +18,47 @@ type Props = {
 
 export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSubscribersModal, paidAccount }) => {
   const t = useTranslations("MyProfilePage");
-  const { data, isLoading, isError } = useGetProfileQuery();
+  const [open, setOpen] = useState(false);
+  const { data, isLoading, isError, error } = useGetProfileQuery();
+  const [selectedPost, setSelectedPost] = useState<number>();
+  const getPostsRequest = useGetPostsQuery();
   if (isError) {
     toast.error("Auth error");
   }
+  if (data?.id) sessionStorage.setItem("userId", data?.id.toString());
 
+  const openPostHandler = (postId: number) => {
+    setOpen(true);
+    setSelectedPost(postId);
+  };
+  const postsImages = () => {
+    return getPostsRequest.isSuccess ? (
+      getPostsRequest.data?.items.map((i) => {
+        if (i.images[0])
+          return (
+            <Image
+              src={i.images ? i.images[0].url : "/img/profile/posts/post1.png"}
+              alt={"post"}
+              width={234}
+              height={228}
+              key={i.id}
+              onClick={() => openPostHandler(i.id)}
+            />
+          );
+      })
+    ) : (
+      <div>
+        <Image src={"/img/profile/posts/post1.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post2.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post3.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post4.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post5.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post6.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post7.png"} alt={"post1"} width={234} height={228} />
+        <Image src={"/img/profile/posts/post8.png"} alt={"post1"} width={234} height={228} />
+      </div>
+    );
+  };
   return (
     <>
       <div className={s.profile}>
@@ -90,16 +127,20 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
           </p>
         </div>
       </div>
-      <div className={s.profile__posts}>
-        <Image src={"/img/profile/posts/post1.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post2.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post3.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post4.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post5.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post6.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post7.png"} alt={"post1"} width={234} height={228} />
-        <Image src={"/img/profile/posts/post8.png"} alt={"post1"} width={234} height={228} />
-      </div>
+      <div className={s.profile__posts}>{postsImages()}</div>
+
+      {open && (
+        <Modal
+          title={""}
+          width={"800px"}
+          onClose={() => {
+            setOpen(false);
+          }}
+          isOkBtn={false}
+        >
+          <Post uploadId={selectedPost} avatar={data?.avatars[0].url} userName={data?.userName} />
+        </Modal>
+      )}
       {isLoading && <Loader />}
     </>
   );

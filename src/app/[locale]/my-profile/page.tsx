@@ -1,15 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
 import { SubscribersModal } from "./SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
 import { SubscriptionsModal } from "./SubscriptionsModal/SubscriptionsModal";
 import { Profile } from "./Profile/Profile";
-import {useGetAuthMeQuery} from "../../../api/auth.api";
-import {redirect} from "next/navigation";
 
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);

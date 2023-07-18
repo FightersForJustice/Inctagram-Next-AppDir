@@ -1,21 +1,23 @@
-import React, { PropsWithChildren } from "react";
-import "./Modal.css";
+import "../Modal/Modal.css";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 
-type Props = {
-  title?: string;
-  onClose?: () => void;
-  width?: string;
-  isOkBtn?: boolean;
-};
-
-export const Modal: React.FC<PropsWithChildren<Props>> = ({ onClose, title, children, width, isOkBtn }) => {
+export const BaseModal = ({
+  children,
+  title,
+  onClose,
+  isOkBtn,
+}: {
+  children: ReactNode;
+  title: string;
+  onClose: () => void;
+  isOkBtn: boolean;
+}) => {
   return (
-    <div className={"modal"} onClick={onClose}>
-      <div className={"modal__content"} style={{ width }} onClick={(e) => e.stopPropagation()}>
+    <div className={"modal"}>
+      <div className={"modal__content"}>
         <div className={"modal__header"}>
           <div className={"modal__title"}>{title}</div>
-
           <Image
             className={"modal__close"}
             src={"/img/close.svg"}

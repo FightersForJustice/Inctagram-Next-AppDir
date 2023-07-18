@@ -1,0 +1,102 @@
+.post_container {
+  font-size: 14px;
+  line-height: 24px;
+  width: 100%;
+  .post_container_body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+
+    .post_container_body_image {
+      border-right: var(--dark-100) 1px solid;
+      min-width: 50%;
+      .post_container_body_image_img{
+        border-radius: 0 !important;
+      }
+    }
+
+    .post_container_info {
+      position: relative;
+      min-width: 50%;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      .post_container_info_header{
+        display: flex;
+        justify-content: space-between;
+        font-weight: lighter;
+        border-bottom: var(--dark-100) 1px solid;
+        .post_container_info_header_userData{
+          display: flex;
+          align-items: center;
+          .container_info_header_avatar_img {
+            display: block;
+            border-radius: 100px;
+            width: 36px;
+            margin: 0 10px 0 5px;
+          }
+          span{
+            display: block;
+            font-weight: bold;
+          }
+        }
+
+      }
+      .container_info_footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        form{
+          width: 100%;
+          border: var(--dark-100) 1px solid;
+          display: flex;
+          margin-bottom: -10px;
+          input{
+            background: none;
+            min-width: 70%;
+            border: none;
+            color:  var(--dark-100);
+            padding-left:5px;
+          }
+        }
+
+      }
+    }
+  }
+  .postBodyEdit_input{
+    background: #171717;
+    min-width: 100%;
+    height: 100px;
+    border: none;
+    color:  var(--dark-100);
+    padding-left:5px;
+
+    &:focus{
+      border: #2f68cc 2px solid;
+    }
+  }
+}
+
+
+
+.comment{
+  border-bottom: var(--dark-100) 1px solid;
+  width: 100%;
+  display: flex;
+  line-height: 18px;
+  padding: 10px;
+      div{
+        min-width: 15%;
+        .comment_avatar{
+          display: block;
+          max-width: 36px;
+          border-radius: 100px;
+          margin: 5px;
+        }
+      }
+
+  .comment_commentBody{
+    display: block;
+
+  }
+}
