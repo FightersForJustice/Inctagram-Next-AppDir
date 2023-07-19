@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePostRegistrationEmailResendingMutation } from "../../../api/auth.api";
-import { Modal } from "../../../components/Modal/Modal";
+import { Modal } from "../../../components/Modals/Modal/Modal";
 import { Loader } from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 

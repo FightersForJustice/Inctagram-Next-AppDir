@@ -6,6 +6,7 @@ import { useCreatePostMutation } from "../../../../api/posts.api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
+import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
 
 type Props = {
   postImage: string;
@@ -13,11 +14,20 @@ type Props = {
   aspectRatio: "" | "1:1" | "4:5" | "16:9";
   activeFilter: string;
   zoomValue: string;
+  setShowCreatePostModal: (value: boolean) => void;
 };
 
-const FourthModal: React.FC<Props> = ({ postImage, showThirdModal, aspectRatio, activeFilter, zoomValue }) => {
+const FourthModal: React.FC<Props> = ({
+  postImage,
+  showThirdModal,
+  aspectRatio,
+  activeFilter,
+  zoomValue,
+  setShowCreatePostModal,
+}) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
 
   const router = useRouter();
   const [createPost, { isLoading }] = useCreatePostMutation();
@@ -51,6 +61,7 @@ const FourthModal: React.FC<Props> = ({ postImage, showThirdModal, aspectRatio, 
         buttonName={"Publish"}
         showThirdModal={showThirdModal}
         onPublishPost={onPublishPost}
+        onClose={() => setAreYouSureModal(true)}
       >
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
@@ -96,6 +107,9 @@ const FourthModal: React.FC<Props> = ({ postImage, showThirdModal, aspectRatio, 
           </div>
         </div>
       </FiltersModal>
+      {areYouSureModal && (
+        <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />
+      )}
       {isLoading && <Loader />}
     </>
   );

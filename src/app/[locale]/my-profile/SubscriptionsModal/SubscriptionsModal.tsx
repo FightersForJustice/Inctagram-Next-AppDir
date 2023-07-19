@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import { UnsubscribeModal } from "../UnsubscribeModal/UnsubscribeModal";

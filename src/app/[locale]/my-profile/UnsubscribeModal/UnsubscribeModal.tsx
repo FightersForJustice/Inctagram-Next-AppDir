@@ -1,7 +1,7 @@
 import React from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { useTranslations } from "next-intl";
 
 type Props = {

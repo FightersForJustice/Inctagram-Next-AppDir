@@ -1,16 +1,16 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 
 type Props = {
-  setShowCreatePostModal: (value: boolean) => void;
   setPostImage: (value: string) => void;
   setFile: (file: File) => void;
+  setShowCreatePostModal: (value: boolean) => void;
 };
-const FirstModal: React.FC<Props> = ({ setShowCreatePostModal, setPostImage, setFile }) => {
+const FirstModal: React.FC<Props> = ({ setPostImage, setFile, setShowCreatePostModal }) => {
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];

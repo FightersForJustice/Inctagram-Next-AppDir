@@ -3,7 +3,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import s from "./Tabs.module.scss";
 import Image from "next/image";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { usePostProfileAvatarMutation } from "../../../../api/profile.api";
 import { toast } from "react-toastify";

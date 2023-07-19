@@ -1,0 +1,14 @@
+.modal {
+  &__text {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  &__btns {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+  }
+}

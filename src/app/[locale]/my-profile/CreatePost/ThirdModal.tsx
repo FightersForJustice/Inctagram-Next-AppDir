@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "../../../../components/FiltersModal/FiltersModal";
 import { filters } from "../../../../features/data/filters";
+import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
 
 type Props = {
   postImage: string;
@@ -13,6 +14,7 @@ type Props = {
   activeFilter: string;
   zoomValue: string;
   file: File;
+  setShowCreatePostModal: (value: boolean) => void;
 };
 
 const ThirdModal: React.FC<Props> = ({
@@ -24,7 +26,10 @@ const ThirdModal: React.FC<Props> = ({
   activeFilter,
   zoomValue,
   file,
+  setShowCreatePostModal,
 }) => {
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
+
   const onActiveFilter = (filter: string) => {
     switch (filter) {
       case "Normal":
@@ -64,48 +69,54 @@ const ThirdModal: React.FC<Props> = ({
   };
 
   return (
-    <FiltersModal
-      title={"Filters"}
-      width={"972px"}
-      buttonName={"Next"}
-      showSecondModal={showSecondModal}
-      showFourthModal={showFourthModal}
-      file={file}
-    >
-      <div className={s.cropping__filters}>
-        <div className={s.cropping__filters__wrapper}>
-          <Image
-            src={`${postImage ? postImage : "/img/create-post/filters-modal/image.png"}`}
-            alt={"image"}
-            width={490}
-            height={503}
-            style={{
-              aspectRatio: aspectRatio.replace(":", "/"),
-              filter: activeFilter,
-              transform: `scale(${+zoomValue / 10})`,
-            }}
-            className={s.cropping__filters__image}
-          />
+    <>
+      <FiltersModal
+        title={"Filters"}
+        width={"972px"}
+        buttonName={"Next"}
+        showSecondModal={showSecondModal}
+        showFourthModal={showFourthModal}
+        file={file}
+        onClose={() => setAreYouSureModal(true)}
+      >
+        <div className={s.cropping__filters}>
+          <div className={s.cropping__filters__wrapper}>
+            <Image
+              src={`${postImage ? postImage : "/img/create-post/filters-modal/image.png"}`}
+              alt={"image"}
+              width={490}
+              height={503}
+              style={{
+                aspectRatio: aspectRatio.replace(":", "/"),
+                filter: activeFilter,
+                transform: `scale(${+zoomValue / 10})`,
+              }}
+              className={s.cropping__filters__image}
+            />
+          </div>
+          <div className={s.cropping__filters__items}>
+            {filters.map((item, index) => {
+              return (
+                <div key={index} className={s.cropping__filters__item} onClick={() => onActiveFilter(item.name)}>
+                  <Image
+                    src={`${postImage ? postImage : "/img/create-post/filters-modal/image-filter.png"}`}
+                    alt={"image-filter"}
+                    width={108}
+                    height={108}
+                    style={{ filter: item.filter }}
+                    className={s.cropping__filters__smallImage}
+                  />
+                  <p>{item.name}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className={s.cropping__filters__items}>
-          {filters.map((item, index) => {
-            return (
-              <div key={index} className={s.cropping__filters__item} onClick={() => onActiveFilter(item.name)}>
-                <Image
-                  src={`${postImage ? postImage : "/img/create-post/filters-modal/image-filter.png"}`}
-                  alt={"image-filter"}
-                  width={108}
-                  height={108}
-                  style={{ filter: item.filter }}
-                  className={s.cropping__filters__smallImage}
-                />
-                <p>{item.name}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </FiltersModal>
+      </FiltersModal>
+      {areYouSureModal && (
+        <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />
+      )}
+    </>
   );
 };
 

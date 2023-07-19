@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import Image from "next/image";
 import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
-import { Modal } from "../../../../../components/Modal/Modal";
+import { Modal } from "../../../../../components/Modals/Modal/Modal";
 import { SignUpFormSchema } from "../../../../../features/schemas/SignUpFormSchema";
 import { Loader } from "../../../../../components/Loader/Loader";
 

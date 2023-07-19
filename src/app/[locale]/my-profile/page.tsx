@@ -8,8 +8,6 @@ import { SubscribersModal } from "./SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
 import { SubscriptionsModal } from "./SubscriptionsModal/SubscriptionsModal";
 import { Profile } from "./Profile/Profile";
-import {useGetAuthMeQuery} from "../../../api/auth.api";
-import {redirect} from "next/navigation";
 
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
@@ -20,7 +18,7 @@ const MyProfile = () => {
   return (
     <>
       <div className={s.container}>
-        <div className={s.wrapper}>
+        <div className={s.wrapper} id={"wrapper"}>
           <Navigation pathname={pathname} paidAccount={paidAccount} />
           <Profile
             setShowSubscriptionsModal={setShowSubscriptionsModal}

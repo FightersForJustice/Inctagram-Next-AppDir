@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Link from "next/link";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { usePostLogoutMutation } from "../../../../api/auth.api";
@@ -19,7 +19,7 @@ type Props = {
 export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
   const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [showCreatePostModal, setShowCreatePostModal] = useState(true);
+  const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const router = useRouter();
   const [logout, { isLoading }] = usePostLogoutMutation();

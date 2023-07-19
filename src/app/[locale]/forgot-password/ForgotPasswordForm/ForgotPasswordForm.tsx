@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePostPasswordRecoveryMutation } from "../../../../api/auth.api";
-import { Modal } from "../../../../components/Modal/Modal";
+import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { Loader } from "../../../../components/Loader/Loader";
 
 type Props = {

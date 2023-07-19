@@ -37,7 +37,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   return (
     <>
       {showCreatePostModal && !postImage && (
-        <FirstModal setFile={setFile} setShowCreatePostModal={setShowCreatePostModal} setPostImage={setPostImage} />
+        <FirstModal setFile={setFile} setPostImage={setPostImage} setShowCreatePostModal={setShowCreatePostModal} />
       )}
       {postImage && (
         <SecondModal
@@ -48,6 +48,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
+          setShowCreatePostModal={setShowCreatePostModal}
         />
       )}
       {third && (
@@ -60,6 +61,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           activeFilter={activeFilter}
           zoomValue={zoomValue}
           file={file!}
+          setShowCreatePostModal={setShowCreatePostModal}
         />
       )}
       {fourth && (
@@ -69,6 +71,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           aspectRatio={aspectRatio}
           activeFilter={activeFilter}
           zoomValue={zoomValue}
+          setShowCreatePostModal={setShowCreatePostModal}
         />
       )}
     </>
