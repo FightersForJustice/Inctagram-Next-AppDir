@@ -13,6 +13,7 @@ export let postsApi = createApi({
     },
     credentials: "include",
   }),
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     postPostImage: builder.mutation<any, any>({
       query: (file: FormData) => {
@@ -47,6 +48,26 @@ export let postsApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Post"],
+    }),
+    putPost: builder.mutation<any, PutPostPayloadData>({
+      query: (payload: PutPostPayloadData) => {
+        return {
+          url: `posts/${payload.postId}`,
+          method: "PUT",
+          body: {
+            description: payload.description,
+          },
+        };
+      },
+    }),
+    deletePost: builder.mutation<any, number>({
+      query: (postId: number) => {
+        return {
+          url: `posts/${postId}`,
+          method: "DELETE",
+        };
+      },
     }),
   }),
 });
@@ -55,7 +76,7 @@ export type PostDataPayload = {
   description: string;
   childrenMetadata: [
     {
-      uploadId: string;
+      uploadId: number;
     },
   ];
 };
@@ -112,4 +133,16 @@ export type getPostResponse = {
   updatedAt: string;
 };
 
-export let { usePostPostImageMutation, usePostPostMutation, useGetPostsQuery, useGetPostQuery } = postsApi;
+export type PutPostPayloadData = {
+  description: string;
+  postId: number;
+};
+
+export let {
+  usePostPostImageMutation,
+  useDeletePostMutation,
+  usePutPostMutation,
+  usePostPostMutation,
+  useGetPostsQuery,
+  useGetPostQuery,
+} = postsApi;

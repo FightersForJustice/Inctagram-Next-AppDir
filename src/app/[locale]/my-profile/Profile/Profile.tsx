@@ -21,6 +21,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
   const [open, setOpen] = useState(false);
   const { data, isLoading, isError, error } = useGetProfileQuery();
   const [selectedPost, setSelectedPost] = useState<number>();
+  const [modalHeader, setModalHeader] = useState("");
   const getPostsRequest = useGetPostsQuery();
   if (isError) {
     toast.error("Auth error");
@@ -131,14 +132,20 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
 
       {open && (
         <Modal
-          title={""}
+          title={modalHeader}
           width={"800px"}
           onClose={() => {
             setOpen(false);
           }}
           isOkBtn={false}
         >
-          <Post uploadId={selectedPost} avatar={data?.avatars[0].url} userName={data?.userName} />
+          <Post
+            setModalHeader={setModalHeader}
+            uploadId={selectedPost}
+            avatar={data?.avatars[0].url}
+            userName={data?.userName}
+            setOpen={setOpen}
+          />
         </Modal>
       )}
       {isLoading && <Loader />}

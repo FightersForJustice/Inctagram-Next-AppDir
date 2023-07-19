@@ -3,19 +3,26 @@ import { PostComment } from "./PostComment";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { TransparentBtn } from "../../../../../components/TransparentBtn/TransparentBtn";
 import React, { useState } from "react";
+import { SmartMenu } from "./SmartMenu";
+import { Modal } from "../../../../../components/Modal/Modal";
+import { DeletePost } from "./DeletePost";
 
-export const PostBody = ({
-  isSuccess,
-  data,
-  userName,
-  avatar,
-}: {
+type PropsType = {
   isSuccess?: boolean;
   data: any;
   userName?: string;
   avatar?: string;
-}) => {
+  setEditMode: any;
+  uploadId: number;
+};
+export const PostBody = ({ isSuccess, data, userName, avatar, setEditMode, uploadId }: PropsType) => {
   const [focus, setFocus] = useState<boolean>(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [opeDeleteModal, setOpeDeleteModal] = useState(false);
+
+  const openMenu = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
 
   return (
     <div className={style.post_container_info}>
@@ -24,7 +31,19 @@ export const PostBody = ({
           <img src={avatar} alt="err" className={style.container_info_header_avatar_img} />
           <span>{userName}</span>
         </div>
-        <img src={"/img/nav-icons/more-horizontal-outline.svg"} alt="/img/settings-profile/load-avatar.svg" />
+        <img
+          src={"/img/nav-icons/more-horizontal-outline.svg"}
+          alt="/img/settings-profile/load-avatar.svg"
+          onClick={openMenu}
+        />
+        {menuIsOpen && (
+          <SmartMenu
+            onClickEdit={setEditMode}
+            onClickDelete={() => {
+              setOpeDeleteModal(true);
+            }}
+          />
+        )}
       </div>
       {isSuccess ? (
         <PostComment
@@ -42,6 +61,11 @@ export const PostBody = ({
           <TransparentBtn>Published</TransparentBtn>
         </form>
       </div>
+      {opeDeleteModal && (
+        <Modal title={"DELETE POST"} onClose={() => setOpeDeleteModal(false)}>
+          <DeletePost postId={uploadId ?? 0} setOpeDeleteModal={setOpeDeleteModal} />
+        </Modal>
+      )}
     </div>
   );
 };
