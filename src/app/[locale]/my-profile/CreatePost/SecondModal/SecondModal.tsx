@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import s from "../CreatePost.module.scss";
 import Image from "next/image";
 import { CroppingModal } from "../../../../../components/CroppingModal/CroppingModal";
@@ -6,6 +6,7 @@ import { AspectRatio } from "./AspectRatio/AspectRatio";
 import { Range } from "./Range/Range";
 import { Gallery } from "./Gallery/Gallery";
 import { AreYouSureModal } from "../../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { ImageType } from "../CreatePost";
 
 type Props = {
   postImage: string;
@@ -16,6 +17,8 @@ type Props = {
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
+  loadedImages: ImageType[];
+  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
 };
 
 const SecondModal: React.FC<Props> = ({
@@ -27,6 +30,8 @@ const SecondModal: React.FC<Props> = ({
   setZoomValue,
   zoomValue,
   setShowCreatePostModal,
+  loadedImages,
+  setLoadedImages,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -42,6 +47,9 @@ const SecondModal: React.FC<Props> = ({
         showThirdModal={showThirdModal}
         onClose={() => setAreYouSureModal(true)}
       >
+        <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
+        <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
+        <Gallery loadedImages={loadedImages} setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
         <div className={s.cropping}>
           <Image
             src={`${postImage ? postImage : "/img/create-post/test-image.png"}`}
@@ -53,10 +61,8 @@ const SecondModal: React.FC<Props> = ({
               aspectRatio: aspectRatio.replace(":", "/"),
               transform: `scale(${+zoomValue / 10})`,
             }}
+            onChange={(e) => console.log(e)}
           />
-          <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
-          <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-          <Gallery />
         </div>
       </CroppingModal>
       {areYouSureModal && (

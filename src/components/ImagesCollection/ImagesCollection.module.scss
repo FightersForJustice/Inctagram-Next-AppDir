@@ -6,7 +6,7 @@
     background: var(--dark-500, #171717);
     height: 106px;
     min-width: 152px;
-    bottom: 50px;
+    bottom: -195px;
     right: -387px;
   }
 
@@ -19,6 +19,7 @@
 
   &__item {
     position: relative;
+    cursor: pointer;
   }
 
   &__close {
@@ -26,6 +27,12 @@
     top: 2px;
     right: 2px;
     cursor: pointer;
+    transition: all .2s linear;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: red;
+    }
   }
 
   &__items {

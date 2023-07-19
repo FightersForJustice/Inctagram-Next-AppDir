@@ -43,14 +43,18 @@
 }
 
 .cropping {
-  position: relative;
   overflow: hidden;
+
+  &__wrapper {
+
+  }
 
   &__icon1 {
     position: absolute;
     bottom: 11px;
     left: 11px;
     cursor: pointer;
+    z-index: 11;
   }
 
   &__icon2 {
@@ -58,6 +62,7 @@
     bottom: 11px;
     left: 71px;
     cursor: pointer;
+    z-index: 11;
   }
 
   &__icon3 {
@@ -65,6 +70,7 @@
     bottom: 11px;
     right: 11px;
     cursor: pointer;
+    z-index: 11;
   }
 
   &__image {

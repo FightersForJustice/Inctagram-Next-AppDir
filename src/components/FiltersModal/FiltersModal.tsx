@@ -14,9 +14,9 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   buttonName,
   showSecondModal,
   showFourthModal,
-  showThirdModal,
   file,
   onPublishPost,
+  onDeletePostImage,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
 
@@ -49,7 +49,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
               width={24}
               height={24}
               className={"modal__arrow"}
-              onClick={() => (buttonName === "Publish" ? showThirdModal?.() : showSecondModal?.())}
+              onClick={() => (buttonName === "Publish" ? onDeletePostImage?.() : showSecondModal?.())}
             />
             <div className={"modal__title"}>{title}</div>
             <button
@@ -74,7 +74,7 @@ type Props = {
   buttonName: string;
   showSecondModal?: () => void;
   showFourthModal?: () => void;
-  showThirdModal?: () => void;
   file?: File;
   onPublishPost?: () => void;
+  onDeletePostImage?: () => void;
 };

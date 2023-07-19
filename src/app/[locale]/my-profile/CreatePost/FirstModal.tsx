@@ -1,21 +1,32 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction, useId } from "react";
 import s from "./CreatePost.module.scss";
-import Image from "next/image";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
 import { Modal } from "../../../../components/Modals/Modal/Modal";
+import { ImageType } from "./CreatePost";
+import Image from "next/image";
 
 type Props = {
   setPostImage: (value: string) => void;
   setFile: (file: File) => void;
   setShowCreatePostModal: (value: boolean) => void;
+  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  loadedImages: ImageType[];
 };
-const FirstModal: React.FC<Props> = ({ setPostImage, setFile, setShowCreatePostModal }) => {
+const FirstModal: React.FC<Props> = ({
+  setPostImage,
+  setFile,
+  setShowCreatePostModal,
+  setLoadedImages,
+  loadedImages,
+}) => {
+  const id = useId();
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     setFile(file);
     setPostImage(URL.createObjectURL(file));
+    setLoadedImages([...loadedImages, { id, image: URL.createObjectURL(file) }]);
   };
 
   return (

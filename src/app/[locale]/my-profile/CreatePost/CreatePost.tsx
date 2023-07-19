@@ -10,11 +10,17 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
 };
 
+export type ImageType = {
+  id: string;
+  image: string;
+};
+
 export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal }) => {
   const [file, setFile] = useState<File>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
+  const [loadedImages, setLoadedImages] = useState<ImageType[]>([]);
   const [aspectRatio, setAspectRatio] = useState<"" | "1:1" | "4:5" | "16:9">("");
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
@@ -37,7 +43,13 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   return (
     <>
       {showCreatePostModal && !postImage && (
-        <FirstModal setFile={setFile} setPostImage={setPostImage} setShowCreatePostModal={setShowCreatePostModal} />
+        <FirstModal
+          setFile={setFile}
+          setPostImage={setPostImage}
+          setShowCreatePostModal={setShowCreatePostModal}
+          setLoadedImages={setLoadedImages}
+          loadedImages={loadedImages}
+        />
       )}
       {postImage && (
         <SecondModal
@@ -49,6 +61,8 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
+          loadedImages={loadedImages}
+          setLoadedImages={setLoadedImages}
         />
       )}
       {third && (

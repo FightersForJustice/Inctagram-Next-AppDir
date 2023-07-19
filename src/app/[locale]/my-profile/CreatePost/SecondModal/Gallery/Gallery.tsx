@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
 import { ImagesCollection } from "../../../../../../components/ImagesCollection/ImagesCollection";
+import { ImageType } from "../../CreatePost";
 
-export const Gallery = () => {
+type Props = {
+  loadedImages: ImageType[];
+  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  setPostImage: (value: string) => void;
+};
+export const Gallery: React.FC<Props> = ({ loadedImages, setLoadedImages, setPostImage }) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
 
   return (
@@ -37,7 +43,7 @@ export const Gallery = () => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="PopoverContent" sideOffset={5}>
-          <ImagesCollection />
+          <ImagesCollection loadedImages={loadedImages} setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
