@@ -45,7 +45,6 @@ const TabsDemo = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", dataURLtoFile(croppedAvatar), file.name);
-
       saveAvatar(formData)
         .unwrap()
         .then((res) => {
@@ -56,7 +55,6 @@ const TabsDemo = () => {
           toast.error("Error");
         });
     }
-
     setUserAvatar("");
     setCroppedAvatar("");
     setShowAddAvatarModal(false);
