@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import style from "./Post.module.scss";
 import { useGetPostQuery } from "../../../../../api/posts.api";
 import { Loader } from "../../../../../components/Loader/Loader";
-import { PostBody } from "./PostBody";
-import { PostBodyEdit } from "./PostBodyEdit";
+import { PostBody } from "./PostBody/PostBody";
+import { PostBodyEdit } from "./PostBody/PostBodyEdit";
 
 type PropsType = {
-  setOpen: (value: boolean) => void;
+  setOpen: any;
   uploadId?: number;
   avatar?: string;
   userName?: string;
@@ -23,12 +23,13 @@ export const Post = ({ uploadId, avatar, userName, setOpen, setModalHeader }: Pr
     return () => {
       setModalHeader("");
     };
-  }, []);
+  }, [setModalHeader]);
   return (
     <div className={style.post_container}>
       <div className={style.post_container_body}>
         <div className={style.post_container_body_image}>
           {isSuccess ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={data.images[0].url}
               alt="/img/settings-profile/load-avatar.svg"
@@ -57,6 +58,8 @@ export const Post = ({ uploadId, avatar, userName, setOpen, setModalHeader }: Pr
             userName={userName}
             isSuccess={isSuccess}
             data={data}
+            createdAt={data?.createdAt}
+            updatedAt={data?.updatedAt}
           />
         )}
       </div>

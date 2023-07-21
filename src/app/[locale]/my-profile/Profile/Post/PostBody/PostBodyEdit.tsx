@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import style from "./Post.module.scss";
-import { TransparentBtn } from "../../../../../components/TransparentBtn/TransparentBtn";
+import style from "../Post.module.scss";
+import { TransparentBtn } from "../../../../../../components/TransparentBtn/TransparentBtn";
 import { useForm } from "react-hook-form";
 
-import { PutPostPayloadData, useDeletePostMutation, usePutPostMutation } from "../../../../../api/posts.api";
-import { Modal } from "../../../../../components/Modal/Modal";
+import { PutPostPayloadData, usePutPostMutation } from "../../../../../../api/posts.api";
+import { Loader } from "../../../../../../components/Loader/Loader";
 
 type PropsType = {
   refetch: () => void;
@@ -16,7 +16,7 @@ type PropsType = {
 };
 export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen, refetch }: PropsType) => {
   const [value, setValue] = useState<string>(description ?? "");
-  const [setPost] = usePutPostMutation();
+  const [setPost, isFetching] = usePutPostMutation();
   const setNewValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setValue(e.target.value);
@@ -38,10 +38,12 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
     refetch();
     setOpen(false);
   };
+
   return (
     <div className={style.post_container_info}>
       <div className={style.post_container_info_header}>
         <div className={style.post_container_info_header_userData}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={avatar} alt="err" className={style.container_info_header_avatar_img} />
           <span>{userName}</span>
         </div>
@@ -64,6 +66,7 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
           </div>
         </form>
       </div>
+      {isFetching && <Loader />}
     </div>
   );
 };

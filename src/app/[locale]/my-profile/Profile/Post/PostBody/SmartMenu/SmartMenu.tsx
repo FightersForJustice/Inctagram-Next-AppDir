@@ -1,4 +1,4 @@
-import style from "./Post.module.scss";
+import style from "../../Post.module.scss";
 import React from "react";
 
 export const SmartMenu = ({ onClickEdit, onClickDelete }: { onClickEdit: any; onClickDelete: () => void }) => {

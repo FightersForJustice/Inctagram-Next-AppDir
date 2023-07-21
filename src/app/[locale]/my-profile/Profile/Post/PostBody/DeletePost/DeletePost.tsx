@@ -1,5 +1,5 @@
-import { useDeletePostMutation } from "../../../../../api/posts.api";
-import { TransparentBtn } from "../../../../../components/TransparentBtn/TransparentBtn";
+import { useDeletePostMutation } from "../../../../../../../api/posts.api";
+import { TransparentBtn } from "../../../../../../../components/TransparentBtn/TransparentBtn";
 import React from "react";
 
 export const DeletePost = ({ postId, setOpeDeleteModal }: { postId: number; setOpeDeleteModal: any }) => {
