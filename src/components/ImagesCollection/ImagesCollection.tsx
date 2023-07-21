@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import s from "./ImagesCollection.module.scss";
 import Image from "next/image";
 import { ImageType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
@@ -10,9 +10,19 @@ type Props = {
 };
 
 export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImages, setPostImage }) => {
+  useEffect(() => {
+    if (!loadedImages.length) {
+      setPostImage("");
+    }
+  }, [loadedImages.length]);
+
   const onDeleteImageFromCollection = (id: string) => {
     const newCollection = loadedImages.filter((item) => item.id !== id);
     setLoadedImages(newCollection);
+
+    if (loadedImages.length === 0) {
+      setPostImage("");
+    }
   };
 
   return (

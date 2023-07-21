@@ -33,8 +33,6 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
       zoomValue!,
     );
 
-    console.log(photoEditingBeforeSending);
-
     if (file) {
       const formData = new FormData();
       formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);

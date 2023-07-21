@@ -6,23 +6,24 @@ import { useCreatePostMutation, useDeletePostImageMutation } from "../../../../a
 import { toast } from "react-toastify";
 import { Loader } from "../../../../components/Loader/Loader";
 import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { AspectRatioType } from "./CreatePost";
 
 type Props = {
-  postImage: string;
   showThirdModal: () => void;
-  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
+  aspectRatio: AspectRatioType;
   activeFilter: string;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
+  croppedPostImage: string;
 };
 
 const FourthModal: React.FC<Props> = ({
-  postImage,
   showThirdModal,
   aspectRatio,
   activeFilter,
   zoomValue,
   setShowCreatePostModal,
+  croppedPostImage,
 }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
@@ -81,7 +82,7 @@ const FourthModal: React.FC<Props> = ({
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
             <Image
-              src={`${postImage ? postImage : "/img/create-post/filters-modal/image.png"}`}
+              src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
               alt={"image"}
               width={480}
               height={504}

@@ -46,7 +46,7 @@
   overflow: hidden;
 
   &__wrapper {
-
+    overflow: hidden;
   }
 
   &__icon1 {
@@ -114,11 +114,13 @@
 
     &__image {
       max-height: 504px;
+      object-fit: contain;
     }
 
     &__smallImage {
       width: 108px;
       height: 108px;
+      object-fit: contain;
     }
   }
 

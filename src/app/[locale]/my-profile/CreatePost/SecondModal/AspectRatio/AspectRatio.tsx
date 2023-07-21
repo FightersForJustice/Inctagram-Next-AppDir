@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
 import { CroppingSizeModal } from "../../../../../../components/CroppingSizeModal/CroppingSizeModal";
+import { AspectRatioType } from "../../CreatePost";
 
 type Props = {
-  setAspectRatio: (value: "0:0" | "1:1" | "4:5" | "16:9") => void;
-  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
+  setAspectRatio: (value: AspectRatioType) => void;
+  aspectRatio: AspectRatioType;
 };
 
 export const AspectRatio: React.FC<Props> = ({ setAspectRatio, aspectRatio }) => {

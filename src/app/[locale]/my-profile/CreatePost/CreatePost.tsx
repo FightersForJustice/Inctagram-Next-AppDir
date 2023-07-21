@@ -20,8 +20,9 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
+  const [croppedPostImage, setCroppedPostImage] = useState("");
   const [loadedImages, setLoadedImages] = useState<ImageType[]>([]);
-  const [aspectRatio, setAspectRatio] = useState<"0:0" | "1:1" | "4:5" | "16:9">("0:0");
+  const [aspectRatio, setAspectRatio] = useState<AspectRatioType>(AspectRatioType.one);
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 
@@ -63,11 +64,11 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           setShowCreatePostModal={setShowCreatePostModal}
           loadedImages={loadedImages}
           setLoadedImages={setLoadedImages}
+          setCroppedPostImage={setCroppedPostImage}
         />
       )}
       {third && (
         <ThirdModal
-          postImage={postImage}
           showSecondModal={showSecondModal}
           showFourthModal={showFourthModal}
           aspectRatio={aspectRatio}
@@ -76,18 +77,26 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           zoomValue={zoomValue}
           file={file!}
           setShowCreatePostModal={setShowCreatePostModal}
+          croppedPostImage={croppedPostImage}
         />
       )}
       {fourth && (
         <FourthModal
-          postImage={postImage}
           showThirdModal={showThirdModal}
           aspectRatio={aspectRatio}
           activeFilter={activeFilter}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
+          croppedPostImage={croppedPostImage}
         />
       )}
     </>
   );
 };
+
+export enum AspectRatioType {
+  one = "0:0",
+  two = "1:1",
+  three = "4:5",
+  four = "16:9",
+}
