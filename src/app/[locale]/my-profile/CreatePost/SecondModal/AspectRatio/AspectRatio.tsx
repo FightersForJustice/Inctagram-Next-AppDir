@@ -4,8 +4,8 @@ import s from "../../CreatePost.module.scss";
 import { CroppingSizeModal } from "../../../../../../components/CroppingSizeModal/CroppingSizeModal";
 
 type Props = {
-  setAspectRatio: (value: "" | "1:1" | "4:5" | "16:9") => void;
-  aspectRatio: "" | "1:1" | "4:5" | "16:9";
+  setAspectRatio: (value: "0:0" | "1:1" | "4:5" | "16:9") => void;
+  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
 };
 
 export const AspectRatio: React.FC<Props> = ({ setAspectRatio, aspectRatio }) => {

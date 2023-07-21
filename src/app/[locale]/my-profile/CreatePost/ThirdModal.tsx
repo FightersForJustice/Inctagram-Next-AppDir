@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "../../../../components/FiltersModal/FiltersModal";
@@ -9,7 +9,7 @@ type Props = {
   postImage: string;
   showSecondModal: () => void;
   showFourthModal: () => void;
-  aspectRatio: "" | "1:1" | "4:5" | "16:9";
+  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
   setActiveFilter: (value: string) => void;
   activeFilter: string;
   zoomValue: string;
@@ -29,6 +29,8 @@ const ThirdModal: React.FC<Props> = ({
   setShowCreatePostModal,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
+
+  const changedPostImage = useRef<any>();
 
   const onActiveFilter = (filter: string) => {
     switch (filter) {
@@ -78,6 +80,10 @@ const ThirdModal: React.FC<Props> = ({
         showFourthModal={showFourthModal}
         file={file}
         onClose={() => setAreYouSureModal(true)}
+        changedPostImage={changedPostImage}
+        activeFilter={activeFilter}
+        zoomValue={zoomValue}
+        aspectRatio={aspectRatio}
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
@@ -92,6 +98,7 @@ const ThirdModal: React.FC<Props> = ({
                 transform: `scale(${+zoomValue / 10})`,
               }}
               className={s.cropping__filters__image}
+              ref={changedPostImage}
             />
           </div>
           <div className={s.cropping__filters__items}>

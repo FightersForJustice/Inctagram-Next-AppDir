@@ -21,7 +21,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
   const [loadedImages, setLoadedImages] = useState<ImageType[]>([]);
-  const [aspectRatio, setAspectRatio] = useState<"" | "1:1" | "4:5" | "16:9">("");
+  const [aspectRatio, setAspectRatio] = useState<"0:0" | "1:1" | "4:5" | "16:9">("0:0");
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 

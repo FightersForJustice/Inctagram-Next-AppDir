@@ -12,8 +12,8 @@ type Props = {
   postImage: string;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
-  setAspectRatio: (value: "" | "1:1" | "4:5" | "16:9") => void;
-  aspectRatio: "" | "1:1" | "4:5" | "16:9";
+  setAspectRatio: (value: "0:0" | "1:1" | "4:5" | "16:9") => void;
+  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;

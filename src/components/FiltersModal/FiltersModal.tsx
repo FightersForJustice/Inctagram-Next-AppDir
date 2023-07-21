@@ -1,10 +1,11 @@
-import React, { PropsWithChildren } from "react";
-import Image from "next/image";
+import React, { MutableRefObject, PropsWithChildren } from "react";
 
 import "./FiltersModal.css";
 import { useUploadPostImageMutation } from "../../api/posts.api";
-import { toast } from "react-toastify";
 import { Loader } from "../Loader/Loader";
+import { toast } from "react-toastify";
+import { applyImageFilter } from "../../utils/applyImageFilter";
+import { dataURLToBlob } from "blob-util";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -17,13 +18,26 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   file,
   onPublishPost,
   onDeletePostImage,
+  changedPostImage,
+  aspectRatio,
+  activeFilter,
+  zoomValue,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
 
   const onSendPostImage = () => {
+    const photoEditingBeforeSending = applyImageFilter(
+      changedPostImage?.current,
+      activeFilter!,
+      aspectRatio!,
+      zoomValue!,
+    );
+
+    console.log(photoEditingBeforeSending);
+
     if (file) {
       const formData = new FormData();
-      formData.append("file", file, file.name);
+      formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);
 
       uploadPostImage(formData)
         .unwrap()
@@ -43,7 +57,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
       <div className={"modal"} onClick={onClose}>
         <div className={"modal__content1"} style={{ width }} onClick={(e) => e.stopPropagation()}>
           <div className={"modal__header"}>
-            <Image
+            <img
               src={"/img/create-post/arrow-back.svg"}
               alt={"arrow-back"}
               width={24}
@@ -77,4 +91,8 @@ type Props = {
   file?: File;
   onPublishPost?: () => void;
   onDeletePostImage?: () => void;
+  changedPostImage?: MutableRefObject<any>;
+  activeFilter?: string;
+  aspectRatio?: string;
+  zoomValue?: string;
 };
