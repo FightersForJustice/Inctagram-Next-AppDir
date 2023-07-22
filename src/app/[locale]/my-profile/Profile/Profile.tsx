@@ -5,6 +5,7 @@ import { useGetProfileQuery } from "../../../../api/profile.api";
 import { Loader } from "../../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import { GetResponse } from "../../../../api/profile.api";
 import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
 import { Modal } from "../../../../components/Modals/Modal/Modal";

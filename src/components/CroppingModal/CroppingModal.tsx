@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import Image from "next/image";
 import "./CroppingModal.css";
+import { toast } from "react-toastify";
 
 type Props = {
   title: string;
@@ -8,6 +9,7 @@ type Props = {
   width?: string;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
+  croppedPostImage: string;
 };
 
 export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
@@ -17,7 +19,16 @@ export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
   width,
   setPostImage,
   showThirdModal,
+  croppedPostImage,
 }) => {
+  const onNextBtnHandler = () => {
+    if (!croppedPostImage) {
+      toast.error("Сrop image before sending");
+    } else {
+      showThirdModal();
+    }
+  };
+
   return (
     <div className={"modal"} onClick={onClose}>
       <div className={"modal__content"} style={{ width }} onClick={(e) => e.stopPropagation()}>
@@ -31,7 +42,7 @@ export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
             onClick={() => setPostImage("")}
           />
           <div className={"modal__title"}>{title}</div>
-          <button className={"modal__next"} onClick={() => showThirdModal()}>
+          <button className={"modal__next"} onClick={onNextBtnHandler}>
             Next
           </button>
         </div>

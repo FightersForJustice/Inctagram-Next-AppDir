@@ -1,24 +1,26 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import s from "../CreatePost.module.scss";
-import Image from "next/image";
 import { CroppingModal } from "../../../../../components/CroppingModal/CroppingModal";
 import { AspectRatio } from "./AspectRatio/AspectRatio";
 import { Range } from "./Range/Range";
 import { Gallery } from "./Gallery/Gallery";
 import { AreYouSureModal } from "../../../../../components/Modals/AreYouSureModal/AreYouSureModal";
-import { ImageType } from "../CreatePost";
+import { AspectRatioType, ImageType } from "../CreatePost";
+import { PostCropper } from "../PostCropper/PostCropper";
 
 type Props = {
   postImage: string;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
-  setAspectRatio: (value: "0:0" | "1:1" | "4:5" | "16:9") => void;
-  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
+  setAspectRatio: (value: AspectRatioType) => void;
+  aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
   loadedImages: ImageType[];
   setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  setCroppedPostImage: (value: string) => void;
+  croppedPostImage: string;
 };
 
 const SecondModal: React.FC<Props> = ({
@@ -32,6 +34,8 @@ const SecondModal: React.FC<Props> = ({
   setShowCreatePostModal,
   loadedImages,
   setLoadedImages,
+  setCroppedPostImage,
+  croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -40,35 +44,30 @@ const SecondModal: React.FC<Props> = ({
   };
 
   return (
-    <>
+    <div className={s.cropping__wrapper}>
       <CroppingModal
         title={"Cropping"}
         setPostImage={setPostImage}
         showThirdModal={showThirdModal}
         onClose={() => setAreYouSureModal(true)}
+        croppedPostImage={croppedPostImage}
+        width={"492px"}
       >
         <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
         <Gallery loadedImages={loadedImages} setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
-        <div className={s.cropping}>
-          <Image
-            src={`${postImage ? postImage : "/img/create-post/test-image.png"}`}
-            alt={"test-image"}
-            width={754}
-            height={504}
-            className={s.cropping__image}
-            style={{
-              aspectRatio: aspectRatio.replace(":", "/"),
-              transform: `scale(${+zoomValue / 10})`,
-            }}
-            onChange={(e) => console.log(e)}
-          />
-        </div>
+
+        <PostCropper
+          postImage={postImage}
+          aspectRatio={aspectRatio}
+          zoomValue={zoomValue}
+          setCroppedPostImage={setCroppedPostImage}
+        />
       </CroppingModal>
       {areYouSureModal && (
         <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />
       )}
-    </>
+    </div>
   );
 };
 

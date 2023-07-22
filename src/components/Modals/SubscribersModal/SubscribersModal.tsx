@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import s from "../MyProfile.module.scss";
+import s from "../../../app/[locale]/my-profile/MyProfile.module.scss";
 import Image from "next/image";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
+import { Modal } from "../Modal/Modal";
 import { DeleteModal } from "../DeleteModal/DeleteModal";
 import { useTranslations } from "next-intl";
 

@@ -4,21 +4,21 @@ import Image from "next/image";
 import { FiltersModal } from "../../../../components/FiltersModal/FiltersModal";
 import { filters } from "../../../../features/data/filters";
 import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { AspectRatioType } from "./CreatePost";
 
 type Props = {
-  postImage: string;
   showSecondModal: () => void;
   showFourthModal: () => void;
-  aspectRatio: "0:0" | "1:1" | "4:5" | "16:9";
+  aspectRatio: AspectRatioType;
   setActiveFilter: (value: string) => void;
   activeFilter: string;
   zoomValue: string;
   file: File;
   setShowCreatePostModal: (value: boolean) => void;
+  croppedPostImage: string;
 };
 
 const ThirdModal: React.FC<Props> = ({
-  postImage,
   showSecondModal,
   showFourthModal,
   aspectRatio,
@@ -27,6 +27,7 @@ const ThirdModal: React.FC<Props> = ({
   zoomValue,
   file,
   setShowCreatePostModal,
+  croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -88,15 +89,11 @@ const ThirdModal: React.FC<Props> = ({
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
             <Image
-              src={`${postImage ? postImage : "/img/create-post/filters-modal/image.png"}`}
+              src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
               alt={"image"}
               width={490}
               height={503}
-              style={{
-                aspectRatio: aspectRatio.replace(":", "/"),
-                filter: activeFilter,
-                transform: `scale(${+zoomValue / 10})`,
-              }}
+              style={{ filter: activeFilter }}
               className={s.cropping__filters__image}
               ref={changedPostImage}
             />
@@ -106,7 +103,7 @@ const ThirdModal: React.FC<Props> = ({
               return (
                 <div key={index} className={s.cropping__filters__item} onClick={() => onActiveFilter(item.name)}>
                   <Image
-                    src={`${postImage ? postImage : "/img/create-post/filters-modal/image-filter.png"}`}
+                    src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image-filter.png"}`}
                     alt={"image-filter"}
                     width={108}
                     height={108}
