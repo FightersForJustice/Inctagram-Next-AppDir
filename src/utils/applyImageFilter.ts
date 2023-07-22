@@ -8,13 +8,12 @@ export const applyImageFilter = (
   const canvas: HTMLCanvasElement = document.createElement("canvas");
   const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
-  const aspectRatioValue = aspectRatio.split(":");
+  const aspectRatioArray = aspectRatio.split(":");
+  const aspectRatioValue = +aspectRatioArray[0] / +aspectRatioArray[1];
 
   // Вычисляем размеры холста на основе аспектного соотношения (aspectRatio)
   const canvasWidth = imageElement.width;
-  const canvasHeight = imageElement.width / (+aspectRatioValue[0] / +aspectRatioValue[1]);
-
-  console.log(aspectRatioValue);
+  const canvasHeight = aspectRatio ? imageElement.width / aspectRatioValue : imageElement.height;
 
   // Устанавливаем размер холста с учетом аспектного соотношения
   canvas.width = canvasWidth;

@@ -8,14 +8,11 @@ import FourthModal from "./FourthModal";
 type Props = {
   showCreatePostModal: boolean;
   setShowCreatePostModal: (value: boolean) => void;
+  userName: string;
+  userAvatar: string;
 };
 
-export type ImageType = {
-  id: string;
-  image: string;
-};
-
-export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal }) => {
+export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal, userAvatar, userName }) => {
   const [file, setFile] = useState<File>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
@@ -65,6 +62,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           loadedImages={loadedImages}
           setLoadedImages={setLoadedImages}
           setCroppedPostImage={setCroppedPostImage}
+          croppedPostImage={croppedPostImage}
         />
       )}
       {third && (
@@ -88,6 +86,8 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
           croppedPostImage={croppedPostImage}
+          userAvatar={userAvatar}
+          userName={userName}
         />
       )}
     </>
@@ -95,8 +95,13 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
 };
 
 export enum AspectRatioType {
-  one = "0:0",
-  two = "1:1",
+  one = "1:1",
+  two = "4:3",
   three = "4:5",
   four = "16:9",
 }
+
+export type ImageType = {
+  id: string;
+  image: string;
+};

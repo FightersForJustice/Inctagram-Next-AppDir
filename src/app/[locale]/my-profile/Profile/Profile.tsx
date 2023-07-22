@@ -2,32 +2,30 @@ import React from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import { useGetProfileQuery } from "../../../../api/profile.api";
-import { Loader } from "../../../../components/Loader/Loader";
-import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import {useGetAuthMeQuery} from "../../../../api/auth.api";
-import {redirect} from "next/navigation";
+import { GetResponse } from "../../../../api/profile.api";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
   paidAccount: boolean;
+  userData: GetResponse;
 };
 
-export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSubscribersModal, paidAccount }) => {
+export const Profile: React.FC<Props> = ({
+  setShowSubscriptionsModal,
+  setShowSubscribersModal,
+  paidAccount,
+  userData,
+}) => {
   const t = useTranslations("MyProfilePage");
-  const { data, isLoading, isError } = useGetProfileQuery();
-  if (isError) {
-    toast.error("Auth error");
-  }
 
   return (
     <>
       <div className={s.profile}>
         <div>
           <Image
-            src={`${data?.avatars[0].url ? data.avatars[0].url : "/img/profile/avatar.png"}`}
+            src={`${userData?.avatars[0].url ? userData.avatars[0].url : "/img/profile/avatar.png"}`}
             alt={"avatar"}
             width={204}
             height={204}
@@ -37,7 +35,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
         <div className={s.profile__wrapper}>
           <div className={s.profile__title}>
             <div className={s.profile__title__wrapper}>
-              <p id={"profile-userName"}>{data?.userName ?? "User Name"}</p>
+              <p id={"profile-userName"}>{userData?.userName ?? "User Name"}</p>
               {paidAccount && (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -85,7 +83,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
             </div>
           </div>
           <p className={s.profile__desc} id={"profile-aboutMe"}>
-            {data?.aboutMe ??
+            {userData?.aboutMe ??
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"}
           </p>
         </div>
@@ -100,7 +98,6 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
         <Image src={"/img/profile/posts/post7.png"} alt={"post1"} width={234} height={228} />
         <Image src={"/img/profile/posts/post8.png"} alt={"post1"} width={234} height={228} />
       </div>
-      {isLoading && <Loader />}
     </>
   );
 };

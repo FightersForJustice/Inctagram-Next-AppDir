@@ -14,9 +14,11 @@ import { CreatePost } from "../CreatePost/CreatePost";
 type Props = {
   pathname: string;
   paidAccount: boolean;
+  userName: string;
+  userAvatar: string;
 };
 
-export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
+export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userName, userAvatar }) => {
   const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
@@ -211,7 +213,12 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount }) => {
         </Modal>
       )}
       {showCreatePostModal && (
-        <CreatePost setShowCreatePostModal={setShowCreatePostModal} showCreatePostModal={showCreatePostModal} />
+        <CreatePost
+          setShowCreatePostModal={setShowCreatePostModal}
+          showCreatePostModal={showCreatePostModal}
+          userAvatar={userAvatar}
+          userName={userName}
+        />
       )}
       {isLoading && <Loader />}
     </>

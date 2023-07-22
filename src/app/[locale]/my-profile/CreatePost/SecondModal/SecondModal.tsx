@@ -20,6 +20,7 @@ type Props = {
   loadedImages: ImageType[];
   setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
   setCroppedPostImage: (value: string) => void;
+  croppedPostImage: string;
 };
 
 const SecondModal: React.FC<Props> = ({
@@ -34,6 +35,7 @@ const SecondModal: React.FC<Props> = ({
   loadedImages,
   setLoadedImages,
   setCroppedPostImage,
+  croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -48,6 +50,7 @@ const SecondModal: React.FC<Props> = ({
         setPostImage={setPostImage}
         showThirdModal={showThirdModal}
         onClose={() => setAreYouSureModal(true)}
+        croppedPostImage={croppedPostImage}
         width={"492px"}
       >
         <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
@@ -60,18 +63,6 @@ const SecondModal: React.FC<Props> = ({
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
         />
-        {/*<Image*/}
-        {/*  src={`${postImage ? postImage : "/img/create-post/test-image.png"}`}*/}
-        {/*  alt={"test-image"}*/}
-        {/*  width={754}*/}
-        {/*  height={504}*/}
-        {/*  className={s.cropping__image}*/}
-        {/*  style={{*/}
-        {/*    aspectRatio: aspectRatio.replace(":", "/"),*/}
-        {/*    transform: `scale(${+zoomValue / 10})`,*/}
-        {/*  }}*/}
-        {/*  onChange={(e) => console.log(e)}*/}
-        {/*/>*/}
       </CroppingModal>
       {areYouSureModal && (
         <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />

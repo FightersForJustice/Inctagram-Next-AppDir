@@ -93,11 +93,7 @@ const ThirdModal: React.FC<Props> = ({
               alt={"image"}
               width={490}
               height={503}
-              style={{
-                //aspectRatio: aspectRatio.replace(":", "/"),
-                filter: activeFilter,
-                //transform: `scale(${+zoomValue / 10})`,
-              }}
+              style={{ filter: activeFilter }}
               className={s.cropping__filters__image}
               ref={changedPostImage}
             />

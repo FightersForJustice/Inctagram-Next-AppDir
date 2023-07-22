@@ -37,7 +37,7 @@ export const CroppingSizeModal: React.FC<Props> = ({ setAspectRatio, aspectRatio
           </svg>
         </div>
         <div className={s.cropping__item} onClick={() => setAspectRatio(AspectRatioType.two)}>
-          <p className={`${aspectRatio === "1:1" ? `${s.cropping__text__active}` : `${s.cropping__text}`}`}>1:1</p>
+          <p className={`${aspectRatio === "4:3" ? `${s.cropping__text__active}` : `${s.cropping__text}`}`}>4:3</p>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect
               x="1"
@@ -45,7 +45,7 @@ export const CroppingSizeModal: React.FC<Props> = ({ setAspectRatio, aspectRatio
               width="16"
               height="16"
               rx="2"
-              stroke={aspectRatio === "1:1" ? "white" : "#8D9094"}
+              stroke={aspectRatio === "4:3" ? "white" : "#8D9094"}
               strokeWidth="2"
             />
           </svg>

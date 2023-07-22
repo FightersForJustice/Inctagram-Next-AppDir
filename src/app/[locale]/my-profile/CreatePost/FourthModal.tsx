@@ -15,6 +15,8 @@ type Props = {
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
+  userName: string;
+  userAvatar: string;
 };
 
 const FourthModal: React.FC<Props> = ({
@@ -24,6 +26,8 @@ const FourthModal: React.FC<Props> = ({
   zoomValue,
   setShowCreatePostModal,
   croppedPostImage,
+  userAvatar,
+  userName,
 }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
@@ -97,13 +101,13 @@ const FourthModal: React.FC<Props> = ({
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>
               <Image
-                src={"/img/create-post/publication-modal/image.png"}
+                src={`${userAvatar ?? "/img/create-post/publication-modal/image.png"}`}
                 alt={"image"}
-                width={72}
-                height={48}
+                width={36}
+                height={36}
                 className={s.cropping__publication__image}
               />
-              <p>URLProfiele</p>
+              <p>{userName}</p>
             </div>
             <div>
               <div className={s.cropping__publication__wrapper}>
