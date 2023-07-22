@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
-import { useGetProfileQuery } from "../../../../api/profile.api";
-import { Loader } from "../../../../components/Loader/Loader";
-import { toast } from "react-toastify";
-import { useTranslations } from "next-intl";
 import { GetResponse } from "../../../../api/profile.api";
+import { Loader } from "../../../../components/Loader/Loader";
+import { useTranslations } from "next-intl";
 import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
 import { Modal } from "../../../../components/Modals/Modal/Modal";
@@ -15,17 +13,22 @@ type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
   paidAccount: boolean;
+  userData: GetResponse;
 };
-export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSubscribersModal, paidAccount }) => {
+export const Profile: React.FC<Props> = ({
+  setShowSubscriptionsModal,
+  setShowSubscribersModal,
+  paidAccount,
+  userData,
+}) => {
   const t = useTranslations("MyProfilePage");
   const [open, setOpen] = useState(false);
-  const { data, isLoading, isError } = useGetProfileQuery();
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
 
   let userId;
-  if (data?.id) {
-    sessionStorage.setItem("userId", data?.id.toString());
+  if (userData?.id) {
+    sessionStorage.setItem("userId", userData?.id.toString());
     userId = sessionStorage.getItem("userId") || "user";
   }
 
@@ -34,9 +37,6 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
     setOpen(true);
     setSelectedPost(postId);
   };
-  useEffect(() => {
-    if (isError) toast.error("Auth error");
-  }, [isError]);
 
   useEffect(() => {
     getPostsRequest.refetch();
@@ -66,7 +66,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
       <div className={s.profile}>
         <div>
           <Image
-            src={`${data?.avatars[0] ? data.avatars[0].url : "/img/profile/avatar.png"}`}
+            src={`${userData?.avatars[0] ? userData.avatars[0].url : "/img/profile/avatar.png"}`}
             alt={"avatar"}
             width={204}
             height={204}
@@ -74,7 +74,7 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
           />
         </div>
         <ProfileWrapper
-          data={data}
+          data={userData}
           t={t}
           setShowSubscriptionsModal={setShowSubscriptionsModal}
           setShowSubscribersModal={setShowSubscribersModal}
@@ -96,13 +96,12 @@ export const Profile: React.FC<Props> = ({ setShowSubscriptionsModal, setShowSub
             refetchPosts={getPostsRequest.refetch}
             setModalHeader={setModalHeader}
             postId={selectedPost}
-            avatar={data?.avatars[0].url}
-            userName={data?.userName}
+            avatar={userData?.avatars[0].url}
+            userName={userData?.userName}
             setOpen={setOpen}
           />
         </Modal>
       )}
-      {isLoading && <Loader />}
     </>
   );
 };
