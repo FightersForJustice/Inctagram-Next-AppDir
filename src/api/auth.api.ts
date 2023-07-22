@@ -8,6 +8,7 @@ export let authApi = createApi({
       const token = sessionStorage.getItem("accessToken");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
+        headers.set("withCredentials", `true`);
       }
       return headers;
     },
