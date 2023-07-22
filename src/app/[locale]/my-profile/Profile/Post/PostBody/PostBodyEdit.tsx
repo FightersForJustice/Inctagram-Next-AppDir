@@ -2,9 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import style from "../Post.module.scss";
 import { TransparentBtn } from "../../../../../../components/TransparentBtn/TransparentBtn";
 import { useForm } from "react-hook-form";
-
-import { PutPostPayloadData, usePutPostMutation } from "../../../../../../api/posts.api";
-import { Loader } from "../../../../../../components/Loader/Loader";
+import { useUpdatePostMutation } from "../../../../../../api/posts.api";
 
 type PropsType = {
   refetch: () => void;
@@ -16,7 +14,7 @@ type PropsType = {
 };
 export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen, refetch }: PropsType) => {
   const [value, setValue] = useState<string>(description ?? "");
-  const [setPost, isFetching] = usePutPostMutation();
+  const [setPost, isFetching] = useUpdatePostMutation();
   const setNewValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setValue(e.target.value);
@@ -29,8 +27,7 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
   } = useForm({});
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    const reqPayload: PutPostPayloadData = {
+    const reqPayload: { postId: number; description: string } = {
       description: data.description,
       postId: uploadId ?? 0,
     };
@@ -51,7 +48,7 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
       <div>
         <form onSubmit={handleSubmit(onSubmit)} className={style.postBodyEdit_form}>
           <div className={style.postBodyEdit_form_text}>
-            <p>Text-area with title</p>
+            <p>Edit your post:</p>
             {
               <textarea
                 {...register("description")}
@@ -66,7 +63,6 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
           </div>
         </form>
       </div>
-      {isFetching && <Loader />}
     </div>
   );
 };

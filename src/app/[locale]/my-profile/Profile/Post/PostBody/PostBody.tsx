@@ -4,9 +4,9 @@ import { Loader } from "../../../../../../components/Loader/Loader";
 import { TransparentBtn } from "../../../../../../components/TransparentBtn/TransparentBtn";
 import React, { useState } from "react";
 import { SmartMenu } from "./SmartMenu/SmartMenu";
-import { Modal } from "../../../../../../components/Modal/Modal";
-import { DeletePost } from "./DeletePost/DeletePost";
+import { DeletePost } from "./SmartMenu/DeletePost/DeletePost";
 import { actualCreateDate } from "../../../../../../utils/actualCreateDate";
+import { Modal } from "../../../../../../components/Modals/Modal/Modal";
 
 type PropsType = {
   isSuccess?: boolean;
@@ -15,10 +15,13 @@ type PropsType = {
   avatar?: string;
   setEditMode: any;
   uploadId: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  refetchPosts?: any;
+  setOpen?: any;
 };
 export const PostBody = ({
+  setOpen,
   isSuccess,
   data,
   userName,
@@ -27,10 +30,11 @@ export const PostBody = ({
   uploadId,
   createdAt,
   updatedAt,
+  refetchPosts,
 }: PropsType) => {
   const [focus, setFocus] = useState<boolean>(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [opeDeleteModal, setOpeDeleteModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const openMenu = () => {
     setMenuIsOpen(!menuIsOpen);
@@ -54,7 +58,8 @@ export const PostBody = ({
           <SmartMenu
             onClickEdit={setEditMode}
             onClickDelete={() => {
-              setOpeDeleteModal(true);
+              setOpenDeleteModal(true);
+              refetchPosts();
             }}
           />
         )}
@@ -75,9 +80,9 @@ export const PostBody = ({
           <TransparentBtn>Published</TransparentBtn>
         </form>
       </div>
-      {opeDeleteModal && (
-        <Modal title={"DELETE POST"} onClose={() => setOpeDeleteModal(false)}>
-          <DeletePost postId={uploadId ?? 0} setOpeDeleteModal={setOpeDeleteModal} />
+      {openDeleteModal && (
+        <Modal title={"DELETE POST"} onClose={() => setOpenDeleteModal(false)}>
+          <DeletePost postId={uploadId ?? 0} setOpenDeleteModal={setOpenDeleteModal} setOpen={setOpen} />
         </Modal>
       )}
     </div>

@@ -13,7 +13,7 @@ export let profileApi = createApi({
     },
     credentials: "include",
   }),
-
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     putProfile: builder.mutation<any, PutProfileBody>({
       query: (profile: PutProfileBody) => {
@@ -33,6 +33,7 @@ export let profileApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Post"],
     }),
     postProfileAvatar: builder.mutation<PostProfileAvatar, FormData>({
       query: (file: FormData) => {

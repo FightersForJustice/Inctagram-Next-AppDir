@@ -8,22 +8,25 @@ import { PostBodyEdit } from "./PostBody/PostBodyEdit";
 
 type PropsType = {
   setOpen: any;
-  uploadId?: number;
+  postId?: number;
   avatar?: string;
   userName?: string;
   setModalHeader: any;
+  refetchPosts?: any;
 };
 
-export const Post = ({ uploadId, avatar, userName, setOpen, setModalHeader }: PropsType) => {
-  const { data, isSuccess, refetch } = useGetPostQuery(uploadId ?? 0);
+export const Post = ({ postId, avatar, userName, setOpen, setModalHeader, refetchPosts }: PropsType) => {
+  const { data, isSuccess, refetch } = useGetPostQuery(postId ?? 0);
   const [editMode, setEditMode] = useState(false);
 
   if (editMode) setModalHeader("Edit");
+
   useEffect(() => {
     return () => {
       setModalHeader("");
     };
-  }, [setModalHeader]);
+  }, []);
+
   return (
     <div className={style.post_container}>
       <div className={style.post_container_body}>
@@ -47,12 +50,14 @@ export const Post = ({ uploadId, avatar, userName, setOpen, setModalHeader }: Pr
               avatar={avatar}
               userName={userName}
               description={data?.description}
-              uploadId={uploadId}
+              uploadId={postId}
             />
           )
         ) : (
           <PostBody
-            uploadId={uploadId ?? 0}
+            setOpen={setOpen}
+            refetchPosts={refetchPosts}
+            uploadId={postId ?? 0}
             setEditMode={setEditMode}
             avatar={avatar}
             userName={userName}

@@ -1,9 +1,11 @@
 import { formatServerDate } from "./formatServerDate";
 
-export const actualCreateDate = (createdAt: string, updatedAt: string) => {
-  if (updatedAt) {
-    return `обнавленно ${formatServerDate(updatedAt)}`;
-  } else {
-    return `созданно ${formatServerDate(createdAt)}`;
+export const actualCreateDate = (createdAt?: string, updatedAt?: string) => {
+  if (createdAt) {
+    if (updatedAt !== createdAt) {
+      return `update ${formatServerDate(updatedAt)}`;
+    } else {
+      return `create ${formatServerDate(createdAt ?? "")}`;
+    }
   }
 };

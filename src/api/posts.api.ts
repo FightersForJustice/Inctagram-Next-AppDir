@@ -13,6 +13,7 @@ export const postsApi = createApi({
     },
     credentials: "include",
   }),
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     uploadPostImage: builder.mutation<UploadImageResponse, FormData>({
       query: (file) => {
@@ -40,7 +41,7 @@ export const postsApi = createApi({
         };
       },
     }),
-    getPost: builder.query<PostResponse, string>({
+    getPost: builder.query<PostResponse, number>({
       query: (postId) => {
         return {
           url: `posts/p/${postId}`,
@@ -48,7 +49,7 @@ export const postsApi = createApi({
         };
       },
     }),
-    updatePost: builder.mutation<any, { postId: string; description: string }>({
+    updatePost: builder.mutation<any, { postId: number; description: string }>({
       query: (args) => {
         return {
           url: `posts/${args.postId}`,
@@ -60,7 +61,7 @@ export const postsApi = createApi({
       },
     }),
     deletePost: builder.mutation({
-      query: (postId: string) => {
+      query: (postId: number) => {
         return {
           url: `posts/${postId}`,
           method: "DELETE",
@@ -74,6 +75,7 @@ export const postsApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Post"],
     }),
   }),
 });
