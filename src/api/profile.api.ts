@@ -63,6 +63,15 @@ export let profileApi = createApi({
   }),
 });
 
+export let {
+  usePutProfileMutation,
+  useGetProfileQuery,
+  usePostProfileAvatarMutation,
+  useDeleteProfileAvatarMutation,
+  useDeleteProfileMutation,
+  useLazyGetProfileQuery,
+} = profileApi;
+
 export type PostProfileAvatar = {
   avatars: Avatar[];
 };
@@ -93,11 +102,3 @@ export interface Avatar {
   height: number;
   fileSize: number;
 }
-
-export let {
-  usePutProfileMutation,
-  useGetProfileQuery,
-  usePostProfileAvatarMutation,
-  useDeleteProfileAvatarMutation,
-  useDeleteProfileMutation,
-} = profileApi;

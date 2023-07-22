@@ -88,6 +88,7 @@ export const {
   useUpdatePostMutation,
   useDeletePostMutation,
   useGetPostsPaginationQuery,
+  useLazyGetPostsPaginationQuery,
 } = postsApi;
 
 type Image = {

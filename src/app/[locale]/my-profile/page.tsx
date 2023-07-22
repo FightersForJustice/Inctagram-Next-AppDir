@@ -27,12 +27,7 @@ const MyProfile = () => {
     <>
       <div className={s.container}>
         <div className={s.wrapper} id={"wrapper"}>
-          <Navigation
-            pathname={pathname}
-            paidAccount={paidAccount}
-            userName={data?.userName!}
-            userAvatar={data?.avatars[1].url!}
-          />
+          <Navigation pathname={pathname} paidAccount={paidAccount} userData={data!} />
           <Profile
             setShowSubscriptionsModal={setShowSubscriptionsModal}
             setShowSubscribersModal={setShowSubscribersModal}

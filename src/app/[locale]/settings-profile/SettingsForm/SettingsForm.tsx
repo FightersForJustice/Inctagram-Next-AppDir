@@ -3,7 +3,7 @@ import s from "./SettingsForm.module.scss";
 import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
 import { DatePick } from "../../../../components/DatePicker/DatePick";
 import React, { useState } from "react";
-import { PutProfileBody, usePutProfileMutation } from "../../../../api/profile.api";
+import { PutProfileBody, useLazyGetProfileQuery, usePutProfileMutation } from "../../../../api/profile.api";
 import { StatusCode } from "../../../../api/auth.api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -19,6 +19,7 @@ type Props = {
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [updateProfile, { isLoading }] = usePutProfileMutation();
+  const [getUserProfile] = useLazyGetProfileQuery();
 
   const {
     register,
@@ -43,6 +44,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
     updateProfile(result)
       .unwrap()
       .then(() => {
+        getUserProfile();
         toast.success("Profile successfully updated");
       })
       .catch((err) => {

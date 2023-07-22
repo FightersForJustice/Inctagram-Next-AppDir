@@ -1,22 +1,14 @@
 import React, { ChangeEvent, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import s from "./Tabs.module.scss";
-import Image from "next/image";
-import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
-import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
-import { usePostProfileAvatarMutation } from "../../../../api/profile.api";
+import { useLazyGetProfileQuery, usePostProfileAvatarMutation } from "../../../../api/profile.api";
 import { toast } from "react-toastify";
 import { dataURLtoFile } from "../../../../utils/dataUrlToFile";
 import { GeneralInformationTab } from "./GeneralInformationTab/GeneralInformationTab";
 import { DevicesTab } from "./DevicesTab/DevicesTab";
 import { Loader } from "../../../../components/Loader/Loader";
-import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-
-const DynamicCropper = dynamic(() => import("./Cropper/Cropper"), {
-  ssr: false,
-});
+import { ShowAddAvatarModal } from "./ShowAddAvatarModal/ShowAddAvatarModal";
 
 const TabsDemo = () => {
   const t = useTranslations("SettingsProfilePage");
@@ -28,6 +20,7 @@ const TabsDemo = () => {
   const [file, setFile] = useState<File>();
 
   const [saveAvatar, { isLoading }] = usePostProfileAvatarMutation();
+  const [getUserProfile] = useLazyGetProfileQuery();
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -48,6 +41,7 @@ const TabsDemo = () => {
       saveAvatar(formData)
         .unwrap()
         .then((res) => {
+          getUserProfile();
           setLoadedAvatar(res.avatars[0].url);
           toast.success("Avatar successfully uploaded");
         })
@@ -85,39 +79,15 @@ const TabsDemo = () => {
         <DevicesTab />
       </Tabs.Root>
       {showAddAvatarModal && (
-        <Modal title={t("AddPhotoModal.title")} onClose={onCloseModal} width={"492px"} isOkBtn={false}>
-          <div className={s.modal}>
-            {userAvatar ? (
-              <div className={s.modal__loadImg}>
-                <DynamicCropper
-                  setUserAvatar={setUserAvatar}
-                  userAvatar={userAvatar}
-                  setCroppedAvatar={setCroppedAvatar}
-                />
-              </div>
-            ) : (
-              <Image
-                src={"/img/settings-profile/modal-img.png"}
-                alt={"modal-img"}
-                width={222}
-                height={228}
-                className={s.modal__img}
-              />
-            )}
-            {userAvatar ? (
-              <div className={s.modal__saveBtn}>
-                <PrimaryBtn onClick={onSaveUserAvatar}>{t("AddPhotoModal.saveBtn")}</PrimaryBtn>
-              </div>
-            ) : (
-              <div className={s.wrapper__loadZone}>
-                <input type="file" className={s.wrapper__inputFile} onChange={onSetUserAvatar} />
-                <div className={s.wrapper__overlay}>
-                  <TransparentBtn>{t("AddPhotoModal.selectBtn")}</TransparentBtn>
-                </div>
-              </div>
-            )}
-          </div>
-        </Modal>
+        <ShowAddAvatarModal
+          t={t}
+          onCloseModal={onCloseModal}
+          userAvatar={userAvatar}
+          setUserAvatar={setUserAvatar}
+          setCroppedAvatar={setCroppedAvatar}
+          onSaveUserAvatar={onSaveUserAvatar}
+          onSetUserAvatar={onSetUserAvatar}
+        />
       )}
       {isLoading && <Loader />}
     </>

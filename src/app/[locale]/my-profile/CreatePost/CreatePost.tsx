@@ -4,15 +4,15 @@ import FirstModal from "./FirstModal";
 import SecondModal from "./SecondModal/SecondModal";
 import ThirdModal from "./ThirdModal";
 import FourthModal from "./FourthModal";
+import { GetResponse } from "../../../../api/profile.api";
 
 type Props = {
   showCreatePostModal: boolean;
   setShowCreatePostModal: (value: boolean) => void;
-  userName: string;
-  userAvatar: string;
+  userData: GetResponse;
 };
 
-export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal, userAvatar, userName }) => {
+export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal, userData }) => {
   const [file, setFile] = useState<File>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
@@ -86,8 +86,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
           croppedPostImage={croppedPostImage}
-          userAvatar={userAvatar}
-          userName={userName}
+          userData={userData}
         />
       )}
     </>

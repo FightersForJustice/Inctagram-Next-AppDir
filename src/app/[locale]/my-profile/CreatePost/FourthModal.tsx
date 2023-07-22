@@ -2,11 +2,16 @@ import React, { ChangeEvent, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "../../../../components/FiltersModal/FiltersModal";
-import { useCreatePostMutation, useDeletePostImageMutation } from "../../../../api/posts.api";
+import {
+  useCreatePostMutation,
+  useDeletePostImageMutation,
+  useLazyGetPostsPaginationQuery,
+} from "../../../../api/posts.api";
 import { toast } from "react-toastify";
 import { Loader } from "../../../../components/Loader/Loader";
 import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
 import { AspectRatioType } from "./CreatePost";
+import { GetResponse } from "../../../../api/profile.api";
 
 type Props = {
   showThirdModal: () => void;
@@ -15,8 +20,7 @@ type Props = {
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
-  userName: string;
-  userAvatar: string;
+  userData: GetResponse;
 };
 
 const FourthModal: React.FC<Props> = ({
@@ -26,8 +30,7 @@ const FourthModal: React.FC<Props> = ({
   zoomValue,
   setShowCreatePostModal,
   croppedPostImage,
-  userAvatar,
-  userName,
+  userData,
 }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
@@ -35,6 +38,7 @@ const FourthModal: React.FC<Props> = ({
 
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
+  const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -51,6 +55,7 @@ const FourthModal: React.FC<Props> = ({
     })
       .unwrap()
       .then((res) => {
+        getPosts(userData?.id.toString());
         toast.success("Post created");
         setShowCreatePostModal(false);
       })
@@ -101,13 +106,13 @@ const FourthModal: React.FC<Props> = ({
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>
               <Image
-                src={`${userAvatar ?? "/img/create-post/publication-modal/image.png"}`}
+                src={`${userData.avatars[1].url ?? "/img/create-post/publication-modal/image.png"}`}
                 alt={"image"}
                 width={36}
                 height={36}
                 className={s.cropping__publication__image}
               />
-              <p>{userName}</p>
+              <p>{userData.userName}</p>
             </div>
             <div>
               <div className={s.cropping__publication__wrapper}>
@@ -137,6 +142,7 @@ const FourthModal: React.FC<Props> = ({
       )}
       {isDeleting && <Loader />}
       {isLoading && <Loader />}
+      {isLoadingPosts && <Loader />}
     </>
   );
 };

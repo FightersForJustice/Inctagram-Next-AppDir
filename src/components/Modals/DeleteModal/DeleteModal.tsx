@@ -1,8 +1,9 @@
 import React from "react";
-import s from "../../../app/[locale]/my-profile/MyProfile.module.scss";
 import Image from "next/image";
 import { Modal } from "../Modal/Modal";
 import { useTranslations } from "next-intl";
+
+import s from "./DeleteModal.module.scss";
 
 type Props = {
   setShowDeleteModal: (value: boolean) => void;

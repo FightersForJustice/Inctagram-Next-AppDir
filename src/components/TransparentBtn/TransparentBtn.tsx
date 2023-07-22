@@ -4,7 +4,7 @@ import s from "./TransparentBtn.module.scss";
 type Props = {
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  style?: any;
+  style?: Object;
 };
 
 export const TransparentBtn: React.FC<Props> = ({ children, onClick, style }) => {

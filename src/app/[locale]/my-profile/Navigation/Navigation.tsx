@@ -10,15 +10,15 @@ import { useRouter } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
+import { GetResponse } from "../../../../api/profile.api";
 
 type Props = {
   pathname: string;
   paidAccount: boolean;
-  userName: string;
-  userAvatar: string;
+  userData: GetResponse;
 };
 
-export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userName, userAvatar }) => {
+export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData }) => {
   const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
@@ -216,8 +216,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userName, u
         <CreatePost
           setShowCreatePostModal={setShowCreatePostModal}
           showCreatePostModal={showCreatePostModal}
-          userAvatar={userAvatar}
-          userName={userName}
+          userData={userData}
         />
       )}
       {isLoading && <Loader />}

@@ -37,9 +37,7 @@ export const Header = () => {
         {/*<LocaleSwitcher />*/}
         <select
           name="Languages"
-          className={
-            "bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer"
-          }
+          className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
           onChange={onSelectChange}
           value={language ? language : "ru"}
         >
@@ -48,10 +46,10 @@ export const Header = () => {
               {t("locale", { locale: cur })}
             </option>
           ))}*/}
-          <option value="en" className={"bg-black"}>
+          <option value="en" className={`bg-black`}>
             English
           </option>
-          <option value="ru" className={"bg-black"}>
+          <option value="ru" className={`bg-black`}>
             {/*<Image src={"/img/russia.svg"} alt={"russia"} width={20} height={20} />*/}
             Russian
           </option>

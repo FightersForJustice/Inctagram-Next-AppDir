@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "../Modal/Modal";
-import s from "../../../app/[locale]/my-profile/MyProfile.module.scss";
 import Image from "next/image";
 import { UnsubscribeModal } from "../UnsubscribeModal/UnsubscribeModal";
 import { useTranslations } from "next-intl";
+
+import s from "./SubscriptionsModal.module.scss";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import { GetResponse } from "../../../../api/profile.api";
@@ -26,21 +26,12 @@ export const Profile: React.FC<Props> = ({
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
 
-  let userId;
-  if (userData?.id) {
-    sessionStorage.setItem("userId", userData?.id.toString());
-    userId = sessionStorage.getItem("userId") || "user";
-  }
-
-  const getPostsRequest = useGetPostsPaginationQuery(userId || "user name");
+  const getPostsRequest = useGetPostsPaginationQuery(userData?.id.toString());
   const openPostHandler = (postId: number) => {
     setOpen(true);
     setSelectedPost(postId);
   };
 
-  useEffect(() => {
-    getPostsRequest.refetch();
-  });
   const postsImages = () => {
     return getPostsRequest.isSuccess ? (
       getPostsRequest.data?.items.map((i) => {

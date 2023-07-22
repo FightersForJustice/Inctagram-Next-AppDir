@@ -1,9 +1,10 @@
 import React from "react";
-import s from "./AreYouSureModal.module.scss";
 import { TransparentBtn } from "../../TransparentBtn/TransparentBtn";
 import { PrimaryBtn } from "../../PrimaryBtn/PrimaryBtn";
 import { Modal } from "../Modal/Modal";
 import { Loader } from "../../Loader/Loader";
+
+import s from "./AreYouSureModal.module.scss";
 
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
