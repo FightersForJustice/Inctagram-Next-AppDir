@@ -4,11 +4,11 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import Image from "next/image";
 import { StatusCode, usePostAuthorizationMutation } from "../../../../../api/auth.api";
-import { Modal } from "../../../../../components/Modals/Modal/Modal";
 import { SignUpFormSchema } from "../../../../../features/schemas/SignUpFormSchema";
 import { Loader } from "../../../../../components/Loader/Loader";
+import { EmailSentModal } from "./EmailSentModal";
+import { FormItem } from "./FormItem";
 
 type Props = {
   lang: "en" | "ru";
@@ -25,8 +25,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     resolver: yupResolver(SignUpFormSchema),
   });
 
-  const [showPass, setShowPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
+  const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
@@ -57,129 +57,56 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
-        <div className={" mt-7"}>
-          <div className={"text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("username")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("userName")}
-              className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.userName ? "border-red-700" : ""
-              }`}
-              id={"sign-up-userName"}
-            />
-            {errors.userName && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-userName-error"}>
-                {errors.userName.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={"mt-7"}
+          translate={translate}
+          register={register}
+          error={errors.userName}
+          errorMessage={errors?.userName?.message}
+          registerName={"userName"}
+          translateName={"username"}
+          id={"sign-up-userName"}
+        />
 
-        <div className={" mt-[18px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("email")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("email")}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.email ? "border-red-700" : ""
-              }`}
-              id={"sign-up-email"}
-            />
-            {errors.email && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-email-error"}>
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={" mt-[18px]"}
+          translate={translate}
+          register={register}
+          error={errors.email}
+          errorMessage={errors?.email?.message}
+          registerName={"email"}
+          translateName={"email"}
+          id={"sign-up-email"}
+        />
 
-        <div className={" mt-[18px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("password")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("password")}
-              type={`${showPass ? "text" : "password"}`}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.password ? "border-red-700" : ""
-              }`}
-              id={"sign-up-password"}
-            />
-            {showPass ? (
-              <Image
-                src={"/img/hidePass.svg"}
-                alt={"hidePass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-                id={"sign-up-password-showPassImage-openAye"}
-              />
-            ) : (
-              <Image
-                src={"/img/showPass.svg"}
-                alt={"showPass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-                id={"sign-up-password-showPassImage-closeAye"}
-              />
-            )}
-            {errors.password && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-password-error"}>
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={" mt-[18px]"}
+          translate={translate}
+          register={register}
+          error={errors.password}
+          errorMessage={errors?.password?.message}
+          registerName={"password"}
+          translateName={"password"}
+          id={"sign-up-password"}
+          show={showPass}
+          setShow={setShowPass}
+          showPasswordIcon={true}
+        />
 
-        <div className={" mt-[18px] mb-[36px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("passwordConf")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("passwordConfirm")}
-              type={`${showConfirmPass ? "text" : "password"}`}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.passwordConfirm ? "border-red-700" : ""
-              }`}
-              id={"sign-up-passwordConfirm"}
-            />
-            {showConfirmPass ? (
-              <Image
-                src={"/img/hidePass.svg"}
-                alt={"hidePass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-                id={"sign-up-passwordConfirm-showPassImage-openAye"}
-              />
-            ) : (
-              <Image
-                src={"/img/showPass.svg"}
-                alt={"showPass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-                id={"sign-up-passwordConfirm-showPassImage-closeAye"}
-              />
-            )}
-            {errors.passwordConfirm && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[12px]"} id={"sign-up-passwordConfirm-error"}>
-                {errors.passwordConfirm.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={" mt-[18px]"}
+          marginBottom={"mb-[36px]"}
+          translate={translate}
+          register={register}
+          error={errors.passwordConfirm}
+          errorMessage={errors?.passwordConfirm?.message}
+          registerName={"passwordConfirm"}
+          translateName={"passwordConf"}
+          id={"sign-up-passwordConfirm"}
+          show={showConfirmPass}
+          setShow={setShowConfirmPass}
+          showPasswordIcon={true}
+        />
 
         <input
           type="submit"
@@ -192,14 +119,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           {translate("btnBottomName")}
         </Link>
       </form>
-      {showModal && (
-        <Modal title={"Email sent"} onClose={() => setShowModal(false)} isOkBtn={true}>
-          We have sent a link to confirm your email to{" "}
-          <span id={"sign-up-modalSuccess-userEmail"} className={"text-blue-300"}>
-            {userEmail}
-          </span>
-        </Modal>
-      )}
+      {showModal && <EmailSentModal userEmail={userEmail} setShowModal={setShowModal} />}
       {isLoading && <Loader />}
     </>
   );

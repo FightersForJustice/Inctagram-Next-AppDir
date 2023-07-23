@@ -1,7 +1,6 @@
 import s from "../../MyProfile.module.scss";
 import Link from "next/link";
 import React from "react";
-import { useTranslations } from "next-intl/dist/src/react-server";
 
 export const ProfileWrapper = ({
   data,

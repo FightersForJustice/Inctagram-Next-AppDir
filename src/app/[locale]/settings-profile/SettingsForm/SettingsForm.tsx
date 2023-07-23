@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Loader } from "../../../../components/Loader/Loader";
 import { GetDefaultValuesForm } from "../../../../utils/GetDefaultValuesForm";
 import { SettingsFormSchema } from "../../../../features/schemas/SettingsFormSchema";
+import { SettingsFormItem } from "./SettingsFormItem";
 
 type Props = {
   userBirthday: Date | undefined;
@@ -57,50 +58,58 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   return (
     <>
       <form onSubmit={onSubmit} className={s.form}>
-        <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>{translate("username")}</label>
-          <input
-            id={"settings-profile-userName"}
-            {...register("userName", { required: true, minLength: 5, maxLength: 15 })}
-            className={`${errors.userName ? s.form__textInput__error : s.form__textInput}`}
-          />
-          {errors.userName && <p className={s.form__error}>{errors.userName.message}</p>}
-        </div>
+        <SettingsFormItem
+          translate={translate}
+          id={"settings-profile-userName"}
+          register={register}
+          error={errors.userName}
+          errorMessage={errors?.userName?.message}
+          registerName={"userName"}
+          translateName={"username"}
+          minLength={5}
+          maxLength={15}
+        />
 
-        <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>{translate("firstname")}</label>
-          <input
-            id={"settings-profile-firstName"}
-            {...register("firstName", { required: true, minLength: 2, maxLength: 15 })}
-            className={`${errors.firstName ? s.form__textInput__error : s.form__textInput}`}
-          />
-          {errors.firstName && <p className={s.form__error}>{errors.firstName.message}</p>}
-        </div>
+        <SettingsFormItem
+          translate={translate}
+          id={"settings-profile-firstName"}
+          register={register}
+          error={errors.firstName}
+          errorMessage={errors?.firstName?.message}
+          registerName={"firstName"}
+          translateName={"firstname"}
+          minLength={2}
+          maxLength={15}
+        />
 
-        <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>{translate("lastname")}</label>
-          <input
-            id={"settings-profile-lastName"}
-            {...register("lastName", { required: true, minLength: 2, maxLength: 15 })}
-            className={`${errors.lastName ? s.form__textInput__error : s.form__textInput}`}
-          />
-          {errors.lastName && <p className={s.form__error}>{errors.lastName.message}</p>}
-        </div>
+        <SettingsFormItem
+          translate={translate}
+          id={"settings-profile-lastName"}
+          register={register}
+          error={errors.lastName}
+          errorMessage={errors?.lastName?.message}
+          registerName={"lastName"}
+          translateName={"lastname"}
+          minLength={2}
+          maxLength={15}
+        />
 
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("birthday")}</label>
           <DatePick setDate={setDateOfBirth} userBirthday={userBirthday} />
         </div>
 
-        <div className={s.form__itemWrapper}>
-          <label className={s.form__label}>{translate("city")}</label>
-          <input
-            id={"settings-profile-city"}
-            {...register("city", { required: true, minLength: 3, maxLength: 20 })}
-            className={`${errors.city ? s.form__textInput__error : s.form__textInput}`}
-          />
-          {errors.city && <p className={s.form__error}>{errors.city.message}</p>}
-        </div>
+        <SettingsFormItem
+          translate={translate}
+          id={"settings-profile-city"}
+          register={register}
+          error={errors.city}
+          errorMessage={errors?.city?.message}
+          registerName={"city"}
+          translateName={"city"}
+          minLength={3}
+          maxLength={20}
+        />
 
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("aboutMe")}</label>

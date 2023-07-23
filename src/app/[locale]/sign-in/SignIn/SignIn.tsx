@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +6,7 @@ import { StatusCode, usePostLoginMutation } from "../../../../api/auth.api";
 import { SignInSchema } from "../../../../features/schemas/SignInSchema";
 import { redirect } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
+import { FormItem } from "../../sign-up/SignUp/SignUpForm/FormItem";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -21,7 +21,7 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   } = useForm({
     resolver: yupResolver(SignInSchema),
   });
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
   const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
 
   const onSubmit = async (data: any) => {
@@ -49,68 +49,31 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
-        <div className={" mt-[18px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("email")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              id={"sign-in-email-input"}
-              {...register("email")}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.email ? "border-red-700" : ""
-              }`}
-            />
-            {errors.email && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[14px]"} id={"sign-in-errors-email-message"}>
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={" mt-[18px]"}
+          translate={translate}
+          register={register}
+          error={errors.email}
+          errorMessage={errors?.email?.message}
+          registerName={"email"}
+          translateName={"email"}
+          id={"sign-in-email-input"}
+        />
 
-        <div className={" mt-[18px] mb-[48px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("password")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              id={"sign-in-password-input"}
-              {...register("password")}
-              type={`${showPass ? "text" : "password"}`}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.password ? "border-red-700" : ""
-              }`}
-            />
-            {showPass ? (
-              <Image
-                src={"/img/hidePass.svg"}
-                alt={"hidePass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-              />
-            ) : (
-              <Image
-                src={"/img/showPass.svg"}
-                alt={"showPass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-              />
-            )}
-            {errors.password && (
-              <p
-                className={"absolute left-[5%] text-[--danger-500] text-[14px]"}
-                id={"sign-in-errors-password-message"}
-              >
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <FormItem
+          marginTop={" mt-[18px] "}
+          marginBottom={"mb-[48px]"}
+          translate={translate}
+          register={register}
+          error={errors.password}
+          errorMessage={errors?.password?.message}
+          registerName={"password"}
+          translateName={"password"}
+          id={"sign-in-password-input"}
+          showPasswordIcon={true}
+          show={showPass}
+          setShow={setShowPass}
+        />
 
         <Link
           href={"/forgot-password"}
