@@ -23,6 +23,8 @@
       min-width: 50%;
 
 
+
+
       .post_container_info_header {
         padding: 10px;
         display: flex;
@@ -58,9 +60,13 @@
 
         .postBodyEdit_form_text {
           margin-top: 10px;
+          padding: 10px;
 
           p {
             color: #8D9094;
+            &:last-child{
+              text-align: end;
+            }
           }
 
           .postBodyEdit_textarea {
@@ -115,22 +121,27 @@
           .container_info_footer_header_likes {
             padding: 15px;
             display: flex;
+
             .container_info_footer_header_likes_images {
               font-size: 14px;
-              div{
+
+              div {
                 display: flex;
                 flex-direction: row;
-                img{
+
+                img {
                   width: 24px;
                   height: 24px;
                   border-radius: 100px;
                   margin-left: -10px;
-                  &:first-child{
-                  margin: 0;
+
+                  &:first-child {
+                    margin: 0;
                   }
                 }
               }
-              div:last-child{
+
+              div:last-child {
                 color: #8D9094;
                 font-size: 12px;
               }
@@ -270,6 +281,10 @@
     &:hover {
       font-weight: bold;
     }
+  }
+
+  .post_container_info_comments{
+    max-height: 80%;
   }
 }
 

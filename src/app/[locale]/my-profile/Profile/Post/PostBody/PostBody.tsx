@@ -69,7 +69,7 @@ export const PostBody = ({
         )}
       </div>
       {isSuccess ? (
-        <div>
+        <div className={style.post_container_info_comments}>
           <PostComment
             description={data.description}
             userName={userName}
