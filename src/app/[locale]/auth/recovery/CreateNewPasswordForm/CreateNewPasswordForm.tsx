@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import {
@@ -11,6 +10,7 @@ import {
 } from "../../../../../api/auth.api";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { CreateNewPasswordFormSchema } from "../../../../../features/schemas/CreateNewPasswordFormSchema";
+import { CreateFormItem } from "./CreateFormItem/CreateFormItem";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -26,10 +26,11 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     resolver: yupResolver(CreateNewPasswordFormSchema),
   });
 
-  const [showPass, setShowPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
+  const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [isCodeSuccess, setIsCodeSuccess] = useState(false);
   const [recoveryCode, setRecoveryCode] = useState("");
+  const [serverError, setServerError] = useState("");
   const router = useRouter();
 
   const [postNewPassword, { isSuccess, isLoading }] = usePostNewPasswordMutation();
@@ -44,7 +45,8 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
         .then(() => setIsCodeSuccess(true))
         .catch((err) => {
           if (err.data.statusCode === StatusCode.badRequest) {
-            setError("passwordConfirm", { message: err.data.messages[0]?.message });
+            setServerError(err.data.messages[0]?.message);
+            //setError("passwordConfirm", { message: err.data.messages[0]?.message });
           }
         });
     }
@@ -56,7 +58,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     }
   }, [isSuccess, router]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { password: string }) => {
     if (isCodeSuccess) {
       postNewPassword({ newPassword: data.password, recoveryCode });
       sessionStorage.removeItem("userEmailRecoveryCode");
@@ -66,85 +68,39 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-[36px] pb-[24px]"}>
-        <div className={" mt-[18px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("password")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("password")}
-              type={`${showPass ? "text" : "password"}`}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.password ? "border-red-700" : ""
-              }`}
-            />
-            {showPass ? (
-              <Image
-                src={"/img/hidePass.svg"}
-                alt={"hidePass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-              />
-            ) : (
-              <Image
-                src={"/img/showPass.svg"}
-                alt={"showPass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowPass(!showPass)}
-              />
-            )}
-            {errors.password && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[11px]"}>{errors.password.message}</p>
-            )}
-          </div>
-        </div>
+        <CreateFormItem
+          marginTop={" mt-[18px]"}
+          translate={translate}
+          register={register}
+          showValue={showPass}
+          setShowCallback={setShowPass}
+          error={errors.password}
+          errorMessage={errors?.password?.message}
+          translateName={"password"}
+          registerName={"password"}
+        />
 
-        <div className={" mt-[18px] mb-[26px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
-            <label>{translate("passwordConf")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("passwordConfirm")}
-              type={`${showConfirmPass ? "text" : "password"}`}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-                errors.passwordConfirm ? "border-red-700" : ""
-              }`}
-            />
-            {showConfirmPass ? (
-              <Image
-                src={"/img/hidePass.svg"}
-                alt={"hidePass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-              />
-            ) : (
-              <Image
-                src={"/img/showPass.svg"}
-                alt={"showPass"}
-                width={30}
-                height={30}
-                className={"absolute top-[3px] right-[24px] cursor-pointer"}
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-              />
-            )}
-            {errors.passwordConfirm && (
-              <p className={"absolute left-[5%] text-[--danger-500] text-[11px]"}>{errors.passwordConfirm.message}</p>
-            )}
-          </div>
-        </div>
+        <CreateFormItem
+          marginTop={"mt-[18px]"}
+          marginBottom={"mb-[26px]"}
+          translate={translate}
+          register={register}
+          showValue={showConfirmPass}
+          setShowCallback={setShowConfirmPass}
+          error={errors.passwordConfirm}
+          errorMessage={errors?.passwordConfirm?.message}
+          translateName={"passwordConf"}
+          registerName={"passwordConfirm"}
+        />
+
+        {serverError && <p className={"text-red-500 mb-3.5 "}>{serverError}</p>}
         <p className={"text-left ml-5 text-[--light-900] leading-5 mb-[40px]"}>{translate("desc")}</p>
 
         <input
           type="submit"
-          className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer`}
+          className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-60`}
           value={String(translate("btnName"))}
+          disabled={!!serverError}
         />
       </form>
       {isLoading || (isCheckLoading && <Loader />)}

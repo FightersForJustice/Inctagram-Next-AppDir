@@ -18,9 +18,7 @@ const Confirm: React.FC<Props> = ({ code, translate }) => {
   useEffect(() => {
     registrationConfirm({ confirmationCode: String(code) })
       .unwrap()
-      .then((res) => {
-        console.log(res);
-      })
+      .then()
       .catch((err) => {
         toast.error("Error confirmation");
         if (err.data.error) {

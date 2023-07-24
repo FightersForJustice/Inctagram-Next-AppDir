@@ -2,21 +2,16 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePostPasswordRecoveryMutation } from "../../../../api/auth.api";
 import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { Loader } from "../../../../components/Loader/Loader";
+import { forgotPasswordSchema } from "../../../../features/schemas/ForgotPasswordFormSchema";
+import { EmailForm } from "./EmailForm/EmailForm";
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
-
-const schema = yup
-  .object({
-    email: yup.string().email().required(),
-  })
-  .required();
 
 const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
@@ -24,7 +19,7 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(forgotPasswordSchema),
   });
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -55,24 +50,12 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
-        <div className={" mt-[18px]"}>
-          <div className={" text-left ml-5 text-[--light-900] text-[14px] font-extrabold"}>
-            <label>{translate("email")}</label>
-          </div>
-          <div className={"relative"}>
-            <input
-              {...register("email")}
-              className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] mb-[15px] ${
-                errors.email ? "border-red-700" : ""
-              }`}
-            />
-            {errors.email && (
-              <p className={"absolute left-[20px] top-[35px] text-[--danger-500] text-[11px]"}>
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-        </div>
+        <EmailForm
+          translate={translate}
+          register={register}
+          error={errors.email}
+          errorMessage={errors?.email?.message}
+        />
 
         <p className={"max-w-[90%] text-left ml-5 text-[--light-900] leading-[20px] mb-[20px]"}>{translate("desc")}</p>
 

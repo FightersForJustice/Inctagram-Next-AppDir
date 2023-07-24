@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { InputError } from "./InputError";
 import { FieldError, UseFormRegister } from "react-hook-form";
-import { ShowHidePass } from "./ShowHidePass";
+import { ShowHidePass } from "../../../../../components/ShowHidePass/ShowHidePass";
 
 type Props = {
   marginTop: string;
