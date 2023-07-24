@@ -6,8 +6,8 @@ import { Loader } from "../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { useGetPostsPaginationQuery } from "../../../../api/posts.api";
+import { EditPostModal } from "../../../../components/Modals/EditPostModal/EditPostModal";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -75,9 +75,9 @@ export const Profile: React.FC<Props> = ({
       <div className={s.profile__posts}>{postsImages()}</div>
 
       {open && (
-        <Modal
+        <EditPostModal
           title={modalHeader}
-          width={"800px"}
+          width={"1200px"}
           onClose={() => {
             setOpen(false);
           }}
@@ -91,7 +91,7 @@ export const Profile: React.FC<Props> = ({
             userName={userData?.userName}
             setOpen={setOpen}
           />
-        </Modal>
+        </EditPostModal>
       )}
     </>
   );

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
