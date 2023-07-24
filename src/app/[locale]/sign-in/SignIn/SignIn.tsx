@@ -24,7 +24,7 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   const [showPass, setShowPass] = useState(true);
   const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = (data: any) => {
     postLogin({
       email: data.email,
       password: data.password,

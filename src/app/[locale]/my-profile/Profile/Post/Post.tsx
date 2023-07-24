@@ -7,7 +7,7 @@ import { PostBody } from "./PostBody/PostBody";
 import { PostBodyEdit } from "./PostBody/PostBodyEdit";
 
 type PropsType = {
-  setOpen: any;
+  setOpen: (value: boolean) => void;
   postId?: number;
   avatar?: string;
   userName?: string;
