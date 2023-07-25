@@ -1,7 +1,7 @@
 import React from "react";
 
 import s from "./CroppingSizeModal.module.scss";
-import { AspectRatioType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
+import { AspectRatioType } from "../../../app/[locale]/my-profile/CreatePost/CreatePost";
 
 type Props = {
   setAspectRatio: (value: AspectRatioType) => void;

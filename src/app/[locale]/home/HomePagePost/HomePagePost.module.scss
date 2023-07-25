@@ -1,0 +1,167 @@
+.post {
+
+  max-width: 491px;
+  position: relative;
+  border-bottom: 1px solid var(--dark-100);
+  margin-bottom: 36px;
+  padding-top: 24px;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 220px;
+    margin-bottom: 12px;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__time {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--light-900);
+  }
+
+  &__img {
+    margin-bottom: 12px;
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+
+  }
+
+  &__desc {
+    display: flex;
+    gap: 12px;
+
+    &__ava {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  &__text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 14px;
+
+    &__name {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 24px;
+    }
+  }
+
+  &__likes {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    &__avatars {
+      display: flex;
+
+
+    }
+
+    &__amount {
+      font-size: 14px;
+      font-weight: 400;
+      padding-left: 50px;
+    }
+
+    &__text {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    &__ava1 {
+      position: absolute;
+      left: 0;
+      bottom: 105px;
+    }
+
+    &__ava2 {
+      position: absolute;
+      left: 15px;
+      bottom: 105px;
+    }
+
+    &__ava3 {
+      position: absolute;
+      left: 30px;
+      bottom: 105px;
+    }
+  }
+
+  &__comments {
+    cursor: pointer;
+    color: var(--light-900, #8D9094);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  &__bottom {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 0 0;
+    align-items: center;
+  }
+
+  &__input {
+    background: none;
+    outline: none;
+    color: var(--light-900, #8D9094);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    width: 80%;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: all .2s ease;
+
+    &:focus {
+      border: 1px solid var(--primary-500);
+    }
+
+    &::placeholder {
+      color: var(--light-900, #8D9094);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+
+  }
+
+  &__btn {
+    color: var(--primary-500);
+    font-weight: bold;
+  }
+}

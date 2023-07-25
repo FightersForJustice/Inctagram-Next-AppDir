@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
-import { FiltersModal } from "../../../../components/FiltersModal/FiltersModal";
+import { FiltersModal } from "../../../../components/Modals/FiltersModal/FiltersModal";
 import {
   useCreatePostMutation,
   useDeletePostImageMutation,

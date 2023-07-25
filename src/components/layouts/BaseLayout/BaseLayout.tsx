@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Header } from "../Header/Header";
+import { Header } from "../../Header/Header";
 
 type Props = {
   title?: string;
