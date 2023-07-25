@@ -1,10 +1,10 @@
 import React, { MutableRefObject, PropsWithChildren } from "react";
 
 import "./FiltersModal.css";
-import { useUploadPostImageMutation } from "../../api/posts.api";
-import { Loader } from "../Loader/Loader";
+import { useUploadPostImageMutation } from "../../../api/posts.api";
+import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
-import { applyImageFilter } from "../../utils/applyImageFilter";
+import { applyImageFilter } from "../../../utils/applyImageFilter";
 import { dataURLToBlob } from "blob-util";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({

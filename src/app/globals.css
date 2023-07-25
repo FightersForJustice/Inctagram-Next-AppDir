@@ -44,3 +44,20 @@ body {
     --disabled: rgba(227, 227, 227, 0.1);
   }
 }
+
+
+body::-webkit-scrollbar {
+   width: 10px;               /* ширина всей полосы прокрутки */
+
+ }
+
+body::-webkit-scrollbar-track {
+   background: var(--dark-300);        /* цвет зоны отслеживания */
+   border-radius: 20px;
+ }
+
+body::-webkit-scrollbar-thumb {
+   background-color: var(--dark-100);    /* цвет бегунка */
+   border-radius: 20px;       /* округлось бегунка */
+  border: 1px solid var(--dark-500);
+ }

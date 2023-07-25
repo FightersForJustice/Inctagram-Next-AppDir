@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import s from "../CreatePost.module.scss";
-import { CroppingModal } from "../../../../../components/CroppingModal/CroppingModal";
+import { CroppingModal } from "../../../../../components/Modals/CroppingModal/CroppingModal";
 import { AspectRatio } from "./AspectRatio/AspectRatio";
 import { Range } from "./Range/Range";
 import { Gallery } from "./Gallery/Gallery";

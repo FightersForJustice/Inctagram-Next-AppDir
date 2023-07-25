@@ -15,7 +15,7 @@ import { GetResponse } from "../../../../api/profile.api";
 type Props = {
   pathname: string;
   paidAccount: boolean;
-  userData: GetResponse;
+  userData?: GetResponse;
 };
 
 export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData }) => {
@@ -31,6 +31,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData })
     logout()
       .unwrap()
       .then(() => {
+        sessionStorage.clear();
         router.push("/sign-in");
         toast.success("Logout success");
       })
@@ -216,7 +217,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData })
         <CreatePost
           setShowCreatePostModal={setShowCreatePostModal}
           showCreatePostModal={showCreatePostModal}
-          userData={userData}
+          userData={userData!}
         />
       )}
       {isLoading && <Loader />}
