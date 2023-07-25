@@ -12,10 +12,9 @@ type PropsType = {
   avatar?: string;
   userName?: string;
   setModalHeader: any;
-  refetchPosts?: any;
 };
 
-export const Post = ({ postId, avatar, userName, setOpen, setModalHeader, refetchPosts }: PropsType) => {
+export const Post = ({ postId, avatar, userName, setOpen, setModalHeader }: PropsType) => {
   const { data, isSuccess, refetch } = useGetPostQuery(postId ?? 0);
   const [editMode, setEditMode] = useState(false);
 
@@ -56,7 +55,6 @@ export const Post = ({ postId, avatar, userName, setOpen, setModalHeader, refetc
         ) : (
           <PostBody
             setOpen={setOpen}
-            refetchPosts={refetchPosts}
             uploadId={postId ?? 0}
             setEditMode={setEditMode}
             avatar={avatar}

@@ -25,16 +25,16 @@ export const Profile: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
-
-  const getPostsRequest = useGetPostsPaginationQuery(userData?.id.toString());
+  const { data, isSuccess } = useGetPostsPaginationQuery(userData?.id.toString());
   const openPostHandler = (postId: number) => {
     setOpen(true);
     setSelectedPost(postId);
   };
 
+  if (userData) sessionStorage.setItem("userId", userData.id.toString());
   const postsImages = () => {
-    return getPostsRequest.isSuccess ? (
-      getPostsRequest.data?.items.map((i) => {
+    return isSuccess ? (
+      data?.items.map((i) => {
         if (i.images[0])
           return (
             <Image
@@ -84,7 +84,6 @@ export const Profile: React.FC<Props> = ({
           isOkBtn={false}
         >
           <Post
-            refetchPosts={getPostsRequest.refetch}
             setModalHeader={setModalHeader}
             postId={selectedPost}
             avatar={userData?.avatars[0].url}

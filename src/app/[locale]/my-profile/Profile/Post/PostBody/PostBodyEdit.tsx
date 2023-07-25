@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import style from "../Post.module.scss";
 import { TransparentBtn } from "../../../../../../components/TransparentBtn/TransparentBtn";
@@ -5,12 +6,12 @@ import { useForm } from "react-hook-form";
 import { useUpdatePostMutation } from "../../../../../../api/posts.api";
 
 type PropsType = {
-  refetch: () => void;
   setOpen: (value: boolean) => void;
   avatar?: string;
   userName?: string;
   description?: string;
   uploadId?: number;
+  refetch?: any;
 };
 export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen, refetch }: PropsType) => {
   const [value, setValue] = useState<string>(description ?? "");
@@ -37,8 +38,8 @@ export const PostBodyEdit = ({ avatar, userName, description, uploadId, setOpen,
       postId: uploadId ?? 0,
     };
     await setPost(reqPayload);
-    setOpen(false);
     refetch();
+    setOpen(false);
   };
 
   useEffect(() => {
