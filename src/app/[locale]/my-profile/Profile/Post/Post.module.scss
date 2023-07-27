@@ -1,11 +1,18 @@
+@mixin flexContainer($flex-direction: none,$justify-content: none, $align-items: none) {
+  display: flex;
+  justify-content: $justify-content;
+  flex-direction: $flex-direction;
+  align-items: $align-items;
+}
+
+
 .post_container {
   font-size: 14px;
   line-height: 24px;
   width: 100%;
 
   .post_container_body {
-    display: flex;
-    flex-direction: row;
+    @include flexContainer(row);
     width: 100%;
 
 
@@ -23,19 +30,15 @@
       min-width: 50%;
 
 
-
-
       .post_container_info_header {
+        @include flexContainer(row, space-between,);
         padding: 10px;
-        display: flex;
-        justify-content: space-between;
         font-weight: lighter;
         border-bottom: var(--dark-100) 1px solid;
         position: relative;
 
         .post_container_info_header_userData {
-          display: flex;
-          align-items: center;
+          @include flexContainer(row, none, center);
 
           .container_info_header_avatar_img {
             display: block;
@@ -53,9 +56,8 @@
       }
 
       .postBodyEdit_form {
+        @include flexContainer(column, space-between);
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
         min-height: 325px;
 
         .postBodyEdit_form_text {
@@ -64,7 +66,8 @@
 
           p {
             color: #8D9094;
-            &:last-child{
+
+            &:last-child {
               text-align: end;
             }
           }
@@ -98,15 +101,13 @@
 
 
           .container_info_footer_header_header {
+            @include flexContainer(row, space-between);
             padding: 15px;
-            display: flex;
-            justify-content: space-between;
             border-top: 1px solid var(--dark-100);
 
             .container_info_footer_header_header_firstEl {
-              display: flex;
+              @include flexContainer(row, space-between);
               width: 12%;
-              justify-content: space-between;
             }
 
             .container_info_footer_header_header_secEl {
@@ -126,8 +127,7 @@
               font-size: 14px;
 
               div {
-                display: flex;
-                flex-direction: row;
+                @include flexContainer(row, none, none);
 
                 img {
                   width: 24px;
@@ -155,11 +155,9 @@
         }
 
         form {
+          @include flexContainer(row, space-between);
           width: 100%;
           border-top: var(--dark-100) 1px solid;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
           padding: 8px;
 
           input {
@@ -183,16 +181,14 @@
 
 
 .comment {
+  @include flexContainer(row, space-between, center);
   border-bottom: var(--dark-100) 1px solid;
   width: 100%;
-  display: flex;
   line-height: 18px;
   padding: 10px;
-  justify-content: space-between;
-  align-items: center;
 
   .comment_body {
-    display: flex;
+    @include flexContainer();
 
     .comment_avatarBlock {
 
@@ -208,9 +204,7 @@
 
 
     .comment_commentBody {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      @include flexContainer(column, space-between);
       min-width: 60%;
       max-width: 80%;
 
@@ -254,7 +248,7 @@
   padding: 10px;
 
   .SmartMenu_edit {
-    display: flex;
+    @include flexContainer();
     padding: 5px;
 
     img {
@@ -269,7 +263,7 @@
   }
 
   .SmartMenu_delete {
-    display: flex;
+    @include flexContainer();
     padding: 5px;
     width: 100%;
 
@@ -283,7 +277,7 @@
     }
   }
 
-  .post_container_info_comments{
+  .post_container_info_comments {
     max-height: 80%;
   }
 }
