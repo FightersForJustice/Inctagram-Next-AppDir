@@ -8,6 +8,7 @@ import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
 import { useGetPostsPaginationQuery } from "../../../../api/posts.api";
 import { EditPostModal } from "../../../../components/Modals/EditPostModal/EditPostModal";
+import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -25,32 +26,8 @@ export const Profile: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
-  const { data, isSuccess } = useGetPostsPaginationQuery(userData?.id.toString());
-  const openPostHandler = (postId: number) => {
-    setOpen(true);
-    setSelectedPost(postId);
-  };
 
   if (userData) sessionStorage.setItem("userId", userData.id.toString());
-  const postsImages = () => {
-    return isSuccess ? (
-      data?.items.map((i) => {
-        if (i.images[0])
-          return (
-            <Image
-              src={i.images ? i.images[0].url : "/img/profile/posts/post1.png"}
-              alt={"post"}
-              width={234}
-              height={228}
-              key={i.id}
-              onClick={() => openPostHandler(i.id)}
-            />
-          );
-      })
-    ) : (
-      <Loader />
-    );
-  };
 
   return (
     <>
@@ -72,7 +49,9 @@ export const Profile: React.FC<Props> = ({
           paidAccount={paidAccount}
         />
       </div>
-      <div className={s.profile__posts}>{postsImages()}</div>
+      <div className={s.profile__posts}>
+        <InfiniteScrollMyPosts userData={userData} setOpen={setOpen} setSelectedPost={setSelectedPost} />
+      </div>
 
       {open && (
         <EditPostModal

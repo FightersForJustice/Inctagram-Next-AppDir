@@ -68,10 +68,10 @@ export const postsApi = createApi({
         };
       },
     }),
-    getPostsPagination: builder.query<PostsWithPagination, string>({
-      query: (userId) => {
+    getPostsPagination: builder.query<PostsWithPagination, { userId: string; page: number }>({
+      query: ({ userId, page }) => {
         return {
-          url: `posts/${userId}`,
+          url: `posts/${userId}?page=${page}`,
           method: "GET",
         };
       },
