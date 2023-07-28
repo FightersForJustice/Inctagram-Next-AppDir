@@ -68,14 +68,22 @@ export const postsApi = createApi({
         };
       },
     }),
-    getPostsPagination: builder.query<PostsWithPagination, { userId: string; page: number }>({
-      query: ({ userId, page }) => {
+    getPostsPagination: builder.query<PostsWithPagination, string>({
+      query: (userId) => {
         return {
-          url: `posts/${userId}?page=${page}`,
+          url: `posts/${userId}`,
           method: "GET",
         };
       },
       providesTags: ["Post"],
+    }),
+    getPosts: builder.query<PostsWithPagination, number>({
+      query: (pageNumber) => {
+        return {
+          url: `posts?pageNumber=${pageNumber}`,
+          method: "GET",
+        };
+      },
     }),
   }),
 });
@@ -89,6 +97,8 @@ export const {
   useDeletePostMutation,
   useGetPostsPaginationQuery,
   useLazyGetPostsPaginationQuery,
+  useGetPostsQuery,
+  useLazyGetPostsQuery,
 } = postsApi;
 
 type Image = {
@@ -121,19 +131,19 @@ export type PostResponse = {
   updatedAt: string;
 };
 
+export type PostsItem = {
+  id: number;
+  description: string;
+  location: string;
+  images: Image[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type PostsWithPagination = {
   totalCount: number;
   pagesCount: number;
   page: number;
   pageSize: number;
-  items: [
-    {
-      id: number;
-      description: string;
-      location: string;
-      images: Image[];
-      createdAt: string;
-      updatedAt: string;
-    },
-  ];
+  items: PostsItem[];
 };

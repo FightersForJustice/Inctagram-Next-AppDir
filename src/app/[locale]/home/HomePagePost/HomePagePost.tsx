@@ -2,8 +2,14 @@ import React from "react";
 import s from "./HomePagePost.module.scss";
 import Image from "next/image";
 import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
+import { PostsItem } from "../../../../api/posts.api";
+import { formatTimeFromDateString } from "../../../../utils/formatTimeFromDateString";
 
-export const HomePagePost = () => {
+type Props = {
+  post: PostsItem;
+};
+
+export const HomePagePost: React.FC<Props> = ({ post }) => {
   return (
     <div className={s.post}>
       <div className={s.post__top}>
@@ -13,11 +19,17 @@ export const HomePagePost = () => {
           <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
-          <p className={s.post__time}>22 Minutes ago</p>
+          <p className={s.post__time}>{formatTimeFromDateString(post.createdAt)}</p>
         </div>
         <HomePostPopup />
       </div>
-      <Image src={"/img/home/post.png"} alt={"post"} width={491} height={504} className={s.post__img} />
+      <Image
+        src={post.images[0]?.url ? post.images[0].url : "/img/home/post.png"}
+        alt={"post"}
+        width={491}
+        height={504}
+        className={s.post__img}
+      />
       <div className={s.post__icons}>
         <div className={s.post__icons__wrapper}>
           <svg
@@ -120,8 +132,8 @@ export const HomePagePost = () => {
       <div className={s.post__desc}>
         <Image src={"/img/home/ava.png"} alt={"ava"} width={36} height={36} className={s.post__desc__ava} />
         <p className={s.post__text}>
-          <span className={s.post__text__name}>URLProfiele</span> Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <span className={s.post__text__name}>URLProfiele </span>
+          {post.description}
         </p>
       </div>
       <div className={s.post__likes}>
