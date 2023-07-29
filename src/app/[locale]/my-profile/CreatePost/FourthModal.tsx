@@ -2,12 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "../../../../components/Modals/FiltersModal/FiltersModal";
-import {
-  useCreatePostMutation,
-  useDeletePostImageMutation,
-  useGetPostsPaginationQuery,
-  useLazyGetPostsPaginationQuery,
-} from "../../../../api/posts.api";
+import { useCreatePostMutation, useDeletePostImageMutation } from "../../../../api/posts.api";
 import { toast } from "react-toastify";
 import { Loader } from "../../../../components/Loader/Loader";
 import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
@@ -39,8 +34,6 @@ const FourthModal: React.FC<Props> = ({
 
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
-  const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
-  const { refetch } = useGetPostsPaginationQuery({ userId: userData?.id.toString(), pageNumber: 1 });
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -57,8 +50,6 @@ const FourthModal: React.FC<Props> = ({
     })
       .unwrap()
       .then((res) => {
-        //getPosts({ userId: userData?.id.toString(), pageNumber: 1 });
-        refetch();
         toast.success("Post created");
         setShowCreatePostModal(false);
       })
@@ -145,7 +136,6 @@ const FourthModal: React.FC<Props> = ({
       )}
       {isDeleting && <Loader />}
       {isLoading && <Loader />}
-      {isLoadingPosts && <Loader />}
     </>
   );
 };

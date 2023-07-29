@@ -31,10 +31,9 @@ export const Post = ({ postId, avatar, userName, setOpen, setModalHeader }: Prop
       <div className={style.post_container_body}>
         <div className={style.post_container_body_image}>
           {isSuccess ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={data.images[0].url}
-              alt="/img/settings-profile/load-avatar.svg"
+              src={data.images[0]?.url ? data.images[0].url : "/img/settings-profile/load-avatar.svg"}
+              alt="avatar"
               className={style.post_container_body_image_img}
             />
           ) : (

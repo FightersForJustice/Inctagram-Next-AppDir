@@ -1,0 +1,13 @@
+.post {
+  width: 234px;
+  height: 228px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all .2s linear;
+
+
+  &:hover {
+    transform: scale(1.01);
+    border: 2px solid var(--primary-500);
+  }
+}

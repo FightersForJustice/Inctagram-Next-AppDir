@@ -1,6 +1,7 @@
-import { useDeletePostMutation, useLazyGetPostsPaginationQuery } from "../../../../../../../../api/posts.api";
+import { useDeletePostMutation } from "../../../../../../../../api/posts.api";
 import { TransparentBtn } from "../../../../../../../../components/TransparentBtn/TransparentBtn";
 import React from "react";
+import { Loader } from "../../../../../../../../components/Loader/Loader";
 
 export const DeletePost = ({
   postId,
@@ -11,25 +12,26 @@ export const DeletePost = ({
   setOpenDeleteModal: any;
   setOpen: any;
 }) => {
-  const [del] = useDeletePostMutation();
-  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
+  const [del, { isLoading: isDeleting }] = useDeletePostMutation();
   const deletePost = async () => {
     await del(postId);
-    getPosts({ userId: sessionStorage.getItem("userId")!, pageNumber: 1 });
     setOpenDeleteModal(false);
     setOpen(false);
   };
 
   return (
-    <div>
-      <p>Are you sure you want to delete this post?</p>
-      <div className={"flex justify-between mt-5"}>
-        <div className={"w-1/2"}></div>
-        <TransparentBtn onClick={deletePost}>Yes</TransparentBtn>
-        <TransparentBtn onClick={() => setOpenDeleteModal(false)} style={{ background: "#397cf6", color: "white" }}>
-          No
-        </TransparentBtn>
+    <>
+      <div>
+        <p>Are you sure you want to delete this post?</p>
+        <div className={"flex justify-between mt-5"}>
+          <div className={"w-1/2"}></div>
+          <TransparentBtn onClick={deletePost}>Yes</TransparentBtn>
+          <TransparentBtn onClick={() => setOpenDeleteModal(false)} style={{ background: "#397cf6", color: "white" }}>
+            No
+          </TransparentBtn>
+        </div>
       </div>
-    </div>
+      {isDeleting && <Loader />}
+    </>
   );
 };

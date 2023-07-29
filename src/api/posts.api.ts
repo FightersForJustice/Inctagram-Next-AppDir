@@ -32,6 +32,7 @@ export const postsApi = createApi({
           body: data,
         };
       },
+      invalidatesTags: ["Post"],
     }),
     deletePostImage: builder.mutation({
       query: (uploadId: string) => {
@@ -67,6 +68,7 @@ export const postsApi = createApi({
           method: "DELETE",
         };
       },
+      invalidatesTags: ["Post"],
     }),
     getPostsPagination: builder.query<PostsWithPagination, { userId: string; pageNumber: number }>({
       query: ({ userId, pageNumber }) => {
@@ -84,6 +86,7 @@ export const postsApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Post"],
     }),
   }),
 });
@@ -95,7 +98,6 @@ export const {
   useGetPostQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
-  useGetPostsPaginationQuery,
   useLazyGetPostsPaginationQuery,
   useLazyGetPostsQuery,
 } = postsApi;

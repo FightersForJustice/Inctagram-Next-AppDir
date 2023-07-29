@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import { GetResponse } from "../../../../api/profile.api";
-import { Loader } from "../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
-import { useGetPostsPaginationQuery } from "../../../../api/posts.api";
 import { EditPostModal } from "../../../../components/Modals/EditPostModal/EditPostModal";
 import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
 

@@ -5,6 +5,8 @@ import { PostsItem, useLazyGetPostsPaginationQuery } from "../../../../../api/po
 import { GetResponse } from "../../../../../api/profile.api";
 import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
+import s from "./InfiniteScrollMyPosts.module.scss";
+
 type Props = {
   userData: GetResponse;
   setOpen: (value: boolean) => void;
@@ -16,8 +18,14 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [getPosts, { isSuccess }] = useLazyGetPostsPaginationQuery();
+  const [getPosts, { isSuccess, data, isLoading }] = useLazyGetPostsPaginationQuery();
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
+
+  useEffect(() => {
+    if (data?.items) {
+      setPosts(data.items);
+    }
+  }, [data?.items]);
 
   useEffect(() => {
     if (posts.length === totalCount) {
@@ -46,28 +54,31 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   const postsImages = () => {
-    return isSuccess ? (
-      posts.map((i) => {
-        if (i.images[0])
-          return (
-            <Image
-              src={i.images[0].url ? i.images[0].url : "/img/profile/posts/post1.png"}
-              alt={"post"}
-              width={234}
-              height={228}
-              key={i.id}
-              onClick={() => openPostHandler(i.id)}
-            />
-          );
-      })
-    ) : (
-      <Loader />
-    );
+    return posts.map((i) => {
+      return (
+        <Image
+          src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}
+          alt={"post"}
+          width={234}
+          height={228}
+          key={i.id}
+          onClick={() => openPostHandler(i.id)}
+          className={s.post}
+        />
+      );
+    });
   };
 
   return (
     <>
-      {postsImages()}
+      {posts.length > 0 ? (
+        postsImages()
+      ) : (
+        <div className={"m-auto"}>
+          <p className={"font-bold text-2xl"}>You don&apos;t have any posts yet 😢</p>
+        </div>
+      )}
+      {isLoading && <Loader />}
       {fetching && <Loader />}
     </>
   );
