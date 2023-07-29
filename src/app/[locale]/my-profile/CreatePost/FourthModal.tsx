@@ -5,6 +5,7 @@ import { FiltersModal } from "../../../../components/Modals/FiltersModal/Filters
 import {
   useCreatePostMutation,
   useDeletePostImageMutation,
+  useGetPostsPaginationQuery,
   useLazyGetPostsPaginationQuery,
 } from "../../../../api/posts.api";
 import { toast } from "react-toastify";
@@ -39,6 +40,7 @@ const FourthModal: React.FC<Props> = ({
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
+  const { refetch } = useGetPostsPaginationQuery({ userId: userData?.id.toString(), pageNumber: 1 });
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -55,7 +57,8 @@ const FourthModal: React.FC<Props> = ({
     })
       .unwrap()
       .then((res) => {
-        getPosts(userData?.id.toString());
+        //getPosts({ userId: userData?.id.toString(), pageNumber: 1 });
+        refetch();
         toast.success("Post created");
         setShowCreatePostModal(false);
       })

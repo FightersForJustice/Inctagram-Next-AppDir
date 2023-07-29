@@ -68,10 +68,10 @@ export const postsApi = createApi({
         };
       },
     }),
-    getPostsPagination: builder.query<PostsWithPagination, string>({
-      query: (userId) => {
+    getPostsPagination: builder.query<PostsWithPagination, { userId: string; pageNumber: number }>({
+      query: ({ userId, pageNumber }) => {
         return {
-          url: `posts/${userId}`,
+          url: `posts/${userId}?pageNumber=${pageNumber}`,
           method: "GET",
         };
       },
@@ -97,7 +97,6 @@ export const {
   useDeletePostMutation,
   useGetPostsPaginationQuery,
   useLazyGetPostsPaginationQuery,
-  useGetPostsQuery,
   useLazyGetPostsQuery,
 } = postsApi;
 

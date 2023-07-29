@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { PostsItem, useLazyGetPostsPaginationQuery } from "../../../../../api/posts.api";
 import { GetResponse } from "../../../../../api/profile.api";
+import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
 type Props = {
   userData: GetResponse;
@@ -14,38 +15,30 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(1);
   const [getPosts, { isSuccess }] = useLazyGetPostsPaginationQuery();
+  const fetchingValue = useScrollFetching(100, fetching, setFetching);
 
   useEffect(() => {
-    const userId = sessionStorage.getItem("userId");
-    if (fetching && userId) {
-      getPosts(userId)
-        .unwrap()
-        .then((res) => {
-          if (res?.items) {
-            setPosts([...posts, ...res.items]);
-            setCurrentPage((prevState) => prevState + 1);
-            setTotalCount(res.totalCount);
-          }
-        })
-        .finally(() => setFetching(false));
+    if (posts.length === totalCount) {
+      setFetching(false);
+      return;
+    } else {
+      const userId = sessionStorage.getItem("userId");
+      if (fetching && userId) {
+        getPosts({ userId, pageNumber: currentPage })
+          .unwrap()
+          .then((res) => {
+            if (res?.items) {
+              setPosts([...posts, ...res.items]);
+              setCurrentPage((prevState) => prevState + 1);
+              setTotalCount(res.totalCount);
+            }
+          })
+          .finally(() => setFetching(false));
+      }
     }
-  }, [fetching]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  const onScroll = (e: Event) => {
-    const target = e.target as Document;
-    if (target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) < 100) {
-      setFetching(true);
-    }
-  };
+  }, [fetchingValue]);
 
   const openPostHandler = (postId: number) => {
     setOpen(true);
@@ -72,5 +65,10 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     );
   };
 
-  return <>{postsImages()}</>;
+  return (
+    <>
+      {postsImages()}
+      {fetching && <Loader />}
+    </>
+  );
 };

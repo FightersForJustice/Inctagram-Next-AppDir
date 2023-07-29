@@ -8,6 +8,7 @@ import s from "./Home.module.scss";
 import { HomePagePost } from "./HomePagePost/HomePagePost";
 import { PostsItem, useLazyGetPostsQuery } from "../../../api/posts.api";
 import { Loader } from "../../../components/Loader/Loader";
+import useScrollFetching from "../../../features/hooks/useScrollListener";
 
 const Home = () => {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ const Home = () => {
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [getPosts] = useLazyGetPostsQuery();
+  const fetchingValue = useScrollFetching(100, fetching, setFetching);
 
   useEffect(() => {
     getPosts(currentPage);
@@ -32,21 +34,7 @@ const Home = () => {
         })
         .finally(() => setFetching(false));
     }
-  }, [fetching]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  const onScroll = (e: Event) => {
-    const target = e.target as Document;
-    if (target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) < 100) {
-      setFetching(true);
-    }
-  };
+  }, [fetchingValue]);
 
   const allPosts = posts.map((item) => {
     return <HomePagePost key={item.id} post={item} />;

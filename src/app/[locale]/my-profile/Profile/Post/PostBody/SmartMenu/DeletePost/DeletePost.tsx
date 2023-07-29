@@ -1,4 +1,4 @@
-import { useDeletePostMutation, useGetPostsPaginationQuery } from "../../../../../../../../api/posts.api";
+import { useDeletePostMutation, useLazyGetPostsPaginationQuery } from "../../../../../../../../api/posts.api";
 import { TransparentBtn } from "../../../../../../../../components/TransparentBtn/TransparentBtn";
 import React from "react";
 
@@ -12,10 +12,10 @@ export const DeletePost = ({
   setOpen: any;
 }) => {
   const [del] = useDeletePostMutation();
-  const { refetch } = useGetPostsPaginationQuery(sessionStorage.getItem("userId") ?? "");
+  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
   const deletePost = async () => {
     await del(postId);
-    refetch();
+    getPosts({ userId: sessionStorage.getItem("userId")!, pageNumber: 1 });
     setOpenDeleteModal(false);
     setOpen(false);
   };
