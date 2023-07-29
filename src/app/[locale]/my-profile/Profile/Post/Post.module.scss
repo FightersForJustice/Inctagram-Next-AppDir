@@ -19,6 +19,9 @@
     .post_container_body_image {
       border-right: var(--dark-100) 1px solid;
       min-width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .post_container_body_image_img {
         border-radius: 0 !important;
