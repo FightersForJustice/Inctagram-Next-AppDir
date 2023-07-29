@@ -99,6 +99,7 @@ export const {
   useUpdatePostMutation,
   useDeletePostMutation,
   useLazyGetPostsPaginationQuery,
+  useGetPostsPaginationQuery,
   useLazyGetPostsQuery,
 } = postsApi;
 

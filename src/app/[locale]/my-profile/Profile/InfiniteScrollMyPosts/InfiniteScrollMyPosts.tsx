@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Loader } from "../../../../../components/Loader/Loader";
-import { PostsItem, useLazyGetPostsPaginationQuery } from "../../../../../api/posts.api";
+import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "../../../../../api/posts.api";
 import { GetResponse } from "../../../../../api/profile.api";
 import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
@@ -13,19 +13,29 @@ type Props = {
   setSelectedPost: (postId: number) => void;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, userData }) => {
+export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen }) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [getPosts, { isSuccess, data, isLoading }] = useLazyGetPostsPaginationQuery();
+  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
+  const { data, isSuccess } = useGetPostsPaginationQuery({ userId: sessionStorage.getItem("userId")!, pageNumber: 1 });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setCurrentPage((prevState) => prevState + 1);
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     if (data?.items) {
       setPosts(data.items);
     }
   }, [data?.items]);
+
+  console.log(posts.length);
+  console.log(totalCount);
 
   useEffect(() => {
     if (posts.length === totalCount) {
