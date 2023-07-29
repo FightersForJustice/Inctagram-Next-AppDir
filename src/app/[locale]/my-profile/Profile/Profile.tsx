@@ -24,7 +24,6 @@ export const Profile: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
-
   if (userData) sessionStorage.setItem("userId", userData.id.toString());
 
   return (
