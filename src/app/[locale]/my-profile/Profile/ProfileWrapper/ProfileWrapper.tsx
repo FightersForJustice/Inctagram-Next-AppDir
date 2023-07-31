@@ -1,6 +1,7 @@
 import s from "../../MyProfile.module.scss";
 import Link from "next/link";
 import React from "react";
+import { redirect } from "next/navigation";
 
 export const ProfileWrapper = ({
   data,
@@ -15,6 +16,7 @@ export const ProfileWrapper = ({
   paidAccount: boolean;
   t: any;
 }) => {
+  if (!data?.userName) redirect("sign-in");
   return (
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>

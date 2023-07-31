@@ -1,9 +1,9 @@
 "use client";
 
-import {redirect} from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default function IndexPage() {
-  redirect("/sign-in");
+  redirect("/my-profile");
   return (
     /*<PageLayout title={t("title")}>
       <p className="max-w-[590px]">

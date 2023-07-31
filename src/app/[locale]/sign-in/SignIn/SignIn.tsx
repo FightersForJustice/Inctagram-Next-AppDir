@@ -45,7 +45,6 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   };
 
   if (isSuccess) redirect("/my-profile");
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
@@ -59,7 +58,6 @@ const SignIn: React.FC<Props> = ({ translate }) => {
           translateName={"email"}
           id={"sign-in-email-input"}
         />
-
         <FormItem
           marginTop={" mt-[18px] "}
           marginBottom={"mb-[48px]"}
@@ -74,7 +72,6 @@ const SignIn: React.FC<Props> = ({ translate }) => {
           show={showPass}
           setShow={setShowPass}
         />
-
         <Link
           href={"/forgot-password"}
           className={"flex justify-end mr-[20px] text-[--light-900]"}

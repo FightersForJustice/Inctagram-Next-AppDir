@@ -1,18 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "../helpers/config";
 
 export let profileApi = createApi({
   reducerPath: "profileApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://inctagram-api.vercel.app/api/",
-    prepareHeaders: (headers) => {
-      const token = sessionStorage.getItem("accessToken");
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     putProfile: builder.mutation<any, PutProfileBody>({
