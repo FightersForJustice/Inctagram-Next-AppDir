@@ -13,6 +13,7 @@ export let authApi = createApi({
     },
     credentials: "include",
   }),
+  keepUnusedDataFor: 60 * 60 * 24,
   endpoints: (builder) => ({
     postAuthorization: builder.mutation<any, { userName: string; email: string; password: string }>({
       query: (user: { userName: string; email: string; password: string }) => {
