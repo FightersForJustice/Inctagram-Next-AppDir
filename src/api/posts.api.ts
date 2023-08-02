@@ -40,6 +40,7 @@ export const postsApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Post"],
     }),
     updatePost: builder.mutation<any, { postId: number; description: string }>({
       query: (args) => {
@@ -51,6 +52,7 @@ export const postsApi = createApi({
           },
         };
       },
+      invalidatesTags: ["Post"],
     }),
     deletePost: builder.mutation({
       query: (postId: number) => {

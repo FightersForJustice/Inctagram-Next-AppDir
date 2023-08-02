@@ -1,0 +1,23 @@
+.post {
+  padding: 24px;
+
+  &__title {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--light-900);
+  }
+
+  &__textarea {
+    background: var(--dark-500);
+    width: 433px;
+    height: 120px;
+    outline: none;
+    padding: 10px;
+    resize: none;
+  }
+
+  &__btn {
+    margin-top: 190px;
+    text-align: right;
+  }
+}

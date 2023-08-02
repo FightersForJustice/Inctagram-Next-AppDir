@@ -130,7 +130,7 @@ const FourthModal: React.FC<Props> = ({
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
-          onDeletePostImage={onDeletePostImage}
+          onDelete={onDeletePostImage}
           isDeleting={isDeleting}
         />
       )}

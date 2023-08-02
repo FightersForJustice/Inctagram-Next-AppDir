@@ -1,0 +1,40 @@
+.post {
+  display: flex;
+  justify-content: center;
+
+  &__img {
+    width: 491px;
+    height: 481px;
+  }
+  
+  &__container {
+    background-color: var(--dark-300);
+    width: 480px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 270px;
+    border-bottom: 1px solid var(--dark-100);
+    padding: 11px 24px 10px 34px;
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    &__img {
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+
+
+
+}

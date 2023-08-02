@@ -1,0 +1,145 @@
+.post {
+  &__desc {
+    margin-top: 19px;
+    display: flex;
+    gap: 12px;
+    padding: 0 24px 0 24px;
+    margin-bottom: 12px;
+
+    &__name {
+      font-weight: bold;
+    }
+
+    &__text {
+      font-weight: 300;
+      font-size: 13px;
+      line-height: 19px;
+    }
+
+    &__time {
+      color: var(--light-900);
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 16px;
+      letter-spacing: 0em;
+    }
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+
+
+
+
+  &__amount {
+
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    &__images {
+      display: flex;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 5px;
+    }
+
+    &__image1, &__image2, &__image3  {
+      border-radius: 50%;
+      height: 24px;
+      width: 24px;
+    }
+
+    &__image1 {
+      position: absolute;
+      top: -10px;
+      right: -7px;
+    }
+
+    &__image2 {
+      position: absolute;
+      top: -10px;
+      right: -19px;
+      z-index: 1;
+    }
+
+    &__image3 {
+      position: absolute;
+      top: -10px;
+      right: -32px;
+      z-index: 2;
+    }
+
+    &__number {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      margin-left: 30px;
+    }
+
+    &__likes {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    &__date {
+      color: var(--light-900);
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      padding-left: 24px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--dark-100);
+    }
+
+  }
+
+  &__form {
+    display: flex;
+    padding-top: 18px;
+    margin-bottom: 17px;
+    padding-left: 19px;
+    padding-right: 24px;
+    gap: 55px;
+
+    &__input {
+      background: transparent;
+      outline: none;
+      color: var(--light-900);
+      font-size: 14px;
+      width: 327px;
+      padding: 2px 5px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: all .2s linear;
+
+      &::placeholder {
+        color: var(--light-900);
+        font-size: 14px;
+      }
+
+      &:focus {
+        border: 1px solid var(--primary-500);
+
+      }
+    }
+
+    &__btn {
+      color: var(--primary-500);
+      transition: all .2s linear;
+
+      &:hover {
+        color: var(--primary-100);
+      }
+    }
+
+  }
+}

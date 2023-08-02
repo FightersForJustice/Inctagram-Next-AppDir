@@ -9,16 +9,11 @@ import s from "./AreYouSureModal.module.scss";
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
   toggleModal: (value: boolean) => void;
-  onDeletePostImage?: () => void;
+  onDelete?: () => void;
   isDeleting?: boolean;
 };
 
-export const AreYouSureModal: React.FC<Props> = ({
-  toggleModal,
-  toggleAreYouSureModal,
-  onDeletePostImage,
-  isDeleting,
-}) => {
+export const AreYouSureModal: React.FC<Props> = ({ toggleModal, toggleAreYouSureModal, onDelete, isDeleting }) => {
   return (
     <>
       <Modal title={"Close"} onClose={() => toggleAreYouSureModal(false)}>
@@ -28,8 +23,8 @@ export const AreYouSureModal: React.FC<Props> = ({
         <div className={s.modal__btns}>
           <TransparentBtn
             onClick={() => {
-              onDeletePostImage?.();
-              if (onDeletePostImage) {
+              onDelete?.();
+              if (onDelete) {
                 setTimeout(() => {
                   toggleModal(false);
                   toggleAreYouSureModal(false);

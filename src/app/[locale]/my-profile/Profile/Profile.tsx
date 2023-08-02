@@ -3,10 +3,10 @@ import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import { GetResponse } from "../../../../api/profile.api";
 import { useTranslations } from "next-intl";
-import { Post } from "./Post/Post";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
-import { EditPostModal } from "../../../../components/Modals/EditPostModal/EditPostModal";
 import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
+import { PostFix } from "./PostFix/PostFix";
+import { PostModal } from "../../../../components/Modals/PostModal/PostModal";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -21,9 +21,10 @@ export const Profile: React.FC<Props> = ({
   userData,
 }) => {
   const t = useTranslations("MyProfilePage");
-  const [open, setOpen] = useState(false);
+  const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
+
   if (userData) sessionStorage.setItem("userId", userData.id.toString());
 
   return (
@@ -47,15 +48,27 @@ export const Profile: React.FC<Props> = ({
         />
       </div>
       <div className={s.profile__posts}>
-        <InfiniteScrollMyPosts userData={userData} setOpen={setOpen} setSelectedPost={setSelectedPost} />
+        <InfiniteScrollMyPosts userData={userData} setOpen={setOpenPostModal} setSelectedPost={setSelectedPost} />
       </div>
 
-      {open && (
+      {openPostModal && (
+        <PostModal width={"972px"} onClose={() => setOpenPostModal(false)}>
+          <PostFix
+            onClose={() => setOpenPostModal(false)}
+            postId={selectedPost}
+            avatar={userData?.avatars[0].url}
+            userName={userData?.userName}
+            setOpenPostModal={setOpenPostModal}
+          />
+        </PostModal>
+      )}
+
+      {/*{openPostModal && (
         <EditPostModal
           title={modalHeader}
           width={"1200px"}
           onClose={() => {
-            setOpen(false);
+            setOpenPostModal(false);
           }}
           isOkBtn={false}
         >
@@ -64,10 +77,10 @@ export const Profile: React.FC<Props> = ({
             postId={selectedPost}
             avatar={userData?.avatars[0].url}
             userName={userData?.userName}
-            setOpen={setOpen}
+            setOpen={setOpenPostModal}
           />
         </EditPostModal>
-      )}
+      )}*/}
     </>
   );
 };
