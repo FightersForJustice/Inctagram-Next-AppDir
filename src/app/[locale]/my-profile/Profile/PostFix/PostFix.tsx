@@ -2,13 +2,12 @@ import React, { MouseEventHandler, useState } from "react";
 
 import s from "./PostFix.module.scss";
 import Image from "next/image";
-import { PostPopup } from "./PostPopup/PostPopup";
-import * as Popover from "@radix-ui/react-popover";
 import { PostContent } from "./PostContent/PostContent";
 import { EditPost } from "./EditPost/EditPost";
 import { useDeletePostMutation, useGetPostQuery } from "../../../../../api/posts.api";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { toast } from "react-toastify";
+import { Dots } from "./Dots/Dots";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -20,6 +19,7 @@ type Props = {
 
 export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, setOpenPostModal }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
+  const [showDots, setShowDots] = useState(true);
   const [editPost, setEditPost] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
@@ -48,44 +48,25 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
                   <p>{userName}</p>
                 </div>
 
-                <Popover.Root onOpenChange={() => setVisiblePopup(!visiblePopup)}>
-                  <Popover.Trigger>
-                    <svg
-                      style={{ cursor: "pointer" }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
-                        fill={`${visiblePopup ? "#397DF6" : "white"}`}
-                      />
-                      <path
-                        d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z"
-                        fill={`${visiblePopup ? "#397DF6" : "white"}`}
-                      />
-                      <path
-                        d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14Z"
-                        fill={`${visiblePopup ? "#397DF6" : "white"}`}
-                      />
-                    </svg>
-                  </Popover.Trigger>
-                  <Popover.Portal>
-                    <Popover.Content className="PopoverContent" sideOffset={5} style={{ zIndex: 1111 }}>
-                      <PostPopup
-                        setEditPost={setEditPost}
-                        setVisiblePopup={setVisiblePopup}
-                        postId={postId}
-                        toggleShowAreYouSureModal={() => setShowAreYouSureModal(true)}
-                      />
-                    </Popover.Content>
-                  </Popover.Portal>
-                </Popover.Root>
+                {showDots ? (
+                  <Dots
+                    setVisiblePopup={setVisiblePopup}
+                    visiblePopup={visiblePopup}
+                    setEditPost={setEditPost}
+                    setShowAreYouSureModal={setShowAreYouSureModal}
+                    setShowDots={setShowDots}
+                  />
+                ) : (
+                  <div className={"w-1/12"}></div>
+                )}
               </div>
               {editPost ? (
-                <EditPost setEditPost={setEditPost} description={data.description} postId={postId} />
+                <EditPost
+                  setEditPost={setEditPost}
+                  description={data.description}
+                  postId={postId}
+                  setShowDots={setShowDots}
+                />
               ) : (
                 <PostContent
                   avatar={avatar}

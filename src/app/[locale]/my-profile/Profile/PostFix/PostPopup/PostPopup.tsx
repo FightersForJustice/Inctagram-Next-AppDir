@@ -5,12 +5,18 @@ import s from "./PostPopup.module.scss";
 type Props = {
   setEditPost: (value: boolean) => void;
   setVisiblePopup: (value: boolean) => void;
-  postId: number | undefined;
   toggleShowAreYouSureModal: () => void;
+  setShowDots: (value: boolean) => void;
 };
 
-export const PostPopup: React.FC<Props> = ({ setEditPost, setVisiblePopup, postId, toggleShowAreYouSureModal }) => {
+export const PostPopup: React.FC<Props> = ({
+  setEditPost,
+  setVisiblePopup,
+  toggleShowAreYouSureModal,
+  setShowDots,
+}) => {
   const onEditPost = () => {
+    setShowDots(false);
     setVisiblePopup(false);
     setEditPost(true);
   };

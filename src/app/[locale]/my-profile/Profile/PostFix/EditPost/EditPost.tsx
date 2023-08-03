@@ -10,9 +10,10 @@ type Props = {
   setEditPost: (value: boolean) => void;
   description: string;
   postId: number | undefined;
+  setShowDots: (value: boolean) => void;
 };
 
-export const EditPost: React.FC<Props> = ({ setEditPost, description, postId }) => {
+export const EditPost: React.FC<Props> = ({ setEditPost, description, postId, setShowDots }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState(description);
 
@@ -29,6 +30,7 @@ export const EditPost: React.FC<Props> = ({ setEditPost, description, postId }) 
       .unwrap()
       .then(() => {
         setEditPost(false);
+        setShowDots(true);
         toast.success("Post was updated");
       });
   };
