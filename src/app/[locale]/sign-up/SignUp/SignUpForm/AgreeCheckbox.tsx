@@ -1,10 +1,12 @@
+import { RichTranslationValues } from "next-intl";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 
 type Props = {
-//   translate: {
-//     rich: <TargetKey extends string>(key: TargetKey, values?: RichTranslationValues | undefined) => ReactNode;
-//   };
+  // translate: {
+  //   rich: <TargetKey extends string>(key: TargetKey, values?: RichTranslationValues | undefined) => ReactNode;
+  // };
 // ----------------- поставил any что бы не тянуть rich с самого начала, надо пофиксить
   translate: any
 };

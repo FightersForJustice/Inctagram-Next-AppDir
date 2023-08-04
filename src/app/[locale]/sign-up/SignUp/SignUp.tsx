@@ -12,6 +12,8 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
 
 
 
+
+
   return (
     <div className={"bg-[#171717] rounded-md m-auto mt-[24px] max-w-[378px] text-center"}>
       <p className={"pt-[23px]"}>{t("title")}</p>
