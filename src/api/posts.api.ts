@@ -75,7 +75,7 @@ export const postsApi = createApi({
     getPosts: builder.query<PostsWithPagination, number>({
       query: (pageNumber) => {
         return {
-          url: `posts`,
+          url: `posts?pageNumber=${pageNumber}`,
           method: "GET",
         };
       },
