@@ -9,13 +9,15 @@ import { SignUpFormSchema } from "../../../../../features/schemas/SignUpFormSche
 import { Loader } from "../../../../../components/Loader/Loader";
 import { EmailSentModal } from "./EmailSentModal";
 import { FormItem } from "./FormItem";
+import { AgreeCheckbox } from "./AgreeCheckbox";
 
 type Props = {
   lang: "en" | "ru";
-  translate: (value: string) => ReactNode;
+  translate: (value: string) => ReactNode ;
 };
 
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
+
   const {
     register,
     handleSubmit,
@@ -24,6 +26,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   } = useForm({
     resolver: yupResolver(SignUpFormSchema),
   });
+
+
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
@@ -38,6 +42,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   }, [isSuccess]);
 
   const onSubmit = (data: SubmitProps) => {
+    console.log(data);
+    
     //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({ userName: data.userName, email: data.email, password: data.password })
       .unwrap()
@@ -95,7 +101,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
         <FormItem
           marginTop={" mt-[18px]"}
-          marginBottom={"mb-[36px]"}
+          marginBottom={"mb-[18px]"}
           translate={translate}
           register={register}
           error={errors.passwordConfirm}
@@ -108,11 +114,21 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           showPasswordIcon={true}
         />
 
+        <AgreeCheckbox 
+        translate={translate}
+        register={register}
+        error={errors.agreements}
+        errorMessage={errors?.agreements?.message}
+        registerName={"agreements"}
+        id={"sign-up-agreemets"}
+        />
+
         <input
           type="submit"
-          className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer"}
+          className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed "}
           id={"sign-up-submit"}
           value={String(translate("btnName"))}
+          disabled={Object.keys(errors).length > 0}
         />
         <p className={"pb-5"}>{translate("question")}</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>
