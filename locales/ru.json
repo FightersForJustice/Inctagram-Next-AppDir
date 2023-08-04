@@ -7,7 +7,9 @@
     "passwordConf": "Подтвердить пароль",
     "btnName": "Регистрация",
     "question": "Уже существует аккаунт?",
-    "btnBottomName": "Логин"
+    "btnBottomName": "Логин",
+    "agreemetsCheckText": "Я согласен(а) с <link>Условиями предоставления услуг</link> и <link2>Политикой конфиденциальности</link2>."
+
   },
   "SignInPage": {
     "title": "Логин",

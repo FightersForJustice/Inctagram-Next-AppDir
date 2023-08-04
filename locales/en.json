@@ -7,7 +7,8 @@
     "passwordConf": "Password confirmation",
     "btnName": "Sign Up",
     "question": "Do you have an account?",
-    "btnBottomName": "Sign In"
+    "btnBottomName": "Sign In",
+    "agreemetsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>"
   },
   "SignInPage": {
     "title": "Login",

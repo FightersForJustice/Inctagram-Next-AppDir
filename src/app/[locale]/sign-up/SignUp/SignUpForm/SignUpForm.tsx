@@ -9,10 +9,11 @@ import { SignUpFormSchema } from "../../../../../features/schemas/SignUpFormSche
 import { Loader } from "../../../../../components/Loader/Loader";
 import { EmailSentModal } from "./EmailSentModal";
 import { FormItem } from "./FormItem";
+import { AgreeCheckbox } from "./AgreeCheckbox";
 
 type Props = {
   lang: "en" | "ru";
-  translate: (value: string) => ReactNode;
+  translate: (value: string) => ReactNode ;
 };
 
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
@@ -24,6 +25,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   } = useForm({
     resolver: yupResolver(SignUpFormSchema),
   });
+
+
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
@@ -95,7 +98,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
         <FormItem
           marginTop={" mt-[18px]"}
-          marginBottom={"mb-[36px]"}
+          marginBottom={"mb-[18px]"}
           translate={translate}
           register={register}
           error={errors.passwordConfirm}
@@ -107,6 +110,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
         />
+
+        <AgreeCheckbox translate={translate}/>
 
         <input
           type="submit"
