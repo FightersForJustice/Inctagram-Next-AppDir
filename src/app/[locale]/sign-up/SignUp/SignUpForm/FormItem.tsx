@@ -35,6 +35,9 @@ export const FormItem: React.FC<Props> = ({
   const type = showPasswordIcon !== undefined && show;
 
   return (
+
+   
+    
     <div className={`${marginTop} ${marginBottom}`}>
       <div className={"text-left ml-5 text-[--light-900] text-[14px]"}>
         <label>{translate(translateName)}</label>

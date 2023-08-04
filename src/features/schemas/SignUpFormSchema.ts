@@ -10,5 +10,6 @@ export const SignUpFormSchema = yup
       .oneOf([yup.ref("password")], "Password mismatch")
       .min(6)
       .required(),
+    agreements: yup.boolean().oneOf([true], "agreements must be accepted").required(),
   })
   .required();
