@@ -5,18 +5,29 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "./HeaderNotification/HeaderNotification";
+import { Loader } from "components/Loader/Loader";
+import loadConfig from "next/dist/server/config";
+
 
 export const Header = () => {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState<string|null>(null);
 
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
+
+
+
+
   useEffect(() => {
     if (typeof window !== "undefined") {
+
       setLanguage(localStorage.getItem("language")!);
+      router.replace(`/${localStorage.getItem("language")}${pathname}`);
+
+      
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
@@ -25,6 +36,7 @@ export const Header = () => {
 
   const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setLanguage(event.currentTarget.value);
+
     if (typeof window !== "undefined") {
       localStorage.setItem("language", event.currentTarget.value);
     }
@@ -43,7 +55,10 @@ export const Header = () => {
         <div className={"flex justify-center items-center gap-[54px]"}>
           {loggedId && <HeaderNotification />}
 
-          <select
+        { !language 
+        //  ?<div ><Loader/></div> 
+          ?<div>loading...</div>
+         :<select
             name="Languages"
             className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
             onChange={onSelectChange}
@@ -62,6 +77,8 @@ export const Header = () => {
               Russian
             </option>
           </select>
+
+          }
         </div>
       </div>
     </header>
