@@ -23,7 +23,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     formState: { errors },
     setError,
   } = useForm({
-    resolver: yupResolver(CreateNewPasswordFormSchema),
+    resolver: yupResolver(CreateNewPasswordFormSchema()),
   });
 
   const [showPass, setShowPass] = useState(true);

@@ -24,7 +24,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     formState: { errors },
     setError,
   } = useForm({
-    resolver: yupResolver(SignUpFormSchema),
+    resolver: yupResolver(SignUpFormSchema()),
   });
 
 

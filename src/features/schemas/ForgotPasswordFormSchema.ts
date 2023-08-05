@@ -1,7 +1,15 @@
 import * as yup from "yup";
+import { useTranslations } from 'next-intl';
 
-export const forgotPasswordSchema = yup
-  .object({
-    email: yup.string().email().required(),
-  })
-  .required();
+
+
+export const ForgotPasswordSchema = () => {
+
+const t = useTranslations("Errors");
+
+  return yup
+    .object({
+      email: yup.string().email(t("email.email")).required(t("email.required")),
+    })
+    .required();
+}

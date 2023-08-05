@@ -6,7 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { usePostPasswordRecoveryMutation } from "../../../../api/auth.api";
 import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { Loader } from "../../../../components/Loader/Loader";
-import { forgotPasswordSchema } from "../../../../features/schemas/ForgotPasswordFormSchema";
+import { ForgotPasswordSchema } from "../../../../features/schemas/ForgotPasswordFormSchema";
 import { EmailForm } from "./EmailForm/EmailForm";
 
 type Props = {
@@ -19,7 +19,7 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(forgotPasswordSchema),
+    resolver: yupResolver(ForgotPasswordSchema()),
   });
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");

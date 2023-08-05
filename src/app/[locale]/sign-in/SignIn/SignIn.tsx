@@ -19,7 +19,7 @@ const SignIn: React.FC<Props> = ({ translate }) => {
     formState: { errors },
     setError,
   } = useForm({
-    resolver: yupResolver(SignInSchema),
+    resolver: yupResolver(SignInSchema()),
   });
   const [showPass, setShowPass] = useState(true);
   const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
