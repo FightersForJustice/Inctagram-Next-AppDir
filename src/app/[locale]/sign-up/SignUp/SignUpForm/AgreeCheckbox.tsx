@@ -24,7 +24,7 @@ const linkStyle = "text-blue-500 underline hover:text-blue-700 hover:no-underlin
 
 
 export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, errorMessage, registerName, id }) => {
-  console.log(registerName);
+
   return (
     <div className={" mb-[18px] pt-[6px] pb-[6px] cursor-pointer flex justify-center  "}>
       <label className={"relative"}>
@@ -56,7 +56,9 @@ export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, err
 
         </div>
 
-          <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} />
+
+
+          <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} className={"left-[30%]"} />        
 
       </label>
     </div>
