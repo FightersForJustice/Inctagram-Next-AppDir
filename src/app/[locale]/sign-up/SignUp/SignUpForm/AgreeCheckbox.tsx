@@ -58,7 +58,7 @@ export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, err
 
 
 
-          <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} className={"left-[30%]"} />        
+          <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} className={"left-[6.3rem]"} />        
 
       </label>
     </div>
