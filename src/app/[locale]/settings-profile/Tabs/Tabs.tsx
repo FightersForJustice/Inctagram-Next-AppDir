@@ -9,6 +9,7 @@ import { DevicesTab } from "./DevicesTab/DevicesTab";
 import { Loader } from "../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { ShowAddAvatarModal } from "./ShowAddAvatarModal/ShowAddAvatarModal";
+import { AccountManagementTab } from "./AccountManagementTab/AccountManagementTab";
 
 const TabsDemo = () => {
   const t = useTranslations("SettingsProfilePage");
@@ -55,7 +56,7 @@ const TabsDemo = () => {
   };
 
   return (
-    <>
+    <div style={{ gridArea: "profile" }}>
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
@@ -77,6 +78,7 @@ const TabsDemo = () => {
           loadedAvatar={loadedAvatar}
         />
         <DevicesTab />
+        <AccountManagementTab />
       </Tabs.Root>
       {showAddAvatarModal && (
         <ShowAddAvatarModal
@@ -90,7 +92,7 @@ const TabsDemo = () => {
         />
       )}
       {isLoading && <Loader />}
-    </>
+    </div>
   );
 };
 

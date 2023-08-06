@@ -1,0 +1,12 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-areas:
+          'menu profile'
+          'menu posts';
+  grid-template-columns: 1fr 1fr 1.2fr;
+}
