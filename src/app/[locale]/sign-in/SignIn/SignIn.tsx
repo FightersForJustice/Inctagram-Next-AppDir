@@ -16,10 +16,11 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setError,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
+    mode: "onTouched",
   });
   const [showPass, setShowPass] = useState(true);
   const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
@@ -82,9 +83,12 @@ const SignIn: React.FC<Props> = ({ translate }) => {
 
         <input
           type="submit"
-          className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px]"}
+          className={
+            "mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "
+          }
           value={String(translate("btnName"))}
           id={"sign-in-submit"}
+          disabled={!isValid}
         />
         <p className={"pb-5"}>{translate("question")}</p>
         <Link href={"/sign-up"} className={"text-[--primary-500]"} id={"sign-in-link-sign-up"}>

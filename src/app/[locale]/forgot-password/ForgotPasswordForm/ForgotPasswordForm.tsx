@@ -17,10 +17,14 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
+    mode: "onTouched"
   });
+
+ 
+
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [recaptcha, setRecaptcha] = useState("");
@@ -47,6 +51,9 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     setRecaptcha(token!);
   };
 
+
+
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
@@ -67,11 +74,9 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
         <input
           type="submit"
-          className={`mb-[24px]  w-[90%] pt-[6px] pb-[6px]  ${
-            !recaptcha ? "cursor-not-allowed bg-[--disabled] text-[--disabled]" : "cursor-pointer bg-[--primary-500]"
-          }`}
+          className={"mb-[24px]  w-[90%] pt-[6px] pb-[6px]   bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "}
           value={`${sendLinkAgain ? `${translate("btnNameAfterSend")}` : `${translate("btnName")}`}`}
-          disabled={!recaptcha}
+          disabled={!recaptcha || !isValid}
         />
 
         <Link href={"/sign-in"} className={"text-[--primary-500] block mb-[30px]"}>

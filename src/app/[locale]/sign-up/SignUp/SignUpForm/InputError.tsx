@@ -6,6 +6,7 @@ type Props = {
   errorMessage: string | undefined;
   id: string;
   className?:string
+
 };
 
 export const InputError: React.FC<Props> = ({ errorMessage, error, id, className }) => {

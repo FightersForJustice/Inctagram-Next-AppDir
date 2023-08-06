@@ -22,11 +22,16 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setError,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
+    mode: "onTouched",
+    
   });
+
+  
+
 
 
 
@@ -43,14 +48,13 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   }, [isSuccess]);
 
   const onSubmit = (data: SubmitProps) => {
-    console.log(data);
-    
+
     //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({ userName: data.userName, email: data.email, password: data.password })
       .unwrap()
       .then(() => {})
       .catch((err) => {
-        if (err.data.statusCode === StatusCode.badRequest) {
+        if (err.data.statusCode === StatusCode.badRequest) { 
           setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
         }
       });
@@ -60,6 +64,9 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
     localStorage.setItem("user-email", data.email);
   };
+
+
+
 
   return (
     <>
@@ -73,6 +80,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           registerName={"userName"}
           translateName={"username"}
           id={"sign-up-userName"}
+
         />
 
         <FormItem
@@ -129,7 +137,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed "}
           id={"sign-up-submit"}
           value={String(translate("btnName"))}
-          disabled={Object.keys(errors).length > 0}
+          disabled={!isValid}
         />
         <p className={"pb-5"}>{translate("question")}</p>
         <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>
