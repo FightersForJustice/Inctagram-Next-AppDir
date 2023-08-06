@@ -18,7 +18,7 @@ export const Header = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setLanguage(localStorage.getItem("language")!);
-      // router.replace(`/${localStorage.getItem("language")}${pathname}`);
+      router.replace(`/${localStorage.getItem("language")}${pathname}`);
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
@@ -46,11 +46,11 @@ export const Header = () => {
         <div className={"flex justify-center items-center gap-[54px]"}>
           {loggedId && <HeaderNotification />}
 
-          {/* {!language ? (
+          {!language ? (
             <div>
               <Loader />
             </div>
-          ) : ( */}
+          ) : (
             <select
               name="Languages"
               className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
@@ -64,7 +64,7 @@ export const Header = () => {
                 Russian
               </option>
             </select>
-          {/* )} */}
+           )} 
         </div>
       </div>
     </header>
