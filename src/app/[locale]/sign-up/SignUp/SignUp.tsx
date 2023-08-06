@@ -8,6 +8,8 @@ type Props = {
 };
 
 export const SignUp: React.FC<Props> = ({ lang }) => {
+
+  
   const t = useTranslations("SignUpPage");
 
 

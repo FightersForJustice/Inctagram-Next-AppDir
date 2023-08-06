@@ -7,8 +7,7 @@ import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "./HeaderNotification/HeaderNotification";
 import { Loader } from "components/Loader/Loader";
 
-
-export const Header = () => {   
+export const Header = () => {
   const [language, setLanguage] = useState<string | null>(null);
 
   const [isPending, startTransition] = useTransition();
@@ -19,7 +18,7 @@ export const Header = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setLanguage(localStorage.getItem("language")!);
-      router.replace(`/${localStorage.getItem("language")}${pathname}`);
+      // router.replace(`/${localStorage.getItem("language")}${pathname}`);
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
@@ -47,33 +46,39 @@ export const Header = () => {
         <div className={"flex justify-center items-center gap-[54px]"}>
           {loggedId && <HeaderNotification />}
 
-          {!language
-           ? (
-            <div ><Loader/></div> 
-            // <div>loading...</div>
-          ) : (
+          {/* {!language ? (
+            <div>
+              <Loader />
+            </div>
+          ) : ( */}
             <select
               name="Languages"
               className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
               onChange={onSelectChange}
               value={language ? language : "ru"}
             >
-              {/*{["en", "ru"].map((cur) => (
-            <option key={cur} value={cur}>
-              {t("locale", { locale: cur })}
-            </option>
-          ))}*/}
               <option value="en" className={`bg-black`}>
                 English
               </option>
               <option value="ru" className={`bg-black`}>
-                {/*<Image src={"/img/russia.svg"} alt={"russia"} width={20} height={20} />*/}
                 Russian
               </option>
             </select>
-          )}
+          {/* )} */}
         </div>
       </div>
     </header>
   );
 };
+
+//из селекта
+{
+  /*{["en", "ru"].map((cur) => (
+            <option key={cur} value={cur}>
+              {t("locale", { locale: cur })}
+            </option>
+          ))}*/
+}
+{
+  /*<Image src={"/img/russia.svg"} alt={"russia"} width={20} height={20} />*/
+}
