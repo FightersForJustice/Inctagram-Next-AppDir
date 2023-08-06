@@ -1,0 +1,35 @@
+.search {
+  &__wrapper {
+    cursor: pointer;
+    width: max-content;
+    margin-bottom: 12px;
+  }
+
+  &__header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    &__image {
+      border-radius: 50%;
+    }
+
+
+  }
+
+  &__username {
+    color: var(--light-100);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    margin-bottom: 5px;
+  }
+
+  &__name {
+    color: var(--light-900);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+
+}
