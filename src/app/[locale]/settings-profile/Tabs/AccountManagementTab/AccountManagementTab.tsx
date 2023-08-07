@@ -5,16 +5,17 @@ import s from "./AccountManagementTab.module.scss";
 import { AccountTypeRadio } from "./AccountTypeRadio/AccountTypeRadio";
 import { SubscriptionRadio } from "./SubscriptionRadio/SubscriptionRadio";
 import Image from "next/image";
+import { Subscription } from "./Subscription/Subscription";
 
 export const AccountManagementTab = () => {
   const [accountTypeValue, setAccountTypeValue] = useState("personal");
   const [subTypeValue, setSubTypeValue] = useState("10");
 
-  console.log(subTypeValue);
-
   return (
     <Tabs.Content className={s.TabsContent} value="accountManagement">
       <div className={s.tab}>
+        <Subscription />
+
         <p className={s.tab__name}>Account type:</p>
         <div className={s.tab__wrapper}>
           <AccountTypeRadio radioValue={accountTypeValue} setRadioValue={setAccountTypeValue} />
