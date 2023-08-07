@@ -8,7 +8,7 @@ import { HeaderNotification } from "./HeaderNotification/HeaderNotification";
 import { Loader } from "components/Loader/Loader";
 
 export const Header = () => {
-  const [language, setLanguage] = useState<string | null>(null);
+  const [language, setLanguage] = useState<string>("");
 
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
@@ -17,6 +17,9 @@ export const Header = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      if (!localStorage.getItem("language")) {
+        localStorage.setItem("language", "en");
+      }
       setLanguage(localStorage.getItem("language")!);
       router.replace(`/${localStorage.getItem("language")}${pathname}`);
     }
@@ -55,7 +58,7 @@ export const Header = () => {
               name="Languages"
               className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
               onChange={onSelectChange}
-              value={language ? language : "ru"}
+              value={language}
             >
               <option value="en" className={`bg-black`}>
                 English
@@ -64,7 +67,7 @@ export const Header = () => {
                 Russian
               </option>
             </select>
-           )} 
+          )}
         </div>
       </div>
     </header>
