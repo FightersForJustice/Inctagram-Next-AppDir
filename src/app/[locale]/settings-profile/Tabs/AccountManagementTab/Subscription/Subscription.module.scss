@@ -1,0 +1,36 @@
+.subscription {
+  padding-top: 30px;
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: 64px;
+    background-color: var(--dark-500);
+    border: 1px solid var(--dark-100);
+    border-radius: 2px;
+    padding: 12px 24px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &__text {
+      color: var(--light-900);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &__data {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+  }
+}
