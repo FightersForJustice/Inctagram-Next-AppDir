@@ -3,12 +3,15 @@
 import React, { useEffect } from "react";
 import CreateNewPasswordForm from "./CreateNewPasswordForm/CreateNewPasswordForm";
 import { useTranslations } from "next-intl";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CreateNewPassword = ({ params, searchParams }: { params: { slug: string }; searchParams: { code: string } }) => {
   const t = useTranslations("RecoveryPage");
 
+  const parameters = useSearchParams();
+
   useEffect(() => {
-    sessionStorage.setItem("userEmailRecoveryCode", searchParams.code);
+    sessionStorage.setItem("userEmailRecoveryCode", parameters.get("code")!);
   }, []);
 
   return (
