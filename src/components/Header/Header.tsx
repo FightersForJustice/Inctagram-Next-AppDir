@@ -7,8 +7,13 @@ import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "./HeaderNotification/HeaderNotification";
 import { Loader } from "components/Loader/Loader";
 
+function hasQueryParams(inputString: string): boolean {
+  const queryParamsRegex = /\?.+=.+$/;
+  return queryParamsRegex.test(inputString);
+}
+
 export const Header = () => {
-  const [language, setLanguage] = useState<string>("");
+  const [language, setLanguage] = useState<string>("ru");
 
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
@@ -21,7 +26,7 @@ export const Header = () => {
         localStorage.setItem("language", "en");
       }
       setLanguage(localStorage.getItem("language")!);
-      router.replace(`/${localStorage.getItem("language")}${pathname}`);
+      //router.replace(`/${localStorage.getItem("language")}${pathname}`);
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
@@ -45,7 +50,7 @@ export const Header = () => {
         <Link href={"/my-profile"} className={"text-[26px] font-semibold leading-[36px]"}>
           Inctagram
         </Link>
-        {/*<LocaleSwitcher />*/}
+
         <div className={"flex justify-center items-center gap-[54px]"}>
           {loggedId && <HeaderNotification />}
 
