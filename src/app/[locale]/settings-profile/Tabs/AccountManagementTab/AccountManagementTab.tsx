@@ -4,8 +4,9 @@ import * as Tabs from "@radix-ui/react-tabs";
 import s from "./AccountManagementTab.module.scss";
 import { AccountTypeRadio } from "./AccountTypeRadio/AccountTypeRadio";
 import { SubscriptionRadio } from "./SubscriptionRadio/SubscriptionRadio";
-import Image from "next/image";
 import { Subscription } from "./Subscription/Subscription";
+import { Stripe } from "../../../../../components/Stripe/Stripe";
+import { PayPal } from "../../../../../components/PayPal/PayPal";
 
 export const AccountManagementTab = () => {
   const [accountTypeValue, setAccountTypeValue] = useState("personal");
@@ -27,13 +28,12 @@ export const AccountManagementTab = () => {
               <SubscriptionRadio subTypeValue={subTypeValue} setSubTypeValue={setSubTypeValue} />
             </div>
             <div className={s.tab__container}>
-              <div className={s.tab__img__wrapper}>
+              <PayPal price={subTypeValue} />
+              {/*<div className={s.tab__img__wrapper}>
                 <Image className={s.tab__img} src={"/img/paypal.png"} alt={"paypal"} width={70} height={47} />
-              </div>
+              </div>*/}
               <p>or</p>
-              <div className={s.tab__img__wrapper}>
-                <Image className={s.tab__img} src={"/img/stripe.png"} alt={"paypal"} width={70} height={30} />
-              </div>
+              <Stripe subTypeValue={subTypeValue} />
             </div>
           </>
         )}
