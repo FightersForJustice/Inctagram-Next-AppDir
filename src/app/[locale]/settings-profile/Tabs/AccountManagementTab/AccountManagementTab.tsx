@@ -29,9 +29,6 @@ export const AccountManagementTab = () => {
             </div>
             <div className={s.tab__container}>
               <PayPal price={subTypeValue} />
-              {/*<div className={s.tab__img__wrapper}>
-                <Image className={s.tab__img} src={"/img/paypal.png"} alt={"paypal"} width={70} height={47} />
-              </div>*/}
               <p>or</p>
               <Stripe subTypeValue={subTypeValue} />
             </div>
