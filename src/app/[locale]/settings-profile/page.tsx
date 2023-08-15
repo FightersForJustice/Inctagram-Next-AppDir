@@ -5,17 +5,22 @@ import s from "./SettingsProfile.module.scss";
 import Tabs from "./Tabs/Tabs";
 import { Navigation } from "../my-profile/Navigation/Navigation";
 import { usePathname } from "next-intl/client";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+const paypalClientId = "Afk1iTJpReNKk1221BifT5DK-ylDl6BTi-YUqoa464lzaGoSGk0hTlfnOVbiTY2bT7bio52y5yIa07L3";
 
 const SettingsProfile = () => {
   const pathname = usePathname();
 
   return (
-    <div className={s.container}>
-      <div className={s.wrapper}>
-        <Navigation pathname={pathname} paidAccount={false} />
-        <Tabs />
+    <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+      <div className={s.container}>
+        <div className={s.wrapper}>
+          <Navigation pathname={pathname} paidAccount={false} />
+          <Tabs />
+        </div>
       </div>
-    </div>
+    </PayPalScriptProvider>
   );
 };
 
