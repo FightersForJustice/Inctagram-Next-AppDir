@@ -13,10 +13,17 @@ export const CreateNewPasswordFormSchema = () => {
         .matches(passwordValidationRegex, t("password.invalidCharacters"))
         .min(6, t("password.min"))
         .max(20, t("password.max"))
-        .required(t("password.required")),
+        .required(t("password.required"))
+        .test("not-only-spaces", t("password.onlySpaces"), (value) => {
+          // Проверяем, что пароль не состоит только из пробелов
+          return value.trim() !== "";
+        })
+        .test("no-inner-spaces", t("password.innerSpaces"), (value) => {
+          // Проверяем, что пароль не содержит пробелов внутри
+          return !/\s/.test(value);
+        }),
       passwordConfirm: yup
         .string()
-        .matches(passwordValidationRegex, t("password.invalidCharacters"))
         .oneOf([yup.ref("password")], t("passwordConfirm.oneOf"))
         .min(6, t("passwordConfirm.min"))
         .required(t("passwordConfirm.required")),
