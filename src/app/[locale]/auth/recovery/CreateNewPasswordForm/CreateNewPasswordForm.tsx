@@ -20,9 +20,10 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setError,
   } = useForm({
+    mode: "onTouched",
     resolver: yupResolver(CreateNewPasswordFormSchema()),
   });
 
@@ -100,7 +101,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
           type="submit"
           className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-60`}
           value={String(translate("btnName"))}
-          disabled={!!serverError}
+          disabled={!!serverError || !isValid}
         />
       </form>
       {isLoading || (isCheckLoading && <Loader />)}
