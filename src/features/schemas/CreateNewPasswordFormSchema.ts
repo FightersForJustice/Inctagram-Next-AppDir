@@ -10,18 +10,18 @@ export const CreateNewPasswordFormSchema = () => {
     .object({
       password: yup
         .string()
-        .matches(passwordValidationRegex, t("password.invalidCharacters"))
-        .min(6, t("password.min"))
-        .max(20, t("password.max"))
         .required(t("password.required"))
-        .test("not-only-spaces", t("password.onlySpaces"), (value) => {
+        .test("not-only-spaces", t("password.spaces"), (value) => {
           // Проверяем, что пароль не состоит только из пробелов
           return value.trim() !== "";
         })
-        .test("no-inner-spaces", t("password.innerSpaces"), (value) => {
+        .test("no-inner-spaces", t("password.spaces"), (value) => {
           // Проверяем, что пароль не содержит пробелов внутри
           return !/\s/.test(value);
-        }),
+        })
+        .matches(passwordValidationRegex, t("password.invalidCharacters"))
+        .min(6, t("password.min"))
+        .max(20, t("password.max")),
       passwordConfirm: yup
         .string()
         .oneOf([yup.ref("password")], t("passwordConfirm.oneOf"))
@@ -31,3 +31,6 @@ export const CreateNewPasswordFormSchema = () => {
 
     .required();
 };
+
+
+
