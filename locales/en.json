@@ -170,7 +170,9 @@
     "password": {
       "required": "Password is required",
       "min": "Password must be at least 6 characters",
-      "max": "Password must not exceed 20 characters"
+      "max": "Password must not exceed 20 characters",
+      "onlySpaces": "Password must not contain spaces",
+      "innerSpaces":"Password must not be separated by spaces"
     },
     "passwordConfirm": {
       "required": "Password confirmation is required",
