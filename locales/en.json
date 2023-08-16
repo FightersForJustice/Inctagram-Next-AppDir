@@ -165,14 +165,16 @@
     },
     "email": {
       "required": "Email is required",
-      "email": "Invalid email format"
+      "email": "Invalid email format",
+      "invalidCharacters": "Email must not contain |$%&/=?^*+!#~'{}"
     },
     "password": {
       "required": "Password is required",
       "min": "Password must be at least 6 characters",
       "max": "Password must not exceed 20 characters",
       "onlySpaces": "Password must not contain spaces",
-      "innerSpaces":"Password must not be separated by spaces"
+      "innerSpaces":"Password must not be separated by spaces",
+      "invalidCharacters": "Password must contain latin characters"
     },
     "passwordConfirm": {
       "required": "Password confirmation is required",

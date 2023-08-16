@@ -4,11 +4,20 @@ import * as yup from "yup";
 export const SignInSchema = () => {
   const t = useTranslations("Errors");
 
+  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
+  const passwordValidationRegex = /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]+$/;
+
   return yup
     .object({
-      email: yup.string().email(t("email.email")).required(t("email.required")),
+      email: yup
+      .string()
+      .matches(emailValidationRegex, t("email.invalidCharacters"))
+      .email(t("email.email"))
+      .required(t("email.required"))
+      ,
       password: yup
         .string()
+        .matches(passwordValidationRegex, t("password.invalidCharacters"))
         .min(6, t("password.min"))
         .max(20, t("password.max"))
         .required(t("password.required"))
