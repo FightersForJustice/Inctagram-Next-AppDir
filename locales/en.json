@@ -8,7 +8,8 @@
     "btnName": "Sign Up",
     "question": "Do you have an account?",
     "btnBottomName": "Sign In",
-    "agreemetsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>"
+    "agreemetsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>",
+    "sentEmailConfirm": "We have sent a link to confirm your email to"
   },
   "SignInPage": {
     "title": "Login",

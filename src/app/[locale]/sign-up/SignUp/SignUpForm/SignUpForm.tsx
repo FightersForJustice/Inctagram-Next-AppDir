@@ -144,7 +144,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           {translate("btnBottomName")}
         </Link>
       </form>
-      {showModal && <EmailSentModal userEmail={userEmail} setShowModal={setShowModal} />}
+      {showModal && <EmailSentModal translate={String(translate("sentEmailConfirm"))} userEmail={userEmail} setShowModal={setShowModal} />}
       {isLoading && <Loader />}
     </>
   );
