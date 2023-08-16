@@ -166,7 +166,8 @@
     "email": {
       "required": "Email is required",
       "email": "Invalid email format",
-      "invalidCharacters": "Email must not contain |$%&/=?^*+!#~'{}"
+      "invalidCharacters": "Email must not contain |$%&/=?^*+!#~'{}",
+      "invalidDomain": "Damain is not correct"
     },
     "password": {
       "required": "Password is required",

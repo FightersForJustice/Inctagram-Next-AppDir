@@ -162,7 +162,8 @@
     "email": {
       "required": "Email обязателен",
       "email": "Неверный формат email",
-      "invalidCharacters": "Email не должен содержать |$%&/=?^*+!#~'{}"
+      "invalidCharacters": "Email не должен содержать |$%&/=?^*+!#~'{}",
+      "invalidDomain": "Некорректный домен"
 
     },
     "password": {
@@ -172,6 +173,7 @@
       "onlySpaces": "Пароль не должен содержать пробелов",
       "innerSpaces":"Пароль не должен быть резделен пробелом",
       "invalidCharacters": "Пароль может содержать латиницу и спец символы"
+
 
     },
     "passwordConfirm": {

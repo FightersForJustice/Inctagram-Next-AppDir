@@ -14,6 +14,14 @@ export const SignInSchema = () => {
       .matches(emailValidationRegex, t("email.invalidCharacters"))
       .email(t("email.email"))
       .required(t("email.required"))
+      .test("valid-domain", t("email.invalidDomain"), (value) => {
+        const parts = value.split("@");
+        if (parts.length === 2) {
+          const [, domain] = parts;
+          return domain.includes(".");
+        }
+        return false;
+      })
       ,
       password: yup
         .string()
