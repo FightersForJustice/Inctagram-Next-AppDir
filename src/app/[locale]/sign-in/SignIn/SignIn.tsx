@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +7,7 @@ import { SignInSchema } from "../../../../features/schemas/SignInSchema";
 import { redirect } from "next/navigation";
 import { Loader } from "../../../../components/Loader/Loader";
 import { FormItem } from "../../sign-up/SignUp/SignUpForm/FormItem";
+
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -25,6 +26,9 @@ const SignIn: React.FC<Props> = ({ translate }) => {
   const [showPass, setShowPass] = useState(true);
   const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
 
+
+
+
   const onSubmit = (data: any) => {
     postLogin({
       email: data.email,
@@ -34,18 +38,22 @@ const SignIn: React.FC<Props> = ({ translate }) => {
       .then((response) => {
         if (response.accessToken) sessionStorage.setItem("accessToken", response.accessToken);
       })
-      .catch((err) => {
+      .catch((err) => {                          
         if (err?.data?.statusCode === StatusCode.badRequest) {
-          setError("password", { message: err.data.messages });
-          setError("email", { message: err.data.messages });
+          setError("password", { message: String(translate("error400")) });
+          setError("email", { message: String(translate("error400")) });
         } else if (err?.data?.statusCode === StatusCode.unauthorized) {
           setError("password", { message: err.data.messages[0]?.message });
           setError("email", { message: err.data.messages[0]?.message });
         }
-      });
+      })
   };
 
-  if (isSuccess) redirect("/my-profile");
+
+  if (isSuccess) {
+      redirect("/my-profile");
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>

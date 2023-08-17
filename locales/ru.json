@@ -10,7 +10,8 @@
     "btnBottomName": "Логин",
     "agreemetsCheckText": "Я согласен(а) с <link>Условиями предоставления услуг</link> и <link2>Политикой конфиденциальности</link2>",
     "sentEmailConfirm": "Мы отправили ссылку для подтверждения на почту:"
-
+    
+    
   },
   "SignInPage": {
     "title": "Логин",
@@ -19,7 +20,8 @@
     "forgotPass": "Забыли пароль?",
     "btnName": "Логин",
     "question": "Нету аккаунта?",
-    "btnBottomName": "Регистрация"
+    "btnBottomName": "Регистрация",
+    "error400": "неверный пароль или почта"
   },
   "VerificationInvalidPage": {
     "title": "Ссылка для подтверждения почты недействительна",

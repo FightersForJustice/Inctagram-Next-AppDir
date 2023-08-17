@@ -18,7 +18,8 @@
     "forgotPass": "Forgot password?",
     "btnName": "Sign In",
     "question": "Don’t have an account?",
-    "btnBottomName": "Sign Up"
+    "btnBottomName": "Sign Up",
+    "error400": "invalid password or email"
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
