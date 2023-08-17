@@ -47,6 +47,17 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     if (isSuccess) setShowModal(true);
   }, [isSuccess]);
 
+  const translateError=(err:string)=> {
+    switch (err) {
+      case "User with this name is already exist":
+        return String(translate('nameExist') )
+      case "User with this email is already exist":
+        return String(translate('emailExist') )
+      default:
+        break;
+    }
+    }
+
   const onSubmit = (data: SubmitProps) => {
 
     //==изменения== закидываем данные нового пользоваеля в запрос
@@ -55,8 +66,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
       .then(() => {})
       .catch((err) => {
         if (err.data.statusCode === StatusCode.badRequest) { 
-          
-          setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
+          setError(err.data.messages[0]?.field, { message: translateError(err.data.messages[0]?.message) });
         }
       });
 
@@ -65,7 +75,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
     localStorage.setItem("user-email", data.email);
   };
-
 
 
 
