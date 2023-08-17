@@ -8,7 +8,7 @@ export const SignUpFormSchema = () => {
 
   return yup
   .object({
-    userName: yup.string().min(6, t("userName.min")).max(30, t("userName.max")).required(t("userName.required")),
+    name: yup.string().min(6, t("userName.min")).max(30, t("userName.max")).required(t("userName.required")),
     email: yup.string().email(t("email.email")).required(t("email.required")),
     password: yup.string().min(6, t("password.min")).max(20, t("password.max")).required(t("password.required")),
     passwordConfirm: yup.string().oneOf([yup.ref("password")], t("passwordConfirm.oneOf")).min(6, t("passwordConfirm.min")).required(t("passwordConfirm.required")),

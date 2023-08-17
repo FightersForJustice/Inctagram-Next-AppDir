@@ -50,11 +50,12 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const onSubmit = (data: SubmitProps) => {
 
     //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({ userName: data.userName, email: data.email, password: data.password })
+    postAuthorization({ userName: data.name, email: data.email, password: data.password })
       .unwrap()
       .then(() => {})
       .catch((err) => {
         if (err.data.statusCode === StatusCode.badRequest) { 
+          
           setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
         }
       });
@@ -75,10 +76,10 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           marginTop={"mt-7"}
           translate={translate}
           register={register}
-          error={errors.userName}
-          errorMessage={errors?.userName?.message}
-          registerName={"userName"}
-          translateName={"username"}
+          error={errors.name}
+          errorMessage={errors?.name?.message}
+          registerName={"name"}
+          translateName={"name"}
           id={"sign-up-userName"}
 
         />
@@ -151,7 +152,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 };
 
 type SubmitProps = {
-  userName: string;
+  name: string;
   email: string;
   password: string;
   passwordConfirm: string;

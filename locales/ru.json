@@ -1,7 +1,7 @@
 {
   "SignUpPage": {
     "title": "Регистрация",
-    "username": "Имя",
+    "name": "Имя",
     "email": "Почта",
     "password": "Пароль",
     "passwordConf": "Подтвердить пароль",
