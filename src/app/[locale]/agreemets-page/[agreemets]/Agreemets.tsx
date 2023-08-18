@@ -1,7 +1,5 @@
 import Link from "next/link";
 import s from "./agreemets.module.scss";
-import Image from "next/image";
-import arrowImg from "../../../../public/img/arrowleft.svg";
 
 type Props = {
   title: string;
@@ -13,7 +11,7 @@ export const Agreemets: React.FC<Props> = ({ title, text, btnName }) => {
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
-        <Link href={"./sign-up"} className={"cursor-pointer flex gap-[15px]"}>
+        <Link href={"../sign-up"} className={"cursor-pointer flex gap-[15px]"}>
           <div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_16760_12589)">

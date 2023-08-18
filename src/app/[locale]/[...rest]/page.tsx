@@ -1,5 +1,18 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import NotFound from "components/NotFound/NotFound";
+import { BaseLayout } from "components/layouts/BaseLayout/BaseLayout";
+import { useTranslations } from "next-intl";
 
 export default function CatchAllPage() {
-  notFound();
+  const t = useTranslations("NotFoundPage");
+
+  return (
+
+      <NotFound>
+        <>{t("title")}</>
+        <>{t("description")}</>
+      </NotFound>
+
+  );
 }

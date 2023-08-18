@@ -40,12 +40,12 @@ export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, err
           <p >
             {translate.rich("agreemetsCheckText", {
               link: (chunks: string) => (
-                <Link className={linkStyle} href="./terms-of-service">
+                <Link className={linkStyle} href="./agreemets-page/terms-of-service">
                   {chunks}
                 </Link>
               ),
               link2: (chunks: string) => (
-                <Link className={linkStyle} href="./privacy-policy">
+                <Link className={linkStyle} href="./agreemets-page/privacy-policy">
                   {chunks}
                 </Link>
               ),
