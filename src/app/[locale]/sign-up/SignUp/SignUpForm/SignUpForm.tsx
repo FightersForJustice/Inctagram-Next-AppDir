@@ -19,6 +19,7 @@ type Props = {
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
 
+
   const {
     register,
     handleSubmit,
