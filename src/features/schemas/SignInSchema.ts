@@ -14,7 +14,7 @@ export const SignInSchema = () => {
       .matches(emailValidationRegex, t("email.invalidCharacters"))
       .email(t("email.email"))
       .required(t("email.required"))
-      .test("valid-domain", t("email.invalidDomain"), (value) => {
+      .test("valid-domain", t("email.invalidCharacters"), (value) => {
         const parts = value.split("@");
         if (parts.length === 2) {
           const [, domain] = parts;

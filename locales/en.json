@@ -1,7 +1,7 @@
 {
   "SignUpPage": {
     "title": "Sign Up",
-    "username": "Username",
+    "name": "Username",
     "email": "Email",
     "password": "Password",
     "passwordConf": "Password confirmation",
@@ -170,15 +170,16 @@
     "email": {
       "required": "Email is required",
       "email": "Invalid email format",
-      "invalidCharacters": "Email must not contain |$%&/=?^*+!#~'{}",
-      "invalidDomain": "Damain is not correct"
+      "invalidCharacters": "Email must contain A-Z, a-z, ., @"
     },
     "password": {
       "required": "Password is required",
       "min": "Password must be at least 6 characters",
       "max": "Password must not exceed 20 characters",
       "spaces": "Password must not contain spaces",
-      "invalidCharacters": "Password must contain latin characters"
+      "invalidCharacters": "Password must contain latin characters",
+      "complexity": "Password must contain a-z, A-Z, 1-9, special "
+
     },
     "passwordConfirm": {
       "required": "Password confirmation is required",
