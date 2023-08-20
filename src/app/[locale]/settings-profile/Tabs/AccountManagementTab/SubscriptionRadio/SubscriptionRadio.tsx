@@ -17,7 +17,7 @@ export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeVal
       onValueChange={(value) => setSubTypeValue(value)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        <RadioGroup.Item className="RadioGroupItem" value="10" id="r10">
+        <RadioGroup.Item className="RadioGroupItem" value="MONTHLY" id="r10">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r10">
@@ -25,7 +25,7 @@ export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeVal
         </label>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <RadioGroup.Item className="RadioGroupItem" value="50" id="r50">
+        <RadioGroup.Item className="RadioGroupItem" value="SEMI_ANNUALLY" id="r50">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r50">
@@ -33,7 +33,7 @@ export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeVal
         </label>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <RadioGroup.Item className="RadioGroupItem" value="100" id="r100">
+        <RadioGroup.Item className="RadioGroupItem" value="YEARLY" id="r100">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r100">
