@@ -32,8 +32,8 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       sessionStorage.setItem("accessToken", res.data?.accessToken);
       toast.success("Token was updated");
     } else {
-      redirect("/sign-in");
       toast.error("Auth error");
+      redirect("/sign-in");
     }
   }
   return result;

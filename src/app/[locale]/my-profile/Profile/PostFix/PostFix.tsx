@@ -44,7 +44,13 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
             <div className={s.post__container}>
               <div className={s.post__header}>
                 <div className={s.post__header__wrapper}>
-                  <Image src={avatar} alt={"ava"} width={36} height={36} className={s.post__header__img} />
+                  <Image
+                    src={avatar ?? "/img/create-post/no-image.png"}
+                    alt={"ava"}
+                    width={36}
+                    height={36}
+                    className={s.post__header__img}
+                  />
                   <p>{userName}</p>
                 </div>
 

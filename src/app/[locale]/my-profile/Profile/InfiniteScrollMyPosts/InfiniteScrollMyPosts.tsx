@@ -6,6 +6,7 @@ import { GetResponse } from "../../../../../api/profile.api";
 import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
+import { toast } from "react-toastify";
 
 type Props = {
   userData: GetResponse;
@@ -18,9 +19,13 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
+  const [getPosts, { isLoading, error: postsError }] = useLazyGetPostsPaginationQuery();
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
-  const { data, isSuccess } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
+  const {
+    data,
+    isSuccess,
+    error: paginationError,
+  } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
 
   useEffect(() => {
     if (isSuccess) {
@@ -74,6 +79,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
       );
     });
   };
+
+  if (postsError || paginationError) toast.error("Error");
 
   return (
     <>

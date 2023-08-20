@@ -14,9 +14,9 @@
 
   &__header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 270px;
+    gap: 230px;
     border-bottom: 1px solid var(--dark-100);
     padding: 11px 24px 10px 34px;
 

@@ -16,7 +16,7 @@ type Props = {
   show?: boolean;
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
-  isTouched?: boolean
+  isTouched?: boolean;
 };
 
 export const FormItem: React.FC<Props> = ({
@@ -32,14 +32,10 @@ export const FormItem: React.FC<Props> = ({
   show,
   setShow,
   showPasswordIcon,
-
 }) => {
   const type = showPasswordIcon !== undefined && show;
 
   return (
-
-   
-    
     <div className={`${marginTop} ${marginBottom}`}>
       <div className={"text-left ml-5 text-[--light-900] text-[14px]"}>
         <label>{translate(translateName)}</label>
@@ -55,7 +51,7 @@ export const FormItem: React.FC<Props> = ({
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError error={error}  errorMessage={errorMessage} id={"sign-up-userName-error"} />
+        <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} />
       </div>
     </div>
   );

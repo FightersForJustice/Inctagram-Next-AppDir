@@ -10,16 +10,14 @@ import { Loader } from "../../../../../components/Loader/Loader";
 import { EmailSentModal } from "./EmailSentModal";
 import { FormItem } from "./FormItem";
 import { AgreeCheckbox } from "./AgreeCheckbox";
+import { toast } from "react-toastify";
 
 type Props = {
   lang: "en" | "ru";
-  translate: (value: string) => ReactNode ;
+  translate: (value: string) => ReactNode;
 };
 
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
-
-
-
   const {
     register,
     handleSubmit,
@@ -28,13 +26,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: "onTouched",
-    
   });
-
-  
-
-
-
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
@@ -48,26 +40,26 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     if (isSuccess) setShowModal(true);
   }, [isSuccess]);
 
-  const translateError=(err:string)=> {
+  const translateError = (err: string) => {
     switch (err) {
       case "User with this name is already exist":
-        return String(translate('nameExist') )
+        return String(translate("nameExist"));
       case "User with this email is already exist":
-        return String(translate('emailExist') )
+        return String(translate("emailExist"));
       default:
         break;
     }
-    }
+  };
 
   const onSubmit = (data: SubmitProps) => {
-
     //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({ userName: data.name, email: data.email, password: data.password })
       .unwrap()
-      .then(() => {})
       .catch((err) => {
-        if (err.data.statusCode === StatusCode.badRequest) { 
+        if (err?.data?.statusCode === StatusCode.badRequest) {
           setError(err.data.messages[0]?.field, { message: translateError(err.data.messages[0]?.message) });
+        } else {
+          toast.error(err.error);
         }
       });
 
@@ -76,8 +68,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
     localStorage.setItem("user-email", data.email);
   };
-
-
 
   return (
     <>
@@ -91,7 +81,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           registerName={"name"}
           translateName={"name"}
           id={"sign-up-userName"}
-
         />
 
         <FormItem
@@ -134,18 +123,20 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           showPasswordIcon={true}
         />
 
-        <AgreeCheckbox 
-        translate={translate}
-        register={register}
-        error={errors.agreements}
-        errorMessage={errors?.agreements?.message}
-        registerName={"agreements"}
-        id={"sign-up-agreemets"}
+        <AgreeCheckbox
+          translate={translate}
+          register={register}
+          error={errors.agreements}
+          errorMessage={errors?.agreements?.message}
+          registerName={"agreements"}
+          id={"sign-up-agreemets"}
         />
 
         <input
           type="submit"
-          className={"mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed "}
+          className={
+            "mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed "
+          }
           id={"sign-up-submit"}
           value={String(translate("btnName"))}
           disabled={!isValid}
@@ -155,7 +146,13 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           {translate("btnBottomName")}
         </Link>
       </form>
-      {showModal && <EmailSentModal translate={String(translate("sentEmailConfirm"))} userEmail={userEmail} setShowModal={setShowModal} />}
+      {showModal && (
+        <EmailSentModal
+          translate={String(translate("sentEmailConfirm"))}
+          userEmail={userEmail}
+          setShowModal={setShowModal}
+        />
+      )}
       {isLoading && <Loader />}
     </>
   );
