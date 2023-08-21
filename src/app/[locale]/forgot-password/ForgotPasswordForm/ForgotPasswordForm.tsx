@@ -8,6 +8,7 @@ import { Modal } from "../../../../components/Modals/Modal/Modal";
 import { Loader } from "../../../../components/Loader/Loader";
 import { ForgotPasswordSchema } from "../../../../features/schemas/ForgotPasswordFormSchema";
 import { EmailForm } from "./EmailForm/EmailForm";
+import { handleApiError } from "../../../../utils/handleApiError";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -20,17 +21,15 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
-    mode: "onTouched"
+    mode: "onTouched",
   });
-
- 
 
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [recaptcha, setRecaptcha] = useState("");
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
 
-  const [recoveryPassword, { isSuccess, isLoading }] = usePostPasswordRecoveryMutation();
+  const [recoveryPassword, { isSuccess, isLoading, error }] = usePostPasswordRecoveryMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -51,8 +50,9 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     setRecaptcha(token!);
   };
 
-
-
+  if (error) {
+    handleApiError(error);
+  }
 
   return (
     <>
@@ -74,7 +74,9 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
         <input
           type="submit"
-          className={"mb-[24px]  w-[90%] pt-[6px] pb-[6px]   bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "}
+          className={
+            "mb-[24px]  w-[90%] pt-[6px] pb-[6px]   bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "
+          }
           value={`${sendLinkAgain ? `${translate("btnNameAfterSend")}` : `${translate("btnName")}`}`}
           disabled={!recaptcha || !isValid}
         />

@@ -19,13 +19,9 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [getPosts, { isLoading, error: postsError }] = useLazyGetPostsPaginationQuery();
+  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
-  const {
-    data,
-    isSuccess,
-    error: paginationError,
-  } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
+  const { data, isSuccess } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
 
   useEffect(() => {
     if (isSuccess) {
@@ -54,6 +50,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
               setTotalCount(res.totalCount);
             }
           })
+          .catch((err) => toast.error(err.error))
           .finally(() => setFetching(false));
       }
     }
@@ -80,7 +77,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     });
   };
 
-  if (postsError || paginationError) toast.error("Error");
+  //if (postsError || paginationError) toast.error("Error");
 
   return (
     <>

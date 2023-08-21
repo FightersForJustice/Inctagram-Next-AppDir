@@ -25,9 +25,7 @@ const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
     resend({ email: userEmail! })
       .unwrap()
       .then()
-      .catch(() => {
-        toast.error("Email resend error");
-      });
+      .catch((err) => toast.error(err.error));
   };
 
   return (

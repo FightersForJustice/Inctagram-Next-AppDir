@@ -4,6 +4,7 @@ import Image from "next/image";
 import s from "./Stripe.module.scss";
 import { useCreateSubscriptionMutation } from "../../api/subscriptions.api";
 import { Loader } from "../Loader/Loader";
+import { toast } from "react-toastify";
 
 type Props = {
   subTypeValue: string;
@@ -19,7 +20,7 @@ export const Stripe: React.FC<Props> = ({ subTypeValue, baseUrl }) => {
       .then((res) => {
         window.location.href = res.url;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.error));
   };
 
   return (

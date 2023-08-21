@@ -8,6 +8,7 @@ import { useDeletePostMutation, useGetPostQuery } from "../../../../../api/posts
 import { Loader } from "../../../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import { Dots } from "./Dots/Dots";
+import { handleApiError } from "../../../../../utils/handleApiError";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -24,7 +25,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const { data, isLoading } = useGetPostQuery(postId!);
+  const { data, isLoading, error, isError } = useGetPostQuery(postId!);
 
   const onDeletePost = () => {
     deletePost(postId!)
@@ -32,8 +33,13 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
       .then(() => {
         setOpenPostModal(false);
         toast.success("Post was deleted");
-      });
+      })
+      .catch((err) => toast.error(err.error));
   };
+
+  if (error) {
+    handleApiError(error);
+  }
 
   return (
     <>
@@ -91,9 +97,9 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
           </button>
         </div>
       ) : (
-        <Loader />
+        <Loader /> //при ошибке постоянно крутиться лоадер
       )}
-      {isLoading && <Loader />}
+      {isLoading && !isError && <Loader />}
       {isDeleting && <Loader />}
     </>
   );

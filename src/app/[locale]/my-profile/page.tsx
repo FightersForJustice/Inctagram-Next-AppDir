@@ -8,14 +8,13 @@ import { SubscriptionsModal } from "../../../components/Modals/SubscriptionsModa
 import { Profile } from "./Profile/Profile";
 import { useGetProfileQuery } from "../../../api/profile.api";
 import { Loader } from "../../../components/Loader/Loader";
-import { toast } from "react-toastify";
 
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
-  const { data, isLoading, refetch, error } = useGetProfileQuery();
+  const { data, isLoading, refetch } = useGetProfileQuery();
 
   let accessToken;
   if (typeof sessionStorage !== "undefined") {
@@ -26,7 +25,7 @@ const MyProfile = () => {
     refetch();
   }, [accessToken]);
 
-  if (error) toast.error("Error");
+  //if (error) toast.error("Error");
   if (isLoading) return <Loader />;
 
   return (
