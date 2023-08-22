@@ -6,14 +6,18 @@ export const SignUpFormSchema = () => {
   const passwordCompletly =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
   const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
+  const nameValidationRegex = /^[A-Za-z0-9]+$/;
+
 
   return yup
     .object({
       name: yup
         .string()
+        .required(t("userName.required"))
+        .matches(/^[^\s]+$/, t("userName.spaces"))
+        .matches(nameValidationRegex, t("userName.invalidCharacters"))
         .min(6, t("userName.min"))
-        .max(30, t("userName.max"))
-        .required(t("userName.required")),
+        .max(30, t("userName.max")),
         email: yup
         .string()
         .matches(emailValidationRegex, t("email.invalidCharacters"))

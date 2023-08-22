@@ -38,7 +38,9 @@ const SignIn: React.FC<Props> = ({ translate }) => {
       .then((response) => {
         if (response.accessToken) sessionStorage.setItem("accessToken", response.accessToken);
       })
-      .catch((err) => {                          
+      .catch((err) => {    
+        console.log(err);
+                              
         if (err?.data?.statusCode === StatusCode.badRequest) {
           setError("password", { message: String(translate("error400")) });
           setError("email", { message: String(translate("error400")) });
