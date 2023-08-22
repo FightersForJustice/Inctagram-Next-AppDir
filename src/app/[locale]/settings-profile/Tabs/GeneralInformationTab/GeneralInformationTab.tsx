@@ -8,12 +8,13 @@ import { toast } from "react-toastify";
 import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "../../../../../api/profile.api";
 import { Loader } from "../../../../../components/Loader/Loader";
 import { useTranslations } from "next-intl";
+import { handleApiError } from "../../../../../utils/handleApiError";
 
 export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, setLoadedAvatar, loadedAvatar }) => {
   const t = useTranslations("SettingsProfilePage.GeneralInformationTab");
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
-  const { data, isLoading } = useGetProfileQuery();
+  const { data, isLoading, error } = useGetProfileQuery();
 
   useEffect(() => {
     if (data?.avatars.length) {
@@ -24,13 +25,13 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
   const onDeleteAvatar = () => {
     deleteAvatar()
       .unwrap()
-      .then((res) => {
-        setLoadedAvatar("");
-      })
-      .catch((err) => {
-        toast.error("Error");
-      });
+      .then(() => setLoadedAvatar(""))
+      .catch((err) => toast.error(err.error));
   };
+
+  if (error) {
+    handleApiError(error);
+  }
 
   return (
     <>

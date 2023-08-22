@@ -49,12 +49,13 @@ export const subscriptionsApi = createApi({
   }),
 });
 
-export const { useGetPaymentsQuery } = subscriptionsApi;
+export const { useGetPaymentsQuery, useCreateSubscriptionMutation, useGetCurrentSubscriptionQuery } = subscriptionsApi;
 
 type CreateSubscription = {
   typeSubscription: string;
   paymentType: string;
   amount: number;
+  baseUrl: string;
 };
 
 export type GetCostOfSubscription = {

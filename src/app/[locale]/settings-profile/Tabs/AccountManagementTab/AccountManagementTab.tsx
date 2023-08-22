@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 
 import s from "./AccountManagementTab.module.scss";
@@ -7,15 +7,51 @@ import { SubscriptionRadio } from "./SubscriptionRadio/SubscriptionRadio";
 import { Subscription } from "./Subscription/Subscription";
 import { Stripe } from "../../../../../components/Stripe/Stripe";
 import { PayPal } from "../../../../../components/PayPal/PayPal";
+import {
+  GetCurrentSubscription,
+  useGetCurrentSubscriptionQuery,
+  useGetPaymentsQuery,
+} from "../../../../../api/subscriptions.api";
 
 export const AccountManagementTab = () => {
+  const [userSubInfo, setUserSubInfo] = useState<GetCurrentSubscription>({
+    data: [
+      {
+        dateOfPayment: "",
+        endDateOfSubscription: "",
+        autoRenewal: false,
+        subscriptionId: "",
+        userId: 0,
+      },
+    ],
+    hasAutoRenewal: false,
+  });
   const [accountTypeValue, setAccountTypeValue] = useState("personal");
-  const [subTypeValue, setSubTypeValue] = useState("10");
+  const [subTypeValue, setSubTypeValue] = useState("MONTHLY");
+  const [baseUrl, setBaseUrl] = useState<any>("");
+
+  const { data } = useGetPaymentsQuery();
+  const { data: currentSubData, isLoading: isLoadingSub } = useGetCurrentSubscriptionQuery();
+
+  useEffect(() => {
+    if (currentSubData?.data[0]?.subscriptionId.length! > 0) {
+      setAccountTypeValue("business");
+    }
+
+    setBaseUrl(window.location);
+    setUserSubInfo(currentSubData!);
+  }, [currentSubData]);
 
   return (
     <Tabs.Content className={s.TabsContent} value="accountManagement">
       <div className={s.tab}>
-        <Subscription />
+        {userSubInfo?.data.length > 0 && (
+          <Subscription
+            expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
+            dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
+            autoRenewal={userSubInfo?.hasAutoRenewal}
+          />
+        )}
 
         <p className={s.tab__name}>Account type:</p>
         <div className={s.tab__wrapper}>
@@ -30,7 +66,7 @@ export const AccountManagementTab = () => {
             <div className={s.tab__container}>
               <PayPal price={subTypeValue} />
               <p>or</p>
-              <Stripe subTypeValue={subTypeValue} />
+              <Stripe subTypeValue={subTypeValue} baseUrl={baseUrl} />
             </div>
           </>
         )}

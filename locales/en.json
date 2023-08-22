@@ -168,7 +168,6 @@
       "max": "Username must not exceed 30 characters",
       "invalidCharacters": "Username must contain a-z, A-Z, 1-9",
       "spaces": "Password must not contain spaces"
-
     },
     "email": {
       "required": "Email is required",

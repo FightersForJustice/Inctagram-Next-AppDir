@@ -9,6 +9,8 @@ import { HomePagePost } from "./HomePagePost/HomePagePost";
 import { PostsItem, useLazyGetPostsQuery } from "../../../api/posts.api";
 import { Loader } from "../../../components/Loader/Loader";
 import useScrollFetching from "../../../features/hooks/useScrollListener";
+import { toast } from "react-toastify";
+import { StatusCode } from "../../../api/auth.api";
 
 const Home = () => {
   const pathname = usePathname();
@@ -19,7 +21,14 @@ const Home = () => {
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
 
   useEffect(() => {
-    getPosts(currentPage);
+    getPosts(currentPage)
+      .unwrap()
+      .catch((err) => {
+        if (err.statusCode === StatusCode.noAddress) {
+          toast.error("Error 404");
+        }
+        toast.error(err.error);
+      });
   }, []);
 
   useEffect(() => {
@@ -32,6 +41,7 @@ const Home = () => {
             setCurrentPage((prevState) => prevState + 1);
           }
         })
+        .catch((err) => toast.error(err.error))
         .finally(() => setFetching(false));
     }
   }, [fetchingValue]);

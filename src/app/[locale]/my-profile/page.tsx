@@ -25,6 +25,7 @@ const MyProfile = () => {
     refetch();
   }, [accessToken]);
 
+  //if (error) toast.error("Error");
   if (isLoading) return <Loader />;
 
   return (

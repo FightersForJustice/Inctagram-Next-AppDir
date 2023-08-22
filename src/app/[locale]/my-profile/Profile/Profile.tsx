@@ -32,7 +32,7 @@ export const Profile: React.FC<Props> = ({
       <div className={s.profile}>
         <div>
           <Image
-            src={`${userData?.avatars[0] ? userData.avatars[0].url : "/img/profile/avatar.png"}`}
+            src={`${userData?.avatars[0] ? userData.avatars[0].url : "/img/create-post/no-image.png"}`}
             alt={"avatar"}
             width={204}
             height={204}
@@ -56,7 +56,7 @@ export const Profile: React.FC<Props> = ({
           <PostFix
             onClose={() => setOpenPostModal(false)}
             postId={selectedPost}
-            avatar={userData?.avatars[0].url}
+            avatar={userData?.avatars[0]?.url}
             userName={userData?.userName}
             setOpenPostModal={setOpenPostModal}
           />

@@ -28,7 +28,13 @@ export const PostContent: React.FC<Props> = ({
   return (
     <>
       <div className={s.post__desc}>
-        <Image src={avatar} alt={"ava"} width={36} height={36} className={s.post__avatar} />
+        <Image
+          src={avatar ?? "/img/create-post/no-image.png"}
+          alt={"ava"}
+          width={36}
+          height={36}
+          className={s.post__avatar}
+        />
         <div>
           <p className={s.post__desc__text}>
             <span className={s.post__desc__name}>{userName} </span>

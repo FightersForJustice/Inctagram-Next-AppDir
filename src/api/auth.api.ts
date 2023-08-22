@@ -127,6 +127,7 @@ type AuthMeResponse = {
 export const StatusCode = {
   badRequest: 400,
   unauthorized: 401,
+  noAddress: 404,
 };
 
 export let {

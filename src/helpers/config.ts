@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://inctagram.work/api/v1" /*"https://inctagram-api.vercel.app/api/"*/,
+  baseUrl: "https://inctagram.work/api/v1/" /*"https://inctagram-api.vercel.app/api/"*/,
   prepareHeaders: (headers, { getState }) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
@@ -32,8 +32,8 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       sessionStorage.setItem("accessToken", res.data?.accessToken);
       toast.success("Token was updated");
     } else {
-      redirect("/sign-in");
       toast.error("Auth error");
+      redirect("/sign-in");
     }
   }
   return result;

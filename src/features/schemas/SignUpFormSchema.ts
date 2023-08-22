@@ -54,3 +54,4 @@ export const SignUpFormSchema = () => {
     })
     .required();
 };
+

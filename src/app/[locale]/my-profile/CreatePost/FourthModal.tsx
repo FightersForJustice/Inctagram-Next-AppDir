@@ -100,7 +100,7 @@ const FourthModal: React.FC<Props> = ({
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>
               <Image
-                src={`${userData.avatars[1].url ?? "/img/create-post/publication-modal/image.png"}`}
+                src={`${userData?.avatars[1]?.url ?? "/img/create-post/no-image.png"}`}
                 alt={"image"}
                 width={36}
                 height={36}

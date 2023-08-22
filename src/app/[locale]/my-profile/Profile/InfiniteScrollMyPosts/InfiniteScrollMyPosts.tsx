@@ -6,6 +6,7 @@ import { GetResponse } from "../../../../../api/profile.api";
 import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
+import { toast } from "react-toastify";
 
 type Props = {
   userData: GetResponse;
@@ -49,6 +50,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
               setTotalCount(res.totalCount);
             }
           })
+          .catch((err) => toast.error(err.error))
           .finally(() => setFetching(false));
       }
     }
@@ -74,6 +76,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
       );
     });
   };
+
+  //if (postsError || paginationError) toast.error("Error");
 
   return (
     <>

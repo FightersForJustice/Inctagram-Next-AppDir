@@ -47,7 +47,7 @@ const TabsDemo = () => {
           toast.success("Avatar successfully uploaded");
         })
         .catch((err) => {
-          toast.error("Error");
+          toast.error(err.error);
         });
     }
     setUserAvatar("");

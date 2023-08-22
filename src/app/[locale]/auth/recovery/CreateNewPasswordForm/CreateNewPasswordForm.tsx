@@ -11,6 +11,7 @@ import {
 import { Loader } from "../../../../../components/Loader/Loader";
 import { CreateNewPasswordFormSchema } from "../../../../../features/schemas/CreateNewPasswordFormSchema";
 import { CreateFormItem } from "./CreateFormItem/CreateFormItem";
+import { toast } from "react-toastify";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -45,6 +46,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
         .unwrap()
         .then(() => setIsCodeSuccess(true))
         .catch((err) => {
+          toast.error(err.error);
           if (err.data.statusCode === StatusCode.badRequest) {
             setServerError(err.data.messages[0]?.message);
             //setError("passwordConfirm", { message: err.data.messages[0]?.message });
@@ -61,7 +63,9 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
 
   const onSubmit = (data: { password: string }) => {
     if (isCodeSuccess) {
-      postNewPassword({ newPassword: data.password, recoveryCode });
+      postNewPassword({ newPassword: data.password, recoveryCode })
+        .unwrap()
+        .catch((err) => toast.error(err.error));
       sessionStorage.removeItem("userEmailRecoveryCode");
     }
   };

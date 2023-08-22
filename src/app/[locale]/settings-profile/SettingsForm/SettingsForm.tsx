@@ -11,6 +11,7 @@ import { Loader } from "../../../../components/Loader/Loader";
 import { GetDefaultValuesForm } from "../../../../utils/GetDefaultValuesForm";
 import { SettingsFormSchema } from "../../../../features/schemas/SettingsFormSchema";
 import { SettingsFormItem } from "./SettingsFormItem";
+import { handleApiError } from "../../../../utils/handleApiError";
 
 type Props = {
   userBirthday: Date | undefined;
@@ -20,7 +21,7 @@ type Props = {
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [updateProfile, { isLoading }] = usePutProfileMutation();
-  const [getUserProfile] = useLazyGetProfileQuery();
+  const [getUserProfile, { error }] = useLazyGetProfileQuery();
 
   const {
     register,
@@ -52,8 +53,13 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         if (err.status === StatusCode.badRequest) {
           setError(err.data.messages[0]?.field, { message: err.data.messages[0]?.message });
         }
+        toast.error(err.error);
       });
   });
+
+  if (error) {
+    handleApiError(error);
+  }
 
   return (
     <>
