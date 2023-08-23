@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useGetAuthMeQuery } from "api/auth.api";
+import { UserID, appActions } from "../../redux/reducers/appReducer";
+import { useDispatch } from "react-redux";
 
 interface AuthCheckerProps {
   children: React.ReactNode;
@@ -8,6 +11,10 @@ interface AuthCheckerProps {
 const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const dispatch = useDispatch();
+
+  const { data, isSuccess } = useGetAuthMeQuery();
+  const { setUserID } = appActions;
 
   useEffect(() => {
     if (typeof sessionStorage !== "undefined") {
@@ -20,7 +27,12 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
     }
   }, [router]);
 
-  if (accessToken) {
+
+    if (isSuccess) {
+      dispatch( setUserID({ userID: data.userId }));
+    }
+
+  if (accessToken && isSuccess) {
     return <>{children}</>;
   } else {
     return null; // Другой компонент для отображения или null
