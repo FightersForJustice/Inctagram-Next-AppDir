@@ -5,8 +5,9 @@ export const SignUpFormSchema = () => {
   const t = useTranslations("Errors");
   const passwordCompletly =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}-]+$/;
+  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
   const nameValidationRegex = /^[A-Za-z0-9]+$/;
+  const firsCharEmail = /^[^|$%&/=?^*+!#~'{}-]+$/;
 
 
   return yup
@@ -18,11 +19,11 @@ export const SignUpFormSchema = () => {
         .matches(nameValidationRegex, t("userName.invalidCharacters"))
         .min(6, t("userName.min"))
         .max(30, t("userName.max")),
-        email: yup
+      email: yup
         .string()
-        .matches(emailValidationRegex, t("email.invalidCharacters"))
-        .email(t("email.email"))
         .required(t("email.required"))
+        .matches(emailValidationRegex, t("email.invalidCharacters"))
+        // .email(t("email.email"))
         .test("valid-domain", t("email.invalidCharacters"), (value) => {
           const parts = value.split("@");
           if (parts.length === 2) {
@@ -30,6 +31,9 @@ export const SignUpFormSchema = () => {
             return domain.includes(".");
           }
           return false;
+        })
+        .test("firstSpec", t("email.invalidCharacters"), (value) => {
+          return firsCharEmail.test(value[0]);
         }),
       password: yup
         .string()
@@ -54,4 +58,3 @@ export const SignUpFormSchema = () => {
     })
     .required();
 };
-
