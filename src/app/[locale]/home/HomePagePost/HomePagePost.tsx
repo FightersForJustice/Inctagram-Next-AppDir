@@ -3,13 +3,18 @@ import s from "./HomePagePost.module.scss";
 import Image from "next/image";
 import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
 import { PostsItem } from "../../../../api/posts.api";
-import { formatTimeFromDateString } from "../../../../utils/formatTimeFromDateString";
+import {  GetTimeAgoText } from "../../../../utils/FormatTimeFromDateString";
+import { pluralizeRu } from "helpers/createPluralize";
 
 type Props = {
   post: PostsItem;
 };
 
 export const HomePagePost: React.FC<Props> = ({ post }) => {
+
+
+
+
   return (
     <div className={s.post}>
       <div className={s.post__top}>
@@ -19,7 +24,8 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
           <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
-          <p className={s.post__time}>{formatTimeFromDateString(post.createdAt)}</p>
+          {/* <p className={s.post__time}>{formatTimeFromDateString(post.createdAt)}</p> */}
+          <p className={s.post__time}>{GetTimeAgoText(post.createdAt)}</p>
         </div>
         <HomePostPopup />
       </div>

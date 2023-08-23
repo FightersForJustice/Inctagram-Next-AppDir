@@ -106,7 +106,7 @@ const FourthModal: React.FC<Props> = ({
                 height={36}
                 className={s.cropping__publication__image}
               />
-              <p>{userData.userName}</p>
+              <p>{`${userData?userData.userName:''}`}</p>
             </div>
             <div>
               <div className={s.cropping__publication__wrapper}>

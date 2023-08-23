@@ -191,5 +191,28 @@
     "agreements": {
       "required": "You must accept the agreements"
     }
+  },
+  "Time": {
+    "now": "just now",
+    "minutes": {
+      "one": "minute",
+      "other": "minutes"
+    },
+    "hours": {
+      "one": "hour",
+      "other": "hours"
+    },
+    "days": {
+      "one": "day",
+      "other": "days"
+    },
+    "months": {
+      "one": "month",
+      "other": "months"
+    },
+    "years": {
+      "one": "year",
+      "other": "years"
+    }
   }
 }
