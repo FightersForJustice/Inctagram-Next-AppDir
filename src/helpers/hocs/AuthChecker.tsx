@@ -38,6 +38,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
 
 
   if (render && accessToken) {
+  // if (accessToken) {
 
     return <>{children}</>;
   } else {

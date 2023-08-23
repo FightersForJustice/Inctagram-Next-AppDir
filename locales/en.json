@@ -195,24 +195,24 @@
   "Time": {
     "now": "just now",
     "minutes": {
-      "one": "minute",
-      "other": "minutes"
+      "one": "minute ago",
+      "other": "minutes ago"
     },
     "hours": {
-      "one": "hour",
-      "other": "hours"
+      "one": "hour ago",
+      "other": "hours ago"
     },
     "days": {
-      "one": "day",
-      "other": "days"
+      "one": "day ago",
+      "other": "days ago"
     },
     "months": {
-      "one": "month",
-      "other": "months"
+      "one": "month ago",
+      "other": "months ago"
     },
     "years": {
-      "one": "year",
-      "other": "years"
+      "one": "year ago",
+      "other": "years ago"
     }
   }
 }

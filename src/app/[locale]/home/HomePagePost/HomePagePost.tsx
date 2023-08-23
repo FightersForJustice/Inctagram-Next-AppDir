@@ -4,7 +4,6 @@ import Image from "next/image";
 import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
 import { PostsItem } from "../../../../api/posts.api";
 import {  GetTimeAgoText } from "../../../../utils/FormatTimeFromDateString";
-import { pluralizeRu } from "helpers/createPluralize";
 
 type Props = {
   post: PostsItem;
@@ -12,7 +11,7 @@ type Props = {
 
 export const HomePagePost: React.FC<Props> = ({ post }) => {
 
-
+  const lang = localStorage.getItem('language');
 
 
   return (
@@ -25,7 +24,7 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
           {/* <p className={s.post__time}>{formatTimeFromDateString(post.createdAt)}</p> */}
-          <p className={s.post__time}>{GetTimeAgoText(post.createdAt)}</p>
+          <p className={s.post__time}>{GetTimeAgoText(post.createdAt, lang!)}</p>
         </div>
         <HomePostPopup />
       </div>
