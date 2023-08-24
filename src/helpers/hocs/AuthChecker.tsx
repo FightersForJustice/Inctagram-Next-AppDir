@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGetAuthMeQuery } from "api/auth.api";
-import { UserID, appActions } from "../../redux/reducers/appReducer";
+import { appActions } from "../../redux/reducers/appReducer";
 import { useDispatch } from "react-redux";
 
 interface AuthCheckerProps {

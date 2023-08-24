@@ -3,7 +3,7 @@ import s from "./HomePagePost.module.scss";
 import Image from "next/image";
 import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
 import { PostsItem } from "../../../../api/posts.api";
-import {  GetTimeAgoText } from "../../../../utils/FormatTimeFromDateString";
+import {GetTimeAgoText} from "../../../../utils/formatTimeFromDateString";
 
 type Props = {
   post: PostsItem;
@@ -20,6 +20,7 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
         <div className={s.post__wrapper}>
           <Image src={"/img/home/ava.png"} alt={"ava"} width={36} height={36} />
           <p className={s.post__title}>URLProfiele</p>
+
           <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
