@@ -173,7 +173,8 @@
     "email": {
       "required": "Email обязателен",
       "email": "Неверный формат email",
-      "invalidCharacters": "Email должен содержать A-Z, a-z, ., @"
+      "invalidCharacters": "Email должен содержать A-Z, a-z, ., @",
+      "spaces": "Почта не должена содержать пробелов"
     },
     "password": {
       "required": "Пароль обязателен",

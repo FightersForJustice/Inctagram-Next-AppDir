@@ -174,7 +174,9 @@
     "email": {
       "required": "Email is required",
       "email": "Invalid email format",
-      "invalidCharacters": "Email must contain A-Z, a-z, ., @"
+      "invalidCharacters": "Email must contain A-Z, a-z, ., @",
+      "spaces": "Email must not contain spaces"
+
     },
     "password": {
       "required": "Password is required",

@@ -6,9 +6,8 @@ export const SignUpFormSchema = () => {
   const passwordCompletly =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
   const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
-  const nameValidationRegex = /^[A-Za-z0-9]+$/;
-  const firsCharEmail = /^[^|$%&/=?^*+!#~'{}-]+$/;
-
+  const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
+  const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
 
   return yup
     .object({
@@ -23,28 +22,28 @@ export const SignUpFormSchema = () => {
         .string()
         .required(t("email.required"))
         .matches(emailValidationRegex, t("email.invalidCharacters"))
-        // .email(t("email.email"))
         .test("valid-domain", t("email.invalidCharacters"), (value) => {
           const parts = value.split("@");
           if (parts.length === 2) {
-            const [, domain] = parts;
-            return domain.includes(".");
+            const [local, domain] = parts;
+            return domain.includes(".") && !domain.includes("_") && !local.includes("..");
           }
           return false;
         })
         .test("firstSpec", t("email.invalidCharacters"), (value) => {
-          return firsCharEmail.test(value[0]);
+          const lastChar = value.indexOf("@");
+          return firsLastCharEmail.test(value[lastChar - 1]) && firsLastCharEmail.test(value[0]);
+        })
+        .test("not-spaces", t("email.spaces"), (value) => {
+          return value.trim() !== "" && !/\s/.test(value);
         }),
+      // .email(t("email.email")),
       password: yup
         .string()
         .required(t("password.required"))
-        .test("not-only-spaces", t("password.spaces"), (value) => {
+        .test("not-spaces", t("password.spaces"), (value) => {
           // Проверяем, что пароль не состоит только из пробелов
-          return value.trim() !== "";
-        })
-        .test("no-inner-spaces", t("password.spaces"), (value) => {
-          // Проверяем, что пароль не содержит пробелов внутри
-          return !/\s/.test(value);
+          return value.trim() !== "" && !/\s/.test(value);
         })
         .min(6, t("password.min"))
         .max(20, t("password.max"))
