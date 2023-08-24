@@ -104,6 +104,17 @@ export let authApi = createApi({
         };
       },
     }),
+    loginWithGoogleOAuth: builder.mutation<{ accessToken: "string" }, { code: string }>({
+      query: (code) => {
+        return {
+          url: "google-auth/login",
+          method: "POST",
+          body: {
+            ...code,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -141,4 +152,5 @@ export let {
   usePostLogoutMutation,
   usePostUpdateTokensMutation,
   useGetAuthMeQuery,
+  useLoginWithGoogleOAuthMutation,
 } = authApi;
