@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export let authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://inctagram-api.vercel.app/api/",
+    baseUrl: "https://inctagram.work/api/v1/",
     prepareHeaders: (headers, { getState }) => {
       const token = sessionStorage.getItem("accessToken");
       if (token) {
@@ -114,6 +114,17 @@ export let authApi = createApi({
         };
       },
     }),
+    loginWithGoogleOAuth: builder.mutation<{ accessToken: "string" }, { code: string }>({
+      query: (code) => {
+        return {
+          url: "google-auth/login",
+          method: "POST",
+          body: {
+            ...code,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -150,4 +161,5 @@ export let {
   usePostLogoutMutation,
   usePostUpdateTokensMutation,
   useGetAuthMeQuery,
+  useLoginWithGoogleOAuthMutation,
 } = authApi;
