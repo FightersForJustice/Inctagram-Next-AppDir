@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
 import { GetResponse } from "../../../../api/profile.api";
 import { useSelector } from "react-redux";
-import { RootState } from "redux/store";
+import { RootState } from "../../../../redux/store";
 
 type Props = {
   pathname: string;
