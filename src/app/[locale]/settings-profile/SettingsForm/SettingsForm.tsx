@@ -17,6 +17,14 @@ type Props = {
   userBirthday: Date | undefined;
   translate: any;
 };
+type FormValues = {
+  userName: string;
+  firstName: string | null | undefined;
+  lastName: string | null | undefined;
+  city: string | null | undefined;
+  aboutMe: string;
+};
+
 
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -136,10 +144,3 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   );
 };
 
-type FormValues = {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  city: string;
-  aboutMe: string | undefined;
-};
