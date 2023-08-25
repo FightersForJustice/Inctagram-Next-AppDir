@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Link from "next/link";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
-import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
-import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
-import { usePostLogoutMutation } from "../../../../api/auth.api";
+import { Modal } from "@/components/Modals/Modal/Modal";
+import { TransparentBtn } from "@/components/TransparentBtn/TransparentBtn";
+import { PrimaryBtn } from "@/components/PrimaryBtn/PrimaryBtn";
+import { usePostLogoutMutation } from "@/api/auth.api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { Loader } from "../../../../components/Loader/Loader";
+import { Loader } from "@/components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
 import { GetResponse } from "../../../../api/profile.api";
@@ -35,6 +35,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData })
       .unwrap()
       .then(() => {
         sessionStorage.clear();
+        localStorage.clear();
         router.push("/sign-in");
         toast.success("Logout success");
       })

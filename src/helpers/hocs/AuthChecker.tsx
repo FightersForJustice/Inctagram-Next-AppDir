@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGetAuthMeQuery } from "api/auth.api";
-import { appActions } from "../../redux/reducers/appReducer";
+import { appActions } from "@/redux/reducers/appReducer";
 import { useDispatch } from "react-redux";
+import { useGetAuthMeQuery } from "@/api/auth.api";
 
 interface AuthCheckerProps {
   children: React.ReactNode;
@@ -33,7 +33,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
       dispatch(setUserData({ userID: data.userId, email: data.email }));
       setRender(true)
     }
-  },[isSuccess]);
+  }, [isSuccess]);
 
 
 

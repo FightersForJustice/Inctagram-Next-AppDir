@@ -1,9 +1,8 @@
 "use client";
 
 import { Provider } from "react-redux";
-import { store } from "../../redux/store";
+import { store } from "@/redux/store";
 import React, { PropsWithChildren } from "react";
-import AuthChecker from "../../helpers/hocs/AuthChecker";
 
 export const ReduxProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return <Provider store={store}>{children}</Provider>;

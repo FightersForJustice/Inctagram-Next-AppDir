@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "../helpers/config";
+import { baseQueryWithReauth } from "@/helpers/config";
 
 export let authApi = createApi({
   reducerPath: "authApi",
@@ -104,6 +104,17 @@ export let authApi = createApi({
         };
       },
     }),
+    loginWithGoogleOAuth: builder.mutation<{ accessToken: "string"; email: string }, { code: string }>({
+      query: (code) => {
+        return {
+          url: "auth/google/login",
+          method: "POST",
+          body: {
+            ...code,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -141,4 +152,5 @@ export let {
   usePostLogoutMutation,
   usePostUpdateTokensMutation,
   useGetAuthMeQuery,
+  useLoginWithGoogleOAuthMutation,
 } = authApi;

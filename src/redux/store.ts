@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authApi } from "api/auth.api";
-import { profileApi } from "../api/profile.api";
-import { postsApi } from "../api/posts.api";
-import { subscriptionsApi } from "../api/subscriptions.api";
+
+import { profileApi } from "@/api/profile.api";
+import { postsApi } from "@/api/posts.api";
+import { subscriptionsApi } from "@/api/subscriptions.api";
 import { appReducer } from "./reducers/appReducer";
+import { authApi } from "@/api/auth.api";
 
 export const store = configureStore({
   reducer: {
