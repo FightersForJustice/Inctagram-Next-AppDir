@@ -15,7 +15,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   const [render, setRender] = useState(false)
 
   const { data, isSuccess } = useGetAuthMeQuery();
-  const { setUserID } = appActions;
+  const { setUserData: setUserData } = appActions;
 
   useEffect(() => {
     if (typeof sessionStorage !== "undefined") {
@@ -30,7 +30,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setUserID({ userID: data.userId }));
+      dispatch(setUserData({ userID: data.userId, email: data.email }));
       setRender(true)
     }
   },[isSuccess]);
@@ -38,8 +38,8 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
 
 
   if (render && accessToken) {
-  // if (accessToken) {
-
+  // if (accessToken) 
+// debugger
     return <>{children}</>;
   } else {
     return null; // Другой компонент для отображения или null

@@ -116,7 +116,7 @@
     "logout": "Log out",
     "LogoutModal": {
       "title": "Logout",
-      "question": "Do you really want to log out?",
+      "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
     }

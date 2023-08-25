@@ -27,11 +27,8 @@ const Home = () => {
   const userID = useSelector<RootState, UserID>((state)=> state.app.userID)
 
 
-   
-
-
   useEffect(() => {
-    getPosts({pageNumber: currentPage, userID} )
+      getPosts({pageNumber: currentPage, userID} )
       .unwrap()
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
@@ -56,7 +53,9 @@ const Home = () => {
     }
   }, [fetchingValue]);
 
-  const allPosts = posts.map((item) => {
+
+  
+const allPosts = posts.map((item) => {
     return <HomePagePost key={item.id} post={item} />;
   });
 
