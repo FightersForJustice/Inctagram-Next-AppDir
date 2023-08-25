@@ -1,4 +1,4 @@
-import { createPluralize } from "helpers/createPluralize";
+import { createPluralize } from "@/helpers/createPluralize";
 import { useTranslations } from "next-intl";
 export function formatTimeFromDateString(dateString: string): string {
   const normalDate = new Date(dateString);
@@ -26,19 +26,18 @@ export function GetTimeAgoText(postDateISO: string, lang: string): string {
     return t("now");
   } else if (minutes < 60) {
     // return `${minutes} минут(ы) назад`;
-   return `${minutes} ${t(`minutes.${pluralizeLang(minutes)}`)}` 
+    return `${minutes} ${t(`minutes.${pluralizeLang(minutes)}`)}`;
   } else if (hours < 24) {
     // return `${hours} часа(ов) назад`;
-       return `${hours} ${t(`hours.${pluralizeLang(hours)}`)}` 
-  }  else if (days < 30) {
+    return `${hours} ${t(`hours.${pluralizeLang(hours)}`)}`;
+  } else if (days < 30) {
     // return `${days} дня(ей) назад`;
-       return `${days} ${t(`days.${pluralizeLang(days)}`)}` 
+    return `${days} ${t(`days.${pluralizeLang(days)}`)}`;
   } else if (months < 12) {
     // return `${months} месяцев назад`;
-       return `${months} ${t(`months.${pluralizeLang(months)}`)}` 
+    return `${months} ${t(`months.${pluralizeLang(months)}`)}`;
   } else {
     // return `${years} год(а) назад`;
-       return `${years} ${t(`years.${pluralizeLang(years)}`)}` 
-
+    return `${years} ${t(`years.${pluralizeLang(years)}`)}`;
   }
 }

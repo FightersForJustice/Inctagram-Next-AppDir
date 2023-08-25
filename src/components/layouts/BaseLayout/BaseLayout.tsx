@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { Header } from "../../Header/Header";
+import { Header } from "@/components/Header/Header";
 
 type Props = {
   title?: string;

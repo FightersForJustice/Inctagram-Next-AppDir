@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "./HeaderNotification/HeaderNotification";
-import { Loader } from "components/Loader/Loader";
+import { Loader } from "@/components/Loader/Loader";
 
 function hasQueryParams(inputString: string): boolean {
   const queryParamsRegex = /\?.+=.+$/;

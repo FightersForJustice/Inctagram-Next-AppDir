@@ -6,17 +6,15 @@ import { usePathname } from "next-intl/client";
 
 import s from "./Home.module.scss";
 import { HomePagePost } from "./HomePagePost/HomePagePost";
-import { PostsItem, useLazyGetPostsQuery } from "../../../api/posts.api";
-import { Loader } from "../../../components/Loader/Loader";
+import { PostsItem, useLazyGetPostsQuery } from "@/api/posts.api";
 import useScrollFetching from "../../../features/hooks/useScrollListener";
 import { toast } from "react-toastify";
-import { StatusCode } from "../../../api/auth.api";
+import { StatusCode } from "@/api/auth.api";
 import { useSelector } from "react-redux";
-import { UserID } from "redux/reducers/appReducer";
-import { RootState } from "redux/store";
+import { UserID } from "@/redux/reducers/appReducer";
+import { RootState } from "@/redux/store";
 
 const Home = () => {
-
   const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(true);
@@ -24,14 +22,10 @@ const Home = () => {
   const [getPosts] = useLazyGetPostsQuery();
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
 
-  const userID = useSelector<RootState, UserID>((state)=> state.app.userID)
-
-
-   
-
+  const userID = useSelector<RootState, UserID>((state) => state.app.userID);
 
   useEffect(() => {
-    getPosts({pageNumber: currentPage, userID} )
+    getPosts({ pageNumber: currentPage, userID })
       .unwrap()
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
@@ -43,7 +37,7 @@ const Home = () => {
 
   useEffect(() => {
     if (fetching) {
-      getPosts( {pageNumber: currentPage, userID})
+      getPosts({ pageNumber: currentPage, userID })
         .unwrap()
         .then((res) => {
           if (res?.items) {

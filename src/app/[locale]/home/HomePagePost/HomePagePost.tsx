@@ -2,17 +2,15 @@ import React from "react";
 import s from "./HomePagePost.module.scss";
 import Image from "next/image";
 import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
-import { PostsItem } from "../../../../api/posts.api";
-import {  GetTimeAgoText } from "../../../../utils/FormatTimeFromDateString";
+import { PostsItem } from "@/api/posts.api";
+import { GetTimeAgoText } from "@/utils/formatTimeFromDateString";
 
 type Props = {
   post: PostsItem;
 };
 
 export const HomePagePost: React.FC<Props> = ({ post }) => {
-
-  const lang = localStorage.getItem('language');
-
+  const lang = localStorage.getItem("language");
 
   return (
     <div className={s.post}>
