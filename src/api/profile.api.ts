@@ -69,9 +69,9 @@ export type PostProfileAvatar = {
 
 export type PutProfileBody = {
   userName: string;
-  firstName: string;
-  lastName: string;
-  city: string;
+  firstName: string | null | undefined;
+  lastName: string | null | undefined;
+  city: string | null | undefined;
   dateOfBirth: Date;
   aboutMe: string | undefined;
 };

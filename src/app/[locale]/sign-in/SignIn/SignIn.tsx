@@ -40,8 +40,8 @@ const SignIn: React.FC<Props> = ({ translate }) => {
           setError("password", { message: String(translate("error400")) });
           setError("email", { message: String(translate("error400")) });
         } else if (err?.data?.statusCode === StatusCode.unauthorized) {
-          setError("password", { message: err.data.messages[0]?.message });
-          setError("email", { message: err.data.messages[0]?.message });
+          // setError("password", { message: err.data.messages[0]?.message });
+          setError("email", { message: String(translate("error401")) });
         } else {
           toast.error(err.error);
         }

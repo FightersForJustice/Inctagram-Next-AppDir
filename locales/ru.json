@@ -21,7 +21,8 @@
     "btnName": "Логин",
     "question": "Нету аккаунта?",
     "btnBottomName": "Регистрация",
-    "error400": "неверный пароль или почта"
+    "error400": "Неверный пароль или почта",
+    "error401": "Данный емайл не зарегистрирован"
   },
   "VerificationInvalidPage": {
     "title": "Ссылка для подтверждения почты недействительна",
@@ -172,7 +173,8 @@
     "email": {
       "required": "Email обязателен",
       "email": "Неверный формат email",
-      "invalidCharacters": "Email должен содержать A-Z, a-z, ., @"
+      "invalidCharacters": "Email должен содержать A-Z, a-z, ., @",
+      "spaces": "Почта не должена содержать пробелов"
     },
     "password": {
       "required": "Пароль обязателен",

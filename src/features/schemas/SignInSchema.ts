@@ -28,11 +28,7 @@ export const SignInSchema = () => {
         .required(t("password.required"))
         .test("not-only-spaces", t("password.spaces"), (value) => {
           // Проверяем, что пароль не состоит только из пробелов
-          return value.trim() !== "";
-        })
-        .test("no-inner-spaces", t("password.spaces"), (value) => {
-          // Проверяем, что пароль не содержит пробелов внутри
-          return !/\s/.test(value);
+          return value.trim() !== "" && !/\s/.test(value);
         })
         .matches(passwordValidationRegex, t("password.invalidCharacters"))
         .min(6, t("password.min"))

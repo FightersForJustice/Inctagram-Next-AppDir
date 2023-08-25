@@ -21,7 +21,9 @@
     "btnName": "Sign In",
     "question": "Don’t have an account?",
     "btnBottomName": "Sign Up",
-    "error400": "invalid password or email"
+    "error400": "Invalid password or email",
+    "error401": "This email is not registered"
+
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -172,7 +174,9 @@
     "email": {
       "required": "Email is required",
       "email": "Invalid email format",
-      "invalidCharacters": "Email must contain A-Z, a-z, ., @"
+      "invalidCharacters": "Email must contain A-Z, a-z, ., @",
+      "spaces": "Email must not contain spaces"
+
     },
     "password": {
       "required": "Password is required",

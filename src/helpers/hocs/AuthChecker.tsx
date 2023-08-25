@@ -12,7 +12,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const [render, setRender] = useState(false);
+  const [render, setRender] = useState(false)
 
   const { data, isSuccess } = useGetAuthMeQuery();
   const { setUserID } = appActions;
@@ -35,8 +35,10 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
     }
   }, [isSuccess]);
 
+
+
   if (render && accessToken) {
-    // if (accessToken) {
+  // if (accessToken) {
 
     return <>{children}</>;
   } else {
