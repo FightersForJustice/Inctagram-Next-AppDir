@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Loader } from "../../../../../components/Loader/Loader";
-import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "../../../../../api/posts.api";
-import { GetResponse } from "../../../../../api/profile.api";
+import { Loader } from "@/components/Loader/Loader";
+import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "@/api/posts.api";
+import { GetResponse } from "@/api/profile.api";
 import useScrollFetching from "../../../../../features/hooks/useScrollListener";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
@@ -12,16 +12,18 @@ type Props = {
   userData: GetResponse;
   setOpen: (value: boolean) => void;
   setSelectedPost: (postId: number) => void;
+  getUserPosts: (postsAmount: number) => void;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, userData }) => {
+export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, userData, getUserPosts }) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [getPosts, { isLoading }] = useLazyGetPostsPaginationQuery();
+
   const fetchingValue = useScrollFetching(100, fetching, setFetching);
   const { data, isSuccess } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
+  const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -32,6 +34,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   useEffect(() => {
     if (data?.items) {
       setPosts(data.items);
+      getUserPosts(data.items.length);
     }
   }, [data?.items]);
 
@@ -88,7 +91,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
           <p className={"font-bold text-2xl"}>You don&apos;t have any posts yet 😢</p>
         </div>
       )}
-      {isLoading && <Loader />}
+      {isLoadingPosts && <Loader />}
       {fetching && <Loader />}
     </>
   );

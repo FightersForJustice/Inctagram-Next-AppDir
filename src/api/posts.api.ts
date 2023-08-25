@@ -1,6 +1,6 @@
-import { UserID } from './../redux/reducers/appReducer';
+import { UserID } from "@/redux/reducers/appReducer";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "../helpers/config";
+import { baseQueryWithReauth } from "@/helpers/config";
 
 export const postsApi = createApi({
   reducerPath: "postsApi",
@@ -73,8 +73,8 @@ export const postsApi = createApi({
       },
       providesTags: ["Post"],
     }),
-    getPosts: builder.query<PostsWithPagination, {pageNumber:number, userID: UserID}>({
-      query: ({pageNumber, userID}) => {
+    getPosts: builder.query<PostsWithPagination, { pageNumber: number; userID: UserID }>({
+      query: ({ pageNumber, userID }) => {
         return {
           url: `posts/${userID}?pageNumber=${pageNumber}`,
           method: "GET",

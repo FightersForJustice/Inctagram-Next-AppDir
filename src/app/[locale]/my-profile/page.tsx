@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
-import { SubscribersModal } from "../../../components/Modals/SubscribersModal/SubscribersModal";
+import { SubscribersModal } from "@/components/Modals/SubscribersModal/SubscribersModal";
 import { Navigation } from "./Navigation/Navigation";
-import { SubscriptionsModal } from "../../../components/Modals/SubscriptionsModal/SubscriptionsModal";
+import { SubscriptionsModal } from "@/components/Modals/SubscriptionsModal/SubscriptionsModal";
 import { Profile } from "./Profile/Profile";
-import { useGetProfileQuery } from "../../../api/profile.api";
-import { Loader } from "../../../components/Loader/Loader";
+import { useGetProfileQuery } from "@/api/profile.api";
+import { Loader } from "@/components/Loader/Loader";
 
 const MyProfile = () => {
   const [paidAccount, setPaidAccount] = useState(true);

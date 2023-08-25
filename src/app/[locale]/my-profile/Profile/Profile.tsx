@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Image from "next/image";
-import { GetResponse } from "../../../../api/profile.api";
+import { GetResponse } from "@/api/profile.api";
 import { useTranslations } from "next-intl";
 import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
 import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
 import { PostFix } from "./PostFix/PostFix";
-import { PostModal } from "../../../../components/Modals/PostModal/PostModal";
+import { PostModal } from "@/components/Modals/PostModal/PostModal";
+import { useLazyGetPostsPaginationQuery } from "@/api/posts.api";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -24,6 +25,11 @@ export const Profile: React.FC<Props> = ({
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
+  const [userPosts, setUserPosts] = useState(0);
+  console.log(userPosts);
+  const getUserPosts = (postsAmount: number) => {
+    setUserPosts(postsAmount);
+  };
 
   if (userData) sessionStorage.setItem("userId", userData.id.toString());
 
@@ -45,10 +51,16 @@ export const Profile: React.FC<Props> = ({
           setShowSubscriptionsModal={setShowSubscriptionsModal}
           setShowSubscribersModal={setShowSubscribersModal}
           paidAccount={paidAccount}
+          userPosts={userPosts}
         />
       </div>
       <div className={s.profile__posts}>
-        <InfiniteScrollMyPosts userData={userData} setOpen={setOpenPostModal} setSelectedPost={setSelectedPost} />
+        <InfiniteScrollMyPosts
+          userData={userData}
+          setOpen={setOpenPostModal}
+          setSelectedPost={setSelectedPost}
+          getUserPosts={getUserPosts}
+        />
       </div>
 
       {openPostModal && (

@@ -12,7 +12,7 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const [render, setRender] = useState(false)
+  const [render, setRender] = useState(false);
 
   const { data, isSuccess } = useGetAuthMeQuery();
   const { setUserData: setUserData } = appActions;
@@ -30,16 +30,14 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setUserData({ userID: data.userId, email: data.email }));
-      setRender(true)
+      dispatch(setUserData({ userID: data.userId, email: data.email, userName: data.userName }));
+      setRender(true);
     }
   }, [isSuccess]);
 
-
-
   if (render && accessToken) {
-  // if (accessToken) 
-// debugger
+    // if (accessToken)
+    // debugger
     return <>{children}</>;
   } else {
     return null; // Другой компонент для отображения или null

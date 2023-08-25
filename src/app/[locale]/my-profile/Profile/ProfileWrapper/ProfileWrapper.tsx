@@ -2,21 +2,27 @@ import s from "../../MyProfile.module.scss";
 import Link from "next/link";
 import React from "react";
 import { redirect } from "next/navigation";
+import { GetResponse } from "@/api/profile.api";
 
-export const ProfileWrapper = ({
+type Props = {
+  data: GetResponse;
+  setShowSubscriptionsModal: (value: boolean) => void;
+  setShowSubscribersModal: (value: boolean) => void;
+  paidAccount: boolean;
+  t: any;
+  userPosts: number;
+};
+
+export const ProfileWrapper: React.FC<Props> = ({
   data,
   setShowSubscriptionsModal,
   paidAccount,
   setShowSubscribersModal,
   t,
-}: {
-  data: any;
-  setShowSubscriptionsModal: (value: boolean) => void;
-  setShowSubscribersModal: (value: boolean) => void;
-  paidAccount: boolean;
-  t: any;
+  userPosts,
 }) => {
   if (!data?.userName) redirect("sign-in");
+
   return (
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>
@@ -56,21 +62,20 @@ export const ProfileWrapper = ({
       </div>
       <div className={s.profile__info}>
         <div className={s.profile__info__subscriptions} onClick={() => setShowSubscriptionsModal(true)}>
-          <p>2 218</p>
+          <p>0</p>
           <p>{t("subscriptions")}</p>
         </div>
         <div className={s.profile__info__subscribers} onClick={() => setShowSubscribersModal(true)}>
-          <p>2 358</p>
+          <p>0</p>
           <p>{t("subscribers")}</p>
         </div>
         <div className={s.profile__info__publications}>
-          <p>2 764</p>
+          <p>{userPosts}</p>
           <p>{t("publications")}</p>
         </div>
       </div>
       <p className={s.profile__desc} id={"profile-aboutMe"}>
-        {data?.aboutMe ??
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"}
+        {data?.aboutMe ?? "Fill in your info, while it's empty👁️"}
       </p>
     </div>
   );
