@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { UserName } from "@/redux/reducers/appReducer";
 import { HomePostPopup } from "./HomePostPopup";
+import { useGetProfileQuery } from "@/api";
 
 type Props = {
   post: PostsItem;
@@ -15,14 +16,23 @@ type Props = {
 
 export const HomePagePost: React.FC<Props> = ({ post }) => {
   const lang = localStorage.getItem("language");
-  const userName = useSelector<RootState, UserName>((state) => state.app.userName);
+  // const userName = useSelector<RootState, UserName>((state) => state.app.userName);
+  const { data, isLoading, refetch } = useGetProfileQuery();
+
+  console.log(data);
 
   return (
     <div className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
-          <Image src={"/img/home/ava.png"} alt={"ava"} width={36} height={36} />
-          <p className={s.post__title}>{userName}</p>
+          <Image 
+          src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
+          alt={"ava"} 
+          width={36} 
+          height={36} 
+          />
+
+          <p className={s.post__title}>{data?.userName}</p>
           <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
@@ -137,9 +147,14 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
         </svg>
       </div>
       <div className={s.post__desc}>
-        <Image src={"/img/home/ava.png"} alt={"ava"} width={36} height={36} className={s.post__desc__ava} />
+        <Image 
+        src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
+        alt={"ava"} 
+        width={36}
+         height={36}
+          className={s.post__desc__ava} />
         <p className={s.post__text}>
-          <span className={s.post__text__name}>{userName} </span> <br />
+          <span className={s.post__text__name}>{data?.userName} </span> <br />
           <span>{post.description}</span>
         </p>
       </div>
