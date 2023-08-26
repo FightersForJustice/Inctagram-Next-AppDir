@@ -13,7 +13,8 @@ function hasQueryParams(inputString: string): boolean {
 }
 
 export const Header = () => {
-  const [language, setLanguage] = useState<string>("ru");
+  // const [language, setLanguage] = useState<string>("ru");
+  const [language, setLanguage] = useState<string>("");
 
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
@@ -21,12 +22,14 @@ export const Header = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!localStorage.getItem("language")) {
-        localStorage.setItem("language", "en");
-      }
+    // if (typeof window !== "undefined") {
+    if (!localStorage.getItem("language")) {
+      localStorage.setItem("language", "en");
+      setLanguage("en");
+      router.replace(`/${localStorage.getItem("en")}${pathname}`);
+    } else {
       setLanguage(localStorage.getItem("language")!);
-      //router.replace(`/${localStorage.getItem("language")}${pathname}`);
+      router.replace(`/${localStorage.getItem("language")}${pathname}`);
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
@@ -36,9 +39,9 @@ export const Header = () => {
   const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setLanguage(event.currentTarget.value);
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("language", event.currentTarget.value);
-    }
+    // if (typeof window !== "undefined") {
+    localStorage.setItem("language", event.currentTarget.value);
+    // }
     startTransition(() => {
       router.replace(`/${event.target.value}${pathname}`);
     });
