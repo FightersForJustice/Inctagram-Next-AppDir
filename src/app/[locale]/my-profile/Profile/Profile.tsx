@@ -7,7 +7,6 @@ import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
 import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
 import { PostFix } from "./PostFix/PostFix";
 import { PostModal } from "@/components/Modals/PostModal/PostModal";
-import { useLazyGetPostsPaginationQuery } from "@/api/posts.api";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -26,7 +25,7 @@ export const Profile: React.FC<Props> = ({
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
   const [userPosts, setUserPosts] = useState(0);
-  console.log(userPosts);
+
   const getUserPosts = (postsAmount: number) => {
     setUserPosts(postsAmount);
   };

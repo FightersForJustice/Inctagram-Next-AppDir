@@ -75,7 +75,7 @@ export const ProfileWrapper: React.FC<Props> = ({
         </div>
       </div>
       <p className={s.profile__desc} id={"profile-aboutMe"}>
-        {data?.aboutMe ?? "Fill in your info, while it's empty👁️"}
+        {data?.aboutMe ?? `${t("aboutMe")}👁️`}
       </p>
     </div>
   );

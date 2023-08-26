@@ -13,20 +13,36 @@ import { StatusCode } from "@/api/auth.api";
 import { useSelector } from "react-redux";
 import { UserID } from "@/redux/reducers/appReducer";
 import { RootState } from "@/redux/store";
+import { Loader } from "@/components/Loader/Loader";
 
 const Home = () => {
   const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [getPosts] = useLazyGetPostsQuery();
-  const fetchingValue = useScrollFetching(100, fetching, setFetching);
-
+  const [totalCountPosts, setTotalCountPosts] = useState(1);
+  const [currentPagePosts, setCurrentPagePosts] = useState<PostsItem[]>([]);
+  const [pageSize, setPageSize] = useState(1);
   const userID = useSelector<RootState, UserID>((state) => state.app.userID);
+
+  const fetchingValue = useScrollFetching(
+    100,
+    fetching,
+    setFetching,
+    pageSize,
+    currentPagePosts.length,
+    totalCountPosts,
+  );
+  const [getPosts, { isLoading }] = useLazyGetPostsQuery();
 
   useEffect(() => {
     getPosts({ pageNumber: currentPage, userID })
       .unwrap()
+      .then((res) => {
+        setPosts(res.items);
+        setPageSize(res.pageSize);
+        setTotalCountPosts(res.totalCount);
+      })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
           toast.error("Error 404");
@@ -43,6 +59,7 @@ const Home = () => {
           if (res?.items) {
             setPosts([...posts, ...res.items]);
             setCurrentPage((prevState) => prevState + 1);
+            setCurrentPagePosts(res.items);
           }
         })
         .catch((err) => toast.error(err.error))
@@ -62,6 +79,7 @@ const Home = () => {
           <div style={{ gridArea: "profile" }}>{allPosts}</div>
         </div>
       </div>
+      {isLoading && <Loader />}
       {/* {fetching && <Loader />} */}
     </>
   );

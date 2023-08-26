@@ -3,12 +3,13 @@
   max-width: 491px;
   position: relative;
   border-bottom: 1px solid var(--dark-100);
-  margin-bottom: 36px;
+  margin-bottom: 12px;
   padding-top: 24px;
 
   &__top {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 190px;
     margin-bottom: 12px;
   }
@@ -55,6 +56,7 @@
   &__desc {
     display: flex;
     gap: 12px;
+    margin-bottom: 15px;
 
     &__ava {
       width: 36px;
@@ -66,7 +68,6 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
-    margin-bottom: 14px;
 
     &__name {
       font-size: 14px;

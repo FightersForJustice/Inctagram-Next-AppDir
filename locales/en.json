@@ -81,6 +81,7 @@
     "subscribers": "Subscribers",
     "publications": "Publications",
     "btnName": "Profile Settings",
+    "aboutMe": "Fill in your info, while it's empty",
     "SubscribersModal": {
       "title": "Subscribers",
       "search": "Search",
