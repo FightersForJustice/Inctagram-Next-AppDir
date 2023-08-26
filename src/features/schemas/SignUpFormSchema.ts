@@ -8,6 +8,8 @@ export const SignUpFormSchema = () => {
   const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
   const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
   const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
+  const emailDomainRegex = /^[A-Za-z0-9-]+$/;
+  const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
   return yup
     .object({
@@ -25,12 +27,24 @@ export const SignUpFormSchema = () => {
         .test("valid-domain", t("email.invalidCharacters"), (value) => {
           const parts = value.split("@");
           if (parts.length === 2) {
-            const [local, domain] = parts;
-            return domain.includes(".") && !domain.includes("_") && !local.includes("..");
+            const [local, fullDomain] = parts;
+            const domainParts = fullDomain.split(".");
+            if (domainParts.length >= 2) {
+              const subdomain = domainParts.slice(0, domainParts.length - 1).join(".");
+              return (
+                emailDomainRegex.test(subdomain) &&
+                emailDomainRegex.test(domainParts[domainParts.length - 1]) &&
+                fullDomain.includes(".") &&
+                !local.includes("..") &&
+                !fullDomain.includes("..") &&
+                subdomain.trim() !== "" &&
+                emailSubdomainRegex.test(subdomain)
+              );
+            }
           }
           return false;
         })
-        .test("firstSpec", t("email.invalidCharacters"), (value) => {
+        .test("firstLastSpec", t("email.invalidCharacters"), (value) => {
           const lastChar = value.indexOf("@");
           return firsLastCharEmail.test(value[lastChar - 1]) && firsLastCharEmail.test(value[0]);
         })
@@ -42,7 +56,6 @@ export const SignUpFormSchema = () => {
         .string()
         .required(t("password.required"))
         .test("not-spaces", t("password.spaces"), (value) => {
-          // Проверяем, что пароль не состоит только из пробелов
           return value.trim() !== "" && !/\s/.test(value);
         })
         .min(6, t("password.min"))
