@@ -80,7 +80,7 @@ const Home = () => {
         </div>
       </div>
       {isLoading && <Loader />}
-      {/* {fetching && <Loader />} */}
+      {fetching && <Loader />}
     </>
   );
 };

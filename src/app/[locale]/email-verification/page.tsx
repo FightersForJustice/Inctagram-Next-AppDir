@@ -10,7 +10,7 @@ const EmailVerification = () => {
 
   return (
     <div>
-      <div className={"flex flex-col justify-center items-center mt-[24px] mb-9"}>
+      <div className={"flex flex-col justify-center items-center mt-[100px] mb-9"}>
         <h1 className={"text-[20px] mb-[19px]"}>{t("title")}</h1>
         <p className={"max-w-[300px] text-center mb-[54px]"}>{t("desc")}</p>
         <Link

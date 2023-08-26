@@ -15,7 +15,7 @@ const CreateNewPassword = ({ params, searchParams }: { params: { slug: string };
   }, []);
 
   return (
-    <div className={"bg-[#171717] rounded-md m-auto mt-[24px] max-w-[378px] text-center"}>
+    <div className={"bg-[#171717] rounded-md m-auto mt-[100px] max-w-[378px] text-center"}>
       <p className={"pt-[23px]"}>{t("title")}</p>
       <div className={"flex gap-[60px] justify-center mt-[13px]"}></div>
       <CreateNewPasswordForm translate={t} />

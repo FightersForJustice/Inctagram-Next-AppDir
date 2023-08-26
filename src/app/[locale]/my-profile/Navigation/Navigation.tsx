@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 import { Loader } from "@/components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
-import { GetResponse } from "../../../../api/profile.api";
+import { GetResponse } from "@/api/profile.api";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { RootState } from "@/redux/store";
 
 type Props = {
   pathname: string;
@@ -210,7 +210,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData })
       </nav>
       {showLogoutModal && (
         <Modal width={"450px"} title={t("LogoutModal.question")} onClose={() => setShowLogoutModal(false)}>
-          {t("LogoutModal.question")}  <strong>{`"${userEmail}"`}</strong>?
+          {t("LogoutModal.question")} <strong>{`"${userEmail}"`}</strong>?
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>{t("LogoutModal.btnYes")}</TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>{t("LogoutModal.btnNo")}</PrimaryBtn>

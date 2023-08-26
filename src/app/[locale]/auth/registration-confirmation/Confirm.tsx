@@ -2,9 +2,9 @@ import React, { ReactNode, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { usePostRegistrationConfirmationMutation } from "../../../../api/auth.api";
+import { usePostRegistrationConfirmationMutation } from "@/api/auth.api";
 import { toast } from "react-toastify";
-import { Loader } from "../../../../components/Loader/Loader";
+import { Loader } from "@/components/Loader/Loader";
 
 type Props = {
   code: string;
@@ -28,7 +28,7 @@ const Confirm: React.FC<Props> = ({ code, translate }) => {
   }, [code, registrationConfirm]);
 
   return (
-    <div className={"flex flex-col justify-center items-center mt-[24px] mb-9"}>
+    <div className={"flex flex-col justify-center items-center mt-[100px] mb-9"}>
       <h1 className={"text-[20px] mb-[19px]"}>{translate("title")}</h1>
       <p className={"max-w-[300px] text-center mb-[54px]"}>{translate("desc")}</p>
       <Link
