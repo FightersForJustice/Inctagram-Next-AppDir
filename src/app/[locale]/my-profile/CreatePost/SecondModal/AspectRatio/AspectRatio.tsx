@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
-import { CroppingSizeModal } from "../../../../../../components/Modals/CroppingSizeModal/CroppingSizeModal";
+import { CroppingSizeModal } from "@/components/Modals/CroppingSizeModal";
 import { AspectRatioType } from "../../CreatePost";
 
 type Props = {

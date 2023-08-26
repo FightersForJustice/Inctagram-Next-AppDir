@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { SignUpForm } from "./SignUpForm/SignUpForm";
+import { SignUpForm } from "./SignUpForm";
 import { useTranslations } from "next-intl";
 
 type Props = {

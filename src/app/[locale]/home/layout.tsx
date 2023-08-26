@@ -1,8 +1,8 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { BaseLayout } from "@/components/layouts/BaseLayout/BaseLayout";
-import AuthChecker from "@/helpers/hocs/AuthChecker";
+import { AuthChecker } from "@/helpers/hocs";
+import { BaseLayout } from "@/components/layouts/BaseLayout";
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (

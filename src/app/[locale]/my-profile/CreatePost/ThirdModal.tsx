@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
-import { FiltersModal } from "../../../../components/Modals/FiltersModal/FiltersModal";
-import { filters } from "../../../../features/data/filters";
-import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { FiltersModal } from "@/components/Modals/FiltersModal";
+import { filters } from "@/features/data";
+import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType } from "./CreatePost";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   croppedPostImage: string;
 };
 
-const ThirdModal: React.FC<Props> = ({
+export const ThirdModal: React.FC<Props> = ({
   showSecondModal,
   showFourthModal,
   aspectRatio,
@@ -123,5 +123,3 @@ const ThirdModal: React.FC<Props> = ({
     </>
   );
 };
-
-export default ThirdModal;

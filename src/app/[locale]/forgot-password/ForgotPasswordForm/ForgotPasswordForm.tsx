@@ -3,18 +3,18 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
-import { usePostPasswordRecoveryMutation } from "../../../../api/auth.api";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
-import { Loader } from "../../../../components/Loader/Loader";
-import { ForgotPasswordSchema } from "../../../../features/schemas/ForgotPasswordFormSchema";
-import { EmailForm } from "./EmailForm/EmailForm";
-import { handleApiError } from "../../../../utils/handleApiError";
+import { usePostPasswordRecoveryMutation } from "@/api/auth.api";
+import { Modal } from "@/components/Modals/Modal";
+import { Loader } from "@/components/Loader";
+import { EmailForm } from "./EmailForm";
+import { ForgotPasswordSchema } from "@/features/schemas";
+import { handleApiError } from "@/utils";
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
+export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
@@ -75,7 +75,7 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         <input
           type="submit"
           className={
-            "mb-[24px]  w-[90%] pt-[6px] pb-[6px]   bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "
+            "mb-[24px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  "
           }
           value={`${sendLinkAgain ? `${translate("btnNameAfterSend")}` : `${translate("btnName")}`}`}
           disabled={!recaptcha || !isValid}
@@ -100,5 +100,3 @@ const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
     </>
   );
 };
-
-export default ForgotPasswordForm;

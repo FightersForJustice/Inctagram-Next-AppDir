@@ -3,10 +3,10 @@ import s from "../MyProfile.module.scss";
 import Image from "next/image";
 import { GetResponse } from "@/api/profile.api";
 import { useTranslations } from "next-intl";
-import { ProfileWrapper } from "./ProfileWrapper/ProfileWrapper";
-import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts/InfiniteScrollMyPosts";
-import { PostFix } from "./PostFix/PostFix";
-import { PostModal } from "@/components/Modals/PostModal/PostModal";
+import { ProfileWrapper } from "./ProfileWrapper";
+import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts";
+import { PostFix } from "./PostFix";
+import { PostModal } from "@/components/Modals/PostModal";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;

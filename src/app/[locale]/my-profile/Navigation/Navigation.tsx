@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import s from "../MyProfile.module.scss";
 import Link from "next/link";
-import { Modal } from "@/components/Modals/Modal/Modal";
-import { TransparentBtn } from "@/components/TransparentBtn/TransparentBtn";
-import { PrimaryBtn } from "@/components/PrimaryBtn/PrimaryBtn";
-import { usePostLogoutMutation } from "@/api/auth.api";
+import { Modal } from "@/components/Modals/Modal";
+import { TransparentBtn } from "@/components/TransparentBtn";
+import { PrimaryBtn } from "@/components/PrimaryBtn";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/Loader";
 import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
 import { GetResponse } from "@/api/profile.api";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { usePostLogoutMutation } from "@/api";
 
 type Props = {
   pathname: string;

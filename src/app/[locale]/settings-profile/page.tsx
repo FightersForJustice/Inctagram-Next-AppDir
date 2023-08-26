@@ -3,7 +3,7 @@
 import React from "react";
 import s from "./SettingsProfile.module.scss";
 import Tabs from "./Tabs/Tabs";
-import { Navigation } from "../my-profile/Navigation/Navigation";
+import { Navigation } from "../my-profile/Navigation";
 import { usePathname } from "next-intl/client";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 

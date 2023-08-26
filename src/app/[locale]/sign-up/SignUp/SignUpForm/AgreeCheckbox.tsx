@@ -1,6 +1,4 @@
-import { RichTranslationValues } from "next-intl";
 import Link from "next/link";
-import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { InputError } from "./InputError";
 

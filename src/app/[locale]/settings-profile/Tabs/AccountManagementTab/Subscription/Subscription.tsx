@@ -2,7 +2,7 @@ import React from "react";
 import { ManagementCheckbox } from "../ManagementCheckbox/ManagementCheckbox";
 
 import s from "./Subscription.module.scss";
-import { formatSubscriptionDate } from "../../../../../../utils/formatSubscriptionDate";
+import { formatSubscriptionDate } from "@/utils";
 
 type Props = {
   dateOfPayment: string | undefined;

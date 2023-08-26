@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useScrollFetching = (
+export const useScrollFetching = (
   threshold: number = 100,
   fetching: boolean,
   setFetching: (value: boolean) => void,
@@ -26,5 +26,3 @@ const useScrollFetching = (
 
   return fetching;
 };
-
-export default useScrollFetching;

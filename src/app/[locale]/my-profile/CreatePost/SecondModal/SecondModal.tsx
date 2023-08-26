@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import s from "../CreatePost.module.scss";
-import { CroppingModal } from "../../../../../components/Modals/CroppingModal/CroppingModal";
-import { AspectRatio } from "./AspectRatio/AspectRatio";
+import { CroppingModal } from "@/components/Modals/CroppingModal";
+import { AspectRatio } from "./AspectRatio";
 import { Range } from "./Range/Range";
-import { Gallery } from "./Gallery/Gallery";
-import { AreYouSureModal } from "../../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { Gallery } from "./Gallery";
+import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType, ImageType } from "../CreatePost";
 import { PostCropper } from "../PostCropper/PostCropper";
 
@@ -23,7 +23,7 @@ type Props = {
   croppedPostImage: string;
 };
 
-const SecondModal: React.FC<Props> = ({
+export const SecondModal: React.FC<Props> = ({
   postImage,
   setPostImage,
   showThirdModal,
@@ -70,5 +70,3 @@ const SecondModal: React.FC<Props> = ({
     </div>
   );
 };
-
-export default SecondModal;

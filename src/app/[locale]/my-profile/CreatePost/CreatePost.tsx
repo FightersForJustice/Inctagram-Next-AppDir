@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import FirstModal from "./FirstModal";
-import SecondModal from "./SecondModal/SecondModal";
-import ThirdModal from "./ThirdModal";
-import FourthModal from "./FourthModal";
-import { GetResponse } from "../../../../api/profile.api";
+import { GetResponse } from "@/api/profile.api";
+import { FirstModal } from "./FirstModal";
+import { SecondModal } from "./SecondModal";
+import { ThirdModal } from "./ThirdModal";
+import { FourthModal } from "./FourthModal";
 
 type Props = {
   showCreatePostModal: boolean;

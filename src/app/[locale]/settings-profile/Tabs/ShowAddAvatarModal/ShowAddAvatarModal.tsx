@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from "react";
 import s from "../Tabs.module.scss";
 import Image from "next/image";
-import { PrimaryBtn } from "../../../../../components/PrimaryBtn/PrimaryBtn";
-import { TransparentBtn } from "../../../../../components/TransparentBtn/TransparentBtn";
-import { Modal } from "../../../../../components/Modals/Modal/Modal";
+import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { TransparentBtn } from "@/components/TransparentBtn";
+import { Modal } from "@/components/Modals/Modal";
 import dynamic from "next/dynamic";
 
 type Props = {

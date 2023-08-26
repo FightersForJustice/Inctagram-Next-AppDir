@@ -1,0 +1,1 @@
+export { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts";

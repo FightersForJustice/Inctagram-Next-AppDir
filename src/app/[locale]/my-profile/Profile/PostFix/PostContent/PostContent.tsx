@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 
 import s from "./PostContent.module.scss";
-import { AreYouSureModal } from "../../../../../../components/Modals/AreYouSureModal/AreYouSureModal";
-import { PostComment } from "./PostComment/PostComment";
-import { PostLikes } from "./PostLikes/PostLikes";
+import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
+import { PostComment } from "./PostComment";
+import { PostLikes } from "./PostLikes";
 
 type Props = {
   avatar: string;

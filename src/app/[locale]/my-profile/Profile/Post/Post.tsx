@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "./Post.module.scss";
-import { useGetPostQuery } from "../../../../../api/posts.api";
-import { Loader } from "../../../../../components/Loader/Loader";
-import { PostBody } from "./PostBody/PostBody";
+
+import { Loader } from "@/components/Loader";
+import { PostBody } from "./PostBody";
 import { PostBodyEdit } from "./PostBody/PostBodyEdit";
+import { useGetPostQuery } from "@/api";
 
 type PropsType = {
   setOpen: (value: boolean) => void;

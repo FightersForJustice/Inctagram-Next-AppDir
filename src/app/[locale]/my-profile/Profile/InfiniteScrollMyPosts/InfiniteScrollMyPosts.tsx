@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Loader } from "@/components/Loader/Loader";
-import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "@/api/posts.api";
-import { GetResponse } from "@/api/profile.api";
-import useScrollFetching from "../../../../../features/hooks/useScrollListener";
+import { Loader } from "@/components/Loader";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
 import { toast } from "react-toastify";
+import { GetResponse } from "@/api/profile.api";
+import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "@/api/posts.api";
+import { useScrollFetching } from "@/features/hooks";
 
 type Props = {
   userData: GetResponse;

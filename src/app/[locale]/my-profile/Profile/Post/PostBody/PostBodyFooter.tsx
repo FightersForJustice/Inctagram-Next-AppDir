@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "../Post.module.scss";
-import { formatServerDateWithoutTime } from "../../../../../../utils/formatServerDate";
-import { TransparentBtn } from "../../../../../../components/TransparentBtn/TransparentBtn";
+import { TransparentBtn } from "@/components/TransparentBtn";
+import { formatServerDateWithoutTime } from "@/utils";
 
 export const PostBodyFooter = () => {
   const [focus, setFocus] = useState<boolean>(false);

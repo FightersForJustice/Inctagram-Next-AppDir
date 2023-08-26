@@ -2,13 +2,14 @@ import React, { MouseEventHandler, useState } from "react";
 
 import s from "./PostFix.module.scss";
 import Image from "next/image";
-import { PostContent } from "./PostContent/PostContent";
-import { EditPost } from "./EditPost/EditPost";
-import { useDeletePostMutation, useGetPostQuery } from "../../../../../api/posts.api";
-import { Loader } from "../../../../../components/Loader/Loader";
+import { PostContent } from "./PostContent";
+import { EditPost } from "./EditPost";
+
+import { Loader } from "@/components/Loader";
 import { toast } from "react-toastify";
-import { Dots } from "./Dots/Dots";
-import { handleApiError } from "../../../../../utils/handleApiError";
+import { Dots } from "./Dots";
+import { useDeletePostMutation, useGetPostQuery } from "@/api";
+import { handleApiError } from "@/utils";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;

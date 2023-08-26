@@ -1,15 +1,15 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
-import { usePostRegistrationEmailResendingMutation } from "@/api/auth.api";
-import { Modal } from "@/components/Modals/Modal/Modal";
-import { Loader } from "@/components/Loader/Loader";
+import { Modal } from "@/components/Modals/Modal";
+import { Loader } from "@/components/Loader";
 import { toast } from "react-toastify";
+import { usePostRegistrationEmailResendingMutation } from "@/api";
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
+export const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
   const [showModal, setShowModal] = useState(false);
   const [resend, { isSuccess, isLoading }] = usePostRegistrationEmailResendingMutation();
   const [userEmail, setUserEmail] = useState("");
@@ -50,5 +50,3 @@ const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
     </>
   );
 };
-
-export default RegistrationEmailResend;

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import s from "./SearchContent.module.scss";
-import { FoundUser } from "../FoundUser/FoundUser";
+import { FoundUser } from "../FoundUser";
 
 export const SearchContent = () => {
   return (

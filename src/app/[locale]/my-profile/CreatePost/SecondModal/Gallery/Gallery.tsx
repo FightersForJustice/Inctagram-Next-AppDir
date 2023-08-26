@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
-import { ImagesCollection } from "../../../../../../components/ImagesCollection/ImagesCollection";
+import { ImagesCollection } from "@/components/ImagesCollection";
 import { ImageType } from "../../CreatePost";
 
 type Props = {

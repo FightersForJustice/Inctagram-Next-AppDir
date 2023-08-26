@@ -1,8 +1,8 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useId } from "react";
 import s from "./CreatePost.module.scss";
-import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
-import { TransparentBtn } from "../../../../components/TransparentBtn/TransparentBtn";
-import { Modal } from "../../../../components/Modals/Modal/Modal";
+import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { TransparentBtn } from "@/components/TransparentBtn";
+import { Modal } from "@/components/Modals/Modal";
 import { ImageType } from "./CreatePost";
 import Image from "next/image";
 
@@ -13,7 +13,7 @@ type Props = {
   setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
   loadedImages: ImageType[];
 };
-const FirstModal: React.FC<Props> = ({
+export const FirstModal: React.FC<Props> = ({
   setPostImage,
   setFile,
   setShowCreatePostModal,
@@ -52,5 +52,3 @@ const FirstModal: React.FC<Props> = ({
     </Modal>
   );
 };
-
-export default FirstModal;

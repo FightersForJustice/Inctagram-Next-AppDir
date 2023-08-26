@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import s from "./Tabs.module.scss";
-import { useLazyGetProfileQuery, usePostProfileAvatarMutation } from "../../../../api/profile.api";
+import { useLazyGetProfileQuery, usePostProfileAvatarMutation } from "@/api/profile.api";
 import { toast } from "react-toastify";
-import { dataURLtoFile } from "../../../../utils/dataUrlToFile";
+import { dataURLtoFile } from "@/utils/dataUrlToFile";
 import { GeneralInformationTab } from "./GeneralInformationTab/GeneralInformationTab";
 import { DevicesTab } from "./DevicesTab/DevicesTab";
-import { Loader } from "../../../../components/Loader/Loader";
+import { Loader } from "@/components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { ShowAddAvatarModal } from "./ShowAddAvatarModal/ShowAddAvatarModal";
 import { AccountManagementTab } from "./AccountManagementTab/AccountManagementTab";

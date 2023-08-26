@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 import { useTranslations } from "next-intl";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
 
 const ForgotPassword = () => {
   const t = useTranslations("ForgotPasswordPage");

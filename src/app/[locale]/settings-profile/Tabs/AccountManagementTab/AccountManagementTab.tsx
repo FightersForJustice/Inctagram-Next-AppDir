@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 
 import s from "./AccountManagementTab.module.scss";
-import { AccountTypeRadio } from "./AccountTypeRadio/AccountTypeRadio";
-import { SubscriptionRadio } from "./SubscriptionRadio/SubscriptionRadio";
-import { Subscription } from "./Subscription/Subscription";
-import { Stripe } from "../../../../../components/Stripe/Stripe";
-import { PayPal } from "../../../../../components/PayPal/PayPal";
-import {
-  GetCurrentSubscription,
-  useGetCurrentSubscriptionQuery,
-  useGetPaymentsQuery,
-} from "../../../../../api/subscriptions.api";
+import { AccountTypeRadio } from "./AccountTypeRadio";
+import { SubscriptionRadio } from "./SubscriptionRadio";
+import { Subscription } from "./Subscription";
+import { Stripe } from "@/components/Stripe";
+import { PayPal } from "@/components/PayPal";
+import { GetCurrentSubscription, useGetCurrentSubscriptionQuery, useGetPaymentsQuery } from "@/api/subscriptions.api";
 
 export const AccountManagementTab = () => {
   const [userSubInfo, setUserSubInfo] = useState<GetCurrentSubscription>({

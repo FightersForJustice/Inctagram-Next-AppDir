@@ -2,13 +2,13 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
-import SignIn from "./SignIn/SignIn";
 import { useTranslations } from "next-intl";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useLoginWithGoogleOAuthMutation } from "@/api/auth.api";
-import { Loader } from "@/components/Loader/Loader";
+import { useLoginWithGoogleOAuthMutation } from "@/api";
+import { Loader } from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { SignIn } from "./SignIn";
 
 const SignInPage = () => {
   const t = useTranslations("SignInPage");

@@ -1,6 +1,6 @@
 import React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { PostPopup } from "../PostPopup/PostPopup";
+import { PostPopup } from "../PostPopup";
 
 type Props = {
   setVisiblePopup: (value: boolean) => void;

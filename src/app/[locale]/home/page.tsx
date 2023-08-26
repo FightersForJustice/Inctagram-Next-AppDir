@@ -3,17 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { Navigation } from "../my-profile/Navigation/Navigation";
 import { usePathname } from "next-intl/client";
-
-import s from "./Home.module.scss";
-import { HomePagePost } from "./HomePagePost/HomePagePost";
-import { PostsItem, useLazyGetPostsQuery } from "@/api/posts.api";
-import useScrollFetching from "../../../features/hooks/useScrollListener";
 import { toast } from "react-toastify";
 import { StatusCode } from "@/api/auth.api";
 import { useSelector } from "react-redux";
 import { UserID } from "@/redux/reducers/appReducer";
 import { RootState } from "@/redux/store";
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/Loader";
+import { HomePagePost } from "./HomePagePost";
+import { PostsItem, useLazyGetPostsQuery } from "@/api/posts.api";
+import { useScrollFetching } from "@/features/hooks";
+
+import s from "./Home.module.scss";
 
 const Home = () => {
   const pathname = usePathname();

@@ -1,12 +1,13 @@
 import React from "react";
 import s from "./HomePagePost.module.scss";
 import Image from "next/image";
-import { HomePostPopup } from "./HomePostPopup/HomePostPopup";
+
 import { PostsItem } from "@/api/posts.api";
 import { GetTimeAgoText } from "@/utils/formatTimeFromDateString";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { UserName } from "@/redux/reducers/appReducer";
+import { HomePostPopup } from "./HomePostPopup";
 
 type Props = {
   post: PostsItem;

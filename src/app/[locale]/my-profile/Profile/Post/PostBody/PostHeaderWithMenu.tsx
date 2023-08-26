@@ -1,5 +1,5 @@
 import style from "../Post.module.scss";
-import { SmartMenu } from "./SmartMenu/SmartMenu";
+import { SmartMenu } from "./SmartMenu";
 import React from "react";
 type Props = {
   avatar: string;

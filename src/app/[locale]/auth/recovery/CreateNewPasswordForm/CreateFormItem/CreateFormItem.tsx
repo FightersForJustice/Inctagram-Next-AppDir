@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { ShowHidePass } from "../../../../../../components/ShowHidePass/ShowHidePass";
+import { ShowHidePass } from "@/components/ShowHidePass";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 type Props = {

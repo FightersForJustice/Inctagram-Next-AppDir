@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
-import { BaseLayout } from "../../../components/layouts/BaseLayout/BaseLayout";
+import { BaseLayout } from "@/components/layouts/BaseLayout";
 
 export const metadata: Metadata = {
   title: "Merger of Accounts",

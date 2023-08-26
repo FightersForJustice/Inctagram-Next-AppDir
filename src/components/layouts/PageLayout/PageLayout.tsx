@@ -5,7 +5,7 @@ type Props = {
   title: ReactNode;
 };
 
-export default function PageLayout({ children, title }: Props) {
+export const PageLayout = ({ children, title }: Props) => {
   return (
     <div className="relative flex grow flex-col bg-slate-850 py-36">
       <div className="absolute inset-0 overflow-hidden">
@@ -18,4 +18,4 @@ export default function PageLayout({ children, title }: Props) {
       </div>
     </div>
   );
-}
+};

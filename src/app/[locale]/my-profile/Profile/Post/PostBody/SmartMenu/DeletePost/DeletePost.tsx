@@ -1,7 +1,7 @@
-import { useDeletePostMutation } from "../../../../../../../../api/posts.api";
-import { TransparentBtn } from "../../../../../../../../components/TransparentBtn/TransparentBtn";
+import { useDeletePostMutation } from "@/api";
+import { TransparentBtn } from "@/components/TransparentBtn";
 import React from "react";
-import { Loader } from "../../../../../../../../components/Loader/Loader";
+import { Loader } from "@/components/Loader";
 
 export const DeletePost = ({
   postId,

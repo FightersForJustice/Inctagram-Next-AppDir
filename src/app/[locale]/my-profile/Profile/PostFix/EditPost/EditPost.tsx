@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 
 import s from "./EditPost.module.scss";
-import { PrimaryBtn } from "../../../../../../components/PrimaryBtn/PrimaryBtn";
-import { useUpdatePostMutation } from "../../../../../../api/posts.api";
+import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { useUpdatePostMutation } from "@/api";
 import { toast } from "react-toastify";
-import { Loader } from "../../../../../../components/Loader/Loader";
+import { Loader } from "@/components/Loader";
 
 type Props = {
   setEditPost: (value: boolean) => void;

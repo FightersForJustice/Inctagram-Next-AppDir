@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./PostLikes.module.scss";
-import { PostAmount } from "../PostAmount/PostAmount";
-import { PostForm } from "../PostForm/PostForm";
+import { PostAmount } from "../PostAmount";
+import { PostForm } from "../PostForm";
 
 export const PostLikes = () => {
   return (

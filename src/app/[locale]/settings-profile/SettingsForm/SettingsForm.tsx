@@ -1,17 +1,17 @@
 import { useForm } from "react-hook-form";
 import s from "./SettingsForm.module.scss";
-import { PrimaryBtn } from "../../../../components/PrimaryBtn/PrimaryBtn";
-import { DatePick } from "../../../../components/DatePicker/DatePick";
+import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { DatePick } from "@/components/DatePicker";
 import React, { useState } from "react";
-import { PutProfileBody, useLazyGetProfileQuery, usePutProfileMutation } from "../../../../api/profile.api";
-import { StatusCode } from "../../../../api/auth.api";
+import { PutProfileBody, useLazyGetProfileQuery, usePutProfileMutation } from "@/api/profile.api";
+import { StatusCode } from "@/api/auth.api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { Loader } from "../../../../components/Loader/Loader";
-import { GetDefaultValuesForm } from "../../../../utils/GetDefaultValuesForm";
-import { SettingsFormSchema } from "../../../../features/schemas/SettingsFormSchema";
+import { Loader } from "@/components/Loader";
+import { GetDefaultValuesForm } from "@/utils";
+import { SettingsFormSchema } from "@/features/schemas";
 import { SettingsFormItem } from "./SettingsFormItem";
-import { handleApiError } from "../../../../utils/handleApiError";
+import { handleApiError } from "@/utils";
 
 type Props = {
   userBirthday: Date | undefined;
@@ -24,7 +24,6 @@ type FormValues = {
   city: string | null | undefined;
   aboutMe: string;
 };
-
 
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -143,4 +142,3 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
     </>
   );
 };
-

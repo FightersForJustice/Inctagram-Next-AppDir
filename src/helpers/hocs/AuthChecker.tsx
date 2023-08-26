@@ -8,7 +8,7 @@ interface AuthCheckerProps {
   children: React.ReactNode;
 }
 
-const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
+export const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const dispatch = useDispatch();
@@ -43,5 +43,3 @@ const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
     return null; // Другой компонент для отображения или null
   }
 };
-
-export default AuthChecker;

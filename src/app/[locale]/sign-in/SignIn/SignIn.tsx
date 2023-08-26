@@ -2,18 +2,20 @@ import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { StatusCode, usePostLoginMutation } from "@/api/auth.api";
-import { SignInSchema } from "@/features/schemas/SignInSchema";
+
 import { redirect } from "next/navigation";
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/Loader";
 import { FormItem } from "../../sign-up/SignUp/SignUpForm/FormItem";
 import { toast } from "react-toastify";
+import { SignInSchema } from "@/features/schemas";
+import { usePostLoginMutation } from "@/api";
+import { StatusCode } from "@/api/auth.api";
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-const SignIn: React.FC<Props> = ({ translate }) => {
+export const SignIn: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
@@ -105,5 +107,3 @@ const SignIn: React.FC<Props> = ({ translate }) => {
     </>
   );
 };
-
-export default SignIn;

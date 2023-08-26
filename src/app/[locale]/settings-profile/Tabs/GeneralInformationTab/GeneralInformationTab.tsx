@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import s from "../Tabs.module.scss";
 import Image from "next/image";
-import { TransparentBtn } from "../../../../../components/TransparentBtn/TransparentBtn";
+import { TransparentBtn } from "@/components/TransparentBtn";
 import { SettingsForm } from "../../SettingsForm/SettingsForm";
 import * as Tabs from "@radix-ui/react-tabs";
 import { toast } from "react-toastify";
-import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "../../../../../api/profile.api";
-import { Loader } from "../../../../../components/Loader/Loader";
+import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "@/api";
+import { Loader } from "@/components/Loader";
 import { useTranslations } from "next-intl";
-import { handleApiError } from "../../../../../utils/handleApiError";
+import { handleApiError } from "@/utils";
 
 export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, setLoadedAvatar, loadedAvatar }) => {
   const t = useTranslations("SettingsProfilePage.GeneralInformationTab");

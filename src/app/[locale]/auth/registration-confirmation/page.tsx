@@ -1,7 +1,7 @@
 "use client";
 
-import Confirm from "./Confirm";
 import { useTranslations } from "next-intl";
+import { Confirm } from "./Confirm";
 
 const RegistrationConfirmation = ({
   params,

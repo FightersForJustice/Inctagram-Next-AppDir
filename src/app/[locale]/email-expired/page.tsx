@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import RegistrationEmailResend from "./RegistrationEmailResend";
+
 import { useTranslations } from "next-intl";
+import { RegistrationEmailResend } from "./RegistrationEmailResend";
 
 const EmailExpired = () => {
   const t = useTranslations("EmailExpiredPage");

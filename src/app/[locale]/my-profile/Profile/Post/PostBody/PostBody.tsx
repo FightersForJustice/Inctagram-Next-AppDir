@@ -1,12 +1,13 @@
 import style from "../Post.module.scss";
-import { PostComment } from "./PostComment/PostComment";
-import { Loader } from "../../../../../../components/Loader/Loader";
+import { PostComment } from "./PostComment";
+import { Loader } from "@/components/Loader";
 import React, { useState } from "react";
-import { DeletePost } from "./SmartMenu/DeletePost/DeletePost";
-import { actualCreateDate } from "../../../../../../utils/actualCreateDate";
-import { Modal } from "../../../../../../components/Modals/Modal/Modal";
+import { DeletePost } from "./SmartMenu/DeletePost";
+
+import { Modal } from "@/components/Modals/Modal";
 import { PostBodyFooter } from "./PostBodyFooter";
 import { PostHeaderWithMenu } from "./PostHeaderWithMenu";
+import { actualCreateDate } from "@/utils";
 
 type PropsType = {
   isSuccess?: boolean;

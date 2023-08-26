@@ -7,17 +7,17 @@ import {
   StatusCode,
   usePostNewPasswordMutation,
   usePostPasswordCheckRecoveryCodeMutation,
-} from "../../../../../api/auth.api";
-import { Loader } from "../../../../../components/Loader/Loader";
-import { CreateNewPasswordFormSchema } from "../../../../../features/schemas/CreateNewPasswordFormSchema";
-import { CreateFormItem } from "./CreateFormItem/CreateFormItem";
+} from "@/api/auth.api";
+import { Loader } from "@/components/Loader/Loader";
+import { CreateNewPasswordFormSchema } from "@/features/schemas/CreateNewPasswordFormSchema";
 import { toast } from "react-toastify";
+import { CreateFormItem } from "./CreateFormItem";
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
+export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
@@ -112,5 +112,3 @@ const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     </>
   );
 };
-
-export default CreateNewPasswordForm;

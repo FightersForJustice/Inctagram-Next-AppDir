@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
 import s from "./CreatePost.module.scss";
 import Image from "next/image";
-import { FiltersModal } from "../../../../components/Modals/FiltersModal/FiltersModal";
-import { useCreatePostMutation, useDeletePostImageMutation } from "../../../../api/posts.api";
+import { FiltersModal } from "@/components/Modals/FiltersModal";
+import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
 import { toast } from "react-toastify";
-import { Loader } from "../../../../components/Loader/Loader";
-import { AreYouSureModal } from "../../../../components/Modals/AreYouSureModal/AreYouSureModal";
+import { Loader } from "@/components/Loader";
+import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType } from "./CreatePost";
-import { GetResponse } from "../../../../api/profile.api";
+import { GetResponse } from "@/api/profile.api";
 
 type Props = {
   showThirdModal: () => void;
@@ -19,7 +19,7 @@ type Props = {
   userData: GetResponse;
 };
 
-const FourthModal: React.FC<Props> = ({
+export const FourthModal: React.FC<Props> = ({
   showThirdModal,
   aspectRatio,
   activeFilter,
@@ -49,11 +49,11 @@ const FourthModal: React.FC<Props> = ({
       childrenMetadata: [{ uploadId: uploadId! }],
     })
       .unwrap()
-      .then((res) => {
+      .then(() => {
         toast.success("Post created");
         setShowCreatePostModal(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Error");
       });
   };
@@ -63,11 +63,11 @@ const FourthModal: React.FC<Props> = ({
 
     deleteImage(uploadId!)
       .unwrap()
-      .then((res) => {
+      .then(() => {
         showThirdModal?.();
         toast.success("Post image deleted");
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Error");
       });
   };
@@ -106,7 +106,7 @@ const FourthModal: React.FC<Props> = ({
                 height={36}
                 className={s.cropping__publication__image}
               />
-              <p>{`${userData?userData.userName:''}`}</p>
+              <p>{`${userData ? userData.userName : ""}`}</p>
             </div>
             <div>
               <div className={s.cropping__publication__wrapper}>
@@ -139,5 +139,3 @@ const FourthModal: React.FC<Props> = ({
     </>
   );
 };
-
-export default FourthModal;

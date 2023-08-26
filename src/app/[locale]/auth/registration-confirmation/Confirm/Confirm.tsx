@@ -4,14 +4,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePostRegistrationConfirmationMutation } from "@/api/auth.api";
 import { toast } from "react-toastify";
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/Loader";
 
 type Props = {
   code: string;
   translate: (value: string) => ReactNode;
 };
 
-const Confirm: React.FC<Props> = ({ code, translate }) => {
+export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const [registrationConfirm, { isLoading }] = usePostRegistrationConfirmationMutation();
   const router = useRouter();
 
@@ -42,5 +42,3 @@ const Confirm: React.FC<Props> = ({ code, translate }) => {
     </div>
   );
 };
-
-export default Confirm;

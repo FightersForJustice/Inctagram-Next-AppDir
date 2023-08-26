@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import CreateNewPasswordForm from "./CreateNewPasswordForm/CreateNewPasswordForm";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { CreateNewPasswordForm } from "./CreateNewPasswordForm";
 
 const CreateNewPassword = ({ params, searchParams }: { params: { slug: string }; searchParams: { code: string } }) => {
   const t = useTranslations("RecoveryPage");
