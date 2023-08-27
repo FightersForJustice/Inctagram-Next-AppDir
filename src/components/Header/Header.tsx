@@ -26,14 +26,15 @@ export const Header = () => {
     if (!localStorage.getItem("language")) {
       localStorage.setItem("language", "en");
       setLanguage("en");
-      router.replace(`/${localStorage.getItem("en")}${pathname}`);
+      router.replace(`/${localStorage.getItem("language")}/${pathname}`);
     } else {
       setLanguage(localStorage.getItem("language")!);
-      router.replace(`/${localStorage.getItem("language")}${pathname}`);
+      router.replace(`/${localStorage.getItem("language")}/${pathname}`);
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
     }
+  // }
   }, []);
 
   const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {

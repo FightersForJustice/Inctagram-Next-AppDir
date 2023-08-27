@@ -19,7 +19,6 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
   // const userName = useSelector<RootState, UserName>((state) => state.app.userName);
   const { data, isLoading, refetch } = useGetProfileQuery();
 
-  console.log(data);
 
   return (
     <div className={s.post}>
