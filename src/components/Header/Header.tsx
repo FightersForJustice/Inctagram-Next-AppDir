@@ -22,7 +22,7 @@ export const Header = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    // if (typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
     if (!localStorage.getItem("language")) {
       localStorage.setItem("language", "en");
       setLanguage("en");
@@ -34,7 +34,7 @@ export const Header = () => {
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
     }
-  // }
+  }
   }, []);
 
   const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
