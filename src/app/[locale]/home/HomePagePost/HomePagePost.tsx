@@ -27,7 +27,7 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
         <div className={s.post__wrapper}>
           <Image 
           // src={data?.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"} 
-          src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
+          src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
 
           alt={"ava"} 
           width={36} 
@@ -151,7 +151,7 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
       <div className={s.post__desc}>
         <Image 
         // src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
-        src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
+        src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
 
         alt={"ava"} 
         width={36}
