@@ -20,12 +20,15 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
   const { data, isLoading, refetch } = useGetProfileQuery();
 
 
+
   return (
     <div className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
           <Image 
-          src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
+          // src={data?.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"} 
+          src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
+
           alt={"ava"} 
           width={36} 
           height={36} 
@@ -147,7 +150,9 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
       </div>
       <div className={s.post__desc}>
         <Image 
-        src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
+        // src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
+        src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
+
         alt={"ava"} 
         width={36}
          height={36}
