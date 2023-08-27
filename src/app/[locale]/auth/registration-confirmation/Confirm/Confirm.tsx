@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,18 +14,24 @@ type Props = {
 export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const [registrationConfirm, { isLoading }] = usePostRegistrationConfirmationMutation();
   const router = useRouter();
+  const isConfirmed = sessionStorage.getItem("isConfirmed");
 
   useEffect(() => {
-    registrationConfirm({ confirmationCode: String(code) })
-      .unwrap()
-      .then()
-      .catch((err) => {
-        toast.error("Error confirmation");
-        if (err.data.error) {
-          router.push("/email-expired");
-        }
-      });
-  }, [code, registrationConfirm]);
+    if (isConfirmed !== "yes") {
+      registrationConfirm({ confirmationCode: String(code) })
+        .unwrap()
+        .then()
+        .catch((err) => {
+          toast.error("Error confirmation");
+          if (err.data.error) {
+            router.push("/email-expired");
+          }
+        });
+      sessionStorage.setItem("isConfirmed", "yes");
+    } else {
+      sessionStorage.removeItem("isConfirmed")
+    }
+  }, []);
 
   return (
     <div className={"flex flex-col justify-center items-center mt-[100px] mb-9"}>

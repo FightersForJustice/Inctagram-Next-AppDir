@@ -21,15 +21,33 @@ export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //   if (!localStorage.getItem("language")) {
+  //     localStorage.setItem("language", "en");
+  //     setLanguage("en");
+  //     router.replace(`/${localStorage.getItem("language")}/${pathname}`);
+  //   } else {
+  //     setLanguage(localStorage.getItem("language")!);
+  //     router.replace(`/${localStorage.getItem("language")}/${pathname}`);
+  //   }
+  //   if (sessionStorage.getItem("accessToken")) {
+  //     setLoggedIn(true);
+  //   }
+  // }
+  // }, []);
   useEffect(() => {
     if (typeof window !== "undefined") {
-    if (!localStorage.getItem("language")) {
+       const loaclLang = localStorage.getItem("language")
+    if (!loaclLang) {
       localStorage.setItem("language", "en");
       setLanguage("en");
-      router.replace(`/${localStorage.getItem("language")}/${pathname}`);
+      router.replace(`/en/${pathname}`);
     } else {
-      setLanguage(localStorage.getItem("language")!);
-      router.replace(`/${localStorage.getItem("language")}/${pathname}`);
+      setLanguage(loaclLang);
+      if (loaclLang !== language){
+      router.replace(`/${loaclLang}/${pathname}`);
+    }
     }
     if (sessionStorage.getItem("accessToken")) {
       setLoggedIn(true);
