@@ -107,6 +107,7 @@ input[type="range"]::-ms-thumb {
   bottom: -195px;
   left: 71px;
   border-radius: 2px;
+  z-index: 2 !important;
 
   background: rgba(23, 23, 23, 0.5);
 }

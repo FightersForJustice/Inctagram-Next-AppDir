@@ -43,7 +43,7 @@ export const AspectRatio: React.FC<Props> = ({ setAspectRatio, aspectRatio }) =>
           </svg>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content className="PopoverContent" sideOffset={5}>
+          <Popover.Content className="PopoverContent z-30" sideOffset={5}>
             <CroppingSizeModal setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
           </Popover.Content>
         </Popover.Portal>
