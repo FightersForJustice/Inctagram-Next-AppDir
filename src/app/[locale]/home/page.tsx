@@ -21,19 +21,19 @@ const Home = () => {
   const [fetching, setFetching] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCountPosts, setTotalCountPosts] = useState(1);
-  const [currentPagePosts, setCurrentPagePosts] = useState<PostsItem[]>([]);
-  const [pageSize, setPageSize] = useState(1);
+  const [page, setPage] = useState(0);
+  const [pagesCount, setPagesCount] = useState(1);
+  const [currentPosts, setCurrentPosts] = useState<PostsItem[]>([]);
   const userID = useSelector<RootState, UserID>((state) => state.app.userID);
 
-
-  
   const fetchingValue = useScrollFetching(
     100,
     fetching,
     setFetching,
-    pageSize,
-    currentPagePosts.length,
+    page,
+    currentPosts.length,
     totalCountPosts,
+    pagesCount,
   );
   const [getPosts, { isLoading }] = useLazyGetPostsQuery();
 
@@ -42,8 +42,10 @@ const Home = () => {
       .unwrap()
       .then((res) => {
         setPosts(res.items);
-        setPageSize(res.pageSize);
+        setPagesCount(res.pagesCount);
         setTotalCountPosts(res.totalCount);
+        setCurrentPosts(res.items);
+        setPage(res.page);
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
@@ -61,7 +63,9 @@ const Home = () => {
           if (res?.items) {
             setPosts([...posts, ...res.items]);
             setCurrentPage((prevState) => prevState + 1);
-            setCurrentPagePosts(res.items);
+            setPage(res.page);
+            setPagesCount(res.pagesCount);
+            setCurrentPosts(res.items);
           }
         })
         .catch((err) => toast.error(err.error))

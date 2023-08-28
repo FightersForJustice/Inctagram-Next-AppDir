@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import s from "./Stripe.module.scss";
-import { useCreateSubscriptionMutation } from "../../api/subscriptions.api";
+import { useCreateSubscriptionMutation } from "@/api";
 import { Loader } from "../Loader/Loader";
 import { toast } from "react-toastify";
 

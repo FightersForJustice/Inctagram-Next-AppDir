@@ -1,6 +1,7 @@
 export { actualCreateDate } from "./actualCreateDate";
 export { applyImageFilter } from "./applyImageFilter";
 export { dataURLToBlob } from "./dataUrlToBlob";
+export { calculateScrollValue } from "./calculateScrollValue";
 export { dataURLtoFile } from "./dataUrlToFile";
 export { handleApiError } from "./handleApiError";
 export { GetDefaultValuesForm } from "./GetDefaultValuesForm";

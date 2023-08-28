@@ -1,17 +1,19 @@
 import { useEffect } from "react";
+import { calculateScrollValue } from "@/utils";
 
 export const useScrollFetching = (
   threshold: number = 100,
   fetching: boolean,
   setFetching: (value: boolean) => void,
-  pageSize: number,
+  page: number,
   postsAmount: number,
   totalCountPosts: number,
+  pagesCount: number,
 ): boolean => {
   const onScroll = (e: Event) => {
     const target = e.target as Document;
     if (target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) < threshold) {
-      if (pageSize + postsAmount > totalCountPosts) {
+      if (postsAmount + calculateScrollValue(pagesCount) > totalCountPosts) {
         setFetching(true);
       }
     }
@@ -22,7 +24,7 @@ export const useScrollFetching = (
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, [pageSize, postsAmount, totalCountPosts]);
+  }, [page, postsAmount, totalCountPosts, pagesCount]);
 
   return fetching;
 };

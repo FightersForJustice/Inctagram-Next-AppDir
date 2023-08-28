@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
 import { SubscribersModal } from "@/components/Modals/SubscribersModal";
-import { Navigation } from "./Navigation/Navigation";
+import { Navigation } from "./Navigation";
 import { SubscriptionsModal } from "@/components/Modals/SubscriptionsModal";
 import { Profile } from "./Profile";
 import { Loader } from "@/components/Loader";

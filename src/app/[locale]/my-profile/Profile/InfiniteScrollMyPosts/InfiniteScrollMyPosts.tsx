@@ -20,17 +20,21 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
-  const [pageSize, setPageSize] = useState(1);
+  const [page, setPage] = useState(0);
+  const [pagesCount, setPagesCount] = useState(1);
   const [currentPagePosts, setCurrentPagePosts] = useState<PostsItem[]>([]);
   const [totalCountPosts, setTotalCountPosts] = useState(1);
+
   const fetchingValue = useScrollFetching(
     100,
     fetching,
     setFetching,
-    pageSize,
+    page,
     currentPagePosts.length,
     totalCountPosts,
+    pagesCount,
   );
+
   const { data, isSuccess } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
   const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
 
@@ -43,9 +47,10 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   useEffect(() => {
     if (data?.items) {
       setPosts(data.items);
-      setPageSize(data.pageSize);
+      setPage(data.page);
       setTotalCountPosts(data.totalCount);
       setCurrentPagePosts(data.items);
+      setPagesCount(data.pagesCount);
       getUserPosts(data.items.length);
     }
   }, [data?.items]);
@@ -64,6 +69,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
               setCurrentPage((prevState) => prevState + 1);
               setTotalCount(res.totalCount);
               setCurrentPagePosts(res.items);
+              setPage(res.page);
+              setPagesCount(res.pagesCount);
             }
           })
           .catch((err) => toast.error(err.error))
