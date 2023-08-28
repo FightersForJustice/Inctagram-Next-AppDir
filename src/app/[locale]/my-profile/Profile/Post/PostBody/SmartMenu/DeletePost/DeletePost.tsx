@@ -1,5 +1,5 @@
 import { useDeletePostMutation } from "@/api";
-import { TransparentBtn } from "@/components/TransparentBtn";
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import React from "react";
 import { Loader } from "@/components/Loader";
 

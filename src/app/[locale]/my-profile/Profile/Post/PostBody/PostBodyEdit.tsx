@@ -1,7 +1,7 @@
 "use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import style from "../Post.module.scss";
-import { TransparentBtn } from "@/components/TransparentBtn";
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { useForm } from "react-hook-form";
 import { useUpdatePostMutation } from "@/api";
 

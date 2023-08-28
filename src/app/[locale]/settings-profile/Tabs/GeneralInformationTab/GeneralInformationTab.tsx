@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import s from "../Tabs.module.scss";
 import Image from "next/image";
-import { TransparentBtn } from "@/components/TransparentBtn";
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { SettingsForm } from "../../SettingsForm/SettingsForm";
 import * as Tabs from "@radix-ui/react-tabs";
 import { toast } from "react-toastify";

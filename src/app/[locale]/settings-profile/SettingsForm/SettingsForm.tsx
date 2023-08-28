@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import s from "./SettingsForm.module.scss";
-import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
 import { DatePick } from "@/components/DatePicker";
 import React, { useState } from "react";
 import { PutProfileBody, useLazyGetProfileQuery, usePutProfileMutation } from "@/api/profile.api";

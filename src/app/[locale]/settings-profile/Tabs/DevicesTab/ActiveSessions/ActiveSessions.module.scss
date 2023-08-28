@@ -1,0 +1,50 @@
+.devices {
+  &__title {
+    padding-top: 30px;
+    margin-bottom: 6px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--dark-500);
+    padding: 17px 24px;
+    border: 1px solid var(--dark-300);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  &__content {
+    &__title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 13px;
+    }
+
+    &__address {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+
+    &__visit {
+      color: var(--light-100);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 133.333% */
+    }
+  }
+
+  &__active {
+    margin-bottom: 18px;
+  }
+
+  &__notLogged {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+  }
+}

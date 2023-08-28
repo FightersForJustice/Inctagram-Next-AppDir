@@ -1,35 +1,38 @@
 import React from "react";
 import s from "../Tabs.module.scss";
-import Image from "next/image";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
+
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
+import { ThisDevice } from "./ThisDevice";
+import { ActiveSessions } from "./ActiveSessions";
 
 export const DevicesTab = () => {
   const t = useTranslations("SettingsProfilePage.DevicesTab");
 
+  const sessions: SessionsType[] = [
+    { deviceName: "Apple iMac 27", ipAddress: "192.168.1.10", lastVisit: "22.09.2022", type: "PC" },
+    { deviceName: "Samsung", ipAddress: "192.168.1.20", lastVisit: "22.09.2022", type: "mobile" },
+  ];
+
   return (
     <Tabs.Content className={s.TabsContent} value="devices">
       <div className={s.devices}>
-        <p className={s.devices__title}>{t("title")}</p>
-        <div className={s.devices__wrapper}>
-          <Image
-            src={"/img/settings-profile/chrome.svg"}
-            alt={"chrome"}
-            width={36}
-            height={36}
-            className={s.devices__icon}
-          />
-          <div className={s.devices__content}>
-            <p className={s.devices__content__title}>Chrome</p>
-            <p className={s.devices__content__address}>IP: 22.345.345.12</p>
-            <p className={s.devices__content__status}>{t("status")}</p>
-          </div>
+        <ThisDevice t={t} />
+
+        <div className={"text-right"}>
+          <TransparentBtn>Terminate all other session</TransparentBtn>
         </div>
-        <p className={s.devices__active}>{t("active")}</p>
-        <div>
-          <p className={s.devices__notLogged}>{t("text")}</p>
-        </div>
+
+        <ActiveSessions t={t} sessions={sessions} />
       </div>
     </Tabs.Content>
   );
+};
+
+export type SessionsType = {
+  deviceName: string;
+  ipAddress: string;
+  lastVisit: string;
+  type: "PC" | "mobile";
 };

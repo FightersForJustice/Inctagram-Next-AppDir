@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "../Post.module.scss";
-import { TransparentBtn } from "@/components/TransparentBtn";
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { formatServerDateWithoutTime } from "@/utils";
 
 export const PostBodyFooter = () => {

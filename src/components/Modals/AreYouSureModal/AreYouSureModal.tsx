@@ -1,6 +1,6 @@
 import React from "react";
-import { TransparentBtn } from "../../TransparentBtn/TransparentBtn";
-import { PrimaryBtn } from "../../PrimaryBtn/PrimaryBtn";
+import { TransparentBtn } from "@/components/Buttons/TransparentBtn/TransparentBtn";
+import { PrimaryBtn } from "@/components/Buttons/PrimaryBtn/PrimaryBtn";
 import { Modal } from "../Modal/Modal";
 import { Loader } from "../../Loader/Loader";
 

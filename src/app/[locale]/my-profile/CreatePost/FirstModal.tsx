@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useId } from "react";
 import s from "./CreatePost.module.scss";
-import { PrimaryBtn } from "@/components/PrimaryBtn";
-import { TransparentBtn } from "@/components/TransparentBtn";
+import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
+import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { Modal } from "@/components/Modals/Modal";
 import { ImageType } from "./CreatePost";
 import Image from "next/image";

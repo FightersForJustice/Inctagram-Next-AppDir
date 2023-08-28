@@ -6,6 +6,7 @@
   font-weight: 600;
   transition: all 0.2s linear;
   border-radius: 2px;
+  cursor: pointer;
 
   &:active {
     border: 1px solid var(--primary-700);

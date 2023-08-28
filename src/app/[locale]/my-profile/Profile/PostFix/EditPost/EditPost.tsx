@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 
 import s from "./EditPost.module.scss";
-import { PrimaryBtn } from "@/components/PrimaryBtn";
+import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
 import { useUpdatePostMutation } from "@/api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
