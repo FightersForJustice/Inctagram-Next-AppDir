@@ -4,48 +4,58 @@ import React, { useEffect, useState } from "react";
 import { Navigation } from "../my-profile/Navigation/Navigation";
 import { usePathname } from "next-intl/client";
 import { toast } from "react-toastify";
-import { StatusCode } from "@/api/auth.api";
-import { useSelector } from "react-redux";
-import { UserID } from "@/redux/reducers/appReducer";
-import { RootState } from "@/redux/store";
 import { Loader } from "@/components/Loader";
 import { HomePagePost } from "./HomePagePost";
-import { PostsItem, useLazyGetPostsQuery } from "@/api/posts.api";
+import { PostsItem, useLazyGetAllPostsQuery } from "@/api/posts.api";
 import { useScrollFetching } from "@/features/hooks";
 
 import s from "./Home.module.scss";
+import { StatusCode } from "@/api/auth.api";
 
-const Home = () => {
+const Home: React.FC = () => {
   const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
-  const [fetching, setFetching] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalCountPosts, setTotalCountPosts] = useState(1);
-  const [page, setPage] = useState(0);
-  const [pagesCount, setPagesCount] = useState(1);
-  const [currentPosts, setCurrentPosts] = useState<PostsItem[]>([]);
-  const userID = useSelector<RootState, UserID>((state) => state.app.userID);
+  const [fetching, setFetching] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
 
-  const fetchingValue = useScrollFetching(
-    100,
-    fetching,
-    setFetching,
-    page,
-    currentPosts.length,
-    totalCountPosts,
-    pagesCount,
-  );
-  const [getPosts, { isLoading }] = useLazyGetPostsQuery();
+  const fetchingValue = useScrollFetching(100, fetching, setFetching);
+  const [getPosts, { isLoading }] = useLazyGetAllPostsQuery();
+
+  const loadMorePosts = () => {
+    if (!isLoading) {
+      getPosts({
+        idLastUploadedPost: lastLoadedPostId,
+        pageSize: 5,
+        pageNumber: currentPage + 1,
+        sortBy: "createdAt",
+        sortDirection: "desc",
+      })
+        .unwrap()
+        .then((res) => {
+          if (res?.items) {
+            setPosts([...posts, ...res.items]);
+            setLastLoadedPostId(res.items[res.items.length - 1].id);
+            setCurrentPage(currentPage + 1);
+          }
+        })
+        .catch((err) => toast.error(err.error))
+        .finally(() => setFetching(false));
+    }
+  };
 
   useEffect(() => {
-    getPosts({ pageNumber: currentPage, userID })
+    getPosts({
+      idLastUploadedPost: lastLoadedPostId!,
+      pageSize: 5,
+      pageNumber: currentPage + 1,
+      sortBy: "createdAt",
+      sortDirection: "desc",
+    })
       .unwrap()
       .then((res) => {
         setPosts(res.items);
-        setPagesCount(res.pagesCount);
-        setTotalCountPosts(res.totalCount);
-        setCurrentPosts(res.items);
-        setPage(res.page);
+        setLastLoadedPostId(res.items[res.items.length - 1].id);
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
@@ -57,25 +67,31 @@ const Home = () => {
 
   useEffect(() => {
     if (fetching) {
-      getPosts({ pageNumber: currentPage, userID })
-        .unwrap()
-        .then((res) => {
-          if (res?.items) {
-            setPosts([...posts, ...res.items]);
-            setCurrentPage((prevState) => prevState + 1);
-            setPage(res.page);
-            setPagesCount(res.pagesCount);
-            setCurrentPosts(res.items);
-          }
-        })
-        .catch((err) => toast.error(err.error))
-        .finally(() => setFetching(false));
+      loadMorePosts();
     }
   }, [fetchingValue]);
 
-  const allPosts = posts.map((item) => {
-    return <HomePagePost key={item.id} post={item} />;
-  });
+  const allPosts = posts.map((item) => <HomePagePost key={item.id} post={item} />);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const wrapper = document.getElementById("wrapper");
+      if (wrapper) {
+        const scrolledHeight = window.innerHeight + window.scrollY;
+        const wrapperHeight = wrapper.clientHeight + wrapper.offsetTop;
+
+        if (scrolledHeight > wrapperHeight - 200) {
+          setFetching(true);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>

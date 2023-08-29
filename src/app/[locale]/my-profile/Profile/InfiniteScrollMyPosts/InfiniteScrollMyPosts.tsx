@@ -3,10 +3,8 @@ import Image from "next/image";
 import { Loader } from "@/components/Loader";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
-import { toast } from "react-toastify";
 import { GetResponse } from "@/api/profile.api";
-import { PostsItem, useGetPostsPaginationQuery, useLazyGetPostsPaginationQuery } from "@/api/posts.api";
-import { useScrollFetching } from "@/features/hooks";
+import { PostsItem, useGetUserPostsQuery } from "@/api/posts.api";
 
 type Props = {
   userData: GetResponse;
@@ -19,65 +17,43 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(1);
-  const [page, setPage] = useState(0);
-  const [pagesCount, setPagesCount] = useState(1);
-  const [currentPagePosts, setCurrentPagePosts] = useState<PostsItem[]>([]);
-  const [totalCountPosts, setTotalCountPosts] = useState(1);
+  const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(200);
 
-  const fetchingValue = useScrollFetching(
-    100,
-    fetching,
-    setFetching,
-    page,
-    currentPagePosts.length,
-    totalCountPosts,
-    pagesCount,
-  );
-
-  const { data, isSuccess } = useGetPostsPaginationQuery({ userId: String(userData?.id), pageNumber: 1 });
-  const [getPosts, { isLoading: isLoadingPosts }] = useLazyGetPostsPaginationQuery();
-
-  useEffect(() => {
-    if (isSuccess) {
-      setCurrentPage((prevState) => prevState + 1);
-    }
-  }, [isSuccess]);
+  const { data, isLoading } = useGetUserPostsQuery({
+    idLastUploadedPost: lastLoadedPostId,
+    pageSize: 5,
+    pageNumber: currentPage + 1,
+    sortBy: "createdAt",
+    sortDirection: "desc",
+  });
 
   useEffect(() => {
     if (data?.items) {
       setPosts(data.items);
-      setPage(data.page);
-      setTotalCountPosts(data.totalCount);
-      setCurrentPagePosts(data.items);
-      setPagesCount(data.pagesCount);
-      getUserPosts(data.items.length);
     }
-  }, [data?.items]);
+  }, [data]);
 
-  useEffect(() => {
-    if (posts.length === totalCount) {
-      setFetching(false);
-      return;
-    } else {
-      if (fetching) {
-        getPosts({ userId: String(userData?.id), pageNumber: currentPage })
-          .unwrap()
-          .then((res) => {
-            if (res?.items) {
-              setPosts([...posts, ...res.items]);
-              setCurrentPage((prevState) => prevState + 1);
-              setTotalCount(res.totalCount);
-              setCurrentPagePosts(res.items);
-              setPage(res.page);
-              setPagesCount(res.pagesCount);
-            }
-          })
-          .catch((err) => toast.error(err.error))
-          .finally(() => setFetching(false));
-      }
+  /*  useEffect(() => {
+    if (fetching) {
+      getPosts({
+        idLastUploadedPost: lastLoadedPostId,
+        pageSize: 5,
+        pageNumber: currentPage + 1,
+        sortBy: "createdAt",
+        sortDirection: "desc",
+      })
+        .unwrap()
+        .then((res) => {
+          if (res?.items) {
+            setPosts(res.items);
+            setCurrentPage((prevState) => prevState + 1);
+            setTotalCount(res.totalCount);
+          }
+        })
+        .catch((err) => toast.error(err.error))
+        .finally(() => setFetching(false));
     }
-  }, [fetchingValue]);
+  }, []);*/
 
   const openPostHandler = (postId: number) => {
     setOpen(true);
@@ -85,7 +61,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   const postsImages = () => {
-    return posts.map((i) => {
+    return data?.items.map((i) => {
       return (
         <Image
           src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}
@@ -111,7 +87,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
           <p className={"font-bold text-2xl"}>You don&apos;t have any posts yet 😢</p>
         </div>
       )}
-      {isLoadingPosts && <Loader />}
+      {isLoading && <Loader />}
       {fetching && <Loader />}
     </>
   );

@@ -19,10 +19,10 @@ type Props = {
 };
 type FormValues = {
   userName: string;
-  firstName: string | null | undefined;
-  lastName: string | null | undefined;
+  firstName: string;
+  lastName: string;
   city: string | null | undefined;
-  aboutMe: string;
+  aboutMe: string | null | undefined;
 };
 
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
@@ -37,16 +37,20 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
     setError,
   } = useForm<FormValues>({
     defaultValues: GetDefaultValuesForm,
-    resolver: yupResolver(SettingsFormSchema),
+    resolver: yupResolver(SettingsFormSchema()),
+    mode: "onTouched",
   });
 
   const onSubmit = handleSubmit((data) => {
+    let parts = dateOfBirth.split(".");
+    let birthdayDate = new Date(+parts[2], +parts[1] - 1, +parts[0]);
+
     const result: PutProfileBody = {
       userName: data.userName,
       firstName: data.firstName,
       lastName: data.lastName,
       city: data.city,
-      dateOfBirth: new Date(dateOfBirth),
+      dateOfBirth: birthdayDate,
       aboutMe: data.aboutMe,
     };
 

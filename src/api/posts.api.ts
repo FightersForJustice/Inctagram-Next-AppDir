@@ -1,4 +1,3 @@
-import { UserID } from "@/redux/reducers/appReducer";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@/helpers/config";
 
@@ -64,19 +63,25 @@ export const postsApi = createApi({
       },
       invalidatesTags: ["Post"],
     }),
-    getPostsPagination: builder.query<PostsWithPagination, { userId: string; pageNumber: number }>({
-      query: ({ userId, pageNumber }) => {
+    getAllPosts: builder.query<
+      GetAllPosts,
+      { idLastUploadedPost: number; pageSize: number; pageNumber: number; sortBy: string; sortDirection: string }
+    >({
+      query: ({ idLastUploadedPost, pageNumber, pageSize, sortBy, sortDirection }) => {
         return {
-          url: `posts/${userId}?pageNumber=${pageNumber}`,
+          url: `posts/all?pageSize=${pageSize}&pageNumber=${pageNumber}&idLastUploadedPost=${idLastUploadedPost}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
           method: "GET",
         };
       },
       providesTags: ["Post"],
     }),
-    getPosts: builder.query<PostsWithPagination, { pageNumber: number; userID: UserID }>({
-      query: ({ pageNumber, userID }) => {
+    getUserPosts: builder.query<
+      GetAllPosts,
+      { idLastUploadedPost: number; pageSize: number; pageNumber: number; sortBy: string; sortDirection: string }
+    >({
+      query: ({ idLastUploadedPost, pageNumber, pageSize, sortBy, sortDirection }) => {
         return {
-          url: `posts/${userID}?pageNumber=${pageNumber}`,
+          url: `posts/user?idLastUploadedPost=${idLastUploadedPost}&pageSize=${pageSize}&pageNumber=${pageNumber}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
           method: "GET",
         };
       },
@@ -92,9 +97,10 @@ export const {
   useGetPostQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
-  useLazyGetPostsPaginationQuery,
-  useGetPostsPaginationQuery,
-  useLazyGetPostsQuery,
+  useGetAllPostsQuery,
+  useLazyGetAllPostsQuery,
+  useGetUserPostsQuery,
+  useLazyGetUserPostsQuery,
 } = postsApi;
 
 type Image = {
@@ -136,10 +142,8 @@ export type PostsItem = {
   updatedAt: string;
 };
 
-export type PostsWithPagination = {
+export type GetAllPosts = {
   totalCount: number;
-  pagesCount: number;
-  page: number;
   pageSize: number;
   items: PostsItem[];
 };

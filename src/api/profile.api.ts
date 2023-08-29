@@ -73,7 +73,7 @@ export type PutProfileBody = {
   lastName: string | null | undefined;
   city: string | null | undefined;
   dateOfBirth: Date;
-  aboutMe: string | undefined;
+  aboutMe: string | undefined | null;
 };
 
 export interface GetResponse {

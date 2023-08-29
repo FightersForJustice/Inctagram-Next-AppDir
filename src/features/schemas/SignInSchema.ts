@@ -10,19 +10,18 @@ export const SignInSchema = () => {
   return yup
     .object({
       email: yup
-      .string()
-      .matches(emailValidationRegex, t("email.invalidCharacters"))
-      .email(t("email.email"))
-      .required(t("email.required"))
-      .test("valid-domain", t("email.invalidCharacters"), (value) => {
-        const parts = value.split("@");
-        if (parts.length === 2) {
-          const [, domain] = parts;
-          return domain.includes(".");
-        }
-        return false;
-      })
-      ,
+        .string()
+        .matches(emailValidationRegex, t("email.invalidCharacters"))
+        .email(t("email.email"))
+        .required(t("email.required"))
+        .test("valid-domain", t("email.invalidCharacters"), (value) => {
+          const parts = value.split("@");
+          if (parts.length === 2) {
+            const [, domain] = parts;
+            return domain.includes(".");
+          }
+          return false;
+        }),
       password: yup
         .string()
         .required(t("password.required"))
@@ -32,7 +31,7 @@ export const SignInSchema = () => {
         })
         .matches(passwordValidationRegex, t("password.invalidCharacters"))
         .min(6, t("password.min"))
-        .max(20, t("password.max"))
+        .max(20, t("password.max")),
     })
     .required();
 };

@@ -15,9 +15,11 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday }) => {
   const [value, setValue] = useState<DateObject | DateObject[] | null>();
 
   useEffect(() => {
-    setDate(formatDate(value!));
+    if (value) {
+      setDate(formatDate(value));
+    }
   }, [value]);
-
+  console.log(value);
   function formatDate(date: DateObject | DateObject[] | null) {
     // @ts-ignore
     const formattedDate = new Date(date?.toDate?.().toString());

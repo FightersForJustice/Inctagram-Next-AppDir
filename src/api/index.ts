@@ -16,12 +16,13 @@ export {
   useCreatePostMutation,
   useUploadPostImageMutation,
   useUpdatePostMutation,
-  useLazyGetPostsQuery,
-  useGetPostsPaginationQuery,
   useDeletePostImageMutation,
+  useGetUserPostsQuery,
+  useLazyGetUserPostsQuery,
   useDeletePostMutation,
-  useLazyGetPostsPaginationQuery,
   useGetPostQuery,
+  useGetAllPostsQuery,
+  useLazyGetAllPostsQuery,
 } from "./posts.api";
 
 export {
