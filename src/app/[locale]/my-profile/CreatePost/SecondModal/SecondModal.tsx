@@ -18,7 +18,7 @@ type Props = {
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
   loadedImages: ImageType[];
-  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  setLoadedImages: (value: any) => void;
   setCroppedPostImage: (value: string) => void;
   croppedPostImage: string;
 };
@@ -63,6 +63,8 @@ export const SecondModal: React.FC<Props> = ({
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
+          loadedImages={loadedImages}
+          setLoadedImages={setLoadedImages}
         />
       </CroppingModal>
       {areYouSureModal && (

@@ -8,6 +8,7 @@ import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
+import { CreatePostRequest } from "@/api/posts.api";
 
 type Props = {
   showThirdModal: () => void;
@@ -42,11 +43,17 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = () => {
-    const uploadId = localStorage.getItem("uploadId");
+    const uploadId = sessionStorage.getItem("uploadId");
+    let value;
+    try {
+      value = uploadId ? JSON.parse(uploadId ?? "") : [{ uploadId: "" }];
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+    }
 
     createPost({
       description: textareaValue,
-      childrenMetadata: [{ uploadId: uploadId! }],
+      childrenMetadata: value,
     })
       .unwrap()
       .then(() => {

@@ -24,7 +24,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [zoomValue, setZoomValue] = useState("10");
 
   useEffect(() => {
-    console.log(loadedImages);
+    sessionStorage.setItem("uploadId", JSON.stringify(loadedImages ?? ""));
   }, [loadedImages]);
   const showSecondModal = () => {
     setThird(false);
@@ -54,6 +54,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
       )}
       {postImage && (
         <SecondModal
+          loadedImages={loadedImages}
           postImage={postImage}
           setPostImage={setPostImage}
           showThirdModal={showThirdModal}
@@ -62,7 +63,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
-          loadedImages={loadedImages}
           setLoadedImages={setLoadedImages}
           setCroppedPostImage={setCroppedPostImage}
           croppedPostImage={croppedPostImage}

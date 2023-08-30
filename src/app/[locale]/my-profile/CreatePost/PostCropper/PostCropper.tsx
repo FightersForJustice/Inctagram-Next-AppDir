@@ -1,22 +1,41 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { AspectRatioType } from "../CreatePost";
+import { AspectRatioType, ImageType } from "../CreatePost";
 
 type Props = {
   postImage: string;
   aspectRatio: number;
   zoomValue: string;
-  setCroppedPostImage: (value: string) => void;
+  setCroppedPostImage: (value: any) => void;
+  loadedImages: ImageType[];
+  setLoadedImages: (value: any) => void;
 };
 
-export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio, setCroppedPostImage }) => {
+export const PostCropper: React.FC<Props> = ({
+  loadedImages,
+  postImage,
+  zoomValue,
+  aspectRatio,
+  setCroppedPostImage,
+  setLoadedImages,
+}) => {
   const cropperRef = useRef<ReactCropperElement>(null);
   const [ratio, setRatio] = useState(1 / 1);
   const onCropEnd = () => {
     const cropper = cropperRef.current?.cropper;
     setCroppedPostImage(cropper?.getCroppedCanvas().toDataURL()!);
+
+    const currentImages: ImageType[] = [
+      ...loadedImages,
+      {
+        image: cropper?.getCroppedCanvas().toDataURL()!,
+        id: cropper?.getCroppedCanvas().toDataURL()!,
+      },
+    ];
+
+    setLoadedImages(currentImages.filter((value) => value.id.length > 10));
   };
 
   return (
