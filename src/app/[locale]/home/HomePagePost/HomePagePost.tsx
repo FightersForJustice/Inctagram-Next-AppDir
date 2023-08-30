@@ -4,9 +4,6 @@ import Image from "next/image";
 
 import { PostsItem } from "@/api/posts.api";
 import { GetTimeAgoText } from "@/utils/formatTimeFromDateString";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { UserName } from "@/redux/reducers/appReducer";
 import { HomePostPopup } from "./HomePostPopup";
 import { useGetProfileQuery } from "@/api";
 
@@ -19,19 +16,16 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
   // const userName = useSelector<RootState, UserName>((state) => state.app.userName);
   const { data, isLoading, refetch } = useGetProfileQuery();
 
-
-
   return (
     <div className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
-          <Image 
-          // src={data?.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"} 
-          src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
-
-          alt={"ava"} 
-          width={36} 
-          height={36} 
+          <Image
+            // src={data?.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
+            src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
+            alt={"ava"}
+            width={36}
+            height={36}
           />
 
           <p className={s.post__title}>{data?.userName}</p>
@@ -149,14 +143,14 @@ export const HomePagePost: React.FC<Props> = ({ post }) => {
         </svg>
       </div>
       <div className={s.post__desc}>
-        <Image 
-        // src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"} 
-        src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
-
-        alt={"ava"} 
-        width={36}
-         height={36}
-          className={s.post__desc__ava} />
+        <Image
+          // src={data?.avatars ? data.avatars[0].url : "/img/home/post.png"}
+          src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
+          alt={"ava"}
+          width={36}
+          height={36}
+          className={s.post__desc__ava}
+        />
         <p className={s.post__text}>
           <span className={s.post__text__name}>{data?.userName} </span> <br />
           <span>{post.description}</span>

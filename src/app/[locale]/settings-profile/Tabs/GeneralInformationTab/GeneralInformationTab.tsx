@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import s from "../Tabs.module.scss";
 import Image from "next/image";
 import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
@@ -14,11 +14,14 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
   const t = useTranslations("SettingsProfilePage.GeneralInformationTab");
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
+  const [userBirthday, setUserBirthday] = useState("");
   const { data, isLoading, error } = useGetProfileQuery();
-
+  console.log(userBirthday);
   useEffect(() => {
     if (data?.avatars.length) {
       setLoadedAvatar(data?.avatars[0]?.url);
+      // @ts-ignore
+      setUserBirthday(data?.dateOfBirth);
     }
   }, [data]);
 
@@ -59,7 +62,7 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
             <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>{t("addBtn")}</TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
-            <SettingsForm userBirthday={data?.dateOfBirth} translate={t} />
+            <SettingsForm userBirthday={userBirthday} translate={t} />
           </div>
         </div>
       </Tabs.Content>

@@ -3,8 +3,10 @@ import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolk
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 
+export const baseUrl = "https://inctagram.work/api/v1/";
+
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "https://inctagram.work/api/v1/" /*"https://inctagram-api.vercel.app/api/"*/,
+  baseUrl,
   prepareHeaders: (headers, { getState }) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {

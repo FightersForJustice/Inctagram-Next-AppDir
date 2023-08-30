@@ -3,57 +3,74 @@ import Image from "next/image";
 import { Loader } from "@/components/Loader";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
-import { GetResponse } from "@/api/profile.api";
-import { PostsItem, useGetUserPostsQuery } from "@/api/posts.api";
+import { PostsItem, useLazyGetUserPostsQuery } from "@/api/posts.api";
+import { useScrollFetching } from "@/features/customHooks";
+import { toast } from "react-toastify";
+import { StatusCode } from "@/api/auth.api";
 
 type Props = {
-  userData: GetResponse;
   setOpen: (value: boolean) => void;
   setSelectedPost: (postId: number) => void;
-  getUserPosts: (postsAmount: number) => void;
+  getUserPosts: (value: number) => void;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, userData, getUserPosts }) => {
+export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, getUserPosts }) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(200);
+  const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
 
-  const { data, isLoading } = useGetUserPostsQuery({
-    idLastUploadedPost: lastLoadedPostId,
-    pageSize: 5,
-    pageNumber: currentPage + 1,
-    sortBy: "createdAt",
-    sortDirection: "desc",
-  });
+  const [getPosts, { isLoading }] = useLazyGetUserPostsQuery();
 
-  useEffect(() => {
-    if (data?.items) {
-      setPosts(data.items);
-    }
-  }, [data]);
-
-  /*  useEffect(() => {
-    if (fetching) {
+  const loadMorePosts = () => {
+    if (!isLoading) {
       getPosts({
         idLastUploadedPost: lastLoadedPostId,
-        pageSize: 5,
-        pageNumber: currentPage + 1,
+        pageSize: 12,
         sortBy: "createdAt",
         sortDirection: "desc",
       })
         .unwrap()
         .then((res) => {
           if (res?.items) {
-            setPosts(res.items);
-            setCurrentPage((prevState) => prevState + 1);
+            setPosts([...posts, ...res.items]);
+            setLastLoadedPostId(res.items[res.items.length - 1].id);
             setTotalCount(res.totalCount);
           }
         })
         .catch((err) => toast.error(err.error))
         .finally(() => setFetching(false));
     }
-  }, []);*/
+  };
+
+  useEffect(() => {
+    getPosts({
+      idLastUploadedPost: lastLoadedPostId!,
+      pageSize: 8,
+      sortBy: "createdAt",
+      sortDirection: "desc",
+    })
+      .unwrap()
+      .then((res) => {
+        setPosts(res.items);
+        setLastLoadedPostId(res.items[res.items.length - 1].id);
+        setTotalCount(res.totalCount);
+        getUserPosts(res.totalCount);
+      })
+      .catch((err) => {
+        if (err.statusCode === StatusCode.noAddress) {
+          toast.error("Error 404");
+        }
+        toast.error(err.error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (fetching && posts.length < totalCount) {
+      loadMorePosts();
+    }
+  }, [fetchingValue]);
 
   const openPostHandler = (postId: number) => {
     setOpen(true);
@@ -61,7 +78,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   const postsImages = () => {
-    return data?.items.map((i) => {
+    return posts.map((i) => {
       return (
         <Image
           src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}

@@ -65,11 +65,11 @@ export const postsApi = createApi({
     }),
     getAllPosts: builder.query<
       GetAllPosts,
-      { idLastUploadedPost: number; pageSize: number; pageNumber: number; sortBy: string; sortDirection: string }
+      { idLastUploadedPost: number; pageSize: number; sortBy: string; sortDirection: string }
     >({
-      query: ({ idLastUploadedPost, pageNumber, pageSize, sortBy, sortDirection }) => {
+      query: ({ idLastUploadedPost, pageSize, sortBy, sortDirection }) => {
         return {
-          url: `posts/all?pageSize=${pageSize}&pageNumber=${pageNumber}&idLastUploadedPost=${idLastUploadedPost}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
+          url: `posts/all/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
           method: "GET",
         };
       },
@@ -77,11 +77,11 @@ export const postsApi = createApi({
     }),
     getUserPosts: builder.query<
       GetAllPosts,
-      { idLastUploadedPost: number; pageSize: number; pageNumber: number; sortBy: string; sortDirection: string }
+      { idLastUploadedPost: number; pageSize: number; sortBy: string; sortDirection: string }
     >({
-      query: ({ idLastUploadedPost, pageNumber, pageSize, sortBy, sortDirection }) => {
+      query: ({ idLastUploadedPost, pageSize, sortBy, sortDirection }) => {
         return {
-          url: `posts/user?idLastUploadedPost=${idLastUploadedPost}&pageSize=${pageSize}&pageNumber=${pageNumber}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
+          url: `posts/user/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
           method: "GET",
         };
       },

@@ -1,10 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "../helpers/config";
+import { baseQueryWithReauth } from "@/helpers";
 
 export let profileApi = createApi({
   reducerPath: "profileApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Post"],
   endpoints: (builder) => ({
     putProfile: builder.mutation<any, PutProfileBody>({
       query: (profile: PutProfileBody) => {
@@ -24,7 +23,6 @@ export let profileApi = createApi({
           method: "GET",
         };
       },
-      providesTags: ["Post"],
     }),
     postProfileAvatar: builder.mutation<PostProfileAvatar, FormData>({
       query: (file: FormData) => {

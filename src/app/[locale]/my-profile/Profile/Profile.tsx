@@ -55,7 +55,6 @@ export const Profile: React.FC<Props> = ({
       </div>
       <div className={s.profile__posts}>
         <InfiniteScrollMyPosts
-          userData={userData}
           setOpen={setOpenPostModal}
           setSelectedPost={setSelectedPost}
           getUserPosts={getUserPosts}

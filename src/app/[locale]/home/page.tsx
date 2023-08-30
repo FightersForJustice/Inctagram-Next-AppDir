@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
 import { HomePagePost } from "./HomePagePost";
 import { PostsItem, useLazyGetAllPostsQuery } from "@/api/posts.api";
-import { useScrollFetching } from "@/features/hooks";
+import { useScrollFetching } from "@/features/customHooks";
 
 import s from "./Home.module.scss";
 import { StatusCode } from "@/api/auth.api";
@@ -16,18 +16,17 @@ const Home: React.FC = () => {
   const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetchingValue = useScrollFetching(100, fetching, setFetching);
   const [getPosts, { isLoading }] = useLazyGetAllPostsQuery();
+  const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
 
   const loadMorePosts = () => {
     if (!isLoading) {
       getPosts({
         idLastUploadedPost: lastLoadedPostId,
         pageSize: 5,
-        pageNumber: currentPage + 1,
         sortBy: "createdAt",
         sortDirection: "desc",
       })
@@ -36,7 +35,7 @@ const Home: React.FC = () => {
           if (res?.items) {
             setPosts([...posts, ...res.items]);
             setLastLoadedPostId(res.items[res.items.length - 1].id);
-            setCurrentPage(currentPage + 1);
+            setTotalCount(res.totalCount);
           }
         })
         .catch((err) => toast.error(err.error))
@@ -48,7 +47,6 @@ const Home: React.FC = () => {
     getPosts({
       idLastUploadedPost: lastLoadedPostId!,
       pageSize: 5,
-      pageNumber: currentPage + 1,
       sortBy: "createdAt",
       sortDirection: "desc",
     })
@@ -56,6 +54,7 @@ const Home: React.FC = () => {
       .then((res) => {
         setPosts(res.items);
         setLastLoadedPostId(res.items[res.items.length - 1].id);
+        setTotalCount(res.totalCount);
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
@@ -66,32 +65,12 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (fetching) {
+    if (fetching && posts.length < totalCount) {
       loadMorePosts();
     }
   }, [fetchingValue]);
 
   const allPosts = posts.map((item) => <HomePagePost key={item.id} post={item} />);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const wrapper = document.getElementById("wrapper");
-      if (wrapper) {
-        const scrolledHeight = window.innerHeight + window.scrollY;
-        const wrapperHeight = wrapper.clientHeight + wrapper.offsetTop;
-
-        if (scrolledHeight > wrapperHeight - 200) {
-          setFetching(true);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <>

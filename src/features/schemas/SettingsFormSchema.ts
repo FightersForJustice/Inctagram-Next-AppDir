@@ -1,13 +1,34 @@
 import * as yup from "yup";
 
 export const SettingsFormSchema = () => {
-  return yup
-    .object({
-      userName: yup.string().min(6).max(30).required(),
-      firstName: yup.string().max(15).required(),
-      lastName: yup.string().max(15).required(),
-      city: yup.string().max(15).nullable(),
-      aboutMe: yup.string().min(0).max(200).nullable(),
-    })
-    .required();
+  return yup.object({
+    userName: yup
+      .string()
+      .matches(/^[0-9A-Za-zА-Яа-я]+$/, "Недопустимые символы в имени пользователя")
+      .min(6, "Имя пользователя должно содержать минимум 6 символов")
+      .max(30, "Имя пользователя не должно превышать 30 символов")
+      .required("Имя пользователя обязательно для заполнения"),
+    firstName: yup
+      .string()
+      .matches(/^[A-Za-zА-Яа-я]+$/, "Имя пользователя может содержать только буквенные символы")
+      .min(1, "Имя должно содержать минимум 1 символ")
+      .max(50, "Имя не должно превышать 50 символов")
+      .required("Имя обязательно для заполнения"),
+    lastName: yup
+      .string()
+      .matches(/^[A-Za-zА-Яа-я]+$/, "Имя пользователя может содержать только буквенные символы")
+      .min(1, "Имя должно содержать минимум 1 символ")
+      .max(50, "Имя не должно превышать 50 символов")
+      .required("Имя обязательно для заполнения"),
+    city: yup.string().max(15, "Город не должен превышать 15 символов").nullable(),
+    aboutMe: yup
+      .string()
+      .matches(
+        /^[0-9A-Za-zА-Яа-я]*$/,
+        "Описание пользователя может содержать только буквенные символы, цифры и специальные символы",
+      )
+      .min(1, "Минимум 1 символ")
+      .max(200, "О себе не должно превышать 200 символов")
+      .nullable(),
+  });
 };

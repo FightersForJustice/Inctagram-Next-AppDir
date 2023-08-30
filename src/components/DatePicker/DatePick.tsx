@@ -7,19 +7,52 @@ import Image from "next/image";
 
 type Props = {
   setDate: (date: string) => void;
-  userBirthday: Date | undefined;
+  userBirthday: Date | string;
+  ageError: string | null;
+  setAgeError: (value: string) => void;
 };
 
-export const DatePick: React.FC<Props> = ({ setDate, userBirthday }) => {
+export const DatePick: React.FC<Props> = ({ setDate, userBirthday, ageError, setAgeError }) => {
   const datePickerRef = useRef<any>();
-  const [value, setValue] = useState<DateObject | DateObject[] | null>();
+
+  const [value, setValue] = useState<DateObject | DateObject[] | null>(
+    // @ts-ignore
+    userBirthday ? convertToReactDatePickerObject(userBirthday) : null,
+  );
+
+  function convertToReactDatePickerObject(dateString: string): DateObject {
+    const date = new Date(dateString);
+
+    const dateObject = new DateObject({
+      year: date.getUTCFullYear(),
+      month: date.getUTCMonth() + 1,
+      day: date.getUTCDate(),
+      hour: date.getUTCHours(),
+      minute: date.getUTCMinutes(),
+      second: date.getUTCSeconds(),
+    });
+
+    return dateObject;
+  }
 
   useEffect(() => {
     if (value) {
+      const selectedDate = new Date(value.toString());
+      const today = new Date();
+      const age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
+        // If the selected date's birthday hasn't occurred this year yet, decrease age by 1
+        setAgeError(age - 1 < 13 ? "A user under 13 cannot create a profile" : "");
+      } else {
+        setAgeError(age < 13 ? "A user under 13 cannot create a profile" : "");
+      }
+
       setDate(formatDate(value));
     }
   }, [value]);
-  console.log(value);
+
   function formatDate(date: DateObject | DateObject[] | null) {
     // @ts-ignore
     const formattedDate = new Date(date?.toDate?.().toString());
@@ -60,6 +93,7 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday }) => {
           height={24}
           className={s.datePicker__icon}
         />
+        {ageError && <p className={"text-red-600 text-[12px] absolute top-[40px] left-0"}>{ageError}</p>}
       </div>
     </>
   );

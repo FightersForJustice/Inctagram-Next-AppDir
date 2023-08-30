@@ -8,13 +8,12 @@ import { StatusCode } from "@/api/auth.api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
-import { GetDefaultValuesForm } from "@/utils";
+import { GetDefaultValuesForm, handleApiError } from "@/utils";
 import { SettingsFormSchema } from "@/features/schemas";
 import { SettingsFormItem } from "./SettingsFormItem";
-import { handleApiError } from "@/utils";
 
 type Props = {
-  userBirthday: Date | undefined;
+  userBirthday: Date | string;
   translate: any;
 };
 type FormValues = {
@@ -26,7 +25,9 @@ type FormValues = {
 };
 
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(userBirthday || "");
+  const [ageError, setAgeError] = useState("");
+
   const [updateProfile, { isLoading }] = usePutProfileMutation();
   const [getUserProfile, { error }] = useLazyGetProfileQuery();
 
@@ -40,7 +41,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
     resolver: yupResolver(SettingsFormSchema()),
     mode: "onTouched",
   });
-
+  console.log(dateOfBirth);
   const onSubmit = handleSubmit((data) => {
     let parts = dateOfBirth.split(".");
     let birthdayDate = new Date(+parts[2], +parts[1] - 1, +parts[0]);
@@ -113,7 +114,12 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
 
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("birthday")}</label>
-          <DatePick setDate={setDateOfBirth} userBirthday={userBirthday} />
+          <DatePick
+            setDate={setDateOfBirth}
+            userBirthday={userBirthday}
+            ageError={ageError}
+            setAgeError={setAgeError}
+          />
         </div>
 
         <SettingsFormItem
@@ -139,7 +145,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
         </div>
 
         <div className={s.form__btn} id={"settings-profile-btn-container"}>
-          <PrimaryBtn>{translate("saveBtn")}</PrimaryBtn>
+          <PrimaryBtn disabled={!!ageError}>{translate("saveBtn")}</PrimaryBtn>
         </div>
       </form>
       {isLoading && <Loader />}
