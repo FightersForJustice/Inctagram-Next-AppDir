@@ -5,6 +5,7 @@ import { postsApi } from "@/api/posts.api";
 import { subscriptionsApi } from "@/api/subscriptions.api";
 import { appReducer } from "./reducers/appReducer";
 import { authApi } from "@/api/auth.api";
+// import { postReducer } from "@/redux/reducers/postReducer";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [postsApi.reducerPath]: postsApi.reducer,
     [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
     app: appReducer,
+    // post: postReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([

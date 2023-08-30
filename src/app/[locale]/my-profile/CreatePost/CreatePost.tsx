@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { GetResponse } from "@/api/profile.api";
 import { FirstModal } from "./FirstModal";
@@ -23,6 +23,9 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 
+  useEffect(() => {
+    console.log(loadedImages);
+  }, [loadedImages]);
   const showSecondModal = () => {
     setThird(false);
     setFourth(false);
@@ -67,6 +70,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
       )}
       {third && (
         <ThirdModal
+          loadedImages={loadedImages}
           showSecondModal={showSecondModal}
           showFourthModal={showFourthModal}
           aspectRatio={aspectRatio}

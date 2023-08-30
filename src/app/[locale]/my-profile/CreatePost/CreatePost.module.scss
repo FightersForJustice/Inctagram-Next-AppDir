@@ -79,6 +79,8 @@
 
   &__filters {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
     gap: 54px;
     max-height: 504px;
 
@@ -110,6 +112,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      width: 100%;
     }
 
     &__image {
@@ -176,3 +179,4 @@
   }
 
 }
+

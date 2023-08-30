@@ -59,6 +59,7 @@ export const SecondModal: React.FC<Props> = ({
 
         <PostCropper
           postImage={postImage}
+          //@ts-ignore
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}

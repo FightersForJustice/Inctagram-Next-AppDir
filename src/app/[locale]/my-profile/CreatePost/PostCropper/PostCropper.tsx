@@ -1,18 +1,19 @@
-import React, { useRef } from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { AspectRatioType } from "../CreatePost";
 
 type Props = {
   postImage: string;
-  aspectRatio: AspectRatioType;
+  aspectRatio: number;
   zoomValue: string;
   setCroppedPostImage: (value: string) => void;
 };
 
 export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio, setCroppedPostImage }) => {
   const cropperRef = useRef<ReactCropperElement>(null);
-
+  const [ratio, setRatio] = useState(1 / 1);
   const onCropEnd = () => {
     const cropper = cropperRef.current?.cropper;
     setCroppedPostImage(cropper?.getCroppedCanvas().toDataURL()!);
@@ -30,8 +31,8 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio
         guides={false}
         ref={cropperRef}
         initialAspectRatio={1}
-        aspectRatio={1}
-        //zoomTo={+zoomValue / 100}
+        aspectRatio={aspectRatio}
+        // zoomTo={+zoomValue / 100}
         cropend={onCropEnd}
       />
     </>
