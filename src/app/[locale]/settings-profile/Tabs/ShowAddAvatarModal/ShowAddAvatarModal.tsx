@@ -14,6 +14,7 @@ type Props = {
   setCroppedAvatar: (value: string) => void;
   onSaveUserAvatar: () => void;
   onSetUserAvatar: (e: ChangeEvent<HTMLInputElement>) => void;
+  fileError: string;
 };
 
 const DynamicCropper = dynamic(() => import("../Cropper/Cropper"), {
@@ -28,6 +29,7 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
   onSetUserAvatar,
   onCloseModal,
   t,
+  fileError,
 }) => {
   return (
     <Modal title={t("AddPhotoModal.title")} onClose={onCloseModal} width={"492px"} isOkBtn={false}>
@@ -37,13 +39,18 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
             <DynamicCropper setUserAvatar={setUserAvatar} userAvatar={userAvatar} setCroppedAvatar={setCroppedAvatar} />
           </div>
         ) : (
-          <Image
-            src={"/img/settings-profile/modal-img.png"}
-            alt={"modal-img"}
-            width={222}
-            height={228}
-            className={s.modal__img}
-          />
+          <div className={"relative"}>
+            <Image
+              src={"/img/settings-profile/modal-img.png"}
+              alt={"modal-img"}
+              width={222}
+              height={228}
+              className={s.modal__img}
+            />
+            {fileError && (
+              <p className={"absolute top-[106%] right-0 text-center w-[100%] text-red-600 text-[15px]"}>{fileError}</p>
+            )}
+          </div>
         )}
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
@@ -51,7 +58,7 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
           </div>
         ) : (
           <div className={s.wrapper__loadZone}>
-            <input type="file" className={s.wrapper__inputFile} onChange={onSetUserAvatar} />
+            <input type="file" className={s.wrapper__inputFile} onChange={onSetUserAvatar} accept=".jpg, .jpeg, .png" />
             <div className={s.wrapper__overlay}>
               <TransparentBtn>{t("AddPhotoModal.selectBtn")}</TransparentBtn>
             </div>

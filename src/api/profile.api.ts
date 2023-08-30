@@ -70,7 +70,7 @@ export type PutProfileBody = {
   firstName: string | null | undefined;
   lastName: string | null | undefined;
   city: string | null | undefined;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   aboutMe: string | undefined | null;
 };
 
@@ -80,7 +80,7 @@ export interface GetResponse {
   firstName: string;
   lastName: string;
   city: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   aboutMe: string;
   avatars: Avatar[];
 }

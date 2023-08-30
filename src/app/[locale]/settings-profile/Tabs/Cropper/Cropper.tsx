@@ -10,12 +10,12 @@ type Props = {
 const Cropper: React.FC<Props> = ({ setCroppedAvatar, userAvatar, setUserAvatar }) => {
   return (
     <Avatar
-      width={316}
-      height={316}
+      width={350}
+      height={350}
       onCrop={(preview) => setCroppedAvatar(preview)}
       onClose={() => setUserAvatar("")}
-      imageWidth={400}
-      imageHeight={400}
+      imageWidth={350}
+      imageHeight={350}
       src={userAvatar}
     />
   );

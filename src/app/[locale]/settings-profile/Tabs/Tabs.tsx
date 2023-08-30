@@ -19,6 +19,7 @@ const TabsDemo = () => {
   const [croppedAvatar, setCroppedAvatar] = useState("");
   const [loadedAvatar, setLoadedAvatar] = useState("");
   const [file, setFile] = useState<File>();
+  const [fileError, setFileError] = useState("");
 
   const [saveAvatar, { isLoading }] = usePostProfileAvatarMutation();
   const [getUserProfile] = useLazyGetProfileQuery();
@@ -26,13 +27,25 @@ const TabsDemo = () => {
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    setFile(file);
-    setUserAvatar(URL.createObjectURL(file));
+
+    // Check for 10mb size of photo
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size <= maxSize) {
+      if (file.type === "image/jpeg" || file.type === "image/png") {
+        setFile(file);
+        setUserAvatar(URL.createObjectURL(file));
+      } else {
+        setFileError("Only .JPEG and .PNG format");
+      }
+    } else {
+      setFileError("Max size of photo 10 Mb");
+    }
   };
 
   const onCloseModal = () => {
     setUserAvatar("");
     setShowAddAvatarModal(false);
+    setFileError("");
   };
 
   const onSaveUserAvatar = () => {
@@ -89,6 +102,7 @@ const TabsDemo = () => {
           setCroppedAvatar={setCroppedAvatar}
           onSaveUserAvatar={onSaveUserAvatar}
           onSetUserAvatar={onSetUserAvatar}
+          fileError={fileError}
         />
       )}
       {isLoading && <Loader />}

@@ -4,10 +4,11 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 
 import s from "./DatePick.module.scss";
 import Image from "next/image";
+import { convertToReactDatePickerObject } from "@/utils";
 
 type Props = {
   setDate: (date: string) => void;
-  userBirthday: Date | string;
+  userBirthday: string;
   ageError: string | null;
   setAgeError: (value: string) => void;
 };
@@ -16,24 +17,8 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday, ageError, set
   const datePickerRef = useRef<any>();
 
   const [value, setValue] = useState<DateObject | DateObject[] | null>(
-    // @ts-ignore
     userBirthday ? convertToReactDatePickerObject(userBirthday) : null,
   );
-
-  function convertToReactDatePickerObject(dateString: string): DateObject {
-    const date = new Date(dateString);
-
-    const dateObject = new DateObject({
-      year: date.getUTCFullYear(),
-      month: date.getUTCMonth() + 1,
-      day: date.getUTCDate(),
-      hour: date.getUTCHours(),
-      minute: date.getUTCMinutes(),
-      second: date.getUTCSeconds(),
-    });
-
-    return dateObject;
-  }
 
   useEffect(() => {
     if (value) {
@@ -70,7 +55,9 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday, ageError, set
           value={userBirthday}
           onChange={setValue}
           ref={datePickerRef}
+          format={"DD.MM.YYYY"}
           className={"bg-dark"}
+          editable={false}
           style={{
             background: "var(--dark-900)",
             border: "1px solid var(--dark-300)",

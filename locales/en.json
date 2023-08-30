@@ -134,6 +134,34 @@
       "addBtn": "Add a profile photo",
       "saveBtn": "Save changes"
     },
+    "SettingsFormSchema": {
+      "userName": {
+        "matches": "Invalid characters in username",
+        "min": "Username must contain at least 6 characters",
+        "max": "Username must not exceed 30 characters",
+        "required": "Username is required"
+      },
+      "firstName": {
+        "matches": "Username can only contain alphabetic characters",
+        "min": "Name must contain at least 1 character",
+        "max": "Name must not exceed 50 characters",
+        "required": "Username is required"
+      },
+      "lastName": {
+        "matches": "Username can only contain alphabetic characters",
+        "min": "The name must contain at least 1 character",
+        "max": "The name must not exceed 50 characters",
+        "required": "Username is required"
+      },
+      "city": {
+        "max": "City must not exceed 15 characters"
+      },
+      "aboutMe": {
+        "matches": "User description can only contain alphabetic characters, numbers and special characters",
+        "min": "Minimum 1 character",
+        "max": "About yourself should not exceed 200 characters"
+      }
+    },
     "DevicesTab": {
       "titleTab": "Devices",
       "title": "This device",

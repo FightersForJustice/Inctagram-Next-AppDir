@@ -13,7 +13,7 @@ import { SettingsFormSchema } from "@/features/schemas";
 import { SettingsFormItem } from "./SettingsFormItem";
 
 type Props = {
-  userBirthday: Date | string;
+  userBirthday: string;
   translate: any;
 };
 type FormValues = {
@@ -25,7 +25,7 @@ type FormValues = {
 };
 
 export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
-  const [dateOfBirth, setDateOfBirth] = useState(userBirthday || "");
+  const [dateOfBirth, setDateOfBirth] = useState(userBirthday);
   const [ageError, setAgeError] = useState("");
 
   const [updateProfile, { isLoading }] = usePutProfileMutation();
@@ -41,9 +41,8 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
     resolver: yupResolver(SettingsFormSchema()),
     mode: "onTouched",
   });
-  console.log(dateOfBirth);
+
   const onSubmit = handleSubmit((data) => {
-    // @ts-ignore
     let parts = dateOfBirth.split(".");
     let birthdayDate = new Date(+parts[2], +parts[1] - 1, +parts[0]);
 
@@ -52,7 +51,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
       firstName: data.firstName,
       lastName: data.lastName,
       city: data.city,
-      dateOfBirth: birthdayDate,
+      dateOfBirth: dateOfBirth ? String(birthdayDate) : userBirthday,
       aboutMe: data.aboutMe,
     };
 

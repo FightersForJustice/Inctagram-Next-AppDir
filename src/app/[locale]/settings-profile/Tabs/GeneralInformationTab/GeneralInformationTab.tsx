@@ -16,11 +16,11 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
   const [userBirthday, setUserBirthday] = useState("");
   const { data, isLoading, error } = useGetProfileQuery();
-  console.log(userBirthday);
+
   useEffect(() => {
     if (data?.avatars.length) {
       setLoadedAvatar(data?.avatars[0]?.url);
-      // @ts-ignore
+
       setUserBirthday(data?.dateOfBirth);
     }
   }, [data]);
