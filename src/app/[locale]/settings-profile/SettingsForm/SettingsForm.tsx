@@ -43,6 +43,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
   });
   console.log(dateOfBirth);
   const onSubmit = handleSubmit((data) => {
+    // @ts-ignore
     let parts = dateOfBirth.split(".");
     let birthdayDate = new Date(+parts[2], +parts[1] - 1, +parts[0]);
 
