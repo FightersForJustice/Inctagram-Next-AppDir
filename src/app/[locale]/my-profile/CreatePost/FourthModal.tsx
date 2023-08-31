@@ -6,9 +6,10 @@ import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType } from "./CreatePost";
+import { AspectRatioType, ImageType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
-import { CreatePostRequest } from "@/api/posts.api";
+import { Carousel } from "@/app/[locale]/my-profile/CreatePost/Carousel";
+import { SwiperSlide } from "swiper/react";
 
 type Props = {
   showThirdModal: () => void;
@@ -18,6 +19,7 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
   userData: GetResponse;
+  loadedImages: ImageType[];
 };
 
 export const FourthModal: React.FC<Props> = ({
@@ -28,6 +30,7 @@ export const FourthModal: React.FC<Props> = ({
   setShowCreatePostModal,
   croppedPostImage,
   userData,
+  loadedImages,
 }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
@@ -79,6 +82,7 @@ export const FourthModal: React.FC<Props> = ({
       });
   };
 
+  console.log(loadedImages);
   return (
     <>
       <FiltersModal
@@ -91,18 +95,22 @@ export const FourthModal: React.FC<Props> = ({
       >
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
-            <Image
-              src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
-              alt={"image"}
-              width={480}
-              height={504}
-              style={{
-                aspectRatio: aspectRatio.replace(":", "/"),
-                maxHeight: "504px",
-                filter: activeFilter,
-                transform: `scale(${+zoomValue / 10})`,
-              }}
-            />
+            <Carousel>
+              {loadedImages.map((i) => {
+                return (
+                  <SwiperSlide key={i.image} className={"w-full"}>
+                    <Image
+                      src={i.image}
+                      alt={"image"}
+                      width={490}
+                      height={503}
+                      style={{ filter: activeFilter }}
+                      className={s.cropping__filters__image}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Carousel>
           </div>
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>

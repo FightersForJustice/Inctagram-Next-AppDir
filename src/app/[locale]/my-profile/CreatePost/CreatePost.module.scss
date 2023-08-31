@@ -130,6 +130,9 @@
   &__publication {
     display: flex;
     gap: 54px;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
 
     &__header {
       display: flex;
@@ -171,10 +174,11 @@
 
     &__box {
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       height: 480px;
       overflow: hidden;
+      width: 100%;
     }
   }
 

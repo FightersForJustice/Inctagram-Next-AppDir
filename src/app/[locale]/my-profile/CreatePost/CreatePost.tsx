@@ -84,6 +84,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
       )}
       {fourth && (
         <FourthModal
+          loadedImages={loadedImages}
           showThirdModal={showThirdModal}
           aspectRatio={aspectRatio}
           activeFilter={activeFilter}

@@ -5,11 +5,9 @@ import { FiltersModal } from "@/components/Modals/FiltersModal";
 import { filters } from "@/features/data";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType, ImageType } from "./CreatePost";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { SwiperSlide } from "swiper/react";
+
+import { Carousel } from "@/app/[locale]/my-profile/CreatePost/Carousel";
 
 type Props = {
   showSecondModal: () => void;
@@ -97,16 +95,7 @@ export const ThirdModal: React.FC<Props> = ({
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
-            <Swiper
-              modules={[Navigation, Pagination, A11y]}
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
-              className={"w-full"}
-            >
+            <Carousel>
               {loadedImages.map((i) => {
                 return (
                   <SwiperSlide key={i.image} className={"w-full"}>
@@ -124,7 +113,7 @@ export const ThirdModal: React.FC<Props> = ({
                   </SwiperSlide>
                 );
               })}
-            </Swiper>
+            </Carousel>
           </div>
           <div className={s.cropping__filters__items}>
             {filters.map((item, index) => {
