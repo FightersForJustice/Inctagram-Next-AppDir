@@ -26,7 +26,7 @@ export const SettingsFormSchema = () => {
     city: yup.string().max(15, t("city.max")).nullable(),
     aboutMe: yup
       .string()
-      .matches(/^[0-9A-Za-zА-Яа-я]*$/, t("aboutMe.matches"))
+      .matches(/^(?!.*\s\s)[0-9A-Za-zА-Яа-я\s]*[0-9A-Za-zА-Яа-я]$/, t("aboutMe.matches"))
       .min(1, t("aboutMe.min"))
       .max(200, t("aboutMe.max"))
       .nullable(),

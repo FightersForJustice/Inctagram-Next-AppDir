@@ -197,7 +197,7 @@ export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData })
         <LogoutBtn btnCallback={setShowLogoutModal} t={t} />
       </nav>
       {showLogoutModal && (
-        <Modal width={"450px"} title={t("LogoutModal.question")} onClose={() => setShowLogoutModal(false)}>
+        <Modal width={"450px"} title={t("LogoutModal.title")} onClose={() => setShowLogoutModal(false)}>
           {t("LogoutModal.question")} <strong>{`"${userEmail}"`}</strong>?
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>{t("LogoutModal.btnYes")}</TransparentBtn>

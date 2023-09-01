@@ -30,7 +30,7 @@ const SignInPage = () => {
     }
   }, [data]);
 
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
       loginWithGoogle({ code: codeResponse.code })
@@ -40,7 +40,7 @@ const SignInPage = () => {
         })
         .catch((err) => toast.error(err));
     },
-    onError: (errorResponse) => console.log(errorResponse),
+    onError: (errorResponse) => toast.error(errorResponse.error),
   });
 
   return (
@@ -49,7 +49,7 @@ const SignInPage = () => {
         <p className={"pt-[23px]"}>{t("title")}</p>
         <div className={"flex gap-[60px] justify-center mt-[13px]"}>
           <Image
-            onClick={() => login()}
+            onClick={googleLogin}
             className={"cursor-pointer"}
             src={"/img/google.svg"}
             alt={"google-icon"}

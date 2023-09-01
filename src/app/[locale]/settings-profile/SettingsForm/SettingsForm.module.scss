@@ -93,7 +93,11 @@
     position: absolute;
     bottom: -15px;
     left: 0;
-    font-size: 12px;
+    font-size: 11px;
+
+    &__bottom {
+      bottom: -24px;
+    }
   }
 
   &__itemWrapper {

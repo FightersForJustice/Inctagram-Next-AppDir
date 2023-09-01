@@ -4,7 +4,7 @@ import * as yup from "yup";
 export const CreateNewPasswordFormSchema = () => {
   const t = useTranslations("Errors");
 
-  const passwordValidationRegex = /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]+$/;
+  const passwordValidationRegex = /^[A-Za-z0-9!"@#$%^&*'()_+{}\[\]:;<>,.?~\-=/\\|]+$/;
 
   return yup
     .object({
@@ -31,6 +31,3 @@ export const CreateNewPasswordFormSchema = () => {
 
     .required();
 };
-
-
-

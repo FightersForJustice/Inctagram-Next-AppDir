@@ -141,7 +141,15 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
             {...register("aboutMe", { required: true, minLength: 10, maxLength: 100 })}
             className={`${errors.aboutMe ? s.form__textarea__error : s.form__textarea}`}
           />
-          {errors.aboutMe && <p className={s.form__textareaError}>{errors.aboutMe.message}</p>}
+          {errors.aboutMe && (
+            <p
+              className={`${s.form__textareaError} ${
+                errors.aboutMe.message?.length! > 90 ? `${s.form__textareaError__bottom}` : ""
+              } `}
+            >
+              {errors.aboutMe.message}
+            </p>
+          )}
         </div>
 
         <div className={s.form__btn} id={"settings-profile-btn-container"}>

@@ -14,8 +14,6 @@ const Cropper: React.FC<Props> = ({ setCroppedAvatar, userAvatar, setUserAvatar 
       height={350}
       onCrop={(preview) => setCroppedAvatar(preview)}
       onClose={() => setUserAvatar("")}
-      imageWidth={350}
-      imageHeight={350}
       src={userAvatar}
     />
   );

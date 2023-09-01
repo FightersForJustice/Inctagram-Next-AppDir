@@ -34,11 +34,12 @@ export const SignUpFormSchema = () => {
               return (
                 emailDomainRegex.test(subdomain) &&
                 emailDomainRegex.test(domainParts[domainParts.length - 1]) &&
-                fullDomain.includes(".") && //??
+                fullDomain.includes(".") &&
                 !local.includes("..") &&
                 !fullDomain.includes("..") &&
                 subdomain.trim() !== "" &&
-                emailSubdomainRegex.test(subdomain)
+                emailSubdomainRegex.test(subdomain) &&
+                !value.includes(",") // Добавляем проверку на запятые
               );
             }
           }
@@ -55,7 +56,7 @@ export const SignUpFormSchema = () => {
       password: yup
         .string()
         .required(t("password.required"))
-        .test("not-spaces", t("password.spaces"), (value) => {      
+        .test("not-spaces", t("password.spaces"), (value) => {
           return value.trim() !== "" && !/\s/.test(value);
         })
         .min(6, t("password.min"))
