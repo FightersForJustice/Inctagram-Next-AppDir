@@ -14,46 +14,50 @@ type Props = {
 };
 
 export const DatePick: React.FC<Props> = ({ setDate, userBirthday, ageError, setAgeError }) => {
-  const datePickerRef = useRef<any>();
+  // @ts-ignore
+  const datePickerRef = useRef<DatePicker | null>(null);
 
   const [value, setValue] = useState<DateObject | DateObject[] | null>(
     userBirthday ? convertToReactDatePickerObject(userBirthday) : null,
   );
 
   useEffect(() => {
-    if (value) {
-      const selectedDate = new Date(value.toString());
-      const today = new Date();
-      const age = today.getFullYear() - selectedDate.getFullYear();
-      const monthDiff = today.getMonth() - selectedDate.getMonth();
+    function checkAge(date: DateObject | DateObject[] | null) {
+      if (date) {
+        // @ts-ignore
+        const birthDate = new Date(date.toDate().toString());
+        const today = new Date();
+        const ageYears = today.getFullYear() - birthDate.getFullYear();
+        const ageMonths = today.getMonth() - birthDate.getMonth();
 
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < selectedDate.getDate())) {
-        // If the selected date's birthday hasn't occurred this year yet, decrease age by 1
-        setAgeError(age - 1 < 13 ? "A user under 13 cannot create a profile" : "");
-      } else {
-        setAgeError(age < 13 ? "A user under 13 cannot create a profile" : "");
+        // check age for 13 y.o.
+        if (ageYears < 13 || (ageYears === 13 && ageMonths < 0)) {
+          setAgeError("You must be over 13 years old");
+        } else {
+          setAgeError("");
+        }
       }
-
-      setDate(formatDate(value));
     }
-  }, [value]);
 
-  function formatDate(date: DateObject | DateObject[] | null) {
-    // @ts-ignore
-    const formattedDate = new Date(date?.toDate?.().toString());
-    const day = ("0" + formattedDate.getDate()).slice(-2);
-    const month = ("0" + (formattedDate.getMonth() + 1)).slice(-2);
-    const year = formattedDate.getFullYear();
-
-    return `${day}.${month}.${year}`;
-  }
+    checkAge(value);
+  }, [value, setAgeError]);
 
   return (
     <>
       <div className={s.datePicker__wrapper}>
         <DatePicker
-          value={userBirthday}
-          onChange={setValue}
+          value={userBirthday ? userBirthday : value}
+          onChange={(e) => {
+            if (e instanceof DateObject) {
+              const formattedDate = e.format("DD.MM.YYYY");
+              setDate(formattedDate);
+            } else if (typeof e === "string") {
+              setDate(e);
+            } else {
+              setDate("");
+            }
+            setValue(e);
+          }}
           ref={datePickerRef}
           format={"DD.MM.YYYY"}
           className={"bg-dark"}

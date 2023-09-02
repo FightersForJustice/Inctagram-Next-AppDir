@@ -11,9 +11,12 @@ import { Loader } from "@/components/Loader";
 import { GetDefaultValuesForm, handleApiError } from "@/utils";
 import { SettingsFormSchema } from "@/features/schemas";
 import { SettingsFormItem } from "./SettingsFormItem";
+import CitySelector from "@/app/[locale]/settings-profile/SettingsForm/CitySelector/CitySelector";
 
 type Props = {
   userBirthday: string;
+  userCity: string;
+  setUserCity: (city: string) => void;
   translate: any;
 };
 type FormValues = {
@@ -24,7 +27,7 @@ type FormValues = {
   aboutMe: string | null | undefined;
 };
 
-export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
+export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCity, setUserCity }) => {
   const [dateOfBirth, setDateOfBirth] = useState(userBirthday);
   const [ageError, setAgeError] = useState("");
 
@@ -50,7 +53,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
       userName: data.userName,
       firstName: data.firstName,
       lastName: data.lastName,
-      city: data.city,
+      city: userCity,
       dateOfBirth: dateOfBirth ? String(birthdayDate) : userBirthday,
       aboutMe: data.aboutMe,
     };
@@ -122,16 +125,14 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate }) => {
           />
         </div>
 
-        <SettingsFormItem
+        <CitySelector
           translate={translate}
-          id={"settings-profile-city"}
-          register={register}
+          translateName={"city"}
           error={errors.city}
           errorMessage={errors?.city?.message}
-          registerName={"city"}
-          translateName={"city"}
-          minLength={3}
-          maxLength={20}
+          id={"settings-profile-city"}
+          userCity={userCity}
+          setUserCity={setUserCity}
         />
 
         <div className={s.form__itemWrapper}>

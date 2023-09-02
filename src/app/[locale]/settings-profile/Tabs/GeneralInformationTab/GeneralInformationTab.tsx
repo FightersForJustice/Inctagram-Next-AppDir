@@ -15,13 +15,16 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
   const [userBirthday, setUserBirthday] = useState("");
+  const [userCity, setUserCity] = useState("");
+
   const { data, isLoading, error } = useGetProfileQuery();
 
   useEffect(() => {
-    if (data?.avatars.length) {
+    if (data) {
       setLoadedAvatar(data?.avatars[0]?.url);
 
       setUserBirthday(data?.dateOfBirth);
+      setUserCity(data?.city);
     }
   }, [data]);
 
@@ -62,7 +65,7 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
             <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>{t("addBtn")}</TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
-            <SettingsForm userBirthday={userBirthday} translate={t} />
+            <SettingsForm userBirthday={userBirthday} userCity={userCity} setUserCity={setUserCity} translate={t} />
           </div>
         </div>
       </Tabs.Content>
