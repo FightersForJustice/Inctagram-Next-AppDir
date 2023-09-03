@@ -7,7 +7,7 @@ import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType, ImageType } from "./CreatePost";
 import { SwiperSlide } from "swiper/react";
 
-import { Carousel } from "@/app/[locale]/my-profile/CreatePost/Carousel";
+import { Carousel } from "@/components/Carousel/Carousel";
 
 type Props = {
   showSecondModal: () => void;

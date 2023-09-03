@@ -8,7 +8,7 @@ import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType, ImageType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
-import { Carousel } from "@/app/[locale]/my-profile/CreatePost/Carousel";
+import { Carousel } from "@/components/Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
 
 type Props = {
