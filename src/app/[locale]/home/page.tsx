@@ -70,7 +70,7 @@ const Home: React.FC = () => {
     }
   }, [fetchingValue]);
 
-  const allPosts = posts.map((item) => <HomePagePost key={item.id} post={item} />);
+  const allPosts = posts.map((item, index) => <HomePagePost key={item.id} post={item} images={posts[index].images} />);
 
   return (
     <>

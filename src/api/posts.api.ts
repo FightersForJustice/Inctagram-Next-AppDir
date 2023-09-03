@@ -103,7 +103,7 @@ export const {
   useLazyGetUserPostsQuery,
 } = postsApi;
 
-type Image = {
+export type ImageType = {
   url: string;
   width: number;
   height: number;
@@ -112,7 +112,7 @@ type Image = {
 };
 
 export type UploadImageResponse = {
-  images: Image[];
+  images: ImageType[];
 };
 
 export type CreatePostRequest = {
@@ -128,7 +128,7 @@ export type PostResponse = {
   id: number;
   description: string;
   location: string;
-  images: Image[];
+  images: ImageType[];
   createdAt: string;
   updatedAt: string;
 };
@@ -137,7 +137,7 @@ export type PostsItem = {
   id: number;
   description: string;
   location: string;
-  images: Image[];
+  images: ImageType[];
   createdAt: string;
   updatedAt: string;
 };
