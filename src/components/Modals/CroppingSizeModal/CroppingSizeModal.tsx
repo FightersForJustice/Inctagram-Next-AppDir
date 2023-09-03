@@ -14,7 +14,12 @@ export const CroppingSizeModal: React.FC<Props> = ({ setAspectRatio, aspectRatio
   return (
     <div className={s.cropping__size}>
       <div className={s.cropping__items}>
-        <div className={s.cropping__item} onClick={() => setAspectRatio(AspectRatioType.one)}>
+        <div
+          className={s.cropping__item}
+          onClick={() => {
+            setAspectRatio(AspectRatioType.one);
+          }}
+        >
           <p
             className={`${aspectRatio === AspectRatioType.one ? `${s.cropping__text__active}` : `${s.cropping__text}`}`}
           >

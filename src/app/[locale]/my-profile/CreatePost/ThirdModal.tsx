@@ -4,7 +4,10 @@ import Image from "next/image";
 import { FiltersModal } from "@/components/Modals/FiltersModal";
 import { filters } from "@/features/data";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType } from "./CreatePost";
+import { AspectRatioType, ImageType } from "./CreatePost";
+import { SwiperSlide } from "swiper/react";
+
+import { Carousel } from "@/app/[locale]/my-profile/CreatePost/Carousel";
 
 type Props = {
   showSecondModal: () => void;
@@ -16,9 +19,11 @@ type Props = {
   file: File;
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
+  loadedImages: ImageType[];
 };
 
 export const ThirdModal: React.FC<Props> = ({
+  loadedImages,
   showSecondModal,
   showFourthModal,
   aspectRatio,
@@ -71,6 +76,8 @@ export const ThirdModal: React.FC<Props> = ({
     }
   };
 
+  const slides = Array.from({ length: 1000 }).map((el, index) => `Slide ${index + 1}`);
+
   return (
     <>
       <FiltersModal
@@ -88,15 +95,25 @@ export const ThirdModal: React.FC<Props> = ({
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
-            <Image
-              src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
-              alt={"image"}
-              width={490}
-              height={503}
-              style={{ filter: activeFilter }}
-              className={s.cropping__filters__image}
-              ref={changedPostImage}
-            />
+            <Carousel>
+              {loadedImages.map((i) => {
+                return (
+                  <SwiperSlide key={i.image} className={"w-full"}>
+                    {/*<img src={i.image} alt="alt" style={{ filter: activeFilter }} />*/}
+                    <Image
+                      // src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
+                      src={i.image}
+                      alt={"image"}
+                      width={490}
+                      height={503}
+                      style={{ filter: activeFilter, margin: "auto" }}
+                      className={s.cropping__filters__image}
+                      ref={changedPostImage}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Carousel>
           </div>
           <div className={s.cropping__filters__items}>
             {filters.map((item, index) => {

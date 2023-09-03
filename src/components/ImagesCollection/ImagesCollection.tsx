@@ -24,7 +24,6 @@ export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImage
       setPostImage("");
     }
   };
-
   return (
     <div className={s.collection__container}>
       <Image
