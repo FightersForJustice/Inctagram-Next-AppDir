@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import s from "../CreatePost.module.scss";
 import { CroppingModal } from "@/components/Modals/CroppingModal";
 import { AspectRatio } from "./AspectRatio";

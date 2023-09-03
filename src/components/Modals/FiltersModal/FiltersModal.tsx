@@ -6,6 +6,8 @@ import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
 import { applyImageFilter } from "../../../utils/applyImageFilter";
 import { dataURLToBlob } from "blob-util";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/postReducer";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -24,7 +26,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   zoomValue,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
-
+  const dispatch = useAppDispatch();
   const onSendPostImage = () => {
     const photoEditingBeforeSending = applyImageFilter(
       changedPostImage?.current,
@@ -34,19 +36,22 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
     );
 
     if (file) {
-      const formData = new FormData();
-      formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);
+      file.map((file) => {
+        const formData = new FormData();
+        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);
+        uploadPostImage(formData)
+          .unwrap()
+          .then((res) => {
+            dispatch(postActions.addImageId(res.images[0]));
+            localStorage.setItem("uploadId", [res.images[0].uploadId].toString());
 
-      uploadPostImage(formData)
-        .unwrap()
-        .then((res) => {
-          localStorage.setItem("uploadId", res.images[0].uploadId);
-          showFourthModal?.();
-          toast.success("Post image uploaded");
-        })
-        .catch((err) => {
-          toast.error("Error");
-        });
+            showFourthModal?.();
+            toast.success("Post image uploaded");
+          })
+          .catch((err) => {
+            toast.error("Error");
+          });
+      });
     }
   };
 
@@ -86,7 +91,7 @@ type Props = {
   buttonName: string;
   showSecondModal?: () => void;
   showFourthModal?: () => void;
-  file?: File;
+  file?: File[];
   onPublishPost?: () => void;
   onDeletePostImage?: () => void;
   changedPostImage?: MutableRefObject<any>;

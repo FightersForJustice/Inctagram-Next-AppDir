@@ -8,12 +8,14 @@ import Image from "next/image";
 
 type Props = {
   setPostImage: (value: string) => void;
-  setFile: (file: File) => void;
+  setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
   setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
   loadedImages: ImageType[];
+  currentFile?: File[];
 };
 export const FirstModal: React.FC<Props> = ({
+  currentFile,
   setPostImage,
   setFile,
   setShowCreatePostModal,
@@ -24,7 +26,12 @@ export const FirstModal: React.FC<Props> = ({
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    setFile(file);
+    if (currentFile) {
+      setFile([...currentFile, file]);
+    } else {
+      setFile([file]);
+    }
+
     setPostImage(URL.createObjectURL(file));
     setLoadedImages([...loadedImages, { id, image: URL.createObjectURL(file) }]);
   };

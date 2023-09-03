@@ -10,6 +10,7 @@ import { AspectRatioType, ImageType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
+import { useAppSelector } from "@/redux/hooks/useSelect";
 
 type Props = {
   showThirdModal: () => void;
@@ -35,7 +36,7 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-
+  const imagesIds = useAppSelector((state) => state.post.postImagesIds);
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
 
@@ -46,17 +47,9 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = () => {
-    const uploadId = sessionStorage.getItem("uploadId");
-    let value;
-    try {
-      value = uploadId ? JSON.parse(uploadId ?? "") : [{ uploadId: "" }];
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-    }
-
     createPost({
       description: textareaValue,
-      childrenMetadata: value,
+      childrenMetadata: imagesIds,
     })
       .unwrap()
       .then(() => {

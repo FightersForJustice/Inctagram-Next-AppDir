@@ -16,7 +16,7 @@ type Props = {
   setActiveFilter: (value: string) => void;
   activeFilter: string;
   zoomValue: string;
-  file: File;
+  file: File[];
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
   loadedImages: ImageType[];

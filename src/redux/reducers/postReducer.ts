@@ -1,31 +1,32 @@
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-//
-// const initialAppState: postStateType = {
-//   postImages: [],
-// };
-//
-// interface Images {
-//   headerText: string | null;
-//   subText: string;
-//   image: string;
-// }
-// const slice = createSlice({
-//   name: "postReducer",
-//   initialState: initialAppState,
-//   reducers: {
-//     addImage(state, action: PayloadAction<{ image: string; subText: string; headerText: string }>) {
-//       state.postImages.push(action.payload);
-//     },
-//   },
-// });
-//
-// export const postReducer = slice.reducer;
-// export const postActions = slice.actions;
-//
-// export type UserID = number | null;
-// export type Email = string | null;
-// export type UserName = string | null;
-//
-// export type postStateType = {
-//   postImages: Images[];
-// };
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+
+const initialAppState: postStateType = {
+  postImagesIds: [],
+  postImages: [],
+};
+
+const slice = createSlice({
+  name: "postReducer",
+  initialState: initialAppState,
+  reducers: {
+    addImageId(state, action: PayloadAction<{ uploadId: string }>) {
+      state.postImagesIds = [...state.postImagesIds, { uploadId: action.payload.uploadId }];
+      console.log(state.postImagesIds);
+    },
+    addImage(state, action: PayloadAction<ImageType>) {
+      state.postImages = [...state.postImages, action.payload];
+      console.log(state.postImages);
+    },
+  },
+});
+
+export const postReducer = slice.reducer;
+export const postActions = slice.actions;
+
+export type ImageId = { uploadId: string };
+
+export type postStateType = {
+  postImagesIds: ImageId[];
+  postImages: ImageType[];
+};

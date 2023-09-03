@@ -5,6 +5,8 @@ import { FirstModal } from "./FirstModal";
 import { SecondModal } from "./SecondModal";
 import { ThirdModal } from "./ThirdModal";
 import { FourthModal } from "./FourthModal";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/postReducer";
 
 type Props = {
   showCreatePostModal: boolean;
@@ -13,7 +15,7 @@ type Props = {
 };
 
 export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreatePostModal, userData }) => {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File[]>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
@@ -23,9 +25,12 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    sessionStorage.setItem("uploadId", JSON.stringify(loadedImages ?? ""));
-  }, [loadedImages]);
+    loadedImages.map((image) => {
+      dispatch(postActions.addImage(image));
+    });
+  }, [loadedImages, file]);
   const showSecondModal = () => {
     setThird(false);
     setFourth(false);
@@ -45,6 +50,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
     <>
       {showCreatePostModal && !postImage && (
         <FirstModal
+          currentFile={file}
           setFile={setFile}
           setPostImage={setPostImage}
           setShowCreatePostModal={setShowCreatePostModal}
