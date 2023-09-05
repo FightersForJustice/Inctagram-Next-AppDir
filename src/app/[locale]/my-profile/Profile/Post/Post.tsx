@@ -1,11 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import style from "./Post.module.scss";
+import { SwiperSlide } from "swiper/react";
 
 import { Loader } from "@/components/Loader";
 import { PostBody } from "./PostBody";
 import { PostBodyEdit } from "./PostBody/PostBodyEdit";
 import { useGetPostQuery } from "@/api";
+import { Carousel } from "@/components/Carousel/Carousel";
+import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import Image from "next/image";
 
 type PropsType = {
   setOpen: (value: boolean) => void;
@@ -32,11 +36,16 @@ export const Post = ({ postId, avatar, userName, setOpen, setModalHeader }: Prop
       <div className={style.post_container_body}>
         <div className={style.post_container_body_image}>
           {isSuccess ? (
-            <img
-              src={data.images[0]?.url ? data.images[0].url : "/img/settings-profile/load-avatar.svg"}
-              alt="avatar"
-              className={style.post_container_body_image_img}
-            />
+            <Carousel>
+              {data.images.map((i) => {
+                console.log(i.url);
+                return (
+                  <SwiperSlide key={i.uploadId} className={"w-full"}>
+                    <Image src={i.url} alt={"err"} width={100} />
+                  </SwiperSlide>
+                );
+              })}
+            </Carousel>
           ) : (
             <Loader />
           )}

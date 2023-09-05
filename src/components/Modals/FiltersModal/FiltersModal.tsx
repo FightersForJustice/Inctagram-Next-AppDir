@@ -8,6 +8,7 @@ import { applyImageFilter } from "../../../utils/applyImageFilter";
 import { dataURLToBlob } from "blob-util";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/postReducer";
+import { useAppSelector } from "@/redux/hooks/useSelect";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -27,6 +28,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
+  const images = useAppSelector((state) => state.post.postImages);
   const onSendPostImage = () => {
     const photoEditingBeforeSending = applyImageFilter(
       changedPostImage?.current,
@@ -35,16 +37,16 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
       zoomValue!,
     );
 
-    if (file) {
-      file.map((file) => {
+    if (images) {
+      images.map((file) => {
+        console.log(file);
         const formData = new FormData();
-        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);
+        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.id);
         uploadPostImage(formData)
           .unwrap()
           .then((res) => {
+            console.log(res.images[0]);
             dispatch(postActions.addImageId(res.images[0]));
-            localStorage.setItem("uploadId", [res.images[0].uploadId].toString());
-
             showFourthModal?.();
             toast.success("Post image uploaded");
           })

@@ -76,7 +76,7 @@ export const ThirdModal: React.FC<Props> = ({
     }
   };
 
-  const slides = Array.from({ length: 1000 }).map((el, index) => `Slide ${index + 1}`);
+  // const slides = Array.from({ length: 1000 }).map((el, index) => `Slide ${index + 1}`);
 
   return (
     <>

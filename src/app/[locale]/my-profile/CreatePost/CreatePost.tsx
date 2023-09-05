@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { GetResponse } from "@/api/profile.api";
 import { FirstModal } from "./FirstModal";
 import { SecondModal } from "./SecondModal";
 import { ThirdModal } from "./ThirdModal";
 import { FourthModal } from "./FourthModal";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/postReducer";
 
 type Props = {
   showCreatePostModal: boolean;
@@ -25,12 +23,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    loadedImages.map((image) => {
-      dispatch(postActions.addImage(image));
-    });
-  }, [loadedImages, file]);
   const showSecondModal = () => {
     setThird(false);
     setFourth(false);
@@ -58,6 +50,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           loadedImages={loadedImages}
         />
       )}
+
       {postImage && (
         <SecondModal
           loadedImages={loadedImages}

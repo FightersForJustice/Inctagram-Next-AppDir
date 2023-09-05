@@ -104,7 +104,7 @@ export const {
   useLazyGetUserPostsQuery,
 } = postsApi;
 
-type Image = {
+export type Image = {
   url: string;
   width: number;
   height: number;

@@ -26,16 +26,16 @@ export const PostCropper: React.FC<Props> = ({
   const onCropEnd = () => {
     const cropper = cropperRef.current?.cropper;
     setCroppedPostImage(cropper?.getCroppedCanvas().toDataURL()!);
-
-    const currentImages: ImageType[] = [
-      ...loadedImages,
-      {
-        image: cropper?.getCroppedCanvas().toDataURL()!,
-        id: cropper?.getCroppedCanvas().toDataURL()!,
-      },
-    ];
-
-    setLoadedImages(currentImages.filter((value) => value.id.length > 10));
+    //
+    // const currentImages: ImageType[] = [
+    //   ...loadedImages,
+    //   {
+    //     image: cropper?.getCroppedCanvas().toDataURL()!,
+    //     id: cropper?.getCroppedCanvas().toDataURL()!,
+    //   },
+    // ];
+    //
+    // setLoadedImages(currentImages.filter((value) => value.id.length > 10));
   };
 
   return (

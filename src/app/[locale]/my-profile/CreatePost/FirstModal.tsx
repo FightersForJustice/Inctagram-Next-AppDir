@@ -5,6 +5,8 @@ import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { Modal } from "@/components/Modals/Modal";
 import { ImageType } from "./CreatePost";
 import Image from "next/image";
+import { postActions } from "@/redux/reducers/postReducer";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
 
 type Props = {
   setPostImage: (value: string) => void;
@@ -22,18 +24,28 @@ export const FirstModal: React.FC<Props> = ({
   setLoadedImages,
   loadedImages,
 }) => {
+  const dispatch = useAppDispatch();
   const id = useId();
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     if (currentFile) {
-      setFile([...currentFile, file]);
+      let newArr = currentFile;
+      newArr.push(file);
+      setFile(newArr);
     } else {
       setFile([file]);
     }
 
+    let newImagesArr: ImageType[] = loadedImages;
+    newImagesArr.push({ id, image: URL.createObjectURL(file) });
+
+    newImagesArr.map((i) => {
+      dispatch(postActions.addImage(i));
+    });
+
     setPostImage(URL.createObjectURL(file));
-    setLoadedImages([...loadedImages, { id, image: URL.createObjectURL(file) }]);
+    // setLoadedImages(newImagesArr);
   };
 
   return (

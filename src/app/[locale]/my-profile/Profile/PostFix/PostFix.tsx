@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { Dots } from "./Dots";
 import { useDeletePostMutation, useGetPostQuery } from "@/api";
 import { handleApiError } from "@/utils";
+import { Carousel } from "@/components/Carousel/Carousel";
+import { SwiperSlide } from "swiper/react";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -26,7 +28,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const { data, isLoading, error, isError } = useGetPostQuery(postId!);
+  const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(postId!);
 
   const onDeletePost = () => {
     deletePost(postId!)
@@ -47,7 +49,24 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
       {data ? (
         <div className={"relative"}>
           <div className={s.post}>
-            <Image src={data?.images[0]?.url} alt={"post"} width={491} height={480} className={s.post__img} />
+            {isSuccess ? (
+              <div className={s.post__img}>
+                <Carousel>
+                  {data.images.map((i) => {
+                    console.log(i.url);
+                    return (
+                      <SwiperSlide key={i.uploadId} className={"w-full"}>
+                        <img src={i.url} alt={"err"} />
+                      </SwiperSlide>
+                    );
+                  })}
+                </Carousel>
+              </div>
+            ) : (
+              <Loader />
+            )}
+
+            {/*<Image src={data?.images[0]?.url} alt={"post"} width={491} height={480} className={s.post__img} />*/}
             <div className={s.post__container}>
               <div className={s.post__header}>
                 <div className={s.post__header__wrapper}>
