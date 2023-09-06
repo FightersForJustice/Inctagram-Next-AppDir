@@ -35,7 +35,7 @@ export const HomePostPopup = () => {
           </div>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content className="PopoverContent" sideOffset={5}>
+          <Popover.Content className="PopoverContent z-10" sideOffset={5}>
             <div className={s.popup__container}>
               <div className={s.popup__item}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
