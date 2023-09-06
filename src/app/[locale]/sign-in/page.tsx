@@ -9,12 +9,15 @@ import { Loader } from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { SignIn } from "./SignIn";
+import { useLazyLoginWithGitHubOAuthQuery } from "@/api/auth.api";
+import { baseUrl } from "@/helpers/config";
 
 const SignInPage = () => {
   const t = useTranslations("SignInPage");
   const router = useRouter();
 
   const [loginWithGoogle, { data, isLoading }] = useLoginWithGoogleOAuthMutation();
+  const [loginWithGitHub, { isSuccess }] = useLazyLoginWithGitHubOAuthQuery();
 
   useEffect(() => {
     if (sessionStorage.getItem("accessToken")) {
@@ -29,6 +32,11 @@ const SignInPage = () => {
       }
     }
   }, [data]);
+
+  const gitHubAuth = () => {
+    console.log("OK");
+    window.location.assign(`${baseUrl}auth/github/login`);
+  };
 
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
@@ -56,7 +64,7 @@ const SignInPage = () => {
             width={36}
             height={36}
           />
-          <Image src={"/img/github.svg"} alt={"github-icon"} width={36} height={36} />
+          <Image src={"/img/github.svg"} alt={"github-icon"} width={36} height={36} onClick={gitHubAuth} />
         </div>
         <SignIn translate={t} />
       </div>
