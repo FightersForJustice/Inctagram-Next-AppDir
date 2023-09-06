@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
 import { SubscribersModal } from "@/components/Modals/SubscribersModal";
@@ -14,16 +14,8 @@ const MyProfile = () => {
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
-  const { data, isLoading, refetch } = useGetProfileQuery();
 
-  let accessToken;
-  if (typeof sessionStorage !== "undefined") {
-    accessToken = sessionStorage.getItem("accessToken");
-  }
-
-  useEffect(() => {
-    refetch();
-  }, [accessToken]);
+  const { data, isLoading, refetch, isSuccess } = useGetProfileQuery();
 
   if (isLoading) return <Loader />;
 

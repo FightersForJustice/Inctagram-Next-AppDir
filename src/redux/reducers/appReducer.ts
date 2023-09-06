@@ -4,6 +4,7 @@ const initialAppState: AppStateType = {
   userID: null,
   email: null,
   userName: null,
+  tokenIsActive: false,
 };
 
 const slice = createSlice({
@@ -14,6 +15,9 @@ const slice = createSlice({
       state.userID = action.payload.userID;
       state.email = action.payload.email;
       state.userName = action.payload.userName;
+    },
+    setTokenIsActive(state, action: PayloadAction<boolean>) {
+      state.tokenIsActive = action.payload;
     },
   },
 });
@@ -29,4 +33,5 @@ export type AppStateType = {
   userID: UserID;
   email: Email;
   userName: UserName;
+  tokenIsActive: boolean;
 };

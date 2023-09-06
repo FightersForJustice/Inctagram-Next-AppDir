@@ -115,6 +115,14 @@ export let authApi = createApi({
         };
       },
     }),
+    loginWithGitHubOAuth: builder.query<any, void>({
+      query: () => {
+        return {
+          url: "auth/github/login",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -153,4 +161,5 @@ export let {
   usePostUpdateTokensMutation,
   useGetAuthMeQuery,
   useLoginWithGoogleOAuthMutation,
+  useLazyLoginWithGitHubOAuthQuery,
 } = authApi;

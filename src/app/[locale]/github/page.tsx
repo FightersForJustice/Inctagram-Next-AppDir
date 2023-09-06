@@ -1,11 +1,12 @@
 "use client";
 import { Loader } from "@/components/Loader";
 import { redirect } from "next/navigation";
-import { useParamsCustomHook } from "@/utils/useParamsCustomHook";
-
+import { useParams } from "react-router-dom";
 const GitHub = () => {
-  const params = useParamsCustomHook(["accessToken", "email"]);
-  sessionStorage.setItem("accessToken", params[0]);
+  const { accessToken } = useParams();
+  if (typeof sessionStorage !== "undefined") {
+    sessionStorage.setItem("accessToken", accessToken as string);
+  }
   redirect("/my-profile");
   return <Loader />;
 };
