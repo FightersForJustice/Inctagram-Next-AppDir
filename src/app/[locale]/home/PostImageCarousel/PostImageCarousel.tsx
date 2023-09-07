@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import "./HomeCarousel.css";
+import "./PostImageCarousel.css";
 import { ImageType } from "@/api/posts.api";
 import React from "react";
 
@@ -14,7 +14,7 @@ type Props = {
   images: ImageType[];
 };
 
-export const HomeCarousel: React.FC<Props> = ({ images }) => {
+export const PostImageCarousel: React.FC<Props> = ({ images }) => {
   if (images.length === 0) {
     return <Image src={"/img/create-post/no-image.png"} alt={"post"} width={491} height={491} />;
   }

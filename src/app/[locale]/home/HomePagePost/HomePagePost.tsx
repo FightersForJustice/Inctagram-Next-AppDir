@@ -6,10 +6,11 @@ import { ImageType, PostsItem } from "@/api/posts.api";
 import { GetTimeAgoText } from "@/utils/formatTimeFromDateString";
 import { HomePostPopup } from "./HomePostPopup";
 import { useGetProfileQuery } from "@/api";
-import { HomeCarousel } from "../HomeCarousel";
+
 import { HomePostIcons } from "./HomePostIcons";
 import { HomePostDescription } from "./HomePostDescription";
 import { HomePostLikes } from "./HomePostLikes";
+import { PostImageCarousel } from "../PostImageCarousel";
 
 type Props = {
   post: PostsItem;
@@ -19,7 +20,7 @@ type Props = {
 export const HomePagePost: React.FC<Props> = ({ post, images }) => {
   const lang = localStorage.getItem("language");
   // const userName = useSelector<RootState, UserName>((state) => state.app.userName);
-  const { data, isLoading, refetch } = useGetProfileQuery();
+  const { data, isLoading } = useGetProfileQuery();
 
   return (
     <div className={s.post}>
@@ -41,7 +42,7 @@ export const HomePagePost: React.FC<Props> = ({ post, images }) => {
         </div>
         <HomePostPopup />
       </div>
-      <HomeCarousel images={images} />
+      <PostImageCarousel images={images} />
       <HomePostIcons />
       <HomePostDescription userName={data?.userName} description={"description"} avatars={data?.avatars} />
       <HomePostLikes />

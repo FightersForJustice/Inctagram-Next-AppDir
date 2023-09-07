@@ -1,0 +1,1 @@
+export { PostImageCarousel } from "./PostImageCarousel";

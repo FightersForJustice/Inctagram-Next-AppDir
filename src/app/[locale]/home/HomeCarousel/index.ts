@@ -1,1 +1,0 @@
-export {HomeCarousel} from './HomeCarousel'

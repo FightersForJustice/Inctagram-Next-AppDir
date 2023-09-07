@@ -11,7 +11,7 @@ import { StatusCode } from "@/api/auth.api";
 type Props = {
   setOpen: (value: boolean) => void;
   setSelectedPost: (postId: number) => void;
-  getUserPosts: (value: number) => void;
+  getUserPosts: (value: PostsItem[]) => void;
 };
 
 export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, getUserPosts }) => {
@@ -56,7 +56,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
         setPosts(res.items);
         setLastLoadedPostId(res.items[res.items.length - 1].id);
         setTotalCount(res.totalCount);
-        getUserPosts(res.totalCount);
+        getUserPosts(res.items);
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {

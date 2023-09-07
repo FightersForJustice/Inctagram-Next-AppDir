@@ -7,6 +7,7 @@ import { ProfileWrapper } from "./ProfileWrapper";
 import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts";
 import { PostFix } from "./PostFix";
 import { PostModal } from "@/components/Modals/PostModal";
+import { PostsItem } from "@/api/posts.api";
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -24,9 +25,9 @@ export const Profile: React.FC<Props> = ({
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [modalHeader, setModalHeader] = useState("");
-  const [userPosts, setUserPosts] = useState(0);
+  const [userPosts, setUserPosts] = useState<PostsItem[]>([]);
 
-  const getUserPosts = (postsAmount: number) => {
+  const getUserPosts = (postsAmount: PostsItem[]) => {
     setUserPosts(postsAmount);
   };
 
@@ -50,7 +51,7 @@ export const Profile: React.FC<Props> = ({
           setShowSubscriptionsModal={setShowSubscriptionsModal}
           setShowSubscribersModal={setShowSubscribersModal}
           paidAccount={paidAccount}
-          userPosts={userPosts}
+          userPosts={userPosts.length}
         />
       </div>
       <div className={s.profile__posts}>

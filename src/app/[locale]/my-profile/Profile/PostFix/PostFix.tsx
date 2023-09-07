@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Dots } from "./Dots";
 import { useDeletePostMutation, useGetPostQuery } from "@/api";
 import { handleApiError } from "@/utils";
+import { PostImageCarousel } from "@/app/[locale]/home/PostImageCarousel";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -47,7 +48,9 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
       {data ? (
         <div className={"relative"}>
           <div className={s.post}>
-            <Image src={data?.images[0]?.url} alt={"post"} width={491} height={480} className={s.post__img} />
+            <div className={s.post__img}>
+              <PostImageCarousel images={data.images} />
+            </div>
             <div className={s.post__container}>
               <div className={s.post__header}>
                 <div className={s.post__header__wrapper}>
