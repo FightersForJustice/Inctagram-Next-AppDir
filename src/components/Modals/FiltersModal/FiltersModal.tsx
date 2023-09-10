@@ -20,10 +20,8 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   buttonName,
   showSecondModal,
   showFourthModal,
-  file,
   onPublishPost,
   onDeletePostImage,
-  changedPostImage,
   aspectRatio,
   activeFilter,
   zoomValue,
@@ -31,27 +29,22 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
   const images = useAppSelector(postImages);
-  const refImage = useRef<any>();
   const onSendPostImage = () => {
     if (images) {
       images.map((file) => {
-        const ref = document.getElementById(file.id);
+        let reff = document.createElement("img");
+        reff.src = file.image;
+        reff.alt = "err";
+        reff.style.filter = activeFilter ?? "";
+        reff.width = 490;
+        reff.height = 503;
 
-        const photoEditingBeforeSending = applyImageFilter(
-          ref as HTMLImageElement,
-          activeFilter!,
-          `${aspectRatio!}`,
-          zoomValue!,
-        );
-        console.log(ref?.offsetWidth);
-
+        const photoEditingBeforeSending = applyImageFilter(reff, activeFilter!, `${aspectRatio!}`, zoomValue!);
         const formData = new FormData();
         formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.id);
-        console.log(formData);
         uploadPostImage(formData)
           .unwrap()
           .then((res) => {
-            console.log(res.images[0]);
             dispatch(postActions.addImageId(res.images[0]));
             showFourthModal?.();
             toast.success("Post image uploaded");

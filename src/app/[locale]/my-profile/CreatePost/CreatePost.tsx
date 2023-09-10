@@ -9,6 +9,7 @@ import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { imagesGallery, postImages } from "@/redux/reducers/post/postSelectors";
+import { act } from "react-dom/test-utils";
 
 type Props = {
   showCreatePostModal: boolean;
@@ -32,6 +33,9 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const imagesGalleryArr = useAppSelector(imagesGallery);
   const currentImage = postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
 
+  useEffect(() => {
+    console.log(activeFilter);
+  }, [activeFilter]);
   const showSecondModal = () => {
     setThird(false);
     setFourth(false);
@@ -111,10 +115,10 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
 };
 
 export enum AspectRatioType {
-  one = 1,
-  two = 4 / 3,
-  three = 4 / 5,
-  four = 16 / 9,
+  one = "1",
+  two = " 4:3",
+  three = "4:5",
+  four = "16:9",
 }
 
 export type ImageType = {
