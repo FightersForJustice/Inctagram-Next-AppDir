@@ -5,6 +5,8 @@ import { Modal } from "../Modal/Modal";
 import { Loader } from "../../Loader/Loader";
 
 import s from "./AreYouSureModal.module.scss";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/post/postReducer";
 
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export const AreYouSureModal: React.FC<Props> = ({ toggleModal, toggleAreYouSureModal, onDelete, isDeleting }) => {
+  const dispatch = useAppDispatch();
   return (
     <>
       <Modal title={"Close"} onClose={() => toggleAreYouSureModal(false)}>
@@ -23,6 +26,8 @@ export const AreYouSureModal: React.FC<Props> = ({ toggleModal, toggleAreYouSure
         <div className={s.modal__btns}>
           <TransparentBtn
             onClick={() => {
+              dispatch(postActions.removeAllImages());
+              dispatch(postActions.removeAllGalleryImages());
               onDelete?.();
               if (onDelete) {
                 setTimeout(() => {

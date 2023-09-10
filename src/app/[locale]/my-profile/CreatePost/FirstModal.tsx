@@ -5,7 +5,7 @@ import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { Modal } from "@/components/Modals/Modal";
 import { ImageType } from "./CreatePost";
 import Image from "next/image";
-import { postActions } from "@/redux/reducers/postReducer";
+import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 
 type Props = {
@@ -41,10 +41,12 @@ export const FirstModal: React.FC<Props> = ({
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
     newImagesArr.map((i) => {
-      dispatch(postActions.addImage(i));
+      // dispatch(postActions.addImage(i));
     });
 
     setPostImage(URL.createObjectURL(file));
+
+    dispatch(postActions.addImage({ id, image: URL.createObjectURL(file) }));
     // setLoadedImages(newImagesArr);
   };
 

@@ -11,6 +11,7 @@ import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "@/redux/hooks/useSelect";
+import { postImagesIds } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
   showThirdModal: () => void;
@@ -36,7 +37,7 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const imagesIds = useAppSelector((state) => state.post.postImagesIds);
+  const imagesIds = useAppSelector(postImagesIds);
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
 
@@ -47,6 +48,7 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = () => {
+    console.log(imagesIds);
     createPost({
       description: textareaValue,
       childrenMetadata: imagesIds,
@@ -75,7 +77,6 @@ export const FourthModal: React.FC<Props> = ({
       });
   };
 
-  console.log(loadedImages);
   return (
     <>
       <FiltersModal

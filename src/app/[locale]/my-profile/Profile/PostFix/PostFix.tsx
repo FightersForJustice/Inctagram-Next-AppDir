@@ -52,10 +52,10 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
             {isSuccess ? (
               <div className={s.post__img}>
                 <Carousel>
-                  {data.images.map((i) => {
+                  {data.images.map((i, index) => {
                     console.log(i.url);
                     return (
-                      <SwiperSlide key={i.uploadId} className={"w-full"}>
+                      <SwiperSlide key={index} className={"w-full"}>
                         <img src={i.url} alt={"err"} />
                       </SwiperSlide>
                     );

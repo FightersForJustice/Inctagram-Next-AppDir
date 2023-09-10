@@ -2,6 +2,9 @@ import React, { Dispatch, SetStateAction, useEffect } from "react";
 import s from "./ImagesCollection.module.scss";
 import Image from "next/image";
 import { ImageType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/post/postReducer";
+import { toast } from "react-toastify";
 
 type Props = {
   loadedImages: ImageType[];
@@ -10,6 +13,8 @@ type Props = {
 };
 
 export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImages, setPostImage }) => {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (!loadedImages.length) {
       setPostImage("");
@@ -17,12 +22,19 @@ export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImage
   }, [loadedImages.length]);
 
   const onDeleteImageFromCollection = (id: string) => {
-    const newCollection = loadedImages.filter((item) => item.id !== id);
-    setLoadedImages(newCollection);
-
-    if (loadedImages.length === 0) {
-      setPostImage("");
+    if (loadedImages.length === 1) {
+      toast.error("Your can't delete one image");
+      return;
+    } else {
+      dispatch(postActions.removeGalleryImage({ id }));
     }
+
+    // const newCollection = loadedImages.filter((item) => item.id !== id);
+    // setLoadedImages(newCollection);
+    //
+    // if (loadedImages.length === 0) {
+    //   setPostImage("");
+    // }
   };
   return (
     <div className={s.collection__container}>
