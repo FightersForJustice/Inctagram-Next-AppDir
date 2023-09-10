@@ -48,9 +48,9 @@ export const SecondModal: React.FC<Props> = ({
 
   const [ratio, setRatio] = useState(1);
 
-  useEffect(() => {
-    setRatio(aspectRatio);
-  }, [aspectRatio]);
+  // useEffect(() => {
+  //   setRatio(aspectRatio);
+  // }, [aspectRatio]);
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
