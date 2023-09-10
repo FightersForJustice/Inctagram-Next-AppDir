@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "../CreatePost.module.scss";
 import { CroppingModal } from "@/components/Modals/CroppingModal";
 import { AspectRatio } from "./AspectRatio";
@@ -7,9 +7,11 @@ import { Gallery } from "./Gallery";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
 import { AspectRatioType, ImageType } from "../CreatePost";
 import { PostCropper } from "../PostCropper/PostCropper";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { imagesGallery } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
-  postImage: string;
+  postImage: ImageType;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
   setAspectRatio: (value: AspectRatioType) => void;
@@ -38,11 +40,17 @@ export const SecondModal: React.FC<Props> = ({
   croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-
+  const imagesArr = useAppSelector((state) => state.post.postImages);
+  const imagesGalleryImages = useAppSelector(imagesGallery);
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
 
+  const [ratio, setRatio] = useState(1);
+
+  useEffect(() => {
+    setRatio(aspectRatio);
+  }, [aspectRatio]);
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
@@ -52,18 +60,24 @@ export const SecondModal: React.FC<Props> = ({
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
         width={"492px"}
+        loadedImages={loadedImages}
       >
         <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery loadedImages={loadedImages} setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
+        <Gallery
+          loadedImages={imagesGalleryImages}
+          setLoadedImages={setLoadedImages}
+          setPostImage={setPostImage}
+          currentImage={postImage}
+          croppedPostImage={croppedPostImage}
+        />
 
         <PostCropper
           postImage={postImage}
-          //@ts-ignore
-          aspectRatio={aspectRatio}
+          aspectRatio={ratio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
-          loadedImages={loadedImages}
+          loadedImages={imagesGalleryImages}
           setLoadedImages={setLoadedImages}
         />
       </CroppingModal>

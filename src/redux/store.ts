@@ -5,7 +5,7 @@ import { postsApi } from "@/api/posts.api";
 import { subscriptionsApi } from "@/api/subscriptions.api";
 import { appReducer } from "./reducers/appReducer";
 import { authApi } from "@/api/auth.api";
-import { postReducer } from "@/redux/reducers/postReducer";
+import { postReducer } from "@/redux/reducers/post/postReducer";
 
 export const store = configureStore({
   reducer: {

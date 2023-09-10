@@ -1,13 +1,16 @@
-import React, { MutableRefObject, PropsWithChildren } from "react";
+import React, { MutableRefObject, PropsWithChildren, useRef } from "react";
 
 import "./FiltersModal.css";
-import { useUploadPostImageMutation } from "../../../api/posts.api";
+import { useUploadPostImageMutation } from "@/api";
 import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
-import { applyImageFilter } from "../../../utils/applyImageFilter";
+import { applyImageFilter } from "@/utils";
 import { dataURLToBlob } from "blob-util";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/postReducer";
+import { postActions } from "@/redux/reducers/post/postReducer";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { postImages } from "@/redux/reducers/post/postSelectors";
+import { AspectRatioType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -17,34 +20,32 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   buttonName,
   showSecondModal,
   showFourthModal,
-  file,
   onPublishPost,
   onDeletePostImage,
-  changedPostImage,
   aspectRatio,
   activeFilter,
   zoomValue,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
+  const images = useAppSelector(postImages);
   const onSendPostImage = () => {
-    const photoEditingBeforeSending = applyImageFilter(
-      changedPostImage?.current,
-      activeFilter!,
-      aspectRatio!,
-      zoomValue!,
-    );
+    if (images) {
+      images.map((file) => {
+        let reff = document.createElement("img");
+        reff.src = file.image;
+        reff.alt = "err";
+        reff.style.filter = activeFilter ?? "";
+        reff.width = 490;
+        reff.height = 503;
 
-    if (file) {
-      file.map((file) => {
+        const photoEditingBeforeSending = applyImageFilter(reff, activeFilter!, `${aspectRatio!}`, zoomValue!);
         const formData = new FormData();
-        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.name);
+        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.id);
         uploadPostImage(formData)
           .unwrap()
           .then((res) => {
             dispatch(postActions.addImageId(res.images[0]));
-            localStorage.setItem("uploadId", [res.images[0].uploadId].toString());
-
             showFourthModal?.();
             toast.success("Post image uploaded");
           })
@@ -96,6 +97,6 @@ type Props = {
   onDeletePostImage?: () => void;
   changedPostImage?: MutableRefObject<any>;
   activeFilter?: string;
-  aspectRatio?: string;
+  aspectRatio?: AspectRatioType;
   zoomValue?: string;
 };

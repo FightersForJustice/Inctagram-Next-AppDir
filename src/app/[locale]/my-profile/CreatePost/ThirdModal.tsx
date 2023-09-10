@@ -8,6 +8,8 @@ import { AspectRatioType, ImageType } from "./CreatePost";
 import { SwiperSlide } from "swiper/react";
 
 import { Carousel } from "@/components/Carousel/Carousel";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { postImages } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
   showSecondModal: () => void;
@@ -35,7 +37,7 @@ export const ThirdModal: React.FC<Props> = ({
   croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-
+  const imagesArr = useAppSelector(postImages);
   const changedPostImage = useRef<any>();
 
   const onActiveFilter = (filter: string) => {
@@ -76,7 +78,7 @@ export const ThirdModal: React.FC<Props> = ({
     }
   };
 
-  const slides = Array.from({ length: 1000 }).map((el, index) => `Slide ${index + 1}`);
+  // const slides = Array.from({ length: 1000 }).map((el, index) => `Slide ${index + 1}`);
 
   return (
     <>
@@ -88,21 +90,20 @@ export const ThirdModal: React.FC<Props> = ({
         showFourthModal={showFourthModal}
         file={file}
         onClose={() => setAreYouSureModal(true)}
-        changedPostImage={changedPostImage}
         activeFilter={activeFilter}
         zoomValue={zoomValue}
         aspectRatio={aspectRatio}
+        changedPostImage={changedPostImage}
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
             <Carousel>
-              {loadedImages.map((i) => {
+              {imagesArr.map((i, index) => {
                 return (
-                  <SwiperSlide key={i.image} className={"w-full"}>
-                    {/*<img src={i.image} alt="alt" style={{ filter: activeFilter }} />*/}
+                  <SwiperSlide key={i.id} className={"w-full"}>
                     <Image
-                      // src={`${croppedPostImage ? croppedPostImage : "/img/create-post/filters-modal/image.png"}`}
-                      src={i.image}
+                      id={i.id}
+                      src={`${i.image ? i.image : "/img/create-post/filters-modal/image.png"}`}
                       alt={"image"}
                       width={490}
                       height={503}
@@ -126,6 +127,7 @@ export const ThirdModal: React.FC<Props> = ({
                     height={108}
                     style={{ filter: item.filter }}
                     className={s.cropping__filters__smallImage}
+                    ref={changedPostImage}
                   />
                   <p>{item.name}</p>
                 </div>

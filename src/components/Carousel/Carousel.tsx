@@ -24,7 +24,7 @@ export const Carousel = ({
   slidesStyles,
   ref,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   loadedImages?: ImageType[];
   slidesStyles?: SlidesStyles;
   ref?: any;
@@ -38,7 +38,7 @@ export const Carousel = ({
       pagination={{ clickable: true }}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
-      className={"w-full text-white"}
+      // className={"w-full text-white"}
     >
       {loadedImages
         ? loadedImages.map((i) => {

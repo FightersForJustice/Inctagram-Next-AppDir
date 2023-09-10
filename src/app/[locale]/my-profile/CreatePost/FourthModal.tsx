@@ -11,6 +11,7 @@ import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "@/redux/hooks/useSelect";
+import { postImagesIds } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
   showThirdModal: () => void;
@@ -36,10 +37,10 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const imagesIds = useAppSelector((state) => state.post.postImagesIds);
+  const imagesIds = useAppSelector(postImagesIds);
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
-
+  const images = useAppSelector((state) => state.post.postImages);
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaLength(e.currentTarget.value.length);
@@ -47,6 +48,7 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = () => {
+    console.log(imagesIds);
     createPost({
       description: textareaValue,
       childrenMetadata: imagesIds,
@@ -75,7 +77,6 @@ export const FourthModal: React.FC<Props> = ({
       });
   };
 
-  console.log(loadedImages);
   return (
     <>
       <FiltersModal
@@ -89,7 +90,7 @@ export const FourthModal: React.FC<Props> = ({
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
             <Carousel>
-              {loadedImages.map((i) => {
+              {images.map((i) => {
                 return (
                   <SwiperSlide key={i.image} className={"w-full"}>
                     <Image

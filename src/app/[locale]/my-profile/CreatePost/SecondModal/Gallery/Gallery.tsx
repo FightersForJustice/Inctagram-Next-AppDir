@@ -3,14 +3,27 @@ import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
 import { ImagesCollection } from "@/components/ImagesCollection";
 import { ImageType } from "../../CreatePost";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/post/postReducer";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { imagesGallery } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
   loadedImages: ImageType[];
   setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
   setPostImage: (value: string) => void;
+  currentImage: ImageType;
+  croppedPostImage: string;
 };
-export const Gallery: React.FC<Props> = ({ loadedImages, setLoadedImages, setPostImage }) => {
+export const Gallery: React.FC<Props> = ({
+  loadedImages,
+  setLoadedImages,
+  setPostImage,
+  currentImage,
+  croppedPostImage,
+}) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
+  const currentImages = useAppSelector(imagesGallery);
 
   return (
     <Popover.Root onOpenChange={() => setOpenCollectionImages(!openCollectionImages)}>
@@ -43,7 +56,11 @@ export const Gallery: React.FC<Props> = ({ loadedImages, setLoadedImages, setPos
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="PopoverContent z-30" sideOffset={5}>
-          <ImagesCollection loadedImages={loadedImages} setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
+          <ImagesCollection
+            loadedImages={currentImages}
+            setLoadedImages={setLoadedImages}
+            setPostImage={setPostImage}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

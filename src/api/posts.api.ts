@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@/helpers/config";
-import { ImageId } from "@/redux/reducers/postReducer";
+import { ImageId } from "@/redux/reducers/post/postReducer";
 
 export const postsApi = createApi({
   reducerPath: "postsApi",
@@ -104,7 +104,7 @@ export const {
   useLazyGetUserPostsQuery,
 } = postsApi;
 
-export type ImageType = {
+export type Image = {
   url: string;
   width: number;
   height: number;
@@ -113,19 +113,19 @@ export type ImageType = {
 };
 
 export type UploadImageResponse = {
-  images: ImageType[];
+  images: Image[];
 };
 
 export type CreatePostRequest = {
   description: string;
-  childrenMetadata: ImageId[];
+  childrenMetadata: [{ uploadId: string }];
 };
 
 export type PostResponse = {
   id: number;
   description: string;
   location: string;
-  images: ImageType[];
+  images: Image[];
   createdAt: string;
   updatedAt: string;
 };
@@ -134,7 +134,7 @@ export type PostsItem = {
   id: number;
   description: string;
   location: string;
-  images: ImageType[];
+  images: Image[];
   createdAt: string;
   updatedAt: string;
 };
