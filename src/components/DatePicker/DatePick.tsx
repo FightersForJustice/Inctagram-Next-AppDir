@@ -4,7 +4,7 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 
 import s from "./DatePick.module.scss";
 import Image from "next/image";
-import { convertToReactDatePickerObject } from "@/utils";
+import { check13YearsOld, convertToReactDatePickerObject } from "@/utils";
 
 type Props = {
   setDate: (date: string) => void;
@@ -22,24 +22,7 @@ export const DatePick: React.FC<Props> = ({ setDate, userBirthday, ageError, set
   );
 
   useEffect(() => {
-    function checkAge(date: DateObject | DateObject[] | null) {
-      if (date) {
-        // @ts-ignore
-        const birthDate = new Date(date.toDate().toString());
-        const today = new Date();
-        const ageYears = today.getFullYear() - birthDate.getFullYear();
-        const ageMonths = today.getMonth() - birthDate.getMonth();
-
-        // check age for 13 y.o.
-        if (ageYears < 13 || (ageYears === 13 && ageMonths < 0)) {
-          setAgeError("You must be over 13 years old");
-        } else {
-          setAgeError("");
-        }
-      }
-    }
-
-    checkAge(value);
+    check13YearsOld(value, setAgeError);
   }, [value, setAgeError]);
 
   return (
