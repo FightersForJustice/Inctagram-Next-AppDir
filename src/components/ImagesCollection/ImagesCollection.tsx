@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import s from "./ImagesCollection.module.scss";
 import Image from "next/image";
-import { ImageType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { toast } from "react-toastify";
 
 type Props = {
-  loadedImages: ImageType[];
-  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  loadedImages: ImageStateType[];
+  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
   setPostImage: (value: string) => void;
 };
 

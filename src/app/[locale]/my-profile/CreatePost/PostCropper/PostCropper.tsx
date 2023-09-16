@@ -2,18 +2,18 @@
 import React, { Dispatch, SetStateAction, useEffect, useId, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { AspectRatioType, ImageType } from "../CreatePost";
+import { AspectRatioType, ImageStateType } from "../CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { imagesGallery } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
-  postImage: ImageType;
+  postImage: ImageStateType;
   aspectRatio: number;
   zoomValue: string;
   setCroppedPostImage: (value: any) => void;
-  loadedImages: ImageType[];
+  loadedImages: ImageStateType[];
   setLoadedImages: (value: any) => void;
 };
 
@@ -26,7 +26,7 @@ export const PostCropper: React.FC<Props> = ({
   setLoadedImages,
 }) => {
   const cropperRef = useRef<ReactCropperElement>(null);
-  const id = useId();
+  const id = crypto.randomUUID();
 
   const dispatch = useAppDispatch();
   const imageCollection = useAppSelector(imagesGallery);
@@ -41,8 +41,6 @@ export const PostCropper: React.FC<Props> = ({
       dispatch(postActions.changeImageFromPostGallery(image));
     }
   };
-
-  console.log("RERENDER" + ` ${aspectRatio}`);
 
   return (
     <>

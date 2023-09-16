@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import { toast } from "react-toastify";
+import { filters } from "@/features/data";
 
-const initialAppState: postStateType = {
-  //@ts-ignore
+const initialAppState: PostStateType = {
   postImagesIds: [],
   postImages: [],
   imagesGallery: [],
@@ -13,24 +13,29 @@ const slice = createSlice({
   name: "postReducer",
   initialState: initialAppState,
   reducers: {
-    addImageId(state, action: PayloadAction<{ uploadId: string }>) {
+    addImageId(state, action: PayloadAction<IUploadImageId>) {
       state.postImagesIds.push(action.payload);
-      console.log(state.postImagesIds);
     },
-    addImage(state, action: PayloadAction<ImageType>) {
+    addImage(state, action: PayloadAction<ImageStateType>) {
       if (state.postImages.findIndex((i) => i.id === action.payload.id) > -1) {
-        console.log("you want added image which yet have");
         return;
       }
-
       state.postImages = [...state.postImages, action.payload];
-
       state.imagesGallery.push(action.payload);
-      console.log(state.postImages);
     },
-    changeImage(state, action: PayloadAction<ImageType>) {
+    changeImage(state, action: PayloadAction<ImageStateType>) {
       const index = state.postImages.findIndex((image) => image.id === action.payload.id);
       if (index !== -1) state.postImages[index] = action.payload;
+    },
+    setImageFilter(state, action: PayloadAction<{ image: string; filter: string }>) {
+      const index = state.postImages.findIndex((image) => image.image === action.payload.image);
+      if (index !== -1) {
+        state.postImages[index] = {
+          image: action.payload.image,
+          id: state.postImages[index].id,
+          filter: action.payload.filter,
+        };
+      }
     },
     removeImage(state, action: PayloadAction<string>) {
       const index = state.postImages.findIndex((image) => image.id === action.payload);
@@ -38,18 +43,15 @@ const slice = createSlice({
     },
     removeAllImages(state) {
       state.postImages = [];
-      console.log("Images was deleted");
     },
-    addImageToPostGallery(state, action: PayloadAction<ImageType>) {
-      console.log(state.imagesGallery);
+    addImageToPostGallery(state, action: PayloadAction<ImageStateType>) {
       if (state.imagesGallery.length >= 10) {
         toast.error("Max images count is 10!");
         return;
       }
       state.imagesGallery.push(action.payload);
-      console.log(state.imagesGallery);
     },
-    changeImageFromPostGallery(state, action: PayloadAction<ImageType>) {
+    changeImageFromPostGallery(state, action: PayloadAction<ImageStateType>) {
       const index = state.imagesGallery.findIndex((image) => image.id === action.payload.id);
       if (index !== -1) state.imagesGallery[index] = action.payload;
     },
@@ -59,7 +61,6 @@ const slice = createSlice({
     },
     removeAllGalleryImages(state) {
       state.imagesGallery = [];
-      console.log("Images was deleted");
     },
   },
 });
@@ -69,8 +70,12 @@ export const postActions = slice.actions;
 
 export type ImageId = { uploadId: string };
 
-export type postStateType = {
-  postImagesIds: [{ uploadId: string }];
-  postImages: ImageType[];
-  imagesGallery: ImageType[];
+export interface IUploadImageId {
+  uploadId: string;
+}
+
+export type PostStateType = {
+  postImagesIds: IUploadImageId[];
+  postImages: ImageStateType[];
+  imagesGallery: ImageStateType[];
 };

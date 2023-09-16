@@ -2,17 +2,17 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import s from "../../CreatePost.module.scss";
 import { ImagesCollection } from "@/components/ImagesCollection";
-import { ImageType } from "../../CreatePost";
+import { ImageStateType } from "../../CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { imagesGallery } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
-  loadedImages: ImageType[];
-  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
+  loadedImages: ImageStateType[];
+  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
   setPostImage: (value: string) => void;
-  currentImage: ImageType;
+  currentImage: ImageStateType;
   croppedPostImage: string;
 };
 export const Gallery: React.FC<Props> = ({

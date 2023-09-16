@@ -8,7 +8,7 @@ import { PostBody } from "./PostBody";
 import { PostBodyEdit } from "./PostBody/PostBodyEdit";
 import { useGetPostQuery } from "@/api";
 import { Carousel } from "@/components/Carousel/Carousel";
-import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import Image from "next/image";
 
 type PropsType = {

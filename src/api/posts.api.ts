@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@/helpers/config";
-import { ImageId } from "@/redux/reducers/post/postReducer";
+import { ImageId, IUploadImageId } from "@/redux/reducers/post/postReducer";
 
 export const postsApi = createApi({
   reducerPath: "postsApi",
@@ -118,7 +118,7 @@ export type UploadImageResponse = {
 
 export type CreatePostRequest = {
   description: string;
-  childrenMetadata: [{ uploadId: string }];
+  childrenMetadata: IUploadImageId[];
 };
 
 export type PostResponse = {

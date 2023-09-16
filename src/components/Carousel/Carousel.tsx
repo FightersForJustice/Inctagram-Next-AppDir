@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { Swiper } from "swiper/react";
 import { A11y, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
@@ -18,17 +18,15 @@ interface SlidesStyles {
   className: string;
 }
 
-export const Carousel = ({
-  children,
-  loadedImages,
-  slidesStyles,
-  ref,
-}: {
+interface IProps {
   children?: ReactNode;
-  loadedImages?: ImageType[];
+  loadedImages?: ImageStateType[];
   slidesStyles?: SlidesStyles;
   ref?: any;
-}) => {
+  setActive: (value: string) => void;
+}
+
+export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, setActive, ref }) => {
   return (
     <Swiper
       modules={[Navigation, Pagination, A11y]}
@@ -36,22 +34,25 @@ export const Carousel = ({
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-      // className={"w-full text-white"}
     >
       {loadedImages
-        ? loadedImages.map((i) => {
+        ? loadedImages.map(({ image, id, filter }) => {
             return (
-              <SwiperSlide key={i.id} className={"w-full"}>
-                <Image
-                  src={i.image}
-                  alt={"image"}
-                  width={slidesStyles?.width ?? 490}
-                  height={slidesStyles?.height ?? 503}
-                  className={slidesStyles?.className}
-                  ref={ref}
-                />
+              <SwiperSlide key={id} className={"w-full"}>
+                {({ isActive }) => {
+                  if (isActive) setActive(image);
+                  return (
+                    <Image
+                      src={image}
+                      alt={"image"}
+                      width={slidesStyles?.width || 490}
+                      height={slidesStyles?.height || 503}
+                      className={slidesStyles?.className}
+                      style={{ filter }}
+                      ref={ref}
+                    />
+                  );
+                }}
               </SwiperSlide>
             );
           })

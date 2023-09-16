@@ -5,13 +5,13 @@ import { AspectRatio } from "./AspectRatio";
 import { Range } from "./Range/Range";
 import { Gallery } from "./Gallery";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType, ImageType } from "../CreatePost";
+import { AspectRatioType, ImageStateType } from "../CreatePost";
 import { PostCropper } from "../PostCropper/PostCropper";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { imagesGallery } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
-  postImage: ImageType;
+  postImage: ImageStateType;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
   setAspectRatio: (value: AspectRatioType) => void;
@@ -19,7 +19,7 @@ type Props = {
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
-  loadedImages: ImageType[];
+  loadedImages: ImageStateType[];
   setLoadedImages: (value: any) => void;
   setCroppedPostImage: (value: string) => void;
   croppedPostImage: string;

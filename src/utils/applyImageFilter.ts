@@ -23,6 +23,7 @@ export const applyImageFilter = (
   ctx.filter = filter;
   ctx.drawImage(imageElement, 0, 0, canvasWidth, canvasHeight);
 
+  console.log(ctx);
   // Применяем дополнительные стили трансформации (transform) на холсте
   const scaleFactor = +zoomValue / 10;
 
@@ -32,14 +33,4 @@ export const applyImageFilter = (
   const modifiedImageData: string = canvas.toDataURL("image/jpeg");
 
   return modifiedImageData;
-};
-
-// Вспомогательная функция для разбора значения трансформации
-const parseTransform = (transform: string): number[] => {
-  // Ваша логика разбора значения трансформации
-  // Здесь предполагается, что функция вернет массив чисел, которые будут переданы в метод ctx.transform()
-
-  // Например, для строки "1.2, 0.3, -0.3, 1.2, 10, 20" вернется [1.2, 0.3, -0.3, 1.2, 10, 20]
-  const values = transform.split(",").map(parseFloat);
-  return values;
 };

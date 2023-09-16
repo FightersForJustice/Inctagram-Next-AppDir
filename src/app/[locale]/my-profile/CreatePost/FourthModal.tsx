@@ -6,10 +6,9 @@ import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType, ImageType } from "./CreatePost";
+import { AspectRatioType, ImageStateType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
-import { SwiperSlide } from "swiper/react";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImagesIds } from "@/redux/reducers/post/postSelectors";
 
@@ -21,7 +20,7 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
   croppedPostImage: string;
   userData: GetResponse;
-  loadedImages: ImageType[];
+  loadedImages: ImageStateType[];
 };
 
 export const FourthModal: React.FC<Props> = ({
@@ -37,10 +36,12 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
   const [areYouSureModal, setAreYouSureModal] = useState(false);
+
   const imagesIds = useAppSelector(postImagesIds);
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
+  const [activeImage, setActiveImage] = useState<string>(images[0].image);
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaLength(e.currentTarget.value.length);
@@ -48,7 +49,6 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = () => {
-    console.log(imagesIds);
     createPost({
       description: textareaValue,
       childrenMetadata: imagesIds,
@@ -89,22 +89,7 @@ export const FourthModal: React.FC<Props> = ({
       >
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
-            <Carousel>
-              {images.map((i) => {
-                return (
-                  <SwiperSlide key={i.image} className={"w-full"}>
-                    <Image
-                      src={i.image}
-                      alt={"image"}
-                      width={490}
-                      height={503}
-                      style={{ filter: activeFilter }}
-                      className={s.cropping__filters__image}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Carousel>
+            <Carousel loadedImages={images} setActive={setActiveImage} />
           </div>
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>

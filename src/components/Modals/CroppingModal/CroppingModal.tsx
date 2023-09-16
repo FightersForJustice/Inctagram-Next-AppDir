@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import Image from "next/image";
 import "./CroppingModal.css";
 import { toast } from "react-toastify";
-import { ImageType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 
@@ -13,7 +13,7 @@ type Props = {
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
   croppedPostImage: string;
-  loadedImages: ImageType[];
+  loadedImages: ImageStateType[];
 };
 
 export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({

@@ -3,7 +3,7 @@ import s from "./CreatePost.module.scss";
 import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
 import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { Modal } from "@/components/Modals/Modal";
-import { ImageType } from "./CreatePost";
+import { ImageStateType } from "./CreatePost";
 import Image from "next/image";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
@@ -12,8 +12,8 @@ type Props = {
   setPostImage: (value: string) => void;
   setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
-  setLoadedImages: Dispatch<SetStateAction<ImageType[]>>;
-  loadedImages: ImageType[];
+  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
+  loadedImages: ImageStateType[];
   currentFile?: File[];
 };
 export const FirstModal: React.FC<Props> = ({
@@ -25,7 +25,7 @@ export const FirstModal: React.FC<Props> = ({
   loadedImages,
 }) => {
   const dispatch = useAppDispatch();
-  const id = useId();
+  const id = crypto.randomUUID();
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -37,7 +37,7 @@ export const FirstModal: React.FC<Props> = ({
       setFile([file]);
     }
 
-    let newImagesArr: ImageType[] = loadedImages;
+    let newImagesArr: ImageStateType[] = loadedImages;
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
     newImagesArr.map((i) => {

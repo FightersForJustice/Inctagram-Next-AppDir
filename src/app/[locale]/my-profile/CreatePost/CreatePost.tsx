@@ -23,7 +23,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState("");
   const [croppedPostImage, setCroppedPostImage] = useState("");
-  const [loadedImages, setLoadedImages] = useState<ImageType[]>([]);
+  const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
   const [aspectRatio, setAspectRatio] = useState<AspectRatioType>(AspectRatioType.two);
   const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
@@ -121,7 +121,8 @@ export enum AspectRatioType {
   four = "16:9",
 }
 
-export type ImageType = {
+export type ImageStateType = {
   id: string;
   image: string;
+  filter: string;
 };

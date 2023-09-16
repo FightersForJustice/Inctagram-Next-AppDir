@@ -1,4 +1,4 @@
-import React, { MutableRefObject, PropsWithChildren, useRef } from "react";
+import React, { MutableRefObject, PropsWithChildren } from "react";
 
 import "./FiltersModal.css";
 import { useUploadPostImageMutation } from "@/api";
@@ -10,7 +10,7 @@ import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImages } from "@/redux/reducers/post/postSelectors";
-import { AspectRatioType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { AspectRatioType, ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -23,31 +23,30 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onPublishPost,
   onDeletePostImage,
   aspectRatio,
-  activeFilter,
   zoomValue,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
-  const images = useAppSelector(postImages);
+  const images: ImageStateType[] = useAppSelector(postImages);
   const onSendPostImage = () => {
     if (images) {
-      images.map((file) => {
-        let reff = document.createElement("img");
-        reff.src = file.image;
-        reff.alt = "err";
-        reff.style.filter = activeFilter ?? "";
-        reff.width = 490;
-        reff.height = 503;
+      images.map(({ image, id, filter }) => {
+        const imageRef = document.createElement("img");
+        imageRef.src = image;
+        imageRef.alt = "err";
+        imageRef.width = 490;
+        imageRef.height = 503;
 
-        const photoEditingBeforeSending = applyImageFilter(reff, activeFilter!, `${aspectRatio!}`, zoomValue!);
+        const photoEditingBeforeSending = applyImageFilter(imageRef, filter, `${aspectRatio!}`, zoomValue!);
+
         const formData = new FormData();
-        formData.append("file", dataURLToBlob(photoEditingBeforeSending), file.id);
+        formData.append("file", dataURLToBlob(photoEditingBeforeSending), id);
         uploadPostImage(formData)
           .unwrap()
           .then((res) => {
             dispatch(postActions.addImageId(res.images[0]));
             showFourthModal?.();
-            toast.success("Post image uploaded");
+            toast.success("Post imageRef uploaded");
           })
           .catch((err) => {
             toast.error("Error");
