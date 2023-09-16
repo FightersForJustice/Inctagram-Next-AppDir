@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import { toast } from "react-toastify";
-import { filters } from "@/features/data";
 
 const initialAppState: PostStateType = {
   postImagesIds: [],

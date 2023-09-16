@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import s from "../CreatePost.module.scss";
 import { CroppingModal } from "@/components/Modals/CroppingModal";
 import { AspectRatio } from "./AspectRatio";
@@ -40,17 +40,11 @@ export const SecondModal: React.FC<Props> = ({
   croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const imagesArr = useAppSelector((state) => state.post.postImages);
   const imagesGalleryImages = useAppSelector(imagesGallery);
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
 
-  const [ratio, setRatio] = useState(1);
-
-  // useEffect(() => {
-  //   setRatio(aspectRatio);
-  // }, [aspectRatio]);
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
@@ -74,7 +68,7 @@ export const SecondModal: React.FC<Props> = ({
 
         <PostCropper
           postImage={postImage}
-          aspectRatio={ratio}
+          aspectRatio={1}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
           loadedImages={imagesGalleryImages}

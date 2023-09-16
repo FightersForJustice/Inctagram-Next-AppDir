@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { GetResponse } from "@/api/profile.api";
 import { FirstModal } from "./FirstModal";
@@ -9,7 +9,6 @@ import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { imagesGallery, postImages } from "@/redux/reducers/post/postSelectors";
-import { act } from "react-dom/test-utils";
 
 type Props = {
   showCreatePostModal: boolean;
@@ -25,7 +24,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [croppedPostImage, setCroppedPostImage] = useState("");
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
   const [aspectRatio, setAspectRatio] = useState<AspectRatioType>(AspectRatioType.two);
-  const [activeFilter, setActiveFilter] = useState("");
   const [zoomValue, setZoomValue] = useState("10");
 
   const dispatch = useAppDispatch();
@@ -33,9 +31,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const imagesGalleryArr = useAppSelector(imagesGallery);
   const currentImage = postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
 
-  useEffect(() => {
-    console.log(activeFilter);
-  }, [activeFilter]);
   const showSecondModal = () => {
     setThird(false);
     setFourth(false);
@@ -86,27 +81,19 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
       )}
       {third && (
         <ThirdModal
-          loadedImages={loadedImages}
           showSecondModal={showSecondModal}
           showFourthModal={showFourthModal}
           aspectRatio={aspectRatio}
-          setActiveFilter={setActiveFilter}
-          activeFilter={activeFilter}
           zoomValue={zoomValue}
-          file={file!}
           setShowCreatePostModal={setShowCreatePostModal}
-          croppedPostImage={croppedPostImage}
         />
       )}
       {fourth && (
         <FourthModal
-          loadedImages={loadedImages}
           showThirdModal={showThirdModal}
           aspectRatio={aspectRatio}
-          activeFilter={activeFilter}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
-          croppedPostImage={croppedPostImage}
           userData={userData}
         />
       )}

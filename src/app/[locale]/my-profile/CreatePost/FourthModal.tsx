@@ -6,7 +6,7 @@ import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType, ImageStateType } from "./CreatePost";
+import { AspectRatioType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { useAppSelector } from "@/redux/hooks/useSelect";
@@ -15,23 +15,17 @@ import { postImagesIds } from "@/redux/reducers/post/postSelectors";
 type Props = {
   showThirdModal: () => void;
   aspectRatio: AspectRatioType;
-  activeFilter: string;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
-  croppedPostImage: string;
   userData: GetResponse;
-  loadedImages: ImageStateType[];
 };
 
 export const FourthModal: React.FC<Props> = ({
   showThirdModal,
   aspectRatio,
-  activeFilter,
   zoomValue,
   setShowCreatePostModal,
-  croppedPostImage,
   userData,
-  loadedImages,
 }) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
@@ -41,7 +35,7 @@ export const FourthModal: React.FC<Props> = ({
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
-  const [activeImage, setActiveImage] = useState<string>(images[0].image);
+  const [activeImage, setActiveImage] = useState<string>(images[0].image || "");
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaLength(e.currentTarget.value.length);

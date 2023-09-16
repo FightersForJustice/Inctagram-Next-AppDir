@@ -3,7 +3,7 @@ import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "@/components/Modals/FiltersModal";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType, ImageStateType } from "./CreatePost";
+import { AspectRatioType } from "./CreatePost";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImages } from "@/redux/reducers/post/postSelectors";
@@ -15,31 +15,16 @@ type Props = {
   showSecondModal: () => void;
   showFourthModal: () => void;
   aspectRatio: AspectRatioType;
-  setActiveFilter: (value: string) => void;
-  activeFilter: string;
   zoomValue: string;
-  file: File[];
   setShowCreatePostModal: (value: boolean) => void;
-  croppedPostImage: string;
-  loadedImages: ImageStateType[];
 };
 
-export interface IActiveImage {
-  image: string;
-  filter: string;
-}
-
 export const ThirdModal: React.FC<Props> = ({
-  loadedImages,
   showSecondModal,
   showFourthModal,
   aspectRatio,
-  setActiveFilter,
-  activeFilter,
   zoomValue,
-  file,
   setShowCreatePostModal,
-  croppedPostImage,
 }) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesArr = useAppSelector(postImages);
@@ -59,9 +44,7 @@ export const ThirdModal: React.FC<Props> = ({
         buttonName={"Next"}
         showSecondModal={showSecondModal}
         showFourthModal={showFourthModal}
-        file={file}
         onClose={() => setAreYouSureModal(true)}
-        activeFilter={activeFilter}
         zoomValue={zoomValue}
         aspectRatio={aspectRatio}
         changedPostImage={changedPostImage}

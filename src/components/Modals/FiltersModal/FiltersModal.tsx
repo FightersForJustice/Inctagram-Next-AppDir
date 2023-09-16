@@ -48,7 +48,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
             showFourthModal?.();
             toast.success("Post imageRef uploaded");
           })
-          .catch((err) => {
+          .catch(() => {
             toast.error("Error");
           });
       });
@@ -91,11 +91,9 @@ type Props = {
   buttonName: string;
   showSecondModal?: () => void;
   showFourthModal?: () => void;
-  file?: File[];
   onPublishPost?: () => void;
   onDeletePostImage?: () => void;
   changedPostImage?: MutableRefObject<any>;
-  activeFilter?: string;
   aspectRatio?: AspectRatioType;
   zoomValue?: string;
 };
