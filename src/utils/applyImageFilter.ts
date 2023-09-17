@@ -23,7 +23,6 @@ export const applyImageFilter = (
   ctx.filter = filter;
   ctx.drawImage(imageElement, 0, 0, canvasWidth, canvasHeight);
 
-  console.log(ctx);
   // Применяем дополнительные стили трансформации (transform) на холсте
   const scaleFactor = +zoomValue / 10;
 

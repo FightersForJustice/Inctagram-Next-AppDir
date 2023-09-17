@@ -35,7 +35,6 @@ export const FourthModal: React.FC<Props> = ({
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
-  const [activeImage, setActiveImage] = useState<string>(images[0].image || "");
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaLength(e.currentTarget.value.length);
@@ -83,7 +82,7 @@ export const FourthModal: React.FC<Props> = ({
       >
         <div className={s.cropping__publication}>
           <div className={s.cropping__publication__box}>
-            <Carousel loadedImages={images} setActive={setActiveImage} />
+            <Carousel loadedImages={images} />
           </div>
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>

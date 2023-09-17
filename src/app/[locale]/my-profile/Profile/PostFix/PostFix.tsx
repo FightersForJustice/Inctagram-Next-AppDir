@@ -53,12 +53,14 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
               <div className={s.post__img}>
                 <Carousel>
                   {data.images.map((i, index) => {
-                    console.log(i.url);
-                    return (
-                      <SwiperSlide key={index} className={"w-full"}>
-                        <img src={i.url} alt={"err"} />
-                      </SwiperSlide>
-                    );
+                    if (i.width !== 640) {
+                      return (
+                        <SwiperSlide key={index} className={"w-full"}>
+                          <img src={i.url} alt={"err"} />
+                        </SwiperSlide>
+                      );
+                    }
+                    return;
                   })}
                 </Carousel>
               </div>
@@ -66,7 +68,6 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
               <Loader />
             )}
 
-            {/*<Image src={data?.images[0]?.url} alt={"post"} width={491} height={480} className={s.post__img} />*/}
             <div className={s.post__container}>
               <div className={s.post__header}>
                 <div className={s.post__header__wrapper}>

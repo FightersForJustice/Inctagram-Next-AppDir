@@ -65,7 +65,7 @@ export const ThirdModal: React.FC<Props> = ({
                     alt={"image-filter"}
                     width={108}
                     height={108}
-                    style={{ filter }}
+                    style={{ filter, marginRight: "10px" }}
                     className={s.cropping__filters__smallImage}
                     ref={changedPostImage}
                   />

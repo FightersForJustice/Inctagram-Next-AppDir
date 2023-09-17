@@ -37,8 +37,8 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
         imageRef.width = 490;
         imageRef.height = 503;
 
-        const photoEditingBeforeSending = applyImageFilter(imageRef, filter, `${aspectRatio!}`, zoomValue!);
-
+        const photoEditingBeforeSending = applyImageFilter(imageRef, filter, `4:5`, zoomValue!);
+        console.log(photoEditingBeforeSending);
         const formData = new FormData();
         formData.append("file", dataURLToBlob(photoEditingBeforeSending), id);
         uploadPostImage(formData)

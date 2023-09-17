@@ -68,7 +68,7 @@ export const SecondModal: React.FC<Props> = ({
 
         <PostCropper
           postImage={postImage}
-          aspectRatio={1}
+          aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
           loadedImages={imagesGalleryImages}

@@ -19,7 +19,7 @@ interface IProps {
   loadedImages?: ImageStateType[];
   slidesStyles?: SlidesStyles;
   ref?: any;
-  setActive: (value: string) => void;
+  setActive?: (value: string) => void;
 }
 
 export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, setActive, ref }) => {
@@ -36,7 +36,7 @@ export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, set
             return (
               <SwiperSlide key={id} className={"w-full"}>
                 {({ isActive }) => {
-                  if (isActive) setActive(image);
+                  if (isActive && setActive) setActive(image);
                   return (
                     <Image
                       src={image}
@@ -44,7 +44,7 @@ export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, set
                       width={slidesStyles?.width || 490}
                       height={slidesStyles?.height || 503}
                       className={slidesStyles?.className}
-                      style={{ filter }}
+                      style={{ filter, margin: "0 auto" }}
                       ref={ref}
                     />
                   );

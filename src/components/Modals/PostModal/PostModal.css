@@ -16,6 +16,7 @@
     background-color: var(--dark-300);
     border-radius: 5px;
     border: 1px solid var(--dark-100);
+    overflow: hidden;
 }
 
 .post__modal__header {
