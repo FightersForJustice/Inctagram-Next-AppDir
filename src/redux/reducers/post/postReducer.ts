@@ -6,6 +6,7 @@ const initialAppState: PostStateType = {
   postImagesIds: [],
   postImages: [],
   imagesGallery: [],
+  somePostChanged: false,
 };
 
 const slice = createSlice({
@@ -61,9 +62,11 @@ const slice = createSlice({
     removeAllGalleryImages(state) {
       state.imagesGallery = [];
     },
+    somePostIsChanged(state, action: PayloadAction<boolean>) {
+      state.somePostChanged = action.payload;
+    },
   },
 });
-
 export const postReducer = slice.reducer;
 export const postActions = slice.actions;
 
@@ -77,4 +80,5 @@ export type PostStateType = {
   postImagesIds: IUploadImageId[];
   postImages: ImageStateType[];
   imagesGallery: ImageStateType[];
+  somePostChanged: boolean;
 };

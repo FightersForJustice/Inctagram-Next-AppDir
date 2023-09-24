@@ -3,28 +3,36 @@ import Image from "next/image";
 import { Loader } from "@/components/Loader";
 
 import s from "./InfiniteScrollMyPosts.module.scss";
-import { PostsItem, useLazyGetUserPostsQuery } from "@/api/posts.api";
+import { PostsItem, useGetPostQuery, useGetUserPostsQuery, useLazyGetUserPostsQuery } from "@/api/posts.api";
 import { useScrollFetching } from "@/features/customHooks";
 import { toast } from "react-toastify";
 import { StatusCode } from "@/api/auth.api";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/post/postReducer";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { somePostChanged } from "@/redux/reducers/post/postSelectors";
+import { overflow } from "html2canvas/dist/types/css/property-descriptors/overflow";
 
 type Props = {
   setOpen: (value: boolean) => void;
   setSelectedPost: (postId: number) => void;
   getUserPosts: (value: PostsItem[]) => void;
+  postChanges: boolean;
 };
 
 export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, getUserPosts }) => {
+  const postChanged = useAppSelector(somePostChanged);
+
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
   const [totalCount, setTotalCount] = useState(0);
   const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
 
-  const [getPosts, { isLoading }] = useLazyGetUserPostsQuery();
+  const [getPosts, { isFetching }] = useLazyGetUserPostsQuery();
 
   const loadMorePosts = () => {
-    if (!isLoading) {
+    if (!isFetching) {
       getPosts({
         idLastUploadedPost: lastLoadedPostId,
         pageSize: 12,
@@ -45,6 +53,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   useEffect(() => {
+    console.log(lastLoadedPostId);
     getPosts({
       idLastUploadedPost: lastLoadedPostId!,
       pageSize: 8,
@@ -64,7 +73,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
         }
         toast.error(err.error);
       });
-  }, []);
+  }, [postChanged]);
 
   useEffect(() => {
     if (fetching && posts.length < totalCount) {
@@ -80,20 +89,20 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   const postsImages = () => {
     return posts.map((i) => {
       return (
-        <Image
-          src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}
-          alt={"post"}
-          width={234}
-          height={228}
-          key={i.id}
-          onClick={() => openPostHandler(i.id)}
-          className={s.post}
-        />
+        <div key={i.id} className={"overflow-hidden"}>
+          <Image
+            src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}
+            alt={"post"}
+            width={234}
+            height={228}
+            key={i.id}
+            onClick={() => openPostHandler(i.id)}
+            className={s.post}
+          />
+        </div>
       );
     });
   };
-
-  //if (postsError || paginationError) toast.error("Error");
 
   return (
     <>
@@ -104,7 +113,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
           <p className={"font-bold text-2xl"}>You don&apos;t have any posts yet 😢</p>
         </div>
       )}
-      {isLoading && <Loader />}
+      {isFetching && <Loader />}
       {fetching && <Loader />}
     </>
   );

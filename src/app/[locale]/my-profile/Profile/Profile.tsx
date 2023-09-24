@@ -27,6 +27,8 @@ export const Profile: React.FC<Props> = ({
   const [modalHeader, setModalHeader] = useState("");
   const [userPosts, setUserPosts] = useState<PostsItem[]>([]);
 
+  const [postChanges, setPostChanges] = useState(false);
+
   const getUserPosts = (postsAmount: PostsItem[]) => {
     setUserPosts(postsAmount);
   };
@@ -56,6 +58,7 @@ export const Profile: React.FC<Props> = ({
       </div>
       <div className={s.profile__posts}>
         <InfiniteScrollMyPosts
+          postChanges={postChanges}
           setOpen={setOpenPostModal}
           setSelectedPost={setSelectedPost}
           getUserPosts={getUserPosts}
@@ -73,25 +76,6 @@ export const Profile: React.FC<Props> = ({
           />
         </PostModal>
       )}
-
-      {/*{openPostModal && (
-        <EditPostModal
-          title={modalHeader}
-          width={"1200px"}
-          onClose={() => {
-            setOpenPostModal(false);
-          }}
-          isOkBtn={false}
-        >
-          <Post
-            setModalHeader={setModalHeader}
-            postId={selectedPost}
-            avatar={userData?.avatars[0].url}
-            userName={userData?.userName}
-            setOpen={setOpenPostModal}
-          />
-        </EditPostModal>
-      )}*/}
     </>
   );
 };

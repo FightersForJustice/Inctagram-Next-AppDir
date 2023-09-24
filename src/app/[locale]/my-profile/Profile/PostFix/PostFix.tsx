@@ -12,6 +12,8 @@ import { useDeletePostMutation, useGetPostQuery } from "@/api";
 import { handleApiError } from "@/utils";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions, postReducer } from "@/redux/reducers/post/postReducer";
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -30,6 +32,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(postId!);
 
+  const dispatch = useAppDispatch();
   const onDeletePost = () => {
     deletePost(postId!)
       .unwrap()
@@ -38,6 +41,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
         toast.success("Post was deleted");
       })
       .catch((err) => toast.error(err.error));
+    dispatch(postActions.somePostIsChanged(true));
   };
 
   if (error) {

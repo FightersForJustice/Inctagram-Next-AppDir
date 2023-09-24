@@ -11,6 +11,8 @@ import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImagesIds } from "@/redux/reducers/post/postSelectors";
+import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import { postActions } from "@/redux/reducers/post/postReducer";
 
 type Props = {
   showThirdModal: () => void;
@@ -27,6 +29,8 @@ export const FourthModal: React.FC<Props> = ({
   setShowCreatePostModal,
   userData,
 }) => {
+  const dispatch = useAppDispatch();
+
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState("");
   const [areYouSureModal, setAreYouSureModal] = useState(false);
@@ -54,6 +58,8 @@ export const FourthModal: React.FC<Props> = ({
       .catch(() => {
         toast.error("Error");
       });
+    dispatch(postActions.removeAllGalleryImages);
+    dispatch(postActions.removeImage);
   };
 
   const onDeletePostImage = () => {
