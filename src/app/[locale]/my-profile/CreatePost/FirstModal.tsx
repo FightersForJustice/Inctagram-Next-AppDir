@@ -37,12 +37,12 @@ export const FirstModal: React.FC<Props> = ({
       setFile([file]);
     }
 
-    let newImagesArr: ImageStateType[] = loadedImages;
+    let newImagesArr: any = loadedImages;
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
-    newImagesArr.map((i) => {
-      // dispatch(postActions.addImage(i));
-    });
+    // newImagesArr.map((i) => {
+    //   // dispatch(postActions.addImage(i));
+    // });
 
     setPostImage(URL.createObjectURL(file));
 

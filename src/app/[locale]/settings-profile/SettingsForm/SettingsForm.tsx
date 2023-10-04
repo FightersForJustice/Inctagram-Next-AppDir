@@ -18,7 +18,7 @@ type Props = {
   userCity: string;
   setUserCity: (city: string) => void;
   translate: any;
-  userProfile: PutProfileBody;
+  userProfile?: PutProfileBody;
 };
 type FormValues = {
   userName: string;

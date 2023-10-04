@@ -8,16 +8,14 @@ import { SubscriptionsModal } from "@/components/Modals/SubscriptionsModal";
 import { Profile } from "./Profile";
 import { Loader } from "@/components/Loader";
 import { useGetProfileQuery } from "@/api";
-import { useAppSelector } from "@/redux/hooks/useSelect";
 
 const MyProfile = () => {
-  const userId = useAppSelector((state) => state.app.userID);
   const [paidAccount, setPaidAccount] = useState(true);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
 
-  const { data, isLoading, refetch, isSuccess } = useGetProfileQuery(userId ?? 0);
+  const { data, isLoading, refetch, isSuccess } = useGetProfileQuery();
 
   if (isLoading) return <Loader />;
 

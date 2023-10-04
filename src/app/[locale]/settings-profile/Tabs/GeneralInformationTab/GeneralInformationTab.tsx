@@ -9,6 +9,7 @@ import { useDeleteProfileAvatarMutation, useGetProfileQuery } from "@/api";
 import { Loader } from "@/components/Loader";
 import { useTranslations } from "next-intl";
 import { handleApiError } from "@/utils";
+import { PutProfileBody } from "@/api/profile.api";
 
 export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, setLoadedAvatar, loadedAvatar }) => {
   const t = useTranslations("SettingsProfilePage.GeneralInformationTab");
