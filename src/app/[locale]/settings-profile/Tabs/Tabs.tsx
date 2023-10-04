@@ -10,9 +10,12 @@ import { Loader } from "@/components/Loader/Loader";
 import { useTranslations } from "next-intl";
 import { ShowAddAvatarModal } from "./ShowAddAvatarModal/ShowAddAvatarModal";
 import { AccountManagementTab } from "./AccountManagementTab/AccountManagementTab";
+import { MyPayments } from "@/app/[locale]/settings-profile/Tabs/MyPayments";
+import { useAppSelector } from "@/redux/hooks/useSelect";
 
 const TabsDemo = () => {
   const t = useTranslations("SettingsProfilePage");
+  const userID = useAppSelector((state) => state.app.userID);
 
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
   const [userAvatar, setUserAvatar] = useState<string>("");
@@ -56,6 +59,7 @@ const TabsDemo = () => {
         .unwrap()
         .then((res) => {
           getUserProfile();
+
           setLoadedAvatar(res.avatars[0].url);
           toast.success("Avatar successfully uploaded");
         })
@@ -69,7 +73,7 @@ const TabsDemo = () => {
   };
 
   return (
-    <div style={{ gridArea: "profile" }}>
+    <div style={{ gridArea: "profile", width: "100%" }}>
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
@@ -92,6 +96,7 @@ const TabsDemo = () => {
         />
         <DevicesTab />
         <AccountManagementTab />
+        <MyPayments />
       </Tabs.Root>
       {showAddAvatarModal && (
         <ShowAddAvatarModal

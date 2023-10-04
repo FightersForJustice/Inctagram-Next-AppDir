@@ -19,7 +19,7 @@ export let profileApi = createApi({
     getProfile: builder.query<GetResponse, void>({
       query: () => {
         return {
-          url: "users/profile",
+          url: `users/profile/${localStorage.getItem("userID") ?? 0}`,
           method: "GET",
         };
       },

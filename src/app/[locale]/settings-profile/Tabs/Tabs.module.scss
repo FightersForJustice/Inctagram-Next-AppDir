@@ -8,7 +8,8 @@ input {
 .TabsRoot {
   display: flex;
   flex-direction: column;
-  width: 726px;
+  width: 100%;
+  min-width: 726px;
   margin: 0 auto;
   outline: none;
   padding-top: 30px;
@@ -17,6 +18,7 @@ input {
 .TabsList {
   flex-shrink: 0;
   display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid var(--dark-100);
 }
 
@@ -140,30 +142,35 @@ input {
 .wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   width: 100%;
   border-bottom: 1px solid var(--dark-300);
   padding-bottom: 23px;
   margin-bottom: 100px;
 
+  &__right{
+    width: 100%;
+    form{
+      width: 100%;
+    }
+  }
+
   &__left {
-    padding-top: 48px;
+    width: 40%;
     position: relative;
     text-align: center;
+    padding-top: 50px;
   }
 
   &__delete {
     position: absolute;
-    top: 69px;
-    right: 18px;
+    top: 55px;
+    right: 70px;
     cursor: pointer;
   }
 
   &__image {
-    margin-bottom: 24px;
     border-radius: 50%;
-    width: 190px;
-    height: 190px;
+    margin: 0 auto 50px auto;
   }
 
   &__inputFile {
@@ -176,13 +183,12 @@ input {
   }
 
   &__loadZone {
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
     overflow: hidden;
     position: relative;
     cursor: pointer;
     padding: 2px;
     max-width: 225px;
-    margin-bottom: 30px;
     text-align: center;
   }
 

@@ -62,10 +62,18 @@ export const GeneralInformationTab: React.FC<Props> = ({ setShowAddAvatarModal, 
                 className={s.wrapper__delete}
               />
             )}
-            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>{t("addBtn")}</TransparentBtn>
+            <TransparentBtn style={{ margin: "0 auto" }} onClick={() => setShowAddAvatarModal(true)}>
+              {t("addBtn")}
+            </TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
-            <SettingsForm userBirthday={userBirthday} userCity={userCity} setUserCity={setUserCity} translate={t} />
+            <SettingsForm
+              userProfile={data}
+              userBirthday={data?.dateOfBirth ?? ""}
+              userCity={userCity}
+              setUserCity={setUserCity}
+              translate={t}
+            />
           </div>
         </div>
       </Tabs.Content>

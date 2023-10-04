@@ -15,6 +15,10 @@ const slice = createSlice({
       state.userID = action.payload.userID;
       state.email = action.payload.email;
       state.userName = action.payload.userName;
+
+      if (action.payload.userID) {
+        localStorage.setItem("userID", action.payload.userID.toString());
+      }
     },
     setTokenIsActive(state, action: PayloadAction<boolean>) {
       state.tokenIsActive = action.payload;

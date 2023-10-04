@@ -12,6 +12,7 @@ type Props = {
   translateName: string;
   minLength: number;
   maxLength: number;
+  defaultValue?: string;
 };
 
 export const SettingsFormItem: React.FC<Props> = ({
@@ -24,11 +25,13 @@ export const SettingsFormItem: React.FC<Props> = ({
   translateName,
   maxLength,
   minLength,
+  defaultValue,
 }) => {
   return (
     <div className={s.form__itemWrapper}>
       <label className={s.form__label}>{translate(translateName)}</label>
       <input
+        defaultValue={defaultValue}
         id={id}
         {...register(registerName, { required: true, minLength, maxLength })}
         className={`${error ? s.form__textInput__error : s.form__textInput}`}

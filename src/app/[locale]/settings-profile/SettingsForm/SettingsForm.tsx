@@ -18,6 +18,7 @@ type Props = {
   userCity: string;
   setUserCity: (city: string) => void;
   translate: any;
+  userProfile: PutProfileBody;
 };
 type FormValues = {
   userName: string;
@@ -27,7 +28,7 @@ type FormValues = {
   aboutMe: string | null | undefined;
 };
 
-export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCity, setUserCity }) => {
+export const SettingsForm: React.FC<Props> = ({ userProfile, userBirthday, translate, userCity, setUserCity }) => {
   const [dateOfBirth, setDateOfBirth] = useState(userBirthday);
   const [ageError, setAgeError] = useState("");
 
@@ -80,6 +81,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCit
     <>
       <form onSubmit={onSubmit} className={s.form}>
         <SettingsFormItem
+          defaultValue={userProfile?.userName ?? ""}
           translate={translate}
           id={"settings-profile-userName"}
           register={register}
@@ -92,6 +94,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCit
         />
 
         <SettingsFormItem
+          defaultValue={userProfile?.firstName ?? ""}
           translate={translate}
           id={"settings-profile-firstName"}
           register={register}
@@ -104,6 +107,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCit
         />
 
         <SettingsFormItem
+          defaultValue={userProfile?.lastName ?? ""}
           translate={translate}
           id={"settings-profile-lastName"}
           register={register}
@@ -138,6 +142,7 @@ export const SettingsForm: React.FC<Props> = ({ userBirthday, translate, userCit
         <div className={s.form__itemWrapper}>
           <label className={s.form__label}>{translate("aboutMe")}</label>
           <textarea
+            defaultValue={userProfile?.aboutMe ?? ""}
             id={"settings-profile-aboutMe"}
             {...register("aboutMe", { required: true, minLength: 10, maxLength: 100 })}
             className={`${errors.aboutMe ? s.form__textarea__error : s.form__textarea}`}
