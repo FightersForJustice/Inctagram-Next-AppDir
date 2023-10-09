@@ -1,7 +1,7 @@
 import React, { MutableRefObject, PropsWithChildren } from "react";
 
 import "./FiltersModal.css";
-import { useUploadPostImageMutation } from "@/api";
+import { useDeletePostImageMutation, useUploadPostImageMutation } from "@/api";
 import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
 import { applyImageFilter } from "@/utils";
@@ -24,6 +24,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onDeletePostImage,
   aspectRatio,
   zoomValue,
+  uploadIds,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
@@ -96,4 +97,5 @@ type Props = {
   changedPostImage?: MutableRefObject<any>;
   aspectRatio?: AspectRatioType;
   zoomValue?: string;
+  uploadIds?: string[];
 };

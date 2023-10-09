@@ -16,6 +16,9 @@ const slice = createSlice({
     addImageId(state, action: PayloadAction<IUploadImageId>) {
       state.postImagesIds.push(action.payload);
     },
+    removeImageIds(state) {
+      state.postImagesIds = [];
+    },
     addImage(state, action: PayloadAction<any>) {
       if (state.postImages.findIndex((i) => i.id === action.payload.id) > -1) {
         return;

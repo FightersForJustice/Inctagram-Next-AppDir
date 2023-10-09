@@ -39,6 +39,8 @@ export const FourthModal: React.FC<Props> = ({
   const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
+  const imagesUploadIds = useAppSelector((state) => state.post.postImagesIds);
+
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaLength(e.currentTarget.value.length);
@@ -63,17 +65,16 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onDeletePostImage = () => {
-    const uploadId = localStorage.getItem("uploadId");
-
-    deleteImage(uploadId!)
-      .unwrap()
-      .then(() => {
-        showThirdModal?.();
-        toast.success("Post image deleted");
-      })
-      .catch(() => {
-        toast.error("Error");
-      });
+    imagesUploadIds.map((uploadId) => {
+      if (uploadId.uploadId)
+        deleteImage(uploadId.uploadId)
+          .unwrap()
+          .then(() => {
+            toast.success("Post image deleted");
+          });
+    });
+    dispatch(postActions.removeImageIds());
+    showThirdModal?.();
   };
 
   return (
