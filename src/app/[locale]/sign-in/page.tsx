@@ -64,7 +64,14 @@ const SignInPage = () => {
             width={36}
             height={36}
           />
-          <Image src={"/img/github.svg"} alt={"github-icon"} width={36} height={36} onClick={gitHubAuth} />
+          <Image
+            src={"/img/github.svg"}
+            alt={"github-icon"}
+            width={36}
+            height={36}
+            onClick={gitHubAuth}
+            className={"cursor-pointer"}
+          />
         </div>
         <SignIn translate={t} />
       </div>
