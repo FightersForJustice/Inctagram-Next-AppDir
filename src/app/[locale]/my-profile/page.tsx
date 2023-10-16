@@ -34,7 +34,7 @@ const MyProfile = () => {
       </div>
       {showSubscribersModal && <SubscribersModal setShowSubscribersModal={setShowSubscribersModal} />}
       {showSubscriptionsModal && <SubscriptionsModal setShowSubscriptionsModal={setShowSubscriptionsModal} />}
-      {/*{isLoading && <Loader />}*/}
+      {isLoading && <Loader />}
     </>
   );
 };

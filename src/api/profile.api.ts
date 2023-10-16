@@ -49,6 +49,30 @@ export let profileApi = createApi({
         };
       },
     }),
+    getDeviceSessions: builder.query<DevicesResponse[], void>({
+      query: () => {
+        return {
+          url: `sessions`,
+          method: "GET",
+        };
+      },
+    }),
+    deleteSessionsTerminateAll: builder.mutation<void, void>({
+      query: () => {
+        return {
+          url: "sessions/terminate-all",
+          method: "DELETE",
+        };
+      },
+    }),
+    deleteSessionsDevice: builder.mutation<void, string>({
+      query: (deviceId: string) => {
+        return {
+          url: `sessions/${deviceId}`,
+          method: "DELETE",
+        };
+      },
+    }),
   }),
 });
 
@@ -59,6 +83,9 @@ export let {
   useDeleteProfileAvatarMutation,
   useDeleteProfileMutation,
   useLazyGetProfileQuery,
+  useGetDeviceSessionsQuery,
+  useDeleteSessionsDeviceMutation,
+  useDeleteSessionsTerminateAllMutation,
 } = profileApi;
 
 export type PostProfileAvatar = {
@@ -90,4 +117,15 @@ export interface Avatar {
   width: number;
   height: number;
   fileSize: number;
+}
+export interface DevicesResponse {
+  deviceId: number;
+  ip: string;
+  lastActive: string;
+  browserName: string;
+  browserVersion: string;
+  deviceName: string;
+  osName: string;
+  osVersion: string;
+  deviceType: string;
 }
