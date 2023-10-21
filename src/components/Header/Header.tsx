@@ -3,28 +3,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "@/components/Header/HeaderNotification";
-import { Loader } from "@/components/Loader/Loader";
-
-function hasQueryParams(inputString: string): boolean {
-  const queryParamsRegex = /\?.+=.+$/;
-  return queryParamsRegex.test(inputString);
-}
 
 export const Header = () => {
-  const [language, setLanguage] = useState<string>("ru");
+  const [language, setLanguage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    setLanguage(localStorage.getItem("language") || "ru");
+    setLanguage(/\/ru/.test(location.pathname) ? "ru" : "en");
   }, []);
 
   const onSelectChange = ({ currentTarget: { value } }: ChangeEvent<HTMLSelectElement>) => {
     setLanguage(value);
-    localStorage.setItem("language", value);
-
     startTransition(() => {
       router.replace(`/${value}${pathname}`);
     });
@@ -41,23 +34,28 @@ export const Header = () => {
           {loggedId && <HeaderNotification />}
 
           {!language ? (
-            <div>
-              <Loader />
+            <div
+              className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
+            >
+              Loading...
             </div>
           ) : (
-            <select
-              name="Languages"
-              className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
-              onChange={onSelectChange}
-              value={language}
-            >
-              <option value="en" className={`bg-black`}>
-                English
-              </option>
-              <option value="ru" className={`bg-black`}>
-                Russian
-              </option>
-            </select>
+            <>
+              {/*ToDo: написать кастомный селект*/}
+              <select
+                name="Languages"
+                className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
+                onChange={onSelectChange}
+                value={language}
+              >
+                <option value="en" className={`bg-black`}>
+                  English
+                </option>
+                <option value="ru" className={`bg-black`}>
+                  Russian
+                </option>
+              </select>
+            </>
           )}
         </div>
       </div>

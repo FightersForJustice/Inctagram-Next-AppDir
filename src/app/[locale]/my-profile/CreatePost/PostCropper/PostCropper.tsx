@@ -1,10 +1,11 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageStateType } from "../CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
+import { useAppSelector } from "@/redux/hooks/useSelect";
 
 type Props = {
   postImage: ImageStateType;
@@ -17,8 +18,12 @@ type Props = {
 
 export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio, setCroppedPostImage }) => {
   const cropperRef = useRef<ReactCropperElement>(null);
+  const ratio = useAppSelector((state) => state.post.cropAspectRatio);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    cropperRef.current?.cropper.setAspectRatio(ratio);
+  }, [ratio]);
   const onCropEnd = () => {
     const cropper = cropperRef.current?.cropper;
     const value = cropper?.getCroppedCanvas().toDataURL()!;
@@ -38,12 +43,11 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio
           width: "100%",
         }}
         ref={cropperRef}
-        aspectRatio={aspectRatio}
         cropend={onCropEnd}
         background={false}
         zoomable={false}
         checkOrientation={true}
-        initialAspectRatio={4 / 4}
+        initialAspectRatio={1}
       />
     </>
   );

@@ -14,7 +14,6 @@ type Props = {
   postImage: ImageStateType;
   setPostImage: (value: string) => void;
   showThirdModal: () => void;
-  setAspectRatio: (value: AspectRatioType) => void;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
@@ -29,7 +28,6 @@ export const SecondModal: React.FC<Props> = ({
   postImage,
   setPostImage,
   showThirdModal,
-  setAspectRatio,
   aspectRatio,
   setZoomValue,
   zoomValue,
@@ -56,7 +54,7 @@ export const SecondModal: React.FC<Props> = ({
         width={"492px"}
         loadedImages={loadedImages}
       >
-        <AspectRatio setAspectRatio={setAspectRatio} aspectRatio={aspectRatio} />
+        <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
         <Gallery
           loadedImages={imagesGalleryImages}

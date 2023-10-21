@@ -7,6 +7,7 @@ const initialAppState: PostStateType = {
   postImages: [],
   imagesGallery: [],
   somePostChanged: false,
+  cropAspectRatio: 1,
 };
 
 const slice = createSlice({
@@ -68,6 +69,9 @@ const slice = createSlice({
     somePostIsChanged(state, action: PayloadAction<boolean>) {
       state.somePostChanged = action.payload;
     },
+    setCropAspectRatio(state, action: PayloadAction<number>) {
+      state.cropAspectRatio = action.payload;
+    },
   },
 });
 export const postReducer = slice.reducer;
@@ -84,4 +88,5 @@ export type PostStateType = {
   postImages: ImageStateType[];
   imagesGallery: ImageStateType[];
   somePostChanged: boolean;
+  cropAspectRatio: number;
 };

@@ -23,8 +23,8 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
   const [postImage, setPostImage] = useState("");
   const [croppedPostImage, setCroppedPostImage] = useState("");
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
-  const [aspectRatio, setAspectRatio] = useState<AspectRatioType>(AspectRatioType.one);
   const [zoomValue, setZoomValue] = useState("10");
+  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
 
   const dispatch = useAppDispatch();
   const postImagesArr = useAppSelector(postImages);
@@ -69,7 +69,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
           postImage={currentImage}
           setPostImage={setPostImage}
           showThirdModal={showThirdModal}
-          setAspectRatio={setAspectRatio}
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
