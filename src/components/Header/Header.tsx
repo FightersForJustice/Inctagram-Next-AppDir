@@ -11,33 +11,22 @@ function hasQueryParams(inputString: string): boolean {
 }
 
 export const Header = () => {
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [language, setLanguage] = useState<string>("en");
+  const [language, setLanguage] = useState<string>("ru");
   const [isPending, startTransition] = useTransition();
   const [loggedId, setLoggedIn] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    // При первой загрузке устанавливаем язык на английский
-    if (isInitialRender) {
-      setIsInitialRender(false);
-      const storedLanguage = localStorage.getItem("language");
-      if (storedLanguage) {
-        setLanguage(storedLanguage);
-      } else {
-        setLanguage("en");
-      }
-    }
+    setLanguage(localStorage.getItem("language") || "ru");
   }, []);
 
-  const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedLanguage = event.currentTarget.value;
-    setLanguage(selectedLanguage);
-    localStorage.setItem("language", selectedLanguage);
+  const onSelectChange = ({ currentTarget: { value } }: ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(value);
+    localStorage.setItem("language", value);
 
     startTransition(() => {
-      router.replace(`/${selectedLanguage}${pathname}`);
+      router.replace(`/${value}${pathname}`);
     });
   };
 
@@ -75,120 +64,3 @@ export const Header = () => {
     </header>
   );
 };
-
-/*"use client";
-
-import React, { ChangeEvent, useEffect, useState, useTransition } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next-intl/client";
-import { HeaderNotification } from "@/components/Header/HeaderNotification";
-import { Loader } from "@/components/Loader/Loader";
-
-function hasQueryParams(inputString: string): boolean {
-  const queryParamsRegex = /\?.+=.+$/;
-  return queryParamsRegex.test(inputString);
-}
-
-export const Header = () => {
-  // const [language, setLanguage] = useState<string>("ru");
-  const [language, setLanguage] = useState<string>("en");
-
-  const [isPending, startTransition] = useTransition();
-  const [loggedId, setLoggedIn] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //   if (!localStorage.getItem("language")) {
-  //     localStorage.setItem("language", "en");
-  //     setLanguage("en");
-  //     router.replace(`/${localStorage.getItem("language")}/${pathname}`);
-  //   } else {
-  //     setLanguage(localStorage.getItem("language")!);
-  //     router.replace(`/${localStorage.getItem("language")}/${pathname}`);
-  //   }
-  //   if (sessionStorage.getItem("accessToken")) {
-  //     setLoggedIn(true);
-  //   }
-  // }
-  // }, []);
-
- useEffect(() => {
-   if (typeof window !== "undefined") {
-     const localLang = localStorage.getItem("language");
-     if (!localLang) {
-       localStorage.setItem("language", "en");
-       setLanguage("en");
-       router.replace(`/en/${pathname}`);
-     } else {
-       setLanguage(localLang);
-       if (localLang !== language) {
-         router.replace(`/${localLang}/${pathname}`);
-       }
-     }
-     if (sessionStorage.getItem("accessToken")) {
-       setLoggedIn(true);
-     }
-   }
- }, []);
-
-
-  const onSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setLanguage(event.currentTarget.value);
-
-    // if (typeof window !== "undefined") {
-    localStorage.setItem("language", event.currentTarget.value);
-    // }
-    startTransition(() => {
-      router.replace(`/${event.target.value}${pathname}`);
-    });
-  };
-
-  return (
-    <header className={"border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10 "}>
-      <div className={" max-w-[1200px] m-auto h-[60px] flex items-center justify-between px-3"}>
-        <Link href={"/my-profile"} className={"text-[26px] font-semibold leading-[36px]"}>
-          Inctagram
-        </Link>
-
-        <div className={"flex justify-center items-center gap-[54px]"}>
-          {loggedId && <HeaderNotification />}
-
-          {!language ? (
-            <div>
-              <Loader />
-            </div>
-          ) : (
-            <select
-              name="Languages"
-              className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
-              onChange={onSelectChange}
-              value={language}
-            >
-              <option value="en" className={`bg-black`}>
-                English
-              </option>
-              <option value="ru" className={`bg-black`}>
-                Russian
-              </option>
-            </select>
-          )}
-        </div>
-      </div>
-    </header>
-  );
-};*/
-
-//из селекта
-{
-  /*{["en", "ru"].map((cur) => (
-            <option key={cur} value={cur}>
-              {t("locale", { locale: cur })}
-            </option>
-          ))}*/
-}
-{
-  /*<Image src={"/img/russia.svg"} alt={"russia"} width={20} height={20} />*/
-}
