@@ -1,14 +1,13 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
 import { appActions } from "@/redux/reducers";
 
 export const baseUrl = "https://inctagram.work/api/v1/";
 
 export const baseQuery = fetchBaseQuery({
   baseUrl,
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
@@ -34,10 +33,11 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
     if (res.data) {
       sessionStorage.setItem("accessToken", res.data?.accessToken);
       toast.success("Token was updated");
+      location.reload();
       api.dispatch(appActions.setTokenIsActive(true));
     } else {
       toast.error("Auth error");
-      redirect("/sign-in");
+      location.reload();
       api.dispatch(appActions.setTokenIsActive(false));
     }
   }

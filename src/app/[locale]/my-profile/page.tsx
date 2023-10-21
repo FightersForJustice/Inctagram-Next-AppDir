@@ -10,12 +10,12 @@ import { Loader } from "@/components/Loader";
 import { useGetProfileQuery } from "@/api";
 
 const MyProfile = () => {
-  const [paidAccount, setPaidAccount] = useState(true);
+  const [paidAccount] = useState(true);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
 
-  const { data, isLoading, refetch, isSuccess } = useGetProfileQuery();
+  const { data, isLoading } = useGetProfileQuery();
 
   if (isLoading) return <Loader />;
 

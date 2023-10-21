@@ -29,7 +29,6 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio
       dispatch(postActions.changeImageFromPostGallery(image));
     }
   };
-
   return (
     <>
       <Cropper
@@ -39,11 +38,12 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio
           width: "100%",
         }}
         ref={cropperRef}
-        initialAspectRatio={aspectRatio}
+        aspectRatio={aspectRatio}
         cropend={onCropEnd}
         background={false}
         zoomable={false}
         checkOrientation={true}
+        initialAspectRatio={4 / 4}
       />
     </>
   );

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Loader } from "@/components/Loader";
-
 import s from "./InfiniteScrollMyPosts.module.scss";
-import { PostsItem, useGetPostQuery, useGetUserPostsQuery, useLazyGetUserPostsQuery } from "@/api/posts.api";
+import { PostsItem, useLazyGetUserPostsQuery } from "@/api/posts.api";
 import { useScrollFetching } from "@/features/customHooks";
 import { toast } from "react-toastify";
 import { StatusCode } from "@/api/auth.api";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { somePostChanged } from "@/redux/reducers/post/postSelectors";
-import { overflow } from "html2canvas/dist/types/css/property-descriptors/overflow";
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -53,7 +49,6 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   useEffect(() => {
-    console.log(lastLoadedPostId);
     getPosts({
       idLastUploadedPost: lastLoadedPostId!,
       pageSize: 8,

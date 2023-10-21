@@ -24,10 +24,9 @@ export const Profile: React.FC<Props> = ({
   const t = useTranslations("MyProfilePage");
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
-  const [modalHeader, setModalHeader] = useState("");
   const [userPosts, setUserPosts] = useState<PostsItem[]>([]);
 
-  const [postChanges, setPostChanges] = useState(false);
+  const [postChanges] = useState(false);
 
   const getUserPosts = (postsAmount: PostsItem[]) => {
     setUserPosts(postsAmount);

@@ -8,7 +8,7 @@ import { StatusCode } from "@/api/auth.api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
-import { GetDefaultValuesForm, handleApiError } from "@/utils";
+import { handleApiError } from "@/utils";
 import { SettingsFormSchema } from "@/features/schemas";
 import { SettingsFormItem } from "./SettingsFormItem";
 import CitySelector from "@/app/[locale]/settings-profile/SettingsForm/CitySelector/CitySelector";
@@ -41,7 +41,8 @@ export const SettingsForm: React.FC<Props> = ({ userProfile, userBirthday, trans
     formState: { errors },
     setError,
   } = useForm<FormValues>({
-    defaultValues: GetDefaultValuesForm,
+    // Для чего это?
+    // defaultValues: GetDefaultValuesForm,
     resolver: yupResolver(SettingsFormSchema()),
     mode: "onTouched",
   });

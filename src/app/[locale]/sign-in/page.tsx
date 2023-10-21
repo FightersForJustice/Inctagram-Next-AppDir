@@ -9,7 +9,6 @@ import { Loader } from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { SignIn } from "./SignIn";
-import { useLazyLoginWithGitHubOAuthQuery } from "@/api/auth.api";
 import { baseUrl } from "@/helpers/config";
 
 const SignInPage = () => {
@@ -17,7 +16,6 @@ const SignInPage = () => {
   const router = useRouter();
 
   const [loginWithGoogle, { data, isLoading }] = useLoginWithGoogleOAuthMutation();
-  const [loginWithGitHub, { isSuccess }] = useLazyLoginWithGitHubOAuthQuery();
 
   useEffect(() => {
     if (sessionStorage.getItem("accessToken")) {

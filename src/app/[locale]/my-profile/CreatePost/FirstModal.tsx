@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useId } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import s from "./CreatePost.module.scss";
 import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
 import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
@@ -21,7 +21,6 @@ export const FirstModal: React.FC<Props> = ({
   setPostImage,
   setFile,
   setShowCreatePostModal,
-  setLoadedImages,
   loadedImages,
 }) => {
   const dispatch = useAppDispatch();
@@ -40,14 +39,9 @@ export const FirstModal: React.FC<Props> = ({
     let newImagesArr: any = loadedImages;
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
-    // newImagesArr.map((i) => {
-    //   // dispatch(postActions.addImage(i));
-    // });
-
     setPostImage(URL.createObjectURL(file));
 
     dispatch(postActions.addImage({ id, image: URL.createObjectURL(file) }));
-    // setLoadedImages(newImagesArr);
   };
 
   return (
