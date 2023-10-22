@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { GetResponse } from "@/api/profile.api";
 import { FirstModal } from "./FirstModal";
 import { SecondModal } from "./SecondModal";
@@ -65,7 +64,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
 
       {postImage && (
         <SecondModal
-          loadedImages={loadedImages}
           postImage={currentImage}
           setPostImage={setPostImage}
           showThirdModal={showThirdModal}
@@ -82,7 +80,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
         <ThirdModal
           showSecondModal={showSecondModal}
           showFourthModal={showFourthModal}
-          aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
         />
@@ -90,8 +87,6 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
       {fourth && (
         <FourthModal
           showThirdModal={showThirdModal}
-          aspectRatio={aspectRatio}
-          zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
           userData={userData}
         />

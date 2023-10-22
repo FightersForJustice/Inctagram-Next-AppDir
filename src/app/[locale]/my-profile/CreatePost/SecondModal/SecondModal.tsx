@@ -18,7 +18,6 @@ type Props = {
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
-  loadedImages: ImageStateType[];
   setLoadedImages: (value: any) => void;
   setCroppedPostImage: (value: string) => void;
   croppedPostImage: string;
@@ -32,7 +31,6 @@ export const SecondModal: React.FC<Props> = ({
   setZoomValue,
   zoomValue,
   setShowCreatePostModal,
-  loadedImages,
   setLoadedImages,
   setCroppedPostImage,
   croppedPostImage,
@@ -52,17 +50,10 @@ export const SecondModal: React.FC<Props> = ({
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
         width={"492px"}
-        loadedImages={loadedImages}
       >
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery
-          loadedImages={imagesGalleryImages}
-          setLoadedImages={setLoadedImages}
-          setPostImage={setPostImage}
-          currentImage={postImage}
-          croppedPostImage={croppedPostImage}
-        />
+        <Gallery setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
 
         <PostCropper
           postImage={postImage}

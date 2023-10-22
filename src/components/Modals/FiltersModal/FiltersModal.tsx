@@ -1,7 +1,7 @@
 import React, { MutableRefObject, PropsWithChildren } from "react";
 
 import "./FiltersModal.css";
-import { useDeletePostImageMutation, useUploadPostImageMutation } from "@/api";
+import { useUploadPostImageMutation } from "@/api";
 import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
 import { applyImageFilter } from "@/utils";
@@ -10,7 +10,7 @@ import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImages } from "@/redux/reducers/post/postSelectors";
-import { AspectRatioType, ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
@@ -22,9 +22,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   showFourthModal,
   onPublishPost,
   onDeletePostImage,
-  aspectRatio,
   zoomValue,
-  uploadIds,
 }) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
@@ -39,7 +37,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
         imageRef.height = 503;
 
         const photoEditingBeforeSending = applyImageFilter(imageRef, filter, `4:5`, zoomValue!);
-        console.log(photoEditingBeforeSending);
+        // console.log(photoEditingBeforeSending);
         const formData = new FormData();
         formData.append("file", dataURLToBlob(photoEditingBeforeSending), id);
         uploadPostImage(formData)
@@ -95,7 +93,5 @@ type Props = {
   onPublishPost?: () => void;
   onDeletePostImage?: () => void;
   changedPostImage?: MutableRefObject<any>;
-  aspectRatio?: AspectRatioType;
   zoomValue?: string;
-  uploadIds?: string[];
 };

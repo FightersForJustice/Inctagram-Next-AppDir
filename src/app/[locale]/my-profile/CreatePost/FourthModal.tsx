@@ -6,7 +6,6 @@ import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType } from "./CreatePost";
 import { GetResponse } from "@/api/profile.api";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { useAppSelector } from "@/redux/hooks/useSelect";
@@ -16,19 +15,11 @@ import { postActions } from "@/redux/reducers/post/postReducer";
 
 type Props = {
   showThirdModal: () => void;
-  aspectRatio: AspectRatioType;
-  zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
 };
 
-export const FourthModal: React.FC<Props> = ({
-  showThirdModal,
-  aspectRatio,
-  zoomValue,
-  setShowCreatePostModal,
-  userData,
-}) => {
+export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePostModal, userData }) => {
   const dispatch = useAppDispatch();
 
   const [textareaLength, setTextareaLength] = useState(0);

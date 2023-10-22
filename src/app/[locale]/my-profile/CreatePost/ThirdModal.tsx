@@ -3,7 +3,6 @@ import s from "./CreatePost.module.scss";
 import Image from "next/image";
 import { FiltersModal } from "@/components/Modals/FiltersModal";
 import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType } from "./CreatePost";
 import { Carousel } from "@/components/Carousel/Carousel";
 import { useAppSelector } from "@/redux/hooks/useSelect";
 import { postImages } from "@/redux/reducers/post/postSelectors";
@@ -14,7 +13,6 @@ import { postActions } from "@/redux/reducers/post/postReducer";
 type Props = {
   showSecondModal: () => void;
   showFourthModal: () => void;
-  aspectRatio: AspectRatioType;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
 };
@@ -22,7 +20,6 @@ type Props = {
 export const ThirdModal: React.FC<Props> = ({
   showSecondModal,
   showFourthModal,
-  aspectRatio,
   zoomValue,
   setShowCreatePostModal,
 }) => {
@@ -46,7 +43,6 @@ export const ThirdModal: React.FC<Props> = ({
         showFourthModal={showFourthModal}
         onClose={() => setAreYouSureModal(true)}
         zoomValue={zoomValue}
-        aspectRatio={aspectRatio}
         changedPostImage={changedPostImage}
       >
         <div className={s.cropping__filters}>

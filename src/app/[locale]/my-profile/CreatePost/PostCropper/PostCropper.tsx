@@ -16,7 +16,7 @@ type Props = {
   setLoadedImages: (value: any) => void;
 };
 
-export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio, setCroppedPostImage }) => {
+export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, setCroppedPostImage }) => {
   const cropperRef = useRef<ReactCropperElement>(null);
   const ratio = useAppSelector((state) => state.post.cropAspectRatio);
   const dispatch = useAppDispatch();
@@ -48,6 +48,7 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, aspectRatio
         zoomable={false}
         checkOrientation={true}
         initialAspectRatio={1}
+        crop={onCropEnd}
       />
     </>
   );
