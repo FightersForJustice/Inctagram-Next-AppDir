@@ -1,1 +1,0 @@
-export { DeletePost } from "./DeletePost";

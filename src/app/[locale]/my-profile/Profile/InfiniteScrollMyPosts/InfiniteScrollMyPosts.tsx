@@ -57,6 +57,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     })
       .unwrap()
       .then((res) => {
+        console.log(res.items);
         setPosts(res.items);
         setLastLoadedPostId(res.items[res.items.length - 1].id);
         setTotalCount(res.totalCount);
@@ -82,11 +83,13 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
   };
 
   const postsImages = () => {
+    let currentPosts;
     return posts.map((i) => {
+      currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
         <div key={i.id} className={"overflow-hidden"}>
           <Image
-            src={i.images[0]?.url ? i.images[0]?.url : "/img/profile/posts/post1.png"}
+            src={i.images[0]?.url ? currentPosts[currentPosts.length - 1].url : "/img/profile/posts/post1.png"}
             alt={"post"}
             width={234}
             height={228}

@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next-intl/client";
 import { HeaderNotification } from "@/components/Header/HeaderNotification";
+import { TranslationSelect } from "@/components/Header/TranslationSelect";
 
 export const Header = () => {
   const [language, setLanguage] = useState<string | null>(null);
@@ -16,7 +17,7 @@ export const Header = () => {
     setLanguage(/\/ru/.test(location.pathname) ? "ru" : "en");
   }, []);
 
-  const onSelectChange = ({ currentTarget: { value } }: ChangeEvent<HTMLSelectElement>) => {
+  const onSelectChange = (value: string) => {
     setLanguage(value);
     startTransition(() => {
       router.replace(`/${value}${pathname}`);
@@ -41,20 +42,7 @@ export const Header = () => {
             </div>
           ) : (
             <>
-              {/*ToDo: написать кастомный селект*/}
-              <select
-                name="Languages"
-                className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
-                onChange={onSelectChange}
-                value={language}
-              >
-                <option value="en" className={`bg-black`}>
-                  English
-                </option>
-                <option value="ru" className={`bg-black`}>
-                  Russian
-                </option>
-              </select>
+              <TranslationSelect onSelectChange={onSelectChange} language={language} />
             </>
           )}
         </div>

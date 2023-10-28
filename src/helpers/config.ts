@@ -24,12 +24,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
-    //@ts-ignore
-    const res: { data: { accessToken: string } } = await baseQuery(
-      { url: "auth/update-tokens", method: "POST" },
-      api,
-      extraOptions,
-    );
+    const res: any = await baseQuery({ url: "auth/update-tokens", method: "POST" }, api, extraOptions);
     if (res.data) {
       sessionStorage.setItem("accessToken", res.data?.accessToken);
       toast.success("Token was updated");
@@ -37,7 +32,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       api.dispatch(appActions.setTokenIsActive(true));
     } else {
       toast.error("Auth error");
-      location.reload();
+      location.replace("/sign-in");
       api.dispatch(appActions.setTokenIsActive(false));
     }
   }

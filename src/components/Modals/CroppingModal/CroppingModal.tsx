@@ -20,11 +20,7 @@ export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
   showThirdModal,
 }) => {
   const onNextBtnHandler = () => {
-    // if (!croppedPostImage) {
-    //   toast.error("Сrop image before sending");
-    // } else {
     showThirdModal();
-    // }
   };
 
   return (

@@ -1,1 +1,0 @@
-export { PostComment } from "./PostComment";
