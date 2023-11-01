@@ -28,13 +28,6 @@ export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImage
     } else {
       dispatch(postActions.removeGalleryImage({ id }));
     }
-
-    // const newCollection = loadedImages.filter((item) => item.id !== id);
-    // setLoadedImages(newCollection);
-    //
-    // if (loadedImages.length === 0) {
-    //   setPostImage("");
-    // }
   };
   return (
     <div className={s.collection__container}>
