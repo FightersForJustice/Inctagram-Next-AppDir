@@ -11,11 +11,9 @@ import { useTranslations } from "next-intl";
 import { ShowAddAvatarModal } from "./ShowAddAvatarModal/ShowAddAvatarModal";
 import { AccountManagementTab } from "./AccountManagementTab/AccountManagementTab";
 import { MyPayments } from "@/app/[locale]/settings-profile/Tabs/MyPayments";
-import { useAppSelector } from "@/redux/hooks/useSelect";
 
 const TabsDemo = () => {
   const t = useTranslations("SettingsProfilePage");
-  const userID = useAppSelector((state) => state.app.userID);
 
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
   const [userAvatar, setUserAvatar] = useState<string>("");
@@ -30,8 +28,6 @@ const TabsDemo = () => {
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-
-    // Check for 10mb size of photo
     const maxSize = 10 * 1024 * 1024;
     if (file.size <= maxSize) {
       if (file.type === "image/jpeg" || file.type === "image/png") {

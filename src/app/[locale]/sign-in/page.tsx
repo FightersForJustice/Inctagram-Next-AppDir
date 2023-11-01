@@ -1,39 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useLoginWithGoogleOAuthMutation } from "@/api";
 import { Loader } from "@/components/Loader";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { SignIn } from "./SignIn";
-import { baseUrl } from "@/helpers/config";
 
 const SignInPage = () => {
   const t = useTranslations("SignInPage");
-  const router = useRouter();
 
-  const [loginWithGoogle, { data, isLoading }] = useLoginWithGoogleOAuthMutation();
-
-  useEffect(() => {
-    if (sessionStorage.getItem("accessToken")) {
-      router.push("/my-profile");
-    }
-
-    if (data?.accessToken) {
-      router.push("/my-profile");
-
-      if (typeof sessionStorage !== "undefined") {
-        sessionStorage.setItem("accessToken", data.accessToken);
-      }
-    }
-  }, [data]);
+  const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
 
   const gitHubAuth = () => {
-    console.log("OK");
-    window.location.assign(`${baseUrl}auth/github/login`);
+    window.location.assign(`${process.env.NEXT_PUBLIC_BASE_URL}auth/github/login`);
   };
 
   const googleLogin = useGoogleLogin({

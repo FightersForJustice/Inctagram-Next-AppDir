@@ -1,63 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  /*background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));*/
-  background: var(--dark-700);
-  color: var(--light-100);
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    background: var(--dark-700);
+    color: var(--light-100);
+
 }
 
 @layer base {
-  :root {
-    --dark-100: #4c4c4c;
-    --dark-300: #333;
-    --dark-500: #171717;
-    --dark-700: #0d0d0d;
-    --light-100: #ffffff;
-    --light-900: #8d9094;
-    --primary-100: #73a5ff;
-    --primary-500: #397df6;
-    --primary-700: #2f68cc;
-    --primary-900: #2f68cc;
-    --danger-500: #cc1439;
-    --info-0: #3677f7;
-    --disabled: rgba(227, 227, 227, 0.1);
-  }
+    :root {
+        --dark-100: #4c4c4c;
+        --dark-300: #333;
+        --dark-500: #171717;
+        --dark-700: #0d0d0d;
+        --light-100: #ffffff;
+        --light-900: #8d9094;
+        --primary-100: #73a5ff;
+        --primary-500: #397df6;
+        --primary-700: #2f68cc;
+        --primary-900: #2f68cc;
+        --danger-500: #cc1439;
+        --info-0: #3677f7;
+        --disabled: rgba(227, 227, 227, 0.1);
+    }
 }
 
 
 body::-webkit-scrollbar {
-   width: 10px;               /* ширина всей полосы прокрутки */
+    width: 10px; /* ширина всей полосы прокрутки */
 
- }
+}
 
 body::-webkit-scrollbar-track {
-   background: var(--dark-300);        /* цвет зоны отслеживания */
-   border-radius: 20px;
- }
+    background: var(--dark-300); /* цвет зоны отслеживания */
+    border-radius: 20px;
+}
 
 body::-webkit-scrollbar-thumb {
-   background-color: var(--dark-100);    /* цвет бегунка */
-   border-radius: 20px;       /* округлось бегунка */
-  border: 1px solid var(--dark-500);
- }
+    background-color: var(--dark-100); /* цвет бегунка */
+    border-radius: 20px; /* округлось бегунка */
+    border: 1px solid var(--dark-500);
+}

@@ -1,9 +1,6 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "@/helpers";
+import { api } from "@/api/api";
 
-export let profileApi = createApi({
-  reducerPath: "profileApi",
-  baseQuery: baseQueryWithReauth,
+export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
     putProfile: builder.mutation<any, PutProfileBody>({
       query: (profile: PutProfileBody) => {
@@ -19,7 +16,7 @@ export let profileApi = createApi({
     getProfile: builder.query<GetResponse, void>({
       query: () => {
         return {
-          url: `users/profile/${localStorage.getItem("userID") ?? 0}`,
+          url: `users/profile/${sessionStorage.getItem("userId") ?? 0}`,
           method: "GET",
         };
       },
@@ -76,7 +73,7 @@ export let profileApi = createApi({
   }),
 });
 
-export let {
+export const {
   usePutProfileMutation,
   useGetProfileQuery,
   usePostProfileAvatarMutation,

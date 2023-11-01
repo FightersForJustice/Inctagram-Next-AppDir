@@ -9,7 +9,8 @@ import { FormItem } from "../../sign-up/SignUp/SignUpForm/FormItem";
 import { toast } from "react-toastify";
 import { SignInSchema } from "@/features/schemas";
 import { usePostLoginMutation } from "@/api";
-import { StatusCode } from "@/api/auth.api";
+import { useAppSelector } from "@/redux/hooks/useSelect";
+import { IUserLoginRequest } from "@/types/userTypes";
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -20,37 +21,29 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
+    reset,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
     mode: "onTouched",
   });
   const [showPass, setShowPass] = useState(true);
-  const [postLogin, { isSuccess, isLoading }] = usePostLoginMutation();
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const [postLogin, { isLoading }] = usePostLoginMutation();
 
-  const onSubmit = (data: any) => {
-    postLogin({
-      email: data.email,
-      password: data.password,
-    })
-      .unwrap()
-      .then((response) => {
-        if (response.accessToken) sessionStorage.setItem("accessToken", response.accessToken);
-      })
-      .catch((err) => {
-        if (err?.data?.statusCode === StatusCode.badRequest) {
-          setError("password", { message: String(translate("error400")) });
-          setError("email", { message: String(translate("error400")) });
-        } else if (err?.data?.statusCode === StatusCode.unauthorized) {
-          // setError("password", { message: err.data.messages[0]?.message });
-          setError("email", { message: String(translate("error401")) });
-        } else {
-          toast.error(err.error);
-        }
-      });
+  const onSubmit = async (data: IUserLoginRequest) => {
+    try {
+      await postLogin(data).unwrap();
+    } catch (error) {
+      const {
+        data: { messages },
+      } = error as { data: { messages: string } };
+      toast.error(messages);
+    } finally {
+      reset();
+    }
   };
 
-  if (isSuccess) {
+  if (isAuth) {
     redirect("/my-profile");
   }
 

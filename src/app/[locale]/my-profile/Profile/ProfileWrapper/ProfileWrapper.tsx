@@ -1,7 +1,6 @@
 import s from "../../MyProfile.module.scss";
 import Link from "next/link";
 import React from "react";
-import { redirect } from "next/navigation";
 import { GetResponse } from "@/api/profile.api";
 
 type Props = {
@@ -21,8 +20,6 @@ export const ProfileWrapper: React.FC<Props> = ({
   t,
   userPosts,
 }) => {
-  if (!data?.userName) redirect("sign-in");
-
   return (
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>

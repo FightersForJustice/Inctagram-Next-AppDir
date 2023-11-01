@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import s from "./MyProfile.module.scss";
 import { usePathname } from "next-intl/client";
 import { SubscribersModal } from "@/components/Modals/SubscribersModal";
-import { Navigation } from "./Navigation";
+import { SideBar } from "./Navigation";
 import { SubscriptionsModal } from "@/components/Modals/SubscriptionsModal";
 import { Profile } from "./Profile";
 import { Loader } from "@/components/Loader";
@@ -23,7 +23,7 @@ const MyProfile = () => {
     <>
       <div className={s.container}>
         <div className={s.wrapper} id={"wrapper"}>
-          <Navigation pathname={pathname} paidAccount={paidAccount} userData={data!} />
+          <SideBar pathname={pathname} paidAccount={paidAccount} userData={data!} />
           <Profile
             setShowSubscriptionsModal={setShowSubscriptionsModal}
             setShowSubscribersModal={setShowSubscribersModal}

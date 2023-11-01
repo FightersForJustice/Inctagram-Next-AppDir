@@ -7,34 +7,27 @@ import { LogoutBtn } from "@/components/Buttons/LogoutBtn";
 import { DevicesResponse, useDeleteSessionsDeviceMutation } from "@/api/profile.api";
 import { dateToFormat } from "@/utils/dateToFormat";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 type Props = {
   t: (value: string) => string;
   sessions: DevicesResponse[];
   refetch: any;
-  logout: () => void;
 };
 
-export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch, logout }) => {
+export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
   const logoutTranslate = useTranslations("Navigation");
-  const [deleteSession, { isSuccess }] = useDeleteSessionsDeviceMutation();
-  const router = useRouter();
+  const [deleteSession] = useDeleteSessionsDeviceMutation();
 
   const logoutSession = async (item: DevicesResponse) => {
+    if (sessions.length <= 1) {
+      toast.error("You authorize only this device");
+      return;
+    }
     await deleteSession(item.deviceId.toString());
     try {
       refetch();
-      console.log(sessions);
-      if (sessions.length <= 1) {
-        logout();
-        sessionStorage.clear();
-        toast.success("All sessions was deleted");
-        router.push("/sign-in");
-      }
-    } catch (e: any) {
-      console.log(e);
-    }
+      toast.success(`session of ${item.deviceName} device was closed`);
+    } catch (e: any) {}
   };
 
   const activeSessions = sessions.map((item, index) => {

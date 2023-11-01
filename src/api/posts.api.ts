@@ -1,11 +1,7 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "@/helpers/config";
 import { IUploadImageId } from "@/redux/reducers/post/postReducer";
+import { api } from "@/api/api";
 
-export const postsApi = createApi({
-  reducerPath: "postsApi",
-  baseQuery: baseQueryWithReauth,
-  tagTypes: ["Post"],
+export const postsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     uploadPostImage: builder.mutation<UploadImageResponse, FormData>({
       query: (file) => {

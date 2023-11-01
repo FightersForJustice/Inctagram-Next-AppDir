@@ -3,7 +3,7 @@ import s from "./HomePagePost.module.scss";
 import Image from "next/image";
 
 import { ImageType, PostsItem } from "@/api/posts.api";
-import { GetTimeAgoText } from "@/utils/formatTimeFromDateString";
+import { getTimeAgoText } from "@/utils/formatTimeFromDateString";
 import { HomePostPopup } from "./HomePostPopup";
 import { useGetProfileQuery } from "@/api";
 
@@ -11,6 +11,8 @@ import { HomePostIcons } from "./HomePostIcons";
 import { HomePostDescription } from "./HomePostDescription";
 import { HomePostLikes } from "./HomePostLikes";
 import { PostImageCarousel } from "../PostImageCarousel";
+import { useGetLanguageFromPath } from "@/redux/hooks/useGetLanguageFromPath";
+import { useTranslations } from "next-intl";
 
 type Props = {
   post: PostsItem;
@@ -18,16 +20,15 @@ type Props = {
 };
 
 export const HomePagePost: React.FC<Props> = ({ post, images }) => {
-  const lang = localStorage.getItem("language");
-  // const userName = useSelector<RootState, UserName>((state) => state.app.userName);
-  const { data, isLoading } = useGetProfileQuery();
+  const { data } = useGetProfileQuery();
+  const language = useGetLanguageFromPath();
+  const test = getTimeAgoText(post.createdAt, language, useTranslations("now"));
 
   return (
     <div className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
           <Image
-            // src={data?.avatars.length !== 0 ? data.avatars[0].url : "/img/home/post.png"}
             src={data?.avatars && data.avatars.length !== 0 ? data.avatars[0].url : "/img/create-post/no-image.png"}
             alt={"ava"}
             width={36}
@@ -38,7 +39,7 @@ export const HomePagePost: React.FC<Props> = ({ post, images }) => {
           <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
-          <p className={s.post__time}>{GetTimeAgoText(post.createdAt, lang!)}</p>
+          <p className={s.post__time}>{test}</p>
         </div>
         <HomePostPopup />
       </div>

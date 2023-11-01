@@ -10,10 +10,9 @@ import { Loader } from "@/components/Loader";
 import { useTranslations } from "next-intl";
 import { CreatePost } from "../CreatePost/CreatePost";
 import { GetResponse } from "@/api/profile.api";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { usePostLogoutMutation } from "@/api";
 import { LogoutBtn } from "@/components/Buttons/LogoutBtn";
+import { useAppSelector } from "@/redux/hooks/useSelect";
 
 type Props = {
   pathname: string;
@@ -21,22 +20,20 @@ type Props = {
   userData?: GetResponse;
 };
 
-export const Navigation: React.FC<Props> = ({ pathname, paidAccount, userData }) => {
+export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) => {
   const t = useTranslations("Navigation");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const router = useRouter();
   const [logout, { isLoading }] = usePostLogoutMutation();
-  const userEmail = useSelector((state: RootState) => state.app.email);
+  const userEmail = useAppSelector((state) => state.auth.user?.email);
 
   const onLogout = () => {
     setShowLogoutModal(false);
     logout()
       .unwrap()
       .then(() => {
-        sessionStorage.clear();
-        localStorage.clear();
         router.push("/sign-in");
         toast.success("Logout success");
       })

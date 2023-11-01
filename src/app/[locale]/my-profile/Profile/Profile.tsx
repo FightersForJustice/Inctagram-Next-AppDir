@@ -32,8 +32,6 @@ export const Profile: React.FC<Props> = ({
     setUserPosts(postsAmount);
   };
 
-  if (userData) sessionStorage.setItem("userId", userData.id.toString());
-
   return (
     <>
       <div className={s.profile}>

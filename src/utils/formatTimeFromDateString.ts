@@ -1,5 +1,4 @@
 import { createPluralize } from "@/helpers/createPluralize";
-import { useTranslations } from "next-intl";
 export function formatTimeFromDateString(dateString: string): string {
   const normalDate = new Date(dateString);
   const hours = normalDate.getUTCHours().toString().padStart(2, "0");
@@ -8,9 +7,11 @@ export function formatTimeFromDateString(dateString: string): string {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-export function GetTimeAgoText(postDateISO: string, lang: string): string {
-  const t = useTranslations("Time");
-
+export function getTimeAgoText(
+  postDateISO: string,
+  lang: string,
+  setTimeTranslation: (time: string) => string,
+): string {
   const pluralizeLang = createPluralize(lang);
 
   const postDate = new Date(postDateISO);
@@ -23,21 +24,21 @@ export function GetTimeAgoText(postDateISO: string, lang: string): string {
   const years = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
 
   if (minutes < 1) {
-    return t("now");
+    return setTimeTranslation("now");
   } else if (minutes < 60) {
-    // return `${minutes} минут(ы) назад`;
-    return `${minutes} ${t(`minutes.${pluralizeLang(minutes)}`)}`;
+    //`${minutes} минут(ы) назад`;
+    return `${minutes} ${setTimeTranslation(`minutes.${pluralizeLang(minutes)}`)}`;
   } else if (hours < 24) {
-    // return `${hours} часа(ов) назад`;
-    return `${hours} ${t(`hours.${pluralizeLang(hours)}`)}`;
+    //`${hours} часа(ов) назад`;
+    return `${hours} ${setTimeTranslation(`hours.${pluralizeLang(hours)}`)}`;
   } else if (days < 30) {
-    // return `${days} дня(ей) назад`;
-    return `${days} ${t(`days.${pluralizeLang(days)}`)}`;
+    //`${days} дня(ей) назад`;
+    return `${days} ${setTimeTranslation(`days.${pluralizeLang(days)}`)}`;
   } else if (months < 12) {
-    // return `${months} месяцев назад`;
-    return `${months} ${t(`months.${pluralizeLang(months)}`)}`;
+    //`${months} месяцев назад`;
+    return `${months} ${setTimeTranslation(`months.${pluralizeLang(months)}`)}`;
   } else {
-    // return `${years} год(а) назад`;
-    return `${years} ${t(`years.${pluralizeLang(years)}`)}`;
+    //`${years} год(а) назад`;
+    return `${years} ${setTimeTranslation(`years.${pluralizeLang(years)}`)}`;
   }
 }

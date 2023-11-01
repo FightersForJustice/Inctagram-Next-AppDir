@@ -1,9 +1,6 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "@/helpers";
+import { api } from "@/api/api";
 
-export const subscriptionsApi = createApi({
-  reducerPath: "subscriptionsApi",
-  baseQuery: baseQueryWithReauth,
+export const subscriptionsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPayments: builder.query<GetPaymentsResponse[], void>({
       query: () => {

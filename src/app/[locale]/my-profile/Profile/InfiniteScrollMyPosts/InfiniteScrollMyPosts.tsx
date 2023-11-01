@@ -57,7 +57,6 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     })
       .unwrap()
       .then((res) => {
-        console.log(res.items);
         setPosts(res.items);
         setLastLoadedPostId(res.items[res.items.length - 1].id);
         setTotalCount(res.totalCount);

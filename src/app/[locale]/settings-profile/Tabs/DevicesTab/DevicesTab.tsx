@@ -7,16 +7,13 @@ import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
 import { ThisDevice } from "./ThisDevice";
 import { ActiveSessions } from "./ActiveSessions";
 import { DevicesResponse, useDeleteSessionsTerminateAllMutation, useGetDeviceSessionsQuery } from "@/api/profile.api";
-import { useRouter } from "next/navigation";
-import { usePostLogoutMutation } from "@/api";
 import { toast } from "react-toastify";
 
 export const DevicesTab = () => {
   const t = useTranslations("SettingsProfilePage.DevicesTab");
-  const router = useRouter();
-  const { data: sessions, isSuccess, refetch } = useGetDeviceSessionsQuery();
+  const { data: sessions, refetch } = useGetDeviceSessionsQuery();
   const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
-  const [logout] = usePostLogoutMutation();
+
   const sessionsDefault: DevicesResponse[] = [
     {
       deviceName: "Apple iMac 27",
@@ -43,14 +40,18 @@ export const DevicesTab = () => {
   ];
 
   const onDeleteAllSessions = async () => {
-    await deleteAllSessions();
-    try {
-      logout();
-      sessionStorage.clear();
-      toast.success("All sessions was deleted");
-      router.push("/sign-in");
-    } catch (e: any) {
-      console.log(e);
+    if (sessions) {
+      if (sessions.length <= 1) {
+        toast.error("You authorize only this device");
+      } else {
+        await deleteAllSessions();
+        try {
+          refetch();
+          toast.success("All sessions except current was deleted");
+        } catch (e: any) {
+          toast.error(e.error);
+        }
+      }
     }
   };
 
@@ -59,15 +60,21 @@ export const DevicesTab = () => {
       <div className={s.devices}>
         <ThisDevice t={t} session={sessions ? sessions[0] : sessionsDefault[0]} />
 
-        {sessions?.length ? (
+        {sessions?.length && (
           <div className={"text-right"}>
             <TransparentBtn onClick={onDeleteAllSessions}>Terminate all other session</TransparentBtn>
           </div>
-        ) : (
-          ""
         )}
-        <ActiveSessions logout={logout} refetch={refetch} t={t} sessions={sessions ? sessions : sessionsDefault} />
+        <ActiveSessions refetch={refetch} t={t} sessions={sessions || sessionsDefault} />
       </div>
     </Tabs.Content>
   );
 };
+
+const map = new Map();
+
+map.set({ age: 20, name: "sam" }, () => {
+  console.log("Sam");
+});
+
+console.log(map);

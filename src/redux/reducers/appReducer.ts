@@ -5,6 +5,7 @@ const initialAppState: AppStateType = {
   email: null,
   userName: null,
   tokenIsActive: false,
+  stopRefresh: false,
 };
 
 const slice = createSlice({
@@ -20,8 +21,13 @@ const slice = createSlice({
         localStorage.setItem("userID", action.payload.userID.toString());
       }
     },
+
     setTokenIsActive(state, action: PayloadAction<boolean>) {
       state.tokenIsActive = action.payload;
+    },
+
+    setTokenRefresh(state, action: PayloadAction<boolean>) {
+      state.stopRefresh = action.payload;
     },
   },
 });
@@ -38,4 +44,5 @@ export type AppStateType = {
   email: Email;
   userName: UserName;
   tokenIsActive: boolean;
+  stopRefresh: boolean;
 };

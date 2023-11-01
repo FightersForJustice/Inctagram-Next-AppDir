@@ -1,27 +1,30 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "@/helpers/config";
+import {
+  ILoginWithGoogleOAuthRequest,
+  ILoginWithGoogleOAuthResponse,
+  IUserLoginRequest,
+  IUserLoginResponse,
+  IUserModel,
+  IUserRegisterRequest,
+} from "@/types/userTypes";
+import { api } from "@/api/api";
 
-export let authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: baseQueryWithReauth,
+export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    postAuthorization: builder.mutation<any, { userName: string; email: string; password: string }>({
-      query: (user: { userName: string; email: string; password: string }) => {
+    postAuthorization: builder.mutation<void, IUserRegisterRequest>({
+      query: (credentials: IUserRegisterRequest) => {
         return {
           url: "auth/registration",
           method: "POST",
-          body: user,
+          body: credentials,
         };
       },
     }),
-    postLogin: builder.mutation<any, { email: string; password: string }>({
-      query: (user: { email: string; password: string }) => {
+    postLogin: builder.mutation<IUserLoginResponse, IUserLoginRequest>({
+      query: (credentials: IUserLoginRequest) => {
         return {
           url: "auth/login",
           method: "POST",
-          body: {
-            ...user,
-          },
+          body: credentials,
         };
       },
     }),
@@ -96,7 +99,7 @@ export let authApi = createApi({
         };
       },
     }),
-    getAuthMe: builder.query<AuthMeResponse, void>({
+    getAuthMe: builder.query<IUserModel, void>({
       query: () => {
         return {
           url: "auth/me",
@@ -104,18 +107,16 @@ export let authApi = createApi({
         };
       },
     }),
-    loginWithGoogleOAuth: builder.mutation<{ accessToken: "string"; email: string }, { code: string }>({
+    loginWithGoogleOAuth: builder.mutation<ILoginWithGoogleOAuthResponse, ILoginWithGoogleOAuthRequest>({
       query: (code) => {
         return {
           url: "auth/google/login",
           method: "POST",
-          body: {
-            ...code,
-          },
+          body: code,
         };
       },
     }),
-    loginWithGitHubOAuth: builder.query<any, void>({
+    loginWithGitHubOAuth: builder.query<void, void>({
       query: () => {
         return {
           url: "auth/github/login",
@@ -125,23 +126,6 @@ export let authApi = createApi({
     }),
   }),
 });
-
-type ResponseMessages = {
-  message: string;
-  field: string;
-};
-
-type Response = {
-  statusCode: number;
-  messages: ResponseMessages[];
-  error: string;
-};
-
-type AuthMeResponse = {
-  userId: number;
-  userName: string;
-  email: string;
-};
 
 export const StatusCode = {
   badRequest: 400,
@@ -161,5 +145,4 @@ export let {
   usePostUpdateTokensMutation,
   useGetAuthMeQuery,
   useLoginWithGoogleOAuthMutation,
-  useLazyLoginWithGitHubOAuthQuery,
 } = authApi;
