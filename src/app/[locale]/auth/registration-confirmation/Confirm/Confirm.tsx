@@ -1,12 +1,10 @@
-"use client";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePostRegistrationConfirmationMutation } from "@/api/auth.api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
-import { useParams } from "react-router-dom";
 
 type Props = {
   code: string;
@@ -17,35 +15,21 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const [registrationConfirm, { isLoading }] = usePostRegistrationConfirmationMutation();
   const router = useRouter();
   const isConfirmed = sessionStorage.getItem("isConfirmed");
-  const param = useParams();
-  console.log(`${code} - is code in component Confirm`);
-  console.log(`${param.code} - PARAMSHOOK`);
-  const regularCode = window.location.search.match(/[?&]code=([^&]+)/);
-  console.log(`Значение 'code' из поисковой строки: ${regularCode ? regularCode[1] : "ERROR"}`);
+
+  const regularVariableForSearchCodeParamFromURL = window.location.search.match(/[?&]code=([^&]+)/);
+  const actualCode = regularVariableForSearchCodeParamFromURL ? regularVariableForSearchCodeParamFromURL[1] : "ERROR";
   useEffect(() => {
-    // if (isConfirmed !== "yes") {
-    //   registrationConfirm({ confirmationCode: code })
-    //     .unwrap()
-    //     .then()
-    //     .catch((err) => {
-    //       toast.error("Error confirmation");
-    //       if (err.data.error) {
-    //         router.push("/email-expired");
-    //       }
-    //     });
-    //   sessionStorage.setItem("isConfirmed", "yes");
-    // } else {
-    //   sessionStorage.removeItem("isConfirmed")
-    // }
-    if (code) {
+    if (isConfirmed !== "yes") {
       registrationConfirm({ confirmationCode: code })
         .unwrap()
         .then()
         .catch((err) => {
-          toast.error("Error confirmation");
-          if (err.data.error) {
-            router.push("/email-expired");
-          }
+          registrationConfirm({ confirmationCode: actualCode }).catch((err) => {
+            toast.error("Error confirmation");
+            if (err.data.error) {
+              router.push("/email-expired");
+            }
+          });
         });
       sessionStorage.setItem("isConfirmed", "yes");
     } else {
