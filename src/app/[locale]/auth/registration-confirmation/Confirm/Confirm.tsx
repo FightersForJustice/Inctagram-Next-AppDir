@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { usePostRegistrationConfirmationMutation } from "@/api/auth.api";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader";
+import { useParams } from "react-router-dom";
 
 type Props = {
   code: string;
@@ -15,8 +16,9 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const [registrationConfirm, { isLoading }] = usePostRegistrationConfirmationMutation();
   const router = useRouter();
   const isConfirmed = sessionStorage.getItem("isConfirmed");
-
+  const param = useParams();
   console.log(`${code} - is code in component Confirm`);
+  console.log(`${param.code} - is code in component Confirm`);
   useEffect(() => {
     // if (isConfirmed !== "yes") {
     //   registrationConfirm({ confirmationCode: code })
