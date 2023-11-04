@@ -18,7 +18,7 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const isConfirmed = sessionStorage.getItem("isConfirmed");
   const param = useParams();
   console.log(`${code} - is code in component Confirm`);
-  console.log(`${param.code} - is code in component Confirm`);
+  console.log(`${param.code} - PARAMSHOOK`);
   useEffect(() => {
     // if (isConfirmed !== "yes") {
     //   registrationConfirm({ confirmationCode: code })
