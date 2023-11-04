@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,20 +16,25 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const router = useRouter();
   const isConfirmed = sessionStorage.getItem("isConfirmed");
 
+  const regularVariableForSearchCodeParamFromURL = window.location.search.match(/[?&]code=([^&]+)/);
+  const actualCode = regularVariableForSearchCodeParamFromURL ? regularVariableForSearchCodeParamFromURL[1] : "ERROR";
+
   useEffect(() => {
     if (isConfirmed !== "yes") {
-      registrationConfirm({ confirmationCode: String(code) })
+      registrationConfirm({ confirmationCode: code })
         .unwrap()
         .then()
-        .catch((err) => {
-          toast.error("Error confirmation");
-          if (err.data.error) {
-            router.push("/email-expired");
-          }
+        .catch(() => {
+          registrationConfirm({ confirmationCode: actualCode }).catch((err) => {
+            toast.error("Error confirmation");
+            if (err.data.error) {
+              router.push("/email-expired");
+            }
+          });
         });
       sessionStorage.setItem("isConfirmed", "yes");
     } else {
-      sessionStorage.removeItem("isConfirmed")
+      sessionStorage.removeItem("isConfirmed");
     }
   }, []);
 

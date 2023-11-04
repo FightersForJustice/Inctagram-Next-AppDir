@@ -37,15 +37,10 @@ export const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
       if (data) {
         sessionStorage.setItem("accessToken", data.accessToken);
-        toast.success("Token was updated");
-
-        /**
-         * retry the initial query
-         * */
+        toast.success("Welcome back!");
         result = await baseQuery(args, api, extraOptions);
         api.dispatch(appActions.setTokenIsActive(true));
       } else {
-        toast.error("Auth error");
         api.dispatch(appActions.setTokenIsActive(false));
       }
     }

@@ -6,8 +6,6 @@ import { PostsItem, useLazyGetUserPostsQuery } from "@/api/posts.api";
 import { useScrollFetching } from "@/features/customHooks";
 import { toast } from "react-toastify";
 import { StatusCode } from "@/api/auth.api";
-import { useAppSelector } from "@/redux/hooks/useSelect";
-import { somePostChanged } from "@/redux/reducers/post/postSelectors";
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -17,15 +15,13 @@ type Props = {
 };
 
 export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, getUserPosts }) => {
-  const postChanged = useAppSelector(somePostChanged);
-
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
   const [totalCount, setTotalCount] = useState(0);
   const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
 
-  const [getPosts, { isFetching }] = useLazyGetUserPostsQuery();
+  const [getPosts, { isFetching, data }] = useLazyGetUserPostsQuery();
 
   const loadMorePosts = () => {
     if (!isFetching) {
@@ -68,7 +64,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
         }
         toast.error(err.error);
       });
-  }, [postChanged]);
+  }, []);
 
   useEffect(() => {
     if (fetching && posts.length < totalCount) {
@@ -83,7 +79,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
 
   const postsImages = () => {
     let currentPosts;
-    return posts.map((i) => {
+    return data?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
         <div key={i.id} className={"overflow-hidden"}>

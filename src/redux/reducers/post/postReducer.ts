@@ -6,7 +6,6 @@ const initialAppState: PostStateType = {
   postImagesIds: [],
   postImages: [],
   imagesGallery: [],
-  somePostChanged: false,
   cropAspectRatio: 1,
 };
 
@@ -66,9 +65,6 @@ const slice = createSlice({
     removeAllGalleryImages(state) {
       state.imagesGallery = [];
     },
-    somePostIsChanged(state, action: PayloadAction<boolean>) {
-      state.somePostChanged = action.payload;
-    },
     setCropAspectRatio(state, action: PayloadAction<number>) {
       state.cropAspectRatio = action.payload;
     },
@@ -76,8 +72,6 @@ const slice = createSlice({
 });
 export const postReducer = slice.reducer;
 export const postActions = slice.actions;
-
-export type ImageId = { uploadId: string };
 
 export interface IUploadImageId {
   uploadId: string;
@@ -87,6 +81,5 @@ export type PostStateType = {
   postImagesIds: IUploadImageId[];
   postImages: ImageStateType[];
   imagesGallery: ImageStateType[];
-  somePostChanged: boolean;
   cropAspectRatio: number;
 };
