@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,6 +20,8 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const param = useParams();
   console.log(`${code} - is code in component Confirm`);
   console.log(`${param.code} - PARAMSHOOK`);
+  const regularCode = window.location.search.match(/[?&]code=([^&]+)/);
+  console.log(`Значение 'code' из поисковой строки: ${regularCode ? regularCode[1] : "ERROR"}`);
   useEffect(() => {
     // if (isConfirmed !== "yes") {
     //   registrationConfirm({ confirmationCode: code })
