@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import s from "./ImagesCollection.module.scss";
 import Image from "next/image";
-import { ImageStateType } from "../../app/[locale]/my-profile/CreatePost/CreatePost";
+import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { toast } from "react-toastify";
@@ -28,13 +28,6 @@ export const ImagesCollection: React.FC<Props> = ({ loadedImages, setLoadedImage
     } else {
       dispatch(postActions.removeGalleryImage({ id }));
     }
-
-    // const newCollection = loadedImages.filter((item) => item.id !== id);
-    // setLoadedImages(newCollection);
-    //
-    // if (loadedImages.length === 0) {
-    //   setPostImage("");
-    // }
   };
   return (
     <div className={s.collection__container}>

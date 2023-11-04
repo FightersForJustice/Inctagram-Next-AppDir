@@ -16,9 +16,24 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   const router = useRouter();
   const isConfirmed = sessionStorage.getItem("isConfirmed");
 
+  console.log(`${code} - is code in component Confirm`);
   useEffect(() => {
-    if (isConfirmed !== "yes") {
-      registrationConfirm({ confirmationCode: String(code) })
+    // if (isConfirmed !== "yes") {
+    //   registrationConfirm({ confirmationCode: code })
+    //     .unwrap()
+    //     .then()
+    //     .catch((err) => {
+    //       toast.error("Error confirmation");
+    //       if (err.data.error) {
+    //         router.push("/email-expired");
+    //       }
+    //     });
+    //   sessionStorage.setItem("isConfirmed", "yes");
+    // } else {
+    //   sessionStorage.removeItem("isConfirmed")
+    // }
+    if (code) {
+      registrationConfirm({ confirmationCode: code })
         .unwrap()
         .then()
         .catch((err) => {
@@ -29,7 +44,7 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
         });
       sessionStorage.setItem("isConfirmed", "yes");
     } else {
-      sessionStorage.removeItem("isConfirmed")
+      sessionStorage.removeItem("isConfirmed");
     }
   }, []);
 
