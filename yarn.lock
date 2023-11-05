@@ -2105,12 +2105,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-autosuggest@npm:^10.1.6":
-  version: 10.1.6
-  resolution: "@types/react-autosuggest@npm:10.1.6"
+"@types/react-autosuggest@npm:9.3.11":
+  version: 9.3.11
+  resolution: "@types/react-autosuggest@npm:9.3.11"
   dependencies:
     "@types/react": "*"
-  checksum: 61a3dc9548607d4abef1463a35e7409540e5893ad7400e0a0fb3617f1a97967822f7ad0f7146824aa188648efe8db377549599db80d5d86c5b79cd0b19792227
+  checksum: 516541ab3be769a17602aa6efaccc8abec9a462d3aa45adab734fb757a8a0c07d1d826a0460a60c550cfec53ce901f08eb7daabf43b5d822d1892de80488487c
   languageName: node
   linkType: hard
 
@@ -3655,13 +3655,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es6-promise@npm:^4.2.8":
-  version: 4.2.8
-  resolution: "es6-promise@npm:4.2.8"
-  checksum: 95614a88873611cb9165a85d36afa7268af5c03a378b35ca7bda9508e1d4f1f6f19a788d4bc755b3fd37c8ebba40782018e02034564ff24c9d6fa37e959ad57d
-  languageName: node
-  linkType: hard
-
 "escalade@npm:^3.1.1":
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
@@ -4855,7 +4848,7 @@ __metadata:
     "@types/negotiator": ^0.6.1
     "@types/node": 20.4.0
     "@types/react": 18.2.14
-    "@types/react-autosuggest": ^10.1.6
+    "@types/react-autosuggest": 9.3.11
     "@types/react-dom": 18.2.6
     "@types/react-google-recaptcha": ^2.1.5
     "@types/redux-thunk": ^2.1.0
@@ -4874,7 +4867,7 @@ __metadata:
     postcss: 8.4.25
     prettier: 3.0.0
     react: 18.2.0
-    react-autosuggest: ^10.1.0
+    react-autosuggest: 9.4.3
     react-avatar-edit: ^1.2.0
     react-cropper: ^2.3.3
     react-dom: 18.2.0
@@ -7013,7 +7006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -7097,18 +7090,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-autosuggest@npm:^10.1.0":
-  version: 10.1.0
-  resolution: "react-autosuggest@npm:10.1.0"
+"react-autosuggest@npm:9.4.3":
+  version: 9.4.3
+  resolution: "react-autosuggest@npm:9.4.3"
   dependencies:
-    es6-promise: ^4.2.8
-    prop-types: ^15.7.2
+    prop-types: ^15.5.10
+    react-autowhatever: ^10.1.2
+    shallow-equal: ^1.0.0
+  peerDependencies:
+    react: ">=0.14.7"
+  checksum: 41e983bd4e84a4dee85b1cc61a9d09ad60c22922bb9fdf483815dfdd498a36955872912f78c020ced80d96c07a72ff1c32f9831df50cf119d81418265d8efd0d
+  languageName: node
+  linkType: hard
+
+"react-autowhatever@npm:^10.1.2":
+  version: 10.2.1
+  resolution: "react-autowhatever@npm:10.2.1"
+  dependencies:
+    prop-types: ^15.5.8
     react-themeable: ^1.1.0
     section-iterator: ^2.0.0
-    shallow-equal: ^1.2.1
   peerDependencies:
-    react: ">=16.3.0"
-  checksum: 3526b02bb1938374c2a0d108a03666eae24cddd8bef7686e7f6271bb4c25ad34f8b09e84d1cc2e9206aff577a742c1f8481964e75442a9e080326676ad71f8ae
+    react: ">=0.14.7"
+  checksum: 507a287d46984c6bc9fa3342ada2faf9002fee72568ce8151448908de553fd6daa501b32bec3406e18dee93939d403b8e8800c0d723f7b8435859b1ce36886e7
   languageName: node
   linkType: hard
 
@@ -7680,7 +7684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shallow-equal@npm:^1.2.1":
+"shallow-equal@npm:^1.0.0":
   version: 1.2.1
   resolution: "shallow-equal@npm:1.2.1"
   checksum: 4f1645cc516e7754c4438db687e1da439a5f29a7dba2ba90c5f88e5708aeb17bc4355ba45cad805b0e95dc898e37d8bf6d77d854919c7512f89939986cff8cd1
