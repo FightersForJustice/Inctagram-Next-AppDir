@@ -1,27 +1,31 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query";
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { toast } from "react-toastify";
-import { appActions } from "@/redux/reducers";
-import { RootState } from "@/redux/store";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+import type {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query';
+import { toast } from 'react-toastify';
+import { appActions } from '@/redux/reducers';
+import { RootState } from '@/redux/store';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers) => {
-    const token = sessionStorage.getItem("accessToken");
+    const token = sessionStorage.getItem('accessToken');
     if (token) {
-      headers.set("authorization", `Bearer ${token}`);
+      headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
   },
-  credentials: "include",
+  credentials: 'include',
 });
 
-export const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
-  args,
-  api,
-  extraOptions,
-) => {
+export const baseQueryWithReAuth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
@@ -32,12 +36,16 @@ export const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, Fetch
     if (!stopRefresh) {
       api.dispatch(appActions.setTokenRefresh(true));
 
-      const res = await baseQuery({ url: "auth/update-tokens", method: "POST" }, api, extraOptions);
+      const res = await baseQuery(
+        { url: 'auth/update-tokens', method: 'POST' },
+        api,
+        extraOptions
+      );
       const data = <{ accessToken: string }>res.data;
 
       if (data) {
-        sessionStorage.setItem("accessToken", data.accessToken);
-        toast.success("Welcome back!");
+        sessionStorage.setItem('accessToken', data.accessToken);
+        toast.success('Welcome back!');
         result = await baseQuery(args, api, extraOptions);
         api.dispatch(appActions.setTokenIsActive(true));
       } else {
@@ -51,9 +59,9 @@ export const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 };
 
 export const api = createApi({
-  reducerPath: "splitApi",
+  reducerPath: 'splitApi',
   baseQuery: baseQueryWithReAuth,
   refetchOnMountOrArgChange: true,
-  tagTypes: ["Post"],
+  tagTypes: ['Post'],
   endpoints: () => ({}),
 });

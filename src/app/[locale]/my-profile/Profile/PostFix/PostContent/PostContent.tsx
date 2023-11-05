@@ -1,10 +1,10 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
-import s from "./PostContent.module.scss";
-import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { PostComment } from "./PostComment";
-import { PostLikes } from "./PostLikes";
+import s from './PostContent.module.scss';
+import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { PostComment } from './PostComment';
+import { PostLikes } from './PostLikes';
 
 type Props = {
   avatar: string;
@@ -29,8 +29,8 @@ export const PostContent: React.FC<Props> = ({
     <>
       <div className={s.post__desc}>
         <Image
-          src={avatar ?? "/img/create-post/no-image.png"}
-          alt={"ava"}
+          src={avatar ?? '/img/create-post/no-image.png'}
+          alt={'ava'}
           width={36}
           height={36}
           className={s.post__avatar}

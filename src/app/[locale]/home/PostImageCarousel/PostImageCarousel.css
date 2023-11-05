@@ -1,15 +1,15 @@
 .swiper-button-next {
-    color: var(--light-100);
-    background-color: rgba(76, 76, 76, 0.5);
-    width: 50px;
-    height: 50px;
+  color: var(--light-100);
+  background-color: rgba(76, 76, 76, 0.5);
+  width: 50px;
+  height: 50px;
 }
 .swiper-button-prev {
-    color: var(--light-100);
-    background-color: rgba(76, 76, 76, 0.5);
-    width: 50px;
-    height: 50px;
+  color: var(--light-100);
+  background-color: rgba(76, 76, 76, 0.5);
+  width: 50px;
+  height: 50px;
 }
 .swiper-pagination-bullet-active {
-    background-color: var(--primary-500);
+  background-color: var(--primary-500);
 }

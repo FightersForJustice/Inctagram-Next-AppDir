@@ -1,17 +1,23 @@
-import React from "react";
-import s from "./PostComment.module.scss";
-import Image from "next/image";
+import React from 'react';
+import s from './PostComment.module.scss';
+import Image from 'next/image';
 
 export const PostComment = () => {
   return (
     <div className={s.post__comment}>
       <div className={s.post__comment__wrapper}>
-        <Image src={"/img/modal/post.png"} alt={"ava"} width={36} height={36} className={s.post__comment__avatar} />
+        <Image
+          src={'/img/modal/post.png'}
+          alt={'ava'}
+          width={36}
+          height={36}
+          className={s.post__comment__avatar}
+        />
         <div>
           <p className={s.post__comment__text}>
             <span className={s.post__comment__name}>URLProfiele </span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <div className={s.post__comment__container}>
             <p>2 Hours ago</p>
@@ -20,7 +26,7 @@ export const PostComment = () => {
         </div>
       </div>
       <svg
-        style={{ cursor: "pointer" }}
+        style={{ cursor: 'pointer' }}
         xmlns="http://www.w3.org/2000/svg"
         width="40"
         height="40"

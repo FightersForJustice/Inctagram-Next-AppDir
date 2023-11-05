@@ -1,8 +1,8 @@
-import React from "react";
-import { ManagementCheckbox } from "../ManagementCheckbox/ManagementCheckbox";
+import React from 'react';
+import { ManagementCheckbox } from '../ManagementCheckbox/ManagementCheckbox';
 
-import s from "./Subscription.module.scss";
-import { formatSubscriptionDate } from "@/utils";
+import s from './Subscription.module.scss';
+import { formatSubscriptionDate } from '@/utils';
 
 type Props = {
   dateOfPayment: string | undefined;
@@ -10,7 +10,11 @@ type Props = {
   autoRenewal: boolean;
 };
 
-export const Subscription: React.FC<Props> = ({ dateOfPayment, autoRenewal, expireAt }) => {
+export const Subscription: React.FC<Props> = ({
+  dateOfPayment,
+  autoRenewal,
+  expireAt,
+}) => {
   const formattedDateOfPayment = formatSubscriptionDate(dateOfPayment!);
   const formattedExpireAtPayment = formatSubscriptionDate(expireAt!);
 
@@ -21,11 +25,15 @@ export const Subscription: React.FC<Props> = ({ dateOfPayment, autoRenewal, expi
         <div className={s.subscription__wrapper}>
           <div className={s.subscription__container}>
             <p className={s.subscription__container__text}>Date of payment</p>
-            <p className={s.subscription__container__data}>{formattedDateOfPayment}</p>
+            <p className={s.subscription__container__data}>
+              {formattedDateOfPayment}
+            </p>
           </div>
           <div className={s.subscription__container}>
             <p className={s.subscription__container__text}>Expire at</p>
-            <p className={s.subscription__container__data}>{formattedExpireAtPayment}</p>
+            <p className={s.subscription__container__data}>
+              {formattedExpireAtPayment}
+            </p>
           </div>
         </div>
       </div>

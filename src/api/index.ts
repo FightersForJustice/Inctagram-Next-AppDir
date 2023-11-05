@@ -10,7 +10,7 @@ export {
   usePostRegistrationConfirmationMutation,
   usePostRegistrationEmailResendingMutation,
   usePostUpdateTokensMutation,
-} from "./auth.api";
+} from './auth.api';
 
 export {
   useCreatePostMutation,
@@ -23,7 +23,7 @@ export {
   useGetPostQuery,
   useGetAllPostsQuery,
   useLazyGetAllPostsQuery,
-} from "./posts.api";
+} from './posts.api';
 
 export {
   useDeleteProfileAvatarMutation,
@@ -32,10 +32,10 @@ export {
   usePutProfileMutation,
   useGetProfileQuery,
   useLazyGetProfileQuery,
-} from "./profile.api";
+} from './profile.api';
 
 export {
   useCreateSubscriptionMutation,
   useGetCurrentSubscriptionQuery,
   useGetPaymentsQuery,
-} from "./subscriptions.api";
+} from './subscriptions.api';

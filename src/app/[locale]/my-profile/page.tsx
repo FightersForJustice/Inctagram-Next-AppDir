@@ -1,13 +1,13 @@
-"use client";
-import React, { useState } from "react";
-import s from "./MyProfile.module.scss";
-import { usePathname } from "next-intl/client";
-import { SubscribersModal } from "@/components/Modals/SubscribersModal";
-import { SideBar } from "./Navigation";
-import { SubscriptionsModal } from "@/components/Modals/SubscriptionsModal";
-import { Profile } from "./Profile";
-import { Loader } from "@/components/Loader";
-import { useGetProfileQuery } from "@/api";
+'use client';
+import React, { useState } from 'react';
+import s from './MyProfile.module.scss';
+import { usePathname } from 'next-intl/client';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
+import { SideBar } from './Navigation';
+import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { Profile } from './Profile';
+import { Loader } from '@/components/Loader';
+import { useGetProfileQuery } from '@/api';
 
 const MyProfile = () => {
   const [paidAccount] = useState(true);
@@ -22,8 +22,12 @@ const MyProfile = () => {
   return (
     <>
       <div className={s.container}>
-        <div className={s.wrapper} id={"wrapper"}>
-          <SideBar pathname={pathname} paidAccount={paidAccount} userData={data!} />
+        <div className={s.wrapper} id={'wrapper'}>
+          <SideBar
+            pathname={pathname}
+            paidAccount={paidAccount}
+            userData={data!}
+          />
           <Profile
             setShowSubscriptionsModal={setShowSubscriptionsModal}
             setShowSubscribersModal={setShowSubscribersModal}
@@ -32,8 +36,14 @@ const MyProfile = () => {
           />
         </div>
       </div>
-      {showSubscribersModal && <SubscribersModal setShowSubscribersModal={setShowSubscribersModal} />}
-      {showSubscriptionsModal && <SubscriptionsModal setShowSubscriptionsModal={setShowSubscriptionsModal} />}
+      {showSubscribersModal && (
+        <SubscribersModal setShowSubscribersModal={setShowSubscribersModal} />
+      )}
+      {showSubscriptionsModal && (
+        <SubscriptionsModal
+          setShowSubscriptionsModal={setShowSubscriptionsModal}
+        />
+      )}
       {isLoading && <Loader />}
     </>
   );

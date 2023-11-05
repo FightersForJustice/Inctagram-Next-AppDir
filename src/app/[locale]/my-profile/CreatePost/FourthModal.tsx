@@ -1,17 +1,17 @@
-import React, { ChangeEvent, useState } from "react";
-import s from "./CreatePost.module.scss";
-import Image from "next/image";
-import { FiltersModal } from "@/components/Modals/FiltersModal";
-import { useCreatePostMutation, useDeletePostImageMutation } from "@/api";
-import { toast } from "react-toastify";
-import { Loader } from "@/components/Loader";
-import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { GetResponse } from "@/api/profile.api";
-import { Carousel } from "@/components/Carousel/Carousel";
-import { useAppSelector } from "@/redux/hooks/useSelect";
-import { postImagesIds } from "@/redux/reducers/post/postSelectors";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/post/postReducer";
+import React, { ChangeEvent, useState } from 'react';
+import s from './CreatePost.module.scss';
+import Image from 'next/image';
+import { FiltersModal } from '@/components/Modals/FiltersModal';
+import { useCreatePostMutation, useDeletePostImageMutation } from '@/api';
+import { toast } from 'react-toastify';
+import { Loader } from '@/components/Loader';
+import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { GetResponse } from '@/api/profile.api';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postImagesIds } from '@/redux/reducers/post/postSelectors';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
 
 type Props = {
   showThirdModal: () => void;
@@ -19,11 +19,15 @@ type Props = {
   userData: GetResponse;
 };
 
-export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePostModal, userData }) => {
+export const FourthModal: React.FC<Props> = ({
+  showThirdModal,
+  setShowCreatePostModal,
+  userData,
+}) => {
   const dispatch = useAppDispatch();
 
   const [textareaLength, setTextareaLength] = useState(0);
-  const [textareaValue, setTextareaValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
   const imagesIds = useAppSelector(postImagesIds);
@@ -45,11 +49,11 @@ export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePost
     })
       .unwrap()
       .then(() => {
-        toast.success("Post created");
+        toast.success('Post created');
         setShowCreatePostModal(false);
       })
       .catch(() => {
-        toast.error("Error");
+        toast.error('Error');
       });
     dispatch(postActions.removeAllGalleryImages);
     dispatch(postActions.removeImage);
@@ -61,7 +65,7 @@ export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePost
         deleteImage(uploadId.uploadId)
           .unwrap()
           .then(() => {
-            toast.success("Post image deleted");
+            toast.success('Post image deleted');
           });
     });
     dispatch(postActions.removeImageIds());
@@ -71,9 +75,9 @@ export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePost
   return (
     <>
       <FiltersModal
-        title={"Publication"}
-        width={"972px"}
-        buttonName={"Publish"}
+        title={'Publication'}
+        width={'972px'}
+        buttonName={'Publish'}
         onPublishPost={onPublishPost}
         onClose={() => setAreYouSureModal(true)}
         onDeletePostImage={onDeletePostImage}
@@ -85,24 +89,34 @@ export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePost
           <div className={s.cropping__publication__container}>
             <div className={s.cropping__publication__header}>
               <Image
-                src={`${userData?.avatars[1]?.url ?? "/img/create-post/no-image.png"}`}
-                alt={"image"}
+                src={`${
+                  userData?.avatars[1]?.url ?? '/img/create-post/no-image.png'
+                }`}
+                alt={'image'}
                 width={36}
                 height={36}
                 className={s.cropping__publication__image}
               />
-              <p>{`${userData ? userData.userName : ""}`}</p>
+              <p>{`${userData ? userData.userName : ''}`}</p>
             </div>
             <div>
               <div className={s.cropping__publication__wrapper}>
-                <p className={s.cropping__publication__text}>Add publication descriptions</p>
-                <p style={{ color: `${textareaLength > 499 ? "red" : "#8D9094"}` }}>{textareaLength} / 500</p>
+                <p className={s.cropping__publication__text}>
+                  Add publication descriptions
+                </p>
+                <p
+                  style={{
+                    color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+                  }}
+                >
+                  {textareaLength} / 500
+                </p>
               </div>
               <textarea
                 cols={30}
                 rows={10}
                 className={s.cropping__publication__textarea}
-                placeholder={"Description..."}
+                placeholder={'Description...'}
                 maxLength={500}
                 onChange={onTextareaHandler}
                 value={textareaValue}

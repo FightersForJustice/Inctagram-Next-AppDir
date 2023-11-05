@@ -1,1 +1,1 @@
-export { PostFix } from "./PostFix";
+export { PostFix } from './PostFix';

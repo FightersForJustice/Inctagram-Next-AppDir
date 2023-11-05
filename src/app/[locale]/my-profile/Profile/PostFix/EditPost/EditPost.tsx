@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from 'react';
 
-import s from "./EditPost.module.scss";
-import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
-import { useUpdatePostMutation } from "@/api";
-import { toast } from "react-toastify";
-import { Loader } from "@/components/Loader";
+import s from './EditPost.module.scss';
+import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
+import { useUpdatePostMutation } from '@/api';
+import { toast } from 'react-toastify';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -13,7 +13,12 @@ type Props = {
   setShowDots: (value: boolean) => void;
 };
 
-export const EditPost: React.FC<Props> = ({ setEditPost, description, postId, setShowDots }) => {
+export const EditPost: React.FC<Props> = ({
+  setEditPost,
+  description,
+  postId,
+  setShowDots,
+}) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState(description);
 
@@ -31,7 +36,7 @@ export const EditPost: React.FC<Props> = ({ setEditPost, description, postId, se
       .then(() => {
         setEditPost(false);
         setShowDots(true);
-        toast.success("Post was updated");
+        toast.success('Post was updated');
       });
   };
 
@@ -47,7 +52,13 @@ export const EditPost: React.FC<Props> = ({ setEditPost, description, postId, se
           value={textareaValue}
           onChange={onTextareaHandler}
         />
-        <p style={{ color: `${textareaLength > 499 ? "red" : "#8D9094"}`, textAlign: "right", fontSize: "12px" }}>
+        <p
+          style={{
+            color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+            textAlign: 'right',
+            fontSize: '12px',
+          }}
+        >
           {textareaLength} / 500
         </p>
         <div className={s.post__btn}>

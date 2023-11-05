@@ -1,5 +1,5 @@
-import React from "react";
-import s from "@/app/[locale]/home/HomePagePost/HomePagePost.module.scss";
+import React from 'react';
+import s from '@/app/[locale]/home/HomePagePost/HomePagePost.module.scss';
 
 export const HomePostIcons = () => {
   return (

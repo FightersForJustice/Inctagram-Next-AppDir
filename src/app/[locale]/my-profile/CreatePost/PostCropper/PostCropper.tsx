@@ -1,11 +1,11 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import Cropper, { ReactCropperElement } from "react-cropper";
-import "cropperjs/dist/cropper.css";
-import { ImageStateType } from "../CreatePost";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/post/postReducer";
-import { useAppSelector } from "@/redux/hooks/useSelect";
+'use client';
+import React, { useEffect, useRef } from 'react';
+import Cropper, { ReactCropperElement } from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import { ImageStateType } from '../CreatePost';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
+import { useAppSelector } from '@/redux/hooks/useSelect';
 
 type Props = {
   postImage: ImageStateType;
@@ -16,7 +16,11 @@ type Props = {
   setLoadedImages: (value: any) => void;
 };
 
-export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, setCroppedPostImage }) => {
+export const PostCropper: React.FC<Props> = ({
+  postImage,
+  zoomValue,
+  setCroppedPostImage,
+}) => {
   const cropperRef = useRef<ReactCropperElement>(null);
   const ratio = useAppSelector((state) => state.post.cropAspectRatio);
   const dispatch = useAppDispatch();
@@ -29,7 +33,7 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, setCroppedP
     const value = cropper?.getCroppedCanvas().toDataURL()!;
     setCroppedPostImage(value);
     if (postImage) {
-      const image = { id: postImage.id, image: postImage.image, filter: "" };
+      const image = { id: postImage.id, image: postImage.image, filter: '' };
       image.image = value;
       dispatch(postActions.changeImageFromPostGallery(image));
     }
@@ -37,10 +41,12 @@ export const PostCropper: React.FC<Props> = ({ postImage, zoomValue, setCroppedP
   return (
     <>
       <Cropper
-        src={`${postImage?.image ? postImage.image : "/img/create-post/test-image.png"}`}
+        src={`${
+          postImage?.image ? postImage.image : '/img/create-post/test-image.png'
+        }`}
         style={{
           transform: `scale(${+zoomValue / 10})`,
-          width: "100%",
+          width: '100%',
         }}
         ref={cropperRef}
         cropend={onCropEnd}

@@ -1,1 +1,1 @@
-export {SecondModal} from './SecondModal'
+export { SecondModal } from './SecondModal';

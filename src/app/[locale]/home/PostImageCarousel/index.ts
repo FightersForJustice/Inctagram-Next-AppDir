@@ -1,1 +1,1 @@
-export { PostImageCarousel } from "./PostImageCarousel";
+export { PostImageCarousel } from './PostImageCarousel';

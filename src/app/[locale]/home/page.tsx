@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { SideBar } from "../my-profile/Navigation/SideBar";
-import { usePathname } from "next-intl/client";
-import { toast } from "react-toastify";
-import { Loader } from "@/components/Loader";
-import { HomePagePost } from "./HomePagePost";
-import { PostsItem, useLazyGetAllPostsQuery } from "@/api/posts.api";
-import { useScrollFetching } from "@/features/customHooks";
+import React, { useEffect, useState } from 'react';
+import { SideBar } from '../my-profile/Navigation/SideBar';
+import { usePathname } from 'next-intl/client';
+import { toast } from 'react-toastify';
+import { Loader } from '@/components/Loader';
+import { HomePagePost } from './HomePagePost';
+import { PostsItem, useLazyGetAllPostsQuery } from '@/api/posts.api';
+import { useScrollFetching } from '@/features/customHooks';
 
-import s from "./Home.module.scss";
-import { StatusCode } from "@/api/auth.api";
+import s from './Home.module.scss';
+import { StatusCode } from '@/api/auth.api';
 
 const Home: React.FC = () => {
   const pathname = usePathname();
@@ -20,15 +20,21 @@ const Home: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const [getPosts, { isLoading }] = useLazyGetAllPostsQuery();
-  const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
+  const fetchingValue = useScrollFetching(
+    100,
+    fetching,
+    setFetching,
+    posts.length,
+    totalCount
+  );
 
   const loadMorePosts = () => {
     if (!isLoading) {
       getPosts({
         idLastUploadedPost: lastLoadedPostId,
         pageSize: 5,
-        sortBy: "createdAt",
-        sortDirection: "desc",
+        sortBy: 'createdAt',
+        sortDirection: 'desc',
       })
         .unwrap()
         .then((res) => {
@@ -47,8 +53,8 @@ const Home: React.FC = () => {
     getPosts({
       idLastUploadedPost: lastLoadedPostId!,
       pageSize: 5,
-      sortBy: "createdAt",
-      sortDirection: "desc",
+      sortBy: 'createdAt',
+      sortDirection: 'desc',
     })
       .unwrap()
       .then((res) => {
@@ -58,7 +64,7 @@ const Home: React.FC = () => {
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
-          toast.error("Error 404");
+          toast.error('Error 404');
         }
         toast.error(err.error);
       });
@@ -70,14 +76,16 @@ const Home: React.FC = () => {
     }
   }, [fetchingValue]);
 
-  const allPosts = posts.map((item, index) => <HomePagePost key={item.id} post={item} images={posts[index].images} />);
+  const allPosts = posts.map((item, index) => (
+    <HomePagePost key={item.id} post={item} images={posts[index].images} />
+  ));
 
   return (
     <>
       <div className={s.container}>
-        <div className={s.wrapper} id={"wrapper"}>
+        <div className={s.wrapper} id={'wrapper'}>
           <SideBar pathname={pathname} paidAccount={false} />
-          <div style={{ gridArea: "profile" }}>{allPosts}</div>
+          <div style={{ gridArea: 'profile' }}>{allPosts}</div>
         </div>
       </div>
       {isLoading && <Loader />}

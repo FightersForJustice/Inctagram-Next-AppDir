@@ -1,14 +1,14 @@
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "./PostImageCarousel.css";
-import { ImageType } from "@/api/posts.api";
-import React from "react";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import './PostImageCarousel.css';
+import { ImageType } from '@/api/posts.api';
+import React from 'react';
 
 type Props = {
   images: ImageType[];
@@ -16,7 +16,14 @@ type Props = {
 
 export const PostImageCarousel: React.FC<Props> = ({ images }) => {
   if (images.length === 0) {
-    return <Image src={"/img/create-post/no-image.png"} alt={"post"} width={491} height={491} />;
+    return (
+      <Image
+        src={'/img/create-post/no-image.png'}
+        alt={'post'}
+        width={491}
+        height={491}
+      />
+    );
   }
 
   const sliderImages = images.map((image, index) => {
@@ -24,8 +31,8 @@ export const PostImageCarousel: React.FC<Props> = ({ images }) => {
       return (
         <SwiperSlide key={index}>
           <Image
-            src={`${image.url ? image.url : "/img/create-post/no-image.png"}`}
-            alt={"post"}
+            src={`${image.url ? image.url : '/img/create-post/no-image.png'}`}
+            alt={'post'}
             width={491}
             height={491}
           />

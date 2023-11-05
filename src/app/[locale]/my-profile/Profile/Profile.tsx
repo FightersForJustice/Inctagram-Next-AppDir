@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import s from "../MyProfile.module.scss";
-import Image from "next/image";
-import { GetResponse } from "@/api/profile.api";
-import { useTranslations } from "next-intl";
-import { ProfileWrapper } from "./ProfileWrapper";
-import { InfiniteScrollMyPosts } from "./InfiniteScrollMyPosts";
-import { PostFix } from "./PostFix";
-import { PostModal } from "@/components/Modals/PostModal";
-import { PostsItem } from "@/api/posts.api";
+import React, { useState } from 'react';
+import s from '../MyProfile.module.scss';
+import Image from 'next/image';
+import { GetResponse } from '@/api/profile.api';
+import { useTranslations } from 'next-intl';
+import { ProfileWrapper } from './ProfileWrapper';
+import { InfiniteScrollMyPosts } from './InfiniteScrollMyPosts';
+import { PostFix } from './PostFix';
+import { PostModal } from '@/components/Modals/PostModal';
+import { PostsItem } from '@/api/posts.api';
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -21,7 +21,7 @@ export const Profile: React.FC<Props> = ({
   paidAccount,
   userData,
 }) => {
-  const t = useTranslations("MyProfilePage");
+  const t = useTranslations('MyProfilePage');
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [userPosts, setUserPosts] = useState<PostsItem[]>([]);
@@ -37,8 +37,12 @@ export const Profile: React.FC<Props> = ({
       <div className={s.profile}>
         <div>
           <Image
-            src={`${userData?.avatars[0] ? userData.avatars[0].url : "/img/create-post/no-image.png"}`}
-            alt={"avatar"}
+            src={`${
+              userData?.avatars[0]
+                ? userData.avatars[0].url
+                : '/img/create-post/no-image.png'
+            }`}
+            alt={'avatar'}
             width={204}
             height={204}
             className={s.profile__avatar}
@@ -63,7 +67,7 @@ export const Profile: React.FC<Props> = ({
       </div>
 
       {openPostModal && (
-        <PostModal width={"972px"} onClose={() => setOpenPostModal(false)}>
+        <PostModal width={'972px'} onClose={() => setOpenPostModal(false)}>
           <PostFix
             onClose={() => setOpenPostModal(false)}
             postId={selectedPost}

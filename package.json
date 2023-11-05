@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
     "test": "jest",
     "cypress:open": "cypress open"
   },

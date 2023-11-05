@@ -1,1 +1,1 @@
-export { PostCropper } from "./PostCropper";
+export { PostCropper } from './PostCropper';

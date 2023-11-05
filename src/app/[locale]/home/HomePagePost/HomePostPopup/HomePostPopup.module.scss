@@ -1,6 +1,4 @@
 .popup {
-
-
   &__icon {
     cursor: pointer;
   }
@@ -25,14 +23,14 @@
     align-items: center;
     gap: 12px;
     cursor: pointer;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
 
     &:hover {
       color: var(--primary-500);
     }
 
     &:hover > svg > g > path {
-      transition: all .2s linear;
+      transition: all 0.2s linear;
       fill: var(--primary-500) !important;
     }
   }

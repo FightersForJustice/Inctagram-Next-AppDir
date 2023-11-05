@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { Loader } from "@/components/Loader";
-import s from "./InfiniteScrollMyPosts.module.scss";
-import { PostsItem, useLazyGetUserPostsQuery } from "@/api/posts.api";
-import { useScrollFetching } from "@/features/customHooks";
-import { toast } from "react-toastify";
-import { StatusCode } from "@/api/auth.api";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Loader } from '@/components/Loader';
+import s from './InfiniteScrollMyPosts.module.scss';
+import { PostsItem, useLazyGetUserPostsQuery } from '@/api/posts.api';
+import { useScrollFetching } from '@/features/customHooks';
+import { toast } from 'react-toastify';
+import { StatusCode } from '@/api/auth.api';
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -14,12 +14,22 @@ type Props = {
   postChanges: boolean;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpen, getUserPosts }) => {
+export const InfiniteScrollMyPosts: React.FC<Props> = ({
+  setSelectedPost,
+  setOpen,
+  getUserPosts,
+}) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
   const [totalCount, setTotalCount] = useState(0);
-  const fetchingValue = useScrollFetching(100, fetching, setFetching, posts.length, totalCount);
+  const fetchingValue = useScrollFetching(
+    100,
+    fetching,
+    setFetching,
+    posts.length,
+    totalCount
+  );
 
   const [getPosts, { isFetching, data }] = useLazyGetUserPostsQuery();
 
@@ -28,8 +38,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
       getPosts({
         idLastUploadedPost: lastLoadedPostId,
         pageSize: 12,
-        sortBy: "createdAt",
-        sortDirection: "desc",
+        sortBy: 'createdAt',
+        sortDirection: 'desc',
       })
         .unwrap()
         .then((res) => {
@@ -48,8 +58,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     getPosts({
       idLastUploadedPost: lastLoadedPostId!,
       pageSize: 8,
-      sortBy: "createdAt",
-      sortDirection: "desc",
+      sortBy: 'createdAt',
+      sortDirection: 'desc',
     })
       .unwrap()
       .then((res) => {
@@ -60,7 +70,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
       })
       .catch((err) => {
         if (err.statusCode === StatusCode.noAddress) {
-          toast.error("Error 404");
+          toast.error('Error 404');
         }
         toast.error(err.error);
       });
@@ -82,10 +92,14 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
     return data?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
-        <div key={i.id} className={"overflow-hidden"}>
+        <div key={i.id} className={'overflow-hidden'}>
           <Image
-            src={i.images[0]?.url ? currentPosts[currentPosts.length - 1].url : "/img/profile/posts/post1.png"}
-            alt={"post"}
+            src={
+              i.images[0]?.url
+                ? currentPosts[currentPosts.length - 1].url
+                : '/img/profile/posts/post1.png'
+            }
+            alt={'post'}
             width={234}
             height={228}
             key={i.id}
@@ -102,8 +116,10 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({ setSelectedPost, setOpe
       {posts.length > 0 ? (
         postsImages()
       ) : (
-        <div className={"m-auto"}>
-          <p className={"font-bold text-2xl"}>You don&apos;t have any posts yet 😢</p>
+        <div className={'m-auto'}>
+          <p className={'font-bold text-2xl'}>
+            You don&apos;t have any posts yet 😢
+          </p>
         </div>
       )}
       {isFetching && <Loader />}

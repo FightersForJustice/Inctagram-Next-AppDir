@@ -1,13 +1,13 @@
-import { IUploadImageId } from "@/redux/reducers/post/postReducer";
-import { api } from "@/api/api";
+import { IUploadImageId } from '@/redux/reducers/post/postReducer';
+import { api } from '@/api/api';
 
 export const postsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     uploadPostImage: builder.mutation<UploadImageResponse, FormData>({
       query: (file) => {
         return {
-          url: "posts/image",
-          method: "POST",
+          url: 'posts/image',
+          method: 'POST',
           body: file,
         };
       },
@@ -15,18 +15,18 @@ export const postsApi = api.injectEndpoints({
     createPost: builder.mutation<PostResponse, CreatePostRequest>({
       query: (data) => {
         return {
-          url: "posts",
-          method: "POST",
+          url: 'posts',
+          method: 'POST',
           body: data,
         };
       },
-      invalidatesTags: ["Post"],
+      invalidatesTags: ['Post'],
     }),
     deletePostImage: builder.mutation({
       query: (uploadId: string) => {
         return {
           url: `posts/image/${uploadId}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
     }),
@@ -34,7 +34,7 @@ export const postsApi = api.injectEndpoints({
       query: (postId) => {
         return {
           url: `posts/p/${postId}`,
-          method: "GET",
+          method: 'GET',
         };
       },
     }),
@@ -42,46 +42,56 @@ export const postsApi = api.injectEndpoints({
       query: (args) => {
         return {
           url: `posts/${args.postId}`,
-          method: "PUT",
+          method: 'PUT',
           body: {
             description: args.description,
           },
         };
       },
-      invalidatesTags: ["Post"],
+      invalidatesTags: ['Post'],
     }),
     deletePost: builder.mutation({
       query: (postId: number) => {
         return {
           url: `posts/${postId}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
-      invalidatesTags: ["Post"],
+      invalidatesTags: ['Post'],
     }),
     getAllPosts: builder.query<
       GetAllPosts,
-      { idLastUploadedPost: number; pageSize: number; sortBy: string; sortDirection: string }
+      {
+        idLastUploadedPost: number;
+        pageSize: number;
+        sortBy: string;
+        sortDirection: string;
+      }
     >({
       query: ({ idLastUploadedPost, pageSize, sortBy, sortDirection }) => {
         return {
           url: `posts/all/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
-          method: "GET",
+          method: 'GET',
         };
       },
-      providesTags: ["Post"],
+      providesTags: ['Post'],
     }),
     getUserPosts: builder.query<
       GetAllPosts,
-      { idLastUploadedPost: number; pageSize: number; sortBy: string; sortDirection: string }
+      {
+        idLastUploadedPost: number;
+        pageSize: number;
+        sortBy: string;
+        sortDirection: string;
+      }
     >({
       query: ({ idLastUploadedPost, pageSize, sortBy, sortDirection }) => {
         return {
           url: `posts/user/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
-          method: "GET",
+          method: 'GET',
         };
       },
-      providesTags: ["Post"],
+      providesTags: ['Post'],
     }),
   }),
 });

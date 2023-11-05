@@ -1,7 +1,7 @@
-import s from "../../MyProfile.module.scss";
-import Link from "next/link";
-import React from "react";
-import { GetResponse } from "@/api/profile.api";
+import s from '../../MyProfile.module.scss';
+import Link from 'next/link';
+import React from 'react';
+import { GetResponse } from '@/api/profile.api';
 
 type Props = {
   data: GetResponse;
@@ -24,9 +24,15 @@ export const ProfileWrapper: React.FC<Props> = ({
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>
         <div className={s.profile__title__wrapper}>
-          <p id={"profile-userName"}>{data?.userName ?? "User Name"}</p>
+          <p id={'profile-userName'}>{data?.userName ?? 'User Name'}</p>
           {paidAccount && (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M11.3654 0.521155C11.7342 0.218242 12.2658 0.218242 12.6346 0.521155L14.7751 2.27886C14.9697 2.43869 15.2175 2.5192 15.4689 2.50429L18.2337 2.34039C18.7101 2.31215 19.1402 2.62457 19.2605 3.08645L19.959 5.76657C20.0225 6.01028 20.1757 6.22105 20.3878 6.35676L22.7209 7.84927C23.123 8.10648 23.2872 8.61199 23.1131 9.05641L22.1029 11.6352C22.011 11.8697 22.011 12.1303 22.1029 12.3648L23.1131 14.9436C23.2872 15.388 23.123 15.8935 22.7209 16.1507L20.3878 17.6432C20.1757 17.779 20.0225 17.9897 19.959 18.2334L19.2605 20.9136C19.1402 21.3754 18.7101 21.6879 18.2337 21.6596L15.4689 21.4957C15.2175 21.4808 14.9697 21.5613 14.7751 21.7211L12.6346 23.4788C12.2658 23.7818 11.7342 23.7818 11.3654 23.4788L9.22494 21.7211C9.03031 21.5613 8.78254 21.4808 8.53113 21.4957L5.76633 21.6596C5.28986 21.6879 4.85985 21.3754 4.73948 20.9136L4.04099 18.2334C3.97747 17.9897 3.82434 17.779 3.61219 17.6432L1.27908 16.1507C0.877008 15.8935 0.712758 15.388 0.886858 14.9436L1.89711 12.3648C1.98897 12.1303 1.98897 11.8697 1.89711 11.6352L0.886858 9.05641C0.712757 8.61199 0.877008 8.10648 1.27908 7.84927L3.61219 6.35676C3.82434 6.22105 3.97747 6.01028 4.04099 5.76657L4.73948 3.08645C4.85985 2.62457 5.28986 2.31215 5.76633 2.34039L8.53113 2.50429C8.78254 2.5192 9.03031 2.43869 9.22494 2.27886L11.3654 0.521155Z"
                 fill="#397DF6"
@@ -47,32 +53,47 @@ export const ProfileWrapper: React.FC<Props> = ({
               </g>
               <defs>
                 <clipPath id="clip0_4700_12136">
-                  <rect width="16" height="16" fill="white" transform="translate(4 4)" />
+                  <rect
+                    width="16"
+                    height="16"
+                    fill="white"
+                    transform="translate(4 4)"
+                  />
                 </clipPath>
               </defs>
             </svg>
           )}
         </div>
-        <Link href={"/settings-profile"} className={s.profile__btn} id={"profile-link-to-settings-profile"}>
-          {t("btnName")}
+        <Link
+          href={'/settings-profile'}
+          className={s.profile__btn}
+          id={'profile-link-to-settings-profile'}
+        >
+          {t('btnName')}
         </Link>
       </div>
       <div className={s.profile__info}>
-        <div className={s.profile__info__subscriptions} onClick={() => setShowSubscriptionsModal(true)}>
+        <div
+          className={s.profile__info__subscriptions}
+          onClick={() => setShowSubscriptionsModal(true)}
+        >
           <p>0</p>
-          <p>{t("subscriptions")}</p>
+          <p>{t('subscriptions')}</p>
         </div>
-        <div className={s.profile__info__subscribers} onClick={() => setShowSubscribersModal(true)}>
+        <div
+          className={s.profile__info__subscribers}
+          onClick={() => setShowSubscribersModal(true)}
+        >
           <p>0</p>
-          <p>{t("subscribers")}</p>
+          <p>{t('subscribers')}</p>
         </div>
         <div className={s.profile__info__publications}>
           <p>{userPosts}</p>
-          <p>{t("publications")}</p>
+          <p>{t('publications')}</p>
         </div>
       </div>
-      <p className={s.profile__desc} id={"profile-aboutMe"}>
-        {data?.aboutMe ?? `${t("aboutMe")}👁️`}
+      <p className={s.profile__desc} id={'profile-aboutMe'}>
+        {data?.aboutMe ?? `${t('aboutMe')}👁️`}
       </p>
     </div>
   );

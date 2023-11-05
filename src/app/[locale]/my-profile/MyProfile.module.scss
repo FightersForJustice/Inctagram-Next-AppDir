@@ -1,6 +1,3 @@
-
-
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -10,8 +7,8 @@
 .wrapper {
   display: grid;
   grid-template-areas:
-          'menu profile'
-          'menu posts';
+    'menu profile'
+    'menu posts';
 }
 
 .nav {
@@ -42,8 +39,7 @@
     font-weight: 500;
     line-height: 24px;
     cursor: pointer;
-    transition: all .2s linear;
-
+    transition: all 0.2s linear;
 
     &:hover {
       color: var(--primary-500);
@@ -56,13 +52,13 @@
      }*/
 
     &:hover > svg {
-      transition: all .2s linear;
+      transition: all 0.2s linear;
       fill: var(--primary-500) !important;
     }
   }
 
   &__item > svg {
-    fill: var(--light-100)
+    fill: var(--light-100);
   }
 
   &__icon {
@@ -87,7 +83,7 @@
     align-items: center;
     gap: 12px;
     cursor: pointer;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
 
     &:hover {
       color: var(--primary-500);
@@ -99,7 +95,6 @@
       align-items: center;
       gap: 20px;
       margin-top: 50px;
-
     }
   }
 
@@ -108,11 +103,9 @@
   }
 
   &__btn:hover > svg {
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     fill: var(--primary-500);
   }
-
-
 }
 
 .profile {
@@ -146,7 +139,9 @@
     gap: 72px;
     margin-bottom: 23px;
 
-    &__subscriptions, &__subscribers, &__publications {
+    &__subscriptions,
+    &__subscribers,
+    &__publications {
       cursor: pointer;
     }
   }
@@ -180,6 +175,3 @@
     gap: 12px;
   }
 }
-
-
-
