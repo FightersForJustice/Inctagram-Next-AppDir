@@ -5,7 +5,7 @@ import { useUploadPostImageMutation } from "@/api";
 import { Loader } from "../../Loader/Loader";
 import { toast } from "react-toastify";
 import { applyImageFilter } from "@/utils";
-import { dataURLToBlob } from "blob-util";
+import { dataURLToBlob } from "@/utils/dataUrlToBlob";
 import { useAppDispatch } from "@/redux/hooks/useDispatch";
 import { postActions } from "@/redux/reducers/post/postReducer";
 import { useAppSelector } from "@/redux/hooks/useSelect";

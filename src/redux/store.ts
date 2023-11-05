@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
+
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { appReducer } from "@/redux/reducers";
 import { postReducer } from "@/redux/reducers/post/postReducer";

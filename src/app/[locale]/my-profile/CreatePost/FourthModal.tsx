@@ -56,7 +56,7 @@ export const FourthModal: React.FC<Props> = ({ showThirdModal, setShowCreatePost
   };
 
   const onDeletePostImage = () => {
-    imagesUploadIds.map((uploadId) => {
+    imagesUploadIds.map((uploadId: any) => {
       if (uploadId.uploadId)
         deleteImage(uploadId.uploadId)
           .unwrap()

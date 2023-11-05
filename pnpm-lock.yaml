@@ -11,6 +11,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.1.1
     version: 3.1.1(react-hook-form@7.45.1)
+  '@paypal/paypal-js':
+    specifier: github:paypal/paypal-js
+    version: github.com/paypal/paypal-js/1acba3f869ed14cd867d3ea33e6657df3d2b820f
   '@paypal/react-paypal-js':
     specifier: ^8.1.1
     version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -5849,4 +5852,14 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+    dev: false
+
+  github.com/paypal/paypal-js/1acba3f869ed14cd867d3ea33e6657df3d2b820f:
+    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/1acba3f869ed14cd867d3ea33e6657df3d2b820f}
+    name: '@paypal/paypal-js'
+    version: 7.0.3
+    prepare: true
+    requiresBuild: true
+    dependencies:
+      promise-polyfill: 8.3.0
     dev: false
