@@ -69,7 +69,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   return (
     <div className="autosuggest-container">
       <label className={"labelInput"}>{translate(translateName)}</label>
-      <Autosuggest
+      {/* <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
         onSuggestionsClearRequested={onSuggestionsClearRequested}
@@ -77,7 +77,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
         getSuggestionValue={(suggestion) => suggestion}
         renderSuggestion={(suggestion) => <div>{suggestion}</div>}
         inputProps={inputProps}
-      />
+      /> */}
       {error && <p className={"city__error"}>{errorMessage}</p>}
     </div>
   );
