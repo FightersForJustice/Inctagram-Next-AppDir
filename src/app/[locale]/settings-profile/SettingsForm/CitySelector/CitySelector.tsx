@@ -43,18 +43,6 @@ const CitySelector: React.FC<CitySelectorProps> = ({
       .map((city: City) => `${city.name}, ${city.country}`);
   };
 
-  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
-    setSuggestions(getSuggestions(value));
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const onSuggestionSelected = (event: React.FormEvent<any>, { suggestionValue }: { suggestionValue: string }) => {
-    setValue(suggestionValue);
-  };
-
   const inputProps = {
     placeholder: "Enter a city",
     className: error ? "inputSelector__error" : "inputSelector",
@@ -71,11 +59,14 @@ const CitySelector: React.FC<CitySelectorProps> = ({
       <label className={"labelInput"}>{translate(translateName)}</label>
       <Autosuggest
         suggestions={suggestions}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        onSuggestionSelected={onSuggestionSelected}
+        onSuggestionsFetchRequested={({ value }) => {
+          setValue(value);
+          setSuggestions(getSuggestions(value));
+        }}
+        onSuggestionSelected={(_, { suggestionValue }) => setValue(suggestionValue)}
+        onSuggestionsClearRequested={() => setSuggestions([])}
         getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={(suggestion) => <Fragment children={suggestion}/>}
+        renderSuggestion={(suggestion) => <Fragment>{suggestion}</Fragment>}
         inputProps={inputProps}
       />
       {error && <p className={"city__error"}>{errorMessage}</p>}
