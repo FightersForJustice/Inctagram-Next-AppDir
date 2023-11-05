@@ -60,7 +60,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     className: `${error ? "inputSelector__error" : "inputSelector"}`,
     id: id,
     value: userCity ? userCity : value,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+    onChange: (event:any, { newValue }: { newValue: string }) => {
       setValue(newValue);
       setUserCity(newValue);
     },
@@ -76,7 +76,6 @@ const CitySelector: React.FC<CitySelectorProps> = ({
         onSuggestionSelected={onSuggestionSelected}
         getSuggestionValue={(suggestion) => suggestion}
         renderSuggestion={(suggestion) => <div>{suggestion}</div>}
-        // @ts-ignore
         inputProps={inputProps}
       />
       {error && <p className={"city__error"}>{errorMessage}</p>}
