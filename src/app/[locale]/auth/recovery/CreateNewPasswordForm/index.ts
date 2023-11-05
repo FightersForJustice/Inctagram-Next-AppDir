@@ -1,1 +1,1 @@
-export { CreateNewPasswordForm } from "./CreateNewPasswordForm";
+export { CreateNewPasswordForm } from './CreateNewPasswordForm';

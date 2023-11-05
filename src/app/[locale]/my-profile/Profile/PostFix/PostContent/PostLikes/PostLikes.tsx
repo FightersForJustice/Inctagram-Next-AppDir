@@ -1,7 +1,7 @@
-import React from "react";
-import s from "./PostLikes.module.scss";
-import { PostAmount } from "../PostAmount";
-import { PostForm } from "../PostForm";
+import React from 'react';
+import s from './PostLikes.module.scss';
+import { PostAmount } from '../PostAmount';
+import { PostForm } from '../PostForm';
 
 export const PostLikes = () => {
   return (
@@ -10,7 +10,7 @@ export const PostLikes = () => {
         <div className={s.post__likes__btns}>
           <div className={s.post__likes__btns__wrapper}>
             <svg
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               xmlns="http://www.w3.org/2000/svg"
               width="21"
               height="17"
@@ -23,7 +23,7 @@ export const PostLikes = () => {
               />
             </svg>
             <svg
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -37,7 +37,7 @@ export const PostLikes = () => {
             </svg>
           </div>
           <svg
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"

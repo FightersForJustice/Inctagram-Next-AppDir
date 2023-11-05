@@ -8,7 +8,8 @@
 
     &__avatar {
       width: 36px;
-      height: 36px;border-radius: 50%;
+      height: 36px;
+      border-radius: 50%;
     }
 
     &__wrapper {
@@ -16,7 +17,6 @@
       gap: 12px;
       justify-content: center;
     }
-
 
     &__name {
       font-size: 14px;
@@ -37,7 +37,7 @@
       color: var(--light-900);
       font-size: 12px;
       font-weight: 300;
-      line-height: 16px;;
+      line-height: 16px;
     }
 
     &__answer {

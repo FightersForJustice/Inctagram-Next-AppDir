@@ -1,7 +1,7 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
-import s from "./FoundUser.module.scss";
+import s from './FoundUser.module.scss';
 
 export const FoundUser = () => {
   return (
@@ -9,8 +9,8 @@ export const FoundUser = () => {
       <div className={s.search__header}>
         <Image
           className={s.search__header__image}
-          src={"/img/profile/avatar.png"}
-          alt={"avatar"}
+          src={'/img/profile/avatar.png'}
+          alt={'avatar'}
           width={50}
           height={50}
         />

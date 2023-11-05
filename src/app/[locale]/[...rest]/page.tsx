@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useTranslations } from "next-intl";
-import { NotFound } from "@/components/NotFound";
+import { useTranslations } from 'next-intl';
+import { NotFound } from '@/components/NotFound';
 
 export default function CatchAllPage() {
-  const t = useTranslations("NotFoundPage");
+  const t = useTranslations('NotFoundPage');
 
   return (
     <NotFound>
-      <>{t("title")}</>
-      <>{t("description")}</>
+      <>{t('title')}</>
+      <>{t('description')}</>
     </NotFound>
   );
 }

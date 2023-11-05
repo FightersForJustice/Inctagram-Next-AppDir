@@ -1,1 +1,1 @@
-export { EmailForm } from "./EmailForm";
+export { EmailForm } from './EmailForm';

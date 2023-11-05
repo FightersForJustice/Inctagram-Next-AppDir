@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
-import s from "./CreatePost.module.scss";
-import Image from "next/image";
-import { FiltersModal } from "@/components/Modals/FiltersModal";
-import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { Carousel } from "@/components/Carousel/Carousel";
-import { useAppSelector } from "@/redux/hooks/useSelect";
-import { postImages } from "@/redux/reducers/post/postSelectors";
-import { filters } from "@/features/data";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/post/postReducer";
+import React, { useRef, useState } from 'react';
+import s from './CreatePost.module.scss';
+import Image from 'next/image';
+import { FiltersModal } from '@/components/Modals/FiltersModal';
+import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postImages } from '@/redux/reducers/post/postSelectors';
+import { filters } from '@/features/data';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
 
 type Props = {
   showSecondModal: () => void;
@@ -36,9 +36,9 @@ export const ThirdModal: React.FC<Props> = ({
   return (
     <>
       <FiltersModal
-        title={"Filters"}
-        width={"972px"}
-        buttonName={"Next"}
+        title={'Filters'}
+        width={'972px'}
+        buttonName={'Next'}
         showSecondModal={showSecondModal}
         showFourthModal={showFourthModal}
         onClose={() => setAreYouSureModal(true)}
@@ -52,16 +52,22 @@ export const ThirdModal: React.FC<Props> = ({
           <div className={s.cropping__filters__items}>
             {filters.map(({ name, filter }) => {
               const onSelectFilter = (filter: string) => {
-                dispatch(postActions.setImageFilter({ image: activeImage, filter }));
+                dispatch(
+                  postActions.setImageFilter({ image: activeImage, filter })
+                );
               };
               return (
-                <div key={name} className={s.cropping__filters__item} onClick={() => onSelectFilter(filter)}>
+                <div
+                  key={name}
+                  className={s.cropping__filters__item}
+                  onClick={() => onSelectFilter(filter)}
+                >
                   <Image
                     src={activeImage}
-                    alt={"image-filter"}
+                    alt={'image-filter'}
                     width={108}
                     height={108}
-                    style={{ filter, marginRight: "10px" }}
+                    style={{ filter, marginRight: '10px' }}
                     className={s.cropping__filters__smallImage}
                     ref={changedPostImage}
                   />
@@ -73,7 +79,10 @@ export const ThirdModal: React.FC<Props> = ({
         </div>
       </FiltersModal>
       {areYouSureModal && (
-        <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />
+        <AreYouSureModal
+          toggleAreYouSureModal={setAreYouSureModal}
+          toggleModal={setShowCreatePostModal}
+        />
       )}
     </>
   );

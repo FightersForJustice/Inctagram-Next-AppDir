@@ -1,1 +1,1 @@
-export { ManagementCheckbox } from "./ManagementCheckbox";
+export { ManagementCheckbox } from './ManagementCheckbox';

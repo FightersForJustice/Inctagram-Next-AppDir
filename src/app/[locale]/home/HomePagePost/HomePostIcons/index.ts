@@ -1,1 +1,1 @@
-export {HomePostIcons} from './HomePostIcons'
+export { HomePostIcons } from './HomePostIcons';

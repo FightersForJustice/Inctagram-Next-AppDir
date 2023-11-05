@@ -1,1 +1,1 @@
-export {SubscriptionRadio} from './SubscriptionRadio'
+export { SubscriptionRadio } from './SubscriptionRadio';

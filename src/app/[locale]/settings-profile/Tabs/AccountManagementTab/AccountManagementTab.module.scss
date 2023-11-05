@@ -8,14 +8,13 @@
 }
 
 .tab {
-
   &__name {
     padding-top: 30px;
     margin-bottom: 6px;
     font-size: 16px;
     font-weight: 600;
   }
-  
+
   &__wrapper {
     background-color: var(--dark-500);
     border: 1px solid var(--dark-300);
@@ -33,9 +32,6 @@
   }
 
   &__img {
-
-
-
     &__wrapper {
       display: flex;
       align-items: center;
@@ -47,8 +43,6 @@
       border-radius: 5px;
       border: 1px solid var(--dark-100);
       cursor: pointer;
-
     }
   }
 }
-

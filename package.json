@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
     "test": "jest",
     "cypress:open": "cypress open"
   },
@@ -26,8 +27,8 @@
     "@types/js-cookie": "^3.0.3",
     "@types/negotiator": "^0.6.1",
     "@types/node": "20.4.0",
-    "@types/react": "18.2.14",
-    "@types/react-autosuggest": "9.3.11",
+    "@types/react": "^18.2.35",
+    "@types/react-autosuggest": "^10.1.8",
     "@types/react-dom": "18.2.6",
     "@types/react-google-recaptcha": "^2.1.5",
     "@types/redux-thunk": "^2.1.0",

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 export default function IndexPage() {
-  redirect("/my-profile");
+  redirect('/my-profile');
 }

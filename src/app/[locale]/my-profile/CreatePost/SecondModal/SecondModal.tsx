@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import s from "../CreatePost.module.scss";
-import { CroppingModal } from "@/components/Modals/CroppingModal";
-import { AspectRatio } from "./AspectRatio";
-import { Range } from "./Range/Range";
-import { Gallery } from "./Gallery";
-import { AreYouSureModal } from "@/components/Modals/AreYouSureModal";
-import { AspectRatioType, ImageStateType } from "../CreatePost";
-import { PostCropper } from "../PostCropper/PostCropper";
-import { useAppSelector } from "@/redux/hooks/useSelect";
-import { imagesGallery } from "@/redux/reducers/post/postSelectors";
+import React, { useState } from 'react';
+import s from '../CreatePost.module.scss';
+import { CroppingModal } from '@/components/Modals/CroppingModal';
+import { AspectRatio } from './AspectRatio';
+import { Range } from './Range/Range';
+import { Gallery } from './Gallery';
+import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { AspectRatioType, ImageStateType } from '../CreatePost';
+import { PostCropper } from '../PostCropper/PostCropper';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
   postImage: ImageStateType;
@@ -44,16 +44,19 @@ export const SecondModal: React.FC<Props> = ({
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
-        title={"Cropping"}
+        title={'Cropping'}
         setPostImage={setPostImage}
         showThirdModal={showThirdModal}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
-        width={"492px"}
+        width={'492px'}
       >
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery setLoadedImages={setLoadedImages} setPostImage={setPostImage} />
+        <Gallery
+          setLoadedImages={setLoadedImages}
+          setPostImage={setPostImage}
+        />
 
         <PostCropper
           postImage={postImage}
@@ -65,7 +68,10 @@ export const SecondModal: React.FC<Props> = ({
         />
       </CroppingModal>
       {areYouSureModal && (
-        <AreYouSureModal toggleAreYouSureModal={setAreYouSureModal} toggleModal={setShowCreatePostModal} />
+        <AreYouSureModal
+          toggleAreYouSureModal={setAreYouSureModal}
+          toggleModal={setShowCreatePostModal}
+        />
       )}
     </div>
   );

@@ -1,19 +1,18 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useState } from 'react';
 
-import s from "./PostFix.module.scss";
-import Image from "next/image";
-import { PostContent } from "./PostContent";
-import { EditPost } from "./EditPost";
+import s from './PostFix.module.scss';
+import Image from 'next/image';
+import { PostContent } from './PostContent';
+import { EditPost } from './EditPost';
 
-import { Loader } from "@/components/Loader";
-import { toast } from "react-toastify";
-import { Dots } from "./Dots";
-import { useDeletePostMutation, useGetPostQuery } from "@/api";
-import { handleApiError } from "@/utils";
-import { Carousel } from "@/components/Carousel/Carousel";
-import { SwiperSlide } from "swiper/react";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions, postReducer } from "@/redux/reducers/post/postReducer";
+import { Loader } from '@/components/Loader';
+import { toast } from 'react-toastify';
+import { Dots } from './Dots';
+import { useDeletePostMutation, useGetPostQuery } from '@/api';
+import { handleApiError } from '@/utils';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { SwiperSlide } from 'swiper/react';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -23,25 +22,31 @@ type Props = {
   setOpenPostModal: (value: boolean) => void;
 };
 
-export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, setOpenPostModal }) => {
+export const PostFix: React.FC<Props> = ({
+  onClose,
+  postId,
+  avatar,
+  userName,
+  setOpenPostModal,
+}) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showDots, setShowDots] = useState(true);
   const [editPost, setEditPost] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(postId!);
+  const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
+    postId!
+  );
 
-  const dispatch = useAppDispatch();
   const onDeletePost = () => {
     deletePost(postId!)
       .unwrap()
       .then(() => {
         setOpenPostModal(false);
-        toast.success("Post was deleted");
+        toast.success('Post was deleted');
       })
       .catch((err) => toast.error(err.error));
-    dispatch(postActions.somePostIsChanged(true));
   };
 
   if (error) {
@@ -51,7 +56,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
   return (
     <>
       {data ? (
-        <div className={"relative"}>
+        <div className={'relative'}>
           <div className={s.post}>
             {isSuccess ? (
               <div className={s.post__img}>
@@ -59,8 +64,8 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
                   {data.images.map((i, index) => {
                     if (i.width !== 640) {
                       return (
-                        <SwiperSlide key={index} className={"w-full"}>
-                          <img src={i.url} alt={"err"} />
+                        <SwiperSlide key={index} className={'w-full'}>
+                          <img src={i.url} alt={'err'} />
                         </SwiperSlide>
                       );
                     }
@@ -76,8 +81,8 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
               <div className={s.post__header}>
                 <div className={s.post__header__wrapper}>
                   <Image
-                    src={avatar ?? "/img/create-post/no-image.png"}
-                    alt={"ava"}
+                    src={avatar ?? '/img/create-post/no-image.png'}
+                    alt={'ava'}
                     width={36}
                     height={36}
                     className={s.post__header__img}
@@ -94,7 +99,7 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
                     setShowDots={setShowDots}
                   />
                 ) : (
-                  <div className={"w-1/12"}></div>
+                  <div className={'w-1/12'}></div>
                 )}
               </div>
               {editPost ? (
@@ -117,8 +122,16 @@ export const PostFix: React.FC<Props> = ({ onClose, postId, avatar, userName, se
               )}
             </div>
           </div>
-          <button className={"absolute top-[-14px] right-[-37px]"} onClick={onClose}>
-            <Image src={"/img/close.svg"} alt={"close"} width={24} height={24} />
+          <button
+            className={'absolute top-[-14px] right-[-37px]'}
+            onClick={onClose}
+          >
+            <Image
+              src={'/img/close.svg'}
+              alt={'close'}
+              width={24}
+              height={24}
+            />
           </button>
         </div>
       ) : (

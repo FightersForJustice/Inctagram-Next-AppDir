@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import s from "./SettingsForm.module.scss";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import React, { ReactNode } from 'react';
+import s from './SettingsForm.module.scss';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
   translate: (value: string) => ReactNode;

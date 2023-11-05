@@ -1,14 +1,17 @@
-import React from "react";
-import * as RadioGroup from "@radix-ui/react-radio-group";
+import React from 'react';
+import * as RadioGroup from '@radix-ui/react-radio-group';
 
-import "./SubscriptionRadio.css";
+import './SubscriptionRadio.css';
 
 type Props = {
   subTypeValue: string;
   setSubTypeValue: (value: string) => void;
 };
 
-export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeValue }) => {
+export const SubscriptionRadio: React.FC<Props> = ({
+  subTypeValue,
+  setSubTypeValue,
+}) => {
   return (
     <RadioGroup.Root
       className="RadioGroupRoot"
@@ -16,7 +19,7 @@ export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeVal
       aria-label="View density"
       onValueChange={(value) => setSubTypeValue(value)}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <RadioGroup.Item className="RadioGroupItem" value="MONTHLY" id="r10">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
@@ -24,15 +27,19 @@ export const SubscriptionRadio: React.FC<Props> = ({ subTypeValue, setSubTypeVal
           $10 per 1 Day
         </label>
       </div>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <RadioGroup.Item className="RadioGroupItem" value="SEMI_ANNUALLY" id="r50">
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <RadioGroup.Item
+          className="RadioGroupItem"
+          value="SEMI_ANNUALLY"
+          id="r50"
+        >
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r50">
           $50 per 7 Day
         </label>
       </div>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <RadioGroup.Item className="RadioGroupItem" value="YEARLY" id="r100">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>

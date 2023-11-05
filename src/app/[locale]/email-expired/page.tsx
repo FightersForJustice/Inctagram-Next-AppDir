@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-import { useTranslations } from "next-intl";
-import { RegistrationEmailResend } from "./RegistrationEmailResend";
+import { useTranslations } from 'next-intl';
+import { RegistrationEmailResend } from './RegistrationEmailResend';
 
 const EmailExpired = () => {
-  const t = useTranslations("EmailExpiredPage");
+  const t = useTranslations('EmailExpiredPage');
 
   return <RegistrationEmailResend translate={t} />;
 };

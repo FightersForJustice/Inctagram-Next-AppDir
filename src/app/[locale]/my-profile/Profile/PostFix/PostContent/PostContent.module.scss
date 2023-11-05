@@ -31,13 +31,7 @@
     border-radius: 50%;
   }
 
-
-
-
-
   &__amount {
-
-
     &__wrapper {
       display: flex;
       align-items: center;
@@ -51,7 +45,9 @@
       margin-bottom: 5px;
     }
 
-    &__image1, &__image2, &__image3  {
+    &__image1,
+    &__image2,
+    &__image3 {
       border-radius: 50%;
       height: 24px;
       width: 24px;
@@ -99,7 +95,6 @@
       padding-bottom: 7px;
       border-bottom: 1px solid var(--dark-100);
     }
-
   }
 
   &__form {
@@ -119,7 +114,7 @@
       padding: 2px 5px;
       border: 1px solid transparent;
       border-radius: 2px;
-      transition: all .2s linear;
+      transition: all 0.2s linear;
 
       &::placeholder {
         color: var(--light-900);
@@ -128,18 +123,16 @@
 
       &:focus {
         border: 1px solid var(--primary-500);
-
       }
     }
 
     &__btn {
       color: var(--primary-500);
-      transition: all .2s linear;
+      transition: all 0.2s linear;
 
       &:hover {
         color: var(--primary-100);
       }
     }
-
   }
 }

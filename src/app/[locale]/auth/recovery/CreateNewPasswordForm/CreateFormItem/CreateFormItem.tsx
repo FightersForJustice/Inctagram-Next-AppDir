@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { ShowHidePass } from "@/components/ShowHidePass";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import React, { ReactNode } from 'react';
+import { ShowHidePass } from '@/components/ShowHidePass';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
   marginTop: string;
@@ -29,19 +29,23 @@ export const CreateFormItem: React.FC<Props> = ({
 }) => {
   return (
     <div className={`${marginTop} ${marginBottom}`}>
-      <div className={" text-left ml-5 text-[--light-900] text-[14px]"}>
+      <div className={' text-left ml-5 text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
-      <div className={"relative"}>
+      <div className={'relative'}>
         <input
           {...register(registerName)}
-          type={`${!showValue ? "text" : "password"}`}
+          type={`${!showValue ? 'text' : 'password'}`}
           className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-            error ? "border-red-700" : ""
+            error ? 'border-red-700' : ''
           }`}
         />
         <ShowHidePass show={showValue} setShow={setShowCallback} />
-        {error && <p className={"absolute left-[5%] text-[--danger-500] text-[11px]"}>{errorMessage}</p>}
+        {error && (
+          <p className={'absolute left-[5%] text-[--danger-500] text-[11px]'}>
+            {errorMessage}
+          </p>
+        )}
       </div>
     </div>
   );

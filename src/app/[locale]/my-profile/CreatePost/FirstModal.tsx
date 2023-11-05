@@ -1,12 +1,12 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
-import s from "./CreatePost.module.scss";
-import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
-import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
-import { Modal } from "@/components/Modals/Modal";
-import { ImageStateType } from "./CreatePost";
-import Image from "next/image";
-import { postActions } from "@/redux/reducers/post/postReducer";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
+import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import s from './CreatePost.module.scss';
+import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
+import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
+import { Modal } from '@/components/Modals/Modal';
+import { ImageStateType } from './CreatePost';
+import Image from 'next/image';
+import { postActions } from '@/redux/reducers/post/postReducer';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 type Props = {
   setPostImage: (value: string) => void;
@@ -45,17 +45,25 @@ export const FirstModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal title={"Add photo"} width={"492px"} onClose={() => setShowCreatePostModal(false)}>
+    <Modal
+      title={'Add photo'}
+      width={'492px'}
+      onClose={() => setShowCreatePostModal(false)}
+    >
       <div className={s.createPost}>
         <Image
-          src={"/img/create-post/no-image.png"}
-          alt={"no-image"}
+          src={'/img/create-post/no-image.png'}
+          alt={'no-image'}
           width={222}
           height={228}
           className={s.createPost__image}
         />
         <div className={s.createPost__select}>
-          <input type="file" className={s.createPost__file} onChange={onSetUserAvatar} />
+          <input
+            type="file"
+            className={s.createPost__file}
+            onChange={onSetUserAvatar}
+          />
           <div className={s.createPost__overlay}>
             <PrimaryBtn>Select from computer</PrimaryBtn>
           </div>

@@ -1,1 +1,1 @@
-export { PostLikes } from "./PostLikes";
+export { PostLikes } from './PostLikes';

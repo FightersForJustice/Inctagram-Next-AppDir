@@ -1,12 +1,15 @@
-import React from "react";
-import s from "./ActiveSessions.module.scss";
+import React from 'react';
+import s from './ActiveSessions.module.scss';
 
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { LogoutBtn } from "@/components/Buttons/LogoutBtn";
-import { DevicesResponse, useDeleteSessionsDeviceMutation } from "@/api/profile.api";
-import { dateToFormat } from "@/utils/dateToFormat";
-import { toast } from "react-toastify";
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
+import {
+  DevicesResponse,
+  useDeleteSessionsDeviceMutation,
+} from '@/api/profile.api';
+import { dateToFormat } from '@/utils/dateToFormat';
+import { toast } from 'react-toastify';
 
 type Props = {
   t: (value: string) => string;
@@ -15,12 +18,12 @@ type Props = {
 };
 
 export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
-  const logoutTranslate = useTranslations("Navigation");
+  const logoutTranslate = useTranslations('Navigation');
   const [deleteSession] = useDeleteSessionsDeviceMutation();
 
   const logoutSession = async (item: DevicesResponse) => {
     if (sessions.length <= 1) {
-      toast.error("You authorize only this device");
+      toast.error('You authorize only this device');
       return;
     }
     await deleteSession(item.deviceId.toString());
@@ -35,11 +38,11 @@ export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
       <div className={s.devices__wrapper} key={index}>
         <Image
           src={`${
-            item.osName === "Mac OS"
-              ? "/img/settings-profile/devices-tab/desktop_mac.svg"
-              : "/img/settings-profile/devices-tab/phone_iphone.svg"
+            item.osName === 'Mac OS'
+              ? '/img/settings-profile/devices-tab/desktop_mac.svg'
+              : '/img/settings-profile/devices-tab/phone_iphone.svg'
           }`}
-          alt={"device"}
+          alt={'device'}
           width={36}
           height={36}
           className={s.devices__icon}
@@ -51,8 +54,11 @@ export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
             Last visit: <span>{dateToFormat(item.lastActive)}</span>
           </p>
         </div>
-        <div className={"mt-auto mb-auto ml-auto"}>
-          <LogoutBtn btnCallback={() => logoutSession(item)} t={logoutTranslate} />
+        <div className={'mt-auto mb-auto ml-auto'}>
+          <LogoutBtn
+            btnCallback={() => logoutSession(item)}
+            t={logoutTranslate}
+          />
         </div>
       </div>
     );
@@ -60,8 +66,12 @@ export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
 
   return (
     <>
-      <p className={s.devices__active}>{t("active")}</p>
-      {sessions.length > 0 ? activeSessions : <p className={s.devices__notLogged}>{t("text")}</p>}
+      <p className={s.devices__active}>{t('active')}</p>
+      {sessions.length > 0 ? (
+        activeSessions
+      ) : (
+        <p className={s.devices__notLogged}>{t('text')}</p>
+      )}
     </>
   );
 };

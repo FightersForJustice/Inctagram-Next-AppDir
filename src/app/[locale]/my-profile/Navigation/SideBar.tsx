@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import s from "../MyProfile.module.scss";
-import Link from "next/link";
-import { Modal } from "@/components/Modals/Modal";
-import { TransparentBtn } from "src/components/Buttons/TransparentBtn";
-import { PrimaryBtn } from "src/components/Buttons/PrimaryBtn";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import { Loader } from "@/components/Loader";
-import { useTranslations } from "next-intl";
-import { CreatePost } from "../CreatePost/CreatePost";
-import { GetResponse } from "@/api/profile.api";
-import { usePostLogoutMutation } from "@/api";
-import { LogoutBtn } from "@/components/Buttons/LogoutBtn";
-import { useAppSelector } from "@/redux/hooks/useSelect";
+import React, { useState } from 'react';
+import s from '../MyProfile.module.scss';
+import Link from 'next/link';
+import { Modal } from '@/components/Modals/Modal';
+import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
+import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { Loader } from '@/components/Loader';
+import { useTranslations } from 'next-intl';
+import { CreatePost } from '../CreatePost/CreatePost';
+import { GetResponse } from '@/api/profile.api';
+import { usePostLogoutMutation } from '@/api';
+import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
+import { useAppSelector } from '@/redux/hooks/useSelect';
 
 type Props = {
   pathname: string;
@@ -20,8 +20,12 @@ type Props = {
   userData?: GetResponse;
 };
 
-export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) => {
-  const t = useTranslations("Navigation");
+export const SideBar: React.FC<Props> = ({
+  pathname,
+  paidAccount,
+  userData,
+}) => {
+  const t = useTranslations('Navigation');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
@@ -34,11 +38,11 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
     logout()
       .unwrap()
       .then(() => {
-        router.push("/sign-in");
-        toast.success("Logout success");
+        router.push('/sign-in');
+        toast.success('Logout success');
       })
       .catch(() => {
-        toast.error("Logout fail");
+        toast.error('Logout fail');
       });
   };
 
@@ -48,11 +52,19 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
         <ul className={s.nav__list}>
           <li>
             <Link
-              href={"/home"}
-              className={`${pathname === "/home" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              href={'/home'}
+              className={`${
+                pathname === '/home'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
             >
               <svg
-                className={`${pathname === "/home" ? `${s.nav__icon__active} ${s.nav__icon}` : `${s.nav__icon}`}`}
+                className={`${
+                  pathname === '/home'
+                    ? `${s.nav__icon__active} ${s.nav__icon}`
+                    : `${s.nav__icon}`
+                }`}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -66,16 +78,24 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("home")}
+              {t('home')}
             </Link>
           </li>
           <li>
             <button
-              className={`${pathname === "/create" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              className={`${
+                pathname === '/create'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
               onClick={() => setShowCreatePostModal(true)}
             >
               <svg
-                className={`${pathname === "/create" ? `${s.nav__icon__active} ${s.nav__icon}` : `${s.nav__icon}`}`}
+                className={`${
+                  pathname === '/create'
+                    ? `${s.nav__icon__active} ${s.nav__icon}`
+                    : `${s.nav__icon}`
+                }`}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -91,15 +111,24 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("create")}
+              {t('create')}
             </button>
           </li>
           <li>
             <Link
-              href={"/my-profile"}
-              className={`${pathname === "/my-profile" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              href={'/my-profile'}
+              className={`${
+                pathname === '/my-profile'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g>
                   <path d="M12 11C12.7911 11 13.5645 10.7654 14.2223 10.3259C14.8801 9.88635 15.3928 9.26164 15.6955 8.53074C15.9983 7.79983 16.0775 6.99556 15.9231 6.21964C15.7688 5.44372 15.3878 4.73098 14.8284 4.17157C14.269 3.61216 13.5563 3.2312 12.7804 3.07686C12.0044 2.92252 11.2002 3.00173 10.4693 3.30448C9.73836 3.60723 9.11365 4.11992 8.67412 4.77772C8.2346 5.43552 8 6.20888 8 7C8 8.06087 8.42143 9.07828 9.17157 9.82843C9.92172 10.5786 10.9391 11 12 11Z" />
                   <path d="M18 21C18.2652 21 18.5196 20.8946 18.7071 20.7071C18.8946 20.5196 19 20.2652 19 20C19 18.1435 18.2625 16.363 16.9497 15.0503C15.637 13.7375 13.8565 13 12 13C10.1435 13 8.36301 13.7375 7.05025 15.0503C5.7375 16.363 5 18.1435 5 20C5 20.2652 5.10536 20.5196 5.29289 20.7071C5.48043 20.8946 5.73478 21 6 21H18Z" />
@@ -110,15 +139,24 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("myProfile")}
+              {t('myProfile')}
             </Link>
           </li>
           <li>
             <Link
-              href={"/messenger"}
-              className={`${pathname === "/messenger" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              href={'/messenger'}
+              className={`${
+                pathname === '/messenger'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g>
                   <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" />
                   <path d="M16 13C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11C15.4477 11 15 11.4477 15 12C15 12.5523 15.4477 13 16 13Z" />
@@ -131,15 +169,24 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("messenger")}
+              {t('messenger')}
             </Link>
           </li>
           <li>
             <Link
-              href={"/search"}
-              className={`${pathname === "/search" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              href={'/search'}
+              className={`${
+                pathname === '/search'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g>
                   <path d="M20.71 19.29L17.31 15.9C18.407 14.5025 19.0022 12.7767 19 11C19 9.41775 18.5308 7.87103 17.6518 6.55544C16.7727 5.23985 15.5233 4.21447 14.0615 3.60897C12.5997 3.00347 10.9911 2.84504 9.43928 3.15372C7.88743 3.4624 6.46197 4.22433 5.34315 5.34315C4.22433 6.46197 3.4624 7.88743 3.15372 9.43928C2.84504 10.9911 3.00347 12.5997 3.60897 14.0615C4.21447 15.5233 5.23985 16.7727 6.55544 17.6518C7.87103 18.5308 9.41775 19 11 19C12.7767 19.0022 14.5025 18.407 15.9 17.31L19.29 20.71C19.383 20.8037 19.4936 20.8781 19.6154 20.9289C19.7373 20.9797 19.868 21.0058 20 21.0058C20.132 21.0058 20.2627 20.9797 20.3846 20.9289C20.5064 20.8781 20.617 20.8037 20.71 20.71C20.8037 20.617 20.8781 20.5064 20.9289 20.3846C20.9797 20.2627 21.0058 20.132 21.0058 20C21.0058 19.868 20.9797 19.7373 20.9289 19.6154C20.8781 19.4936 20.8037 19.383 20.71 19.29ZM5 11C5 9.81332 5.3519 8.65328 6.01119 7.66658C6.67047 6.67989 7.60755 5.91085 8.7039 5.45673C9.80026 5.0026 11.0067 4.88378 12.1705 5.11529C13.3344 5.3468 14.4035 5.91825 15.2426 6.75736C16.0818 7.59648 16.6532 8.66558 16.8847 9.82946C17.1162 10.9933 16.9974 12.1997 16.5433 13.2961C16.0892 14.3925 15.3201 15.3295 14.3334 15.9888C13.3467 16.6481 12.1867 17 11 17C9.4087 17 7.88258 16.3679 6.75736 15.2426C5.63214 14.1174 5 12.5913 5 11Z" />
                 </g>
@@ -149,15 +196,24 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("search")}
+              {t('search')}
             </Link>
           </li>
           <li>
             <Link
-              href={"/favourites"}
-              className={`${pathname === "/favourites" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+              href={'/favourites'}
+              className={`${
+                pathname === '/favourites'
+                  ? `${s.nav__item__active} ${s.nav__item}`
+                  : `${s.nav__item}`
+              }`}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g>
                   <path d="M6.09008 21.06C5.82486 21.06 5.57051 20.9546 5.38297 20.7671C5.19544 20.5796 5.09008 20.3252 5.09008 20.06L4.94008 5.4C4.92804 5.10234 4.97496 4.80525 5.07815 4.52579C5.18135 4.24633 5.33877 3.99004 5.54137 3.77164C5.74396 3.55324 5.98774 3.37705 6.25868 3.25321C6.52961 3.12936 6.82236 3.0603 7.12008 3.05L16.7101 3C17.0082 3.00521 17.3024 3.06909 17.5758 3.18801C17.8492 3.30692 18.0965 3.47854 18.3036 3.69305C18.5107 3.90756 18.6735 4.16077 18.7827 4.43821C18.8919 4.71565 18.9454 5.01189 18.9401 5.31L19.0801 19.97C19.0818 20.1452 19.0374 20.3178 18.9514 20.4705C18.8654 20.6232 18.7408 20.7506 18.5901 20.84C18.4381 20.9278 18.2656 20.974 18.0901 20.974C17.9145 20.974 17.7421 20.9278 17.5901 20.84L11.8901 17.68L6.60008 20.91C6.44343 20.9975 6.26916 21.0488 6.09008 21.06ZM11.8501 15.51C12.0238 15.5103 12.1951 15.5514 12.3501 15.63L17.0601 18.24L16.9401 5.29C16.9401 5.09 16.8101 4.95 16.7301 4.96L7.13008 5.05C7.05008 5.05 6.94008 5.18 6.94008 5.38L7.06008 18.28L11.3401 15.65C11.4955 15.561 11.671 15.5128 11.8501 15.51Z" />
                 </g>
@@ -167,16 +223,25 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                   </clipPath>
                 </defs>
               </svg>
-              {t("favourites")}
+              {t('favourites')}
             </Link>
           </li>
           {paidAccount && (
             <li>
               <Link
-                href={"/statistics"}
-                className={`${pathname === "/statistics" ? `${s.nav__item__active} ${s.nav__item}` : `${s.nav__item}`}`}
+                href={'/statistics'}
+                className={`${
+                  pathname === '/statistics'
+                    ? `${s.nav__item__active} ${s.nav__item}`
+                    : `${s.nav__item}`
+                }`}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <g>
                     <path d="M21.0001 7C21.0095 6.93032 21.0095 6.85968 21.0001 6.79C20.9913 6.73129 20.9745 6.67407 20.9501 6.62C20.9236 6.57113 20.8935 6.52433 20.8601 6.48C20.822 6.41675 20.7748 6.35947 20.7201 6.31L20.6001 6.24C20.5423 6.19696 20.4782 6.16321 20.4101 6.14H20.2101C20.1491 6.08099 20.078 6.03356 20.0001 6H15.0001C14.7348 6 14.4805 6.10536 14.2929 6.29289C14.1054 6.48043 14.0001 6.73478 14.0001 7C14.0001 7.26522 14.1054 7.51957 14.2929 7.70711C14.4805 7.89464 14.7348 8 15.0001 8H17.8301L13.8301 12.71L9.51005 10.14C9.30543 10.0183 9.06411 9.97359 8.82948 10.0139C8.59484 10.0542 8.38229 10.177 8.23005 10.36L3.23005 16.36C3.14585 16.461 3.08241 16.5777 3.04336 16.7033C3.00432 16.8289 2.99044 16.961 3.00251 17.092C3.01459 17.2229 3.05239 17.3503 3.11374 17.4666C3.17509 17.5829 3.25879 17.6861 3.36005 17.77C3.53996 17.9191 3.7664 18.0005 4.00005 18C4.14696 18.0002 4.29212 17.9681 4.4252 17.9059C4.55829 17.8437 4.67603 17.7529 4.77005 17.64L9.22005 12.3L13.4901 14.86C13.6926 14.9801 13.931 15.0249 14.1633 14.9865C14.3957 14.9481 14.607 14.8289 14.7601 14.65L19.0001 9.7V12C19.0001 12.2652 19.1054 12.5196 19.2929 12.7071C19.4805 12.8946 19.7348 13 20.0001 13C20.2653 13 20.5196 12.8946 20.7072 12.7071C20.8947 12.5196 21.0001 12.2652 21.0001 12V7Z" />
                   </g>
@@ -186,7 +251,7 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
                     </clipPath>
                   </defs>
                 </svg>
-                {t("statistics")}
+                {t('statistics')}
               </Link>
             </li>
           )}
@@ -194,11 +259,19 @@ export const SideBar: React.FC<Props> = ({ pathname, paidAccount, userData }) =>
         <LogoutBtn btnCallback={setShowLogoutModal} t={t} />
       </nav>
       {showLogoutModal && (
-        <Modal width={"450px"} title={t("LogoutModal.title")} onClose={() => setShowLogoutModal(false)}>
-          {t("LogoutModal.question")} <strong>{`"${userEmail}"`}</strong>?
+        <Modal
+          width={'450px'}
+          title={t('LogoutModal.title')}
+          onClose={() => setShowLogoutModal(false)}
+        >
+          {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           <div className={s.nav__btn__modal}>
-            <TransparentBtn onClick={onLogout}>{t("LogoutModal.btnYes")}</TransparentBtn>
-            <PrimaryBtn onClick={() => setShowLogoutModal(false)}>{t("LogoutModal.btnNo")}</PrimaryBtn>
+            <TransparentBtn onClick={onLogout}>
+              {t('LogoutModal.btnYes')}
+            </TransparentBtn>
+            <PrimaryBtn onClick={() => setShowLogoutModal(false)}>
+              {t('LogoutModal.btnNo')}
+            </PrimaryBtn>
           </div>
         </Modal>
       )}

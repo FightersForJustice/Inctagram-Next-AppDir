@@ -1,1 +1,1 @@
-export { PostComment } from "./PostComment";
+export { PostComment } from './PostComment';

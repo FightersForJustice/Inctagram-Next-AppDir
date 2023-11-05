@@ -1,1 +1,1 @@
-export { HomePostLikes } from "./HomePostLikes";
+export { HomePostLikes } from './HomePostLikes';

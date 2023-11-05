@@ -23,7 +23,6 @@
     "btnBottomName": "Sign Up",
     "error400": "Invalid password or email",
     "error401": "This email is not registered"
-
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -205,7 +204,6 @@
       "email": "Invalid email format",
       "invalidCharacters": "Email must contain A-Z, a-z, ., @",
       "spaces": "Email must not contain spaces"
-
     },
     "password": {
       "required": "Password is required",
@@ -214,7 +212,6 @@
       "spaces": "Password must not contain spaces",
       "invalidCharacters": "Password must contain latin characters",
       "complexity": "Password must contain a-z, A-Z, 1-9, special "
-
     },
     "passwordConfirm": {
       "required": "Password confirmation is required",

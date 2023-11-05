@@ -1,12 +1,12 @@
-import { api } from "@/api/api";
+import { api } from '@/api/api';
 
 export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
     putProfile: builder.mutation<any, PutProfileBody>({
       query: (profile: PutProfileBody) => {
         return {
-          url: "users/profile",
-          method: "PUT",
+          url: 'users/profile',
+          method: 'PUT',
           body: {
             ...profile,
           },
@@ -16,16 +16,16 @@ export const profileApi = api.injectEndpoints({
     getProfile: builder.query<GetResponse, void>({
       query: () => {
         return {
-          url: `users/profile/${sessionStorage.getItem("userId") ?? 0}`,
-          method: "GET",
+          url: `users/profile/${sessionStorage.getItem('userId') ?? 0}`,
+          method: 'GET',
         };
       },
     }),
     postProfileAvatar: builder.mutation<PostProfileAvatar, FormData>({
       query: (file: FormData) => {
         return {
-          url: "users/profile/avatar",
-          method: "POST",
+          url: 'users/profile/avatar',
+          method: 'POST',
           body: file,
         };
       },
@@ -33,16 +33,16 @@ export const profileApi = api.injectEndpoints({
     deleteProfileAvatar: builder.mutation<any, void>({
       query: () => {
         return {
-          url: "users/profile/avatar",
-          method: "DELETE",
+          url: 'users/profile/avatar',
+          method: 'DELETE',
         };
       },
     }),
     deleteProfile: builder.mutation<void, void>({
       query: () => {
         return {
-          url: "users/profile",
-          method: "DELETE",
+          url: 'users/profile',
+          method: 'DELETE',
         };
       },
     }),
@@ -50,15 +50,15 @@ export const profileApi = api.injectEndpoints({
       query: () => {
         return {
           url: `sessions`,
-          method: "GET",
+          method: 'GET',
         };
       },
     }),
     deleteSessionsTerminateAll: builder.mutation<void, void>({
       query: () => {
         return {
-          url: "sessions/terminate-all",
-          method: "DELETE",
+          url: 'sessions/terminate-all',
+          method: 'DELETE',
         };
       },
     }),
@@ -66,7 +66,7 @@ export const profileApi = api.injectEndpoints({
       query: (deviceId: string) => {
         return {
           url: `sessions/${deviceId}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
     }),

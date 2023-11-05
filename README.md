@@ -2,10 +2,10 @@
 
 - **NextJS**
 - **TypeScript**
-- **Redux Toolkit/RTK Query** 
-- **Next Intl** 
+- **Redux Toolkit/RTK Query**
+- **Next Intl**
 - **OAuth 2.0**
-- **Stripe/PayPal payments** 
+- **Stripe/PayPal payments**
 - **Rest API**
 - **SCSS/Tailwind**
 - **Radix UI**

@@ -14,7 +14,7 @@
     padding: 6px 6px 6px 41px;
     outline: none;
     color: var(--light-100);
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     border-radius: 2px;
     width: 100%;
     margin-bottom: 30px;
@@ -28,21 +28,17 @@
     }
 
     &:focus + &__search .path {
-        fill: #ff0000;
-
+      fill: #ff0000;
     }
 
     &__search {
       position: absolute;
       top: 87px;
       left: 10px;
-
-
     }
   }
 
   &__container {
-
     &__title {
       color: var(--light-100);
       font-size: 16px;
@@ -68,6 +64,4 @@
       font-weight: 400;
     }
   }
-
-
 }

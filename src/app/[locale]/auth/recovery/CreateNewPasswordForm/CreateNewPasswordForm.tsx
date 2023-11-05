@@ -1,17 +1,17 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import React, { ReactNode, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import {
   StatusCode,
   usePostNewPasswordMutation,
   usePostPasswordCheckRecoveryCodeMutation,
-} from "@/api/auth.api";
-import { Loader } from "@/components/Loader/Loader";
-import { CreateNewPasswordFormSchema } from "@/features/schemas/CreateNewPasswordFormSchema";
-import { toast } from "react-toastify";
-import { CreateFormItem } from "./CreateFormItem";
+} from '@/api/auth.api';
+import { Loader } from '@/components/Loader/Loader';
+import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
+import { toast } from 'react-toastify';
+import { CreateFormItem } from './CreateFormItem';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -24,22 +24,24 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     formState: { errors, isValid },
     setError,
   } = useForm({
-    mode: "onTouched",
+    mode: 'onTouched',
     resolver: yupResolver(CreateNewPasswordFormSchema()),
   });
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [isCodeSuccess, setIsCodeSuccess] = useState(false);
-  const [recoveryCode, setRecoveryCode] = useState("");
-  const [serverError, setServerError] = useState("");
+  const [recoveryCode, setRecoveryCode] = useState('');
+  const [serverError, setServerError] = useState('');
   const router = useRouter();
 
-  const [postNewPassword, { isSuccess, isLoading }] = usePostNewPasswordMutation();
-  const [checkCode, { isLoading: isCheckLoading }] = usePostPasswordCheckRecoveryCodeMutation();
+  const [postNewPassword, { isSuccess, isLoading }] =
+    usePostNewPasswordMutation();
+  const [checkCode, { isLoading: isCheckLoading }] =
+    usePostPasswordCheckRecoveryCodeMutation();
 
   useEffect(() => {
-    setRecoveryCode(sessionStorage.getItem("userEmailRecoveryCode")!);
+    setRecoveryCode(sessionStorage.getItem('userEmailRecoveryCode')!);
 
     if (recoveryCode) {
       checkCode({ recoveryCode })
@@ -57,7 +59,7 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/sign-in");
+      router.push('/sign-in');
     }
   }, [isSuccess, router]);
 
@@ -66,45 +68,50 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
       postNewPassword({ newPassword: data.password, recoveryCode })
         .unwrap()
         .catch((err) => toast.error(err.error));
-      sessionStorage.removeItem("userEmailRecoveryCode");
+      sessionStorage.removeItem('userEmailRecoveryCode');
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-[36px] pb-[24px]"}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={' mt-[24px] mb-[36px] pb-[24px]'}
+      >
         <CreateFormItem
-          marginTop={" mt-[18px]"}
+          marginTop={' mt-[18px]'}
           translate={translate}
           register={register}
           showValue={showPass}
           setShowCallback={setShowPass}
           error={errors.password}
           errorMessage={errors?.password?.message}
-          translateName={"password"}
-          registerName={"password"}
+          translateName={'password'}
+          registerName={'password'}
         />
 
         <CreateFormItem
-          marginTop={"mt-[18px]"}
-          marginBottom={"mb-[26px]"}
+          marginTop={'mt-[18px]'}
+          marginBottom={'mb-[26px]'}
           translate={translate}
           register={register}
           showValue={showConfirmPass}
           setShowCallback={setShowConfirmPass}
           error={errors.passwordConfirm}
           errorMessage={errors?.passwordConfirm?.message}
-          translateName={"passwordConf"}
-          registerName={"passwordConfirm"}
+          translateName={'passwordConf'}
+          registerName={'passwordConfirm'}
         />
 
-        {serverError && <p className={"text-red-500 mb-3.5 "}>{serverError}</p>}
-        <p className={"text-left ml-5 text-[--light-900] leading-5 mb-[40px]"}>{translate("desc")}</p>
+        {serverError && <p className={'text-red-500 mb-3.5 '}>{serverError}</p>}
+        <p className={'text-left ml-5 text-[--light-900] leading-5 mb-[40px]'}>
+          {translate('desc')}
+        </p>
 
         <input
           type="submit"
           className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-60`}
-          value={String(translate("btnName"))}
+          value={String(translate('btnName'))}
           disabled={!!serverError || !isValid}
         />
       </form>
