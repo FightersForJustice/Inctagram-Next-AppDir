@@ -18,13 +18,12 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
 
   const regularVariableForSearchCodeParamFromURL = window.location.search.match(/[?&]code=([^&]+)/);
   const actualCode = regularVariableForSearchCodeParamFromURL ? regularVariableForSearchCodeParamFromURL[1] : "ERROR";
-
   useEffect(() => {
     if (isConfirmed !== "yes") {
       registrationConfirm({ confirmationCode: code })
         .unwrap()
         .then()
-        .catch(() => {
+        .catch((err) => {
           registrationConfirm({ confirmationCode: actualCode }).catch((err) => {
             toast.error("Error confirmation");
             if (err.data.error) {

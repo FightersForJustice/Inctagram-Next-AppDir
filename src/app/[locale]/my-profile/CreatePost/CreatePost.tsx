@@ -37,7 +37,7 @@ export const CreatePost: React.FC<Props> = ({ showCreatePostModal, setShowCreate
 
   const showThirdModal = () => {
     dispatch(postActions.removeAllImages());
-    imagesGalleryArr.map((i) => {
+    imagesGalleryArr.map((i:any) => {
       dispatch(postActions.addImage(i));
     });
     setThird(true);

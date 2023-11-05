@@ -48,7 +48,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
     className: error ? "inputSelector__error" : "inputSelector",
     id: id,
     value: userCity ? userCity : value,
-    onChange: (event: FormEvent, { newValue }: { newValue: string }) => {
+    onChange: (event:any, { newValue }: { newValue: string }) => {
       setValue(newValue);
       setUserCity(newValue);
     },
@@ -66,7 +66,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
         onSuggestionSelected={(_, { suggestionValue }) => setValue(suggestionValue)}
         onSuggestionsClearRequested={() => setSuggestions([])}
         getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={(suggestion) => <Fragment>{suggestion}</Fragment>}
+        renderSuggestion={(suggestion) => <div>{suggestion}</div>}
         inputProps={inputProps}
       />
       {error && <p className={"city__error"}>{errorMessage}</p>}
