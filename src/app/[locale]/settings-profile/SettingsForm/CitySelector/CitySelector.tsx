@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, FormEvent, Fragment } from "react";
+import React, { useState, ReactNode, FormEvent } from "react";
 import Autosuggest from "react-autosuggest";
 import citiesData from "../../../../../../public/cities.json";
 
@@ -75,7 +75,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
         onSuggestionsClearRequested={onSuggestionsClearRequested}
         onSuggestionSelected={onSuggestionSelected}
         getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={(suggestion) => <Fragment>{suggestion}</Fragment>}
+        renderSuggestion={(suggestion) => <>{suggestion}</>}
         inputProps={inputProps}
       />
       {error && <p className={"city__error"}>{errorMessage}</p>}
