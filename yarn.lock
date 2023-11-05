@@ -2105,12 +2105,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-autosuggest@npm:^10.1.6":
-  version: 10.1.6
-  resolution: "@types/react-autosuggest@npm:10.1.6"
+"@types/react-autosuggest@npm:^10.1.8":
+  version: 10.1.8
+  resolution: "@types/react-autosuggest@npm:10.1.8"
   dependencies:
     "@types/react": "*"
-  checksum: 61a3dc9548607d4abef1463a35e7409540e5893ad7400e0a0fb3617f1a97967822f7ad0f7146824aa188648efe8db377549599db80d5d86c5b79cd0b19792227
+  checksum: 8e648f3a28eaea259f198725f1ba67d7452a94fd5f12714e0ef62a20aab580bd8c5d0fe6cefd9ffdcfce37f2ceea66e64162b5b24dbf8f3257f8b261b14d9263
   languageName: node
   linkType: hard
 
@@ -2132,7 +2132,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.14":
+"@types/react@npm:*":
   version: 18.2.14
   resolution: "@types/react@npm:18.2.14"
   dependencies:
@@ -2140,6 +2140,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: a6a5e8cc78f486b9020d1ad009aa6c56943c68c7c6376e0f8399e9cbcd950b7b8f5d73f00200f5379f5e58d31d57d8aed24357f301d8e86108cd438ce6c8b3dd
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.35":
+  version: 18.2.35
+  resolution: "@types/react@npm:18.2.35"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: d3f1c39116c82e3a504f3332b9198f94f34a33d8535604434b1e387ecabd41ec995961775e2e1c08feefdde878a5b86220879350900137980d681ae3983db462
   languageName: node
   linkType: hard
 
@@ -4854,8 +4865,8 @@ __metadata:
     "@types/js-cookie": ^3.0.3
     "@types/negotiator": ^0.6.1
     "@types/node": 20.4.0
-    "@types/react": 18.2.14
-    "@types/react-autosuggest": ^10.1.6
+    "@types/react": ^18.2.35
+    "@types/react-autosuggest": ^10.1.8
     "@types/react-dom": 18.2.6
     "@types/react-google-recaptcha": ^2.1.5
     "@types/redux-thunk": ^2.1.0
