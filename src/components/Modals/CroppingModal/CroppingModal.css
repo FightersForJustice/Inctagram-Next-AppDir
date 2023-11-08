@@ -1,75 +1,75 @@
 .modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal__content {
-    width: 400px;
-    background-color: var(--dark-300);
-    border-radius: 5px;
-    border: 1px solid var(--dark-100);
+  width: 400px;
+  background-color: var(--dark-300);
+  border-radius: 5px;
+  border: 1px solid var(--dark-100);
 }
 
 .modal__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--dark-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--dark-100);
 }
 
-.modal__header, modal__footer {
-    padding: 12px;
+.modal__header,
+modal__footer {
+  padding: 12px;
 }
 
 .modal__body2 {
-    position: relative;
-    text-align: left;
-    font-size: 16px;
-    line-height: 24px;
-    height: 504px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  position: relative;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  height: 504px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .modal__footer {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 12px;
-
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 12px;
 }
 
 .modal__close {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .modal__btn {
-    margin-bottom: 36px;
-    background-color: var(--primary-500);
-    padding: 6px 36px;
-    border-radius: 2px;
+  margin-bottom: 36px;
+  background-color: var(--primary-500);
+  padding: 6px 36px;
+  border-radius: 2px;
 }
 
 .modal__title {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 36px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 36px;
 }
 
 .modal__arrow {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .modal__next {
-    color: var(--primary-500);
-    outline: none;
-    border: none;
+  color: var(--primary-500);
+  outline: none;
+  border: none;
 }

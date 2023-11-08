@@ -1,8 +1,8 @@
 export const dataURLToBlob = (dataURL: string): Blob => {
-  const arr = dataURL.split(",");
+  const arr = dataURL.split(',');
   const mimeMatch = arr[0].match(/:(.*?);/);
   if (!mimeMatch) {
-    throw new Error("Invalid Data URL format");
+    throw new Error('Invalid Data URL format');
   }
 
   const mime = mimeMatch[1];

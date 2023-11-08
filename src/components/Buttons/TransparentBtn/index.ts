@@ -1,1 +1,1 @@
-export { TransparentBtn } from "./TransparentBtn";
+export { TransparentBtn } from './TransparentBtn';

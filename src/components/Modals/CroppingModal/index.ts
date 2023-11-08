@@ -1,1 +1,1 @@
-export { CroppingModal } from "./CroppingModal";
+export { CroppingModal } from './CroppingModal';

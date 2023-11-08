@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/redux/hooks/useSelect";
+'use client';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@/redux/hooks/useSelect';
 
 interface AuthCheckerProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export const AuthChecker: React.FC<AuthCheckerProps> = ({ children }) => {
   if (isAuth) {
     return <>{children}</>;
   } else {
-    router.push("/sign-in");
+    router.push('/sign-in');
     return <div></div>;
   }
 };

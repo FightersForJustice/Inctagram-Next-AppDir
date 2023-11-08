@@ -1,12 +1,12 @@
-import React from "react";
-import { TransparentBtn } from "@/components/Buttons/TransparentBtn/TransparentBtn";
-import { PrimaryBtn } from "@/components/Buttons/PrimaryBtn/PrimaryBtn";
-import { Modal } from "../Modal/Modal";
-import { Loader } from "../../Loader/Loader";
+import React from 'react';
+import { TransparentBtn } from '@/components/Buttons/TransparentBtn/TransparentBtn';
+import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn/PrimaryBtn';
+import { Modal } from '../Modal/Modal';
+import { Loader } from '../../Loader/Loader';
 
-import s from "./AreYouSureModal.module.scss";
-import { useAppDispatch } from "@/redux/hooks/useDispatch";
-import { postActions } from "@/redux/reducers/post/postReducer";
+import s from './AreYouSureModal.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
 
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
@@ -15,13 +15,19 @@ type Props = {
   isDeleting?: boolean;
 };
 
-export const AreYouSureModal: React.FC<Props> = ({ toggleModal, toggleAreYouSureModal, onDelete, isDeleting }) => {
+export const AreYouSureModal: React.FC<Props> = ({
+  toggleModal,
+  toggleAreYouSureModal,
+  onDelete,
+  isDeleting,
+}) => {
   const dispatch = useAppDispatch();
   return (
     <>
-      <Modal title={"Close"} onClose={() => toggleAreYouSureModal(false)}>
+      <Modal title={'Close'} onClose={() => toggleAreYouSureModal(false)}>
         <p className={s.modal__text}>
-          Do you really want to close the creation of a publication? If you close everything will be deleted
+          Do you really want to close the creation of a publication? If you
+          close everything will be deleted
         </p>
         <div className={s.modal__btns}>
           <TransparentBtn
@@ -42,7 +48,9 @@ export const AreYouSureModal: React.FC<Props> = ({ toggleModal, toggleAreYouSure
           >
             Yes
           </TransparentBtn>
-          <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>No</PrimaryBtn>
+          <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>
+            No
+          </PrimaryBtn>
         </div>
       </Modal>
       {isDeleting && <Loader />}

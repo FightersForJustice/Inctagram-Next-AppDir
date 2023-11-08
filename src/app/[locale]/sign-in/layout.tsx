@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
-import { Metadata } from "next";
-import { BaseLayout } from "@/components/layouts/BaseLayout";
+import React, { ReactNode } from 'react';
+import { Metadata } from 'next';
+import { BaseLayout } from '@/components/layouts/BaseLayout';
 
 export const metadata: Metadata = {
-  title: "Sign In",
-  description: "Login page",
+  title: 'Sign In',
+  description: 'Login page',
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {

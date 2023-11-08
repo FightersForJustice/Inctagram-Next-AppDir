@@ -1,1 +1,1 @@
-export { SubscriptionsModal } from "./SubscriptionsModal";
+export { SubscriptionsModal } from './SubscriptionsModal';

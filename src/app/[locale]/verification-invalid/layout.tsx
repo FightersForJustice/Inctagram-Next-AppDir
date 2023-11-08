@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
-import { Metadata } from "next";
-import { BaseLayout } from "@/components/layouts/BaseLayout";
+import React, { ReactNode } from 'react';
+import { Metadata } from 'next';
+import { BaseLayout } from '@/components/layouts/BaseLayout';
 
 export const metadata: Metadata = {
-  title: "Link invalid",
-  description: "Email verification link invalid",
+  title: 'Link invalid',
+  description: 'Email verification link invalid',
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {

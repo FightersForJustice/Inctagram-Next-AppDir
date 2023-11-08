@@ -1,23 +1,22 @@
-
-    .container{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    align-items: center;
-    padding: 0 20px 0 20px;
-    max-width: 80vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  padding: 0 20px 0 20px;
+  max-width: 80vh;
   .title {
     margin-top: 35px;
-    font-size: 20px; 
+    font-size: 20px;
     font-weight: 700;
   }
 
   .description {
     margin-top: 20px;
-    text-align: center; 
-
+    text-align: center;
   }
 
   .image img {
     margin-top: 70px;
-  }}
+  }
+}

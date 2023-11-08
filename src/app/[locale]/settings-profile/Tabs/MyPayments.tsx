@@ -1,11 +1,11 @@
-import { useGetPaymentsQuery } from "@/api";
-import * as Tabs from "@radix-ui/react-tabs";
-import s from "@/app/[locale]/settings-profile/Tabs/MyPayments.module.scss";
-import React, { useState } from "react";
-import { fakeDataForTesting } from "@/app/[locale]/settings-profile/Tabs/myPaymentsDATA";
-import { Loader } from "@/components/Loader";
-import { Pagination } from "@/components/Pagination/Pagination";
-import { dateToFormat } from "@/utils/dateToFormat";
+import { useGetPaymentsQuery } from '@/api';
+import * as Tabs from '@radix-ui/react-tabs';
+import s from '@/app/[locale]/settings-profile/Tabs/MyPayments.module.scss';
+import React, { useState } from 'react';
+import { fakeDataForTesting } from '@/app/[locale]/settings-profile/Tabs/myPaymentsDATA';
+import { Loader } from '@/components/Loader';
+import { Pagination } from '@/components/Pagination/Pagination';
+import { dateToFormat } from '@/utils/dateToFormat';
 
 export const MyPayments = () => {
   const { data } = useGetPaymentsQuery();
@@ -71,6 +71,6 @@ export interface myPayment {
   dateOfPayment: string;
   endDateOfSubscription: string;
   price: number;
-  subscriptionType: "MONTHLY" | "WEEKLY";
-  paymentType: "STRIPE" | "PAYPAL";
+  subscriptionType: 'MONTHLY' | 'WEEKLY';
+  paymentType: 'STRIPE' | 'PAYPAL';
 }

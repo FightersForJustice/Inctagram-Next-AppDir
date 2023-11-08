@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React, { ChangeEvent } from "react";
+import Link from 'next/link';
+import React, { ChangeEvent } from 'react';
 
 export const Pagination = ({
   paymentsPerPage,
@@ -22,32 +22,46 @@ export const Pagination = ({
     pageNumbers.push(i);
   }
   return (
-    <div className={"flex items-center mt-4"}>
-      <div onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)}>
-        <Link href={"#"}>{"<"}</Link>
+    <div className={'flex items-center mt-4'}>
+      <div
+        onClick={() =>
+          setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)
+        }
+      >
+        <Link href={'#'}>{'<'}</Link>
       </div>
-      <ul className={"flex items-center"}>
+      <ul className={'flex items-center'}>
         {pageNumbers.map((number) => {
           return (
-            <li className={"mx-1.5"} key={number} onClick={() => paginate(number)}>
-              <Link href={"#"}>{number}</Link>
+            <li
+              className={'mx-1.5'}
+              key={number}
+              onClick={() => paginate(number)}
+            >
+              <Link href={'#'}>{number}</Link>
             </li>
           );
         })}
       </ul>
 
-      <div className={"flex items-center"}>
+      <div className={'flex items-center'}>
         <Link
-          href={"#"}
-          onClick={() => setCurrentPage(currentPage < totalPayments / paymentsPerPage ? currentPage + 1 : currentPage)}
+          href={'#'}
+          onClick={() =>
+            setCurrentPage(
+              currentPage < totalPayments / paymentsPerPage
+                ? currentPage + 1
+                : currentPage
+            )
+          }
         >
-          {">"}
+          {'>'}
         </Link>
-        <div className={"ml-2"}>
+        <div className={'ml-2'}>
           Show
           <select
             defaultValue={5}
-            className={"bg-black border-b-white mx-2"}
+            className={'bg-black border-b-white mx-2'}
             name="paymentsOnOePage"
             id="paymentsOnOePage"
             onChange={(e: ChangeEvent<HTMLSelectElement>) => {

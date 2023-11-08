@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const LanguagesModal = ({
   setLanguage,
@@ -14,14 +14,18 @@ export const LanguagesModal = ({
   return (
     <div>
       <div
-        className={"cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black"}
-        onClick={() => onChangeSelectOption("en")}
+        className={
+          'cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black'
+        }
+        onClick={() => onChangeSelectOption('en')}
       >
         English
       </div>
       <div
-        className={"cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black"}
-        onClick={() => onChangeSelectOption("ru")}
+        className={
+          'cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black'
+        }
+        onClick={() => onChangeSelectOption('ru')}
       >
         Russian
       </div>

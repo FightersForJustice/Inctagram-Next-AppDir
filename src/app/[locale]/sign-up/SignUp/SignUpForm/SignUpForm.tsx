@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import React, { ReactNode, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Link from "next/link";
-import { StatusCode, usePostAuthorizationMutation } from "@/api/auth.api";
-import { SignUpFormSchema } from "@/features/schemas";
-import { Loader } from "@/components/Loader";
-import { EmailSentModal } from "./EmailSentModal";
-import { FormItem } from "./FormItem";
-import { AgreeCheckbox } from "./AgreeCheckbox";
-import { toast } from "react-toastify";
+import React, { ReactNode, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
+import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
+import { SignUpFormSchema } from '@/features/schemas';
+import { Loader } from '@/components/Loader';
+import { EmailSentModal } from './EmailSentModal';
+import { FormItem } from './FormItem';
+import { AgreeCheckbox } from './AgreeCheckbox';
+import { toast } from 'react-toastify';
 
 type Props = {
-  lang: "en" | "ru";
+  lang: 'en' | 'ru';
   translate: (value: string) => ReactNode;
 };
 
@@ -25,15 +25,16 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     setError,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
-    mode: "onTouched",
+    mode: 'onTouched',
   });
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState('');
 
-  const [postAuthorization, { isSuccess, isLoading }] = usePostAuthorizationMutation();
+  const [postAuthorization, { isSuccess, isLoading }] =
+    usePostAuthorizationMutation();
 
   //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
@@ -42,10 +43,10 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
   const translateError = (err: string) => {
     switch (err) {
-      case "User with this name is already exist":
-        return String(translate("nameExist"));
-      case "User with this email is already exist":
-        return String(translate("emailExist"));
+      case 'User with this name is already exist':
+        return String(translate('nameExist'));
+      case 'User with this email is already exist':
+        return String(translate('emailExist'));
       default:
         break;
     }
@@ -53,11 +54,17 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
   const onSubmit = (data: SubmitProps) => {
     //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({ userName: data.name, email: data.email, password: data.password })
+    postAuthorization({
+      userName: data.name,
+      email: data.email,
+      password: data.password,
+    })
       .unwrap()
       .catch((err) => {
         if (err?.data?.statusCode === StatusCode.badRequest) {
-          setError(err.data.messages[0]?.field, { message: translateError(err.data.messages[0]?.message) });
+          setError(err.data.messages[0]?.field, {
+            message: translateError(err.data.messages[0]?.message),
+          });
         } else {
           toast.error(err.error);
         }
@@ -66,58 +73,61 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
 
-    localStorage.setItem("user-email", data.email);
+    localStorage.setItem('user-email', data.email);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={" mt-[24px] mb-10 pb-[24px]"}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={' mt-[24px] mb-10 pb-[24px]'}
+      >
         <FormItem
-          marginTop={"mt-7"}
+          marginTop={'mt-7'}
           translate={translate}
           register={register}
           error={errors.name}
           errorMessage={errors?.name?.message}
-          registerName={"name"}
-          translateName={"name"}
-          id={"sign-up-userName"}
+          registerName={'name'}
+          translateName={'name'}
+          id={'sign-up-userName'}
         />
 
         <FormItem
-          marginTop={" mt-[18px]"}
+          marginTop={' mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.email}
           errorMessage={errors?.email?.message}
-          registerName={"email"}
-          translateName={"email"}
-          id={"sign-up-email"}
+          registerName={'email'}
+          translateName={'email'}
+          id={'sign-up-email'}
         />
 
         <FormItem
-          marginTop={" mt-[18px]"}
+          marginTop={' mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.password}
           errorMessage={errors?.password?.message}
-          registerName={"password"}
-          translateName={"password"}
-          id={"sign-up-password"}
+          registerName={'password'}
+          translateName={'password'}
+          id={'sign-up-password'}
           show={showPass}
           setShow={setShowPass}
           showPasswordIcon={true}
         />
 
         <FormItem
-          marginTop={" mt-[18px]"}
-          marginBottom={"mb-[18px]"}
+          marginTop={' mt-[18px]'}
+          marginBottom={'mb-[18px]'}
           translate={translate}
           register={register}
           error={errors.passwordConfirm}
           errorMessage={errors?.passwordConfirm?.message}
-          registerName={"passwordConfirm"}
-          translateName={"passwordConf"}
-          id={"sign-up-passwordConfirm"}
+          registerName={'passwordConfirm'}
+          translateName={'passwordConf'}
+          id={'sign-up-passwordConfirm'}
           show={showConfirmPass}
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
@@ -128,27 +138,31 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           register={register}
           error={errors.agreements}
           errorMessage={errors?.agreements?.message}
-          registerName={"agreements"}
-          id={"sign-up-agreemets"}
+          registerName={'agreements'}
+          id={'sign-up-agreemets'}
         />
 
         <input
           type="submit"
           className={
-            "mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed "
+            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '
           }
-          id={"sign-up-submit"}
-          value={String(translate("btnName"))}
+          id={'sign-up-submit'}
+          value={String(translate('btnName'))}
           disabled={!isValid}
         />
-        <p className={"pb-5"}>{translate("question")}</p>
-        <Link href={"/sign-in"} className={"text-[--primary-500]"} id={"sign-up-link-to-sign-in"}>
-          {translate("btnBottomName")}
+        <p className={'pb-5'}>{translate('question')}</p>
+        <Link
+          href={'/sign-in'}
+          className={'text-[--primary-500]'}
+          id={'sign-up-link-to-sign-in'}
+        >
+          {translate('btnBottomName')}
         </Link>
       </form>
       {showModal && (
         <EmailSentModal
-          translate={String(translate("sentEmailConfirm"))}
+          translate={String(translate('sentEmailConfirm'))}
           userEmail={userEmail}
           setShowModal={setShowModal}
         />

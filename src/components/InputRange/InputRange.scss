@@ -1,41 +1,38 @@
-input[type="range"] {
+input[type='range'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 100px;
   background-color: transparent;
 
-  &
-  :focus {
+  & :focus {
     outline-color: #f8b195;
   }
-
 }
 
-input[type="range"]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   appearance: none;
   height: 2px;
   background: rgb(255, 255, 255);
 }
 
-input[type="range"]::-moz-range-track {
+input[type='range']::-moz-range-track {
   -moz-appearance: none;
   appearance: none;
   height: 3px;
   background: rgb(246, 114, 128);
 }
 
-input[type="range"]::-ms-track {
+input[type='range']::-ms-track {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   height: 3px;
   background: rgb(246, 114, 128);
-
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   border: 2px solid #f8b195;
@@ -44,20 +41,19 @@ input[type="range"]::-webkit-slider-thumb {
   width: 15px;
   position: relative;
   bottom: 5px;
-  background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+  background: #222
+    url('http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png')
+    center no-repeat;
   background-size: 50%;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
   cursor: grab;
 
-  &
-  :active {
+  & :active {
     cursor: grabbing;
   }
-
 }
 
-
-input[type="range"]::-moz-range-thumb {
+input[type='range']::-moz-range-thumb {
   -moz-appearance: none;
   appearance: none;
   border: 2px solid #f8b195;
@@ -66,19 +62,19 @@ input[type="range"]::-moz-range-thumb {
   width: 10px;
   position: relative;
   bottom: 8px;
-  background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+  background: #222
+    url('http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png')
+    center no-repeat;
   background-size: 50%;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
   cursor: grab;
 
-  &
-  :active {
+  & :active {
     cursor: grabbing;
   }
-
 }
 
-input[type="range"]::-ms-thumb {
+input[type='range']::-ms-thumb {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -88,7 +84,9 @@ input[type="range"]::-ms-thumb {
   width: 10px;
   position: relative;
   bottom: 8px;
-  background: #222 url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png") center no-repeat;
+  background: #222
+    url('http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png')
+    center no-repeat;
   background-size: 50%;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
   cursor: grab;
@@ -96,7 +94,6 @@ input[type="range"]::-ms-thumb {
   & :active {
     cursor: grabbing;
   }
-
 }
 
 .inputWrapper {
@@ -111,4 +108,3 @@ input[type="range"]::-ms-thumb {
 
   background: rgba(23, 23, 23, 0.5);
 }
-

@@ -1,1 +1,1 @@
-export { createPluralize } from "./createPluralize";
+export { createPluralize } from './createPluralize';
