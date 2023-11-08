@@ -4,7 +4,7 @@ export const useParamsCustomHook = (params: string[]) => {
     if (p.length) {
       const qString = window.location.search;
       const urlParam = new URLSearchParams(qString);
-      allParams.push(urlParam.get(p) ?? "");
+      allParams.push(urlParam.get(p) ?? '');
     }
   });
 

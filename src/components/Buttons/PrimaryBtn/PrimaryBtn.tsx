@@ -1,5 +1,5 @@
-import React, { MouseEventHandler, ReactNode } from "react";
-import s from "./PrimaryBtn.module.scss";
+import React, { MouseEventHandler, ReactNode } from 'react';
+import s from './PrimaryBtn.module.scss';
 
 type Props = {
   children: ReactNode;
@@ -7,7 +7,11 @@ type Props = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const PrimaryBtn: React.FC<Props> = ({ children, disabled, onClick }) => {
+export const PrimaryBtn: React.FC<Props> = ({
+  children,
+  disabled,
+  onClick,
+}) => {
   return (
     <button className={s.primaryBtn} disabled={disabled} onClick={onClick}>
       {children}

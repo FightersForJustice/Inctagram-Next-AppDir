@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { SignUp } from "./SignUp";
+import React from 'react';
+import { SignUp } from './SignUp';
 
-const SignUpPage = ({ params }: { params: { locale: "en" | "ru" } }) => {
+const SignUpPage = ({ params }: { params: { locale: 'en' | 'ru' } }) => {
   return (
     <div>
       <SignUp lang={params.locale} />

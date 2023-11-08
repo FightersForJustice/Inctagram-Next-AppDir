@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialAppState: AppStateType = {
   userID: null,
@@ -9,16 +9,23 @@ const initialAppState: AppStateType = {
 };
 
 const slice = createSlice({
-  name: "app",
+  name: 'app',
   initialState: initialAppState,
   reducers: {
-    setUserData(state, action: PayloadAction<{ userID: UserID; email: Email; userName: UserName }>) {
+    setUserData(
+      state,
+      action: PayloadAction<{
+        userID: UserID;
+        email: Email;
+        userName: UserName;
+      }>
+    ) {
       state.userID = action.payload.userID;
       state.email = action.payload.email;
       state.userName = action.payload.userName;
 
       if (action.payload.userID) {
-        localStorage.setItem("userID", action.payload.userID.toString());
+        localStorage.setItem('userID', action.payload.userID.toString());
       }
     },
 

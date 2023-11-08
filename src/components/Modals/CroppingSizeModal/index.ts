@@ -1,1 +1,1 @@
-export { CroppingSizeModal } from "./CroppingSizeModal";
+export { CroppingSizeModal } from './CroppingSizeModal';

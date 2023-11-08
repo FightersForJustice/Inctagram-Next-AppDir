@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { ReactNode } from "react";
-import { Header } from "@/components/Header/Header";
-import { useGetAuthMeQuery } from "@/api";
-import { Loader } from "@/components/Loader";
+import React, { ReactNode } from 'react';
+import { Header } from '@/components/Header/Header';
+import { useGetAuthMeQuery } from '@/api';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   title?: string;

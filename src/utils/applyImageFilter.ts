@@ -2,18 +2,20 @@ export const applyImageFilter = (
   imageElement: HTMLImageElement,
   filter: string,
   aspectRatio: string,
-  zoomValue: string,
+  zoomValue: string
 ): string => {
   // Получение элемента <canvas>
-  const canvas: HTMLCanvasElement = document.createElement("canvas");
-  const ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
+  const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
-  const aspectRatioArray = aspectRatio.split(":");
+  const aspectRatioArray = aspectRatio.split(':');
   const aspectRatioValue = +aspectRatioArray[0] / +aspectRatioArray[1];
 
   // Вычисляем размеры холста на основе аспектного соотношения (aspectRatio)
   const canvasWidth = imageElement.width;
-  const canvasHeight = aspectRatio ? imageElement.width / aspectRatioValue : imageElement.height;
+  const canvasHeight = aspectRatio
+    ? imageElement.width / aspectRatioValue
+    : imageElement.height;
 
   // Устанавливаем размер холста с учетом аспектного соотношения
   canvas.width = canvasWidth;
@@ -29,7 +31,7 @@ export const applyImageFilter = (
   ctx.transform(scaleFactor, 0, 0, scaleFactor, 0, 0);
 
   // Получаем измененное изображение в формате Data URL
-  const modifiedImageData: string = canvas.toDataURL("image/jpeg");
+  const modifiedImageData: string = canvas.toDataURL('image/jpeg');
 
   return modifiedImageData;
 };

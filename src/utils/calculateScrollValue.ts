@@ -4,6 +4,6 @@ export const calculateScrollValue = (pagesCount: number): number => {
   } else if (pagesCount >= 2 && pagesCount <= 10) {
     return (pagesCount - 2) * 12 + 12; // Исправлено здесь
   } else {
-    throw new Error("Invalid pagesCount value. Supported range: 1 to 10.");
+    throw new Error('Invalid pagesCount value. Supported range: 1 to 10.');
   }
 };

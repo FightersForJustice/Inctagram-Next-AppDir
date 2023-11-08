@@ -1,1 +1,1 @@
-export { ImagesCollection } from "./ImagesCollection";
+export { ImagesCollection } from './ImagesCollection';

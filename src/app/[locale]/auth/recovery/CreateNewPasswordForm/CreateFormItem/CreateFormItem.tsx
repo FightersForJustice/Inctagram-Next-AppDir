@@ -13,6 +13,7 @@ type Props = {
   errorMessage: string | undefined;
   translateName: string;
   registerName: string;
+  placeholder?: string;
 };
 
 export const CreateFormItem: React.FC<Props> = ({
@@ -26,17 +27,19 @@ export const CreateFormItem: React.FC<Props> = ({
   setShowCallback,
   showValue,
   marginTop,
+  placeholder,
 }) => {
   return (
     <div className={`${marginTop} ${marginBottom}`}>
-      <div className={' text-left ml-5 text-[--light-900] text-[14px]'}>
+      <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
       <div className={'relative'}>
         <input
           {...register(registerName)}
+          placeholder={placeholder}
           type={`${!showValue ? 'text' : 'password'}`}
-          className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
+          className={`text-[14px] relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
             error ? 'border-red-700' : ''
           }`}
         />

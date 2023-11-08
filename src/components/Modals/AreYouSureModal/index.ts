@@ -1,1 +1,1 @@
-export { AreYouSureModal } from "./AreYouSureModal";
+export { AreYouSureModal } from './AreYouSureModal';

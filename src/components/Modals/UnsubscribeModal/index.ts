@@ -1,1 +1,1 @@
-export { UnsubscribeModal } from "./UnsubscribeModal";
+export { UnsubscribeModal } from './UnsubscribeModal';

@@ -1,12 +1,12 @@
-import React, { FC, ReactNode } from "react";
-import { Swiper } from "swiper/react";
-import { A11y, Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
-import { SwiperSlide } from "swiper/react";
-import Image from "next/image";
+import React, { FC, ReactNode } from 'react';
+import { Swiper } from 'swiper/react';
+import { A11y, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { SwiperSlide } from 'swiper/react';
+import Image from 'next/image';
 
 interface SlidesStyles {
   width: number;
@@ -22,7 +22,13 @@ interface IProps {
   setActive?: (value: string) => void;
 }
 
-export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, setActive, ref }) => {
+export const Carousel: FC<IProps> = ({
+  children,
+  loadedImages,
+  slidesStyles,
+  setActive,
+  ref,
+}) => {
   return (
     <Swiper
       modules={[Navigation, Pagination, A11y]}
@@ -34,17 +40,17 @@ export const Carousel: FC<IProps> = ({ children, loadedImages, slidesStyles, set
       {loadedImages
         ? loadedImages.map(({ image, id, filter }) => {
             return (
-              <SwiperSlide key={id} className={"w-full"}>
+              <SwiperSlide key={id} className={'w-full'}>
                 {({ isActive }) => {
                   if (isActive && setActive) setActive(image);
                   return (
                     <Image
                       src={image}
-                      alt={"image"}
+                      alt={'image'}
                       width={slidesStyles?.width || 490}
                       height={slidesStyles?.height || 503}
                       className={slidesStyles?.className}
-                      style={{ filter, margin: "0 auto" }}
+                      style={{ filter, margin: '0 auto' }}
                       ref={ref}
                     />
                   );

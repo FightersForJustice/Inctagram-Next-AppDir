@@ -1,1 +1,1 @@
-export { ShowAddAvatarModal } from "./ShowAddAvatarModal";
+export { ShowAddAvatarModal } from './ShowAddAvatarModal';

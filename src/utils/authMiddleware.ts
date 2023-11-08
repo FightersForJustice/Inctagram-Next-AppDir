@@ -1,5 +1,5 @@
-import { createListenerMiddleware } from "@reduxjs/toolkit";
-import { authApi } from "@/api/auth.api";
+import { createListenerMiddleware } from '@reduxjs/toolkit';
+import { authApi } from '@/api/auth.api';
 
 export const listenerMiddleware = createListenerMiddleware();
 
@@ -10,7 +10,7 @@ listenerMiddleware.startListening({
     api.cancelActiveListeners();
 
     if (action.payload.accessToken) {
-      sessionStorage.setItem("accessToken", action.payload.accessToken);
+      sessionStorage.setItem('accessToken', action.payload.accessToken);
     }
   },
 });

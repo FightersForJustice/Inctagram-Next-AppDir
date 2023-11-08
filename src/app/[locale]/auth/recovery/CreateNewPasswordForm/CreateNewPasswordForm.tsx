@@ -74,12 +74,10 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-[36px] pb-[24px]'}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="pb-[36px]">
         <CreateFormItem
           marginTop={' mt-[18px]'}
+          placeholder="Password"
           translate={translate}
           register={register}
           showValue={showPass}
@@ -91,6 +89,7 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
         />
 
         <CreateFormItem
+          placeholder="Password confirmation"
           marginTop={'mt-[18px]'}
           marginBottom={'mb-[26px]'}
           translate={translate}
@@ -104,13 +103,19 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
         />
 
         {serverError && <p className={'text-red-500 mb-3.5 '}>{serverError}</p>}
-        <p className={'text-left ml-5 text-[--light-900] leading-5 mb-[40px]'}>
+        <p
+          className={
+            'text-normal text-[14px] text-left leading-5 mx-5 text-[--light-900] mb-[42px]'
+          }
+        >
           {translate('desc')}
         </p>
 
         <input
           type="submit"
-          className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-60`}
+          className={
+            'w-[90%] text-normal text-[16px] bg-[--primary-500] py-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
+          }
           value={String(translate('btnName'))}
           disabled={!!serverError || !isValid}
         />

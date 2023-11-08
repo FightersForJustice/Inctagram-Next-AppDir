@@ -1,6 +1,8 @@
-import { DateObject } from "react-multi-date-picker";
+import { DateObject } from 'react-multi-date-picker';
 
-export const convertToReactDatePickerObject = (dateString: string): DateObject => {
+export const convertToReactDatePickerObject = (
+  dateString: string
+): DateObject => {
   const date = new Date(dateString);
 
   const dateObject = new DateObject({
