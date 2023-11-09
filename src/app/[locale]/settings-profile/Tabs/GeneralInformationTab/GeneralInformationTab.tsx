@@ -9,6 +9,7 @@ import { useDeleteProfileAvatarMutation, useGetProfileQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
+// unused profile
 import { PutProfileBody } from '@/api/profile.api';
 
 export const GeneralInformationTab: React.FC<Props> = ({
@@ -19,6 +20,7 @@ export const GeneralInformationTab: React.FC<Props> = ({
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
+  // unused state?
   const [userBirthday, setUserBirthday] = useState('');
   const [userCity, setUserCity] = useState('');
 
@@ -55,7 +57,7 @@ export const GeneralInformationTab: React.FC<Props> = ({
                   ? loadedAvatar
                   : '/img/settings-profile/load-avatar.svg'
               }`}
-              alt={'load-avatar'}
+              alt="load-avatar"
               width={192}
               height={192}
               className={s.wrapper__image}
@@ -63,8 +65,8 @@ export const GeneralInformationTab: React.FC<Props> = ({
             />
             {loadedAvatar && (
               <Image
-                src={'/img/settings-profile/delete.svg'}
-                alt={'delete'}
+                src="/img/settings-profile/delete.svg"
+                alt="delete"
                 width={24}
                 height={24}
                 onClick={onDeleteAvatar}
@@ -72,7 +74,6 @@ export const GeneralInformationTab: React.FC<Props> = ({
               />
             )}
             <TransparentBtn
-              style={{ margin: '0 auto' }}
               onClick={() => setShowAddAvatarModal(true)}
             >
               {t('addBtn')}

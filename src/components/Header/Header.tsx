@@ -30,7 +30,9 @@ export const Header = () => {
         'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10 '
       }
     >
-      <div className={"px-16 m-auto h-[60px] flex items-center justify-between"}>
+      <div
+        className={'px-16 m-auto h-[60px] flex items-center justify-between'}
+      >
         <Link
           href={'/my-profile'}
           className={'text-[26px] font-semibold leading-[36px]'}

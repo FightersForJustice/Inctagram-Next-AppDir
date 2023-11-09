@@ -18,7 +18,7 @@ export const EmailForm: React.FC<Props> = ({
   placeholder,
 }) => {
   return (
-    <div className={s.container}>
+    <div>
       <div className={' text-left text-[--light-900] text-[14px] font-normal'}>
         <label>{translate('email')}</label>
       </div>

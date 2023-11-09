@@ -27,7 +27,6 @@ const CreateNewPassword = ({
       }
     >
       <p className={'font-bold pt-[23px]'}>{t('title')}</p>
-      {/* <div className={"flex gap-[60px] justify-center"}></div> */}
       <CreateNewPasswordForm translate={t} />
     </div>
   );

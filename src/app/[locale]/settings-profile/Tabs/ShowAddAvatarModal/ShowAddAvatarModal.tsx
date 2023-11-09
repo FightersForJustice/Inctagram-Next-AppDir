@@ -50,8 +50,8 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
         ) : (
           <div className={'relative'}>
             <Image
-              src={'/img/settings-profile/modal-img.png'}
-              alt={'modal-img'}
+              src='/img/settings-profile/modal-img.png'
+              alt='modal-img'
               width={222}
               height={228}
               className={s.modal__img}

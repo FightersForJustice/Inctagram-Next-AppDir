@@ -2,8 +2,6 @@ import React, { ReactNode } from 'react';
 import { InputError } from './InputError';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ShowHidePass } from '@/components/ShowHidePass';
-import s from './form.module.scss';
-
 
 type Props = {
   marginTop: string;
@@ -40,7 +38,7 @@ export const FormItem: React.FC<Props> = ({
   const type = showPasswordIcon !== undefined && show;
 
   return (
-    <div className={`${s.container} ${marginTop} ${marginBottom}`}>
+    <div className={`${marginTop} ${marginBottom}`}>
       <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
