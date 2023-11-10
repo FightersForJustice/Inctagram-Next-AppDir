@@ -46,6 +46,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   if (isAuth) {
     redirect('/my-profile');
   }
+  const passwordPlaceholder = String.fromCharCode(8727).repeat(10);
 
   return (
     <>
@@ -77,7 +78,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           showPasswordIcon={true}
           show={showPass}
           setShow={setShowPass}
-          placeholder="*******************"
+          placeholder={`${passwordPlaceholder}`}
         />
         <Link
           href={'/forgot-password'}
