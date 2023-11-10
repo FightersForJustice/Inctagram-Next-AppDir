@@ -1,28 +1,16 @@
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next-intl/client';
+
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-import { TranslationSelect } from '@/components/Header/TranslationSelect';
+import { HeaderTranslation } from './HeaderTranslation';
 
 export const Header = () => {
   const [language, setLanguage] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const [loggedId, setLoggedIn] = useState(false);
-
-  const router = useRouter();
-  const pathname = usePathname();
-
+  console.log(language)
   useEffect(() => {
+    console.log('useEffect')
     setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
   }, []);
-
-  const onSelectChange = (value: string) => {
-    setLanguage(value);
-    startTransition(() => {
-      router.replace(`/${value}${pathname}`);
-    });
-  };
 
   return (
     <header
@@ -42,21 +30,7 @@ export const Header = () => {
 
         <div className={'flex justify-center items-center gap-[54px]'}>
           <HeaderNotification />
-
-          {!language ? (
-            <div
-              className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
-            >
-              Loading...
-            </div>
-          ) : (
-            <>
-              <TranslationSelect
-                onSelectChange={onSelectChange}
-                language={language}
-              />
-            </>
-          )}
+          <HeaderTranslation language={language || 'ru'} setLanguage={setLanguage} />
         </div>
       </div>
     </header>

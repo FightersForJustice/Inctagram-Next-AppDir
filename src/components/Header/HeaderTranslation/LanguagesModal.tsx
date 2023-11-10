@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 
-export const LanguagesModal = ({
-  setLanguage,
+export const LanguagesModal = memo(function ({
+  closeModal,
   language,
   onSelectChange,
 }: {
-  setLanguage: (language: string) => void;
+  closeModal: () => void;
   onSelectChange: (value: string) => void;
   language: string;
-}) => {
-  const onChangeSelectOption = (language: string) => {
-    setLanguage(language);
-    onSelectChange(language);
-  };
+}) {
   const langHandler = (lang: string) => {
+    closeModal();
     if (lang === 'ru') {
-      onChangeSelectOption('en');
+      onSelectChange('en');
     } else {
-      onChangeSelectOption('ru');
+      onSelectChange('ru');
     }
   };
   const languageForRender = (lang: string) => {
     return (
       <div
         className={
-          'flex items-center justify-start gap-2 w-[163px] cursor-pointer border-1 border-[--dark-100] px-[12px] mt-[-6px] py-[6px] bg-black'
+          'flex items-center justify-start gap-2 w-[163px] cursor-pointer border-1 border-[--dark-100] px-[12px] py-[6px] bg-black'
         }
         onClick={() => langHandler(lang)}
       >
@@ -44,4 +41,4 @@ export const LanguagesModal = ({
     );
   };
   return <div>{languageForRender(language)}</div>;
-};
+});

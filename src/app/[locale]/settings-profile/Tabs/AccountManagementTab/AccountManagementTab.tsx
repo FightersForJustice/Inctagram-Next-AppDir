@@ -62,10 +62,10 @@ export const AccountManagementTab = () => {
           <>
             <p className={s.tab__name}>Your subscription costs:</p>
             <div className={s.tab__wrapper}>
-              <SubscriptionRadio
+              {/* <SubscriptionRadio
                 subTypeValue={subTypeValue}
                 setSubTypeValue={setSubTypeValue}
-              />
+              /> */}
             </div>
             <div className={s.tab__container}>
               <PayPal price={subTypeValue} />
