@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
-import s from './emailForm.module.scss';
 
 type Props = {
   translate: (value: string) => ReactNode;

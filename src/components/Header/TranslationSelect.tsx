@@ -25,16 +25,27 @@ export const TranslationSelect = ({
         <div className={s.cropping__wrapper}>
           <Popover.Trigger
             className={
-              'cursor-pointer gap-2 flex items-center border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[20px]'
+              'cursor-pointer flex items-center justify-between border-1 border-[--dark-100] w-[163px] px-[12px] py-[6px]'
             }
           >
-            {/* <span>&#x1F1E6; &#x1F1FF;</span> */}
-            <span>{returnLanguageFullName(language)}</span>
+            <div className="flex items-center justify-left gap-2">
+              <Image
+                alt="no-image"
+                src={
+                  language === 'ru'
+                    ? '/img/flag_russia.svg'
+                    : '/img/flag_united_kingdom.svg'
+                }
+                width={20}
+                height={20}
+              />
+              <span>{returnLanguageFullName(language)}</span>
+            </div>
             <Image
-              alt={'no-image'}
-              src={'/img/arrowDown-light.png'}
-              width={10}
-              height={10}
+              alt="no-image"
+              src="/img/arrowDown-light.svg"
+              width={20}
+              height={20}
             />
           </Popover.Trigger>
           <Popover.Portal>
@@ -42,6 +53,7 @@ export const TranslationSelect = ({
               <LanguagesModal
                 setLanguage={returnLanguageFullName}
                 onSelectChange={onSelectChange}
+                language={language}
               />
             </Popover.Content>
           </Popover.Portal>

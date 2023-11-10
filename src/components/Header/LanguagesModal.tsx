@@ -1,34 +1,47 @@
 import React from 'react';
+import Image from 'next/image';
 
 export const LanguagesModal = ({
   setLanguage,
+  language,
   onSelectChange,
 }: {
   setLanguage: (language: string) => void;
   onSelectChange: (value: string) => void;
+  language: string;
 }) => {
   const onChangeSelectOption = (language: string) => {
     setLanguage(language);
     onSelectChange(language);
   };
-  return (
-    <div>
+  const langHandler = (lang: string) => {
+    if (lang === 'ru') {
+      onChangeSelectOption('en');
+    } else {
+      onChangeSelectOption('ru');
+    }
+  };
+  const languageForRender = (lang: string) => {
+    return (
       <div
         className={
-          'cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black'
+          'flex items-center justify-start gap-2 w-[163px] cursor-pointer border-1 border-[--dark-100] px-[12px] mt-[-6px] py-[6px] bg-black'
         }
-        onClick={() => onChangeSelectOption('en')}
+        onClick={() => langHandler(lang)}
       >
-        English
+        <Image
+          alt="no-image"
+          src={
+            lang === 'en'
+              ? '/img/flag_russia.svg'
+              : '/img/flag_united_kingdom.svg'
+          }
+          width={20}
+          height={20}
+        />
+        <span>{lang === 'ru' ? 'English' : 'Russian'}</span>
       </div>
-      <div
-        className={
-          'cursor-pointer border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] bg-black'
-        }
-        onClick={() => onChangeSelectOption('ru')}
-      >
-        Russian
-      </div>
-    </div>
-  );
+    );
+  };
+  return <div>{languageForRender(language)}</div>;
 };

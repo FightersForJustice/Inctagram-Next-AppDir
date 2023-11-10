@@ -41,7 +41,6 @@ export const Header = () => {
         </Link>
 
         <div className={'flex justify-center items-center gap-[54px]'}>
-          {/* {loggedId && <HeaderNotification />} */}
           <HeaderNotification />
 
           {!language ? (
