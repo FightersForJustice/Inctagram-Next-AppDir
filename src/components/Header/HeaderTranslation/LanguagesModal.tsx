@@ -36,7 +36,7 @@ export const LanguagesModal = memo(function ({
           width={20}
           height={20}
         />
-        <span>{lang === 'ru' ? 'English' : 'Russian'}</span>
+        <span>{lang === 'ru' ? 'English' : 'Русский'}</span>
       </div>
     );
   };

@@ -12,8 +12,9 @@ export const TranslationSelect = ({
   onSelectChange: (value: string) => void;
 }) => {
   const [openChangeSize, setOpenChangeSize] = useState(false);
+
   const fullLanguages: any = {
-    ru: { name: 'Russian', img: '/img/flag_russia.svg' },
+    ru: { name: 'Русский', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
 
@@ -45,7 +46,7 @@ export const TranslationSelect = ({
           />
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content className="PopoverContent z-30" forceMount={true}>
+          <Popover.Content className="PopoverContent z-30">
             <LanguagesModal
               closeModal={() => setOpenChangeSize(false)}
               onSelectChange={onSelectChange}
