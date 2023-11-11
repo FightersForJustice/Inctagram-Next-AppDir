@@ -16,9 +16,6 @@ export const TranslationSelect = ({
     ru: { name: 'Russian', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
-  const onSelectChange1 = (value: string) => {
-    onSelectChange(value);
-  };
 
   return (
     <Popover.Root
@@ -51,7 +48,7 @@ export const TranslationSelect = ({
           <Popover.Content className="PopoverContent z-30" forceMount={true}>
             <LanguagesModal
               closeModal={() => setOpenChangeSize(false)}
-              onSelectChange={onSelectChange1}
+              onSelectChange={onSelectChange}
               language={language}
             />
           </Popover.Content>

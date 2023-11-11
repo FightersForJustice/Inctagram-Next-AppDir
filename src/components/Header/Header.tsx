@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { startTransition, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-import { HeaderTranslation } from './HeaderTranslation';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next-intl/client';
+import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
 
 export const Header = () => {
   const [language, setLanguage] = useState<string | null>(null);
-  console.log(language)
+
+  const router = useRouter();
+  const pathname = usePathname();
+
   useEffect(() => {
-    console.log('useEffect')
     setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
   }, []);
+
+  const onSelectChange = (value: string) => {
+    setLanguage(value);
+    startTransition(() => {
+      router.replace(`/${value}${pathname}`);
+    });
+  };
 
   return (
     <header
@@ -30,7 +41,7 @@ export const Header = () => {
 
         <div className={'flex justify-center items-center gap-[54px]'}>
           <HeaderNotification />
-          <HeaderTranslation language={language || 'ru'} setLanguage={setLanguage} />
+          <TranslationSelect language={language || 'ru'} onSelectChange={onSelectChange} />
         </div>
       </div>
     </header>
