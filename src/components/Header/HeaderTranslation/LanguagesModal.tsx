@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
-export const LanguagesModal = memo(function ({
+export const LanguagesModal = function ({
   closeModal,
   language,
   onSelectChange,
@@ -41,4 +41,4 @@ export const LanguagesModal = memo(function ({
     );
   };
   return <div>{languageForRender(language)}</div>;
-});
+};
