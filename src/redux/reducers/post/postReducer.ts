@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
-import { toast } from 'react-toastify';
 
 const initialAppState: PostStateType = {
   postImagesIds: [],
@@ -52,15 +51,13 @@ const slice = createSlice({
         (image) => image.id === action.payload
       );
       if (index !== -1) state.postImages.splice(index, 1);
+      if(state.imagesGallery.length < 10){
+      }
     },
     removeAllImages(state) {
       state.postImages = [];
     },
     addImageToPostGallery(state, action: PayloadAction<ImageStateType>) {
-      if (state.imagesGallery.length >= 10) {
-        toast.error('Max images count is 10!');
-        return;
-      }
       state.imagesGallery.push(action.payload);
     },
     changeImageFromPostGallery(state, action: PayloadAction<ImageStateType>) {

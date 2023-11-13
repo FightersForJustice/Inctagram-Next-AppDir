@@ -45,6 +45,7 @@ export const SettingsForm: React.FC<Props> = ({
   const [updateProfile, { isLoading }] = usePutProfileMutation();
   const [getUserProfile, { error }] = useLazyGetProfileQuery();
 
+
   const {
     register,
     handleSubmit,
@@ -53,6 +54,7 @@ export const SettingsForm: React.FC<Props> = ({
   } = useForm<FormValues>({
     // Для чего это?
     // defaultValues: GetDefaultValuesForm,
+    // @ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });

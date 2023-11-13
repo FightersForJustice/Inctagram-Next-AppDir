@@ -39,8 +39,6 @@ export const DatePick: React.FC<Props> = ({
             if (e instanceof DateObject) {
               const formattedDate = e.format('DD.MM.YYYY');
               setDate(formattedDate);
-            } else if (typeof e === 'string') {
-              setDate(e);
             } else {
               setDate('');
             }
@@ -49,7 +47,7 @@ export const DatePick: React.FC<Props> = ({
           ref={datePickerRef}
           format={'DD.MM.YYYY'}
           className={'bg-dark'}
-          editable={false}
+          editable={true}
           style={{
             background: 'var(--dark-900)',
             border: '1px solid var(--dark-300)',
@@ -67,7 +65,7 @@ export const DatePick: React.FC<Props> = ({
           >
             close
           </button>
-        </DatePicker>
+        </DatePicker >
         <Image
           src={'/img/settings-profile/calendar.svg'}
           alt={'calendar'}
