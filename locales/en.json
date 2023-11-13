@@ -10,8 +10,8 @@
     "btnBottomName": "Sign In",
     "agreemetsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>",
     "sentEmailConfirm": "We have sent a link to confirm your email to",
-    "nameExist": "User with this name is already exist",
-    "emailExist": "User with this email is already exist"
+    "nameExist": "User with this name is already registered",
+    "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
     "title": "Login",
@@ -58,8 +58,8 @@
   },
   "RecoveryPage": {
     "title": "Create New Password",
-    "password": "Password",
-    "passwordConf": "Confirm password",
+    "password": "New password",
+    "passwordConf": "Password confirmation",
     "desc": "Your password must be between 6 and 20 characters",
     "btnName": "Create new password"
   },

@@ -11,13 +11,14 @@ export const AccountTypeRadio: React.FC<Props> = ({
   radioValue,
   setRadioValue,
 }) => (
-  <RadioGroup.Root
+  <>
+    <RadioGroup.Root
     className="RadioGroupRoot"
     defaultValue={radioValue}
     aria-label="View density"
     onValueChange={(value) => setRadioValue(value)}
-  >
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
       <RadioGroup.Item className="RadioGroupItem" value="personal" id="r1">
         <RadioGroup.Indicator className="RadioGroupIndicator" />
       </RadioGroup.Item>
@@ -33,5 +34,6 @@ export const AccountTypeRadio: React.FC<Props> = ({
         Business
       </label>
     </div>
-  </RadioGroup.Root>
+    </RadioGroup.Root>
+  </>
 );

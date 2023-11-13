@@ -13,10 +13,10 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
   return (
     <div
       className={
-        'bg-[#171717] rounded-md m-auto mt-[100px] max-w-[378px] text-center'
+        'border-solid border-1 border-[--dark-300] bg-[#171717] rounded-md m-auto mt-[100px] max-w-[378px] text-center'
       }
     >
-      <p className={'pt-[23px]'}>{t('title')}</p>
+      <p className={'text-xl font-bold pt-[23px]'}>{t('title')}</p>
       <div className={'flex gap-[60px] justify-center mt-[13px]'}>
         <Image
           src={'/img/google.svg'}

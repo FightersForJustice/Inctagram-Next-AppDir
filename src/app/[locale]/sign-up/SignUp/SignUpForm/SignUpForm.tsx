@@ -17,13 +17,22 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
+type FormType = {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  agreements: NonNullable<boolean | undefined>;
+};
+
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
     setError,
-  } = useForm({
+  } = useForm<FormType>({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
   });
@@ -32,13 +41,23 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const resetObj = {
+    name: '',
+    agreements: false,
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
   //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
-    if (isSuccess) setShowModal(true);
+    if (isSuccess) {
+      setShowModal(true);
+      reset(resetObj);
+    }
   }, [isSuccess]);
 
   const translateError = (err: string) => {
@@ -69,7 +88,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           toast.error(err.error);
         }
       });
-
     //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
 
@@ -80,7 +98,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-10 pb-[24px]'}
+        className={' mt-[24px] mb-2 pb-[24px]'}
       >
         <FormItem
           marginTop={'mt-7'}

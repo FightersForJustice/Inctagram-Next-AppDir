@@ -122,7 +122,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
           </p>
         </div>
       )}
-      {isFetching && <Loader />}
+      {/* {isFetching && <Loader />} */}
       {fetching && <Loader />}
     </>
   );

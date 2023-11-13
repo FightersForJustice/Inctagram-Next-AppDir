@@ -1,29 +1,35 @@
-import React, { useEffect, useState, useTransition } from 'react';
+'use client';
+
+import React, {
+  useEffect,
+  useState,
+  useTransition,
+} from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { usePathname } from 'next-intl/client';
+
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-import { TranslationSelect } from '@/components/Header/TranslationSelect';
+
+import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
+import { useRouter } from 'next/navigation';
 
 export const Header = () => {
-  const [language, setLanguage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [loggedId, setLoggedIn] = useState(false);
-
-  const router = useRouter();
-  const pathname = usePathname();
-
+  const [language, setLanguage] = useState<string>(
+    /\/ru/.test(location.pathname) ? 'ru' : 'en'
+  );
   useEffect(() => {
     setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
   }, []);
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const onSelectChange = (value: string) => {
-    setLanguage(value);
     startTransition(() => {
       router.replace(`/${value}${pathname}`);
     });
   };
-
   return (
     <header
       className={
@@ -31,9 +37,7 @@ export const Header = () => {
       }
     >
       <div
-        className={
-          ' max-w-[1200px] m-auto h-[60px] flex items-center justify-between px-3'
-        }
+        className={'px-16 m-auto h-[60px] flex items-center justify-between'}
       >
         <Link
           href={'/my-profile'}
@@ -43,22 +47,11 @@ export const Header = () => {
         </Link>
 
         <div className={'flex justify-center items-center gap-[54px]'}>
-          {loggedId && <HeaderNotification />}
-
-          {!language ? (
-            <div
-              className={`bg-transparent flex justify-center items-center gap-2 border-1 border-[--dark-100] pt-[6px] pb-[6px] pl-[24px] pr-[24px] outline-none cursor-pointer`}
-            >
-              Loading...
-            </div>
-          ) : (
-            <>
-              <TranslationSelect
-                onSelectChange={onSelectChange}
-                language={language}
-              />
-            </>
-          )}
+          <HeaderNotification />
+          <TranslationSelect
+            language={language}
+            onSelectChange={onSelectChange}
+          />
         </div>
       </div>
     </header>

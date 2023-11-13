@@ -15,12 +15,12 @@ const SettingsProfile = () => {
 
   return (
     <PayPalScriptProvider options={{ clientId: paypalClientId }}>
-      <div className={s.container}>
+       <div className={s.container}>
         <div className={s.wrapper}>
           <SideBar pathname={pathname} paidAccount={false} />
           <Tabs />
         </div>
-      </div>
+      </div> 
     </PayPalScriptProvider>
   );
 };
