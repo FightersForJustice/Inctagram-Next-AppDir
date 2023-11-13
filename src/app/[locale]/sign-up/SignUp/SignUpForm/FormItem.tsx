@@ -57,7 +57,7 @@ export const FormItem: React.FC<Props> = ({
         <InputError
           error={error}
           errorMessage={errorMessage}
-          id={'sign-up-userName-error'}
+          id={id}
         />
       </div>
     </div>
