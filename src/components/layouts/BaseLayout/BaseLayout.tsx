@@ -1,7 +1,6 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-// import { Header } from '@/components/Header/Header';
 import { useGetAuthMeQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { Header } from '@/components/Header';
