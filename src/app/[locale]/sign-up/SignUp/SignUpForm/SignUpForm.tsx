@@ -17,6 +17,13 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
+type SubmitProps = {
+  userName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
+
 export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const {
     register,
@@ -36,14 +43,13 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
-  //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
     if (isSuccess) setShowModal(true);
   }, [isSuccess]);
 
   const translateError = (err: string) => {
     switch (err) {
-      case 'User with this name is already exist':
+      case 'User with this userName is already exist':
         return String(translate('nameExist'));
       case 'User with this email is already exist':
         return String(translate('emailExist'));
@@ -53,9 +59,8 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   };
 
   const onSubmit = (data: SubmitProps) => {
-    //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({
-      userName: data.name,
+      userName: data.userName,
       email: data.email,
       password: data.password,
     })
@@ -70,7 +75,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
         }
       });
 
-    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
 
     localStorage.setItem('user-email', data.email);
@@ -80,21 +84,21 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-10 pb-[24px]'}
+        className={'mt-[24px] mb-10 pb-[24px]'}
       >
         <FormItem
           marginTop={'mt-7'}
           translate={translate}
           register={register}
-          error={errors.name}
-          errorMessage={errors?.name?.message}
-          registerName={'name'}
+          error={errors.userName}
+          errorMessage={errors?.userName?.message}
+          registerName={'userName'}
           translateName={'name'}
           id={'sign-up-userName'}
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -105,7 +109,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.password}
@@ -119,7 +123,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           marginBottom={'mb-[18px]'}
           translate={translate}
           register={register}
@@ -170,11 +174,4 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
       {isLoading && <Loader />}
     </>
   );
-};
-
-type SubmitProps = {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
 };

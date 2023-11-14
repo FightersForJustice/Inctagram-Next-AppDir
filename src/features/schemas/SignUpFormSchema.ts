@@ -13,7 +13,7 @@ export const SignUpFormSchema = () => {
 
   return yup
     .object({
-      name: yup
+      userName: yup
         .string()
         .required(t('userName.required'))
         .matches(/^[^\s]+$/, t('userName.spaces'))
