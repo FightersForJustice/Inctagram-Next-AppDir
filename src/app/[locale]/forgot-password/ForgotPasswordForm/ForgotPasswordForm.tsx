@@ -2,13 +2,13 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { usePostPasswordRecoveryMutation } from '@/api/auth.api';
 import { Modal } from '@/components/Modals/Modal';
 import { Loader } from '@/components/Loader';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { handleApiError } from '@/utils';
+import { ReCAPTCHAComponent } from '@/components/Recaptcha/Recaptcha';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -45,10 +45,6 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
       recaptcha,
     });
     setUserEmail(data.email);
-  };
-
-  const reCaptchaHandler = (token: string | null) => {
-    setRecaptcha(token!);
   };
 
   if (error) {
@@ -99,12 +95,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         >
           {translate('linkName')}
         </Link>
-
-        <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
-          onChange={reCaptchaHandler}
-          className={'flex justify-center items-center'}
-        />
+        <ReCAPTCHAComponent setRecaptcha={setRecaptcha}/>
+        
       </form>
       {showModal && (
         <Modal

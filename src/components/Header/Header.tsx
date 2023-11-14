@@ -37,7 +37,7 @@ export const Header = () => {
       }
     >
       <div
-        className={'w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'}
+        className={'max-w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'}
       >
         <Link
           href={'/my-profile'}
