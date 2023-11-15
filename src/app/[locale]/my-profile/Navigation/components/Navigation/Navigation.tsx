@@ -34,19 +34,19 @@ export const Navigation = ({
       <li key={el.href} onClick={createHandler}>
         {el.href === 'create' && (
           <button className={style}>
-            <BarComponent children={el.img} />
+            <BarComponent>{el.img}</BarComponent>
             {t('create')}
           </button>
         )}
         {el.href !== 'create' && el.href !== 'statistics' && (
           <Link href={'/' + el.href} className={style}>
-            <BarComponent children={el.img} />
+            <BarComponent>{el.img}</BarComponent>
             {t(el.href === 'my-profile' ? 'myProfile' : el.href)}
           </Link>
         )}
         {el.href === 'statistics' && paidAccount && (
           <Link href={'/' + el.href} className={style}>
-            <BarComponent children={el.img} />
+            <BarComponent>{el.img}</BarComponent>
             {t(el.href)}
           </Link>
         )}
