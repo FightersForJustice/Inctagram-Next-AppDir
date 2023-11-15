@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 export const Header = () => {
   const [isPending, startTransition] = useTransition();
-  const [language, setLanguage] = useState<string>(
+  const [language, setLanguage] = useState(
     /\/ru/.test(location.pathname) ? 'ru' : 'en'
   );
   console.log('lang changed:', language);
@@ -23,6 +23,7 @@ export const Header = () => {
   const pathname = usePathname();
 
   const onSelectChange = (value: string) => {
+    console.log('value is', value)
     startTransition(() => {
       router.replace(`/${value}${pathname}`);
     });
