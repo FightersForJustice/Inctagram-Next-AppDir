@@ -2,7 +2,7 @@
 
 import React from 'react';
 import s from './Search.module.scss';
-import { SideBar } from '../my-profile/Navigation';
+import { SideBar } from '../my-profile/navigation';
 import { usePathname } from 'next-intl/client';
 import { SearchContent } from './SearchContent';
 

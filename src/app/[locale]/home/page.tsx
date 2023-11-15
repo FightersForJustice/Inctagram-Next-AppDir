@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { SideBar } from '../my-profile/Navigation/SideBar';
+import { SideBar } from '../my-profile/navigation/SideBar';
 import { usePathname } from 'next-intl/client';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
