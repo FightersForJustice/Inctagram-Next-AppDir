@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import { SideBar } from '../my-profile/Navigation/SideBar';
 import { usePathname } from 'next-intl/client';
