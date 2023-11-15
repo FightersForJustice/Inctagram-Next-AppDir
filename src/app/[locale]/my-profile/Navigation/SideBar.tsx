@@ -19,11 +19,7 @@ type Props = {
   userData?: GetResponse;
 };
 
-export const SideBar: React.FC<Props> = ({
-  pathname,
-  paidAccount,
-  userData,
-}) => {
+export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const t = useTranslations('Navigation');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);

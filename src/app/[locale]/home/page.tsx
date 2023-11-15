@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-// import { SideBar } from '../my-profile/navigation/SideBar';
+import { SideBar } from '../my-profile/Navigation/SideBar';
 import { usePathname } from 'next-intl/client';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
@@ -85,7 +85,7 @@ const Home: React.FC = () => {
       <div className={s.container}>
         <div className={s.wrapper} id={'wrapper'}>
           {/*!paidAccount where get?*/}
-          {/* <SideBar pathname={pathname} paidAccount={false} /> */}
+          <SideBar pathname={pathname} paidAccount={false} />
           <div style={{ gridArea: 'profile' }}>{allPosts}</div>
         </div>
       </div>
