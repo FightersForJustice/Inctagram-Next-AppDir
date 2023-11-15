@@ -12,7 +12,7 @@ type NavigationType = {
   setShowLogoutModal: (value: boolean) => void;
 };
 
-export const Navigation = ({
+const Navigation = ({
   pathname,
   setShowCreatePostModal,
   setShowLogoutModal,
@@ -60,3 +60,5 @@ export const Navigation = ({
     </nav>
   );
 };
+
+export default Navigation;
