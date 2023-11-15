@@ -13,7 +13,7 @@ import s from './Home.module.scss';
 import { StatusCode } from '@/api/auth.api';
 
 const Home: React.FC = () => {
-  const pathname = usePathname();
+    const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);

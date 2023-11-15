@@ -1,10 +1,6 @@
 'use client';
 
-import React, {
-  useEffect,
-  useState,
-  useTransition,
-} from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next-intl/client';
 
@@ -18,6 +14,7 @@ export const Header = () => {
   const [language, setLanguage] = useState<string>(
     /\/ru/.test(location.pathname) ? 'ru' : 'en'
   );
+  console.log('lang changed:', language);
   useEffect(() => {
     setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
   }, []);
@@ -33,11 +30,13 @@ export const Header = () => {
   return (
     <header
       className={
-        'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10 '
+        'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10'
       }
     >
       <div
-        className={'max-w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'}
+        className={
+          'max-w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'
+        }
       >
         <Link
           href={'/my-profile'}

@@ -14,7 +14,7 @@ const MyProfile = () => {
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
-
+  
   const { data, isLoading } = useGetProfileQuery();
 
   if (isLoading) return <Loader />;
