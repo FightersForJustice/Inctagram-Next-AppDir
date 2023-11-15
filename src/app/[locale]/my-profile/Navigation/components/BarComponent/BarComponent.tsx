@@ -4,7 +4,7 @@ type BarType = {
   children: React.ReactNode;
 };
 
-export const BarComponent = ({ children }: BarType) => {
+const BarComponent = ({ children }: BarType) => {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24">
       {children}
@@ -16,3 +16,5 @@ export const BarComponent = ({ children }: BarType) => {
     </svg>
   );
 };
+
+export default BarComponent;
