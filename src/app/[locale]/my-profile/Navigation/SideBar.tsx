@@ -11,7 +11,7 @@ import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { usePostLogoutMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import Navigation from './components/Navigation/Navigation';
+import { Navigation } from './BarPage';
 
 type Props = {
   pathname: string;

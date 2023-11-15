@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import s from '../../../MyProfile.module.scss';
+import s from '../../MyProfile.module.scss';
 import { useTranslations } from 'next-intl';
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
-import { navigationBar } from '../../bardata';
-import BarComponent from '../BarComponent/BarComponent';
+import { navigationBar } from './Bardata';
+import BarComponent from './BarComponent';
 
 type NavigationType = {
   pathname: string;
@@ -12,7 +12,7 @@ type NavigationType = {
   setShowLogoutModal: (value: boolean) => void;
 };
 
-const Navigation = ({
+export const Navigation = ({
   pathname,
   setShowCreatePostModal,
   setShowLogoutModal,
@@ -60,5 +60,3 @@ const Navigation = ({
     </nav>
   );
 };
-
-export default Navigation;
