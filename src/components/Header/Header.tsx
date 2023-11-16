@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 
 export const Header = () => {
   const [isPending, startTransition] = useTransition();
-  const [language, setLanguage] = useState<string>(
+  const [language, setLanguage] = useState(
     /\/ru/.test(location.pathname) ? 'ru' : 'en'
   );
   useEffect(() => {
@@ -33,11 +33,11 @@ export const Header = () => {
   return (
     <header
       className={
-        'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10 '
+        'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10'
       }
     >
       <div
-        className={'px-16 m-auto h-[60px] flex items-center justify-between'}
+        className={'max-w-[1280px] m-auto h-[60px] flex items-center justify-between'}
       >
         <Link
           href={'/my-profile'}
