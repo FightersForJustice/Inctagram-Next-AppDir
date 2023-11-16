@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next-intl/client';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
 
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const Header = () => {
   const [isPending, startTransition] = useTransition();

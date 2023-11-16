@@ -4,8 +4,8 @@ import React from 'react';
 import s from './SettingsProfile.module.scss';
 import Tabs from './Tabs/Tabs';
 import { SideBar } from '../my-profile/Navigation';
-import { usePathname } from 'next-intl/client';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { usePathname } from 'next/navigation';
 
 const paypalClientId =
   'Afk1iTJpReNKk1221BifT5DK-ylDl6BTi-YUqoa464lzaGoSGk0hTlfnOVbiTY2bT7bio52y5yIa07L3';
