@@ -1,7 +1,9 @@
 import React from 'react';
-import Image from 'next/image';
 import { SignUpForm } from './SignUpForm';
 import { useTranslations } from 'next-intl';
+import ServiceAuth from '../../sign-in/SignIn/ServiceAuth';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { redirect } from 'next/navigation';
 
 type Props = {
   lang: 'en' | 'ru';
@@ -9,6 +11,10 @@ type Props = {
 
 export const SignUp: React.FC<Props> = ({ lang }) => {
   const t = useTranslations('SignUpPage');
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    redirect('/my-profile');
+  }
 
   return (
     <div
@@ -16,21 +22,7 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
         'border-solid border-1 border-[--dark-300] bg-[#171717] rounded-md m-auto mt-[100px] max-w-[378px] text-center'
       }
     >
-      <p className={'text-xl font-bold pt-[23px]'}>{t('title')}</p>
-      <div className={'flex gap-[60px] justify-center mt-[13px]'}>
-        <Image
-          src={'/img/google.svg'}
-          alt={'google-icon'}
-          width={36}
-          height={36}
-        />
-        <Image
-          src={'/img/github.svg'}
-          alt={'github-icon'}
-          width={36}
-          height={36}
-        />
-      </div>
+      <ServiceAuth />
       <SignUpForm lang={lang} translate={t} />
     </div>
   );

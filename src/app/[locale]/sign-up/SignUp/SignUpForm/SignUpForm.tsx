@@ -93,6 +93,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
 
     localStorage.setItem('user-email', data.email);
   };
+  const passwordPlaceholder = String.fromCharCode(8727).repeat(20);
 
   return (
     <>
@@ -109,6 +110,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           registerName={'name'}
           translateName={'name'}
           id={'sign-up-userName'}
+          placeholder='Emap11'
         />
 
         <FormItem
@@ -120,6 +122,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-up-email'}
+          placeholder='Epam@epam.com'
         />
 
         <FormItem
@@ -134,6 +137,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           show={showPass}
           setShow={setShowPass}
           showPasswordIcon={true}
+          placeholder={passwordPlaceholder}
         />
 
         <FormItem
@@ -149,6 +153,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           show={showConfirmPass}
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
+          placeholder={passwordPlaceholder}
         />
 
         <AgreeCheckbox
