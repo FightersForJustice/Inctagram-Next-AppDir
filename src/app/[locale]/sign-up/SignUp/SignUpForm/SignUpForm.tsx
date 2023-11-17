@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
@@ -11,20 +11,9 @@ import { EmailSentModal } from './EmailSentModal';
 import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
+import { SignUpFormProps, SubmitProps } from './typesSignUp';
 
-type Props = {
-  lang: 'en' | 'ru';
-  translate: (value: string) => ReactNode;
-};
-
-type SubmitProps = {
-  userName: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-};
-
-export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
+export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
@@ -44,7 +33,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
     usePostAuthorizationMutation();
 
   useEffect(() => {
-    if (isSuccess) setShowModal(true);
+    isSuccess && setShowModal(true);
   }, [isSuccess]);
 
   const translateError = (err: string) => {
@@ -59,25 +48,26 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   };
 
   const onSubmit = (data: SubmitProps) => {
-    postAuthorization({
-      userName: data.userName,
-      email: data.email,
-      password: data.password,
-    })
-      .unwrap()
-      .catch((err) => {
-        if (err?.data?.statusCode === StatusCode.badRequest) {
-          setError(err.data.messages[0]?.field, {
-            message: translateError(err.data.messages[0]?.message),
-          });
-        } else {
-          toast.error(err.error);
-        }
-      });
-
-    setUserEmail(data.email);
-
-    localStorage.setItem('user-email', data.email);
+    try {
+      postAuthorization({
+        userName: data.userName,
+        email: data.email,
+        password: data.password,
+      })
+        .unwrap()
+        .catch((err) => {
+          if (err?.data?.statusCode === StatusCode.badRequest) {
+            setError(err.data.messages[0]?.field, {
+              message: translateError(err.data.messages[0]?.message),
+            });
+          } else {
+            toast.error(err.error);
+          }
+        });
+      setUserEmail(data.email);
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   return (

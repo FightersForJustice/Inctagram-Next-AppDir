@@ -1,25 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { InputError } from './InputError';
-import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ShowHidePass } from '@/components/ShowHidePass';
+import { FormItemProps } from './typesSignUp';
 
-type Props = {
-  marginTop: string;
-  marginBottom?: string;
-  translate: (value: string) => ReactNode;
-  register: UseFormRegister<any>;
-  error: FieldError | undefined;
-  errorMessage: string | undefined;
-  registerName: string;
-  translateName: string;
-  id: string;
-  show?: boolean;
-  setShow?: (value: boolean) => void;
-  showPasswordIcon?: boolean;
-  isTouched?: boolean;
-};
-
-export const FormItem: React.FC<Props> = ({
+export const FormItem: React.FC<FormItemProps> = ({
   errorMessage,
   error,
   register,
