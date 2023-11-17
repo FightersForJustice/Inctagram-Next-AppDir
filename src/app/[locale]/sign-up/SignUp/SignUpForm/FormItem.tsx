@@ -45,7 +45,7 @@ export const FormItem: React.FC<Props> = ({
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
+          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-100] w-[90%] ${
             error ? 'border-red-700' : ''
           }`}
           id={id}
