@@ -16,6 +16,7 @@ export const FormItem: React.FC<FormItemProps> = ({
   show,
   setShow,
   showPasswordIcon,
+  placeholder,
 }) => {
   const type = showPasswordIcon !== undefined && show;
 
@@ -31,6 +32,7 @@ export const FormItem: React.FC<FormItemProps> = ({
             error ? 'border-red-700' : ''
           }`}
           id={id}
+          placeholder={placeholder}
           type={`${!type ? 'text' : 'password'}`}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
@@ -38,7 +40,7 @@ export const FormItem: React.FC<FormItemProps> = ({
         <InputError
           error={error}
           errorMessage={errorMessage}
-          id={'sign-up-userName-error'}
+          id={id}
         />
       </div>
     </div>

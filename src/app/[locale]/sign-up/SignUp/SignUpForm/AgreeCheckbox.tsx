@@ -55,7 +55,7 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
         <InputError
           error={error}
           errorMessage={errorMessage}
-          id={'sign-up-userName-error'}
+          id={id}
           className={'left-[6.3rem]'}
         />
       </label>

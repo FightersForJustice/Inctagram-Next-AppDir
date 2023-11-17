@@ -57,29 +57,23 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-10 pb-[24px]'}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={'my-[24px] mx-5'}>
         <EmailForm
           translate={translate}
           register={register}
           error={errors.email}
           errorMessage={errors?.email?.message}
+          placeholder="Epam@epam.com"
         />
 
-        <p
-          className={
-            'max-w-[90%] text-left ml-5 text-[--light-900] leading-[20px] mb-[20px]'
-          }
-        >
+        <p className={'pt-2 max-w-[100%] text-left text-[--light-900]'}>
           {translate('desc')}
         </p>
 
         {sendLinkAgain && (
           <p
             className={
-              'max-w-[90%] text-left ml-5 text-[--light-300] leading-[20px] mb-[20px] text-[15px]'
+              'max-w-[100%] text-left text-[--light-300] my-[20px] text-[15px]'
             }
           >
             {translate('descAfterSend')}
@@ -89,7 +83,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         <input
           type="submit"
           className={
-            'mb-[24px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  '
+            'my-[24px] bg-[--primary-500] w-[100%] py-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
           }
           value={`${
             sendLinkAgain
@@ -101,7 +95,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
         <Link
           href={'/sign-in'}
-          className={'text-[--primary-500] block mb-[30px]'}
+          className={'font-medium text-[--primary-500] block mb-[30px]'}
         >
           {translate('linkName')}
         </Link>
@@ -110,6 +104,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
+          theme='dark'
         />
       </form>
       {showModal && (

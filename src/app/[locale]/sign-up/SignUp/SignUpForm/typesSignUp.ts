@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { FieldError, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 
 export type SignUpFormProps = {
@@ -31,6 +31,7 @@ export type FormItemProps = {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
+  placeholder?: string;
 };
 
 export type AgreeCheckboxProps = {

@@ -46,12 +46,13 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   if (isAuth) {
     redirect('/my-profile');
   }
+  const passwordPlaceholder = String.fromCharCode(8727).repeat(10);
 
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-10 pb-[24px]'}
+        className={' mt-[24px] mb-2 pb-[24px]'}
       >
         <FormItem
           marginTop={' mt-[18px]'}
@@ -62,6 +63,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
+          placeholder="Epam@epam.com"
         />
         <FormItem
           marginTop={' mt-[18px] '}
@@ -76,6 +78,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           showPasswordIcon={true}
           show={showPass}
           setShow={setShowPass}
+          placeholder={`${passwordPlaceholder}`}
         />
         <Link
           href={'/forgot-password'}

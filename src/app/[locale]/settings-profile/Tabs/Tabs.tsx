@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import s from './Tabs.module.scss';
+import '../../../globals.css';
 import {
   useLazyGetProfileQuery,
   usePostProfileAvatarMutation,

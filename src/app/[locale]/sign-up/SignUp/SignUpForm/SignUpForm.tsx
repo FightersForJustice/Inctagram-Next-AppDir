@@ -17,6 +17,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
     setError,
   } = useForm({
@@ -28,6 +29,13 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const resetObj = {
+    name: '',
+    agreements: false,
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
@@ -74,7 +82,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={'mt-[24px] mb-10 pb-[24px]'}
+        className={' mt-[24px] mb-2 pb-[24px]'}
       >
         <FormItem
           marginTop={'mt-7'}

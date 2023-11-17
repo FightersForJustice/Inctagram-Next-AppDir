@@ -34,13 +34,15 @@ export const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
       <div
         className={'flex flex-col justify-center items-center mt-[100px] mb-9'}
       >
-        <h1 className={'text-[20px] mb-[19px]'}>{translate('title')}</h1>
+        <h1 className={'font-bold text-[20px] mb-[19px]'}>
+          {translate('title')}
+        </h1>
         <p className={'max-w-[300px] text-center mb-[30px]'}>
           {translate('desc')}
         </p>
         <button
           className={
-            'bg-[--primary-500] rounded-s pt-[6px] pr-[34px] pb-[6px] pl-[34px] mb-[32px]'
+            'bg-[--primary-500] rounded-s py-[6px] px-[34px] mb-[32px]'
           }
           onClick={onResend}
         >
