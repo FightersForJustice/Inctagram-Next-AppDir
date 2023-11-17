@@ -17,9 +17,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid },
     setError,
+    watch,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -29,13 +29,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const resetObj = {
-    name: '',
-    agreements: false,
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
@@ -93,6 +86,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           registerName={'userName'}
           translateName={'name'}
           id={'sign-up-userName'}
+          watch={watch}
         />
 
         <FormItem
@@ -104,6 +98,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-up-email'}
+          watch={watch}
         />
 
         <FormItem
@@ -118,6 +113,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           show={showPass}
           setShow={setShowPass}
           showPasswordIcon={true}
+          watch={watch}
         />
 
         <FormItem
@@ -133,6 +129,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           show={showConfirmPass}
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
+          watch={watch}
         />
 
         <AgreeCheckbox

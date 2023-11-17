@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
-import { FieldError, UseFormRegister, UseFormTrigger } from 'react-hook-form';
+import {
+  FieldError,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormTrigger,
+} from 'react-hook-form';
 
 export type SignUpFormProps = {
   lang: 'en' | 'ru';
@@ -31,7 +36,7 @@ export type FormItemProps = {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
-  placeholder?: string;
+  watch: UseFormGetValues<any>;
 };
 
 export type AgreeCheckboxProps = {

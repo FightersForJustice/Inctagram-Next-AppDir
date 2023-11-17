@@ -18,6 +18,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
@@ -62,8 +63,9 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           translate={translate}
           register={register}
           error={errors.email}
+          registerName="email"
           errorMessage={errors?.email?.message}
-          placeholder="Epam@epam.com"
+          watch={watch}
         />
 
         <p className={'pt-2 max-w-[100%] text-left text-[--light-900]'}>
@@ -104,7 +106,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
-          theme='dark'
+          theme="dark"
         />
       </form>
       {showModal && (

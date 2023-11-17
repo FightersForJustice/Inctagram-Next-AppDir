@@ -2,6 +2,8 @@ import React from 'react';
 import { InputError } from './InputError';
 import { ShowHidePass } from '@/components/ShowHidePass';
 import { FormItemProps } from './typesSignUp';
+import { usePlaceholder } from '@/utils/usePlaceholder';
+import clsx from 'clsx';
 
 export const FormItem: React.FC<FormItemProps> = ({
   errorMessage,
@@ -16,9 +18,10 @@ export const FormItem: React.FC<FormItemProps> = ({
   show,
   setShow,
   showPasswordIcon,
-  placeholder,
+  watch,
 }) => {
   const type = showPasswordIcon !== undefined && show;
+  const value = watch(registerName);
 
   return (
     <div className={`${marginTop} ${marginBottom}`}>
@@ -28,20 +31,18 @@ export const FormItem: React.FC<FormItemProps> = ({
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-            error ? 'border-red-700' : ''
-          }`}
+          className={clsx(
+            ' bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%]',
+            { 'border-red-700': error },
+            { 'text-white': value }
+          )}
           id={id}
-          placeholder={placeholder}
+          placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError
-          error={error}
-          errorMessage={errorMessage}
-          id={id}
-        />
+        <InputError error={error} errorMessage={errorMessage} id={id} />
       </div>
     </div>
   );
