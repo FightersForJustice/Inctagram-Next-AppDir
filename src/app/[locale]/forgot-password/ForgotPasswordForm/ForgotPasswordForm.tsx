@@ -105,6 +105,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
           theme='dark'
+          // hl=
         />
       </form>
       {showModal && (
