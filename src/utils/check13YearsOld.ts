@@ -18,7 +18,7 @@ export function check13YearsOld(
       (ageYears === 13 && ageMonths < 0) ||
       (ageYears === 13 && ageMonths === 0 && ageDays < 0)
     ) {
-      setAgeError('You must be over 13 years old');
+      setAgeError('A user under 13 cannot create a profile.');
     } else {
       setAgeError('');
     }

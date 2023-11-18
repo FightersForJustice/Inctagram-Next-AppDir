@@ -5,6 +5,7 @@ import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 import s from './DatePick.module.scss';
 import Image from 'next/image';
 import { check13YearsOld, convertToReactDatePickerObject } from '@/utils';
+import Link from "next/link";
 
 type Props = {
   setDate: (date: string) => void;
@@ -75,7 +76,7 @@ export const DatePick: React.FC<Props> = ({
         />
         {ageError && (
           <p className={'text-red-600 text-[12px] absolute top-[40px] left-0'}>
-            {ageError}
+            {ageError} <Link href={'/privacy-policy'} className={'underline'}>Privacy policy</Link>
           </p>
         )}
       </div>
