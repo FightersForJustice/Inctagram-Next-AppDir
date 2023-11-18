@@ -11,6 +11,8 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { useDispatch } from 'react-redux';
+import { setAccessToken } from '@/redux/reducers/user/userSlice';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -29,10 +31,15 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const [showPass, setShowPass] = useState(true);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const [postLogin, { isLoading }] = usePostLoginMutation();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data: IUserLoginRequest) => {
     try {
-      await postLogin(data).unwrap();
+      postLogin(data)
+        .unwrap()
+        .then((data) => {
+          dispatch(setAccessToken(data));
+        });
     } catch (error) {
       const {
         data: { messages },
