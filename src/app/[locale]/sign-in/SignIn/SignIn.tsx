@@ -2,7 +2,6 @@ import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
@@ -12,7 +11,7 @@ import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
 import { useDispatch } from 'react-redux';
-import { setAccessToken } from '@/redux/reducers/user/userSlice';
+import { authActions } from '@/redux/reducers/authSlice';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -38,7 +37,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
       postLogin(data)
         .unwrap()
         .then((data) => {
-          dispatch(setAccessToken(data));
+          dispatch(authActions.setAccessToken(data));
         });
     } catch (error) {
       const {

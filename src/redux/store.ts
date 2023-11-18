@@ -9,13 +9,11 @@ import { profileApi } from '@/api/profile.api';
 import { postsApi } from '@/api/posts.api';
 import { subscriptionsApi } from '@/api/subscriptions.api';
 import { api } from '@/api/api';
-import { userReducer } from './reducers/user/userSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
   post: postReducer,
-  user: userReducer,
   [authApi.reducerPath]: authApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
   [postsApi.reducerPath]: postsApi.reducer,
