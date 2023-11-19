@@ -25,7 +25,7 @@ type FormType = {
   agreements: NonNullable<boolean | undefined>;
 };
 
-export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
+export const SignUpForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
@@ -52,7 +52,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
-  //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
     if (isSuccess) {
       setShowModal(true);
@@ -72,7 +71,6 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   };
 
   const onSubmit = (data: SubmitProps) => {
-    //==изменения== закидываем данные нового пользоваеля в запрос
     postAuthorization({
       userName: data.name,
       email: data.email,
@@ -88,9 +86,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           toast.error(err.error);
         }
       });
-    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
     setUserEmail(data.email);
-
     localStorage.setItem('user-email', data.email);
   };
 

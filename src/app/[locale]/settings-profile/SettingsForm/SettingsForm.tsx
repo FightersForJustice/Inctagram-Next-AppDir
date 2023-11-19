@@ -52,8 +52,6 @@ export const SettingsForm: React.FC<Props> = ({
     formState: { errors },
     setError,
   } = useForm<FormValues>({
-    // Для чего это?
-    // defaultValues: GetDefaultValuesForm,
     // @ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
@@ -61,14 +59,14 @@ export const SettingsForm: React.FC<Props> = ({
 
   const onSubmit = handleSubmit((data) => {
     let parts = dateOfBirth.split('.');
-    let birthdayDate = new Date(+parts[2], +parts[1] - 1, +parts[0]);
+    let birthdayDate: Date | string = new Date(+parts[2], +parts[1] - 1, +parts[0]);
 
     const result: PutProfileBody = {
       userName: data.userName,
       firstName: data.firstName,
       lastName: data.lastName,
       city: userCity,
-      dateOfBirth: dateOfBirth ? String(birthdayDate) : userBirthday,
+      dateOfBirth: dateOfBirth ? String(birthdayDate) === "Invalid Date" ? userBirthday : String(birthdayDate) : userBirthday,
       aboutMe: data.aboutMe,
     };
 
