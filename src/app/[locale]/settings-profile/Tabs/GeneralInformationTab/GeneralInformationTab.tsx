@@ -73,9 +73,7 @@ export const GeneralInformationTab: React.FC<Props> = ({
                 className={s.wrapper__delete}
               />
             )}
-            <TransparentBtn
-              onClick={() => setShowAddAvatarModal(true)}
-            >
+            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
               {t('addBtn')}
             </TransparentBtn>
           </div>

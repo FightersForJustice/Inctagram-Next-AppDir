@@ -1,13 +1,8 @@
 import React from 'react';
 import { Modal } from '@/components/Modals/Modal';
+import { EmailSentModalProps } from './typesSignUp';
 
-type Props = {
-  userEmail: string;
-  setShowModal: (value: boolean) => void;
-  translate: string;
-};
-
-export const EmailSentModal: React.FC<Props> = ({
+export const EmailSentModal: React.FC<EmailSentModalProps> = ({
   userEmail,
   setShowModal,
   translate,

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
@@ -11,28 +11,16 @@ import { EmailSentModal } from './EmailSentModal';
 import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
+import { SignUpFormProps, SubmitProps } from './typesSignUp';
 
-type Props = {
-  lang: 'en' | 'ru';
-  translate: (value: string) => ReactNode;
-};
-
-type FormType = {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  agreements: NonNullable<boolean | undefined>;
-};
-
-export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
+export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid },
     setError,
-  } = useForm<FormType>({
+    watch,
+  } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
   });
@@ -41,28 +29,17 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const resetObj = {
-    name: '',
-    agreements: false,
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
-  //==изменения== для открытия модалки при успешной регистрации
   useEffect(() => {
-    if (isSuccess) {
-      setShowModal(true);
-      reset(resetObj);
-    }
+    isSuccess && setShowModal(true);
   }, [isSuccess]);
 
   const translateError = (err: string) => {
     switch (err) {
-      case 'User with this name is already exist':
+      case 'User with this userName is already exist':
         return String(translate('nameExist'));
       case 'User with this email is already exist':
         return String(translate('emailExist'));
@@ -72,26 +49,26 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
   };
 
   const onSubmit = (data: SubmitProps) => {
-    //==изменения== закидываем данные нового пользоваеля в запрос
-    postAuthorization({
-      userName: data.name,
-      email: data.email,
-      password: data.password,
-    })
-      .unwrap()
-      .catch((err) => {
-        if (err?.data?.statusCode === StatusCode.badRequest) {
-          setError(err.data.messages[0]?.field, {
-            message: translateError(err.data.messages[0]?.message),
-          });
-        } else {
-          toast.error(err.error);
-        }
-      });
-    //==изменения== тут раньше был setShowModal(true), но теперь он в useEffect
-    setUserEmail(data.email);
-
-    localStorage.setItem('user-email', data.email);
+    try {
+      postAuthorization({
+        userName: data.userName,
+        email: data.email,
+        password: data.password,
+      })
+        .unwrap()
+        .catch((err) => {
+          if (err?.data?.statusCode === StatusCode.badRequest) {
+            setError(err.data.messages[0]?.field, {
+              message: translateError(err.data.messages[0]?.message),
+            });
+          } else {
+            toast.error(err.error);
+          }
+        });
+      setUserEmail(data.email);
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   return (
@@ -104,15 +81,16 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           marginTop={'mt-7'}
           translate={translate}
           register={register}
-          error={errors.name}
-          errorMessage={errors?.name?.message}
-          registerName={'name'}
+          error={errors.userName}
+          errorMessage={errors?.userName?.message}
+          registerName={'userName'}
           translateName={'name'}
           id={'sign-up-userName'}
+          watch={watch}
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -120,10 +98,11 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-up-email'}
+          watch={watch}
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.password}
@@ -134,10 +113,11 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           show={showPass}
           setShow={setShowPass}
           showPasswordIcon={true}
+          watch={watch}
         />
 
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           marginBottom={'mb-[18px]'}
           translate={translate}
           register={register}
@@ -149,6 +129,7 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
           show={showConfirmPass}
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
+          watch={watch}
         />
 
         <AgreeCheckbox
@@ -188,11 +169,4 @@ export const SignUpForm: React.FC<Props> = ({ lang, translate }) => {
       {isLoading && <Loader />}
     </>
   );
-};
-
-type SubmitProps = {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
 };

@@ -1,14 +1,7 @@
 import React from 'react';
-import { FieldError } from 'react-hook-form';
+import { InputErrorProps } from './typesSignUp';
 
-type Props = {
-  error: FieldError | undefined;
-  errorMessage: string | undefined;
-  id: string;
-  className?: string;
-};
-
-export const InputError: React.FC<Props> = ({
+export const InputError: React.FC<InputErrorProps> = ({
   errorMessage,
   error,
   id,
