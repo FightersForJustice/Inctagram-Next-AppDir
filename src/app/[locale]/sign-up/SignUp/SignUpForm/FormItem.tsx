@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { InputError } from './InputError';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ShowHidePass } from '@/components/ShowHidePass';
-import { FormItemProps } from './typesSignUp';
-import { usePlaceholder } from '@/utils/usePlaceholder';
-import clsx from 'clsx';
+
+export interface FormItemProps {
+  marginTop: string;
+  marginBottom?: string;
+  translate: (value: string) => ReactNode;
+  register: UseFormRegister<any>;
+  error: FieldError | undefined;
+  errorMessage: string | undefined;
+  registerName: string;
+  translateName: string;
+  id: string;
+  show?: boolean;
+  setShow?: (value: boolean) => void;
+  showPasswordIcon?: boolean;
+  isTouched?: boolean;
+  placeholder?: string;
+};
 
 export const FormItem: React.FC<FormItemProps> = ({
   errorMessage,
@@ -18,6 +33,7 @@ export const FormItem: React.FC<FormItemProps> = ({
   show,
   setShow,
   showPasswordIcon,
+  placeholder,
 }) => {
   const type = showPasswordIcon !== undefined && show;
 
@@ -29,17 +45,20 @@ export const FormItem: React.FC<FormItemProps> = ({
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={clsx(
-            ' bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-100] w-[90%]',
-            { 'border-red-700': error }
-          )}
+          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
+            error ? 'border-red-700' : ''
+          }`}
           id={id}
-          placeholder={usePlaceholder(registerName)}
+          placeholder={placeholder}
           type={`${!type ? 'text' : 'password'}`}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError error={error} errorMessage={errorMessage} id={id} />
+        <InputError
+          error={error}
+          errorMessage={errorMessage}
+          id={id}
+        />
       </div>
     </div>
   );
