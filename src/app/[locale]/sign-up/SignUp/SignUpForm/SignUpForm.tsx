@@ -29,12 +29,20 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const resetObj = {
+    name: '',
+    agreements: false,
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
   useEffect(() => {
     isSuccess && setShowModal(true);
+    reset(resetObj);
   }, [isSuccess]);
 
   const translateError = (err: string) => {
