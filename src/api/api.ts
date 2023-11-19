@@ -8,12 +8,11 @@ import { toast } from 'react-toastify';
 import { appActions } from '@/redux/reducers';
 import { RootState } from '@/redux/store';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { accessToken, setAccessToken } from '@/accessToken';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers) => {
-    const token = accessToken;
+    const token = sessionStorage.getItem('accessToken');
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -45,7 +44,7 @@ export const baseQueryWithReAuth: BaseQueryFn<
       const data = <{ accessToken: string }>res.data;
 
       if (data) {
-        setAccessToken(data.accessToken);
+        sessionStorage.setItem('accessToken', data.accessToken);
         toast.success('Welcome back!');
         result = await baseQuery(args, api, extraOptions);
         api.dispatch(appActions.setTokenIsActive(true));
