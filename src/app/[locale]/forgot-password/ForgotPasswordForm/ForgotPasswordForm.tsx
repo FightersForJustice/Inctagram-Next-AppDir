@@ -18,7 +18,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
@@ -41,11 +41,15 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   }, [isSuccess]);
 
   const onSubmit = (data: any) => {
-    recoveryPassword({
-      email: data.email,
-      recaptcha,
-    });
-    setUserEmail(data.email);
+    try {
+      recoveryPassword({
+        email: data.email,
+        recaptcha,
+      });
+      setUserEmail(data.email);
+    } finally {
+      reset();
+    }
   };
 
   const reCaptchaHandler = (token: string | null) => {
@@ -65,7 +69,6 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           error={errors.email}
           registerName="email"
           errorMessage={errors?.email?.message}
-          watch={watch}
         />
 
         <p className={'pt-2 max-w-[100%] text-left text-[--light-900]'}>

@@ -19,8 +19,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
     handleSubmit,
     formState: { errors, isValid },
     setError,
-    watch,
-    reset
+    reset,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -77,6 +76,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
       setUserEmail(data.email);
     } catch (error) {
       console.log({ error });
+    } finally {
+      reset();
     }
   };
 
@@ -95,7 +96,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           registerName={'userName'}
           translateName={'name'}
           id={'sign-up-userName'}
-          watch={watch}
         />
 
         <FormItem
@@ -107,7 +107,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-up-email'}
-          watch={watch}
         />
 
         <FormItem
@@ -122,7 +121,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           show={showPass}
           setShow={setShowPass}
           showPasswordIcon={true}
-          watch={watch}
         />
 
         <FormItem
@@ -138,7 +136,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           show={showConfirmPass}
           setShow={setShowConfirmPass}
           showPasswordIcon={true}
-          watch={watch}
         />
 
         <AgreeCheckbox
