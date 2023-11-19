@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
@@ -31,7 +32,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
 
   const onSubmit = async (data: IUserLoginRequest) => {
     try {
-      postLogin(data).unwrap();
+      await postLogin(data).unwrap();
     } catch (error) {
       const {
         data: { messages },
