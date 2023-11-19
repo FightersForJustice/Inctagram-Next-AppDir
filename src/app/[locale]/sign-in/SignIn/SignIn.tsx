@@ -11,7 +11,6 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
-import { usePlaceholder } from '@/utils/usePlaceholder';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -23,7 +22,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors, isValid },
     reset,
-    watch,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
@@ -64,7 +62,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
-          watch={watch}
         />
         <FormItem
           marginTop={' mt-[18px] '}
@@ -79,7 +76,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           showPasswordIcon={true}
           show={showPass}
           setShow={setShowPass}
-          watch={watch}
         />
         <Link
           href={'/forgot-password'}

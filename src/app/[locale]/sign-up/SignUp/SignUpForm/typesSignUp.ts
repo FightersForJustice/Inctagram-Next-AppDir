@@ -36,7 +36,6 @@ export type FormItemProps = {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
-  watch: UseFormGetValues<any>;
 };
 
 export type AgreeCheckboxProps = {
