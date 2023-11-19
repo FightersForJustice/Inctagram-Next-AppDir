@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import DatePicker, { DateObject, DatePickerRef } from 'react-multi-date-picker';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
-
 import s from './DatePick.module.scss';
 import Image from 'next/image';
 import { check13YearsOld, convertToReactDatePickerObject } from '@/utils';
-import Link from "next/link";
+import Link from 'next/link';
 
 type Props = {
   setDate: (date: string) => void;
@@ -66,7 +65,7 @@ export const DatePick: React.FC<Props> = ({
           >
             close
           </button>
-        </DatePicker >
+        </DatePicker>
         <Image
           src={'/img/settings-profile/calendar.svg'}
           alt={'calendar'}
@@ -77,7 +76,10 @@ export const DatePick: React.FC<Props> = ({
         {ageError && (
           <p className={'text-red-600 text-[12px] absolute top-[40px] left-0'}>
             {ageError}
-            <Link href={'/privacy-policy'} className={'underline'}>
+            <Link
+              href={'/agreemets-page/privacy-policy'}
+              className={'underline'}
+            >
               Privacy policy
             </Link>
           </p>
