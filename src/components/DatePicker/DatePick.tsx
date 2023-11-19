@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import DatePicker, { DateObject, DatePickerRef } from 'react-multi-date-picker';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
 import s from './DatePick.module.scss';
 import Image from 'next/image';
 import { check13YearsOld, convertToReactDatePickerObject } from '@/utils';
 import Link from 'next/link';
+import DatePicker, { DateObject } from 'react-multi-date-picker';
+// import { DatePickerRef } from 'react-multi-date-picker';
 
 type Props = {
   setDate: (date: string) => void;
@@ -20,7 +21,7 @@ export const DatePick: React.FC<Props> = ({
   ageError,
   setAgeError,
 }) => {
-  const datePickerRef = useRef<DatePickerRef | null>(null);
+  const datePickerRef = useRef<any>(null);
 
   const [value, setValue] = useState<DateObject | DateObject[] | null>(
     userBirthday ? convertToReactDatePickerObject(userBirthday) : null
