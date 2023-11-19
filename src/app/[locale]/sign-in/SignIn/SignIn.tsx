@@ -11,6 +11,7 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { usePlaceholder } from '@/utils/usePlaceholder';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -22,6 +23,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors, isValid },
     reset,
+    watch,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
@@ -46,7 +48,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   if (isAuth) {
     redirect('/my-profile');
   }
-  const passwordPlaceholder = String.fromCharCode(8727).repeat(10);
 
   return (
     <>
@@ -63,7 +64,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
-          placeholder="Epam@epam.com"
+          watch={watch}
         />
         <FormItem
           marginTop={'mt-[18px]'}
@@ -78,7 +79,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           showPasswordIcon={true}
           show={showPass}
           setShow={setShowPass}
-          placeholder={`${passwordPlaceholder}`}
+          watch={watch}
         />
         <Link
           href={'/forgot-password'}

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
-import '../globals.css'
+import '../globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });

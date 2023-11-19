@@ -51,7 +51,7 @@ const slice = createSlice({
         (image) => image.id === action.payload
       );
       if (index !== -1) state.postImages.splice(index, 1);
-      if(state.imagesGallery.length < 10){
+      if (state.imagesGallery.length < 10) {
       }
     },
     removeAllImages(state) {
