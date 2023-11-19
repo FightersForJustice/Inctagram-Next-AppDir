@@ -53,6 +53,9 @@ export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
           <p className={s.devices__content__visit}>
             Last visit: <span>{dateToFormat(item.lastActive)}</span>
           </p>
+          <p className={s.devices__content__visit}>
+            Browser Name: <span>{item.browserName}</span>
+          </p>
         </div>
         <div className={'mt-auto mb-auto ml-auto'}>
           <LogoutBtn
