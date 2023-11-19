@@ -79,7 +79,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
       console.log({ error });
     }
   };
-  const passwordPlaceholder = String.fromCharCode(8727).repeat(20);
 
   return (
     <>
