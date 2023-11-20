@@ -58,14 +58,22 @@ export const SettingsForm: React.FC<Props> = ({
 
   const onSubmit = handleSubmit((data) => {
     let parts = dateOfBirth.split('.');
-    let birthdayDate: Date | string = new Date(+parts[2], +parts[1] - 1, +parts[0]);
+    let birthdayDate: Date | string = new Date(
+      +parts[2],
+      +parts[1] - 1,
+      +parts[0]
+    );
 
     const result: PutProfileBody = {
       userName: data.userName,
       firstName: data.firstName,
       lastName: data.lastName,
       city: userCity,
-      dateOfBirth: dateOfBirth ? String(birthdayDate) === "Invalid Date" ? userBirthday : String(birthdayDate) : userBirthday,
+      dateOfBirth: dateOfBirth
+        ? String(birthdayDate) === 'Invalid Date'
+          ? userBirthday
+          : String(birthdayDate)
+        : userBirthday,
       aboutMe: data.aboutMe,
     };
 
