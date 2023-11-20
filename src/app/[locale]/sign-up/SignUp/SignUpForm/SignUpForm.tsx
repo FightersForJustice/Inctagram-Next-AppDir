@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,23 +11,17 @@ import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
 import { SignUpFormProps, SubmitProps } from './typesSignUp';
+import {getSignUpFormItemsData, resetObjSignUpForm} from "@/utils/data/sign-up-form-items-data";
+import {translateError} from "@/utils/translateErrorSignUpForm";
 
-type FormType = {
-    name: string;
-    email: string;
-    password: string;
-    passwordConfirm: string;
-    agreements: NonNullable<boolean | undefined>;
-};
-
-export const SignUpForm: React.FC<Props> = ({ translate}) => {
+export const SignUpForm: React.FC<SignUpFormProps> = ({translate}) => {
     const {
         register,
         handleSubmit,
         reset,
         formState: {errors, isValid},
         setError,
-    } = useForm<FormType>({
+    } = useForm({
         resolver: yupResolver(SignUpFormSchema()),
         mode: 'onTouched',
     });
@@ -37,45 +30,37 @@ export const SignUpForm: React.FC<Props> = ({ translate}) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const resetObj = {
-    name: '',
-    agreements: false,
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
+
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
   useEffect(() => {
     isSuccess && setShowModal(true);
-    reset(resetObj);
+    reset(resetObjSignUpForm);
   }, [isSuccess]);
 
-    const translateError = (err: string) => ({
-            'User with this name is already exist': String(translate('nameExist')),
-            'User with this email is already exist': String(translate('emailExist'))
-        }[err])
-
-
     const onSubmit = (data: SubmitProps) => {
-        postAuthorization({
-            userName: data.name,
-            email: data.email,
-            password: data.password,
-        }).unwrap().catch((err) => {
-                if (err?.data?.statusCode === StatusCode.badRequest) {
-                    setError(err.data.messages[0]?.field, {
-                        message: translateError(err.data.messages[0]?.message),
-                    });
-                } else {
-                    toast.error(err.error);
-                }
-            });
-        setUserEmail(data.email);
-
-        localStorage.setItem('user-email', data.email);
+        try {
+            postAuthorization({
+                userName: data.userName,
+                email: data.email,
+                password: data.password,
+            }).unwrap().catch((err) => {
+                    if (err?.data?.statusCode === StatusCode.badRequest) {
+                        setError(err.data.messages[0]?.field, {
+                            message: translateError(err.data.messages[0]?.message, translate),
+                        });
+                    } else {
+                        toast.error(err.error);
+                    }
+                });
+            setUserEmail(data.email);
+        } catch (error) {
+            console.log({ error });
+        } finally {
+            reset();
+        }
     };
 
     const formItemsProps = getSignUpFormItemsData({
@@ -86,21 +71,15 @@ export const SignUpForm: React.FC<Props> = ({ translate}) => {
         setShowConfirmPass
     })
 
+
     return (
         <>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={' mt-[24px] mb-2 pb-[24px]'}
             >
-                {
-                    formItemsProps.map(formItem => {
-                        return (
-                            <FormItem translate={translate}
-                                      register={register} {...formItem} />
-                        )
-                    })
+                {formItemsProps.map(formItem=> (<FormItem translate={translate} register={register} {...formItem} key={formItem.id}/>))}
 
-                }
                 <AgreeCheckbox
                     translate={translate}
                     register={register}
@@ -109,11 +88,12 @@ export const SignUpForm: React.FC<Props> = ({ translate}) => {
                     registerName={'agreements'}
                     id={'sign-up-agreemets'}
                 />
-
                 <input
                     type="submit"
                     className={
-                        'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '
+                        'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px]' +
+                        ' cursor-pointer disabled:bg-[--primary-100] ' +
+                        'disabled:text-gray-300 disabled:cursor-not-allowed '
                     }
                     id={'sign-up-submit'}
                     value={String(translate('btnName'))}

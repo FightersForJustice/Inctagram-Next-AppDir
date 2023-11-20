@@ -1,7 +1,3 @@
-import {FormItemProps} from "@/app/[locale]/sign-up/SignUp/SignUpForm/FormItem";
-import {FieldError} from "react-hook-form";
-
-
 export const getSignUpFormItemsData = ({errors, showPass, showConfirmPass, setShowPass, setShowConfirmPass}: {
     errors: any | undefined,
     showPass?: boolean,
@@ -11,22 +7,22 @@ export const getSignUpFormItemsData = ({errors, showPass, showConfirmPass, setSh
     setShowConfirmPass?: (value: boolean) => void
 }) => {
 
-    const formItems = [
+    return [
         {
             marginTop: 'mt-7',
-            error: errors.name,
-            errorMessage: errors?.name?.message,
-            registerName: 'name',
+            error: errors.userName,
+            errorMessage: errors?.userName?.message,
+            registerName: 'userName',
             translateName: 'name',
             id: 'sign-up-userName',
         },
         {
-            marginTop: ' mt-[18px]',
+            marginTop: 'mt-[18px]',
             error: errors.email,
-            errorMessage: errors?.name?.message,
+            errorMessage: errors?.email?.message,
             registerName: 'email',
             translateName: 'email',
-            id: 'sign-up-email'
+            id: 'sign-up-email',
         },
         {
             marginTop: ' mt-[18px]',
@@ -53,6 +49,12 @@ export const getSignUpFormItemsData = ({errors, showPass, showConfirmPass, setSh
         }
 
     ]
-
-    return formItems
 }
+
+export const resetObjSignUpForm = {
+    name: '',
+    agreements: false,
+    email: '',
+    password: '',
+    passwordConfirm: '',
+};

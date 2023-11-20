@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { InputError } from './InputError';
 import { AgreeCheckboxProps } from './typesSignUp';
+import React from "react";
 
 const linkStyle =
   'text-blue-500 underline hover:text-blue-700 hover:no-underline';
