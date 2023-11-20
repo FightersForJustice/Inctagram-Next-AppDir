@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+// @ts-ignore
 import { useTranslations } from 'next-intl';
 
 export const SettingsFormSchema = () => {
@@ -27,7 +28,7 @@ export const SettingsFormSchema = () => {
     aboutMe: yup
       .string()
       .matches(
-        /^(?!.*\s\s)[0-9A-Za-zА-Яа-я\s]*[0-9A-Za-zА-Яа-я]$/,
+        /^(?!.*\s\s)[0-9A-Za-zА-Яа-я\s.,;:!?]*[0-9A-Za-zА-Яа-я][.,;:!?]?$/,
         t('aboutMe.matches')
       )
       .min(1, t('aboutMe.min'))

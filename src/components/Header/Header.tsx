@@ -34,7 +34,7 @@ export const Header = () => {
     >
       <div
         className={
-          'max-w-[1280px] m-auto h-[60px] flex items-center justify-between'
+          'max-w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'
         }
       >
         <Link

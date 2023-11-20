@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 import s from './ThisDeviceTab.module.scss';
 import { DevicesResponse } from '@/api/profile.api';
-import { actualCreateDate } from '@/utils';
 import { dateToFormat } from '@/utils/dateToFormat';
 import { findMatchingString } from '@/utils/findBrowserName';
 
@@ -12,7 +11,7 @@ type Props = {
   session: DevicesResponse;
 };
 
-export const ThisDevice: React.FC<Props> = ({ t, session }) => {
+export const ThisDevice: React.FC<Props> = ({ session }) => {
   if (session) {
     return (
       <>

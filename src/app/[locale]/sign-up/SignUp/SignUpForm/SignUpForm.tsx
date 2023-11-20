@@ -1,21 +1,17 @@
 'use client';
-import React, {ReactNode, useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import Link from 'next/link';
-import {StatusCode, usePostAuthorizationMutation} from '@/api/auth.api';
-import {SignUpFormSchema} from '@/features/schemas';
-import {Loader} from '@/components/Loader';
-import {EmailSentModal} from './EmailSentModal';
-import {FormItem} from './FormItem';
-import {AgreeCheckbox} from './AgreeCheckbox';
-import {toast} from 'react-toastify';
-import {getSignUpFormItemsData} from "@/utils/data/sign-up-form-items-data";
 
-type Props = {
-    lang: 'en' | 'ru';
-    translate: (value: string) => ReactNode;
-};
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
+import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
+import { SignUpFormSchema } from '@/features/schemas';
+import { Loader } from '@/components/Loader';
+import { EmailSentModal } from './EmailSentModal';
+import { FormItem } from './FormItem';
+import { AgreeCheckbox } from './AgreeCheckbox';
+import { toast } from 'react-toastify';
+import { SignUpFormProps, SubmitProps } from './typesSignUp';
 
 type FormType = {
     name: string;
@@ -37,27 +33,25 @@ export const SignUpForm: React.FC<Props> = ({ translate}) => {
         mode: 'onTouched',
     });
 
-    const [showPass, setShowPass] = useState(true);
-    const [showConfirmPass, setShowConfirmPass] = useState(true);
-    const [showModal, setShowModal] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
-    const resetObj = {
-        name: '',
-        agreements: false,
-        email: '',
-        password: '',
-        passwordConfirm: '',
-    };
+  const [showPass, setShowPass] = useState(true);
+  const [showConfirmPass, setShowConfirmPass] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const resetObj = {
+    name: '',
+    agreements: false,
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  };
 
-    const [postAuthorization, {isSuccess, isLoading}] =
-        usePostAuthorizationMutation();
+  const [postAuthorization, { isSuccess, isLoading }] =
+    usePostAuthorizationMutation();
 
-    useEffect(() => {
-        if (isSuccess) {
-            setShowModal(true);
-            reset(resetObj);
-        }
-    }, [isSuccess]);
+  useEffect(() => {
+    isSuccess && setShowModal(true);
+    reset(resetObj);
+  }, [isSuccess]);
 
     const translateError = (err: string) => ({
             'User with this name is already exist': String(translate('nameExist')),
@@ -144,11 +138,4 @@ export const SignUpForm: React.FC<Props> = ({ translate}) => {
             {isLoading && <Loader/>}
         </>
     );
-};
-
-type SubmitProps = {
-    name: string;
-    email: string;
-    password: string;
-    passwordConfirm: string;
 };

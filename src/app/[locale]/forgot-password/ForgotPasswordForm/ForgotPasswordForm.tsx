@@ -30,6 +30,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const [recaptcha, setRecaptcha] = useState('');
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
 
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
+
   const [recoveryPassword, { isSuccess, isLoading, error }] =
     usePostPasswordRecoveryMutation();
 
@@ -106,7 +108,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         </Link>
 
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
+          sitekey={siteKey}
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
           theme="dark"
