@@ -18,7 +18,7 @@ export interface FormItemProps {
   showPasswordIcon?: boolean;
   isTouched?: boolean;
   placeholder?: string;
-};
+}
 
 export const FormItem: React.FC<FormItemProps> = ({
   errorMessage,
