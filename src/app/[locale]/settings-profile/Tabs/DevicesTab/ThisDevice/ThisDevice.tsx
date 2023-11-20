@@ -11,7 +11,7 @@ type Props = {
   session: DevicesResponse;
 };
 
-export const ThisDevice: React.FC<Props> = ({  session }) => {
+export const ThisDevice: React.FC<Props> = ({ session }) => {
   if (session) {
     return (
       <>

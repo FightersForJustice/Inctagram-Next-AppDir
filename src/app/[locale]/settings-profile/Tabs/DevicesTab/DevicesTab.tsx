@@ -84,4 +84,3 @@ export const DevicesTab = () => {
     </Tabs.Content>
   );
 };
-

@@ -11,7 +11,6 @@ import { Loader } from '@/components/Loader';
 import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
 
-
 export const GeneralInformationTab: React.FC<Props> = ({
   setShowAddAvatarModal,
   setLoadedAvatar,
@@ -34,7 +33,8 @@ export const GeneralInformationTab: React.FC<Props> = ({
   }, [data]);
 
   const onDeleteAvatar = () => {
-    deleteAvatar().unwrap()
+    deleteAvatar()
+      .unwrap()
       .then(() => setLoadedAvatar(''))
       .catch((err) => toast.error(err.error));
   };
