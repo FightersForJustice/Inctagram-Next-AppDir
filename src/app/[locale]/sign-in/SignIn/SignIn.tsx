@@ -46,16 +46,15 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   if (isAuth) {
     redirect('/my-profile');
   }
-  const passwordPlaceholder = String.fromCharCode(8727).repeat(10);
 
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-2 pb-[24px]'}
+        className={'mt-[24px] mb-2 pb-[24px]'}
       >
         <FormItem
-          marginTop={' mt-[18px]'}
+          marginTop={'mt-[18px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -63,10 +62,9 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
-          placeholder="Epam@epam.com"
         />
         <FormItem
-          marginTop={' mt-[18px] '}
+          marginTop={'mt-[18px]'}
           marginBottom={'mb-[48px]'}
           translate={translate}
           register={register}
@@ -78,7 +76,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           showPasswordIcon={true}
           show={showPass}
           setShow={setShowPass}
-          placeholder={`${passwordPlaceholder}`}
         />
         <Link
           href={'/forgot-password'}
@@ -91,7 +88,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
         <input
           type="submit"
           className={
-            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  '
+            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
           }
           value={String(translate('btnName'))}
           id={'sign-in-submit'}

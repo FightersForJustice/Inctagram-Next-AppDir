@@ -18,6 +18,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
@@ -28,6 +29,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const [userEmail, setUserEmail] = useState('');
   const [recaptcha, setRecaptcha] = useState('');
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
+
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
 
   const [recoveryPassword, { isSuccess, isLoading, error }] =
     usePostPasswordRecoveryMutation();
@@ -40,11 +43,15 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   }, [isSuccess]);
 
   const onSubmit = (data: any) => {
-    recoveryPassword({
-      email: data.email,
-      recaptcha,
-    });
-    setUserEmail(data.email);
+    try {
+      recoveryPassword({
+        email: data.email,
+        recaptcha,
+      });
+      setUserEmail(data.email);
+    } finally {
+      reset();
+    }
   };
 
   const reCaptchaHandler = (token: string | null) => {
@@ -62,8 +69,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           translate={translate}
           register={register}
           error={errors.email}
+          registerName="email"
           errorMessage={errors?.email?.message}
-          placeholder="Epam@epam.com"
         />
 
         <p className={'pt-2 max-w-[100%] text-left text-[--light-900]'}>
@@ -101,7 +108,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         </Link>
 
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
+          sitekey={siteKey}
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
           theme="dark"

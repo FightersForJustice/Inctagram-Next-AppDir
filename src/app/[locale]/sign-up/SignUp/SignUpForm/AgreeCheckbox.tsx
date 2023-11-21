@@ -1,24 +1,11 @@
 import Link from 'next/link';
-import { FieldError, UseFormRegister } from 'react-hook-form';
 import { InputError } from './InputError';
-
-type Props = {
-  // translate: {
-  //   rich: <TargetKey extends string>(key: TargetKey, values?: RichTranslationValues | undefined) => ReactNode;
-  // };
-  // ----------------- поставил any что бы не тянуть rich с самого начала, надо пофиксить
-  translate: any;
-  register: UseFormRegister<any>;
-  error: FieldError | undefined;
-  errorMessage: string | undefined;
-  registerName: string;
-  id: string;
-};
+import { AgreeCheckboxProps } from './typesSignUp';
 
 const linkStyle =
   'text-blue-500 underline hover:text-blue-700 hover:no-underline';
 
-export const AgreeCheckbox: React.FC<Props> = ({
+export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
   translate,
   register,
   error,
