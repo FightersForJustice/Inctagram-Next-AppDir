@@ -30,7 +30,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const resetObj = {
-    name: '',
+    userName: '',
     agreements: false,
     email: '',
     password: '',
@@ -41,8 +41,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
     usePostAuthorizationMutation();
 
   useEffect(() => {
-    isSuccess && setShowModal(true);
-    reset(resetObj);
+    if (isSuccess) {
+      setShowModal(true);
+      reset(resetObj);
+    }
   }, [isSuccess]);
 
   const translateError = (err: string) => {
@@ -76,8 +78,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
       setUserEmail(data.email);
     } catch (error) {
       console.log({ error });
-    } finally {
-      reset();
     }
   };
 
