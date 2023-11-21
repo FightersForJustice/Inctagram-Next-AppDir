@@ -1,10 +1,6 @@
 'use client';
 
-import React, {
-  useEffect,
-  useState,
-  useTransition,
-} from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next-intl/client';
 
@@ -37,7 +33,9 @@ export const Header = () => {
       }
     >
       <div
-        className={'max-w-[1280px] m-auto h-[60px] flex items-center justify-between'}
+        className={
+          'max-w-[1280px] m-auto h-[60px] flex items-center justify-between'
+        }
       >
         <Link
           href={'/my-profile'}

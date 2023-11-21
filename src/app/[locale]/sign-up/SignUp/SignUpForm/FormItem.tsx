@@ -54,11 +54,7 @@ export const FormItem: React.FC<Props> = ({
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError
-          error={error}
-          errorMessage={errorMessage}
-          id={id}
-        />
+        <InputError error={error} errorMessage={errorMessage} id={id} />
       </div>
     </div>
   );

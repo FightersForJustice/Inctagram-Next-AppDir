@@ -45,7 +45,6 @@ export const SettingsForm: React.FC<Props> = ({
   const [updateProfile, { isLoading }] = usePutProfileMutation();
   const [getUserProfile, { error }] = useLazyGetProfileQuery();
 
-
   const {
     register,
     handleSubmit,

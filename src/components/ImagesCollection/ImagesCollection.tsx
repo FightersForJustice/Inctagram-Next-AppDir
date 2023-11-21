@@ -24,7 +24,7 @@ export const ImagesCollection: React.FC<Props> = ({
     }
   }, [loadedImages.length]);
 
-  const moreThen10Img = loadedImages.length >= 10
+  const moreThen10Img = loadedImages.length >= 10;
   const onDeleteImageFromCollection = (id: string) => {
     if (loadedImages.length === 1) {
       toast.error("Your can't delete one image");
@@ -36,13 +36,16 @@ export const ImagesCollection: React.FC<Props> = ({
   return (
     <div className={s.collection__container}>
       <Image
-        src={moreThen10Img ?'/img/create-post/plus-disable.svg' :  '/img/create-post/plus.svg'}
+        src={
+          moreThen10Img
+            ? '/img/create-post/plus-disable.svg'
+            : '/img/create-post/plus.svg'
+        }
         alt={'plus'}
         height={36}
         width={36}
         className={s.collection__plusBtn}
         onClick={() => !moreThen10Img && setPostImage('')}
-
       />
       <div className={s.collection__items}>
         {loadedImages.map((item, index) => {

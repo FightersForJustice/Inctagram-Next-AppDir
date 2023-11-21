@@ -65,7 +65,7 @@ export const DatePick: React.FC<Props> = ({
           >
             close
           </button>
-        </DatePicker >
+        </DatePicker>
         <Image
           src={'/img/settings-profile/calendar.svg'}
           alt={'calendar'}
