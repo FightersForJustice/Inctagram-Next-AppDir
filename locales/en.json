@@ -14,7 +14,7 @@
     "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
-    "title": "Login",
+    "title": "Sign In",
     "email": "Email",
     "password": "Password",
     "forgotPass": "Forgot password?",
