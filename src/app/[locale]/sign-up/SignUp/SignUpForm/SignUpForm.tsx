@@ -149,15 +149,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           value={String(translate('btnName'))}
           disabled={!isValid}
         />
-        {/*<input*/}
-        {/*  type="submit"*/}
-        {/*  className={*/}
-        {/*    'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '*/}
-        {/*  }*/}
-        {/*  id={'sign-up-submit'}*/}
-        {/*  value={String(translate('btnName'))}*/}
-        {/*  disabled={!isValid}*/}
-        {/*/>*/}
         <p className={'pb-5'}>{translate('question')}</p>
         <Link
           href={'/sign-in'}
