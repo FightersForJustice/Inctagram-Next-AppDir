@@ -86,7 +86,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormItem
-          marginTop={'mt-5'}
+          marginTop={'mt-6'}
           translate={translate}
           register={register}
           error={errors.userName}
@@ -108,7 +108,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={'mt-7'}
+          marginTop={'mt-6'}
           translate={translate}
           register={register}
           error={errors.password}
