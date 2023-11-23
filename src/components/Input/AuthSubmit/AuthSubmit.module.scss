@@ -1,0 +1,15 @@
+.submit {
+  margin-bottom: 18px;
+  background-color: var(--primary-500);
+  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  cursor: pointer;
+  margin-top: 24px;
+
+  &:disabled {
+    background-color: var(--primary-100);
+    color: var(--light-300);
+    cursor: not-allowed;
+  }
+}

@@ -12,6 +12,7 @@ import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
 import { SignUpFormProps, SubmitProps } from './typesSignUp';
+import { AuthSubmit } from '@/components/Input';
 
 export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const {
@@ -83,12 +84,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-2 pb-[24px]'}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormItem
-          marginTop={'mt-7'}
+          marginTop={'mt-5'}
           translate={translate}
           register={register}
           error={errors.userName}
@@ -99,7 +97,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={'mt-[18px]'}
+          marginTop={'mt-7'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -110,7 +108,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={'mt-[18px]'}
+          marginTop={'mt-7'}
           translate={translate}
           register={register}
           error={errors.password}
@@ -124,7 +122,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
         />
 
         <FormItem
-          marginTop={'mt-[18px]'}
+          marginTop={'mt-7'}
           marginBottom={'mb-[18px]'}
           translate={translate}
           register={register}
@@ -146,16 +144,20 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           registerName={'agreements'}
           id={'sign-up-agreemets'}
         />
-
-        <input
-          type="submit"
-          className={
-            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '
-          }
+        <AuthSubmit
           id={'sign-up-submit'}
           value={String(translate('btnName'))}
           disabled={!isValid}
         />
+        {/*<input*/}
+        {/*  type="submit"*/}
+        {/*  className={*/}
+        {/*    'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '*/}
+        {/*  }*/}
+        {/*  id={'sign-up-submit'}*/}
+        {/*  value={String(translate('btnName'))}*/}
+        {/*  disabled={!isValid}*/}
+        {/*/>*/}
         <p className={'pb-5'}>{translate('question')}</p>
         <Link
           href={'/sign-in'}
