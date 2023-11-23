@@ -1,4 +1,5 @@
-import React, { ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
+import s from './SignIn.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +17,7 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const SignIn: React.FC<Props> = ({ translate }) => {
+export const SignIn: FC<Props> = ({ translate }) => {
   const {
     register,
     handleSubmit,
@@ -49,12 +50,9 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={'mt-[24px] mb-2 pb-[24px]'}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <FormItem
-          marginTop={'mt-[18px]'}
+          marginTop={'mt-[20px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -64,8 +62,8 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
           id={'sign-in-email-input'}
         />
         <FormItem
-          marginTop={'mt-[18px]'}
-          marginBottom={'mb-[48px]'}
+          marginTop={'mt-[25px]'}
+          marginBottom={'mb-[35px]'}
           translate={translate}
           register={register}
           error={errors.password}
@@ -79,7 +77,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
         />
         <Link
           href={'/forgot-password'}
-          className={'flex justify-end mr-[20px] text-[--light-900]'}
+          className={s.forgot}
           id={'sign-in-link-forgot-password'}
         >
           {translate('forgotPass')}
@@ -87,17 +85,15 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
 
         <input
           type="submit"
-          className={
-            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
-          }
+          className={s.submit}
           value={String(translate('btnName'))}
           id={'sign-in-submit'}
           disabled={!isValid}
         />
-        <p className={'pb-5'}>{translate('question')}</p>
+        <p className={s.alreadyHaveText}>{translate('question')}</p>
         <Link
           href={'/sign-up'}
-          className={'text-[--primary-500]'}
+          className={s.signUpBtn}
           id={'sign-in-link-sign-up'}
         >
           {translate('btnBottomName')}

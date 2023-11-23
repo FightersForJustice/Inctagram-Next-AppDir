@@ -1,3 +1,4 @@
+import s from './ServiceAuth.module.scss';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useLoginWithGoogleOAuthMutation } from '@/api';
 import { Loader } from '@/components/Loader';
@@ -31,8 +32,8 @@ const ServiceAuth = () => {
   });
   return (
     <>
-      <p className={'font-bold text-xl pt-[23px]'}>{t('title')}</p>
-      <div className={'flex gap-[60px] justify-center mt-[13px]'}>
+      <p className={s.title}>{t('title')}</p>
+      <div className={s.container}>
         <GetService
           onClick={googleLogin}
           img="/img/google.svg"

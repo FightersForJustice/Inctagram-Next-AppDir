@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './FormItem.module.scss';
 import { InputError } from './InputError';
 import { ShowHidePass } from '@/components/ShowHidePass';
 import { FormItemProps } from './typesSignUp';
@@ -23,16 +24,13 @@ export const FormItem: React.FC<FormItemProps> = ({
 
   return (
     <div className={`${marginTop} ${marginBottom}`}>
-      <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
+      <div className={'text-left text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={clsx(
-            ' bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-100] w-[90%]',
-            { 'border-red-700': error }
-          )}
+          className={clsx(s.input, { [s.error]: error })}
           id={id}
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
