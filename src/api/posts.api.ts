@@ -70,7 +70,7 @@ export const postsApi = api.injectEndpoints({
     >({
       query: ({ idLastUploadedPost, pageSize, sortBy, sortDirection }) => {
         return {
-          url: `posts/all/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
+          url: `posts/user/${idLastUploadedPost}?pageSize=${pageSize}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
           method: 'GET',
         };
       },
