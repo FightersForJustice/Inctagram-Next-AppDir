@@ -10,6 +10,8 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { toast } from 'react-toastify';
+import { ServerError } from '@/types/serverResponseTyper';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -40,13 +42,17 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
       reset();
     } catch (error) {
       const {
+        status,
         data: { messages },
-      } = error as { data: { messages: string } };
-      messages &&
+      } = error as ServerError;
+      if (status < 500) {
         setError('password', {
           type: 'custom',
-          message: 'invalid password or email',
+          message: String(translate(`error${status}`)),
         });
+      } else {
+        toast.error(messages);
+      }
     }
   };
 
