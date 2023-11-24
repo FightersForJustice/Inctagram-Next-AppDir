@@ -22,6 +22,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors, isValid },
     reset,
+    setError,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
@@ -39,7 +40,11 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
       } = error as { data: { messages: string } };
       toast.error(messages);
     } finally {
-      reset();
+      setError('password', {
+        type: 'manual',
+        message:
+          'The password or email you entered is incorrect. Please try again',
+      });
     }
   };
 
