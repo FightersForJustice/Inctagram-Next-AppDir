@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
-import { toast } from 'react-toastify';
 import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
@@ -21,8 +20,13 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setError,
     reset,
   } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
   });
@@ -33,13 +37,16 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const onSubmit = async (data: IUserLoginRequest) => {
     try {
       await postLogin(data).unwrap();
+      reset();
     } catch (error) {
       const {
         data: { messages },
       } = error as { data: { messages: string } };
-      toast.error(messages);
-    } finally {
-      reset();
+      messages &&
+        setError('password', {
+          type: 'custom',
+          message: 'invalid password or email',
+        });
     }
   };
 
