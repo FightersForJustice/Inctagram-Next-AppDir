@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
-import { toast } from 'react-toastify';
 import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
@@ -21,7 +20,6 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
     setError,
   } = useForm({
     resolver: yupResolver(SignInSchema()),
@@ -35,15 +33,10 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     try {
       await postLogin(data).unwrap();
     } catch (error) {
-      const {
-        data: { messages },
-      } = error as { data: { messages: string } };
-      toast.error(messages);
-    } finally {
+      const message = `${translate('error400')}`;
       setError('password', {
         type: 'manual',
-        message:
-          'The password or email you entered is incorrect. Please try again',
+        message,
       });
     }
   };
