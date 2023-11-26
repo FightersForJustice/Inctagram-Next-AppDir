@@ -244,5 +244,9 @@
       "one": "year ago",
       "other": "years ago"
     }
+  },
+  "Header": {
+    "notifications" : "Notifications",
+    "zeroNotifications" : "You don't have notifications yet"
   }
 }
