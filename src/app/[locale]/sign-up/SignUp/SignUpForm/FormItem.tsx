@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { InputError } from './InputError';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ShowHidePass } from '@/components/ShowHidePass';
+import { usePlaceholder } from '@/utils/usePlaceholder';
 
 export interface FormItemProps {
   marginTop: string;
@@ -50,7 +51,7 @@ export const FormItem: React.FC<FormItemProps> = ({
             error ? 'border-red-700' : ''
           }`}
           id={id}
-          placeholder={placeholder}
+          placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
