@@ -251,7 +251,7 @@
     }
   },
   "Header": {
-    "notifications" : "Уведомления",
-    "zeroNotifications" : "У Вас пока нет уведомлений"
+    "notifications": "Уведомления",
+    "zeroNotifications": "У Вас пока нет уведомлений"
   }
 }
