@@ -23,7 +23,7 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
       }
     >
       <ServiceAuth />
-      <SignUpForm lang={lang} translate={t}/>
+      <SignUpForm lang={lang} translate={t} />
     </div>
   );
 };

@@ -246,7 +246,7 @@
     }
   },
   "Header": {
-    "notifications" : "Notifications",
-    "zeroNotifications" : "You don't have notifications yet"
+    "notifications": "Notifications",
+    "zeroNotifications": "You don't have notifications yet"
   }
 }

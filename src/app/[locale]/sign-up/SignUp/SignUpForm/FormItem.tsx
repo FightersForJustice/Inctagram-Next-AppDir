@@ -38,7 +38,6 @@ export const FormItem: React.FC<FormItemProps> = ({
 }) => {
   const type = showPasswordIcon !== undefined && show;
 
-
   return (
     <div className={`${marginTop} ${marginBottom}`} key={id}>
       <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
@@ -56,11 +55,7 @@ export const FormItem: React.FC<FormItemProps> = ({
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError
-          error={error}
-          errorMessage={errorMessage}
-          id={id}
-        />
+        <InputError error={error} errorMessage={errorMessage} id={id} />
       </div>
     </div>
   );
