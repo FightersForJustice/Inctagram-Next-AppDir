@@ -10,11 +10,11 @@
     "btnBottomName": "Sign In",
     "agreemetsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>",
     "sentEmailConfirm": "We have sent a link to confirm your email to",
-    "nameExist": "User with this name is already registered",
+    "nameExist": "User with this username is already registered",
     "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
-    "title": "Login",
+    "title": "Sign In",
     "email": "Email",
     "password": "Password",
     "forgotPass": "Forgot password?",
@@ -244,5 +244,9 @@
       "one": "year ago",
       "other": "years ago"
     }
+  },
+  "Header": {
+    "notifications" : "Notifications",
+    "zeroNotifications" : "You don't have notifications yet"
   }
 }

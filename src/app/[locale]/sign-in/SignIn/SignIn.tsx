@@ -37,8 +37,9 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const [postLogin, { isLoading }] = usePostLoginMutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
+    const { email, password } = data;
     try {
-      await postLogin(data).unwrap();
+      await postLogin({ email: email.toLowerCase(), password }).unwrap();
       reset();
     } catch (error) {
       const {
@@ -99,7 +100,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
         </Link>
 
         <input
-          type="submit"
+          type='submit'
           className={
             'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
           }
