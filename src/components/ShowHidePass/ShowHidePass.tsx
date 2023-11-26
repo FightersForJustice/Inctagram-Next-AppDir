@@ -18,6 +18,7 @@ export const ShowHidePass: React.FC<Props> = ({ setShow, show }) => {
           className={'absolute top-[3px] right-[24px] cursor-pointer'}
           onClick={() => setShow(!show)}
           id={'sign-up-password-showPassImage-closeAye'}
+          draggable={'false'}
         />
       ) : (
         <Image
@@ -28,6 +29,7 @@ export const ShowHidePass: React.FC<Props> = ({ setShow, show }) => {
           className={'absolute top-[3px] right-[24px] cursor-pointer'}
           onClick={() => setShow(!show)}
           id={'sign-up-password-showPassImage-openAye'}
+          draggable={'false'}
         />
       )}
     </>
