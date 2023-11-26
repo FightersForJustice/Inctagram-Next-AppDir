@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,13 +32,14 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({translate}) => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
   useEffect(() => {
-    isSuccess && setShowModal(true);
-    reset(resetObjSignUpForm);
+    if (isSuccess) {
+      setShowModal(true);
+      reset(resetObjSignUpForm);
+    }
   }, [isSuccess]);
 
     const onSubmit = (data: SubmitProps) => {

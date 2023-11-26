@@ -6,11 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
-import { toast } from 'react-toastify';
 import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { toast } from 'react-toastify';
+import { ServerError } from '@/types/serverResponseTyper';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -21,8 +22,13 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setError,
     reset,
   } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
   });
@@ -31,15 +37,23 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const [postLogin, { isLoading }] = usePostLoginMutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
+    const { email, password } = data;
     try {
-      await postLogin(data).unwrap();
+      await postLogin({ email: email.toLowerCase(), password }).unwrap();
+      reset();
     } catch (error) {
       const {
+        status,
         data: { messages },
-      } = error as { data: { messages: string } };
-      toast.error(messages);
-    } finally {
-      reset();
+      } = error as ServerError;
+      if (status < 500) {
+        setError('password', {
+          type: 'custom',
+          message: String(translate(`error${status}`)),
+        });
+      } else {
+        toast.error(messages);
+      }
     }
   };
 
@@ -86,7 +100,7 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
         </Link>
 
         <input
-          type="submit"
+          type='submit'
           className={
             'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
           }

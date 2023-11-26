@@ -33,12 +33,12 @@ type FormValues = {
 };
 
 export const SettingsForm: React.FC<Props> = ({
-  userProfile,
-  userBirthday,
-  translate,
-  userCity,
-  setUserCity,
-}) => {
+                                                userProfile,
+                                                userBirthday,
+                                                translate,
+                                                userCity,
+                                                setUserCity,
+                                              }) => {
   const [dateOfBirth, setDateOfBirth] = useState(userBirthday);
   const [ageError, setAgeError] = useState('');
 
@@ -51,7 +51,7 @@ export const SettingsForm: React.FC<Props> = ({
     formState: { errors },
     setError,
   } = useForm<FormValues>({
-    // @ts-ignore
+    //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
@@ -61,7 +61,7 @@ export const SettingsForm: React.FC<Props> = ({
     let birthdayDate: Date | string = new Date(
       +parts[2],
       +parts[1] - 1,
-      +parts[0]
+      +parts[0],
     );
 
     const result: PutProfileBody = {
@@ -74,7 +74,7 @@ export const SettingsForm: React.FC<Props> = ({
           ? userBirthday
           : String(birthdayDate)
         : userBirthday,
-      aboutMe: data.aboutMe,
+      aboutMe: data.aboutMe || " ",
     };
 
     updateProfile(result)
@@ -165,7 +165,7 @@ export const SettingsForm: React.FC<Props> = ({
             defaultValue={userProfile?.aboutMe ?? ''}
             id={'settings-profile-aboutMe'}
             {...register('aboutMe', {
-              required: true,
+              required: false,
               minLength: 10,
               maxLength: 100,
             })}
