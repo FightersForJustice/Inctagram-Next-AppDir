@@ -28,8 +28,8 @@ type FormValues = {
   userName: string;
   firstName: string;
   lastName: string;
-  city?: string | null | undefined;
-  aboutMe?: string | null | undefined;
+  city: string | null | undefined;
+  aboutMe: string | null | undefined;
 };
 
 export const SettingsForm: React.FC<Props> = ({
