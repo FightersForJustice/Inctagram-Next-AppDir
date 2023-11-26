@@ -4,7 +4,7 @@ import * as yup from 'yup';
 export const SignInSchema = () => {
   const t = useTranslations('Errors');
 
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
+  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/i;
   const passwordValidationRegex =
     /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]+$/;
 
