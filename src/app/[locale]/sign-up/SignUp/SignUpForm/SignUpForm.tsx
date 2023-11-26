@@ -144,7 +144,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           error={errors.agreements}
           errorMessage={errors?.agreements?.message}
           registerName={'agreements'}
-          id={'sign-up-agreemets'}
+          id={'sign-up-agreements'}
         />
 
         <input

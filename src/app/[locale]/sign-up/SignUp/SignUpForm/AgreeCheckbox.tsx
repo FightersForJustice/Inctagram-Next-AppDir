@@ -31,11 +31,11 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
           />
 
           <p>
-            {translate.rich('agreemetsCheckText', {
+            {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/terms-of-service"
+                  href="./agreements-page/terms-of-service"
                 >
                   {chunks}
                 </Link>
@@ -43,7 +43,7 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
               link2: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/privacy-policy"
+                  href="./agreements-page/privacy-policy"
                 >
                   {chunks}
                 </Link>
