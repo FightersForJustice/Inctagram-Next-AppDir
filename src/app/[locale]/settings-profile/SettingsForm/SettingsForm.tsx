@@ -51,6 +51,7 @@ export const SettingsForm: React.FC<Props> = ({
     formState: { errors },
     setError,
   } = useForm<FormValues>({
+    //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
