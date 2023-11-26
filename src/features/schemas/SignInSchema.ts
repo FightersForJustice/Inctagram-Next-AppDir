@@ -6,7 +6,7 @@ export const SignInSchema = () => {
 
   const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
   const passwordValidationRegex =
-    /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|'“`]+$/;
+    /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|'“`"]+$/;
 
   return yup
     .object({
