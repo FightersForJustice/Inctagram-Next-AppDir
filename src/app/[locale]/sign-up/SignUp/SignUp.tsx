@@ -19,7 +19,7 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
 
   return (
     <div className={s.container}>
-      <ServiceAuth />
+      <ServiceAuth page={'SignUpPage'} />
       <SignUpForm lang={lang} translate={t} />
     </div>
   );

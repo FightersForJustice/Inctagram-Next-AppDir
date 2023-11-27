@@ -12,7 +12,7 @@ const SignInPage = () => {
   return (
     <>
       <div id={'sign-in'} className={s.container}>
-        <ServiceAuth />
+        <ServiceAuth page={'SignInPage'} />
         <SignIn translate={t} />
       </div>
     </>

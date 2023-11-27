@@ -5,9 +5,13 @@ import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import GetService from './GetService';
+import { FC } from 'react';
 
-const ServiceAuth = () => {
-  const t = useTranslations('SignInPage');
+type Props = {
+  page: 'SignInPage' | 'SignUpPage';
+};
+const ServiceAuth: FC<Props> = ({ page }) => {
+  const t = useTranslations(page);
   const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
 
   const gitHubAuth = () => {
