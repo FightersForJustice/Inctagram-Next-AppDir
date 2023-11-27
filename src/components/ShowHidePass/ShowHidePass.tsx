@@ -19,6 +19,7 @@ export const ShowHidePass: FC<Props> = ({ setShow, show }) => {
           className={s.icon}
           onClick={() => setShow(!show)}
           id={'sign-up-password-showPassImage-closeAye'}
+          draggable={'false'}
         />
       ) : (
         <Image
@@ -29,6 +30,7 @@ export const ShowHidePass: FC<Props> = ({ setShow, show }) => {
           className={s.icon}
           onClick={() => setShow(!show)}
           id={'sign-up-password-showPassImage-openAye'}
+          draggable={'false'}
         />
       )}
     </>

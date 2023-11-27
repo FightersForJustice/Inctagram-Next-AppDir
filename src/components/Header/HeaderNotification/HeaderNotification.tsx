@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import s from './HeaderNotification.module.scss';
 import * as Popover from '@radix-ui/react-popover';
+import { useTranslations } from 'next-intl';
 
-export const HeaderNotification = () => {
-  const [amount, setAmount] = useState(3);
+type TProps = {
+  language: string;
+};
+
+export const HeaderNotification: React.FC<TProps> = ({ language }) => {
+  const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
+
+  const t = useTranslations('Header');
 
   const onOpenPopup = () => {
     setShowPopup(!showPopup);
@@ -39,19 +46,13 @@ export const HeaderNotification = () => {
         <Popover.Portal>
           <Popover.Content className="PopoverContent" sideOffset={5}>
             <div className={s.popup}>
-              <h3 className={s.popup__title}>Уведомления</h3>
-              <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div>
+              <h3 className={s.popup__title}> {t('notifications')}</h3>
+              {amount ? (
+                'future notifications'
+              ) : (
+                //left marcup for future
 
-              <div className={s.popup__item}>
+                /* <div className={s.popup__item}>
                 <p className={s.popup__item__title}>
                   Новое уведомление!{' '}
                   <span className={s.popup__item__new}>Новое</span>
@@ -60,51 +61,11 @@ export const HeaderNotification = () => {
                   Следующий платеж у вас спишется через 1 день
                 </p>
                 <p className={s.popup__time}>1 час назад</p>
-              </div>
-
-              <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div>
-
-              <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div>
-
-              <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div>
-
-              <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div>
+              </div> */
+                <div className={s.popup__item}>
+                  <p className={s.popup__desc}>{t('zeroNotifications')}</p>
+                </div>
+              )}
             </div>
           </Popover.Content>
         </Popover.Portal>

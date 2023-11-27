@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 import { BaseLayout } from '@/components/layouts/BaseLayout/BaseLayout';
 
 export const metadata: Metadata = {
-  title: 'Agreemets',
-  description: 'Agreemets',
+  title: 'Agreements',
+  description: 'Agreements',
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {

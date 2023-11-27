@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import s from './agreemets.module.scss';
+import s from './agreements.module.scss';
+import { FC } from 'react';
 
 type Props = {
   title: string;
@@ -7,7 +8,7 @@ type Props = {
   btnName: string;
 };
 
-export const Agreemets: React.FC<Props> = ({ title, text, btnName }) => {
+export const Agreements: FC<Props> = ({ title, text, btnName }) => {
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
