@@ -10,7 +10,7 @@ type TProps = {
 export const HeaderNotification: React.FC<TProps> = ({ language }) => {
   const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
-  
+
   const t = useTranslations('Header');
 
   const onOpenPopup = () => {
