@@ -11,7 +11,7 @@ export const InputError: React.FC<InputErrorProps> = ({
     <>
       {error && (
         <p
-          className={`absolute left-[5%] text-[--danger-500] text-[12px] ${className}`}
+          className={`absolute left-[5%] text-[--danger-500] text-[12px] text-left ${className}`}
           id={id}
         >
           {errorMessage}
