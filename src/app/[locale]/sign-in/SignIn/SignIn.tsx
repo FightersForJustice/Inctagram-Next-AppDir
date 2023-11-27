@@ -11,6 +11,7 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { AuthSubmit } from '@/components/Input';
 import { toast } from 'react-toastify';
 import { ServerError } from '@/types/serverResponseTyper';
 
@@ -97,12 +98,9 @@ export const SignIn: FC<Props> = ({ translate }) => {
         >
           {translate('forgotPass')}
         </Link>
-
-        <input
-          type="submit"
-          className={s.submit}
-          value={String(translate('btnName'))}
+        <AuthSubmit
           id={'sign-in-submit'}
+          value={String(translate('btnName'))}
           disabled={!isValid}
         />
         <p className={s.alreadyHaveText}>{translate('question')}</p>

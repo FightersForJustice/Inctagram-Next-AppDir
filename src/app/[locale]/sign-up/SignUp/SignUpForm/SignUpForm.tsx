@@ -12,6 +12,7 @@ import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
 import { SignUpFormProps, SubmitProps } from './typesSignUp';
+import { AuthSubmit } from '@/components/Input';
 import {
   getSignUpFormItemsData,
   resetObjSignUpForm,
@@ -82,7 +83,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-2 pb-[24px]'}
       >
         {formItemsProps.map((formItem) => (
           <FormItem
@@ -101,13 +101,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
           registerName={'agreements'}
           id={'sign-up-agreements'}
         />
-        <input
-          type="submit"
-          className={
-            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px]' +
-            ' cursor-pointer disabled:bg-[--primary-100] ' +
-            'disabled:text-gray-300 disabled:cursor-not-allowed '
-          }
+        <AuthSubmit
           id={'sign-up-submit'}
           value={String(translate('btnName'))}
           disabled={!isValid}
