@@ -1,0 +1,20 @@
+.form {
+  margin-top: 27px;
+}
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--light-90);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.alreadyHaveText {
+  padding-bottom: 0.75rem;
+}
+
+.signUpBtn {
+  color: var(--primary-500);
+}

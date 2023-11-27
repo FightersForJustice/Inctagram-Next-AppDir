@@ -1,3 +1,4 @@
+import React, { FC } from 'react';
 import Link from 'next/link';
 import { InputError } from './InputError';
 import { AgreeCheckboxProps } from './typesSignUp';
@@ -5,7 +6,7 @@ import { AgreeCheckboxProps } from './typesSignUp';
 const linkStyle =
   'text-blue-500 underline hover:text-blue-700 hover:no-underline';
 
-export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
+export const AgreeCheckbox: FC<AgreeCheckboxProps> = ({
   translate,
   register,
   error,
@@ -20,22 +21,20 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
       }
     >
       <label className={'relative'}>
-        <div
-          className={`text-[12px] pr-[30px] pl-[30px] flex justify-center  items-start`}
-        >
+        <div className={`text-[12px] flex justify-center  items-start`}>
           <input
             type="checkbox"
-            className={`mr-2 accent-white w-[20px] mt-[2px] `}
+            className={`mr-3 accent-white w-[20px] h-[20px]`}
             {...register(registerName)}
             id={id}
           />
 
           <p>
-            {translate.rich('agreemetsCheckText', {
+            {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/terms-of-service"
+                  href="./agreements-page/terms-of-service"
                 >
                   {chunks}
                 </Link>
@@ -43,7 +42,7 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
               link2: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/privacy-policy"
+                  href="./agreements-page/privacy-policy"
                 >
                   {chunks}
                 </Link>
