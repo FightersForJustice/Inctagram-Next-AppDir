@@ -10,6 +10,8 @@ import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
+import { toast } from 'react-toastify';
+import { ServerError } from '@/types/serverResponseTyper';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -21,7 +23,12 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
     handleSubmit,
     formState: { errors, isValid },
     setError,
+    reset,
   } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
   });
@@ -30,14 +37,23 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const [postLogin, { isLoading }] = usePostLoginMutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
+    const { email, password } = data;
     try {
-      await postLogin(data).unwrap();
+      await postLogin({ email: email.toLowerCase(), password }).unwrap();
+      reset();
     } catch (error) {
-      const message = `${translate('error400')}`;
-      setError('password', {
-        type: 'manual',
-        message,
-      });
+      const {
+        status,
+        data: { messages },
+      } = error as ServerError;
+      if (status < 500) {
+        setError('password', {
+          type: 'custom',
+          message: String(translate(`error${status}`)),
+        });
+      } else {
+        toast.error(messages);
+      }
     }
   };
 

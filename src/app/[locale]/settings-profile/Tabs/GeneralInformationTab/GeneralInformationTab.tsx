@@ -7,7 +7,6 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { toast } from 'react-toastify';
 import { useDeleteProfileAvatarMutation, useGetProfileQuery } from '@/api';
 import { Loader } from '@/components/Loader';
-// @ts-ignore
 import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
 

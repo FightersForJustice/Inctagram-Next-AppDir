@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { InputError } from './InputError';
 import { AgreeCheckboxProps } from './typesSignUp';
+import React from 'react';
 
 const linkStyle =
   'text-blue-500 underline hover:text-blue-700 hover:no-underline';
@@ -31,11 +32,11 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
           />
 
           <p>
-            {translate.rich('agreemetsCheckText', {
+            {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/terms-of-service"
+                  href="./agreements-page/terms-of-service"
                 >
                   {chunks}
                 </Link>
@@ -43,7 +44,7 @@ export const AgreeCheckbox: React.FC<AgreeCheckboxProps> = ({
               link2: (chunks: string) => (
                 <Link
                   className={linkStyle}
-                  href="./agreemets-page/privacy-policy"
+                  href="./agreements-page/privacy-policy"
                 >
                   {chunks}
                 </Link>

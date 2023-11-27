@@ -51,7 +51,7 @@ export const SettingsForm: React.FC<Props> = ({
     formState: { errors },
     setError,
   } = useForm<FormValues>({
-    // @ts-ignore
+    //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
@@ -74,7 +74,7 @@ export const SettingsForm: React.FC<Props> = ({
           ? userBirthday
           : String(birthdayDate)
         : userBirthday,
-      aboutMe: data.aboutMe,
+      aboutMe: data.aboutMe || ' ',
     };
 
     updateProfile(result)
@@ -165,7 +165,7 @@ export const SettingsForm: React.FC<Props> = ({
             defaultValue={userProfile?.aboutMe ?? ''}
             id={'settings-profile-aboutMe'}
             {...register('aboutMe', {
-              required: true,
+              required: false,
               minLength: 10,
               maxLength: 100,
             })}
