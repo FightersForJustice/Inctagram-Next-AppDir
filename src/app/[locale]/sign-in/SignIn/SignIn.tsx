@@ -45,11 +45,12 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
       const {
         status,
         data: { messages },
-      } = error as ServerError;
+      } = error as ServerError; 
       if (status < 500) {
+        const message = `${translate(`error${status}`)}`
         setError('password', {
           type: 'custom',
-          message: String(translate(`error${status}`)),
+          message,
         });
       } else {
         toast.error(messages);
