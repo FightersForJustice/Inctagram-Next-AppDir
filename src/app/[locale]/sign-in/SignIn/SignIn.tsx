@@ -37,10 +37,9 @@ export const SignIn: React.FC<Props> = ({ translate }) => {
   const [postLogin, { isLoading }] = usePostLoginMutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
-    const lowercaseEmail = data.email.toLowerCase();
-    const requestData = { ...data, email: lowercaseEmail };
+    const { email, password } = data;
     try {
-      await postLogin(requestData).unwrap();
+      await postLogin({ email: email.toLowerCase(), password }).unwrap();
       reset();
     } catch (error) {
       const {

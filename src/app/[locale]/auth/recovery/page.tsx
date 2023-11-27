@@ -17,7 +17,9 @@ const CreateNewPassword = ({
   const parameters = useSearchParams();
 
   useEffect(() => {
-    sessionStorage.setItem('userEmailRecoveryCode', parameters.get('code')!);
+    const code = sessionStorage.getItem('userEmailRecoveryCode');
+    !code &&
+      sessionStorage.setItem('userEmailRecoveryCode', parameters.get('code')!);
   }, []);
 
   return (
