@@ -99,7 +99,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
           error={errors.agreements}
           errorMessage={errors?.agreements?.message}
           registerName={'agreements'}
-          id={'sign-up-agreemets'}
+          id={'sign-up-agreements'}
         />
         <input
           type="submit"
