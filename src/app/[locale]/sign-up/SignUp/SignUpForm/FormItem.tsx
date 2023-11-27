@@ -1,4 +1,7 @@
 import React, { ReactNode } from 'react';
+import s from './FormItem.module.scss';
+import clsx from 'clsx';
+
 import { InputError } from './InputError';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ShowHidePass } from '@/components/ShowHidePass';
@@ -46,9 +49,7 @@ export const FormItem: React.FC<FormItemProps> = ({
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-            error ? 'border-red-700' : ''
-          }`}
+          className={clsx(s.input, { [s.error]: error })}
           id={id}
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
