@@ -81,9 +81,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         {formItemsProps.map((formItem) => (
           <FormItem
             translate={translate}
