@@ -40,16 +40,17 @@ export const FormItem: React.FC<FormItemProps> = ({
   placeholder,
 }) => {
   const type = showPasswordIcon !== undefined && show;
+  const inputStyle = clsx(s.input, { [s.error]: error });
 
   return (
     <div className={`${marginTop} ${marginBottom}`} key={id}>
-      <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
+      <div className={'text-left text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
       <div className={'relative'}>
         <input
           {...register(registerName)}
-          className={clsx(s.input, { [s.error]: error })}
+          className={inputStyle}
           id={id}
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
