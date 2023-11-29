@@ -96,7 +96,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
           <Image
             src={
               i.images[0]?.url
-                ? currentPosts[currentPosts.length - 1].url
+                ? currentPosts[0].url
                 : '/img/profile/posts/post1.png'
             }
             alt={'post'}
