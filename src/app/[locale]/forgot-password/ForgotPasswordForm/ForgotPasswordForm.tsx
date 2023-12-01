@@ -9,6 +9,7 @@ import { Loader } from '@/components/Loader';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { handleApiError } from '@/utils';
+import { AuthSubmit } from '@/components/Input';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -29,6 +30,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const [userEmail, setUserEmail] = useState('');
   const [recaptcha, setRecaptcha] = useState('');
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
+
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
 
   const [recoveryPassword, { isSuccess, isLoading, error }] =
     usePostPasswordRecoveryMutation();
@@ -84,12 +87,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
             {translate('descAfterSend')}
           </p>
         )}
-
-        <input
-          type="submit"
-          className={
-            'my-[24px] bg-[--primary-500] w-[100%] py-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
-          }
+        <AuthSubmit
           value={`${
             sendLinkAgain
               ? `${translate('btnNameAfterSend')}`
@@ -106,7 +104,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
         </Link>
 
         <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
+          sitekey={siteKey}
           onChange={reCaptchaHandler}
           className={'flex justify-center items-center'}
           theme="dark"

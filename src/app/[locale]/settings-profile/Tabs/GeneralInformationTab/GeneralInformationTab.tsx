@@ -9,8 +9,6 @@ import { useDeleteProfileAvatarMutation, useGetProfileQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
-// unused profile
-import { PutProfileBody } from '@/api/profile.api';
 
 export const GeneralInformationTab: React.FC<Props> = ({
   setShowAddAvatarModal,
@@ -20,7 +18,6 @@ export const GeneralInformationTab: React.FC<Props> = ({
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
-  // unused state?
   const [userBirthday, setUserBirthday] = useState('');
   const [userCity, setUserCity] = useState('');
 
@@ -29,7 +26,6 @@ export const GeneralInformationTab: React.FC<Props> = ({
   useEffect(() => {
     if (data) {
       setLoadedAvatar(data?.avatars[0]?.url);
-
       setUserBirthday(data?.dateOfBirth);
       setUserCity(data?.city);
     }

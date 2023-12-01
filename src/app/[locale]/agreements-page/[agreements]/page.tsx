@@ -1,28 +1,28 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { Agreemets } from './Agreements';
+import { Agreements } from './Agreements';
 
 type Props = {
   params: {
-    agreemets: 'privacy-policy' | 'terms-of-service';
+    agreements: 'privacy-policy' | 'terms-of-service';
   };
 };
 
-const AgreemetsPage = (props: Props) => {
-  const t = useTranslations('AgreemetsPage');
+const AgreementsPage = (props: Props) => {
+  const t = useTranslations('AgreementsPage');
 
-  if (props.params.agreemets === 'privacy-policy') {
+  if (props.params.agreements === 'privacy-policy') {
     return (
-      <Agreemets
+      <Agreements
         text={t('PrivacyPolicy.text')}
         title={t('PrivacyPolicy.title')}
         btnName={t('btnName')}
       />
     );
   }
-  if (props.params.agreemets === 'terms-of-service') {
+  if (props.params.agreements === 'terms-of-service') {
     return (
-      <Agreemets
+      <Agreements
         text={t('TermsOfService.text')}
         title={t('TermsOfService.title')}
         btnName={t('btnName')}
@@ -31,4 +31,4 @@ const AgreemetsPage = (props: Props) => {
   }
 };
 
-export default AgreemetsPage;
+export default AgreementsPage;

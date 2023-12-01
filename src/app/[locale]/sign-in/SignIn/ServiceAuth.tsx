@@ -1,12 +1,17 @@
+import s from './ServiceAuth.module.scss';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useLoginWithGoogleOAuthMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import GetService from './GetService';
+import { FC } from 'react';
 
-const ServiceAuth = () => {
-  const t = useTranslations('SignInPage');
+type Props = {
+  page: 'SignInPage' | 'SignUpPage';
+};
+const ServiceAuth: FC<Props> = ({ page }) => {
+  const t = useTranslations(page);
   const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
 
   const gitHubAuth = () => {
@@ -31,8 +36,8 @@ const ServiceAuth = () => {
   });
   return (
     <>
-      <p className={'font-bold text-xl pt-[23px]'}>{t('title')}</p>
-      <div className={'flex gap-[60px] justify-center mt-[13px]'}>
+      <p className={s.title}>{t('title')}</p>
+      <div className={s.container}>
         <GetService
           onClick={googleLogin}
           img="/img/google.svg"

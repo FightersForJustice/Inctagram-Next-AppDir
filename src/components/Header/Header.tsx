@@ -45,7 +45,7 @@ export const Header = () => {
         </Link>
 
         <div className={'flex justify-center items-center gap-[54px]'}>
-          <HeaderNotification />
+          <HeaderNotification language={language} />
           <TranslationSelect
             language={language}
             onSelectChange={onSelectChange}

@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './SignUp.module.scss';
 import { SignUpForm } from './SignUpForm';
 import { useTranslations } from 'next-intl';
 import ServiceAuth from '../../sign-in/SignIn/ServiceAuth';
@@ -17,12 +18,8 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
   }
 
   return (
-    <div
-      className={
-        'border-solid border-1 border-[--dark-300] bg-[#171717] rounded-md m-auto mt-[100px] max-w-[378px] text-center'
-      }
-    >
-      <ServiceAuth />
+    <div className={s.container}>
+      <ServiceAuth page={'SignUpPage'} />
       <SignUpForm lang={lang} translate={t} />
     </div>
   );

@@ -22,7 +22,11 @@ type Props = {
 export const HomePagePost: React.FC<Props> = ({ post, images }) => {
   const { data } = useGetProfileQuery();
   const language = useGetLanguageFromPath();
-  const test = getTimeAgoText(post.createdAt, language, useTranslations('now'));
+  const test = getTimeAgoText(
+    post.createdAt,
+    language,
+    useTranslations('Time')
+  );
 
   return (
     <div className={s.post}>

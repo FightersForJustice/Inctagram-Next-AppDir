@@ -1,6 +1,7 @@
 import React from 'react';
 import s from '../Tabs.module.scss';
 import * as Tabs from '@radix-ui/react-tabs';
+// @ts-ignore
 import { useTranslations } from 'next-intl';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
@@ -83,11 +84,3 @@ export const DevicesTab = () => {
     </Tabs.Content>
   );
 };
-
-const map = new Map();
-
-map.set({ age: 20, name: 'sam' }, () => {
-  console.log('Sam');
-});
-
-console.log(map);

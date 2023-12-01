@@ -12,14 +12,20 @@ import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
 import { SignUpFormProps, SubmitProps } from './typesSignUp';
+import { AuthSubmit } from '@/components/Input';
+import {
+  getSignUpFormItemsData,
+  resetObjSignUpForm,
+} from '@/utils/data/sign-up-form-items-data';
+import { translateError } from '@/utils/translateErrorSignUpForm';
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
+export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
     setError,
-    reset,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -29,32 +35,16 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const resetObj = {
-    name: '',
-    agreements: false,
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
   useEffect(() => {
-    isSuccess && setShowModal(true);
-    reset(resetObj);
-  }, [isSuccess]);
-
-  const translateError = (err: string) => {
-    switch (err) {
-      case 'User with this userName is already exist':
-        return String(translate('nameExist'));
-      case 'User with this email is already exist':
-        return String(translate('emailExist'));
-      default:
-        break;
+    if (isSuccess) {
+      setShowModal(true);
+      reset(resetObjSignUpForm);
     }
-  };
+  }, [isSuccess]);
 
   const onSubmit = (data: SubmitProps) => {
     try {
@@ -67,7 +57,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
         .catch((err) => {
           if (err?.data?.statusCode === StatusCode.badRequest) {
             setError(err.data.messages[0]?.field, {
-              message: translateError(err.data.messages[0]?.message),
+              message: translateError(err.data.messages[0]?.message, translate),
             });
           } else {
             toast.error(err.error);
@@ -81,62 +71,25 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
     }
   };
 
+  const formItemsProps = getSignUpFormItemsData({
+    errors,
+    showPass,
+    showConfirmPass,
+    setShowPass,
+    setShowConfirmPass,
+  });
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-2 pb-[24px]'}
-      >
-        <FormItem
-          marginTop={'mt-7'}
-          translate={translate}
-          register={register}
-          error={errors.userName}
-          errorMessage={errors?.userName?.message}
-          registerName={'userName'}
-          translateName={'name'}
-          id={'sign-up-userName'}
-        />
-
-        <FormItem
-          marginTop={'mt-[18px]'}
-          translate={translate}
-          register={register}
-          error={errors.email}
-          errorMessage={errors?.email?.message}
-          registerName={'email'}
-          translateName={'email'}
-          id={'sign-up-email'}
-        />
-
-        <FormItem
-          marginTop={'mt-[18px]'}
-          translate={translate}
-          register={register}
-          error={errors.password}
-          errorMessage={errors?.password?.message}
-          registerName={'password'}
-          translateName={'password'}
-          id={'sign-up-password'}
-          show={showPass}
-          setShow={setShowPass}
-          showPasswordIcon={true}
-        />
-
-        <FormItem
-          marginTop={'mt-[18px]'}
-          marginBottom={'mb-[18px]'}
-          translate={translate}
-          register={register}
-          error={errors.passwordConfirm}
-          errorMessage={errors?.passwordConfirm?.message}
-          registerName={'passwordConfirm'}
-          translateName={'passwordConf'}
-          id={'sign-up-passwordConfirm'}
-          show={showConfirmPass}
-          setShow={setShowConfirmPass}
-          showPasswordIcon={true}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {formItemsProps.map((formItem) => (
+          <FormItem
+            translate={translate}
+            register={register}
+            {...formItem}
+            key={formItem.id}
+          />
+        ))}
 
         <AgreeCheckbox
           translate={translate}
@@ -144,14 +97,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ lang, translate }) => {
           error={errors.agreements}
           errorMessage={errors?.agreements?.message}
           registerName={'agreements'}
-          id={'sign-up-agreemets'}
+          id={'sign-up-agreements'}
         />
-
-        <input
-          type="submit"
-          className={
-            'mb-[18px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed '
-          }
+        <AuthSubmit
           id={'sign-up-submit'}
           value={String(translate('btnName'))}
           disabled={!isValid}
