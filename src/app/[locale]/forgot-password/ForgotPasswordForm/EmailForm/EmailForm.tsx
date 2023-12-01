@@ -1,7 +1,8 @@
 import { usePlaceholder } from '@/utils/usePlaceholder';
+import s from './EmailForm.module.scss';
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
-import { FieldError, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -20,23 +21,16 @@ export const EmailForm: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      <div className={' text-left text-[--light-900] text-[14px] font-normal'}>
+      <div className={s.container}>
         <label>{translate('email')}</label>
       </div>
       <div className={'relative'}>
         <input
           {...register(registerName)}
           placeholder={usePlaceholder(registerName)}
-          className={clsx(
-            ' relative bg-transparent border-1 py-[5px] px-[12px] outline-none rounded-md border-[--dark-100] text-[--light-100] w-[100%] mb-[15px]',
-            { 'border-red-700': error }
-          )}
+          className={clsx([s.input], { [s.error]: error })}
         />
-        {error && (
-          <p className={'absolute top-[40px] text-[--danger-500] text-[12px]'}>
-            {errorMessage}
-          </p>
-        )}
+        {error && <p className={s.errorMessage}>{errorMessage}</p>}
       </div>
     </div>
   );

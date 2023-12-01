@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
+import s from './ForgotPasswordForm.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -65,7 +66,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={'my-[24px] mx-5'}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <EmailForm
           translate={translate}
           register={register}
@@ -74,27 +75,21 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
           errorMessage={errors?.email?.message}
         />
 
-        <p className={'pt-2 max-w-[100%] text-left text-[--light-900]'}>
-          {translate('desc')}
-        </p>
+        <p className={s.instruction}>{translate('desc')}</p>
 
         {sendLinkAgain && (
-          <p
-            className={
-              'max-w-[100%] text-left text-[--light-300] my-[20px] text-[15px]'
-            }
-          >
-            {translate('descAfterSend')}
-          </p>
+          <p className={s.sendAgain}>{translate('descAfterSend')}</p>
         )}
-        <AuthSubmit
-          value={`${
-            sendLinkAgain
-              ? `${translate('btnNameAfterSend')}`
-              : `${translate('btnName')}`
-          }`}
-          disabled={!recaptcha || !isValid}
-        />
+        <div className={s.authSubmit}>
+          <AuthSubmit
+            value={`${
+              sendLinkAgain
+                ? `${translate('btnNameAfterSend')}`
+                : `${translate('btnName')}`
+            }`}
+            disabled={!recaptcha || !isValid}
+          />
+        </div>
 
         <Link
           href={'/sign-in'}
