@@ -3,7 +3,6 @@ import s from './SignIn.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
@@ -41,8 +40,7 @@ export const SignIn: FC<Props> = ({ translate }) => {
   const onSubmit = async (data: IUserLoginRequest) => {
     const { email, password } = data;
     try {
-      await postLogin({ email: email.toLowerCase(), password }).unwrap();
-      reset();
+      postLogin(data).unwrap();
     } catch (error) {
       const {
         status,
