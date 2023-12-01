@@ -24,6 +24,9 @@ export const SignUpFormSchema = () => {
         .string()
         .required(t('email.required'))
         .matches(emailValidationRegex, t('email.invalidCharacters'))
+        .test('no-spaces', t('email.spaces'), (value) => {
+          return !/\s/.test(value); // Проверка на отсутствие пробелов в любом месте строки
+        })
         .test('valid-domain', t('email.invalidCharacters'), (value) => {
           const parts = value.split('@');
           if (parts.length === 2) {
@@ -53,9 +56,6 @@ export const SignUpFormSchema = () => {
             firsLastCharEmail.test(value[lastChar - 1]) &&
             firsLastCharEmail.test(value[0])
           );
-        })
-        .test('not-spaces', t('email.spaces'), (value) => {
-          return value.trim() !== '' && !/\s/.test(value);
         }),
       // .email(t("email.email")),
       password: yup
