@@ -40,7 +40,8 @@ export const SignIn: FC<Props> = ({ translate }) => {
   const onSubmit = async (data: IUserLoginRequest) => {
     const { email, password } = data;
     try {
-      postLogin(data).unwrap();
+      await postLogin({ email: email.toLowerCase(), password }).unwrap();
+      reset();
     } catch (error) {
       const {
         status,
