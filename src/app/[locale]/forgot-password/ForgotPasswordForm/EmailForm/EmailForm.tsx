@@ -2,7 +2,7 @@ import { usePlaceholder } from '@/utils/usePlaceholder';
 import s from './EmailForm.module.scss';
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
-import { FieldError, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
   translate: (value: string) => ReactNode;
