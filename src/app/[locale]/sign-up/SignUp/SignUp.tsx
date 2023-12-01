@@ -19,7 +19,9 @@ export const SignUp: React.FC<Props> = ({ lang }) => {
 
   return (
     <div className={s.container}>
-      <ServiceAuth page={'SignUpPage'} />
+      <div className={s.serviceAuth}>
+        <ServiceAuth page={'SignUpPage'} />
+      </div>
       <SignUpForm lang={lang} translate={t} />
     </div>
   );
