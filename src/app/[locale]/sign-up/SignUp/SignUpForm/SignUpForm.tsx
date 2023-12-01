@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
@@ -82,14 +83,16 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {formItemsProps.map((formItem) => (
-          <FormItem
-            translate={translate}
-            register={register}
-            {...formItem}
-            key={formItem.id}
-          />
-        ))}
+        <div className={s.formContainer}>
+          {formItemsProps.map((formItem) => (
+            <FormItem
+              translate={translate}
+              register={register}
+              {...formItem}
+              key={formItem.id}
+            />
+          ))}
+        </div>
 
         <AgreeCheckbox
           translate={translate}
@@ -99,12 +102,14 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
           registerName={'agreements'}
           id={'sign-up-agreements'}
         />
-        <AuthSubmit
-          id={'sign-up-submit'}
-          value={String(translate('btnName'))}
-          disabled={!isValid}
-        />
-        <p className={'pb-5'}>{translate('question')}</p>
+        <div className={s.authSubmit}>
+          <AuthSubmit
+            id={'sign-up-submit'}
+            value={String(translate('btnName'))}
+            disabled={!isValid}
+          />
+        </div>
+        <p className={'pb-[10px]'}>{translate('question')}</p>
         <Link
           href={'/sign-in'}
           className={'text-[--primary-500]'}
