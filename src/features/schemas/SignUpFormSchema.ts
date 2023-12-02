@@ -8,7 +8,8 @@ export const SignUpFormSchema = () => {
   const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
   const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
   const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
-  const emailDomainRegex = /^[A-Za-z0-9-]+$/;
+  const emailDomainRegex = /^[A-Za-z0-9]+$/;
+  const emailDomainNumberRegex = /^[^\d]*$/
   const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
   return yup
@@ -25,7 +26,7 @@ export const SignUpFormSchema = () => {
         .required(t('email.required'))
         .matches(emailValidationRegex, t('email.invalidCharacters'))
         .test('no-spaces', t('email.spaces'), (value) => {
-          return !/\s/.test(value); // Проверка на отсутствие пробелов в любом месте строки
+          return !/\s/.test(value);
         })
         .test('valid-domain', t('email.invalidCharacters'), (value) => {
           const parts = value.split('@');
@@ -33,12 +34,12 @@ export const SignUpFormSchema = () => {
             const [local, fullDomain] = parts;
             const domainParts = fullDomain.split('.');
             if (domainParts.length >= 2) {
-              const subdomain = domainParts
-                .slice(0, domainParts.length - 1)
-                .join('.');
+              const subdomain = domainParts[0];
+              const mainDomain = domainParts[1];
               return (
                 emailDomainRegex.test(subdomain) &&
-                emailDomainRegex.test(domainParts[domainParts.length - 1]) &&
+                emailDomainRegex.test(mainDomain) &&
+                emailDomainNumberRegex.test(mainDomain) &&
                 fullDomain.includes('.') &&
                 !local.includes('..') &&
                 !fullDomain.includes('..') &&
