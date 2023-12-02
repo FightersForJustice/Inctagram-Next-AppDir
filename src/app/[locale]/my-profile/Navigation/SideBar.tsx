@@ -12,6 +12,7 @@ import { GetResponse } from '@/api/profile.api';
 import { usePostLogoutMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { Navigation } from './BarPage';
+import { setAccessToken } from '@/accessToken';
 
 type Props = {
   pathname: string;
@@ -33,6 +34,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
     logout()
       .unwrap()
       .then(() => {
+        setAccessToken('');
         router.push('/sign-in');
         toast.success('Logout success');
       })
