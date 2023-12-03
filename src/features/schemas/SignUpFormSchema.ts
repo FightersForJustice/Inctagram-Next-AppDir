@@ -9,7 +9,7 @@ export const SignUpFormSchema = () => {
   const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
   const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
   const emailDomainRegex = /^[A-Za-z0-9]+$/;
-  const emailDomainNumberRegex = /^[^\d]*$/
+  const emailDomainNumberRegex = /^[^\d]*$/;
   const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
   return yup
