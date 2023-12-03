@@ -54,9 +54,12 @@ export const FourthModal: React.FC<Props> = ({
       })
       .catch(() => {
         toast.error('Error');
+      })
+      .finally(() => {
+        dispatch(postActions.removeAllImages());
+        dispatch(postActions.removeImageIds());
+        dispatch(postActions.removeAllGalleryImages());
       });
-    dispatch(postActions.removeAllGalleryImages);
-    dispatch(postActions.removeImage);
   };
 
   const onDeletePostImage = () => {
