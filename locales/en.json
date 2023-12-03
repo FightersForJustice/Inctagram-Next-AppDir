@@ -125,10 +125,10 @@
     "GeneralInformationTab": {
       "titleTab": "General Information",
       "username": "Username",
-      "firstname": "Firstname",
-      "lastname": "Lastname",
-      "birthday": "Date of birthday",
-      "city": "City",
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "birthday": "Date of Birth",
+      "city": "Enter your city",
       "aboutMe": "About me",
       "addBtn": "Add a profile photo",
       "saveBtn": "Save changes"

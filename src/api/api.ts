@@ -62,7 +62,7 @@ export const baseQueryWithReAuth: BaseQueryFn<
 export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithReAuth,
-  refetchOnMountOrArgChange: true,
+  refetchOnMountOrArgChange: false,
   tagTypes: ['Post'],
   endpoints: () => ({}),
 });
