@@ -67,8 +67,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
       setUserEmail(data.email);
     } catch (error) {
       console.log({ error });
-    } finally {
-      reset();
     }
   };
 
