@@ -1,0 +1,32 @@
+.container {
+  margin-bottom: 18px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.text {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.checkbox {
+  margin-right: 3px;
+  background-color: var(--light-100);
+  min-width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.link {
+  color: var(--primary-300);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--primary-500);
+    text-decoration: none;
+  }
+}

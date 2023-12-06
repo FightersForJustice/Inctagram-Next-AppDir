@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { CreateNewPasswordForm } from './CreateNewPasswordForm';
+import s from './recovery.module.scss';
 
 const CreateNewPassword = ({
   params,
@@ -23,12 +24,8 @@ const CreateNewPassword = ({
   }, []);
 
   return (
-    <div
-      className={
-        'text-xl border-solid border-1 mt-[120px] border-[--dark-300] bg-[--dark-500] rounded-md m-auto max-w-[378px] text-center'
-      }
-    >
-      <p className={'font-bold pt-[23px]'}>{t('title')}</p>
+    <div className={s.container}>
+      <p className={s.title}>{t('title')}</p>
       <CreateNewPasswordForm translate={t} />
     </div>
   );

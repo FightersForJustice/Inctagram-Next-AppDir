@@ -1,0 +1,16 @@
+.container {
+  border: 1px solid var(--dark-300);
+  background-color: var(--dark-500);
+  border-radius: 0.125rem;
+  max-width: 380px;
+  text-align: center;
+  margin: 120px auto auto;
+  padding: 1.57rem 1.3rem 2.1rem 1.3rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.25rem;
+}

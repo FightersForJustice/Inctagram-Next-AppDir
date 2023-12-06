@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
+import s from './CreateNewPasswordForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -12,6 +13,7 @@ import { Loader } from '@/components/Loader/Loader';
 import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { toast } from 'react-toastify';
 import { CreateFormItem } from './CreateFormItem';
+import { AuthSubmit } from '@/components/Input';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -74,9 +76,9 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="pb-[36px]">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <CreateFormItem
-          marginTop={' mt-[18px]'}
+          marginTop={' mt-[36px]'}
           placeholder="Password"
           translate={translate}
           register={register}
@@ -90,8 +92,8 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
 
         <CreateFormItem
           placeholder="Password confirmation"
-          marginTop={'mt-[18px]'}
-          marginBottom={'mb-[26px]'}
+          marginTop={'mt-[28px]'}
+          marginBottom={'mb-[8px]'}
           translate={translate}
           register={register}
           showValue={showConfirmPass}
@@ -102,20 +104,9 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
           registerName={'passwordConfirm'}
         />
 
-        {serverError && <p className={'text-red-500 mb-3.5 '}>{serverError}</p>}
-        <p
-          className={
-            'text-normal text-[14px] text-left leading-5 mx-5 text-[--light-900] mb-[42px]'
-          }
-        >
-          {translate('desc')}
-        </p>
-
-        <input
-          type="submit"
-          className={
-            'w-[90%] text-normal text-[16px] bg-[--primary-500] py-[6px] cursor-pointer disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed'
-          }
+        {serverError && <p className={s.errorMessage}>{serverError}</p>}
+        <p className={s.infoText}>{translate('desc')}</p>
+        <AuthSubmit
           value={String(translate('btnName'))}
           disabled={!!serverError || !isValid}
         />
