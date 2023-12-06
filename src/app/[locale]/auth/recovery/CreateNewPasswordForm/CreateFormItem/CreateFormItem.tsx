@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { ShowHidePass } from '@/components/ShowHidePass';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+import s from './CreateFormItem.module.scss';
+import clsx from 'clsx';
 
 type Props = {
   marginTop: string;
@@ -29,9 +31,10 @@ export const CreateFormItem: React.FC<Props> = ({
   marginTop,
   placeholder,
 }) => {
+  const inputStyle = clsx(s.input, { [s.error]: error });
   return (
     <div className={`${marginTop} ${marginBottom}`}>
-      <div className={'text-left ml-5 text-[--light-900] text-[14px]'}>
+      <div className={s.text}>
         <label>{translate(translateName)}</label>
       </div>
       <div className={'relative'}>
@@ -39,16 +42,10 @@ export const CreateFormItem: React.FC<Props> = ({
           {...register(registerName)}
           placeholder={placeholder}
           type={`${!showValue ? 'text' : 'password'}`}
-          className={`text-[14px] relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-            error ? 'border-red-700' : ''
-          }`}
+          className={inputStyle}
         />
         <ShowHidePass show={showValue} setShow={setShowCallback} />
-        {error && (
-          <p className={'absolute left-[5%] text-[--danger-500] text-[11px]'}>
-            {errorMessage}
-          </p>
-        )}
+        {error && <p className={s.errorMessage}>{errorMessage}</p>}
       </div>
     </div>
   );

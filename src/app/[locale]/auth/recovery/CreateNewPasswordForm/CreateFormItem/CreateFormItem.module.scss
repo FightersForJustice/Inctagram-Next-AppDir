@@ -1,0 +1,27 @@
+.text {
+  text-align: left;
+  margin-left: 5px;
+  color: var(--light-900);
+  font-size: 14px;
+}
+
+.input {
+  background-color: transparent;
+  border-width: 1px;
+  padding: 5px 12px;
+  outline: none;
+  border-radius: 0.125rem;
+  border-color: var(--dark-100);
+  color: var(--light-100);
+  width: 100%;
+}
+
+.error {
+  border-color: var(--danger-500);
+}
+
+.errorMessage {
+  position: absolute;
+  color: var(--danger-500);
+  font-size: 11px;
+}
