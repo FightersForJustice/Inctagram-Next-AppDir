@@ -79,7 +79,7 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CreateFormItem
           marginTop={' mt-[36px]'}
-          placeholder="Password"
+          placeholder="******************"
           translate={translate}
           register={register}
           showValue={showPass}
@@ -91,7 +91,7 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
         />
 
         <CreateFormItem
-          placeholder="Password confirmation"
+          placeholder="******************"
           marginTop={'mt-[28px]'}
           marginBottom={'mb-[8px]'}
           translate={translate}
