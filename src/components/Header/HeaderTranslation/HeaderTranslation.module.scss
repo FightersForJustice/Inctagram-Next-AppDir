@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--dark-100);
+  cursor: pointer;
+  width: 163px;
+  padding: 6px 12px;
+  gap: 12px;
+}
+
+.languagesContainer {
+  justify-content: flex-start;
+  background-color: var(--dark-700);
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.popOver {
+    z-index: 10;
+}
