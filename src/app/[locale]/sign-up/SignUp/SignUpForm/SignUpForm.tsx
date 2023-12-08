@@ -66,7 +66,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
         });
       setUserEmail(data.email);
     } catch (error) {
-      console.log({ error });
+      toast.error({ error }.toString())
     }
   };
 
@@ -100,13 +100,11 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
           registerName={'agreements'}
           id={'sign-up-agreements'}
         />
-        <div className={s.authSubmit}>
           <AuthSubmit
             id={'sign-up-submit'}
             value={String(translate('btnName'))}
             disabled={!isValid}
           />
-        </div>
         <p className={'pb-[10px]'}>{translate('question')}</p>
         <Link
           href={'/sign-in'}

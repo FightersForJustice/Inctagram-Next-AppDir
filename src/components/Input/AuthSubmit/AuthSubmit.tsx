@@ -7,10 +7,11 @@ type Props = {
   disabled: boolean;
 };
 export const AuthSubmit: FC<Props> = ({ id, value, disabled }) => {
+  const finalStyle = id === 'sign-up-submit' ? s.submit + " " + s.signUp : s.submit
   return (
     <input
       type="submit"
-      className={s.submit}
+      className={finalStyle}
       id={id}
       value={value}
       disabled={disabled}
