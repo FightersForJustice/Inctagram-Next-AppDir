@@ -13,10 +13,10 @@ export const LanguagesModal = function ({
   const langHandler = (lang: string) => {
     closeModal();
     if (lang === 'ru') {
-      onSelectChange('en');
-    } else {
-      onSelectChange('ru');
-    }
+      return onSelectChange('en');
+    } 
+    onSelectChange('ru');
+    
   };
   const languageForRender = (lang: string) => {
     return (

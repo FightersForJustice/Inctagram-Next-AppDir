@@ -8,15 +8,15 @@ export const InputError: React.FC<InputErrorProps> = ({
   className,
 }) => {
   return (
-    <>
-      {error && (
-        <p
-          className={`absolute left-[0] text-[--danger-500] text-[12px] text-left ${className}`}
-          id={id}
-        >
-          {errorMessage}
-        </p>
-      )}
-    </>
+    error && (
+      <p
+        className={`absolute left-[0] text-[--danger-500] text-[12px] text-left ${
+          className ? className : ''
+        }`}
+        id={id}
+      >
+        {errorMessage}
+      </p>
+    )
   );
 };

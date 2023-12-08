@@ -21,7 +21,6 @@ export interface FormItemProps {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
-  placeholder?: string;
 }
 
 export const FormItem: React.FC<FormItemProps> = ({
@@ -37,13 +36,20 @@ export const FormItem: React.FC<FormItemProps> = ({
   show,
   setShow,
   showPasswordIcon,
-  placeholder,
 }) => {
   const type = showPasswordIcon !== undefined && show;
   const inputStyle = clsx(s.input, { [s.error]: error });
-
+  const inputTypes: any = {
+    "sign-in-email-input": "username",
+    "sign-up-email": "username",
+    "sign-in-password-input": "current-password",
+    "sign-up-password": "new-password",
+    "sign-up-passwordConfirm": "new-password",
+  }
+  const currentFlex = `${marginTop ? marginTop : ""}${marginBottom ? " " + marginBottom : ""}`
+  
   return (
-    <div className={`${marginTop} ${marginBottom}`} key={id}>
+    <div className={currentFlex} key={id}>
       <div className={'text-left text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>
@@ -54,6 +60,8 @@ export const FormItem: React.FC<FormItemProps> = ({
           id={id}
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
+          autoComplete={inputTypes[id] ?? null}
+
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 

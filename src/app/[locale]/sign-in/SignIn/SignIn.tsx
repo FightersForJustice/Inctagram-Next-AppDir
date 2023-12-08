@@ -75,6 +75,7 @@ export const SignIn: FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
+          
         />
         <FormItem
           marginTop={'mt-[25px]'}
