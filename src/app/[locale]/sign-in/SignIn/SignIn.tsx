@@ -65,9 +65,8 @@ export const SignIn: FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormItem
-          marginTop={'mt-[20px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -78,8 +77,6 @@ export const SignIn: FC<Props> = ({ translate }) => {
           
         />
         <FormItem
-          marginTop={'mt-[25px]'}
-          marginBottom={'mb-[35px]'}
           translate={translate}
           register={register}
           error={errors.password}

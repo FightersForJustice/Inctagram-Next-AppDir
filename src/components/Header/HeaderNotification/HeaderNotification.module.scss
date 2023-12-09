@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .notification {
   position: relative;
   height: 20px;
@@ -93,5 +95,11 @@
   &__time {
     color: var(--light-900);
     font-size: 12px;
+  }
+}
+
+@include s.devices(mobile) {
+  .notification {
+    display: none;
   }
 }

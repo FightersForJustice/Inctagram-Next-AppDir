@@ -8,8 +8,6 @@ import { ShowHidePass } from '@/components/ShowHidePass';
 import { usePlaceholder } from '@/utils/usePlaceholder';
 
 export interface FormItemProps {
-  marginTop: string;
-  marginBottom?: string;
   translate: (value: string) => ReactNode;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
@@ -27,11 +25,9 @@ export const FormItem: React.FC<FormItemProps> = ({
   errorMessage,
   error,
   register,
-  marginTop,
   translate,
   registerName,
   translateName,
-  marginBottom,
   id,
   show,
   setShow,
@@ -46,10 +42,11 @@ export const FormItem: React.FC<FormItemProps> = ({
     "sign-up-password": "new-password",
     "sign-up-passwordConfirm": "new-password",
   }
-  const currentFlex = `${marginTop ? marginTop : ""}${marginBottom ? " " + marginBottom : ""}`
+
+  const finalStyle = id.slice(0, 7) === "sign-in" ? s.signInContainer : s.signInUpContainer
   
   return (
-    <div className={currentFlex} key={id}>
+    <div className={finalStyle} key={id}>
       <div className={'text-left text-[--light-900] text-[14px]'}>
         <label>{translate(translateName)}</label>
       </div>

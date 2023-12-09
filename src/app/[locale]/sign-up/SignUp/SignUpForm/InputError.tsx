@@ -1,16 +1,15 @@
-import React from 'react';
 import { InputErrorProps } from './typesSignUp';
 
-export const InputError: React.FC<InputErrorProps> = ({
+export const InputError = ({
   errorMessage,
   error,
   id,
   className,
-}) => {
+}: InputErrorProps) => {
   return (
     error && (
       <p
-        className={`absolute left-[0] text-[--danger-500] text-[12px] text-left ${
+        className={`relative left-[0] text-[--danger-500] text-[12px] text-left ${
           className ? className : ''
         }`}
         id={id}

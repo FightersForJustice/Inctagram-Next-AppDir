@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -7,6 +9,8 @@
   background-color: var(--dark-700);
   border-bottom: 1px solid var(--dark-300);
   z-index: 10;
+  
+  
 }
 
 .container {
@@ -25,12 +29,19 @@
   font-style: normal;
   font-weight: 600;
   line-height: 36px;
-  color: var(--light-100)
+  color: var(--light-100);
 }
 
 .notificationContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 54px;
 }
+
+@include s.devices(mobile) {
+  .container {
+    padding: 0px 15px;
+  }
+}
+

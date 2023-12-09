@@ -1,20 +1,29 @@
-.form {
-  margin-top: 27px;
-}
+@use '@/app/mixins.scss' as s;
 
 .forgot {
   display: flex;
   justify-content: flex-end;
-  color: var(--light-90);
+  color: var(--light-900);
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5rem;
+  padding-top: 36px;
 }
 
 .alreadyHaveText {
-  padding-bottom: 0.75rem;
+  padding-bottom: 18px;
 }
 
 .signUpBtn {
   color: var(--primary-500);
+}
+
+@include s.devices(mobile) {
+  .forgot {
+    padding-top: 6px;
+  }
+
+  .alreadyHaveText {
+    padding-top: 18px;
+  }
 }
