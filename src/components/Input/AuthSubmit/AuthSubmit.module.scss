@@ -28,12 +28,16 @@
 
 @include s.devices(mobile) {
   .signIn {
-    margin-top: 66px;
+    margin-top: 72px;
     margin-bottom: 0px;
   }
 
   .submit {
     padding: 12px 0px;
+  }
+
+  .errorSubmit {
+    margin-top: 96px;
   }
   
 }

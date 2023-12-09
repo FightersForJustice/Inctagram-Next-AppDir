@@ -1,0 +1,16 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+    display: flex;
+    position: relative;
+    left: 0;
+    color: var(--danger-500);
+    text-align: left;
+    font-size: 12px;
+}
+
+@include s.devices(mobile) {
+    .container {
+        position: absolute;
+    }
+}

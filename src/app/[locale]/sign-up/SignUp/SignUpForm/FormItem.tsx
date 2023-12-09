@@ -58,7 +58,6 @@ export const FormItem: React.FC<FormItemProps> = ({
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
           autoComplete={inputTypes[id] ?? null}
-
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 

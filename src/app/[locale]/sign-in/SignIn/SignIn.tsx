@@ -74,7 +74,6 @@ export const SignIn: FC<Props> = ({ translate }) => {
           registerName={'email'}
           translateName={'email'}
           id={'sign-in-email-input'}
-          
         />
         <FormItem
           translate={translate}
@@ -88,16 +87,19 @@ export const SignIn: FC<Props> = ({ translate }) => {
           show={showPass}
           setShow={setShowPass}
         />
-        <Link
-          href={'/forgot-password'}
-          className={s.forgot}
-          id={'sign-in-link-forgot-password'}
-        >
-          {translate('forgotPass')}
-        </Link>
+        <div className={s.forgot}>
+          <Link
+            href={'/forgot-password'}
+            className={errors.password ? s.password : ""}
+            id={'sign-in-link-forgot-password'}
+          >
+            {translate('forgotPass')}
+          </Link>
+        </div>
         <AuthSubmit
           id={'sign-in-submit'}
           value={String(translate('btnName'))}
+          error={errors.password ? errors.password + "" : ""}
           disabled={!isValid}
         />
         <p className={s.alreadyHaveText}>{translate('question')}</p>
