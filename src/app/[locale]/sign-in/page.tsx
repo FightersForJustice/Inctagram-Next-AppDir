@@ -1,18 +1,20 @@
-import React from 'react';
-import SignInContainer from './Sign-inContainer';
-import { Metadata } from 'next';
-import { Header } from '@/components/Header';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Sign In',
-  description: 'Login page',
-};
+import React from 'react';
+import s from './SignIn.module.scss';
+import { SignIn } from './SignIn';
+import { useTranslations } from 'next-intl';
+import ServiceAuth from './SignIn/ServiceAuth';
 
 const SignInPage = () => {
+  const t = useTranslations('SignInPage');
+
   return (
     <>
-      <Header />
-      <SignInContainer />
+      <div id={'sign-in'} className={s.container}>
+        <ServiceAuth page={'SignInPage'} />
+        <SignIn translate={t} />
+      </div>
     </>
   );
 };

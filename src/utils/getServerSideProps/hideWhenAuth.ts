@@ -8,7 +8,6 @@ type Props = {
 export const hideWhenAuth: GetServerSideProps<Props> = async ({ req }) => {
   try {
     const isAuth = await authAxiosApi.meServer(req as NextApiRequest);
-
     if (isAuth) {
       return {
         redirect: {
@@ -24,6 +23,7 @@ export const hideWhenAuth: GetServerSideProps<Props> = async ({ req }) => {
       },
     };
   } catch (error) {
+    console.log(error);
     console.log('SSR meServer Error hideWhenAuth');
 
     return {
