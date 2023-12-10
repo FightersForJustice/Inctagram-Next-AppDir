@@ -1,10 +1,20 @@
+@use '@/app/mixins.scss' as s;
+
 .mainWrapper {
+  z-index: 11;
   .backLinkWrapper {
     margin-top: 5.25rem;
     margin-left: 5%;
     padding: 5px;
     display: inline-block;
     position: relative;
+   
+
+    .linkRedirect {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+    }
 
     &::after {
       content: '';
@@ -24,7 +34,11 @@
   }
 
   .contentWrapper {
-    padding: 0 10% 50px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10%;
 
     .title {
       margin-top: 15px;
@@ -39,6 +53,27 @@
       font-size: 14px;
       line-height: 24px;
       text-align: center;
+    }
+  }
+}
+
+@include s.devices(mobile) {
+  .btnText {
+    display: none;
+  }
+
+  .mainWrapper {
+    .backLinkWrapper {
+      margin-top: 5.5rem;
+    }
+    .contentWrapper {
+      // position: relative;
+      padding: 0 5%;
+      margin-top: -52px;
+      // z-index: 12;
+      .title {
+        max-width: 300px;
+      }
     }
   }
 }

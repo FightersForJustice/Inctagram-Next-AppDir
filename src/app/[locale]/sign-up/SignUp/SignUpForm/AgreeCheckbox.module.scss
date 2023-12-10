@@ -1,6 +1,8 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
   display: flex;
-  padding: 24px 0px;
+  padding: 36px 0px 12px 0px;
   justify-content: flex-start;
 }
 
@@ -9,10 +11,14 @@
 }
 
 .text {
-  font-size: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
   text-align: left;
   gap: 6px;
   svg {
@@ -32,5 +38,11 @@
   &:hover {
     color: var(--primary-500);
     text-decoration: none;
+  }
+}
+
+@include s.devices(mobile) {
+  .container {
+    padding: 12px 0px 24px 0px;
   }
 }

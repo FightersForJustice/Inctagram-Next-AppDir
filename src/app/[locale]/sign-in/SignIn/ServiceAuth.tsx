@@ -5,12 +5,11 @@ import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import GetService from './GetService';
-import { FC } from 'react';
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
 };
-const ServiceAuth: FC<Props> = ({ page }) => {
+const ServiceAuth = ({ page }: Props) => {
   const t = useTranslations(page);
   const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
 

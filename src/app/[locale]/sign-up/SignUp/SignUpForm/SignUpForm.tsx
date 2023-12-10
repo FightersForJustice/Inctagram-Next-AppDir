@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,8 +19,9 @@ import {
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
+import ServiceAuth from '@/app/[locale]/sign-in/SignIn/ServiceAuth';
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
+export const SignUpForm = ({ translate }: SignUpFormProps) => {
   const {
     register,
     handleSubmit,
@@ -66,7 +67,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
         });
       setUserEmail(data.email);
     } catch (error) {
-      toast.error({ error }.toString())
+      toast.error({ error }.toString());
     }
   };
 
@@ -80,6 +81,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
 
   return (
     <>
+      <div>
+        <ServiceAuth page={'SignUpPage'} />
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.formContainer}>
           {formItemsProps.map((formItem) => (
@@ -100,15 +104,15 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
           registerName={'agreements'}
           id={'sign-up-agreements'}
         />
-          <AuthSubmit
-            id={'sign-up-submit'}
-            value={String(translate('btnName'))}
-            disabled={!isValid}
-          />
-        <p className={'pb-[10px]'}>{translate('question')}</p>
+        <AuthSubmit
+          id={'sign-up-submit'}
+          value={String(translate('btnName'))}
+          disabled={!isValid}
+        />
+        <p className={s.questionContainer}>{translate('question')}</p>
         <Link
           href={'/sign-in'}
-          className={'text-[--primary-500]'}
+          className={s.redirectSignIn}
           id={'sign-up-link-to-sign-in'}
         >
           {translate('btnBottomName')}

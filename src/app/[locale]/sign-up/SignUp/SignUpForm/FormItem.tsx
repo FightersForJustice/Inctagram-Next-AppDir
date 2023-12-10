@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import s from './FormItem.module.scss';
 import clsx from 'clsx';
 
@@ -21,7 +21,7 @@ export interface FormItemProps {
   isTouched?: boolean;
 }
 
-export const FormItem: React.FC<FormItemProps> = ({
+export const FormItem = ({
   errorMessage,
   error,
   register,
@@ -32,19 +32,20 @@ export const FormItem: React.FC<FormItemProps> = ({
   show,
   setShow,
   showPasswordIcon,
-}) => {
+}: FormItemProps) => {
   const type = showPasswordIcon !== undefined && show;
   const inputStyle = clsx(s.input, { [s.error]: error });
   const inputTypes: any = {
-    "sign-in-email-input": "username",
-    "sign-up-email": "username",
-    "sign-in-password-input": "current-password",
-    "sign-up-password": "new-password",
-    "sign-up-passwordConfirm": "new-password",
-  }
+    'sign-in-email-input': 'username',
+    'sign-up-email': 'username',
+    'sign-in-password-input': 'current-password',
+    'sign-up-password': 'new-password',
+    'sign-up-passwordConfirm': 'new-password',
+  };
 
-  const finalStyle = id.slice(0, 7) === "sign-in" ? s.signInContainer : s.signInUpContainer
-  
+  const finalStyle =
+    id.slice(0, 7) === 'sign-in' ? s.signInContainer : s.signInUpContainer;
+
   return (
     <div className={finalStyle} key={id}>
       <div className={'text-left text-[--light-900] text-[14px]'}>

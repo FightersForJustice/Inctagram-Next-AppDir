@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -17,9 +16,7 @@ const EmailVerification = () => {
         <p className={'max-w-[300px] text-center mb-[54px]'}>{t('desc')}</p>
         <Link
           href={'/sign-in'}
-          className={
-            'bg-[--primary-500] rounded-s pt-[6px] pr-[34px] pb-[6px] pl-[34px] mb-[72px]'
-          }
+          className={'bg-[--primary-500] rounded-sm py-[6px] px-[34px] mb-[72px]'}
         >
           {t('btnName')}
         </Link>

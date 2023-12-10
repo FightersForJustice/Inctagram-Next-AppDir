@@ -1,5 +1,5 @@
 import { InputErrorProps } from './typesSignUp';
-import s from './InputError.module.scss'
+import s from './InputError.module.scss';
 
 export const InputError = ({
   errorMessage,
@@ -9,13 +9,7 @@ export const InputError = ({
 }: InputErrorProps) => {
   return (
     error && (
-      <p
-        // className={`relative left-[0] text-[--danger-500] text-[12px] text-left ${
-        className={`${s.container} ${
-          className ? className : ''
-        }`}
-        id={id}
-      >
+      <p className={`${s.container} ${className ? className : ''}`} id={id}>
         {errorMessage}
       </p>
     )

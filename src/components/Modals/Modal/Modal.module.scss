@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .modal {
   position: fixed;
   top: 0;
@@ -12,9 +14,9 @@
 }
 
 .modal__content {
-  width: 400px;
+  max-width: 378px;
   background-color: var(--dark-300);
-  border-radius: 5px;
+  border-radius: 0.125rem;
   border: 1px solid var(--dark-100);
 }
 
@@ -23,15 +25,11 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--dark-100);
-}
-
-.modal__header,
-modal__footer {
-  padding: 12px;
+  padding: 12px 24px;
 }
 
 .modal__body {
-  padding: 20px;
+  padding: 30px 24px 18px 24px;
   text-align: left;
   font-size: 16px;
   line-height: 24px;
@@ -40,7 +38,7 @@ modal__footer {
 .modal__footer {
   display: flex;
   justify-content: flex-end;
-  padding-right: 12px;
+  padding: 0px 24px;
 }
 
 .modal__close {
@@ -59,3 +57,27 @@ modal__footer {
   font-weight: 700;
   line-height: 36px;
 }
+
+@include s.devices(mobile) {
+  .modal__content {
+    max-width: 330px;
+  }
+  .modal__header {
+    padding: 12px;
+  }
+  .modal__btn {
+    width: 100%;
+    padding: 12px 0px;
+    margin-bottom: 36px;
+  }
+  .modal__body {
+    padding: 30px 12px 18px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal__footer {
+    padding: 0px 12px;
+  }
+}
+

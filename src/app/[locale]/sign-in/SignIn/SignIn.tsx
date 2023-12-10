@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import s from './SignIn.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,7 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const SignIn: FC<Props> = ({ translate }) => {
+export const SignIn = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
@@ -90,7 +90,7 @@ export const SignIn: FC<Props> = ({ translate }) => {
         <div className={s.forgot}>
           <Link
             href={'/forgot-password'}
-            className={errors.password ? s.password : ""}
+            className={errors.password ? s.password : ''}
             id={'sign-in-link-forgot-password'}
           >
             {translate('forgotPass')}
@@ -99,7 +99,7 @@ export const SignIn: FC<Props> = ({ translate }) => {
         <AuthSubmit
           id={'sign-in-submit'}
           value={String(translate('btnName'))}
-          error={errors.password ? errors.password + "" : ""}
+          error={errors.password ? errors.password + '' : ''}
           disabled={!isValid}
         />
         <p className={s.alreadyHaveText}>{translate('question')}</p>
