@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import s from './SignUp.module.scss';
 import { SignUpForm } from './SignUpForm';
 import { useTranslations } from 'next-intl';
@@ -10,7 +10,7 @@ type Props = {
   lang: 'en' | 'ru';
 };
 
-export const SignUp: React.FC<Props> = ({ lang }) => {
+export const SignUp: FC<Props> = ({ lang }) => {
   const t = useTranslations('SignUpPage');
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   if (isAuth) {

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 import { Metadata } from 'next';
 

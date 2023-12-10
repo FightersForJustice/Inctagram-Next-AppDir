@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode, FC } from 'react';
 import s from './FormItem.module.scss';
 import clsx from 'clsx';
 
@@ -24,7 +24,7 @@ export interface FormItemProps {
   placeholder?: string;
 }
 
-export const FormItem: React.FC<FormItemProps> = ({
+export const FormItem: FC<FormItemProps> = ({
   errorMessage,
   error,
   register,
