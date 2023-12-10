@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import { FC } from 'react';
 import { Modal } from '@/components/Modals/Modal';
 import { EmailSentModalProps } from './typesSignUp';
 

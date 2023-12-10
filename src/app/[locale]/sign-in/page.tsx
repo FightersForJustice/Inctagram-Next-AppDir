@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import s from './SignIn.module.scss';
 import { SignIn } from './SignIn';
 import { useTranslations } from 'next-intl';
