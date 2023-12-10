@@ -56,7 +56,7 @@ export const getSignUpFormItemsData = ({
 };
 
 export const resetObjSignUpForm = {
-  name: '',
+  userName: '',
   agreements: false,
   email: '',
   password: '',

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +20,7 @@ import {
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ translate }) => {
+export const SignUpForm: FC<SignUpFormProps> = ({ translate }) => {
   const {
     register,
     handleSubmit,

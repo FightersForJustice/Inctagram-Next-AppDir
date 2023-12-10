@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import { InputErrorProps } from './typesSignUp';
 
-export const InputError: React.FC<InputErrorProps> = ({
+export const InputError: FC<InputErrorProps> = ({
   errorMessage,
   error,
   id,

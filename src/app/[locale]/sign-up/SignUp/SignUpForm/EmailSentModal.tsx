@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { Modal } from '@/components/Modals/Modal';
 import { EmailSentModalProps } from './typesSignUp';
 
-export const EmailSentModal: React.FC<EmailSentModalProps> = ({
+export const EmailSentModal: FC<EmailSentModalProps> = ({
   userEmail,
   setShowModal,
   translate,
