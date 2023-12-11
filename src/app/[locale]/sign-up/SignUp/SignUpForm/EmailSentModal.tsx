@@ -11,7 +11,7 @@ export const EmailSentModal = ({
     <Modal
       title={'Email sent'}
       onClose={() => setShowModal(false)}
-      isOkBtn={true}
+      isOkBtn
     >
       <p className={s.container}>
         {translate}{' '}

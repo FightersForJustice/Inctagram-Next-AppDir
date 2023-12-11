@@ -15,7 +15,7 @@ export const AgreeCheckbox = ({
   const [agree, setAgree] = useState(false);
   return (
     <div className={s.container}>
-      <label htmlFor={id} className={'relative'}>
+      <label htmlFor={id} className={s.checkBoxContainer}>
         <div className={s.text}>
           <input
             type="checkbox"

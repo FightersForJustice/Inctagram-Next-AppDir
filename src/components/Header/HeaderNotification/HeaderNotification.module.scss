@@ -98,7 +98,15 @@
   }
 }
 
+@include s.devices(tablet) {
+  .popup {
+    right: -175px;
+  }
+}
 @include s.devices(mobile) {
+  .popup {
+    display: none;
+  }
   .notification {
     display: none;
   }

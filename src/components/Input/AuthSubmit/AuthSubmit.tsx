@@ -6,8 +6,15 @@ type Props = {
   value: string;
   disabled: boolean;
   error?: string;
+  sendLinkAgain?: boolean;
 };
-export const AuthSubmit = ({ id, value, disabled, error }: Props) => {
+export const AuthSubmit = ({
+  id,
+  value,
+  disabled,
+  error,
+  sendLinkAgain,
+}: Props) => {
   const submitType: any = {
     'sign-up-submit': s.signUp,
     'sign-in-submit': s.signIn,
@@ -16,7 +23,8 @@ export const AuthSubmit = ({ id, value, disabled, error }: Props) => {
   const inputStyle = clsx(
     s.submit,
     { [submitType[id ? id : '']]: id },
-    { [s.errorSubmit]: error }
+    { [s.errorSubmit]: error },
+    { [s.errorSendLink]: sendLinkAgain }
   );
 
   return (

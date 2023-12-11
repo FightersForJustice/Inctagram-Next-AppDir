@@ -1,16 +1,22 @@
-@use '@/app/mixins.scss' as s;
-
 .container {
-    display: flex;
-    position: relative;
-    left: 0;
-    color: var(--danger-500);
-    text-align: left;
-    font-size: 12px;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 100%;
+  color: var(--danger-500);
+  text-align: left;
+
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
-@include s.devices(mobile) {
-    .container {
-        position: absolute;
-    }
+.containerSignUp {
+  position: relative;
+}
+
+.containerSignUpCheckbox {
+  position: static;
 }

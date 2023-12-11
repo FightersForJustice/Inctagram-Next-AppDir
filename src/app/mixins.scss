@@ -2,13 +2,19 @@
   //the name of the mixin is devices
 
   @if $breakpoint == tablet {
-    @media screen and (max-width: 680px) {
+    @media screen and (max-width: 780px) {
       @content;
     }
   }
 
   @if $breakpoint == mobile {
     @media screen and (max-width: 521px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == mobile-sm {
+    @media screen and (max-width: 420px) {
       @content;
     }
   }

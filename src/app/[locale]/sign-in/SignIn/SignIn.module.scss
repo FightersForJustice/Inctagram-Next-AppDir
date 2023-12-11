@@ -17,6 +17,7 @@
 
 .signUpBtn {
   color: var(--primary-500);
+  font-weight: 600;
 }
 
 @include s.devices(mobile) {
@@ -32,8 +33,6 @@
 
   .password {
     position: absolute;
-    // position: relative;
-    // right: 0px;
     margin-top: 42px;
   }
 }
