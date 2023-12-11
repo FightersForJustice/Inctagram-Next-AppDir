@@ -1,1 +1,0 @@
-export { ThisDevice } from './ThisDevice';

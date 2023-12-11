@@ -1,1 +1,0 @@
-export { ProfileWrapper } from './ProfileWrapper';

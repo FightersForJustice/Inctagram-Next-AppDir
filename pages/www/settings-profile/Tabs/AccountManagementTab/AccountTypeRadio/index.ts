@@ -1,1 +1,0 @@
-export { AccountTypeRadio } from './AccountTypeRadio';

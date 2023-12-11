@@ -1,1 +1,0 @@
-export { DevicesTab } from './DevicesTab';

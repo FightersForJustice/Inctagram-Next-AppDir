@@ -1,1 +1,0 @@
-export { SecondModal } from './SecondModal';

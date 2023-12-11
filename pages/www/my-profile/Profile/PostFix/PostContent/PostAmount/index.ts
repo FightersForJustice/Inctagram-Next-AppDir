@@ -1,1 +1,0 @@
-export { PostAmount } from './PostAmount';

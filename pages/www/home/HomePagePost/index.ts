@@ -1,1 +1,0 @@
-export { HomePagePost } from './HomePagePost';
