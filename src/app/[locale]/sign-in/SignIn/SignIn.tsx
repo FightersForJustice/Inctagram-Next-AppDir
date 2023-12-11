@@ -13,6 +13,7 @@ import { IUserLoginRequest } from '@/types/userTypes';
 import { AuthSubmit } from '@/components/Input';
 import { toast } from 'react-toastify';
 import { ServerError } from '@/types/serverResponseTyper';
+import { useLogin2Mutation } from '@/api/api.next';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -35,14 +36,20 @@ export const SignIn: FC<Props> = ({ translate }) => {
   });
   const [showPass, setShowPass] = useState(true);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const [postLogin, { isLoading }] = usePostLoginMutation();
+  const [postLogin, { isLoading }] = useLogin2Mutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
     const { email, password } = data;
     try {
-      await postLogin({ email: email.toLowerCase(), password }).unwrap();
+      await postLogin({ email: email.toLowerCase(), password })
+        .unwrap()
+        .then((data) => {
+          document.cookie = `accessToken=${data.accessToken}; Max-Age=86400; path=/`;
+          document.cookie = `refreshToken=${data.refreshToken}; Max-Age=86400; path=/`;
+        });
       reset();
     } catch (error) {
+      console.log(error);
       const {
         status,
         data: { messages },
