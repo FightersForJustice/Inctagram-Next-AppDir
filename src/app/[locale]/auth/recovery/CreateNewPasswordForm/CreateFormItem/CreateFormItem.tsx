@@ -27,8 +27,12 @@ export const CreateFormItem = ({
   showValue,
 }: Props) => {
   const inputStyle = clsx(s.input, { [s.error]: error });
-  const containerStyle = clsx(s.container, { [s.containerTop]: translateName === "password" });
-  const errorStyle = clsx(s.errorMessage, { [s.errorMessagePassword]: translateName === "password" });
+  const containerStyle = clsx(s.container, {
+    [s.containerTop]: translateName === 'password',
+  });
+  const errorStyle = clsx(s.errorMessage, {
+    [s.errorMessagePassword]: translateName === 'password',
+  });
   return (
     <div className={containerStyle}>
       <div className={s.text}>

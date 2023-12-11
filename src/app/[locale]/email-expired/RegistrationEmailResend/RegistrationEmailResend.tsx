@@ -48,11 +48,7 @@ export const RegistrationEmailResend = ({ translate }: Props) => {
         />
       </div>
       {showModal && (
-        <Modal
-          title={'Email sent'}
-          onClose={() => setShowModal(false)}
-          isOkBtn
-        >
+        <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
           <p className={f.container}>
             We have sent a link to confirm your email to{' '}
             <span>{userEmail}</span>

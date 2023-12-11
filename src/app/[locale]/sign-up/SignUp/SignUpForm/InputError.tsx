@@ -6,12 +6,10 @@ export const InputError = ({ errorMessage, error, id }: InputErrorProps) => {
   const signUpStyle = clsx(
     s.container,
     {
-      [s.containerSignUp]:
-        id === 'sign-up-passwordConfirm',
+      [s.containerSignUp]: id === 'sign-up-passwordConfirm',
     },
     {
-      [s.containerSignUpCheckbox]:
-        id === 'sign-up-agreements',
+      [s.containerSignUpCheckbox]: id === 'sign-up-agreements',
     }
   );
   return (

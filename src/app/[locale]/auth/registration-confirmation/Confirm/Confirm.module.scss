@@ -34,20 +34,19 @@
 }
 
 @include s.devices(mobile) {
-    .container {
-      margin-top: 77px;
-      padding: 0px 12px;
-    }
+  .container {
+    margin-top: 77px;
+    padding: 0px 12px;
+  }
 
-    .confirmationText {
-        margin-bottom: 65px;
-    }
+  .confirmationText {
+    margin-bottom: 65px;
+  }
 
-    .resendLink {
-        margin-top: 45px;
-        padding: 12px 34px;
-        max-width: 330px;
-        order: 8;
-    }
+  .resendLink {
+    margin-top: 45px;
+    padding: 12px 34px;
+    max-width: 330px;
+    order: 8;
+  }
 }
-

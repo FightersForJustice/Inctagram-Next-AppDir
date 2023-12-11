@@ -8,16 +8,10 @@ export const EmailSentModal = ({
   translate,
 }: EmailSentModalProps) => {
   return (
-    <Modal
-      title={'Email sent'}
-      onClose={() => setShowModal(false)}
-      isOkBtn
-    >
+    <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
       <p className={s.container}>
         {translate}{' '}
-        <span id={'sign-up-modalSuccess-userEmail'}>
-          {userEmail}
-        </span>
+        <span id={'sign-up-modalSuccess-userEmail'}>{userEmail}</span>
       </p>
     </Modal>
   );

@@ -9,12 +9,10 @@ const SignInPage = () => {
   const t = useTranslations('SignInPage');
 
   return (
-    <>
-      <div id={'sign-in'} className={s.container}>
-        <ServiceAuth page={'SignInPage'} />
-        <SignIn translate={t} />
-      </div>
-    </>
+    <div id={'sign-in'} className={s.container}>
+      <ServiceAuth page={'SignInPage'} />
+      <SignIn translate={t} />
+    </div>
   );
 };
 

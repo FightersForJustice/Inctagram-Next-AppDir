@@ -7,7 +7,7 @@ type Props = {
   btnName: string;
 };
 
-export const Agreements = ({ title, text, btnName } : Props) => {
+export const Agreements = ({ title, text, btnName }: Props) => {
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
