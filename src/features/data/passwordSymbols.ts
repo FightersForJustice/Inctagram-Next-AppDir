@@ -1,1 +1,2 @@
-export const dictionary = "! \" # $ % & ' ( ) * + , - . \/ : ; < = > ? @ [ \\ ] ^ _` { | } ~"
+export const dictionary =
+  '! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~';
