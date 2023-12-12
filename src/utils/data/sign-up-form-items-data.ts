@@ -14,7 +14,6 @@ export const getSignUpFormItemsData = ({
 }) => {
   return [
     {
-      marginTop: 'mt-[10px]',
       error: errors.userName,
       errorMessage: errors?.userName?.message,
       registerName: 'userName',
@@ -22,7 +21,6 @@ export const getSignUpFormItemsData = ({
       id: 'sign-up-userName',
     },
     {
-      marginTop: '',
       error: errors.email,
       errorMessage: errors?.email?.message,
       registerName: 'email',
@@ -30,7 +28,6 @@ export const getSignUpFormItemsData = ({
       id: 'sign-up-email',
     },
     {
-      marginTop: '',
       error: errors.password,
       errorMessage: errors?.password?.message,
       registerName: 'password',
@@ -41,8 +38,6 @@ export const getSignUpFormItemsData = ({
       showPasswordIcon: true,
     },
     {
-      marginTop: '',
-      marginBottom: 'mb-[18px]',
       error: errors.passwordConfirm,
       errorMessage: errors?.passwordConfirm?.message,
       registerName: 'passwordConfirm',

@@ -48,7 +48,7 @@ export const FormItem = ({
 
   return (
     <div className={finalStyle} key={id}>
-      <div className={'text-left text-[--light-900] text-[14px]'}>
+      <div className={s.labelContainer}>
         <label>{translate(translateName)}</label>
       </div>
       <div className={s.inputContainer}>
