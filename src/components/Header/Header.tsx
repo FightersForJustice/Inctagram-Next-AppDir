@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next-intl/client';
 
@@ -8,6 +8,7 @@ import { HeaderNotification } from '@/components/Header/HeaderNotification';
 
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
 import { useRouter } from 'next/navigation';
+import s from './Header.module.scss';
 
 export const Header = () => {
   const [isPending, startTransition] = useTransition();
@@ -27,24 +28,13 @@ export const Header = () => {
     });
   };
   return (
-    <header
-      className={
-        'border-b-1 bg-[--dark-700] border-[--dark-300] fixed w-[100%] z-10'
-      }
-    >
-      <div
-        className={
-          'max-w-[1280px] px-[60px] m-auto h-[60px] flex items-center justify-between'
-        }
-      >
-        <Link
-          href={'/my-profile'}
-          className={'text-[26px] font-semibold leading-[36px]'}
-        >
+    <header className={s.wrapper}>
+      <div className={s.container}>
+        <Link href={'/my-profile'} className={s.logo}>
           Inctagram
         </Link>
 
-        <div className={'flex justify-center items-center gap-[54px]'}>
+        <div className={s.notificationContainer}>
           <HeaderNotification language={language} />
           <TranslationSelect
             language={language}

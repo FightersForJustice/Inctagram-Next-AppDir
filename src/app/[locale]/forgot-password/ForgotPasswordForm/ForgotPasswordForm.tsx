@@ -1,5 +1,6 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import s from './ForgotPasswordForm.module.scss';
+import f from './EmailSentModal.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +17,7 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
+export const ForgotPasswordForm = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
@@ -66,7 +67,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.formContainer}>
         <EmailForm
           translate={translate}
           register={register}
@@ -88,31 +89,28 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
                 : `${translate('btnName')}`
             }`}
             disabled={!recaptcha || !isValid}
+            sendLinkAgain={sendLinkAgain}
           />
         </div>
 
-        <Link
-          href={'/sign-in'}
-          className={'font-medium text-[--primary-500] block mb-[30px]'}
-        >
+        <Link href={'/sign-in'} className={s.forgotRedirect}>
           {translate('linkName')}
         </Link>
 
-        <ReCAPTCHA
-          sitekey={siteKey}
-          onChange={reCaptchaHandler}
-          className={'flex justify-center items-center'}
-          theme="dark"
-        />
+        {!sendLinkAgain && (
+          <ReCAPTCHA
+            sitekey={siteKey}
+            onChange={reCaptchaHandler}
+            className={s.recaptchaContainer}
+            theme="dark"
+          />
+        )}
       </form>
       {showModal && (
-        <Modal
-          title={'Email sent'}
-          onClose={() => setShowModal(false)}
-          isOkBtn={true}
-        >
-          {translate('modal')}{' '}
-          <span className={'text-blue-300'}>{userEmail}</span>
+        <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
+          <p className={f.container}>
+            {translate('modal')} <span>{userEmail}</span>
+          </p>
         </Modal>
       )}
       {isLoading && <Loader />}

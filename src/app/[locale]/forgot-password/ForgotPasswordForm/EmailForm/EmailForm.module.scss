@@ -15,6 +15,12 @@
   width: 100%;
 }
 
+.inputContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
 .error {
   border-color: var(--danger-500);
 }

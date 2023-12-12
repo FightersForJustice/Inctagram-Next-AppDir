@@ -1,14 +1,29 @@
 .input {
   background-color: transparent;
-  border-width: 1px;
+  border: 1px solid var(--dark-100);
   padding: 5px 12px;
   outline: none;
   border-radius: 0.125rem;
-  border-color: var(--dark-100);
   color: var(--light-100);
   width: 100%;
 }
 
 .error {
   border-color: var(--danger-500);
+}
+
+.labelContainer {
+  text-align: left;
+  color: var(--light-900);
+  font-size: 14px;
+}
+
+.signInContainer {
+  padding-top: 27px;
+}
+
+.inputContainer {
+  display: flex;
+  position: relative;
+  flex-direction: column;
 }

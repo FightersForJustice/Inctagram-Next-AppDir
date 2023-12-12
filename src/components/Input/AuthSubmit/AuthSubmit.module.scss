@@ -1,9 +1,10 @@
+@use '@/app/mixins.scss' as s;
+
 .submit {
   margin-bottom: 18px;
   background-color: var(--primary-500);
   width: 100%;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding: 6px 0px;
   cursor: pointer;
   margin-top: 24px;
 
@@ -11,5 +12,35 @@
     background-color: var(--primary-100);
     color: var(--light-300);
     cursor: not-allowed;
+  }
+}
+
+.signUp {
+  margin: 0px;
+  margin-bottom: 18px;
+}
+
+.signIn {
+  margin: 0px;
+  margin-bottom: 18px;
+  margin-top: 24px;
+}
+
+@include s.devices(mobile) {
+  .signIn {
+    margin-top: 72px;
+    margin-bottom: 0px;
+  }
+
+  .submit {
+    padding: 12px 0px;
+  }
+
+  .errorSubmit {
+    margin-top: 96px;
+  }
+
+  .errorSendLink {
+    margin-top: 3px;
   }
 }

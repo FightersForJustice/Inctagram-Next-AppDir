@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import s from './agreements.module.scss';
-import { FC } from 'react';
 
 type Props = {
   title: string;
@@ -8,11 +7,11 @@ type Props = {
   btnName: string;
 };
 
-export const Agreements: FC<Props> = ({ title, text, btnName }) => {
+export const Agreements = ({ title, text, btnName }: Props) => {
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
-        <Link href={'../sign-up'} className={'cursor-pointer flex gap-[15px]'}>
+        <Link href={'../sign-up'} className={s.linkRedirect}>
           <div>
             <svg
               width="24"

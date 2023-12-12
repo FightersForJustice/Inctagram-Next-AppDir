@@ -1,24 +1,39 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
-  margin-bottom: 18px;
-  padding-top: 16px;
-  padding-bottom: 6px;
   display: flex;
-  justify-content: center;
+  padding: 12px 0;
+  justify-content: flex-start;
+}
+
+.checkBoxContainer {
+  position: relative;
+}
+
+.container label {
+  cursor: pointer;
 }
 
 .text {
-  font-size: 12px;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
+  gap: 6px;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+
+  svg {
+    min-width: 24px;
+    min-height: 24px;
+  }
 }
 
 .checkbox {
-  margin-right: 3px;
-  background-color: var(--light-100);
-  min-width: 20px;
-  height: 20px;
-  cursor: pointer;
+  width: 0px;
 }
 
 .link {
@@ -28,5 +43,11 @@
   &:hover {
     color: var(--primary-500);
     text-decoration: none;
+  }
+}
+
+@include s.devices(mobile) {
+  .container {
+    padding: 12px 0px 24px 0px;
   }
 }

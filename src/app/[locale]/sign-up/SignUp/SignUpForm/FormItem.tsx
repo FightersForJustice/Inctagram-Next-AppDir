@@ -1,4 +1,4 @@
-import { ReactNode, FC } from 'react';
+import { ReactNode } from 'react';
 import s from './FormItem.module.scss';
 import clsx from 'clsx';
 
@@ -8,8 +8,6 @@ import { ShowHidePass } from '@/components/ShowHidePass';
 import { usePlaceholder } from '@/utils/usePlaceholder';
 
 export interface FormItemProps {
-  marginTop: string;
-  marginBottom?: string;
   translate: (value: string) => ReactNode;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
@@ -21,39 +19,46 @@ export interface FormItemProps {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
-  placeholder?: string;
 }
 
-export const FormItem: FC<FormItemProps> = ({
+export const FormItem = ({
   errorMessage,
   error,
   register,
-  marginTop,
   translate,
   registerName,
   translateName,
-  marginBottom,
   id,
   show,
   setShow,
   showPasswordIcon,
-  placeholder,
-}) => {
+}: FormItemProps) => {
   const type = showPasswordIcon !== undefined && show;
   const inputStyle = clsx(s.input, { [s.error]: error });
+  const inputTypes: any = {
+    'sign-in-email-input': 'username',
+    'sign-up-email': 'username',
+    'sign-in-password-input': 'current-password',
+    'sign-up-password': 'new-password',
+    'sign-up-passwordConfirm': 'new-password',
+  };
+
+  const finalStyle =
+    id.slice(0, 7) === 'sign-in' ? s.signInContainer : s.signInUpContainer;
 
   return (
-    <div className={`${marginTop} ${marginBottom}`} key={id}>
-      <div className={'text-left text-[--light-900] text-[14px]'}>
+    <div className={finalStyle} key={id}>
+      <div className={s.labelContainer}>
         <label>{translate(translateName)}</label>
       </div>
-      <div className={'relative'}>
+      <div className={s.inputContainer}>
         <input
           {...register(registerName)}
           className={inputStyle}
           id={id}
           placeholder={usePlaceholder(registerName)}
           type={`${!type ? 'text' : 'password'}`}
+          autoComplete={inputTypes[id] ?? null}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 

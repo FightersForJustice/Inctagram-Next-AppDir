@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ShowHidePass } from '@/components/ShowHidePass';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import s from './CreateFormItem.module.scss';
 import clsx from 'clsx';
+import { usePlaceholder } from '@/utils/usePlaceholder';
+import { dictionary } from '@/features/data/passwordSymbols';
 
 type Props = {
-  marginTop: string;
-  marginBottom?: string;
   translate: (value: string) => ReactNode;
   register: UseFormRegister<any>;
   showValue: boolean;
@@ -15,37 +15,45 @@ type Props = {
   errorMessage: string | undefined;
   translateName: string;
   registerName: string;
-  placeholder?: string;
 };
 
-export const CreateFormItem: React.FC<Props> = ({
+export const CreateFormItem = ({
   errorMessage,
   error,
   register,
   registerName,
   translateName,
-  marginBottom,
   translate,
   setShowCallback,
   showValue,
-  marginTop,
-  placeholder,
-}) => {
+}: Props) => {
   const inputStyle = clsx(s.input, { [s.error]: error });
+  const containerStyle = clsx(s.container, {
+    [s.containerTop]: translateName === 'password',
+  });
+  const errorStyle = clsx(s.errorMessage, {
+    [s.errorMessagePassword]: translateName === 'password',
+  });
   return (
-    <div className={`${marginTop} ${marginBottom}`}>
+    <div className={containerStyle}>
       <div className={s.text}>
         <label>{translate(translateName)}</label>
       </div>
-      <div className={'relative'}>
+      <div className={s.inputContainer}>
         <input
           {...register(registerName)}
-          placeholder={placeholder}
+          placeholder={usePlaceholder(registerName)}
           type={`${!showValue ? 'text' : 'password'}`}
           className={inputStyle}
         />
         <ShowHidePass show={showValue} setShow={setShowCallback} />
-        {error && <p className={s.errorMessage}>{errorMessage}</p>}
+        {error && (
+          <p className={errorStyle}>
+            {errorMessage}
+            {error.message === 'Password must contain 0-9, a-z, A-Z ' &&
+              dictionary}
+          </p>
+        )}
       </div>
     </div>
   );

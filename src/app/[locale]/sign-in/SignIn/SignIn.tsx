@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import s from './SignIn.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,7 @@ type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const SignIn: FC<Props> = ({ translate }) => {
+export const SignIn = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
@@ -65,9 +65,8 @@ export const SignIn: FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormItem
-          marginTop={'mt-[20px]'}
           translate={translate}
           register={register}
           error={errors.email}
@@ -77,8 +76,6 @@ export const SignIn: FC<Props> = ({ translate }) => {
           id={'sign-in-email-input'}
         />
         <FormItem
-          marginTop={'mt-[25px]'}
-          marginBottom={'mb-[35px]'}
           translate={translate}
           register={register}
           error={errors.password}
@@ -90,16 +87,19 @@ export const SignIn: FC<Props> = ({ translate }) => {
           show={showPass}
           setShow={setShowPass}
         />
-        <Link
-          href={'/forgot-password'}
-          className={s.forgot}
-          id={'sign-in-link-forgot-password'}
-        >
-          {translate('forgotPass')}
-        </Link>
+        <div className={s.forgot}>
+          <Link
+            href={'/forgot-password'}
+            className={errors.password ? s.password : ''}
+            id={'sign-in-link-forgot-password'}
+          >
+            {translate('forgotPass')}
+          </Link>
+        </div>
         <AuthSubmit
           id={'sign-in-submit'}
           value={String(translate('btnName'))}
+          error={errors.password ? errors.password + '' : ''}
           disabled={!isValid}
         />
         <p className={s.alreadyHaveText}>{translate('question')}</p>

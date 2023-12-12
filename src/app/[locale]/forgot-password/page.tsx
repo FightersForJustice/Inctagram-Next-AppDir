@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import s from './Forgot-Password.module.scss';
 import { useTranslations } from 'next-intl';
 import { ForgotPasswordForm } from './ForgotPasswordForm';

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import f from './HeaderTranslation.module.scss';
 
 export const LanguagesModal = function ({
   closeModal,
@@ -13,17 +14,14 @@ export const LanguagesModal = function ({
   const langHandler = (lang: string) => {
     closeModal();
     if (lang === 'ru') {
-      onSelectChange('en');
-    } else {
-      onSelectChange('ru');
+      return onSelectChange('en');
     }
+    onSelectChange('ru');
   };
   const languageForRender = (lang: string) => {
     return (
       <div
-        className={
-          'flex items-center justify-start gap-2 w-[163px] cursor-pointer border-1 border-[--dark-100] px-[12px] py-[6px] bg-black'
-        }
+        className={f.container + ' ' + f.languagesContainer}
         onClick={() => langHandler(lang)}
       >
         <Image

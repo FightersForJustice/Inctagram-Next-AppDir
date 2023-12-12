@@ -1,7 +1,7 @@
 import { usePlaceholder } from '@/utils/usePlaceholder';
 import s from './EmailForm.module.scss';
 import clsx from 'clsx';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
@@ -12,15 +12,15 @@ type Props = {
   registerName: 'email';
 };
 
-export const EmailForm: React.FC<Props> = ({
+export const EmailForm = ({
   translate,
   errorMessage,
   error,
   register,
   registerName,
-}) => {
+}: Props) => {
   return (
-    <div>
+    <div className={s.inputContainer}>
       <div className={s.container}>
         <label>{translate('email')}</label>
       </div>
