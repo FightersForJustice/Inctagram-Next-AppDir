@@ -30,8 +30,10 @@
 }
 
 .errorMessagePassword {
-  position: absolute;
+  position: relative;
+  margin-bottom: -20px;
 }
+
 
 .container {
   display: flex;

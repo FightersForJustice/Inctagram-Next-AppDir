@@ -4,6 +4,7 @@ import { FieldError, UseFormRegister } from 'react-hook-form';
 import s from './CreateFormItem.module.scss';
 import clsx from 'clsx';
 import { usePlaceholder } from '@/utils/usePlaceholder';
+import { dictionary } from '@/features/data/passwordSymbols';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -46,7 +47,14 @@ export const CreateFormItem = ({
           className={inputStyle}
         />
         <ShowHidePass show={showValue} setShow={setShowCallback} />
-        {error && <p className={errorStyle}>{errorMessage}</p>}
+        {error && (
+          <p className={errorStyle}>
+            {errorMessage}
+            {error.message === 'Password must contain 0-9, a-z, A-Z '
+              ? dictionary
+              : ''}
+          </p>
+        )}
       </div>
     </div>
   );

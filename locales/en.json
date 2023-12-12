@@ -211,7 +211,7 @@
       "max": "Password must not exceed 20 characters",
       "spaces": "Password must not contain spaces",
       "invalidCharacters": "Password must contain latin characters",
-      "complexity": "Password must contain a-z, A-Z, 1-9, special "
+      "complexity": "Password must contain 0-9, a-z, A-Z"
     },
     "passwordConfirm": {
       "required": "Password confirmation is required",
