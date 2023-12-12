@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import { navigationBar } from './Bardata';
 import BarComponent from './BarComponent';
+import clsx from 'clsx';
 
 type NavigationType = {
   pathname: string;
@@ -21,10 +22,15 @@ export const Navigation = ({
   const t = useTranslations('Navigation');
 
   const mapNav = navigationBar.map((el) => {
-    const style =
-      pathname === '/' + el.href
-        ? `${s.nav__item__active} ${s.nav__item}`
-        : `${s.nav__item}`;
+    const style = clsx(
+      s.nav__item,
+      {
+        [s.nav__item__active]: pathname === '/' + el.href,
+      },
+      {
+        [s.statistics]: el.href === 'statistics',
+      }
+    );
     const createHandler = () => {
       if (el.href === 'create') {
         setShowCreatePostModal(true);
