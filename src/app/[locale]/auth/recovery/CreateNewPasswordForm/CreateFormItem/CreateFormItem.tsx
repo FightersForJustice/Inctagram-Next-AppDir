@@ -50,9 +50,8 @@ export const CreateFormItem = ({
         {error && (
           <p className={errorStyle}>
             {errorMessage}
-            {error.message === 'Password must contain 0-9, a-z, A-Z '
-              ? dictionary
-              : ''}
+            {error.message === 'Password must contain 0-9, a-z, A-Z ' &&
+              dictionary}
           </p>
         )}
       </div>
