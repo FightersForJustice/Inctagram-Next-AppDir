@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import s from '../Tabs.module.scss';
 import Image from 'next/image';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
@@ -10,11 +10,11 @@ import { Loader } from '@/components/Loader';
 import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
 
-export const GeneralInformationTab: React.FC<Props> = ({
+export const GeneralInformationTab = ({
   setShowAddAvatarModal,
   setLoadedAvatar,
   loadedAvatar,
-}) => {
+}: Props) => {
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
@@ -22,7 +22,6 @@ export const GeneralInformationTab: React.FC<Props> = ({
   const [userCity, setUserCity] = useState('');
 
   const { data, isLoading, error } = useGetProfileQuery();
-
   useEffect(() => {
     if (data) {
       setLoadedAvatar(data?.avatars[0]?.url);
