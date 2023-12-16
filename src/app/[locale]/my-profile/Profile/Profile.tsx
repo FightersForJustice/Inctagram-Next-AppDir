@@ -35,7 +35,7 @@ export const Profile: React.FC<Props> = ({
   return (
     <>
       <div className={s.profile}>
-        <div>
+        <div className={s.profile__avatar__container}>
           <Image
             src={`${
               userData?.avatars[0]

@@ -27,7 +27,7 @@
   z-index: 10;
 }
 
-@include s.devices(mobile) {
+@include s.devices(tablet) {
   .container {
     width: 80px;
     border: none;

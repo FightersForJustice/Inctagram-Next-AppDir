@@ -14,7 +14,7 @@ type Props = {
   images: ImageType[];
 };
 
-export const PostImageCarousel: React.FC<Props> = ({ images }) => {
+export const PostImageCarousel = ({ images }: Props) => {
   if (images.length === 0) {
     return (
       <Image

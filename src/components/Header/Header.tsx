@@ -7,6 +7,7 @@ import { usePathname } from 'next-intl/client';
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
 
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
+import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 import { useRouter } from 'next/navigation';
 import s from './Header.module.scss';
 
@@ -40,6 +41,7 @@ export const Header = () => {
             language={language}
             onSelectChange={onSelectChange}
           />
+          <HeaderMenuMobile language={language} />
         </div>
       </div>
     </header>

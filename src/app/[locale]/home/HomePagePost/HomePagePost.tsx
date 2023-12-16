@@ -31,7 +31,7 @@ export const HomePagePost = ({ post, images }: Props) => {
     <div className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
-          <Image
+          {/* <Image
             src={
               data?.avatars && data.avatars.length !== 0
                 ? data.avatars[0].url
@@ -52,7 +52,7 @@ export const HomePagePost = ({ post, images }: Props) => {
           >
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
-          <p className={s.post__time}>{test}</p>
+          <p className={s.post__time}>{test}</p> */}
         </div>
         <HomePostPopup />
       </div>
