@@ -41,7 +41,6 @@ export const SignIn = ({ translate }: Props) => {
     const { email, password } = data;
     try {
       await postLogin({ email: email.toLowerCase(), password }).unwrap();
-      toast.success('Welcome back!');
       reset();
     } catch (error) {
       const {
@@ -60,7 +59,9 @@ export const SignIn = ({ translate }: Props) => {
     }
   };
 
-  if (isAuth) redirect('/my-profile');
+  if (isAuth) {
+    redirect('/my-profile');
+  }
 
   return (
     <>

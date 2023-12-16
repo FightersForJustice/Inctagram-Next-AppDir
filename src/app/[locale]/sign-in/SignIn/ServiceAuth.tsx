@@ -22,12 +22,12 @@ const ServiceAuth = ({ page }: Props) => {
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
-    onSuccess: (codeResponse) => {
+    onSuccess: async (codeResponse) => {
       loginWithGoogle({ code: codeResponse.code })
         .unwrap()
         .then((res) => {
           //need change on local lang from state (header lang)
-          // I'll leave the then block for possible use when moving to a new translation library
+          toast.success(`Hello, ${res.email}!`);
         })
         .catch((err) => toast.error(err));
     },

@@ -20,7 +20,6 @@
     "forgotPass": "Forgot password?",
     "btnName": "Sign In",
     "question": "Don’t have an account?",
-    "greetings": "Welcome back!",
     "btnBottomName": "Sign Up",
     "error400": "The email or password are incorrect. Try again please",
     "error401": "This email is not registered"
