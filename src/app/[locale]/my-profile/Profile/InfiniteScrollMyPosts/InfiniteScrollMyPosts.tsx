@@ -92,9 +92,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
     return data?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
-        <div key={i.id} className={s.imageContainer}>
+        <div key={i.id} className={'overflow-hidden'}>
           <Image
-            // fill
             src={
               i.images[0]?.url
                 ? currentPosts[0].url
@@ -106,7 +105,6 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
             key={i.id}
             onClick={() => openPostHandler(i.id)}
             className={s.post}
-            // style={{maxWidth: '100%', flexDirection: 'row'}}
           />
         </div>
       );
@@ -118,8 +116,10 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
       {posts.length > 0 ? (
         postsImages()
       ) : (
-        <div className={s.container}>
-          <p className={s.text}>You don&apos;t have any posts yet 😢</p>
+        <div className={'m-auto'}>
+          <p className={'font-bold text-2xl'}>
+            You don&apos;t have any posts yet 😢
+          </p>
         </div>
       )}
       {/* {isFetching && <Loader />} */}

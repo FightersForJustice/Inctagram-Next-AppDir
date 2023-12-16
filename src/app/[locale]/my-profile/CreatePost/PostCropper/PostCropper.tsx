@@ -47,7 +47,6 @@ export const PostCropper: React.FC<Props> = ({
         style={{
           transform: `scale(${+zoomValue / 10})`,
           width: '100%',
-          zIndex: '100'
         }}
         ref={cropperRef}
         cropend={onCropEnd}

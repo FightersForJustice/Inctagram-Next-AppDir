@@ -14,13 +14,7 @@
 }
 
 .modal__content {
-  // max-width: 378px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  // width: 100%;
-  flex-direction: column;
-
+  max-width: 378px;
   background-color: var(--dark-300);
   border-radius: 0.125rem;
   border: 1px solid var(--dark-100);
@@ -30,8 +24,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  width: 100%;
   border-bottom: 1px solid var(--dark-100);
   padding: 12px 24px;
 }
@@ -41,12 +33,6 @@
   text-align: left;
   font-size: 16px;
   line-height: 24px;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .modal__footer {
@@ -74,7 +60,7 @@
 
 @include s.devices(mobile) {
   .modal__content {
-    // max-width: 330px;
+    max-width: 330px;
   }
   .modal__header {
     padding: 12px;

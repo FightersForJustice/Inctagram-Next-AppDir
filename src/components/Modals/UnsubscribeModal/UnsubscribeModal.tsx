@@ -21,7 +21,7 @@ export const UnsubscribeModal: React.FC<Props> = ({
       width={'378px'}
       onClose={() => setShowUnsubscribeModal(false)}
     >
-      {/* <div className={s.deleteModal}> */}
+      <div className={s.deleteModal}>
         <div className={s.deleteModal__info}>
           <Image
             src={'/img/modal/avatar.png'}
@@ -45,7 +45,7 @@ export const UnsubscribeModal: React.FC<Props> = ({
             {t('UnsubscribeModal.btnNo')}
           </button>
         </div>
-      {/* </div> */}
+      </div>
     </Modal>
   );
 };

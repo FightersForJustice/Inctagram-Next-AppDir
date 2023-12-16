@@ -1,16 +1,12 @@
-@use '@/app/mixins.scss' as s;
-
 .modal {
   position: relative;
   margin-bottom: 24px;
-  width: 100%;
 
   &__input {
     background: transparent;
     border: 1px solid var(--dark-100, #4c4c4c);
     padding: 6px 41px;
-    // width: 600px;
-    width: 100%;
+    width: 600px;
     outline: none;
 
     &::placeholder {
@@ -32,8 +28,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    max-width: 644px;
-    width: 100%;
 
     &:last-child {
       margin-bottom: 0;
@@ -44,16 +38,6 @@
       justify-content: center;
       align-items: center;
       gap: 12px;
-
-      max-width: 100%;
-    }
-
-    &__left p {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      max-width: 70%;
-      margin-right: 10px;
     }
 
     &__right {
@@ -89,25 +73,5 @@
       font-size: 16px;
       font-weight: 600;
     }
-  }
-}
-
-.modalClassName {
-  max-width: 650px;
-  margin: 0px 15px;
-  width: 100%;
-}
-
-@include s.devices(mobile) {
-  .modal {
-    &__content {
-      &__right {
-        gap: 0;
-      }
-    }
-  }
-
-  .modalClassName {
-    margin: 0;
   }
 }
