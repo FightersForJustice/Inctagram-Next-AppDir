@@ -41,19 +41,19 @@ export const Navigation = ({
         {el.href === 'create' && (
           <button className={style}>
             <BarComponent>{el.img}</BarComponent>
-            {t('create')}
+            <span>{t('create')}</span>
           </button>
         )}
         {el.href !== 'create' && el.href !== 'statistics' && (
           <Link href={'/' + el.href} className={style}>
             <BarComponent>{el.img}</BarComponent>
-            {t(el.href === 'my-profile' ? 'myProfile' : el.href)}
+            <span>{t(el.href === 'my-profile' ? 'myProfile' : el.href)}</span>
           </Link>
         )}
         {el.href === 'statistics' && paidAccount && (
           <Link href={'/' + el.href} className={style}>
             <BarComponent>{el.img}</BarComponent>
-            {t(el.href)}
+            <span>{t(el.href)}</span>
           </Link>
         )}
       </li>

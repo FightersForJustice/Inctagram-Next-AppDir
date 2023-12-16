@@ -251,7 +251,15 @@
     }
   },
   "Header": {
-    "notifications": "Уведомления",
-    "zeroNotifications": "У Вас пока нет уведомлений"
+    "notifications": {
+      "notZeroNotifications": "Уведомления",
+      "zeroNotifications": "У Вас пока нет уведомлений"
+    },
+    "mobileMenu": {
+      "profileSettings": "Настройки профиля",
+      "statistics": "Статистика",
+      "favorites": "Избранное",
+      "logOut": "Выйти"
+    }
   }
 }

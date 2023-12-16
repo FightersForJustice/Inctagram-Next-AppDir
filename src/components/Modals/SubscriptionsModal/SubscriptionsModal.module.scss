@@ -1,12 +1,14 @@
 .modal {
   position: relative;
   margin-bottom: 24px;
+  width: 100%;
 
   &__input {
     background: transparent;
     border: 1px solid var(--dark-100, #4c4c4c);
     padding: 6px 41px;
-    width: 600px;
+    // width: 600px;
+    width: 100%;
     outline: none;
 
     &::placeholder {
@@ -27,6 +29,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+
     margin-bottom: 30px;
 
     &:last-child {
@@ -35,9 +40,17 @@
 
     &__left {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      max-width: 100%;
+      width: 200px;
       gap: 12px;
+    }
+
+    &__left p {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 70%;
+      margin-right: 10px;
     }
 
     &__right {
@@ -74,4 +87,10 @@
       font-weight: 600;
     }
   }
+}
+
+.modalClassName {
+  max-width: 650px;
+  margin: 0px 15px;
+  width: 100%;
 }

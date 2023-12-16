@@ -36,7 +36,7 @@ export const HeaderNotification = ({ language }: TProps) => {
         <Popover.Portal>
           <Popover.Content className="PopoverContent" sideOffset={5}>
             <div className={s.popup}>
-              <h3 className={s.popup__title}> {t('notifications')}</h3>
+              <h3 className={s.popup__title}> {t('notifications.notZeroNotifications')}</h3>
               {amount ? (
                 'future notifications'
               ) : (
@@ -53,7 +53,7 @@ export const HeaderNotification = ({ language }: TProps) => {
                 <p className={s.popup__time}>1 час назад</p>
               </div> */
                 <div className={s.popup__item}>
-                  <p className={s.popup__desc}>{t('zeroNotifications')}</p>
+                  <p className={s.popup__desc}>{t('notifications.zeroNotifications')}</p>
                 </div>
               )}
             </div>

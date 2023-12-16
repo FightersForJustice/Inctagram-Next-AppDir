@@ -76,31 +76,31 @@
     "title": "next-intl example"
   },
   "MyProfilePage": {
-    "subscriptions": "Subscriptions",
-    "subscribers": "Subscribers",
+    "subscriptions": "Following",
+    "subscribers": "Followers",
     "publications": "Publications",
     "btnName": "Profile Settings",
     "aboutMe": "Fill in your info, while it's empty",
     "SubscribersModal": {
-      "title": "Subscribers",
+      "title": "Followers",
       "search": "Search",
-      "subBtn": "Subscribe",
+      "subBtn": "Follow",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
-      "title": "Subscriptions",
+      "title": "Following",
       "search": "Search",
-      "unsubscribe": "Unsubscribe"
+      "unsubscribe": "Unfollow"
     },
     "UnsubscribeModal": {
-      "title": "Unsubscribe",
-      "question": "Do you really want to unsubscribe from this user",
+      "title": "Unfollow",
+      "question": "Do you really want to unfollow from this user",
       "btnYes": "Yes",
       "btnNo": "No"
     },
     "DeleteModal": {
       "title": "Delete Subscriber",
-      "question": "Do you really want to delete a subscriber",
+      "question": "Do you really want to delete a Following",
       "btnYes": "Yes",
       "btnNo": "No"
     }
@@ -113,9 +113,9 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
-    "logout": "Log out",
+    "logout": "Log Out",
     "LogoutModal": {
-      "title": "Logout",
+      "title": "Log Out",
       "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
@@ -246,7 +246,15 @@
     }
   },
   "Header": {
-    "notifications": "Notifications",
-    "zeroNotifications": "You don't have notifications yet"
+    "notifications": {
+      "notZeroNotifications": "Notifications",
+      "zeroNotifications": "You don't have notifications yet"
+    },
+    "mobileMenu": {
+      "profileSettings": "Profile Settings",
+      "statistics": "Statistics",
+      "favorites": "Favorites",
+      "logOut": "Log Out"
+    }
   }
 }
