@@ -13,6 +13,7 @@ import { IUserLoginRequest } from '@/types/userTypes';
 import { AuthSubmit } from '@/components/Input';
 import { toast } from 'react-toastify';
 import { ServerError } from '@/types/serverResponseTyper';
+import { ServerLoginResponse } from '@/api/api.next';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -40,8 +41,12 @@ export const SignIn = ({ translate }: Props) => {
   const onSubmit = async (data: IUserLoginRequest) => {
     const { email, password } = data;
     try {
-      await postLogin({ email: email.toLowerCase(), password }).unwrap();
-      toast.success('Welcome back!');
+      await postLogin({ email: email.toLowerCase(), password })
+        .unwrap()
+        .then((data: ServerLoginResponse) => {
+          document.cookie = `accessToken=${data.accessToken}; Max-Age=86400; path=/`;
+          document.cookie = `refreshToken=${data.refreshToken}; Max-Age=86400; path=/`;
+        });
       reset();
     } catch (error) {
       const {
