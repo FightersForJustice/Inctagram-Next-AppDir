@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -10,13 +12,24 @@
   grid-template-columns: 2fr 10fr;
   grid-template-areas:
     'menu profile'
-    'menu posts';
+    'menu profile';
 }
 
-.profile {
+.home {
   grid-area: profile;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 35px 0px 55px 25px;
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
+  width: 100%;
+  max-width: 491px;
+  margin: 0 auto;
+}
+
+
+@include s.devices(laptop) {
+  .wrapper {
+    grid-template-areas:
+    'profile profile'
+    'profile profile';
+  }
 }

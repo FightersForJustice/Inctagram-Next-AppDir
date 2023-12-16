@@ -85,7 +85,7 @@ const Home = () => {
       <div className={s.container}>
         <div className={s.wrapper} id={'wrapper'}>
           <SideBar pathname={pathname} paidAccount={false} />
-          <div style={{ gridArea: 'profile' }}>{allPosts}</div>
+          <div className={s.home}>{allPosts}</div>
         </div>
       </div>
       {isLoading && <Loader />}

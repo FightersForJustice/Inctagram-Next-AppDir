@@ -30,7 +30,7 @@ export const HomePagePost: React.FC<Props> = ({ post, images }) => {
 
   return (
     <div className={s.post}>
-      <div className={s.post__top}>
+      {/* <div className={s.post__top}>
         <div className={s.post__wrapper}>
           <Image
             src={
@@ -56,7 +56,7 @@ export const HomePagePost: React.FC<Props> = ({ post, images }) => {
           <p className={s.post__time}>{test}</p>
         </div>
         <HomePostPopup />
-      </div>
+      </div> */}
       <PostImageCarousel images={images} />
       <HomePostIcons />
       <HomePostDescription
