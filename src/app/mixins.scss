@@ -1,8 +1,20 @@
 @mixin devices($breakpoint) {
   //the name of the mixin is devices
 
+  @if $breakpoint == laptop {
+    @media screen and (max-width: 1200px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tablet-xl {
+    @media screen and (max-width: 992px) {
+      @content;
+    }
+  }
+
   @if $breakpoint == tablet {
-    @media screen and (max-width: 780px) {
+    @media screen and (max-width: 768px) {
       @content;
     }
   }

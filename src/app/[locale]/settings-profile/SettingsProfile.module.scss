@@ -6,8 +6,9 @@
 
 .wrapper {
   display: grid;
+  grid-template-rows: 285px;
+  grid-template-columns: 2fr 10fr;
   grid-template-areas:
     'menu profile'
     'menu posts';
-  grid-template-columns: 1fr 4fr;
 }

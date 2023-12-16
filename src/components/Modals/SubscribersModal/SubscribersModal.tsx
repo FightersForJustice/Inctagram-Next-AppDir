@@ -25,7 +25,7 @@ export const SubscribersModal: React.FC<Props> = ({
       <Modal
         title={`2 358 ${t('SubscribersModal.title')}`}
         isOkBtn={false}
-        width={'644px'}
+        className={s.modalClassName}
         onClose={() => setShowSubscribersModal(false)}
       >
         <div className={s.modal}>
