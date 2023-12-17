@@ -107,7 +107,6 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
       
       {showLogoutModal && (
         <Modal
-          width={'450px'}
           title={t('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
         >

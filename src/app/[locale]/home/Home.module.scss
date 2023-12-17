@@ -4,6 +4,8 @@
   max-width: 1280px;
   margin: 0 auto;
   padding-top: 60px;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -17,8 +19,15 @@
 
 .home {
   grid-area: profile;
-  width: 100%;
-  max-width: 491px;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  flex-direction: column;
+  // width: 100%;
+  // padding-left: 50px;
+  // max-width: 491px;
+  // flex-wrap: wrap;
+  // margin-left: 100px;
   margin: 0 auto;
 }
 
