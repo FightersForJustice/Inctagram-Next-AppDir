@@ -19,6 +19,7 @@ import { MyPayments } from '@/app/[locale]/settings-profile/Tabs/MyPayments';
 const TabsDemo = () => {
   const t = useTranslations('SettingsProfilePage');
 
+  
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
   const [userAvatar, setUserAvatar] = useState<string>('');
   const [croppedAvatar, setCroppedAvatar] = useState('');
