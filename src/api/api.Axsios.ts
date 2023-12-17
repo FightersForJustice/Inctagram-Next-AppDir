@@ -6,7 +6,7 @@ export const createAxiosServerInstance = (
   req: NextApiRequest
 ): AxiosInstance => {
   const serverInstance = axios.create({
-    baseURL: 'https://inctagram.work/api/v1',
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${accessToken}`,

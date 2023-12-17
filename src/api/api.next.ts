@@ -16,7 +16,7 @@ const nextQueryApi = createApi({
   endpoints: (builder) => ({
     login2: builder.mutation<ServerLoginResponse, LoginParamsData>({
       query: (credentials) => ({
-        url: 'http://localhost:3000/api/login',
+        url: `${process.env.NEXT_PUBLIC_URL}api/login`,
         method: 'POST',
         body: credentials,
       }),
