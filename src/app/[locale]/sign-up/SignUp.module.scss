@@ -13,7 +13,7 @@
 @include s.devices(mobile) {
   .container {
     margin: 77px auto;
-    padding: 0px 1rem;
+    padding: 0 1rem;
     background-color: var(--dark-900);
     border: none;
   }

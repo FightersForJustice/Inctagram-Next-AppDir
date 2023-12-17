@@ -1,10 +1,5 @@
 import { ReactNode } from 'react';
-import {
-  FieldError,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormTrigger,
-} from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 export type SignUpFormProps = {
   lang: 'en' | 'ru';

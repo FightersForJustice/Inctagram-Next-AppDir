@@ -21,7 +21,7 @@
   padding-left: 10px;
   gap: 6px;
 
-  font-family: Inter;
+  font-family: Inter sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -49,6 +49,6 @@
 
 @include s.devices(mobile) {
   .container {
-    padding: 12px 0px 24px 0px;
+    padding: 12px 0 24px 0;
   }
 }

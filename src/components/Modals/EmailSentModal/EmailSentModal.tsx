@@ -1,5 +1,5 @@
 import { Modal } from '@/components/Modals/Modal';
-import { EmailSentModalProps } from '../../../types/signUpTypes';
+import { EmailSentModalProps } from '@/types/signUpTypes';
 import s from './EmailSentModal.module.scss';
 
 export const EmailSentModal = ({

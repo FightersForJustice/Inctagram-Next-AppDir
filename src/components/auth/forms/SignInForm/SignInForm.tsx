@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
-import { FormItem } from '../../../Input/FormItem/FormItem';
+import { FormItem } from '@/components/Input';
 import { SignInSchema } from '@/features/schemas';
 import { usePostLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';

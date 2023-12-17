@@ -1,4 +1,4 @@
-import { InputErrorProps } from '../../../types/signUpTypes';
+import { InputErrorProps } from '@/types/signUpTypes';
 import s from './InputError.module.scss';
 import clsx from 'clsx';
 import { dictionary } from '@/features/data/passwordSymbols';

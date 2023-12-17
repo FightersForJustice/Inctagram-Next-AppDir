@@ -24,7 +24,6 @@ export const CreateNewPasswordForm = ({ translate }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(CreateNewPasswordFormSchema()),
