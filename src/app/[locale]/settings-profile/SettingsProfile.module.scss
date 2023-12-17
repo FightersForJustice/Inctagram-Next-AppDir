@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,4 +13,12 @@
   grid-template-areas:
     'menu profile'
     'menu posts';
+}
+
+@include s.devices(tablet-xl) {
+  .wrapper {
+    grid-template-areas:
+    'profile profile'
+    'profile profile';
+  }
 }

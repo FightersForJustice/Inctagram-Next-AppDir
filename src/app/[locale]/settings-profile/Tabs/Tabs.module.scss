@@ -1,9 +1,12 @@
-/*!* reset *!
-button,
-fieldset,
-input {
-    all: unset;
-}*/
+@use '@/app/mixins.scss' as s;
+
+.container {
+  grid-area: profile;
+  width: 100%;
+  padding: 0px 20px 0px 45px;
+  border: 1px solid red;
+  margin: 0 auto;
+}
 
 .TabsRoot {
   display: flex;
@@ -12,7 +15,7 @@ input {
   min-width: 726px;
   margin: 0 auto;
   outline: none;
-  padding-top: 30px;
+  padding-top: 35px;
 }
 
 .TabsList {
@@ -224,5 +227,12 @@ input {
 
   &__saveBtn {
     text-align: right;
+  }
+}
+
+@include s.devices(tablet-xl) {
+  .container {
+    grid-area: profile;
+    padding: 0px 25px;
   }
 }
