@@ -1,17 +1,18 @@
-import React, { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { usePostRegistrationConfirmationMutation } from '@/api/auth.api';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
+import s from './Confirm.module.scss';
 
 type Props = {
   code: string;
   translate: (value: string) => ReactNode;
 };
 
-export const Confirm: React.FC<Props> = ({ code, translate }) => {
+export const Confirm = ({ code, translate }: Props) => {
   const [registrationConfirm, { isLoading }] =
     usePostRegistrationConfirmationMutation();
   const router = useRouter();
@@ -42,19 +43,10 @@ export const Confirm: React.FC<Props> = ({ code, translate }) => {
   }, []);
 
   return (
-    <div
-      className={'flex flex-col justify-center items-center mt-[100px] mb-9'}
-    >
-      <h1 className={'text-[20px] mb-[19px]'}>{translate('title')}</h1>
-      <p className={'max-w-[300px] text-center mb-[54px]'}>
-        {translate('desc')}
-      </p>
-      <Link
-        href={'/sign-in'}
-        className={
-          'bg-[--primary-500] rounded-s pt-[6px] pr-[34px] pb-[6px] pl-[34px] mb-[72px]'
-        }
-      >
+    <div className={s.container}>
+      <h1 className={s.slogan}>{translate('title')}</h1>
+      <p className={s.confirmationText}>{translate('desc')}</p>
+      <Link href={'/sign-in'} className={s.resendLink}>
         {translate('btnName')}
       </Link>
       <Image

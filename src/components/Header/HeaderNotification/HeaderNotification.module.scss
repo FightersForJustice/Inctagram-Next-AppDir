@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .notification {
   position: relative;
   height: 20px;
@@ -27,7 +29,7 @@
 .popup {
   position: absolute;
   width: 371px;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
   background-color: var(--dark-500);
   top: 16px;
   right: -25px;
@@ -39,23 +41,22 @@
   max-height: 450px;
   overflow: scroll;
   overflow-x: hidden;
+  text-align: center;
 
   &::-webkit-scrollbar {
-    width: 6px;               /* ширина всей полосы прокрутки */
-
+    width: 6px; /* ширина всей полосы прокрутки */
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--dark-300);        /* цвет зоны отслеживания */
+    background: var(--dark-300); /* цвет зоны отслеживания */
     border-radius: 20px;
     margin-top: 52px;
     margin-bottom: 27px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--dark-100);    /* цвет бегунка */
-    border-radius: 20px;       /* округлось бегунка */
-
+    background-color: var(--dark-100); /* цвет бегунка */
+    border-radius: 20px; /* округлось бегунка */
   }
 
   &__title {
@@ -69,8 +70,7 @@
     padding-top: 12px;
     margin-bottom: 12px;
     cursor: pointer;
-    transition: all .2s linear;
-
+    transition: all 0.2s linear;
 
     &__title {
       font-weight: bold;
@@ -85,7 +85,6 @@
 
     &:hover {
       border-top: 1px solid var(--primary-500);
-
     }
   }
 
@@ -96,5 +95,19 @@
   &__time {
     color: var(--light-900);
     font-size: 12px;
+  }
+}
+
+@include s.devices(tablet) {
+  .popup {
+    right: -175px;
+  }
+}
+@include s.devices(mobile) {
+  .popup {
+    display: none;
+  }
+  .notification {
+    display: none;
   }
 }

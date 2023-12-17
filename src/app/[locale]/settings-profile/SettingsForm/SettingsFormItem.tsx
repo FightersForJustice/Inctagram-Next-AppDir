@@ -29,7 +29,10 @@ export const SettingsFormItem: React.FC<Props> = ({
 }) => {
   return (
     <div className={s.form__itemWrapper}>
-      <label className={s.form__label}>{translate(translateName)}</label>
+      <label className={s.form__label}>
+        {translate(translateName)}
+        <span className={s.form__required}>*</span>
+      </label>
       <input
         defaultValue={defaultValue}
         id={id}

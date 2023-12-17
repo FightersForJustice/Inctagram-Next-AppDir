@@ -1,1 +1,1 @@
-export { GeneralInformationTab } from "./GeneralInformationTab";
+export { GeneralInformationTab } from './GeneralInformationTab';

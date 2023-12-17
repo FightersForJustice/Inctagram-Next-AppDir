@@ -1,6 +1,6 @@
-import "../Modal/Modal.css";
-import React, { ReactNode } from "react";
-import Image from "next/image";
+import '../Modal/Modal.css';
+import React, { ReactNode } from 'react';
+import Image from 'next/image';
 
 export const BaseModal = ({
   children,
@@ -14,23 +14,23 @@ export const BaseModal = ({
   isOkBtn: boolean;
 }) => {
   return (
-    <div className={"modal"}>
-      <div className={"modal__content"}>
-        <div className={"modal__header"}>
-          <div className={"modal__title"}>{title}</div>
+    <div className={'modal'}>
+      <div className={'modal__content'}>
+        <div className={'modal__header'}>
+          <div className={'modal__title'}>{title}</div>
           <Image
-            className={"modal__close"}
-            src={"/img/close.svg"}
-            alt={"close"}
+            className={'modal__close'}
+            src={'/img/close.svg'}
+            alt={'close'}
             width={24}
             height={24}
             onClick={onClose}
           />
         </div>
-        <div className={"modal__body"}>{children}</div>
+        <div className={'modal__body'}>{children}</div>
         {isOkBtn && (
-          <div className={"modal__footer"}>
-            <button className={"modal__btn"} onClick={onClose}>
+          <div className={'modal__footer'}>
+            <button className={'modal__btn'} onClick={onClose}>
               OK
             </button>
           </div>

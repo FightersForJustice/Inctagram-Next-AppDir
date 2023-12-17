@@ -1,4 +1,6 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import s from './ForgotPasswordForm.module.scss';
+import f from './EmailSentModal.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,15 +11,17 @@ import { Loader } from '@/components/Loader';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { handleApiError } from '@/utils';
+import { AuthSubmit } from '@/components/Input';
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
+export const ForgotPasswordForm = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema()),
@@ -28,6 +32,8 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   const [userEmail, setUserEmail] = useState('');
   const [recaptcha, setRecaptcha] = useState('');
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
+
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
 
   const [recoveryPassword, { isSuccess, isLoading, error }] =
     usePostPasswordRecoveryMutation();
@@ -40,11 +46,15 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
   }, [isSuccess]);
 
   const onSubmit = (data: any) => {
-    recoveryPassword({
-      email: data.email,
-      recaptcha,
-    });
-    setUserEmail(data.email);
+    try {
+      recoveryPassword({
+        email: data.email,
+        recaptcha,
+      });
+      setUserEmail(data.email);
+    } finally {
+      reset();
+    }
   };
 
   const reCaptchaHandler = (token: string | null) => {
@@ -57,69 +67,50 @@ export const ForgotPasswordForm: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-10 pb-[24px]'}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={s.formContainer}>
         <EmailForm
           translate={translate}
           register={register}
           error={errors.email}
+          registerName="email"
           errorMessage={errors?.email?.message}
         />
 
-        <p
-          className={
-            'max-w-[90%] text-left ml-5 text-[--light-900] leading-[20px] mb-[20px]'
-          }
-        >
-          {translate('desc')}
-        </p>
+        <p className={s.instruction}>{translate('desc')}</p>
 
         {sendLinkAgain && (
-          <p
-            className={
-              'max-w-[90%] text-left ml-5 text-[--light-300] leading-[20px] mb-[20px] text-[15px]'
-            }
-          >
-            {translate('descAfterSend')}
-          </p>
+          <p className={s.sendAgain}>{translate('descAfterSend')}</p>
         )}
+        <div className={s.authSubmit}>
+          <AuthSubmit
+            value={`${
+              sendLinkAgain
+                ? `${translate('btnNameAfterSend')}`
+                : `${translate('btnName')}`
+            }`}
+            disabled={!recaptcha || !isValid}
+            sendLinkAgain={sendLinkAgain}
+          />
+        </div>
 
-        <input
-          type="submit"
-          className={
-            'mb-[24px] bg-[--primary-500] w-[90%] pt-[6px] pb-[6px] cursor-pointer mt-[24px] disabled:bg-[--primary-100] disabled:text-gray-300 disabled:cursor-not-allowed  '
-          }
-          value={`${
-            sendLinkAgain
-              ? `${translate('btnNameAfterSend')}`
-              : `${translate('btnName')}`
-          }`}
-          disabled={!recaptcha || !isValid}
-        />
-
-        <Link
-          href={'/sign-in'}
-          className={'text-[--primary-500] block mb-[30px]'}
-        >
+        <Link href={'/sign-in'} className={s.forgotRedirect}>
           {translate('linkName')}
         </Link>
 
-        <ReCAPTCHA
-          sitekey="6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ"
-          onChange={reCaptchaHandler}
-          className={'flex justify-center items-center'}
-        />
+        {!sendLinkAgain && (
+          <ReCAPTCHA
+            sitekey={siteKey}
+            onChange={reCaptchaHandler}
+            className={s.recaptchaContainer}
+            theme="dark"
+          />
+        )}
       </form>
       {showModal && (
-        <Modal
-          title={'Email sent'}
-          onClose={() => setShowModal(false)}
-          isOkBtn={true}
-        >
-          {translate('modal')}{' '}
-          <span className={'text-blue-300'}>{userEmail}</span>
+        <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
+          <p className={f.container}>
+            {translate('modal')} <span>{userEmail}</span>
+          </p>
         </Modal>
       )}
       {isLoading && <Loader />}

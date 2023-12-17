@@ -1,43 +1,63 @@
-import Link from "next/link";
-import { FieldError, UseFormRegister } from "react-hook-form";
-import { InputError } from "./InputError";
+import { useState } from 'react';
+import Link from 'next/link';
+import { InputError } from './InputError';
+import { AgreeCheckboxProps } from './typesSignUp';
+import s from './AgreeCheckbox.module.scss';
 
-type Props = {
-  // translate: {
-  //   rich: <TargetKey extends string>(key: TargetKey, values?: RichTranslationValues | undefined) => ReactNode;
-  // };
-  // ----------------- поставил any что бы не тянуть rich с самого начала, надо пофиксить
-  translate: any;
-  register: UseFormRegister<any>;
-  error: FieldError | undefined;
-  errorMessage: string | undefined;
-  registerName: string;
-  id: string;
-};
-
-const linkStyle = "text-blue-500 underline hover:text-blue-700 hover:no-underline";
-
-export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, errorMessage, registerName, id }) => {
+export const AgreeCheckbox = ({
+  translate,
+  register,
+  error,
+  errorMessage,
+  registerName,
+  id,
+}: AgreeCheckboxProps) => {
+  const [agree, setAgree] = useState(false);
   return (
-    <div className={" mb-[18px] pt-[6px] pb-[6px] cursor-pointer flex justify-center  "}>
-      <label className={"relative"}>
-        <div className={`text-[12px] pr-[30px] pl-[30px] flex justify-center  items-start`}>
+    <div className={s.container}>
+      <label htmlFor={id} className={s.checkBoxContainer}>
+        <div className={s.text}>
           <input
             type="checkbox"
-            className={`mr-2 accent-white w-[20px] mt-[2px] `}
+            className={s.checkbox}
+            onClick={() => setAgree(!agree)}
             {...register(registerName)}
             id={id}
           />
 
+          <svg height={24} width={24} viewBox="0 0 24 24" fill="none">
+            {(!agree && (
+              <g>
+                <path
+                  d="M19 5V19H5V5H19ZM19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"
+                  fill="#C3C1C7"
+                />
+              </g>
+            )) || (
+              <g>
+                <rect x="4" y="6" width="16" height="12" fill="black" />
+                <path
+                  d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.11 21 21 20.1 21 19V5C21 3.9 20.11 3 19 3ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+                  fill="white"
+                />
+              </g>
+            )}
+          </svg>
           <p>
-            {translate.rich("agreemetsCheckText", {
+            {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
-                <Link className={linkStyle} href="./agreemets-page/terms-of-service">
+                <Link
+                  className={s.link}
+                  href="./agreements-page/terms-of-service"
+                >
                   {chunks}
                 </Link>
               ),
               link2: (chunks: string) => (
-                <Link className={linkStyle} href="./agreemets-page/privacy-policy">
+                <Link
+                  className={s.link}
+                  href="./agreements-page/privacy-policy"
+                >
                   {chunks}
                 </Link>
               ),
@@ -45,12 +65,7 @@ export const AgreeCheckbox: React.FC<Props> = ({ translate, register, error, err
           </p>
         </div>
 
-        <InputError
-          error={error}
-          errorMessage={errorMessage}
-          id={"sign-up-userName-error"}
-          className={"left-[6.3rem]"}
-        />
+        <InputError error={error} errorMessage={errorMessage} id={id} />
       </label>
     </div>
   );

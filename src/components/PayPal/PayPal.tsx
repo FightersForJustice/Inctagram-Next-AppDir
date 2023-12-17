@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import React, { useState } from 'react';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
   CreateOrderActions,
   CreateOrderData,
   OnApproveActions,
   OnApproveData,
   OnClickActions,
-} from "@paypal/paypal-js";
+} from '@paypal/paypal-js';
 
 type Props = {
   price: string;
@@ -14,7 +14,7 @@ type Props = {
 
 export const PayPal: React.FC<Props> = ({ price }) => {
   const [paidFor, setPaidFor] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleApprove = (orderId: string) => {
     // Call backend function to fulfill order
@@ -27,13 +27,16 @@ export const PayPal: React.FC<Props> = ({ price }) => {
     // alert("Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance.");
   };
 
-  const onCreateOrder = (data: CreateOrderData, actions: CreateOrderActions) => {
+  const onCreateOrder = (
+    data: CreateOrderData,
+    actions: CreateOrderActions
+  ) => {
     const description =
-      price === "10"
-        ? "$10 per 1 Day Subscription"
-        : price === "50"
-        ? "$50 per 7 Day Subscription"
-        : "$100 per month Subscription";
+      price === '10'
+        ? '$10 per 1 Day Subscription'
+        : price === '50'
+        ? '$50 per 7 Day Subscription'
+        : '$100 per month Subscription';
 
     return actions.order.create({
       purchase_units: [
@@ -47,24 +50,32 @@ export const PayPal: React.FC<Props> = ({ price }) => {
     });
   };
 
-  const onApproveOrder = async (data: OnApproveData, actions: OnApproveActions) => {
+  const onApproveOrder = async (
+    data: OnApproveData,
+    actions: OnApproveActions
+  ) => {
     const order = await actions?.order?.capture();
-    console.log("order", order);
+    console.log('order', order);
 
     handleApprove(data.orderID);
   };
 
   const onErrorOrder = (err: any) => {
     setError(err);
-    console.error("PayPal Checkout onError", err);
+    console.error('PayPal Checkout onError', err);
   };
 
-  const onClickOrder = (data: Record<string, unknown>, actions: OnClickActions) => {
+  const onClickOrder = (
+    data: Record<string, unknown>,
+    actions: OnClickActions
+  ) => {
     // Validate on button click, client or server side
     const hasAlreadyBoughtCourse = false;
 
     if (hasAlreadyBoughtCourse) {
-      setError("You already bought this course. Go to your account to view your list of courses.");
+      setError(
+        'You already bought this course. Go to your account to view your list of courses.'
+      );
 
       return actions.reject();
     } else {
@@ -76,7 +87,7 @@ export const PayPal: React.FC<Props> = ({ price }) => {
 
   if (paidFor) {
     // Display success message, modal or redirect user to success page
-    console.log("Thank you for your purchase!");
+    console.log('Thank you for your purchase!');
   }
 
   if (error) {
@@ -86,8 +97,8 @@ export const PayPal: React.FC<Props> = ({ price }) => {
 
   return (
     <PayPalButtons
-      style={{ color: "gold", layout: "horizontal", shape: "rect", height: 55 }}
-      className={"flex"}
+      style={{ color: 'gold', layout: 'horizontal', shape: 'rect', height: 55 }}
+      className={'flex'}
       createOrder={onCreateOrder}
       onApprove={onApproveOrder}
       onError={onErrorOrder}

@@ -1,1 +1,1 @@
-export { DevicesTab } from "./DevicesTab";
+export { DevicesTab } from './DevicesTab';

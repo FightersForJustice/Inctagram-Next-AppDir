@@ -1,15 +1,17 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Modal } from '@/components/Modals/Modal';
 import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { usePostRegistrationEmailResendingMutation } from '@/api';
+import s from './RegistrationEmailResend.module.scss';
+import f from './EmailSentModal.module.scss';
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
+export const RegistrationEmailResend = ({ translate }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [resend, { isSuccess, isLoading }] =
     usePostRegistrationEmailResendingMutation();
@@ -31,36 +33,26 @@ export const RegistrationEmailResend: React.FC<Props> = ({ translate }) => {
 
   return (
     <>
-      <div
-        className={'flex flex-col justify-center items-center mt-[100px] mb-9'}
-      >
-        <h1 className={'text-[20px] mb-[19px]'}>{translate('title')}</h1>
-        <p className={'max-w-[300px] text-center mb-[30px]'}>
-          {translate('desc')}
-        </p>
-        <button
-          className={
-            'bg-[--primary-500] rounded-s pt-[6px] pr-[34px] pb-[6px] pl-[34px] mb-[32px]'
-          }
-          onClick={onResend}
-        >
+      <div className={s.container}>
+        <h1 className={s.slogan}>{translate('title')}</h1>
+        <p className={s.verificationText}>{translate('desc')}</p>
+        <button className={s.resendLink} onClick={onResend}>
           {translate('btnName')}
         </button>
         <Image
+          className={s.imgContainer}
           src={'/img/expired.svg'}
           alt={'congrats'}
-          width={423}
-          height={292}
+          width={473}
+          height={352}
         />
       </div>
       {showModal && (
-        <Modal
-          title={'Email sent'}
-          onClose={() => setShowModal(false)}
-          isOkBtn={true}
-        >
-          We have sent a link to confirm your email to{' '}
-          <span className={'text-blue-300'}>{userEmail}</span>
+        <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
+          <p className={f.container}>
+            We have sent a link to confirm your email to{' '}
+            <span>{userEmail}</span>
+          </p>
         </Modal>
       )}
       {isLoading && <Loader />}

@@ -1,5 +1,5 @@
-export const dataURLtoFile = (dataurl: any, filename = "avatar.txt") => {
-  let arr = dataurl.split(","),
+export const dataURLtoFile = (dataurl: any, filename = 'avatar.txt') => {
+  let arr = dataurl.split(','),
     mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[arr.length - 1]),
     n = bstr.length,

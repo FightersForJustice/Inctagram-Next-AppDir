@@ -1,0 +1,15 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  text-align: left;
+}
+
+.container span {
+  color: var(--primary-100);
+}
+
+@include s.devices(mobile) {
+  .container {
+    text-align: center;
+  }
+}

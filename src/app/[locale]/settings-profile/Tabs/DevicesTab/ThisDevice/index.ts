@@ -1,1 +1,1 @@
-export { ThisDevice } from "./ThisDevice";
+export { ThisDevice } from './ThisDevice';

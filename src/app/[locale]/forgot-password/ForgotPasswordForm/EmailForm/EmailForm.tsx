@@ -1,4 +1,7 @@
-import React, { ReactNode } from 'react';
+import { usePlaceholder } from '@/utils/usePlaceholder';
+import s from './EmailForm.module.scss';
+import clsx from 'clsx';
+import { ReactNode } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
@@ -6,39 +9,28 @@ type Props = {
   register: UseFormRegister<{ email: string }>;
   error: FieldError | undefined;
   errorMessage: string | undefined;
+  registerName: 'email';
 };
 
-export const EmailForm: React.FC<Props> = ({
+export const EmailForm = ({
   translate,
   errorMessage,
   error,
   register,
-}) => {
+  registerName,
+}: Props) => {
   return (
-    <div className={' mt-[18px]'}>
-      <div
-        className={
-          ' text-left ml-5 text-[--light-900] text-[14px] font-extrabold'
-        }
-      >
+    <div className={s.inputContainer}>
+      <div className={s.container}>
         <label>{translate('email')}</label>
       </div>
       <div className={'relative'}>
         <input
-          {...register('email')}
-          className={`relative bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] mb-[15px] ${
-            error ? 'border-red-700' : ''
-          }`}
+          {...register(registerName)}
+          placeholder={usePlaceholder(registerName)}
+          className={clsx([s.input], { [s.error]: error })}
         />
-        {error && (
-          <p
-            className={
-              'absolute left-[20px] top-[35px] text-[--danger-500] text-[11px]'
-            }
-          >
-            {errorMessage}
-          </p>
-        )}
+        {error && <p className={s.errorMessage}>{errorMessage}</p>}
       </div>
     </div>
   );

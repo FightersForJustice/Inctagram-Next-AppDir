@@ -10,7 +10,6 @@
 - **SCSS/Tailwind**
 - **Radix UI**
 - **React Hook Form**
-- **Cypress**
 - **Material UI**
 - **Prettier**
 

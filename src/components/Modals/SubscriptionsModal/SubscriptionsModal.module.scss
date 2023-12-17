@@ -2,16 +2,15 @@
   position: relative;
   margin-bottom: 24px;
 
-
   &__input {
     background: transparent;
-    border: 1px solid var(--dark-100, #4C4C4C);
+    border: 1px solid var(--dark-100, #4c4c4c);
     padding: 6px 41px;
     width: 600px;
     outline: none;
 
     &::placeholder {
-      color: var(--light-900, #8D9094);
+      color: var(--light-900, #8d9094);
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
@@ -76,4 +75,3 @@
     }
   }
 }
-

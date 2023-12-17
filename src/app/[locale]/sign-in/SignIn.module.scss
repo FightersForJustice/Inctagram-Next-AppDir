@@ -1,0 +1,22 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  border: 1px solid var(--dark-300);
+  background-color: var(--dark-500);
+  border-radius: 0.125rem;
+  max-width: 380px;
+  text-align: center;
+  margin: 95px auto;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+@include s.devices(mobile) {
+  .container {
+    border: none;
+    background-color: var(--dark-700);
+    margin: 75px auto;
+    max-width: 378px;
+    padding: 0 1.5rem;
+  }
+}

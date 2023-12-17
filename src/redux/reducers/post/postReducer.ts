@@ -1,6 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ImageStateType } from "@/app/[locale]/my-profile/CreatePost/CreatePost";
-import { toast } from "react-toastify";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
 
 const initialAppState: PostStateType = {
   postImagesIds: [],
@@ -10,7 +9,7 @@ const initialAppState: PostStateType = {
 };
 
 const slice = createSlice({
-  name: "postReducer",
+  name: 'postReducer',
   initialState: initialAppState,
   reducers: {
     addImageId(state, action: PayloadAction<IUploadImageId>) {
@@ -27,11 +26,18 @@ const slice = createSlice({
       state.imagesGallery.push(action.payload);
     },
     changeImage(state, action: PayloadAction<ImageStateType>) {
-      const index = state.postImages.findIndex((image) => image.id === action.payload.id);
+      const index = state.postImages.findIndex(
+        (image) => image.id === action.payload.id
+      );
       if (index !== -1) state.postImages[index] = action.payload;
     },
-    setImageFilter(state, action: PayloadAction<{ image: string; filter: string }>) {
-      const index = state.postImages.findIndex((image) => image.image === action.payload.image);
+    setImageFilter(
+      state,
+      action: PayloadAction<{ image: string; filter: string }>
+    ) {
+      const index = state.postImages.findIndex(
+        (image) => image.image === action.payload.image
+      );
       if (index !== -1) {
         state.postImages[index] = {
           image: action.payload.image,
@@ -41,25 +47,29 @@ const slice = createSlice({
       }
     },
     removeImage(state, action: PayloadAction<string>) {
-      const index = state.postImages.findIndex((image) => image.id === action.payload);
+      const index = state.postImages.findIndex(
+        (image) => image.id === action.payload
+      );
       if (index !== -1) state.postImages.splice(index, 1);
+      if (state.imagesGallery.length < 10) {
+      }
     },
     removeAllImages(state) {
       state.postImages = [];
     },
     addImageToPostGallery(state, action: PayloadAction<ImageStateType>) {
-      if (state.imagesGallery.length >= 10) {
-        toast.error("Max images count is 10!");
-        return;
-      }
       state.imagesGallery.push(action.payload);
     },
     changeImageFromPostGallery(state, action: PayloadAction<ImageStateType>) {
-      const index = state.imagesGallery.findIndex((image) => image.id === action.payload.id);
+      const index = state.imagesGallery.findIndex(
+        (image) => image.id === action.payload.id
+      );
       if (index !== -1) state.imagesGallery[index] = action.payload;
     },
     removeGalleryImage(state, action: PayloadAction<{ id: string }>) {
-      const index = state.imagesGallery.findIndex((image) => image.id === action.payload.id);
+      const index = state.imagesGallery.findIndex(
+        (image) => image.id === action.payload.id
+      );
       if (index !== -1) state.imagesGallery.splice(index, 1);
     },
     removeAllGalleryImages(state) {

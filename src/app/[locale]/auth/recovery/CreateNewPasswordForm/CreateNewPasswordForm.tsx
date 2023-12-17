@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import s from './CreateNewPasswordForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -12,12 +13,13 @@ import { Loader } from '@/components/Loader/Loader';
 import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { toast } from 'react-toastify';
 import { CreateFormItem } from './CreateFormItem';
+import { AuthSubmit } from '@/components/Input';
 
 type Props = {
   translate: (value: string) => ReactNode;
 };
 
-export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
+export const CreateNewPasswordForm = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
@@ -72,50 +74,38 @@ export const CreateNewPasswordForm: React.FC<Props> = ({ translate }) => {
     }
   };
 
-  return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={' mt-[24px] mb-[36px] pb-[24px]'}
-      >
-        <CreateFormItem
-          marginTop={' mt-[18px]'}
-          translate={translate}
-          register={register}
-          showValue={showPass}
-          setShowCallback={setShowPass}
-          error={errors.password}
-          errorMessage={errors?.password?.message}
-          translateName={'password'}
-          registerName={'password'}
-        />
+  return isLoading || isCheckLoading ? (
+    <Loader />
+  ) : (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <CreateFormItem
+        translate={translate}
+        register={register}
+        showValue={showPass}
+        setShowCallback={setShowPass}
+        error={errors.password}
+        errorMessage={errors?.password?.message}
+        translateName={'password'}
+        registerName={'password'}
+      />
 
-        <CreateFormItem
-          marginTop={'mt-[18px]'}
-          marginBottom={'mb-[26px]'}
-          translate={translate}
-          register={register}
-          showValue={showConfirmPass}
-          setShowCallback={setShowConfirmPass}
-          error={errors.passwordConfirm}
-          errorMessage={errors?.passwordConfirm?.message}
-          translateName={'passwordConf'}
-          registerName={'passwordConfirm'}
-        />
+      <CreateFormItem
+        translate={translate}
+        register={register}
+        showValue={showConfirmPass}
+        setShowCallback={setShowConfirmPass}
+        error={errors.passwordConfirm}
+        errorMessage={errors?.passwordConfirm?.message}
+        translateName={'passwordConf'}
+        registerName={'passwordConfirm'}
+      />
 
-        {serverError && <p className={'text-red-500 mb-3.5 '}>{serverError}</p>}
-        <p className={'text-left ml-5 text-[--light-900] leading-5 mb-[40px]'}>
-          {translate('desc')}
-        </p>
-
-        <input
-          type="submit"
-          className={`mb-[10px]  w-[90%] pt-[6px] pb-[6px] bg-[--primary-500] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-60`}
-          value={String(translate('btnName'))}
-          disabled={!!serverError || !isValid}
-        />
-      </form>
-      {isLoading || (isCheckLoading && <Loader />)}
-    </>
+      {serverError && <p className={s.errorMessage}>{serverError}</p>}
+      <p className={s.infoText}>{translate('desc')}</p>
+      <AuthSubmit
+        value={String(translate('btnName'))}
+        disabled={!!serverError || !isValid}
+      />
+    </form>
   );
 };

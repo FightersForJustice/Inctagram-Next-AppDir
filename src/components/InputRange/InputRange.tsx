@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
-import "./InputRange.scss";
+import React, { ChangeEvent, useState } from 'react';
+import './InputRange.scss';
 
 type Props = {
   onZoomImage: (value: string) => void;
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const InputRange: React.FC<Props> = ({ onZoomImage, zoomImage }) => {
-  const [value, setValue] = useState(zoomImage ? zoomImage : "0");
+  const [value, setValue] = useState(zoomImage ? zoomImage : '0');
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onZoomImage(e.currentTarget.value);
@@ -16,7 +16,13 @@ export const InputRange: React.FC<Props> = ({ onZoomImage, zoomImage }) => {
 
   return (
     <div className="inputWrapper">
-      <input type="range" min="10" max="100" value={value} onChange={onChangeHandler} />
+      <input
+        type="range"
+        min="10"
+        max="100"
+        value={value}
+        onChange={onChangeHandler}
+      />
     </div>
   );
 };

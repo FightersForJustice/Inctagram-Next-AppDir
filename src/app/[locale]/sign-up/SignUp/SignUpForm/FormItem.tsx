@@ -1,11 +1,13 @@
-import React, { ReactNode } from "react";
-import { InputError } from "./InputError";
-import { FieldError, UseFormRegister } from "react-hook-form";
-import { ShowHidePass } from "@/components/ShowHidePass";
+import { ReactNode } from 'react';
+import s from './FormItem.module.scss';
+import clsx from 'clsx';
 
-type Props = {
-  marginTop: string;
-  marginBottom?: string;
+import { InputError } from './InputError';
+import { FieldError, UseFormRegister } from 'react-hook-form';
+import { ShowHidePass } from '@/components/ShowHidePass';
+import { usePlaceholder } from '@/utils/usePlaceholder';
+
+export interface FormItemProps {
   translate: (value: string) => ReactNode;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
@@ -17,41 +19,50 @@ type Props = {
   setShow?: (value: boolean) => void;
   showPasswordIcon?: boolean;
   isTouched?: boolean;
-};
+}
 
-export const FormItem: React.FC<Props> = ({
+export const FormItem = ({
   errorMessage,
   error,
   register,
-  marginTop,
   translate,
   registerName,
   translateName,
-  marginBottom,
   id,
   show,
   setShow,
   showPasswordIcon,
-}) => {
+}: FormItemProps) => {
   const type = showPasswordIcon !== undefined && show;
+  const inputStyle = clsx(s.input, { [s.error]: error });
+  const inputTypes: any = {
+    'sign-in-email-input': 'username',
+    'sign-up-email': 'username',
+    'sign-in-password-input': 'current-password',
+    'sign-up-password': 'new-password',
+    'sign-up-passwordConfirm': 'new-password',
+  };
+
+  const finalStyle =
+    id.slice(0, 7) === 'sign-in' ? s.signInContainer : s.signInUpContainer;
 
   return (
-    <div className={`${marginTop} ${marginBottom}`}>
-      <div className={"text-left ml-5 text-[--light-900] text-[14px]"}>
+    <div className={finalStyle} key={id}>
+      <div className={s.labelContainer}>
         <label>{translate(translateName)}</label>
       </div>
-      <div className={"relative"}>
+      <div className={s.inputContainer}>
         <input
           {...register(registerName)}
-          className={` bg-transparent border-1 pt-[5px] pl-[12px] pb-[5px] pr-[12px] outline-none rounded-md border-[--dark-100] text-[--light-900] w-[90%] ${
-            error ? "border-red-700" : ""
-          }`}
+          className={inputStyle}
           id={id}
-          type={`${!type ? "text" : "password"}`}
+          placeholder={usePlaceholder(registerName)}
+          type={`${!type ? 'text' : 'password'}`}
+          autoComplete={inputTypes[id] ?? null}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError error={error} errorMessage={errorMessage} id={"sign-up-userName-error"} />
+        <InputError error={error} errorMessage={errorMessage} id={id} />
       </div>
     </div>
   );

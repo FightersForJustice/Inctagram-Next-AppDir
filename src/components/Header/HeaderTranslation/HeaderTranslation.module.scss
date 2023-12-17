@@ -1,0 +1,61 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--dark-100);
+  cursor: pointer;
+  width: 163px;
+  padding: 6px 12px;
+  gap: 12px;
+}
+
+.languagesContainer {
+  justify-content: flex-start;
+  background-color: var(--dark-700);
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.popOver {
+  z-index: 10;
+}
+
+@include s.devices(mobile) {
+  .container {
+    width: 80px;
+    border: none;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  .container img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .select {
+    span {
+      display: none;
+    }
+  }
+
+  .languagesContainer {
+    border-top: 1px solid var(--dark-300);
+    margin-top: 12px;
+
+    span {
+      display: none;
+    }
+
+    img {
+      margin-right: 26px;
+    }
+  }
+}

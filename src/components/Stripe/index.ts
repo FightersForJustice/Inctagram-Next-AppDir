@@ -1,1 +1,1 @@
-export { Stripe } from "./Stripe";
+export { Stripe } from './Stripe';

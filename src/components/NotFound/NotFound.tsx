@@ -1,7 +1,7 @@
-import React from "react";
-import s from "./NotFound.module.scss";
-import img from "./../../../public/img/404Page.svg";
-import Image from "next/image";
+import React from 'react';
+import s from './NotFound.module.scss';
+import img from './../../../public/img/404Page.svg';
+import Image from 'next/image';
 
 export const NotFound = ({ children }: Props) => {
   const [title, description] = React.Children.toArray(children);

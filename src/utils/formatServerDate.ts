@@ -1,16 +1,16 @@
 const months: string[] = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 export const formatServerDate = (dateStr?: string) => {
@@ -21,7 +21,9 @@ export const formatServerDate = (dateStr?: string) => {
     const year: number = date.getFullYear();
     const hours: number = date.getHours();
     const minutes: number = date.getMinutes();
-    return `${month} ${day}, ${year} at ${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+    return `${month} ${day}, ${year} at ${hours}:${
+      minutes < 10 ? '0' : ''
+    }${minutes}`;
   }
   return;
 };
