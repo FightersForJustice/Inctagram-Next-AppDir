@@ -16,13 +16,13 @@ type Props = {
   loadedImages: ImageStateType[];
   currentFile?: File[];
 };
-export const FirstModal: React.FC<Props> = ({
+export const FirstModal = ({
   currentFile,
   setPostImage,
   setFile,
   setShowCreatePostModal,
   loadedImages,
-}) => {
+}: Props) => {
   const dispatch = useAppDispatch();
   const id = crypto.randomUUID();
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
