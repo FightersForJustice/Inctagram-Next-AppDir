@@ -253,7 +253,7 @@
     "mobileMenu": {
       "profileSettings": "Profile Settings",
       "statistics": "Statistics",
-      "favorites": "Favorites",
+      "favourites": "Favourites",
       "logOut": "Log Out"
     }
   }

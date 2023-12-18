@@ -8,7 +8,7 @@ export const menuOptions = [
     img: '/img/trending-up.svg',
   },
   {
-    ref: 'favorites',
+    ref: 'favourites',
     img: '/img/bookmark-outline.svg',
   },
   {

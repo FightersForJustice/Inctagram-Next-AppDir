@@ -258,7 +258,7 @@
     "mobileMenu": {
       "profileSettings": "Настройки профиля",
       "statistics": "Статистика",
-      "favorites": "Избранное",
+      "favourites": "Избранное",
       "logOut": "Выйти"
     }
   }
