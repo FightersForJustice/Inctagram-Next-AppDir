@@ -71,14 +71,6 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
     if (ref === 'statistics') {
       console.log(2);
     }
-    //   const action: any = {
-    //   profileSettings: console.log(1),
-    //   statistics: console.log(2),
-    //   favorites: console.log(3),
-    //   logOut: logOutMenu(),
-    // }
-    // console.log(ref)
-    // action[ref]
   };
   return (
     <button className={s.container} id="mobileMenu">
