@@ -16,8 +16,8 @@ export const DeleteModal: React.FC<Props> = ({ setShowDeleteModal }) => {
     <Modal
       title={t('DeleteModal.title')}
       isOkBtn={false}
-      width={'378px'}
       onClose={() => setShowDeleteModal(false)}
+      className={s.container}
     >
         <div className={s.deleteModal__info}>
           <Image
