@@ -47,6 +47,18 @@
   fill: var(--primary-500);
 }
 
+.modal {
+  width: 450px;
+  &__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 50px;
+  }
+}
+
 @include s.devices(tablet-xl) {
   .container {
     display: block;

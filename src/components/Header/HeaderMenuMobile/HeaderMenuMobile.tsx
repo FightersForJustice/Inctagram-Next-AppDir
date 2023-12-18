@@ -59,19 +59,27 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
   };
 
   const logOutMenu = () => {
-    setShowLogoutModal(true)
+    setShowLogoutModal(true);
     setModal(!modal);
-  }
+  };
 
-  const actionsHandler = (ref: string) => { 
-    const action: any = {
-    profileSettings: '',
-    statistics: '',
-    favorites: '',
-    logOut: logOutMenu(),
-  }
-  action[ref]
-};
+  const actionsHandler = (ref: string) => {
+    if (ref === 'logOut') {
+      console.log(userEmail);
+      logOutMenu();
+    }
+    if (ref === 'statistics') {
+      console.log(2);
+    }
+    //   const action: any = {
+    //   profileSettings: console.log(1),
+    //   statistics: console.log(2),
+    //   favorites: console.log(3),
+    //   logOut: logOutMenu(),
+    // }
+    // console.log(ref)
+    // action[ref]
+  };
   return (
     <button className={s.container} id="mobileMenu">
       <MenuImage modal={modal} setModal={modalHandler} />
@@ -104,14 +112,17 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
           />
         </ul>
       )}
-      
+
       {showLogoutModal && (
         <Modal
           title={t('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
+          className={s.modal}
         >
-          {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
-          <div className={s.nav__btn__modal}>
+          <div>
+            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          </div>
+          <div className={s.modal__btn}>
             <TransparentBtn onClick={onLogout}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>

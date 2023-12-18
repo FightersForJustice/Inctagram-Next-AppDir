@@ -53,11 +53,13 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
       />
       {showLogoutModal && (
         <Modal
-          width={'450px'}
+          className={s.modal}
           title={t('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
         >
-          {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          <div>
+            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>
               {t('LogoutModal.btnYes')}
