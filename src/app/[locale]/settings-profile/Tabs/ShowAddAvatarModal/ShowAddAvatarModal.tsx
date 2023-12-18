@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import s from '../Tabs.module.scss';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
@@ -21,7 +21,7 @@ const DynamicCropper = dynamic(() => import('../Cropper/Cropper'), {
   ssr: false,
 });
 
-export const ShowAddAvatarModal: React.FC<Props> = ({
+export const ShowAddAvatarModal = ({
   setCroppedAvatar,
   userAvatar,
   setUserAvatar,
@@ -30,7 +30,7 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
   onCloseModal,
   t,
   fileError,
-}) => {
+}: Props) => {
   return (
     <Modal
       title={t('AddPhotoModal.title')}
