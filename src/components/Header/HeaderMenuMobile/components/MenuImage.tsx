@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './HeaderMenuMobile.module.scss';
+import s from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.module.scss';
 
 type ImageProps = {
   modal: boolean;
