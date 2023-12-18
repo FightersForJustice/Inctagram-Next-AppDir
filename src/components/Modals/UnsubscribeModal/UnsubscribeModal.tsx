@@ -18,7 +18,6 @@ export const UnsubscribeModal: React.FC<Props> = ({
     <Modal
       title={t('UnsubscribeModal.title')}
       isOkBtn={false}
-      width={'378px'}
       onClose={() => setShowUnsubscribeModal(false)}
     >
       {/* <div className={s.deleteModal}> */}
