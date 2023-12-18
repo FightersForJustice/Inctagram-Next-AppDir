@@ -1,5 +1,5 @@
 'use client';
-import './globals.css';
+import './globals.scss';
 import { ReactNode } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { store } from '@/redux';
