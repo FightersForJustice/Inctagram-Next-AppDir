@@ -35,7 +35,7 @@ export const ShowAddAvatarModal: React.FC<Props> = ({
     <Modal
       title={t('AddPhotoModal.title')}
       onClose={onCloseModal}
-      width={'492px'}
+      className={s.modal__container}
       isOkBtn={false}
     >
       <div className={s.modal}>

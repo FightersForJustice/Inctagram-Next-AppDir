@@ -210,6 +210,9 @@
 /*-----modal-------*/
 
 .modal {
+  &__container {
+    width: 495px;
+  }
   &__img {
     margin: 0 auto;
     padding-top: 72px;
