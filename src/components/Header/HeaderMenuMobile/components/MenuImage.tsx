@@ -1,9 +1,9 @@
-import React from 'react';
+import { MouseEvent } from 'react';
 import s from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.module.scss';
 
 type ImageProps = {
   modal: boolean;
-  setModal: (e: React.MouseEvent) => void;
+  setModal: (e: MouseEvent) => void;
 };
 
 export const MenuImage = ({ modal, setModal }: ImageProps) => {
@@ -15,7 +15,7 @@ export const MenuImage = ({ modal, setModal }: ImageProps) => {
       className={modal ? s.active : s.nonActive}
       onClick={setModal}
       xmlns="http://www.w3.org/2000/svg"
-      id='dots'
+      id="dots"
     >
       <g clipPath="url(#clip0_43741_10677)">
         <path d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" />

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
+
+import { LanguagesModal } from './LanguagesModal';
+
 import s from '@/app/[locale]/my-profile/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
-import Image from 'next/image';
-import { LanguagesModal } from './LanguagesModal';
 
 export const TranslationSelect = ({
   language,

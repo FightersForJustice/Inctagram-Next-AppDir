@@ -49,7 +49,7 @@ export const SubscriptionsModal: React.FC<Props> = ({
                   height={36}
                   className={s.modal__content__avatar}
                 />
-                <p>URLProfielgwegwergrgety45h454545yh45y</p>
+                <p>URLProfielркеркеркерокео</p>
               </div>
               <div className={s.modal__content__right}>
                 <button

@@ -3,12 +3,12 @@
 import { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next-intl/client';
+import { useRouter } from 'next/navigation';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
 import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
-import { useRouter } from 'next/navigation';
+
 import s from './Header.module.scss';
 
 export const Header = () => {
