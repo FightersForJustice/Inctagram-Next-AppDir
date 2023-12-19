@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Confirm } from './Confirm';
+import { Confirm } from '@/components/auth';
 
 const RegistrationConfirmation = ({
   searchParams,

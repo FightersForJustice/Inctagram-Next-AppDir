@@ -77,10 +77,7 @@ export const DatePick: React.FC<Props> = ({
         {ageError && (
           <p className={'text-red-600 text-[12px] absolute top-[40px] left-0'}>
             {ageError}
-            <Link
-              href={'/agreements-page/privacy-policy'}
-              className={'underline'}
-            >
+            <Link href={'/agreements/privacy-policy'} className={'underline'}>
               Privacy policy
             </Link>
           </p>
