@@ -142,16 +142,16 @@
         "required": "Username is required"
       },
       "firstName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "Name must contain at least 1 character",
-        "max": "Name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "First Name can only contain alphabetic characters",
+        "min": "First Name must contain at least 1 character",
+        "max": "First Name must not exceed 50 characters",
+        "required": "First Name is required"
       },
       "lastName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "The name must contain at least 1 character",
-        "max": "The name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "Last Name can only contain alphabetic characters",
+        "min": "Last Name must contain at least 1 character",
+        "max": "Last Name must not exceed 50 characters",
+        "required": "Last Name is required"
       },
       "city": {
         "max": "City must not exceed 15 characters"
