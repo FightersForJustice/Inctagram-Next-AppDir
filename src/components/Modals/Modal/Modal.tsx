@@ -16,6 +16,7 @@ export const Modal = ({
   className,
   isOkBtn,
 }: PropsWithChildren<Props>) => {
+  console.log(1)
   return (
     <div className={s.modal} onClick={onClose}>
       <div
