@@ -18,6 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 10px;
   gap: 6px;
 
   font-family: Inter;
@@ -33,7 +34,7 @@
 }
 
 .checkbox {
-  width: 0px;
+  display: none;
 }
 
 .link {
