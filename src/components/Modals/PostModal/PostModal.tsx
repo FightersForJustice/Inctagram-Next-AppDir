@@ -1,5 +1,4 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
-import Image from 'next/image';
+import { MouseEventHandler, ReactNode } from 'react';
 import './PostModal.css';
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   width?: string;
 };
 
-export const PostModal: React.FC<Props> = ({ children, width, onClose }) => {
+export const PostModal = ({ children, width, onClose }: Props) => {
   return (
     <div className={'post__modal'} onClick={onClose}>
       <div

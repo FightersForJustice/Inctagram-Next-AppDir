@@ -1,6 +1,7 @@
-import '../Modal/Modal.css';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import Image from 'next/image';
+
+import '../Modal/Modal.css';
 
 export const BaseModal = ({
   children,

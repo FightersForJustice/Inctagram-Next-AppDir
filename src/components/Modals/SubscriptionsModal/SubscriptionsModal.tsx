@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Modal } from '../Modal/Modal';
+import { useState } from 'react';
 import Image from 'next/image';
-import { UnsubscribeModal } from '../UnsubscribeModal/UnsubscribeModal';
 import { useTranslations } from 'next-intl';
+
+import { Modal } from '../Modal/Modal';
+import { UnsubscribeModal } from '../UnsubscribeModal/UnsubscribeModal';
 
 import s from './SubscriptionsModal.module.scss';
 

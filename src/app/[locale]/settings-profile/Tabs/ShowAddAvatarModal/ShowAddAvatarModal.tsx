@@ -31,10 +31,14 @@ export const ShowAddAvatarModal = ({
   t,
   fileError,
 }: Props) => {
+
+  const closeModalHandler = () => {
+    onCloseModal()
+  }
   return (
     <Modal
       title={t('AddPhotoModal.title')}
-      onClose={onCloseModal}
+      onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
     >

@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import Image from 'next/image';
+
 import './CroppingModal.css';
 
 type Props = {

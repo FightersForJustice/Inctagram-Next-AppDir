@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
-import s from './Modal.module.scss';
 import Image from 'next/image';
+
+import s from './Modal.module.scss';
 
 type Props = {
   title?: string;
@@ -19,7 +20,7 @@ export const Modal = ({
   return (
     <div className={s.modal} onClick={onClose}>
       <div
-        className={s.modal__content + " " + className}
+        className={s.modal__content + ' ' + className}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={s.modal__header}>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+
 import { Modal } from '../Modal/Modal';
 import { DeleteModal } from '../DeleteModal/DeleteModal';
-import { useTranslations } from 'next-intl';
 
 import s from './SubscribersModal.module.scss';
 
@@ -10,9 +11,7 @@ type Props = {
   setShowSubscribersModal: (value: boolean) => void;
 };
 
-export const SubscribersModal: React.FC<Props> = ({
-  setShowSubscribersModal,
-}) => {
+export const SubscribersModal = ({ setShowSubscribersModal }: Props) => {
   const t = useTranslations('MyProfilePage');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
