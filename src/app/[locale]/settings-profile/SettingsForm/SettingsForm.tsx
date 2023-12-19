@@ -32,13 +32,13 @@ type FormValues = {
   aboutMe: string | null | undefined;
 };
 
-export const SettingsForm: React.FC<Props> = ({
+export const SettingsForm = ({
   userProfile,
   userBirthday,
   translate,
   userCity,
   setUserCity,
-}) => {
+}: Props) => {
   const [dateOfBirth, setDateOfBirth] = useState(userBirthday);
   const [ageError, setAgeError] = useState('');
 
