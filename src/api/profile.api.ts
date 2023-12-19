@@ -15,8 +15,9 @@ export const profileApi = api.injectEndpoints({
     }),
     getProfile: builder.query<GetResponse, void>({
       query: () => {
+        const userId = sessionStorage.getItem('userId');
         return {
-          url: `users/profile/${sessionStorage.getItem('userId') ?? 0}`,
+          url: `users/profile/${userId}`,
           method: 'GET',
         };
       },

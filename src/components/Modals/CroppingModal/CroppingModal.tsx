@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import Image from 'next/image';
 import './CroppingModal.css';
 
@@ -11,14 +11,14 @@ type Props = {
   croppedPostImage: string;
 };
 
-export const CroppingModal = ({
+export const CroppingModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,
   title,
   children,
   width,
   setPostImage,
   showThirdModal,
-}: PropsWithChildren<Props>) => {
+}) => {
   const onNextBtnHandler = () => {
     showThirdModal();
   };

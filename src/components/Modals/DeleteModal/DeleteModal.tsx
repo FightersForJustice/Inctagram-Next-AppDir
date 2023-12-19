@@ -19,6 +19,7 @@ export const DeleteModal: React.FC<Props> = ({ setShowDeleteModal }) => {
       onClose={() => setShowDeleteModal(false)}
       className={s.container}
     >
+      <div className={s.deleteModal}>
         <div className={s.deleteModal__info}>
           <Image
             src={'/img/modal/avatar.png'}
@@ -42,6 +43,7 @@ export const DeleteModal: React.FC<Props> = ({ setShowDeleteModal }) => {
             {t('DeleteModal.btnNo')}
           </button>
         </div>
+      </div>
     </Modal>
   );
 };

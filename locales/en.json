@@ -76,31 +76,31 @@
     "title": "next-intl example"
   },
   "MyProfilePage": {
-    "subscriptions": "Following",
-    "subscribers": "Followers",
+    "subscriptions": "Subscriptions",
+    "subscribers": "Subscribers",
     "publications": "Publications",
     "btnName": "Profile Settings",
     "aboutMe": "Fill in your info, while it's empty",
     "SubscribersModal": {
-      "title": "Followers",
+      "title": "Subscribers",
       "search": "Search",
-      "subBtn": "Follow",
+      "subBtn": "Subscribe",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
-      "title": "Following",
+      "title": "Subscriptions",
       "search": "Search",
-      "unsubscribe": "Unfollow"
+      "unsubscribe": "Unsubscribe"
     },
     "UnsubscribeModal": {
-      "title": "Unfollow",
-      "question": "Do you really want to unfollow from this user",
+      "title": "Unsubscribe",
+      "question": "Do you really want to unsubscribe from this user",
       "btnYes": "Yes",
       "btnNo": "No"
     },
     "DeleteModal": {
       "title": "Delete Subscriber",
-      "question": "Do you really want to delete a Following",
+      "question": "Do you really want to delete a subscriber",
       "btnYes": "Yes",
       "btnNo": "No"
     }
@@ -113,9 +113,9 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
-    "logout": "Log Out",
+    "logout": "Log out",
     "LogoutModal": {
-      "title": "Log Out",
+      "title": "Logout",
       "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
@@ -246,15 +246,7 @@
     }
   },
   "Header": {
-    "notifications": {
-      "notZeroNotifications": "Notifications",
-      "zeroNotifications": "You don't have notifications yet"
-    },
-    "mobileMenu": {
-      "profileSettings": "Profile Settings",
-      "statistics": "Statistics",
-      "favorites": "Favorites",
-      "logOut": "Log Out"
-    }
+    "notifications": "Notifications",
+    "zeroNotifications": "You don't have notifications yet"
   }
 }

@@ -1,0 +1,65 @@
+@use '@/app/mixins' as s;
+
+.text {
+  text-align: left;
+  color: var(--light-900);
+  width: 100%;
+}
+
+.input {
+  background-color: transparent;
+  border: 1px solid var(--dark-100);
+  padding: 5px 12px;
+  outline: none;
+  border-radius: 0.125rem;
+  color: var(--light-100);
+  width: 100%;
+
+  font-size: 16px;
+}
+
+.error {
+  border-color: var(--danger-500);
+}
+
+.errorMessage {
+  position: relative;
+
+  color: var(--danger-500);
+  text-align: left;
+}
+
+.errorMessagePassword {
+  position: relative;
+  margin-bottom: -20px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 24px;
+
+  font-family: Inter sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.containerTop {
+  padding-top: 37px;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+@include s.devices(mobile) {
+  .containerTop {
+    padding-top: 31px;
+  }
+}

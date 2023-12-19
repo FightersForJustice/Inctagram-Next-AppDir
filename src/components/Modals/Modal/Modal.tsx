@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 type Props = {
   title?: string;
-  className?: string;
   onClose?: () => void;
+  width?: string;
   isOkBtn?: boolean;
 };
 
@@ -13,13 +13,14 @@ export const Modal = ({
   onClose,
   title,
   children,
-  className,
+  width,
   isOkBtn,
 }: PropsWithChildren<Props>) => {
   return (
     <div className={s.modal} onClick={onClose}>
       <div
-        className={s.modal__content + " " + className}
+        className={s.modal__content}
+        style={{ width }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={s.modal__header}>

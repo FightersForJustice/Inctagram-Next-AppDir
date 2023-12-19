@@ -1,4 +1,3 @@
-import React from 'react';
 import s from './HomePagePost.module.scss';
 import Image from 'next/image';
 
@@ -19,7 +18,7 @@ type Props = {
   images: ImageType[];
 };
 
-export const HomePagePost: React.FC<Props> = ({ post, images }) => {
+export const HomePagePost = ({ post, images }: Props) => {
   const { data } = useGetProfileQuery();
   const language = useGetLanguageFromPath();
   const test = getTimeAgoText(

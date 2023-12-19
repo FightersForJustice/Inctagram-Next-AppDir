@@ -18,7 +18,6 @@ const MyProfile = () => {
   const { data, isLoading } = useGetProfileQuery();
 
   if (isLoading) return <Loader />;
-
   return (
     <>
       <div className={s.container}>
