@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+
 import { Loader } from '@/components/Loader';
-import s from './InfiniteScrollMyPosts.module.scss';
 import { PostsItem, useLazyGetUserPostsQuery } from '@/api/posts.api';
 import { useScrollFetching } from '@/features/customHooks';
-import { toast } from 'react-toastify';
 import { StatusCode } from '@/api/auth.api';
+
+import s from './InfiniteScrollMyPosts.module.scss';
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -14,11 +16,11 @@ type Props = {
   postChanges: boolean;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({
+export const InfiniteScrollMyPosts = ({
   setSelectedPost,
   setOpen,
   getUserPosts,
-}) => {
+}: Props) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
@@ -92,8 +94,9 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
     return data?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
-        <div key={i.id} className={'overflow-hidden'}>
+        <div key={i.id} className={s.imageContainer}>
           <Image
+            // fill
             src={
               i.images[0]?.url
                 ? currentPosts[0].url
@@ -105,6 +108,7 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
             key={i.id}
             onClick={() => openPostHandler(i.id)}
             className={s.post}
+            // style={{maxWidth: '100%', flexDirection: 'row'}}
           />
         </div>
       );
@@ -116,10 +120,8 @@ export const InfiniteScrollMyPosts: React.FC<Props> = ({
       {posts.length > 0 ? (
         postsImages()
       ) : (
-        <div className={'m-auto'}>
-          <p className={'font-bold text-2xl'}>
-            You don&apos;t have any posts yet 😢
-          </p>
+        <div className={s.container}>
+          <p className={s.text}>You don&apos;t have any posts yet 😢</p>
         </div>
       )}
       {/* {isFetching && <Loader />} */}

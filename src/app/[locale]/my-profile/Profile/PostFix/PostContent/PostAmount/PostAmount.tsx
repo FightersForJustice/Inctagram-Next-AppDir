@@ -1,6 +1,6 @@
-import React from 'react';
-import s from '../PostContent.module.scss';
 import Image from 'next/image';
+
+import s from '../PostContent.module.scss';
 
 export const PostAmount = () => {
   return (

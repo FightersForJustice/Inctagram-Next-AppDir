@@ -21,7 +21,7 @@ export const SubscriptionsModal: React.FC<Props> = ({
       <Modal
         title={`2 218 ${t('SubscriptionsModal.title')}`}
         isOkBtn={false}
-        width={'644px'}
+        className={s.modalClassName}
         onClose={() => setShowSubscriptionsModal(false)}
       >
         <div className={s.modal}>
@@ -49,7 +49,7 @@ export const SubscriptionsModal: React.FC<Props> = ({
                   height={36}
                   className={s.modal__content__avatar}
                 />
-                <p>URLProfiele</p>
+                <p>URLProfielркеркеркерокео</p>
               </div>
               <div className={s.modal__content__right}>
                 <button

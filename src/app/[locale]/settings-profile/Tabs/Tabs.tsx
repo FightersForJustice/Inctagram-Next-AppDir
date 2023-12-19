@@ -73,7 +73,7 @@ const TabsDemo = () => {
   };
 
   return (
-    <div style={{ gridArea: 'profile', width: '100%' }}>
+    <div className={s.container}>
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">

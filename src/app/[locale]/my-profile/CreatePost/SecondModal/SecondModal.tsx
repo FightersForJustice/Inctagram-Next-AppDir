@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import s from '../CreatePost.module.scss';
+import { useState } from 'react';
+
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { AspectRatio } from './AspectRatio';
 import { Range } from './Range/Range';
@@ -9,6 +9,8 @@ import { AspectRatioType, ImageStateType } from '../CreatePost';
 import { PostCropper } from '../PostCropper/PostCropper';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+
+import s from '../CreatePost.module.scss';
 
 type Props = {
   postImage: ImageStateType;
@@ -23,7 +25,7 @@ type Props = {
   croppedPostImage: string;
 };
 
-export const SecondModal: React.FC<Props> = ({
+export const SecondModal = ({
   postImage,
   setPostImage,
   showThirdModal,
@@ -34,7 +36,7 @@ export const SecondModal: React.FC<Props> = ({
   setLoadedImages,
   setCroppedPostImage,
   croppedPostImage,
-}) => {
+}: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesGalleryImages = useAppSelector(imagesGallery);
   const onZoomImage = (value: string) => {

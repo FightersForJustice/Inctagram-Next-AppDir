@@ -1,12 +1,14 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import s from './CreatePost.module.scss';
+import Image from 'next/image';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { Modal } from '@/components/Modals/Modal';
 import { ImageStateType } from './CreatePost';
-import Image from 'next/image';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
+
+import s from './CreatePost.module.scss';
 
 type Props = {
   setPostImage: (value: string) => void;
@@ -47,7 +49,7 @@ export const FirstModal = ({
   return (
     <Modal
       title={'Add photo'}
-      width={'492px'}
+      className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
       <div className={s.createPost}>
