@@ -1,7 +1,8 @@
-import s from '../../MyProfile.module.scss';
 import Link from 'next/link';
-import React from 'react';
+
 import { GetResponse } from '@/api/profile.api';
+
+import s from '../../MyProfile.module.scss';
 
 type Props = {
   data: GetResponse;
@@ -12,14 +13,14 @@ type Props = {
   userPosts: number;
 };
 
-export const ProfileWrapper: React.FC<Props> = ({
+export const ProfileWrapper = ({
   data,
   setShowSubscriptionsModal,
   paidAccount,
   setShowSubscribersModal,
   t,
   userPosts,
-}) => {
+}: Props) => {
   return (
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>

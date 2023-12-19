@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+
 import { Loader } from '@/components/Loader';
-import s from './InfiniteScrollMyPosts.module.scss';
 import { PostsItem, useLazyGetUserPostsQuery } from '@/api/posts.api';
 import { useScrollFetching } from '@/features/customHooks';
-import { toast } from 'react-toastify';
 import { StatusCode } from '@/api/auth.api';
+
+import s from './InfiniteScrollMyPosts.module.scss';
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -14,11 +16,11 @@ type Props = {
   postChanges: boolean;
 };
 
-export const InfiniteScrollMyPosts: React.FC<Props> = ({
+export const InfiniteScrollMyPosts = ({
   setSelectedPost,
   setOpen,
   getUserPosts,
-}) => {
+}: Props) => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);

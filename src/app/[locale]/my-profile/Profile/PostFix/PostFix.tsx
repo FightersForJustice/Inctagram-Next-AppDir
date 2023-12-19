@@ -1,18 +1,18 @@
 import React, { MouseEventHandler, useState } from 'react';
-
-import s from './PostFix.module.scss';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+import { SwiperSlide } from 'swiper/react';
+
 import { PostContent } from './PostContent';
 import { EditPost } from './EditPost';
-
 import { Loader } from '@/components/Loader';
-import { toast } from 'react-toastify';
 import { Dots } from './Dots';
 import { useDeletePostMutation, useGetPostQuery } from '@/api';
 import { handleApiError } from '@/utils';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { SwiperSlide } from 'swiper/react';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
+
+import s from './PostFix.module.scss';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;

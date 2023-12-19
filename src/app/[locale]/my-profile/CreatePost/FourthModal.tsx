@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useState } from 'react';
-import s from './CreatePost.module.scss';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+
 import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { useCreatePostMutation, useDeletePostImageMutation } from '@/api';
-import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { GetResponse } from '@/api/profile.api';
@@ -12,6 +12,8 @@ import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImagesIds } from '@/redux/reducers/post/postSelectors';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+
+import s from './CreatePost.module.scss';
 
 type Props = {
   showThirdModal: () => void;
