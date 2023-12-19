@@ -1,16 +1,18 @@
 .post {
+  display: flex;
+  flex-direction: column;
   max-width: 491px;
-  position: relative;
+  // width: 100%;
   border-bottom: 1px solid var(--dark-100);
-  margin-bottom: 12px;
   padding-top: 24px;
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 190px;
-    margin-bottom: 12px;
+    padding-bottom: 12px;
+
+    max-width: 100%;
   }
 
   &__wrapper {
@@ -36,9 +38,10 @@
 
   &__icons {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 17px;
+    padding: 12px 0px;
     padding-top: 12px;
 
     &__wrapper {
@@ -55,7 +58,6 @@
   &__desc {
     display: flex;
     gap: 12px;
-    margin-bottom: 15px;
 
     &__ava {
       width: 36px;
@@ -77,17 +79,25 @@
 
   &__likes {
     display: flex;
+    align-items: center;
     gap: 12px;
-    margin-bottom: 24px;
+
+    padding-bottom: 24px;
+    padding-top: 15px;
 
     &__avatars {
       display: flex;
     }
 
     &__amount {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 5px;
       font-size: 14px;
       font-weight: 400;
-      padding-left: 50px;
+      padding: 0;
     }
 
     &__text {
@@ -96,21 +106,14 @@
     }
 
     &__ava1 {
-      position: absolute;
-      left: 0;
-      bottom: 105px;
     }
 
     &__ava2 {
-      position: absolute;
-      left: 15px;
-      bottom: 105px;
+      margin-left: -10px;
     }
 
     &__ava3 {
-      position: absolute;
-      left: 30px;
-      bottom: 105px;
+      margin-left: -10px;
     }
   }
 
@@ -120,14 +123,11 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
-    margin-bottom: 12px;
   }
 
   &__bottom {
-    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
-    padding: 0 10px 0 0;
     align-items: center;
   }
 
@@ -143,6 +143,7 @@
     border: 1px solid transparent;
     border-radius: 3px;
     transition: all 0.2s ease;
+    padding-bottom: 10px;
 
     &:focus {
       border: 1px solid var(--primary-500);

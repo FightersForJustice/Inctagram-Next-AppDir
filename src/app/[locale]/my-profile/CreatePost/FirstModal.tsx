@@ -47,7 +47,7 @@ export const FirstModal: React.FC<Props> = ({
   return (
     <Modal
       title={'Add photo'}
-      width={'492px'}
+      className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
       <div className={s.createPost}>

@@ -1,12 +1,33 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding-top: 60px;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .wrapper {
   display: grid;
+  grid-template-rows: 285px;
+  grid-template-columns: 2fr 10fr;
   grid-template-areas:
     'menu profile'
-    'menu posts';
+    'menu profile';
+}
+
+.home {
+  grid-area: profile;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+
+@include s.devices(laptop) {
+  .wrapper {
+    grid-template-areas:
+    'profile profile'
+    'profile profile';
+  }
 }
