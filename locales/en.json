@@ -106,7 +106,7 @@
       "btnNo": "No"
     },
     "DeleteAvatarModal": {
-      "title": "Close profile photo",
+      "title": "Delete profile photo",
       "question": "Do you really want delete uploaded profile photo",
       "btnYes": "Yes",
       "btnNo": "No"
