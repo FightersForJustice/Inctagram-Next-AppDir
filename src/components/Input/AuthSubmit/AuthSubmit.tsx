@@ -19,7 +19,6 @@ export const AuthSubmit = ({
     'sign-up-submit': s.signUp,
     'sign-in-submit': s.signIn,
   };
-  console.log(1)
   const inputStyle = clsx(
     s.submit,
     { [submitType[id ? id : '']]: id },
