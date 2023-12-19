@@ -30,12 +30,14 @@ const TabsDemo = () => {
   const [getUserProfile] = useLazyGetProfileQuery();
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(1);
     if (!e.target.files) return;
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
     if (file.size <= maxSize) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         setFile(file);
+        console.log(2);
         setUserAvatar(URL.createObjectURL(file));
       } else {
         setFileError('Only .JPEG and .PNG format');

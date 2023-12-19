@@ -104,6 +104,12 @@
       "question": "Do you really want to delete a Following",
       "btnYes": "Yes",
       "btnNo": "No"
+    },
+    "DeleteAvatarModal": {
+      "title": "Close profile photo",
+      "question": "Do you really want delete uploaded profile photo",
+      "btnYes": "Yes",
+      "btnNo": "No"
     }
   },
   "Navigation": {
