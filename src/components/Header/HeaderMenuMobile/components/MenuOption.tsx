@@ -15,13 +15,10 @@ export const MenuOption = ({
   actionsHandler,
 }: OptionType) => {
   const tf = useTranslations('Header');
-  console.log('clicked to: ', textRef)
   return (
     <li className={className} onClick={() => actionsHandler(textRef)}>
-      {/* <Link href={ link } > */}
-        <Image src={img} width={24} height={24} alt={textRef} />
-        <span>{tf('mobileMenu.' + textRef)}</span>
-      {/* </Link> */}
+      <Image src={img} width={24} height={24} alt={textRef} />
+      <span>{tf('mobileMenu.' + textRef)}</span>
     </li>
   );
 };

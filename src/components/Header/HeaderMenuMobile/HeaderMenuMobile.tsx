@@ -66,30 +66,21 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
   };
 
   const actionsHandler = (ref: string) => {
-    console.log(ref);
     if (ref === 'logOut') {
       return logOutMenu();
-      // console.log(3)
     }
     if (ref === 'statistics') {
-      setShowLogoutModal(false);
       router.push('/statistics');
-      console.log(2);
-      return;
     }
     if (ref === 'profileSettings') {
-      console.log(1);
-      setShowLogoutModal(false);
       router.push('/my-profile');
-      return;
     }
     if (ref === 'favourites') {
-      console.log(4);
-      setShowLogoutModal(false);
       router.push('/favourites');
-      return;
     }
+    setModal(false);
   };
+
   return (
     <button className={s.container} id="mobileMenu">
       <MenuImage modal={modal} setModal={modalHandler} />
@@ -115,7 +106,7 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
               opacity: '0',
               position: 'absolute',
               width: '0',
-              height: '0'
+              height: '0',
             }}
           />
         </ul>
