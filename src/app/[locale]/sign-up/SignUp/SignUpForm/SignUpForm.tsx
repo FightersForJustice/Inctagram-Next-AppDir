@@ -20,8 +20,9 @@ import {
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
 import ServiceAuth from '@/app/[locale]/sign-in/SignIn/ServiceAuth';
+import { useTranslations } from 'next-intl';
 
-export const SignUpForm = ({ translate }: SignUpFormProps) => {
+export const SignUpForm = () => {
   const {
     register,
     handleSubmit,
@@ -37,6 +38,8 @@ export const SignUpForm = ({ translate }: SignUpFormProps) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  const translate = useTranslations('SignUpPage');
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();

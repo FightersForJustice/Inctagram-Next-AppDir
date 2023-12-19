@@ -8,7 +8,6 @@ import {
 
 export type SignUpFormProps = {
   lang: 'en' | 'ru';
-  translate: (value: string) => ReactNode;
 };
 
 export type SubmitProps = {

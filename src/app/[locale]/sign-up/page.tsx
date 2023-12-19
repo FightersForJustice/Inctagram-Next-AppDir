@@ -1,11 +1,11 @@
-'use client';
+
 
 import { SignUp } from './SignUp';
 
-const SignUpPage = ({ params }: { params: { locale: 'en' | 'ru' } }) => {
+const SignUpPage = () => {
   return (
     <div>
-      <SignUp lang={params.locale} />
+      <SignUp  />
     </div>
   );
 };

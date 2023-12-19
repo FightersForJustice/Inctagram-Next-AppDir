@@ -1,32 +1,29 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next-intl/client';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
-import { useRouter } from 'next/navigation';
+
 import s from './Header.module.scss';
 
 export const Header = () => {
-  const [isPending, startTransition] = useTransition();
-  const [language, setLanguage] = useState(
-    /\/ru/.test(location.pathname) ? 'ru' : 'en'
-  );
-  useEffect(() => {
-    setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
-  }, []);
+  const currentLanguage = localStorage.getItem('language');
 
-  const router = useRouter();
-  const pathname = usePathname();
+  if (!currentLanguage) {
+    localStorage.setItem('language', 'en');
+  }
+
+  const [language, setLanguage] = useState(
+    localStorage.getItem('language') || 'en'
+  );
 
   const onSelectChange = (value: string) => {
-    startTransition(() => {
-      router.replace(`/${value}${pathname}`);
-    });
+    setLanguage(value);
+    localStorage.setItem('language', String(value));
   };
+
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
