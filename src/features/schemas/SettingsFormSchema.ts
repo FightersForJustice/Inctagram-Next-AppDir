@@ -13,13 +13,13 @@ export const SettingsFormSchema = () => {
       .required(t('userName.required')),
     firstName: yup
       .string()
-      .matches(/^[A-Za-zА-Яа-я]+$/, t('firstName.matches'))
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, t('firstName.matches'))
       .min(1, t('firstName.min'))
       .max(50, t('firstName.max'))
       .required(t('firstName.required')),
     lastName: yup
       .string()
-      .matches(/^[A-Za-zА-Яа-я]+$/, t('lastName.matches'))
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, t('lastName.matches'))
       .min(1, t('lastName.min'))
       .max(50, t('lastName.max'))
       .required(t('lastName.required')),
