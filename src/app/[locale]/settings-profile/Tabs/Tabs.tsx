@@ -30,7 +30,6 @@ const TabsDemo = () => {
   const [getUserProfile] = useLazyGetProfileQuery();
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(1);
     if (!e.target.files) return;
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
