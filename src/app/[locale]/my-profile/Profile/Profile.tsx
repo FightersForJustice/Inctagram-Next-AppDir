@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import s from '../MyProfile.module.scss';
+import { useState } from 'react';
 import Image from 'next/image';
-import { GetResponse } from '@/api/profile.api';
 import { useTranslations } from 'next-intl';
+
+import { GetResponse } from '@/api/profile.api';
 import { ProfileWrapper } from './ProfileWrapper';
 import { InfiniteScrollMyPosts } from './InfiniteScrollMyPosts';
 import { PostFix } from './PostFix';
 import { PostModal } from '@/components/Modals/PostModal';
 import { PostsItem } from '@/api/posts.api';
+
+import s from '../MyProfile.module.scss';
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -35,7 +37,7 @@ export const Profile = ({
   return (
     <>
       <div className={s.profile}>
-        <div>
+        <div className={s.profile__avatar__container}>
           <Image
             src={`${
               userData?.avatars[0]

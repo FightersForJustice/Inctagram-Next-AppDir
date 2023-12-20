@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
-import s from '../../CreatePost.module.scss';
+
 import { InputRange } from '@/components/InputRange';
+
+import s from '../../CreatePost.module.scss';
 
 type Props = {
   onZoomImage: (value: string) => void;

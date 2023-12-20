@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
 import { GetResponse } from '@/api/profile.api';
 import { FirstModal } from './FirstModal';
 import { SecondModal } from './SecondModal';
@@ -15,11 +16,11 @@ type Props = {
   userData: GetResponse;
 };
 
-export const CreatePost: React.FC<Props> = ({
+export const CreatePost = ({
   showCreatePostModal,
   setShowCreatePostModal,
   userData,
-}) => {
+}: Props) => {
   const [file, setFile] = useState<File[]>();
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);

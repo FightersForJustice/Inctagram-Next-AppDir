@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import s from '../MyProfile.module.scss';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/Loader';
-import { useTranslations } from 'next-intl';
 import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { usePostLogoutMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { Navigation } from './BarPage';
 import { setAccessToken } from '@/accessToken';
+
+import s from '../MyProfile.module.scss';
 
 type Props = {
   pathname: string;
@@ -53,11 +55,13 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
       />
       {showLogoutModal && (
         <Modal
-          width={'450px'}
+          className={s.modal}
           title={t('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
         >
-          {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          <div>
+            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>
               {t('LogoutModal.btnYes')}
