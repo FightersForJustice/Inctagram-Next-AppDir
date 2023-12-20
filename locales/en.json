@@ -142,13 +142,13 @@
       },
       "firstName": {
         "matches": "Username can only contain alphabetic characters",
-        "min": "Name must contain at least 1 character",
+        "min": "First Name must be at least 1 character",
         "max": "First Name must not exceed 50 characters",
         "required": "Username is required"
       },
       "lastName": {
         "matches": "Username can only contain alphabetic characters",
-        "min": "The name must contain at least 1 character",
+        "min": "Last Name must be at least 1 character",
         "max": "Last Name must not exceed 50 characters",
         "required": "Username is required"
       },
