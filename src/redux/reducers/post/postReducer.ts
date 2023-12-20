@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(locale)/my-profile/CreatePost/CreatePost';
 
 const initialAppState: PostStateType = {
   postImagesIds: [],

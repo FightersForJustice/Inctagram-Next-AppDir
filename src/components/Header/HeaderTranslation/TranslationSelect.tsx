@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
-import s from '@/app/[locale]/my-profile/CreatePost/CreatePost.module.scss';
+import s from '@/app/(locale)/my-profile/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';

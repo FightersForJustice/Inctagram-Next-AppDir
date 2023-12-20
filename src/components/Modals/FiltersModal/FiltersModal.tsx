@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
-import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(locale)/my-profile/CreatePost/CreatePost';
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,

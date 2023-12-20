@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './CroppingSizeModal.module.scss';
-import { AspectRatioType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { AspectRatioType } from '@/app/(locale)/my-profile/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';
