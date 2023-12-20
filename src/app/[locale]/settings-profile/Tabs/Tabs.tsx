@@ -39,7 +39,7 @@ const TabsDemo = () => {
         setUserAvatar(URL.createObjectURL(file));
       } else {
         setFileError(
-          'The format of the uploaded photo must be\n' + 'PNG and JPEG'
+          'The format of the uploaded photo must be 'PNG and JPEG'
         );
       }
     } else {
