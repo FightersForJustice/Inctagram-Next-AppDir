@@ -1,5 +1,6 @@
 @use './mixins.scss';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,6 +51,9 @@ body {
     --primary-700: #2f68cc;
     --primary-900: #2f68cc;
     --danger-500: #cc1439;
+    --danger-900: #660a1d;
+    --success-500: #14cc70;
+    --success-900: #0a6638;
     --info-0: #3677f7;
     --disabled: rgba(227, 227, 227, 0.1);
   }

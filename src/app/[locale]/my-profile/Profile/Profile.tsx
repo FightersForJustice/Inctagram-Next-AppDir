@@ -15,12 +15,12 @@ type Props = {
   paidAccount: boolean;
   userData: GetResponse;
 };
-export const Profile: React.FC<Props> = ({
+export const Profile = ({
   setShowSubscriptionsModal,
   setShowSubscribersModal,
   paidAccount,
   userData,
-}) => {
+}: Props) => {
   const t = useTranslations('MyProfilePage');
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();

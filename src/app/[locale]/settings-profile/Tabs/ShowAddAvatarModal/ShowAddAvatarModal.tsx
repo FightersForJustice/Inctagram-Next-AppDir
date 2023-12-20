@@ -5,6 +5,7 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { Modal } from '@/components/Modals/Modal';
 import dynamic from 'next/dynamic';
+import { Alert } from '@/components/Alert';
 
 type Props = {
   t: (value: string) => string;
@@ -48,7 +49,8 @@ export const ShowAddAvatarModal = ({
             />
           </div>
         ) : (
-          <div className={'relative'}>
+          <div>
+            {fileError && <Alert text={fileError} />}
             <Image
               src="/img/settings-profile/modal-img.png"
               alt="modal-img"
@@ -56,15 +58,6 @@ export const ShowAddAvatarModal = ({
               height={228}
               className={s.modal__img}
             />
-            {fileError && (
-              <p
-                className={
-                  'absolute top-[106%] right-0 text-center w-[100%] text-red-600 text-[15px]'
-                }
-              >
-                {fileError}
-              </p>
-            )}
           </div>
         )}
         {userAvatar ? (

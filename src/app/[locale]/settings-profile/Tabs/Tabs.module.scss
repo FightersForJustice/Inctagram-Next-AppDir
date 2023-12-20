@@ -151,6 +151,7 @@ input {
 
   &__right {
     width: 100%;
+
     form {
       width: 100%;
     }
@@ -206,20 +207,16 @@ input {
 /*-----modal-------*/
 
 .modal {
+  min-width: 350px;
+
   &__img {
-    margin: 0 auto;
     padding-top: 72px;
-    margin-bottom: 60px;
+    margin: 0 auto 60px;
   }
 
   &__loadImg {
-    margin: 0 auto;
-    /* padding-top: 72px; */
-    margin-bottom: 60px;
     border-radius: 50%;
-    height: 316px;
-    width: 316px;
-    margin-top: 20px;
+    margin: 20px auto 60px;
   }
 
   &__saveBtn {
