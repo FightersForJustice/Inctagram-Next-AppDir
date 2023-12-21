@@ -299,15 +299,17 @@
     &__info {
       gap: 33px;
     }
+
     &__posts {
       height: 107px;
       padding: 0 24px;
-      // justify-content: flex-start;
     }
+
     &__avatar {
       width: 100%;
       min-width: 162px;
     }
+
     &__btn {
       display: none;
     }
@@ -323,6 +325,7 @@
     &__avatar {
       min-width: 122px;
     }
+
     &__posts {
       gap: 4px;
     }
@@ -345,11 +348,13 @@
       max-height: 72px;
       max-width: 72px;
     }
+
     &__avatar {
       min-width: 72px;
       max-width: 150px;
       max-height: 150px;
     }
+
     &__title {
       order: 4;
 
@@ -363,6 +368,7 @@
       font-weight: 700;
       line-height: 24px;
     }
+
     &__desc {
       order: 6;
 
@@ -376,6 +382,7 @@
       left: -80px;
       top: 10px;
     }
+
     &__info {
       height: 100%;
       width: 100%;
@@ -403,9 +410,11 @@
         text-align: center;
       }
     }
+
     &__wrapper {
       padding: 0px 24px 0px 15px;
     }
+
     &__posts {
       padding: 0 15px;
       gap: 2px;

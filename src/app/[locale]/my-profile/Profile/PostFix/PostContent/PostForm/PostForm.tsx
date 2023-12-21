@@ -1,4 +1,3 @@
-import React from 'react';
 import s from '../PostContent.module.scss';
 
 export const PostForm = () => {

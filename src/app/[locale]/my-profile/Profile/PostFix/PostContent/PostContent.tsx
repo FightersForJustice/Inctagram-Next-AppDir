@@ -1,10 +1,10 @@
-import React from 'react';
 import Image from 'next/image';
 
-import s from './PostContent.module.scss';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { PostComment } from './PostComment';
 import { PostLikes } from './PostLikes';
+
+import s from './PostContent.module.scss';
 
 type Props = {
   avatar: string;
@@ -16,7 +16,7 @@ type Props = {
   onDeletePost: () => void;
 };
 
-export const PostContent: React.FC<Props> = ({
+export const PostContent = ({
   description,
   userName,
   avatar,
@@ -24,7 +24,7 @@ export const PostContent: React.FC<Props> = ({
   showAreYouSureModal,
   setShowAreYouSureModal,
   onDeletePost,
-}) => {
+}: Props) => {
   return (
     <>
       <div className={s.post__desc}>

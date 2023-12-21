@@ -5,7 +5,7 @@
   margin: 0 auto;
   padding-top: 60px;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .wrapper {
@@ -30,4 +30,14 @@
     'profile profile'
     'profile profile';
   }
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

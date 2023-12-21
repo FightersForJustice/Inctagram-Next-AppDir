@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+
 import f from './HeaderTranslation.module.scss';
 
 export const LanguagesModal = function ({

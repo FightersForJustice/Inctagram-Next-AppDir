@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import s from './EditPost.module.scss';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { useUpdatePostMutation } from '@/api';
-import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
+
+import s from './EditPost.module.scss';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -13,12 +14,12 @@ type Props = {
   setShowDots: (value: boolean) => void;
 };
 
-export const EditPost: React.FC<Props> = ({
+export const EditPost = ({
   setEditPost,
   description,
   postId,
   setShowDots,
-}) => {
+}: Props) => {
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState(description);
 

@@ -56,7 +56,6 @@ export const baseQueryWithReAuth: BaseQueryFn<
 
     api.dispatch(appActions.setTokenRefresh(false));
   }
-
   return result;
 };
 

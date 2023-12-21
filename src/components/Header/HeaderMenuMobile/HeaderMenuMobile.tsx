@@ -1,17 +1,19 @@
+import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
-import { MenuImage } from './MenuImage';
-import s from './HeaderMenuMobile.module.scss';
-import { menuOptions } from './mobileMenuData';
-import Image from 'next/image';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
+import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
 import { usePostLogoutMutation } from '@/api/auth.api';
 import { setAccessToken } from '@/accessToken';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
-import { useAppSelector } from '@/redux/hooks/useSelect';
+import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
+
+import s from './HeaderMenuMobile.module.scss';
 
 type TProps = {
   language: string;
@@ -21,24 +23,24 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
   const t = useTranslations('Navigation');
   const userEmail = useAppSelector((state) => state.auth.user?.email);
   const [logout, { isLoading }] = usePostLogoutMutation();
-  const [showLogoutModal, setShowLogoutModal] = React.useState(false);
-  const [modal, setModal] = React.useState(false);
-  const tf = useTranslations('Header');
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [modal, setModal] = useState(false);
+
   const router = useRouter();
-  const onBlurHandler = (e: React.FocusEvent<HTMLTextAreaElement, Element>) => {
+  const onBlurHandler = (e: FocusEvent<HTMLTextAreaElement, Element>) => {
     if (e.relatedTarget?.id === 'mobileMenu') {
       return;
     }
     setModal(false);
   };
 
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const keyDownHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Escape') {
       setModal(!modal);
     }
   };
 
-  const modalHandler = (e: React.MouseEvent) => {
+  const modalHandler = (e: MouseEvent) => {
     if (e.currentTarget.id === 'dots') {
       return setModal(!modal);
     }
@@ -65,13 +67,20 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
 
   const actionsHandler = (ref: string) => {
     if (ref === 'logOut') {
-      console.log(userEmail);
-      logOutMenu();
+      return logOutMenu();
     }
     if (ref === 'statistics') {
-      console.log(2);
+      router.push('/statistics');
     }
+    if (ref === 'profileSettings') {
+      router.push('/my-profile');
+    }
+    if (ref === 'favourites') {
+      router.push('/favourites');
+    }
+    setModal(false);
   };
+
   return (
     <button className={s.container} id="mobileMenu">
       <MenuImage modal={modal} setModal={modalHandler} />
@@ -79,27 +88,25 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
         <ul className={s.settingsList}>
           {menuOptions.map(({ ref, img }) => {
             return (
-              <li
+              <MenuOption
                 key={ref}
                 className={s.settingsContainer}
-                onClick={() => actionsHandler(ref)}
-              >
-                <Image src={img} width={24} height={24} alt={ref} />
-                <span>{tf('mobileMenu.' + ref)}</span>
-              </li>
+                textRef={ref}
+                img={img}
+                actionsHandler={actionsHandler}
+              />
             );
           })}
           <textarea
             autoFocus
             onKeyDown={keyDownHandler}
-            name="post"
+            name="menu"
             onBlur={onBlurHandler}
             style={{
               opacity: '0',
               position: 'absolute',
-              zIndex: '0',
-              width: '0px',
-              height: '0px',
+              width: '0',
+              height: '0',
             }}
           />
         </ul>

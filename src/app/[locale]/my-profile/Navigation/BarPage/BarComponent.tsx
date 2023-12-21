@@ -1,5 +1,3 @@
-import React from 'react';
-
 type BarType = {
   children: React.ReactNode;
 };

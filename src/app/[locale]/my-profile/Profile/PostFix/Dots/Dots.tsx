@@ -1,5 +1,5 @@
-import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
+
 import { PostPopup } from '../PostPopup';
 
 type Props = {
@@ -10,13 +10,13 @@ type Props = {
   setShowDots: (value: boolean) => void;
 };
 
-export const Dots: React.FC<Props> = ({
+export const Dots = ({
   visiblePopup,
   setVisiblePopup,
   setEditPost,
   setShowAreYouSureModal,
   setShowDots,
-}) => {
+}: Props) => {
   return (
     <Popover.Root onOpenChange={() => setVisiblePopup(!visiblePopup)}>
       <Popover.Trigger>

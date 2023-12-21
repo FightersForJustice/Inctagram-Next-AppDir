@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { RegistrationEmailResend } from './RegistrationEmailResend';
+import { RegistrationEmailResend } from '@/components/auth';
 
 const EmailExpired = () => {
   const t = useTranslations('EmailExpiredPage');

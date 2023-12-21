@@ -1,10 +1,12 @@
 import Link from 'next/link';
-import s from '../../MyProfile.module.scss';
+import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
+
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import { navigationBar } from './Bardata';
 import BarComponent from './BarComponent';
-import clsx from 'clsx';
+
+import s from '../../MyProfile.module.scss';
 
 type NavigationType = {
   pathname: string;

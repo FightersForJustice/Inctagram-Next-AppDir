@@ -2,7 +2,7 @@
 
 import s from './Forgot-Password.module.scss';
 import { useTranslations } from 'next-intl';
-import { ForgotPasswordForm } from './ForgotPasswordForm';
+import { ForgotPasswordForm } from '@/components/auth';
 
 const ForgotPassword = () => {
   const t = useTranslations('ForgotPasswordPage');
