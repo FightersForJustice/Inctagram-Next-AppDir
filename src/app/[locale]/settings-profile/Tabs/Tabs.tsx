@@ -36,6 +36,7 @@ const TabsDemo = () => {
     if (file.size <= maxSize) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         setFile(file);
+        console.log(2);
         setUserAvatar(URL.createObjectURL(file));
       } else {
         setFileError(

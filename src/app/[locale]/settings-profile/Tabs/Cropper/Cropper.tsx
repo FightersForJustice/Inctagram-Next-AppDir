@@ -9,8 +9,8 @@ type Props = {
 const Cropper = ({ setCroppedAvatar, userAvatar, setUserAvatar }: Props) => {
   return (
     <Avatar
-      width={350}
-      height={350}
+      width={300}
+      height={300}
       onCrop={(preview) => setCroppedAvatar(preview)}
       onClose={() => setUserAvatar('')}
       src={userAvatar}

@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from 'react';
-import style from './EditPostModal.module.css';
+import { PropsWithChildren } from 'react';
 import Image from 'next/image';
+
+import style from './EditPostModal.module.css';
 
 type Props = {
   title?: string;
@@ -9,13 +10,13 @@ type Props = {
   isOkBtn?: boolean;
 };
 
-export const EditPostModal: React.FC<PropsWithChildren<Props>> = ({
+export const EditPostModal = ({
   onClose,
   title,
   children,
   width,
   isOkBtn,
-}) => {
+}: PropsWithChildren<Props>) => {
   return (
     <div className={style.modal} onClick={onClose}>
       <div
