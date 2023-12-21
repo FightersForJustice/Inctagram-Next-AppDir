@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { Loader } from '@/components/Loader';
 import { FormItem } from '@/components/Input';
 import { SignInSchema } from '@/features/schemas';
-import { usePostLoginMutation } from '@/api';
+import { useLoginMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { IUserLoginRequest } from '@/types/userTypes';
 import { AuthSubmit } from '@/components/Input';
@@ -35,7 +35,7 @@ export const SignInForm = ({ translate }: Props) => {
   });
   const [showPass, setShowPass] = useState(true);
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const [postLogin, { isLoading }] = usePostLoginMutation();
+  const [postLogin, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: IUserLoginRequest) => {
     const { email, password } = data;

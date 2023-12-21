@@ -5,7 +5,7 @@ import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
+import { StatusCode, useAuthorizationMutation } from '@/api/auth.api';
 import { SignUpFormSchema } from '@/features/schemas';
 import { Loader } from '@/components/Loader';
 import { EmailSentModal } from '@/components/Modals/EmailSentModal';
@@ -39,7 +39,7 @@ export const SignUpForm = ({ translate }: SignUpFormProps) => {
   const [userEmail, setUserEmail] = useState('');
 
   const [postAuthorization, { isSuccess, isLoading }] =
-    usePostAuthorizationMutation();
+    useAuthorizationMutation();
 
   useEffect(() => {
     if (isSuccess) {

@@ -5,7 +5,7 @@ import { setAccessToken } from '@/accessToken';
 export const listenerMiddleware = createListenerMiddleware();
 
 listenerMiddleware.startListening({
-  matcher: authApi.endpoints?.postLogin.matchFulfilled,
+  matcher: authApi.endpoints?.login.matchFulfilled,
 
   effect: async (action, api) => {
     api.cancelActiveListeners();

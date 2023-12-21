@@ -17,8 +17,7 @@ type LoginResponseType = {
   accessToken: string;
 };
 
-const { postLogin, loginWithGoogleOAuth, postLogout, getAuthMe } =
-  authApi.endpoints;
+const { login, loginWithGoogleOAuth, logout, getAuthMe } = authApi.endpoints;
 
 const authReducerHandler = (
   state: IInitialState,
@@ -38,9 +37,9 @@ const { actions: authActions, reducer: authReducer } = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(postLogin.matchFulfilled, authReducerHandler)
+      .addMatcher(login.matchFulfilled, authReducerHandler)
       .addMatcher(loginWithGoogleOAuth.matchFulfilled, authReducerHandler)
-      .addMatcher(postLogout.matchFulfilled, (state) => {
+      .addMatcher(logout.matchFulfilled, (state) => {
         state.isAuth = false;
         sessionStorage.clear();
       })

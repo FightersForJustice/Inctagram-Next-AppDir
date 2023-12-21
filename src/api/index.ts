@@ -1,15 +1,15 @@
 export {
   useLoginWithGoogleOAuthMutation,
-  usePostLoginMutation,
-  usePostAuthorizationMutation,
-  usePostLogoutMutation,
+  useLoginMutation,
+  useAuthorizationMutation,
+  useLogoutMutation,
   useGetAuthMeQuery,
-  usePostNewPasswordMutation,
-  usePostPasswordRecoveryMutation,
-  usePostPasswordCheckRecoveryCodeMutation,
-  usePostRegistrationConfirmationMutation,
-  usePostRegistrationEmailResendingMutation,
-  usePostUpdateTokensMutation,
+  useNewPasswordMutation,
+  usePasswordRecoveryMutation,
+  usePasswordCheckRecoveryCodeMutation,
+  useRegistrationConfirmationMutation,
+  useRegistrationEmailResendingMutation,
+  useUpdateTokensMutation,
 } from './auth.api';
 
 export {

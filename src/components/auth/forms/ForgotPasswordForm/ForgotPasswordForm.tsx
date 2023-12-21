@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { usePostPasswordRecoveryMutation } from '@/api/auth.api';
+import { usePasswordRecoveryMutation } from '@/api/auth.api';
 import { Modal } from '@/components/Modals/Modal';
 import { Loader } from '@/components/Loader';
 import { EmailForm } from './EmailForm';
@@ -36,7 +36,7 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
 
   const [recoveryPassword, { isSuccess, isLoading, error }] =
-    usePostPasswordRecoveryMutation();
+    usePasswordRecoveryMutation();
 
   useEffect(() => {
     if (isSuccess) {

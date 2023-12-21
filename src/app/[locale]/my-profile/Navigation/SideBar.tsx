@@ -9,7 +9,7 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { Loader } from '@/components/Loader';
 import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
-import { usePostLogoutMutation } from '@/api';
+import { useLogoutMutation } from '@/api';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { Navigation } from './BarPage';
 import { setAccessToken } from '@/accessToken';
@@ -28,7 +28,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const router = useRouter();
-  const [logout, { isLoading }] = usePostLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
   const userEmail = useAppSelector((state) => state.auth.user?.email);
 
   const onLogout = () => {

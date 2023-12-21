@@ -10,7 +10,7 @@ import { api } from '@/api/api';
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    postAuthorization: builder.mutation<void, IUserRegisterRequest>({
+    authorization: builder.mutation<void, IUserRegisterRequest>({
       query: (credentials: IUserRegisterRequest) => {
         return {
           url: 'auth/registration',
@@ -19,7 +19,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postLogin: builder.mutation<IUserLoginResponse, IUserLoginRequest>({
+    login: builder.mutation<IUserLoginResponse, IUserLoginRequest>({
       query: (credentials: IUserLoginRequest) => {
         return {
           url: 'auth/login',
@@ -28,7 +28,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postRegistrationConfirmation: builder.mutation<
+    registrationConfirmation: builder.mutation<
       any,
       { confirmationCode: string }
     >({
@@ -42,7 +42,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postRegistrationEmailResending: builder.mutation<any, { email: string }>({
+    registrationEmailResending: builder.mutation<any, { email: string }>({
       query: (user: { email: string }) => {
         return {
           url: 'auth/registration-email-resending',
@@ -53,7 +53,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postPasswordRecovery: builder.mutation<
+    passwordRecovery: builder.mutation<
       void,
       { email: string; recaptcha: string }
     >({
@@ -67,10 +67,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postPasswordCheckRecoveryCode: builder.mutation<
-      any,
-      { recoveryCode: string }
-    >({
+    passwordCheckRecoveryCode: builder.mutation<any, { recoveryCode: string }>({
       query: (user: { recoveryCode: string }) => {
         return {
           url: 'auth/check-recovery-code',
@@ -81,7 +78,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postNewPassword: builder.mutation<
+    newPassword: builder.mutation<
       void,
       { newPassword: string; recoveryCode: string }
     >({
@@ -95,7 +92,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postLogout: builder.mutation<void, void>({
+    logout: builder.mutation<void, void>({
       query: () => {
         return {
           url: 'auth/logout',
@@ -103,7 +100,7 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    postUpdateTokens: builder.mutation<any, void>({
+    updateTokens: builder.mutation<any, void>({
       query: () => {
         return {
           url: 'auth/update-tokens',
@@ -149,15 +146,15 @@ export const StatusCode = {
 };
 
 export let {
-  usePostAuthorizationMutation,
-  usePostLoginMutation,
-  usePostRegistrationConfirmationMutation,
-  usePostRegistrationEmailResendingMutation,
-  usePostPasswordRecoveryMutation,
-  usePostPasswordCheckRecoveryCodeMutation,
-  usePostNewPasswordMutation,
-  usePostLogoutMutation,
-  usePostUpdateTokensMutation,
+  useAuthorizationMutation,
+  useLoginMutation,
+  useRegistrationConfirmationMutation,
+  useRegistrationEmailResendingMutation,
+  usePasswordRecoveryMutation,
+  usePasswordCheckRecoveryCodeMutation,
+  useNewPasswordMutation,
+  useLogoutMutation,
+  useUpdateTokensMutation,
   useGetAuthMeQuery,
   useLoginWithGoogleOAuthMutation,
 } = authApi;

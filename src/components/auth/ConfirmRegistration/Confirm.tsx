@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { usePostRegistrationConfirmationMutation } from '@/api/auth.api';
+import { useRegistrationConfirmationMutation } from '@/api/auth.api';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
 import s from './Confirm.module.scss';
@@ -14,7 +14,7 @@ type Props = {
 
 export const Confirm = ({ code, translate }: Props) => {
   const [registrationConfirm, { isLoading }] =
-    usePostRegistrationConfirmationMutation();
+    useRegistrationConfirmationMutation();
   const router = useRouter();
   const isConfirmed = sessionStorage.getItem('isConfirmed');
 

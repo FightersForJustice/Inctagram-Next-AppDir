@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
 import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
-import { usePostLogoutMutation } from '@/api/auth.api';
+import { useLogoutMutation } from '@/api/auth.api';
 import { setAccessToken } from '@/accessToken';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
@@ -22,7 +22,7 @@ type TProps = {
 export const HeaderMenuMobile = ({ language }: TProps) => {
   const t = useTranslations('Navigation');
   const userEmail = useAppSelector((state) => state.auth.user?.email);
-  const [logout, { isLoading }] = usePostLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
 

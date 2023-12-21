@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Modal } from '@/components/Modals/Modal';
 import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
-import { usePostRegistrationEmailResendingMutation } from '@/api';
+import { useRegistrationEmailResendingMutation } from '@/api';
 import s from './RegistrationEmailResend.module.scss';
 import f from './EmailSentModal.module.scss';
 
@@ -14,7 +14,7 @@ type Props = {
 export const RegistrationEmailResend = ({ translate }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [resend, { isSuccess, isLoading }] =
-    usePostRegistrationEmailResendingMutation();
+    useRegistrationEmailResendingMutation();
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {

@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import {
   StatusCode,
-  usePostNewPasswordMutation,
-  usePostPasswordCheckRecoveryCodeMutation,
+  useNewPasswordMutation,
+  usePasswordCheckRecoveryCodeMutation,
 } from '@/api/auth.api';
 import { Loader } from '@/components/Loader/Loader';
 import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
@@ -36,10 +36,9 @@ export const CreateNewPasswordForm = ({ translate }: Props) => {
   const [serverError, setServerError] = useState('');
   const router = useRouter();
 
-  const [postNewPassword, { isSuccess, isLoading }] =
-    usePostNewPasswordMutation();
+  const [postNewPassword, { isSuccess, isLoading }] = useNewPasswordMutation();
   const [checkCode, { isLoading: isCheckLoading }] =
-    usePostPasswordCheckRecoveryCodeMutation();
+    usePasswordCheckRecoveryCodeMutation();
 
   useEffect(() => {
     setRecoveryCode(sessionStorage.getItem('userEmailRecoveryCode')!);
