@@ -1,11 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { Modal } from '@/components/Modals/Modal';
-import dynamic from 'next/dynamic';
 import { Alert } from '@/components/Alert';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import s from '../Tabs.module.scss';
