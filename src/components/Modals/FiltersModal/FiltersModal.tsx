@@ -1,9 +1,8 @@
-import React, { MutableRefObject, PropsWithChildren } from 'react';
+import { MutableRefObject, PropsWithChildren } from 'react';
+import { toast } from 'react-toastify';
 
-import './FiltersModal.css';
 import { useUploadPostImageMutation } from '@/api';
 import { Loader } from '../../Loader/Loader';
-import { toast } from 'react-toastify';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
@@ -11,6 +10,8 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+
+import './FiltersModal.css';
 
 export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onClose,

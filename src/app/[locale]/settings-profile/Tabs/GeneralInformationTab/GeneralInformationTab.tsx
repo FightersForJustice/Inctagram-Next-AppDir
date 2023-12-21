@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import s from '../Tabs.module.scss';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
+import * as Tabs from '@radix-ui/react-tabs';
 import Image from 'next/image';
+
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { SettingsForm } from '../../SettingsForm/SettingsForm';
-import * as Tabs from '@radix-ui/react-tabs';
-import { toast } from 'react-toastify';
 import { useDeleteProfileAvatarMutation, useGetProfileQuery } from '@/api';
 import { Loader } from '@/components/Loader';
-import { useTranslations } from 'next-intl';
 import { handleApiError } from '@/utils';
+import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+
+import s from '../Tabs.module.scss';
 
 export const GeneralInformationTab = ({
   setShowAddAvatarModal,
@@ -18,6 +21,7 @@ export const GeneralInformationTab = ({
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
+  const [showModal, setShowModal] = useState(false);
   const [userBirthday, setUserBirthday] = useState('');
   const [userCity, setUserCity] = useState('');
 
@@ -64,7 +68,7 @@ export const GeneralInformationTab = ({
                 alt="delete"
                 width={24}
                 height={24}
-                onClick={onDeleteAvatar}
+                onClick={() => setShowModal(true)}
                 className={s.wrapper__delete}
               />
             )}
@@ -83,6 +87,13 @@ export const GeneralInformationTab = ({
           </div>
         </div>
       </Tabs.Content>
+      {showModal && (
+        <DeleteAvatarModal
+          userAvatar={loadedAvatar}
+          setShowModal={setShowModal}
+          onClose={onDeleteAvatar}
+        />
+      )}
       {isLoading && <Loader />}
     </>
   );

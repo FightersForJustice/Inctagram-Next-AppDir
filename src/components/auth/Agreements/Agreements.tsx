@@ -1,5 +1,9 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import s from './agreements.module.scss';
+import Link from 'next/link';
 
 type Props = {
   title: string;
@@ -8,10 +12,12 @@ type Props = {
 };
 
 export const Agreements = ({ title, text, btnName }: Props) => {
+  const router = useRouter();
+  const handler = () => router.back();
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
-        <Link href={'../sign-up'} className={s.linkRedirect}>
+        <Link href={''} onClick={handler} className={s.linkRedirect}>
           <div>
             <svg
               width="24"
