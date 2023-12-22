@@ -39,10 +39,12 @@ const TabsDemo = () => {
         console.log(2);
         setUserAvatar(URL.createObjectURL(file));
       } else {
-        setFileError('Only .JPEG and .PNG format');
+        setFileError(
+          'The format of the uploaded photo must be PNG and JPEG'
+        );
       }
     } else {
-      setFileError('Max size of photo 10 Mb');
+      setFileError('Photo size must be less than 10 MB!');
     }
   };
 
