@@ -4,18 +4,18 @@ import { appReducer } from '@/redux/reducers';
 import { postReducer } from '@/redux/reducers/post/postReducer';
 import { listenerMiddleware } from '@/utils/authMiddleware';
 import { authApi } from '@/api/auth.api';
-import { profileApi } from '@/api/profile.api';
-import { postsApi } from '@/api/posts.api';
-import { subscriptionsApi } from '@/api/subscriptions.api';
+// import { profileApi } from '@/api/profile.api';
+// import { postsApi } from '@/api/posts.api';
+// import { subscriptionsApi } from '@/api/subscriptions.api';
 import { api } from '@/api/api';
 
 const rootReducer = combineReducers({
   app: appReducer,
   post: postReducer,
   [authApi.reducerPath]: authApi.reducer,
-  [profileApi.reducerPath]: profileApi.reducer,
-  [postsApi.reducerPath]: postsApi.reducer,
-  [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
+  // [profileApi.reducerPath]: profileApi.reducer,
+  // [postsApi.reducerPath]: postsApi.reducer,
+  // [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
 });
 
 export const store = configureStore({
