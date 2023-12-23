@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import s from '@/app/(locale)/my-profile/CreatePost/CreatePost.module.scss';
@@ -5,14 +7,16 @@ import f from './HeaderTranslation.module.scss';
 import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
 
-export const TranslationSelect = ({
-  language,
-  onSelectChange,
-}: {
-  language: string;
-  onSelectChange: (value: string) => void;
-}) => {
+export const TranslationSelect = () => {
   const [openChangeSize, setOpenChangeSize] = useState(false);
+
+  //hardcode
+  const [language, setLanguage] = useState('en');
+
+  const onSelectChange = (value: string) => {
+    setLanguage(value);
+    localStorage.setItem('language', String(value));
+  };
 
   const fullLanguages: any = {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },

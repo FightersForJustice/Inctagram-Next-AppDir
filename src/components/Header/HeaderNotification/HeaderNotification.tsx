@@ -1,13 +1,11 @@
+'use client';
+
 import { useState } from 'react';
 import s from './HeaderNotification.module.scss';
 import * as Popover from '@radix-ui/react-popover';
 import { useTranslations } from 'next-intl';
 
-type TProps = {
-  language: string;
-};
-
-export const HeaderNotification = ({ language }: TProps) => {
+export const HeaderNotification = () => {
   const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
