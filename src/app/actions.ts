@@ -5,6 +5,7 @@ import { SingInData } from "@/features/schemas/SignInSchema";
 import { loginOptions, requestGoogleLoginOptions, requestLogoutOptions, requestUpdateTokensOptions } from "./actionOptions";
 import { getRefreshToken } from "@/utils/getRefreshToken";
 import { NextResponse } from "next/server";
+import { setCookieExpires } from "@/utils/setCookieExpire";
 
 // AUTH ACTIONS
 
@@ -102,3 +103,27 @@ export async function updateTokenMiddleware(currentRefreshToken: string | undefi
     }
 }
 
+export async function updateTokensAndContinue(refreshToken: string): Promise<NextResponse> {
+    try {
+      const updateTokenResponse = await fetch(routes.UPDATE_TOKENS, requestUpdateTokensOptions(refreshToken));
+      const res = await updateTokenResponse.json();
+      const newAccessToken = res.accessToken;
+      const newRefreshToken = getRefreshToken(updateTokenResponse.headers.getSetCookie());
+  
+      if (updateTokenResponse.status === 200) {
+        console.log("MiddleWare (Update Tokens Success)");
+        return NextResponse.next({
+          headers: {
+            'Set-Cookie': [
+              `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
+              `refreshToken=${newRefreshToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`
+            ]
+          } as any,
+        });
+      }
+    } catch (error) {
+      console.error("error with updating Tokens", error);
+    }
+  
+    return NextResponse.next();
+  }

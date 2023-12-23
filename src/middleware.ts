@@ -4,6 +4,7 @@ import { routes } from './api/routes';
 import { getRefreshToken } from './utils/getRefreshToken';
 import { requestMeOptions, requestUpdateTokensOptions } from './app/actionOptions';
 import { setCookieExpires } from './utils/setCookieExpire';
+import { updateTokensAndContinue } from './app/actions';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -21,7 +22,6 @@ export const config = {
 };
 
 
-
 export async function middleware(request: NextRequest, response: NextResponse) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;
@@ -36,10 +36,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   const accessToken = cookiesList.get('accessToken')?.value
   const refreshToken = cookiesList.get('refreshToken')?.value
-
-
-  // console.log("accessToken", accessToken);
-  // console.log("refreshToken", refreshToken);
 
   const authPaths = ['/sign-in', '/sign-up', '/auth/registration-confirmation', '/email-verification', '/email-expired', '/forgot-password', '/verification-invalid'];
 
@@ -62,43 +58,15 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     switch (meResponse.status) {
       case 200:
         console.log(meResponse.status, 'isAuth');
+        return isAuthPath ? NextResponse.redirect(new URL('/my-profile', request.url)) : NextResponse.next()
 
-        return isAuthPath
-          ? NextResponse.redirect(new URL('/my-profile', request.url))
-          : NextResponse.next()
       case 401:
         console.log("Middleware (Bad AccessToken)");
-
-        try {
-          const updateTokenResponse = await fetch(routes.UPDATE_TOKENS, requestUpdateTokensOptions(refreshToken));
-          const res = await updateTokenResponse.json();
-          const newAccessToken = res.accessToken;
-          const newRefreshToken = getRefreshToken(updateTokenResponse.headers.getSetCookie());
-
-          if (updateTokenResponse.status === 200) {
-            console.log("MiddleWare (Update Tokens Success)");
-
-            return NextResponse.next({
-              headers: {
-                'Set-Cookie': [
-                  `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
-                  `refreshToken=${newRefreshToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`
-                ]
-              } as any,  //any is needed for real, looks like Next bug, when setting multiple cookies 
-            })
-          }
-        } catch (error) {
-          console.error("error with updating Tokens", error);
-          return
-        }
-        break;
+        return updateTokensAndContinue(refreshToken)
 
       default:
         console.log("Middleware (Not Authorized)")
-
-        return !isAuthPath
-          ? NextResponse.redirect(new URL('/sign-in', request.url))
-          : NextResponse.next()
+        return !isAuthPath ? NextResponse.redirect(new URL('/sign-in', request.url)) : NextResponse.next()
     }
 
   } catch (error) {

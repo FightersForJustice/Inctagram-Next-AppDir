@@ -6,18 +6,14 @@ import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 import { SideBar } from './Navigation';
 import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
 import { Profile } from './Profile';
-import { Loader } from '@/components/Loader';
-import { useGetProfileQuery } from '@/api';
 
 const MyProfile = () => {
   const [paidAccount] = useState(true);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
   const pathname = usePathname();
+  let data; //mocked data
 
-  const { data, isLoading } = useGetProfileQuery();
-
-  if (isLoading) return <Loader />;
   return (
     <>
       <div className={s.container}>
@@ -43,7 +39,6 @@ const MyProfile = () => {
           setShowSubscriptionsModal={setShowSubscriptionsModal}
         />
       )}
-      {isLoading && <Loader />}
     </>
   );
 };
