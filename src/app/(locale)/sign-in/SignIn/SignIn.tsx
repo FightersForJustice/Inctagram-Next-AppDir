@@ -2,23 +2,19 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
-
-import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-
+import { useRouter } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Loader } from '@/components/Loader';
+
 import { FormItem } from '../../sign-up/SignUp/SignUpForm/FormItem';
 import { SignInSchema } from '@/features/schemas';
-import { usePostLoginMutation } from '@/api';
-import { IUserLoginRequest } from '@/types/userTypes';
 import { AuthSubmit } from '@/components/Input';
-import { ServerError } from '@/types/serverResponseTyper';
+import { SingInData } from '@/features/schemas/SignInSchema';
+import { signInAction } from '@/app/actions';
 
 import s from './SignIn.module.scss';
-import { useRouter } from 'next/navigation';
 
 export const SignIn = () => {
   const translate = useTranslations('SignInPage');
@@ -29,7 +25,6 @@ export const SignIn = () => {
     handleSubmit,
     formState: { errors, isValid },
     setError,
-    reset,
   } = useForm({
     defaultValues: {
       email: '',
@@ -39,42 +34,42 @@ export const SignIn = () => {
     mode: 'onTouched',
   });
   const [showPass, setShowPass] = useState(true);
-  const [postLogin, { isLoading }] = usePostLoginMutation();
 
-  const onSubmit = async (data: IUserLoginRequest) => {
-    const { email, password } = data;
-    try {
-      await postLogin({ email: email.toLowerCase(), password })
-        .unwrap()
-        .then((res) => {
-          Cookies.set('accessToken', res.accessToken);
-          router.push('/my-profile');
-          toast.success('Welcome back!');
-        });
+  const processForm: SubmitHandler<SingInData> = async (data) => {
+    const result = await signInAction(data);
 
-      reset();
-    } catch (error) {
-      console.log(error);
+    if (!result) {
+      console.log('Something went wrong');
+      return;
+    }
 
-      const {
-        status,
-        data: { messages },
-      } = error as ServerError;
-      if (status < 500) {
-        const message = `${translate(`error${status}`)}`;
-        setError('password', {
-          type: 'custom',
-          message,
-        });
-      } else {
-        toast.error(messages);
-      }
+    if (result.error) {
+      const statusCode = result.error.statusCode;
+      const statusMessage = `error${statusCode}`;
+      setError('password', {
+        type: 'manual',
+        message: translate(statusMessage),
+      });
+    }
+
+    if (result.data) {
+      Cookies.set('accessToken', result.data.accessToken, {
+        expires: 14,
+        sameSite: 'none',
+        secure: true,
+      });
+      Cookies.set('refreshToken', result.data.refreshToken, {
+        expires: 14,
+        sameSite: 'none',
+        secure: true,
+      });
+      router.push('/my-profile');
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(processForm)}>
         <FormItem
           translate={translate}
           register={register}
@@ -120,7 +115,6 @@ export const SignIn = () => {
           {translate('btnBottomName')}
         </Link>
       </form>
-      {isLoading && <Loader />}
     </>
   );
 };

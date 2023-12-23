@@ -1,14 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-import type {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from '@reduxjs/toolkit/query';
-
-import { appActions } from '@/redux/reducers';
-import { RootState } from '@/redux/store';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { accessToken, setAccessToken } from '@/accessToken';
+import { accessToken } from '@/accessToken';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,

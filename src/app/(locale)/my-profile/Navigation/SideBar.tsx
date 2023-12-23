@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import s from '../MyProfile.module.scss';
 import { Modal } from '@/components/Modals/Modal';
@@ -5,13 +7,12 @@ import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { Loader } from '@/components/Loader';
 import { useTranslations } from 'next-intl';
 import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
-import { usePostLogoutMutation } from '@/api';
 import { Navigation } from './BarPage';
 import Cookies from 'js-cookie';
+import { logOutAction } from '@/app/actions';
 
 type Props = {
   pathname: string;
@@ -25,21 +26,19 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const router = useRouter();
-  const [logout, { isLoading }] = usePostLogoutMutation();
   const userEmail = 'mocked';
 
-  const onLogout = () => {
+  const onLogout = async () => {
     setShowLogoutModal(false);
-    logout()
-      .unwrap()
-      .catch(() => {
-        toast.error('Logout fail');
-      })
-      .finally(() => {
-        Cookies.remove('accessToken')
-        toast.success('Logout success');
-        router.push('/sign-in');
-      } )
+    const refreshToken = Cookies.get('refreshToken');
+    //don`t forget handle bad response  
+    const res = await logOutAction(refreshToken);
+
+    Cookies.remove('refreshToken');
+    Cookies.remove('accessToken');
+    
+    router.push('/sign-in');
+    toast.success('Logout success');
   };
 
   return (
@@ -74,7 +73,6 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
           userData={userData!}
         />
       )}
-      {isLoading && <Loader />}
     </>
   );
 };

@@ -1,39 +1,56 @@
-'use client'
+'use client';
 
 import { useGoogleLogin } from '@react-oauth/google';
-import { useLoginWithGoogleOAuthMutation } from '@/api';
-import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import GetService from './GetService';
+import { routes } from '@/api/routes';
 
 import s from './ServiceAuth.module.scss';
+import { loginGoogleAction } from '@/app/actions';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
 };
 const ServiceAuth = ({ page }: Props) => {
-
   const t = useTranslations(page);
-  const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
+  const router = useRouter();
+
 
   const gitHubAuth = () => {
     //need change on local lang from state (header lang)
-    window.location.assign(
-      `${process.env.NEXT_PUBLIC_BASE_URL}auth/github/login`
-    );
+    window.location.assign(routes.GITHUB_LOGIN);
   };
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
-    onSuccess: (codeResponse) => {
-      loginWithGoogle({ code: codeResponse.code })
-        .unwrap()
-        .then((res) => {
-          //need change on local lang from state (header lang)
-          // I'll leave the then block for possible use when moving to a new translation library
-        })
-        .catch((err) => toast.error(err));
+    onSuccess: async (codeResponse) => {
+      try {
+        const data = await loginGoogleAction(codeResponse.code);
+
+        Cookies.set('accessToken', data?.data.accessToken, {
+          expires: 14,
+          sameSite: 'none',
+          secure: true,
+        });
+        Cookies.set('refreshToken', data?.data.refreshToken, {
+          expires: 14,
+          sameSite: 'none',
+          secure: true,
+        });
+        Cookies.set('userEmail', data?.data.email, {
+          expires: 14,
+          sameSite: 'none',
+          secure: true,
+        });
+
+        router.push('/my-profile');
+      } catch (error) {
+        console.log('error', error);
+      }
     },
     onError: (errorResponse) => toast.error(errorResponse.error),
   });
@@ -52,7 +69,6 @@ const ServiceAuth = ({ page }: Props) => {
           alt="github-icon"
         />
       </div>
-      {isLoading && <Loader />}
     </>
   );
 };

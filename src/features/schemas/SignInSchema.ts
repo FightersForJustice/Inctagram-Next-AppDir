@@ -1,17 +1,19 @@
-import { useTranslations } from 'next-intl';
 import * as yup from 'yup';
+import { emailValidationRegex, passwordValidationRegex } from './validationRegex';
+import { useTranslations } from 'next-intl';
+
+export type SingInData = {
+  email: string;
+  password: string;
+};
+
 
 export const SignInSchema = () => {
   const t = useTranslations('Errors');
 
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/i;
-  const passwordValidationRegex =
-    /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|'“`"]+$/;
-
-  return yup
-    .object({
-      email: yup
-        .string()
+  return yup.object({
+    email: yup
+      .string()
         .matches(emailValidationRegex, t('email.invalidCharacters'))
         .email(t('email.email'))
         .required(t('email.required'))
@@ -35,4 +37,5 @@ export const SignInSchema = () => {
         .max(20, t('password.max')),
     })
     .required();
-};
+}
+
