@@ -5,12 +5,13 @@ import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import { GetService } from './GetService';
+import React from 'react';
 
 type Props = {
-  page: 'SignInPage' | 'SignUpPage';
+  u: React.ReactNode;
 };
-export const ServiceAuth = ({ page }: Props) => {
-  const t = useTranslations(page);
+export const ServiceAuth = ({ u }: Props) => {
+  // const t = u('SignIn');
   const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
 
   const gitHubAuth = () => {
@@ -36,7 +37,7 @@ export const ServiceAuth = ({ page }: Props) => {
 
   return (
     <>
-      <p className={s.title}>{t('title')}</p>
+      {/* <p className={s.title}>{t('title')}</p> */}
       <div className={s.container}>
         <GetService
           onClick={googleLogin}

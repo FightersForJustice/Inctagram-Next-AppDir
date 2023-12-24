@@ -9,7 +9,7 @@ const SignInPage = () => {
 
   return (
     <div id={'sign-in'} className={s.container}>
-      <ServiceAuth page={'SignInPage'} />
+      <ServiceAuth translate={t} />
       <SignInForm translate={t} />
     </div>
   );
