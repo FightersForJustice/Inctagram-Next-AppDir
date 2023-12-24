@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Providers from '@/helpers/hocs/Providers';
 
-import './globals.css';
+import './globals.scss';
 
 export default function RootLayout({
   children,

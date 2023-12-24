@@ -8,13 +8,12 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import './PostImageCarousel.css';
 import { ImageType } from '@/api/posts.api';
-import React from 'react';
 
 type Props = {
   images: ImageType[];
 };
 
-export const PostImageCarousel: React.FC<Props> = ({ images }) => {
+export const PostImageCarousel = ({ images }: Props) => {
   if (images.length === 0) {
     return (
       <Image
@@ -46,10 +45,11 @@ export const PostImageCarousel: React.FC<Props> = ({ images }) => {
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={0}
       slidesPerView={1}
-      width={491}
-      height={491}
+      // width={491}
+      // height={491}
       navigation
       pagination={{ clickable: true }}
+      style={{maxWidth: '100%'}}
     >
       {sliderImages}
     </Swiper>

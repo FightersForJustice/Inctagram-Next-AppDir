@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import s from '../MyProfile.module.scss';
+import { useState } from 'react';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
@@ -13,6 +12,8 @@ import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
 import Cookies from 'js-cookie';
 import { logOutAction } from '@/app/actions';
+
+import s from '../MyProfile.module.scss';
 
 type Props = {
   pathname: string;
@@ -51,11 +52,13 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
       />
       {showLogoutModal && (
         <Modal
-          width={'450px'}
+          className={s.modal}
           title={t('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
         >
-          {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          <div>
+            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+          </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn onClick={onLogout}>
               {t('LogoutModal.btnYes')}

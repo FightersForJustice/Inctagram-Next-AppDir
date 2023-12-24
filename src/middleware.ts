@@ -1,9 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
-import { getRefreshToken } from './utils/getRefreshToken';
-import { requestMeOptions, requestUpdateTokensOptions } from './app/actionOptions';
-import { setCookieExpires } from './utils/setCookieExpire';
+import { requestMeOptions } from './app/actionOptions';
 import { updateTokensAndContinue } from './app/actions';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {

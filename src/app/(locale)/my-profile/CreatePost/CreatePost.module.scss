@@ -83,7 +83,6 @@
       display: flex;
       flex-wrap: wrap;
       max-width: 372px;
-      //gap: 20px;
       padding-top: 24px;
     }
 
@@ -175,4 +174,9 @@
       width: 100%;
     }
   }
+}
+
+.firstModal {
+  width: 100%;
+  max-width: 491px;
 }

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import s from '../MyProfile.module.scss';
+import { useState } from 'react';
 import Image from 'next/image';
-import { GetResponse } from '@/api/profile.api';
 import { useTranslations } from 'next-intl';
+
+import { GetResponse } from '@/api/profile.api';
 import { ProfileWrapper } from './ProfileWrapper';
 import { InfiniteScrollMyPosts } from './InfiniteScrollMyPosts';
 import { PostFix } from './PostFix';
 import { PostModal } from '@/components/Modals/PostModal';
 import { PostsItem } from '@/api/posts.api';
+
+import s from '../MyProfile.module.scss';
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -15,12 +17,12 @@ type Props = {
   paidAccount: boolean;
   userData: GetResponse;
 };
-export const Profile: React.FC<Props> = ({
+export const Profile = ({
   setShowSubscriptionsModal,
   setShowSubscribersModal,
   paidAccount,
   userData,
-}) => {
+}: Props) => {
   const t = useTranslations('MyProfilePage');
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
@@ -35,7 +37,7 @@ export const Profile: React.FC<Props> = ({
   return (
     <>
       <div className={s.profile}>
-        <div>
+        <div className={s.profile__avatar__container}>
           <Image
             src={`${
               userData?.avatars[0]

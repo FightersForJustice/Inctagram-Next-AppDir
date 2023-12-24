@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import s from './CreatePost.module.scss';
 import Image from 'next/image';
+import { useRef, useState } from 'react';
+
 import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { Carousel } from '@/components/Carousel/Carousel';
@@ -9,6 +9,8 @@ import { postImages } from '@/redux/reducers/post/postSelectors';
 import { filters } from '@/features/data';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+
+import s from './CreatePost.module.scss';
 
 type Props = {
   showSecondModal: () => void;

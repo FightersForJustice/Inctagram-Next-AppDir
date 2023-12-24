@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
 import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
+import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 
 import s from './Header.module.scss';
 
@@ -16,6 +17,7 @@ export const Header = () => {
         <div className={s.notificationContainer}>
           <HeaderNotification />
           <TranslationSelect/>
+          <HeaderMenuMobile/>
         </div>
       </div>
     </header>

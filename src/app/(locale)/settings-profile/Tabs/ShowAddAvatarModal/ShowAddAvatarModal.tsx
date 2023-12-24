@@ -1,10 +1,12 @@
-import { ChangeEvent } from 'react';
-import s from '../Tabs.module.scss';
+import { ChangeEvent, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { Modal } from '@/components/Modals/Modal';
-import dynamic from 'next/dynamic';
+import { Alert } from '@/components/Alert';
+import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+import s from '../Tabs.module.scss';
 
 type Props = {
   t: (value: string) => string;
@@ -31,11 +33,14 @@ export const ShowAddAvatarModal = ({
   t,
   fileError,
 }: Props) => {
+  const [showModal, setShowModal] = useState(false);
+  // const closeModalHandler => 
+
   return (
     <Modal
       title={t('AddPhotoModal.title')}
       onClose={onCloseModal}
-      width={'492px'}
+      className={s.modal__container}
       isOkBtn={false}
     >
       <div className={s.modal}>
@@ -48,7 +53,8 @@ export const ShowAddAvatarModal = ({
             />
           </div>
         ) : (
-          <div className={'relative'}>
+          <div>
+            {fileError && <Alert text={fileError} />}
             <Image
               src="/img/settings-profile/modal-img.png"
               alt="modal-img"
@@ -56,15 +62,6 @@ export const ShowAddAvatarModal = ({
               height={228}
               className={s.modal__img}
             />
-            {fileError && (
-              <p
-                className={
-                  'absolute top-[106%] right-0 text-center w-[100%] text-red-600 text-[15px]'
-                }
-              >
-                {fileError}
-              </p>
-            )}
           </div>
         )}
         {userAvatar ? (
@@ -85,6 +82,13 @@ export const ShowAddAvatarModal = ({
               <TransparentBtn>{t('AddPhotoModal.selectBtn')}</TransparentBtn>
             </div>
           </div>
+        )}
+        {showModal && (
+          <DeleteAvatarModal
+            userAvatar={userAvatar}
+            setShowModal={setShowModal}
+            onClose={onCloseModal}
+          />
         )}
       </div>
     </Modal>

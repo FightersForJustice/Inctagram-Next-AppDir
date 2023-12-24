@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import s from './Tabs.module.scss';
-import '../../../globals.css';
+import '../../../globals.scss';
 import {
   useLazyGetProfileQuery,
   usePostProfileAvatarMutation,
@@ -36,12 +36,15 @@ const TabsDemo = () => {
     if (file.size <= maxSize) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         setFile(file);
+        console.log(2);
         setUserAvatar(URL.createObjectURL(file));
       } else {
-        setFileError('Only .JPEG and .PNG format');
+        setFileError(
+          'The format of the uploaded photo must be PNG and JPEG'
+        );
       }
     } else {
-      setFileError('Max size of photo 10 Mb');
+      setFileError('Photo size must be less than 10 MB!');
     }
   };
 
@@ -73,7 +76,7 @@ const TabsDemo = () => {
   };
 
   return (
-    <div style={{ gridArea: 'profile', width: '100%' }}>
+    <div className={s.container}>
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">

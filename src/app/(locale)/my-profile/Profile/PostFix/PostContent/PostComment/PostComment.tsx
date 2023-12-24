@@ -1,6 +1,6 @@
-import React from 'react';
-import s from './PostComment.module.scss';
 import Image from 'next/image';
+
+import s from './PostComment.module.scss';
 
 export const PostComment = () => {
   return (

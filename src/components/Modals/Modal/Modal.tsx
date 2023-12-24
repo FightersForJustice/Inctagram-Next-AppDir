@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react';
-import s from './Modal.module.scss';
 import Image from 'next/image';
+
+import s from './Modal.module.scss';
 
 type Props = {
   title?: string;
+  className?: string;
   onClose?: () => void;
-  width?: string;
   isOkBtn?: boolean;
 };
 
@@ -13,14 +14,13 @@ export const Modal = ({
   onClose,
   title,
   children,
-  width,
+  className,
   isOkBtn,
 }: PropsWithChildren<Props>) => {
   return (
     <div className={s.modal} onClick={onClose}>
       <div
-        className={s.modal__content}
-        style={{ width }}
+        className={s.modal__content + ' ' + className}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={s.modal__header}>

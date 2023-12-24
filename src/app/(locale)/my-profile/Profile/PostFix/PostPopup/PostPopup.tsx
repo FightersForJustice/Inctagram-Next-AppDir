@@ -1,5 +1,3 @@
-import React from 'react';
-
 import s from './PostPopup.module.scss';
 
 type Props = {
@@ -9,12 +7,12 @@ type Props = {
   setShowDots: (value: boolean) => void;
 };
 
-export const PostPopup: React.FC<Props> = ({
+export const PostPopup = ({
   setEditPost,
   setVisiblePopup,
   toggleShowAreYouSureModal,
   setShowDots,
-}) => {
+}: Props) => {
   const onEditPost = () => {
     setShowDots(false);
     setVisiblePopup(false);

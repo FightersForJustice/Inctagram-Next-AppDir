@@ -20,7 +20,6 @@
     "forgotPass": "Forgot password?",
     "btnName": "Sign In",
     "question": "Don’t have an account?",
-    "greetings": "Welcome back!",
     "btnBottomName": "Sign Up",
     "error400": "The email or password are incorrect. Try again please",
     "error401": "This email is not registered"
@@ -77,31 +76,37 @@
     "title": "next-intl example"
   },
   "MyProfilePage": {
-    "subscriptions": "Subscriptions",
-    "subscribers": "Subscribers",
+    "subscriptions": "Following",
+    "subscribers": "Followers",
     "publications": "Publications",
     "btnName": "Profile Settings",
     "aboutMe": "Fill in your info, while it's empty",
     "SubscribersModal": {
-      "title": "Subscribers",
+      "title": "Followers",
       "search": "Search",
-      "subBtn": "Subscribe",
+      "subBtn": "Follow",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
-      "title": "Subscriptions",
+      "title": "Following",
       "search": "Search",
-      "unsubscribe": "Unsubscribe"
+      "unsubscribe": "Unfollow"
     },
     "UnsubscribeModal": {
-      "title": "Unsubscribe",
-      "question": "Do you really want to unsubscribe from this user",
+      "title": "Unfollow",
+      "question": "Do you really want to unfollow from this user",
       "btnYes": "Yes",
       "btnNo": "No"
     },
     "DeleteModal": {
       "title": "Delete Subscriber",
-      "question": "Do you really want to delete a subscriber",
+      "question": "Do you really want to delete a Following",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    },
+    "DeleteAvatarModal": {
+      "title": "Delete profile photo",
+      "question": "Do you really want delete uploaded profile photo",
       "btnYes": "Yes",
       "btnNo": "No"
     }
@@ -114,9 +119,9 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
-    "logout": "Log out",
+    "logout": "Log Out",
     "LogoutModal": {
-      "title": "Logout",
+      "title": "Log Out",
       "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
@@ -142,16 +147,16 @@
         "required": "Username is required"
       },
       "firstName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "Name must contain at least 1 character",
-        "max": "Name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "First Name can only contain alphabetic characters",
+        "min": "First Name must contain at least 1 character",
+        "max": "First Name must not exceed 50 characters",
+        "required": "First Name is required"
       },
       "lastName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "The name must contain at least 1 character",
-        "max": "The name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "Last Name can only contain alphabetic characters",
+        "min": "Last Name must contain at least 1 character",
+        "max": "Last Name must not exceed 50 characters",
+        "required": "Last Name is required"
       },
       "city": {
         "max": "City must not exceed 15 characters"
@@ -183,6 +188,7 @@
   },
   "AgreementsPage": {
     "btnName": "Back to Sign Up",
+    "btnName1": "Back to General information",
     "TermsOfService": {
       "title": "Terms of Service",
       "text": "There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious.  There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious"
@@ -247,7 +253,15 @@
     }
   },
   "Header": {
-    "notifications": "Notifications",
-    "zeroNotifications": "You don't have notifications yet"
+    "notifications": {
+      "notZeroNotifications": "Notifications",
+      "zeroNotifications": "You don't have notifications yet"
+    },
+    "mobileMenu": {
+      "profileSettings": "Profile Settings",
+      "statistics": "Statistics",
+      "favourites": "Favourites",
+      "logOut": "Log Out"
+    }
   }
 }

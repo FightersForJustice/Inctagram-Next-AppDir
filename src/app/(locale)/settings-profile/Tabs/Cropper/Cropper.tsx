@@ -1,4 +1,3 @@
-import React from 'react';
 import Avatar from 'react-avatar-edit';
 
 type Props = {
@@ -7,15 +6,11 @@ type Props = {
   userAvatar: string;
 };
 
-const Cropper: React.FC<Props> = ({
-  setCroppedAvatar,
-  userAvatar,
-  setUserAvatar,
-}) => {
+const Cropper = ({ setCroppedAvatar, userAvatar, setUserAvatar }: Props) => {
   return (
     <Avatar
-      width={350}
-      height={350}
+      width={300}
+      height={300}
       onCrop={(preview) => setCroppedAvatar(preview)}
       onClose={() => setUserAvatar('')}
       src={userAvatar}

@@ -2,8 +2,9 @@
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { CreateNewPasswordForm } from './CreateNewPasswordForm';
+
 import s from './recovery.module.scss';
+import { CreateNewPasswordForm } from '@/components/auth';
 
 const CreateNewPassword = ({
   params,
