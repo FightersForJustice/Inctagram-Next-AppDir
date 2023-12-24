@@ -15,6 +15,7 @@ import { SingInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/actions';
 
 import s from './SignIn.module.scss';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
 export const SignIn = () => {
   const translate = useTranslations('SignInPage');
@@ -53,16 +54,9 @@ export const SignIn = () => {
     }
 
     if (result.data) {
-      Cookies.set('accessToken', result.data.accessToken, {
-        expires: 14,
-        sameSite: 'none',
-        secure: true,
-      });
-      Cookies.set('refreshToken', result.data.refreshToken, {
-        expires: 14,
-        sameSite: 'none',
-        secure: true,
-      });
+      setAuthCookie('accessToken', result.data.accessToken);
+      setAuthCookie('refreshToken', result.data.refreshToken);
+
       router.push('/my-profile');
     }
   };

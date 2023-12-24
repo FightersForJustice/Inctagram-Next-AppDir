@@ -10,7 +10,7 @@ import {
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { NextResponse } from 'next/server';
-import { setCookieExpires } from '@/utils/setCookieExpire';
+import { setCookieExpires } from '@/utils/cookiesActions';
 
 // AUTH ACTIONS
 

@@ -10,6 +10,7 @@ import s from './ServiceAuth.module.scss';
 import { loginGoogleAction } from '@/app/actions';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
@@ -29,21 +30,9 @@ const ServiceAuth = ({ page }: Props) => {
       try {
         const data = await loginGoogleAction(codeResponse.code);
 
-        Cookies.set('accessToken', data?.data.accessToken, {
-          expires: 14,
-          sameSite: 'none',
-          secure: true,
-        });
-        Cookies.set('refreshToken', data?.data.refreshToken, {
-          expires: 14,
-          sameSite: 'none',
-          secure: true,
-        });
-        Cookies.set('userEmail', data?.data.email, {
-          expires: 14,
-          sameSite: 'none',
-          secure: true,
-        });
+        setAuthCookie('accessToken', data?.data.accessToken);
+        setAuthCookie('refreshToken', data?.data.refreshToken);
+        setAuthCookie('userEmail', data?.data.email);
 
         router.push('/my-profile');
       } catch (error) {
