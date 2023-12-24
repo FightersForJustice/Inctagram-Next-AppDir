@@ -1,3 +1,6 @@
-export const getRefreshToken = (fullHeaders: string[]) => {
-  return fullHeaders[0].split('=')[1].split(';')[0];
+export const getRefreshToken = (fullHeaders: string | null) => {
+
+  return fullHeaders
+    ? fullHeaders.split('=')[1].split(';')[0]
+    : ""
 };

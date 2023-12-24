@@ -21,8 +21,11 @@ export async function signInAction(data: SingInData) {
       const responseBody = await res.json();
       if (res.ok) {
         const refreshToken = {
-          refreshToken: getRefreshToken(res.headers.getSetCookie()),
-        }; 
+          refreshToken: getRefreshToken(res.headers.get('set-cookie')),
+        };
+
+        console.log("refreshToken", refreshToken);
+
         const returnData = { ...responseBody, ...refreshToken };
 
         return { success: true, data: returnData };
@@ -64,7 +67,7 @@ export async function loginGoogleAction(code: string) {
       console.log('GoogleAuth Success');
 
       const refreshToken = {
-        refreshToken: getRefreshToken(res.headers.getSetCookie()),
+        refreshToken: getRefreshToken(res.headers.get('set-cookie')),
       };
       const returnData = { ...responseBody, ...refreshToken };
 
@@ -93,7 +96,7 @@ export async function updateTokenMiddleware(
       const responseBody = await res.json();
       if (res.ok) {
         const newAccessToken = responseBody.accessToken;
-        const newRefreshToken = getRefreshToken(res.headers.getSetCookie());
+        const newRefreshToken = getRefreshToken(res.headers.get('set-cookie'));
 
         return NextResponse.next({
           headers: {
@@ -124,9 +127,7 @@ export async function updateTokensAndContinue(
     );
     const res = await updateTokenResponse.json();
     const newAccessToken = res.accessToken;
-    const newRefreshToken = getRefreshToken(
-      updateTokenResponse.headers.getSetCookie()
-    );
+    const newRefreshToken = getRefreshToken(updateTokenResponse.headers.get('set-cookie'));
 
     if (updateTokenResponse.status === 200) {
       console.log('MiddleWare (Update Tokens Success)');
