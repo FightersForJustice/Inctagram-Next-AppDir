@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 const SignInPage = () => {
   const t = useTranslations('SignInPage');
-
+  
   return (
     <div id={'sign-in'} className={s.container}>
       <ServiceAuth page={'SignInPage'} />

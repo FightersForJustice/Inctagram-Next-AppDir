@@ -13,11 +13,13 @@ import s from './Header.module.scss';
 
 export const Header = () => {
   const [isPending, startTransition] = useTransition();
+  const [auth, setAuth] = useState();
   const [language, setLanguage] = useState(
     /\/ru/.test(location.pathname) ? 'ru' : 'en'
   );
   useEffect(() => {
     setLanguage(/\/ru/.test(location.pathname) ? 'ru' : 'en');
+    setAuth(JSON.parse(localStorage.getItem('auth') ?? ''));
   }, []);
 
   const router = useRouter();
@@ -41,7 +43,7 @@ export const Header = () => {
             language={language}
             onSelectChange={onSelectChange}
           />
-          <HeaderMenuMobile language={language} />
+          {auth && <HeaderMenuMobile language={language} />}
         </div>
       </div>
     </header>
