@@ -1,6 +1,14 @@
 .datePicker {
   &__wrapper {
     position: relative;
+    display: flex;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  &__wrapper input {
+    // display: flex;
+    border: 1px solid red;
+
   }
 
   &__label {
@@ -16,4 +24,27 @@
     top: 7px;
     left: 125px;
   }
+}
+
+.container {
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+
+  // width: 100%;
+  // max-width: 100%;
+
+  border-radius: 15px;
+  height: 300px;
+  border: 1px #0c8af8 solid;
+  padding: 4px 12px;
+  background-color: white;
+  height: 22px;
+  box-shadow: 0 0 2px #0074d9;
+}
+
+.container:focus {
+  outline: none;
+  border: 1px solid #0c8af8;
+  box-shadow: 0 0 10px 2px #0074d9;
 }

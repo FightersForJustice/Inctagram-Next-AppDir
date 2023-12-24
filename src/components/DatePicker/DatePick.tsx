@@ -48,6 +48,7 @@ export const DatePick: React.FC<Props> = ({
           ref={datePickerRef}
           format={'DD.MM.YYYY'}
           className={'bg-dark'}
+          // inputClass={s.container}
           editable={true}
           style={{
             background: 'var(--dark-900)',
@@ -55,7 +56,8 @@ export const DatePick: React.FC<Props> = ({
             padding: '6px 12px',
             height: '36px',
             borderRadius: '2px',
-            maxWidth: '158px',
+            // maxWidth: '100%',
+            // width: '100%',
             marginBottom: '24px',
             cursor: 'pointer',
           }}
