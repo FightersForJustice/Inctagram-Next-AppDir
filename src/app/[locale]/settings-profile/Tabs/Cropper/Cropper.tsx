@@ -2,17 +2,15 @@ import Avatar from 'react-avatar-edit';
 
 type Props = {
   setCroppedAvatar: (value: string) => void;
-  setUserAvatar: (value: string) => void;
   userAvatar: string;
 };
 
-const Cropper = ({ setCroppedAvatar, userAvatar, setUserAvatar }: Props) => {
+const Cropper = ({ setCroppedAvatar, userAvatar }: Props) => {
   return (
     <Avatar
       width={300}
       height={300}
       onCrop={(preview) => setCroppedAvatar(preview)}
-      onClose={() => setUserAvatar('')}
       src={userAvatar}
     />
   );
