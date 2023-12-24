@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { useTranslations } from 'next-intl';

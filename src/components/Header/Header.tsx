@@ -16,8 +16,8 @@ export const Header = () => {
 
         <div className={s.notificationContainer}>
           <HeaderNotification />
-          <TranslationSelect/>
-          <HeaderMenuMobile/>
+          <TranslationSelect />
+          <HeaderMenuMobile />
         </div>
       </div>
     </header>

@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/actionOptions';
@@ -10,7 +9,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch { }
+  } catch {}
   return 'en';
 }
 
@@ -18,7 +17,6 @@ export const config = {
   // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
-
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   const { pathname } = request.nextUrl;
@@ -32,21 +30,28 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const lang = changedLang || defaultLang;
   const isMobile = /mobile/i.test(userAgent);
 
-  const accessToken = cookiesList.get('accessToken')?.value
-  const refreshToken = cookiesList.get('refreshToken')?.value
+  const accessToken = cookiesList.get('accessToken')?.value;
+  const refreshToken = cookiesList.get('refreshToken')?.value;
 
-  const authPaths = ['/sign-in', '/sign-up', '/auth/registration-confirmation', '/email-verification', '/email-expired', '/forgot-password', '/verification-invalid'];
+  const authPaths = [
+    '/sign-in',
+    '/sign-up',
+    '/auth/registration-confirmation',
+    '/email-verification',
+    '/email-expired',
+    '/forgot-password',
+    '/verification-invalid',
+  ];
 
   const isAuthPath = authPaths.some((path) => pathname === path);
 
   //definitely not auth user
   if (!refreshToken) {
-
     console.log('Middleware (User in NOT auth)');
 
     return isAuthPath
       ? NextResponse.next()
-      : NextResponse.redirect(new URL('/sign-in', request.url))
+      : NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
   //checking auth
@@ -56,19 +61,21 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     switch (meResponse.status) {
       case 200:
         console.log(meResponse.status, 'isAuth');
-        return isAuthPath ? NextResponse.redirect(new URL('/my-profile', request.url)) : NextResponse.next()
+        return isAuthPath
+          ? NextResponse.redirect(new URL('/my-profile', request.url))
+          : NextResponse.next();
 
       case 401:
-        console.log("Middleware (Bad AccessToken)");
-        return updateTokensAndContinue(refreshToken)
+        console.log('Middleware (Bad AccessToken)');
+        return updateTokensAndContinue(refreshToken);
 
       default:
-        console.log("Middleware (Not Authorized)")
-        return !isAuthPath ? NextResponse.redirect(new URL('/sign-in', request.url)) : NextResponse.next()
+        console.log('Middleware (Not Authorized)');
+        return !isAuthPath
+          ? NextResponse.redirect(new URL('/sign-in', request.url))
+          : NextResponse.next();
     }
-
   } catch (error) {
-    console.log("NOT Authorized because of error : ", error);
+    console.log('NOT Authorized because of error : ', error);
   }
-
 }

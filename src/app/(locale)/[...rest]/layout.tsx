@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>
+  return <>{children}</>;
 };
 
 export default RootLayout;

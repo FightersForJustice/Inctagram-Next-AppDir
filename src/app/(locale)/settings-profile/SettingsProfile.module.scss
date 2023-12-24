@@ -18,7 +18,7 @@
 @include s.devices(tablet-xl) {
   .wrapper {
     grid-template-areas:
-    'profile profile'
-    'profile profile';
+      'profile profile'
+      'profile profile';
   }
 }

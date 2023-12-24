@@ -49,7 +49,7 @@ export const PostImageCarousel = ({ images }: Props) => {
       // height={491}
       navigation
       pagination={{ clickable: true }}
-      style={{maxWidth: '100%'}}
+      style={{ maxWidth: '100%' }}
     >
       {sliderImages}
     </Swiper>

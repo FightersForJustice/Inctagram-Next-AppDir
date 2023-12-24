@@ -32,12 +32,12 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const onLogout = async () => {
     setShowLogoutModal(false);
     const refreshToken = Cookies.get('refreshToken');
-    //don`t forget handle bad response  
+    //don`t forget handle bad response
     const res = await logOutAction(refreshToken);
 
     Cookies.remove('refreshToken');
     Cookies.remove('accessToken');
-    
+
     router.push('/sign-in');
     toast.success('Logout success');
   };

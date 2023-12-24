@@ -8,8 +8,8 @@ const nextConfig = {
       process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY,
   },
   experimental: {
-    serverActions: true
-  }
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig;

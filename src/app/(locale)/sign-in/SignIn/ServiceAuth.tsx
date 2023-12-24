@@ -11,14 +11,12 @@ import { loginGoogleAction } from '@/app/actions';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
-
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
 };
 const ServiceAuth = ({ page }: Props) => {
   const t = useTranslations(page);
   const router = useRouter();
-
 
   const gitHubAuth = () => {
     //need change on local lang from state (header lang)

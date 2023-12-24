@@ -23,12 +23,11 @@
   margin: 0 auto;
 }
 
-
 @include s.devices(laptop) {
   .wrapper {
     grid-template-areas:
-    'profile profile'
-    'profile profile';
+      'profile profile'
+      'profile profile';
   }
 }
 
@@ -38,6 +37,6 @@
 }
 
 .container {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

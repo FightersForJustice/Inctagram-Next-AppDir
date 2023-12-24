@@ -34,7 +34,7 @@ export const ShowAddAvatarModal = ({
   fileError,
 }: Props) => {
   const [showModal, setShowModal] = useState(false);
-  // const closeModalHandler => 
+  // const closeModalHandler =>
 
   return (
     <Modal
