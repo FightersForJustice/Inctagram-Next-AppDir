@@ -1,5 +1,4 @@
 import { SingInData } from '@/features/schemas/SignInSchema';
-import { ILoginWithGoogleOAuthRequest } from '@/types/userTypes';
 
 export const loginOptions = (data: SingInData) => {
   return {

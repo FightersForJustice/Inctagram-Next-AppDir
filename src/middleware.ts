@@ -9,7 +9,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch {}
+  } catch { }
   return 'en';
 }
 
@@ -17,6 +17,16 @@ export const config = {
   // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
+
+const authPaths = [
+  '/sign-in',
+  '/sign-up',
+  '/auth/registration-confirmation',
+  '/email-verification',
+  '/email-expired',
+  '/forgot-password',
+  '/verification-invalid',
+];
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   const { pathname } = request.nextUrl;
@@ -33,16 +43,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
 
-  const authPaths = [
-    '/sign-in',
-    '/sign-up',
-    '/auth/registration-confirmation',
-    '/email-verification',
-    '/email-expired',
-    '/forgot-password',
-    '/verification-invalid',
-  ];
-
   const isAuthPath = authPaths.some((path) => pathname === path);
 
   //definitely not auth user
@@ -54,7 +54,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       : NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
-  //checking auth
+  //checking auth refactor
   try {
     const meResponse = await fetch(routes.ME, requestMeOptions(accessToken));
 

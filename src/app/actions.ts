@@ -16,14 +16,13 @@ import { setCookieExpires } from '@/utils/cookiesActions';
 
 export async function signInAction(data: SingInData) {
   if (data) {
-    console.log('SignInSchema validated success');
     try {
       const res = await fetch(routes.LOGIN, loginOptions(data));
       const responseBody = await res.json();
       if (res.ok) {
         const refreshToken = {
           refreshToken: getRefreshToken(res.headers.getSetCookie()),
-        };
+        }; 
         const returnData = { ...responseBody, ...refreshToken };
 
         return { success: true, data: returnData };
