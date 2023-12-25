@@ -2,6 +2,7 @@
   &__wrapper {
     position: relative;
     display: flex;
+    flex-direction: column;
   }
 
   &__icon {
@@ -13,6 +14,7 @@
 
 .border {
   width: 100%;
+  z-index: 1;
 }
 
 // needs change focuse within visible
@@ -31,16 +33,20 @@
   cursor: pointer;
 }
 
-
-
 .error {
   display: flex;
   font-size: 12px;
-  position: absolute;
-  padding-top: 40px;
+  margin-top: -18px;
   color: red;
-  z-index: -1;
+  z-index: 2;
 }
+
+// .container :focus-visible {
+//   border: 1px solid red !important;
+// }
+// .container :focus-within {
+//   border: 1px solid red !important;
+// }
 
 .borderError {
   border: 1px solid var(--danger-500) !important;
