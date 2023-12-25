@@ -1,11 +1,13 @@
 .input {
-  background-color: transparent;
-  border: 1px solid var(--dark-100);
-  padding: 5px 12px;
-  outline: none;
-  border-radius: 0.125rem;
-  color: var(--light-100);
   width: 100%;
+
+  padding: 5px 12px;
+  border: 1px solid var(--dark-100);
+  border-radius: 0.125rem;
+  outline: none;
+
+  color: var(--light-100);
+  background-color: transparent;
 }
 
 .error {
@@ -22,8 +24,20 @@
   padding-top: 27px;
 }
 
+.signUpContainer {
+  padding-bottom: 24px;
+}
+
+.signUpContainerBottom {
+  padding-bottom: 6px;
+}
+
 .inputContainer {
   display: flex;
   position: relative;
   flex-direction: column;
+}
+
+.containerError {
+  padding-bottom: 3px;
 }
