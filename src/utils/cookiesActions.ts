@@ -1,8 +1,8 @@
 // all cookie expires after 14days
 
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
-const days = 24 * 60 * 60 * 1000
+const days = 24 * 60 * 60 * 1000;
 
 export const setCookieExpires = () => {
   return new Date(Date.now() + 14 * days).toUTCString();
@@ -14,4 +14,4 @@ export const setAuthCookie = (key: string, value: string) => {
     sameSite: 'none',
     secure: true,
   });
-}
+};

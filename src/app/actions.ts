@@ -24,8 +24,6 @@ export async function signInAction(data: SingInData) {
           refreshToken: getRefreshToken(res.headers.get('set-cookie')),
         };
 
-        console.log("refreshToken", refreshToken);
-
         const returnData = { ...responseBody, ...refreshToken };
 
         return { success: true, data: returnData };
@@ -127,7 +125,9 @@ export async function updateTokensAndContinue(
     );
     const res = await updateTokenResponse.json();
     const newAccessToken = res.accessToken;
-    const newRefreshToken = getRefreshToken(updateTokenResponse.headers.get('set-cookie'));
+    const newRefreshToken = getRefreshToken(
+      updateTokenResponse.headers.get('set-cookie')
+    );
 
     if (updateTokenResponse.status === 200) {
       console.log('MiddleWare (Update Tokens Success)');
