@@ -1,20 +1,23 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import * as Popover from '@radix-ui/react-popover';
+'use client';
 
+import { useState } from 'react';
+import * as Popover from '@radix-ui/react-popover';
+import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
 
-import s from '@/app/[locale]/my-profile/CreatePost/CreatePost.module.scss';
+import s from '@/app/(locale)/my-profile/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 
-export const TranslationSelect = ({
-  language,
-  onSelectChange,
-}: {
-  language: string;
-  onSelectChange: (value: string) => void;
-}) => {
+export const TranslationSelect = () => {
   const [openChangeSize, setOpenChangeSize] = useState(false);
+
+  //hardcode
+  const [language, setLanguage] = useState('ru');
+
+  const onSelectChange = (value: string) => {
+    setLanguage(value);
+    localStorage.setItem('language', String(value));
+  };
 
   const fullLanguages: any = {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },

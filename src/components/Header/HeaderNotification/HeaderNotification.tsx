@@ -1,18 +1,16 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
 import { useTranslations } from 'next-intl';
 
-import fillBell from '../../../../public/img/MaskFill.svg';
-import bell from '../../../../public/img/MaskOutline.svg';
+import fillBell from 'public/img/MaskFill.svg';
+import bell from 'public/img/MaskOutline.svg';
 
 import s from './HeaderNotification.module.scss';
 
-type TProps = {
-  language: string;
-};
-
-export const HeaderNotification = ({ language }: TProps) => {
+export const HeaderNotification = () => {
   const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
