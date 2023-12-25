@@ -73,7 +73,7 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
       router.push('/statistics');
     }
     if (ref === 'profileSettings') {
-      router.push('/my-profile');
+      router.push('/settings-profile');
     }
     if (ref === 'favourites') {
       router.push('/favourites');
