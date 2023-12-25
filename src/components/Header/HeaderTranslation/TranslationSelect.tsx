@@ -12,7 +12,7 @@ export const TranslationSelect = () => {
   const [openChangeSize, setOpenChangeSize] = useState(false);
 
   //hardcode
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('ru');
 
   const onSelectChange = (value: string) => {
     setLanguage(value);
