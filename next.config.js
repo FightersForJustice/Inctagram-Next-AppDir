@@ -7,10 +7,6 @@ const nextConfig = {
     NEXT_PUBLIC_RECAPTCHA_SECRET_KEY:
       process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY,
   },
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'ru'],
-  },
 };
 
 module.exports = nextConfig;
