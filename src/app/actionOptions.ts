@@ -11,7 +11,10 @@ export const loginOptions = (data: SingInData) => {
   };
 };
 
-export const recoveryPasswordOptions = (data: { email: string, recaptcha: string }) => {
+export const recoveryPasswordOptions = (data: {
+  email: string;
+  recaptcha: string;
+}) => {
   return {
     method: 'POST',
     headers: {
@@ -41,7 +44,7 @@ export const newPasswordOptions = (password: string, code: string) => {
     },
     body: JSON.stringify({
       newPassword: password,
-      recoveryCode: code
+      recoveryCode: code,
     }),
     next: { revalidate: 0 },
   };

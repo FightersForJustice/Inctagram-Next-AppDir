@@ -103,7 +103,9 @@ export const HeaderMenuMobile = () => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
-            <TransparentBtn onClick={() => logout(setShowLogoutModal, t, router)}>
+            <TransparentBtn
+              onClick={() => logout(setShowLogoutModal, t, router)}
+            >
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>

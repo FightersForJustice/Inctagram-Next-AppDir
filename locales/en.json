@@ -42,7 +42,7 @@
     "linkName": "Back to Sign In",
     "descAfterSend": "The link has been sent by email. If you don’t receive an email send link again",
     "btnNameAfterSend": "Send link again",
-    "modal": "We have sent a link to confirm your email to", 
+    "modal": "We have sent a link to confirm your email to",
     "error400": "Incorrect input data by field or reCaptcha"
   },
   "MergerOfAccountsPage": {

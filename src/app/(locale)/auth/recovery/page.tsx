@@ -12,13 +12,15 @@ const CreateNewPassword = ({
     code?: string;
   };
 }) => {
-  
   const t = useTranslations('RecoveryPage');
 
   return (
     <div className={s.container}>
       <p className={s.title}>{t('title')}</p>
-      <CreateNewPasswordForm newPasswordCode={searchParams?.code} translate={t} />
+      <CreateNewPasswordForm
+        newPasswordCode={searchParams?.code}
+        translate={t}
+      />
     </div>
   );
 };

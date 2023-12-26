@@ -39,18 +39,24 @@ export async function signInAction(data: SingInData) {
   }
 }
 
-export async function forgotPasswordAction(data: { email: string, recaptcha: string }) {
+export async function forgotPasswordAction(data: {
+  email: string;
+  recaptcha: string;
+}) {
   if (data) {
     try {
-      const res = await fetch(routes.PASSWORD_RECOVERY, recoveryPasswordOptions(data));
+      const res = await fetch(
+        routes.PASSWORD_RECOVERY,
+        recoveryPasswordOptions(data)
+      );
 
       if (res.ok) {
-        return { success: true, data: "The link has been sent by email" };
+        return { success: true, data: 'The link has been sent by email' };
       } else {
-        return { success: false, error: "errorCode" };
+        return { success: false, error: 'errorCode' };
       }
     } catch (error) {
-      return { success: false, error: "errorCode" };
+      return { success: false, error: 'errorCode' };
     }
   }
 }
@@ -58,13 +64,18 @@ export async function forgotPasswordAction(data: { email: string, recaptcha: str
 export async function checkRecoveryCodeAction(code: string | undefined) {
   if (code) {
     try {
-      const res = await fetch(routes.CHECK_RECOVERY_CODE, checkRecoveryCodeOptions(code));
+      const res = await fetch(
+        routes.CHECK_RECOVERY_CODE,
+        checkRecoveryCodeOptions(code)
+      );
       const responseBody = await res.json();
 
       if (res.ok) {
         return { success: true, data: responseBody };
       } else {
-        console.error('The recovery code is incorrect, expired or already been applied');
+        console.error(
+          'The recovery code is incorrect, expired or already been applied'
+        );
         return { success: false };
       }
     } catch (error) {
@@ -72,16 +83,22 @@ export async function checkRecoveryCodeAction(code: string | undefined) {
       return { success: false };
     }
   } else {
-    console.error("There is no code to recover the password");
+    console.error('There is no code to recover the password');
 
     return { success: false };
   }
 }
 
-export async function newPasswordAction(password: string, newPasswordCode: string | undefined) {
+export async function newPasswordAction(
+  password: string,
+  newPasswordCode: string | undefined
+) {
   if (newPasswordCode) {
     try {
-      const res = await fetch(routes.NEW_PASSWORD, newPasswordOptions(password, newPasswordCode));
+      const res = await fetch(
+        routes.NEW_PASSWORD,
+        newPasswordOptions(password, newPasswordCode)
+      );
 
       if (res.ok) {
         return { success: true };
@@ -94,7 +111,7 @@ export async function newPasswordAction(password: string, newPasswordCode: strin
       return { success: false };
     }
   } else {
-    console.error("There is no code to recover the password");
+    console.error('There is no code to recover the password');
 
     return { success: false };
   }

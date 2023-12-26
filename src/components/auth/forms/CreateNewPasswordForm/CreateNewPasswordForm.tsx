@@ -12,9 +12,9 @@ import {
   newPasswordAction,
   signInAction,
 } from '@/app/actions';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './CreateNewPasswordForm.module.scss';
-import { setAuthCookie } from '@/utils/cookiesActions';
 
 type Props = {
   translate: (value: string) => ReactNode;

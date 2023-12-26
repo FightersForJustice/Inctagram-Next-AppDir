@@ -54,7 +54,6 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
       if (recaptchaRef.current) {
         recaptchaRef.current.reset();
       }
-
     } else toast.error(translate('errorCode'));
   };
 
