@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { InputErrorProps } from '@/types/signUpTypes';
 import { dictionary } from '@/features/data/passwordSymbols';
-import { errorStyle, useStyle } from './utils';
+import { errorStyle, setStyle } from './utils';
 
 import s from './InputError.module.scss';
 
