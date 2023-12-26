@@ -20,7 +20,7 @@ import s from './HeaderMenuMobile.module.scss';
 export const HeaderMenuMobile = () => {
   const t = useTranslations('Navigation');
   const userEmail = 'mocked'; //mocked
-  const [logout, { isLoading }] = usePostLogoutMutation();
+
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -47,14 +47,17 @@ export const HeaderMenuMobile = () => {
   const onLogout = async () => {
     setShowLogoutModal(false);
     const refreshToken = Cookies.get('refreshToken');
-    //don`t forget handle bad response
+
     const res = await logOutAction(refreshToken);
 
-    Cookies.remove('refreshToken');
-    Cookies.remove('accessToken');
+    if (res?.success) {
+      Cookies.remove('refreshToken');
+      Cookies.remove('accessToken');
+      Cookies.remove('userEmail');
 
-    router.push('/sign-in');
-    toast.success('Logout success');
+      router.push('/sign-in');
+      toast.success(t(res.data));
+    } else toast.error(t(res?.error));
   };
 
   const logOutMenu = () => {

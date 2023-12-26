@@ -44,14 +44,14 @@ export async function logOutAction(refreshToken: string | undefined) {
         requestLogoutOptions(refreshToken)
       );
       if (res.ok) {
-        return { success: true, data: 'logout.success' };
+        return { success: true, data: 'logoutSuccess' };
       } else {
-        return { success: false, data: 'logout.failed' };
+        return { success: false, data: 'logoutFailed' };
       }
     } catch (error) {
       console.error('Logout Error', error);
     }
-  } else return { success: false, error: 'logout.failed' };
+  } else return { success: false, error: 'logoutFailed' };
 }
 
 export async function loginGoogleAction(code: string) {

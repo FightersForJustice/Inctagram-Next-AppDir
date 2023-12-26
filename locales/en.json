@@ -125,7 +125,9 @@
       "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
-    }
+    },
+    "logoutSuccess": "Log Out Success",
+    "logoutError": "Log Out Failed"
   },
   "SettingsProfilePage": {
     "GeneralInformationTab": {
