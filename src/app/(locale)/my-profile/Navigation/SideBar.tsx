@@ -4,14 +4,12 @@ import { useState } from 'react';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
-import Cookies from 'js-cookie';
-import { logOutAction } from '@/app/actions';
+import { useLogout } from '@/features/customHooks/useLogout';
 
 import s from '../MyProfile.module.scss';
 
@@ -30,16 +28,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const userEmail = 'mocked';
 
   const onLogout = async () => {
-    setShowLogoutModal(false);
-    const refreshToken = Cookies.get('refreshToken');
-    //don`t forget handle bad response
-    const res = await logOutAction(refreshToken);
-
-    Cookies.remove('refreshToken');
-    Cookies.remove('accessToken');
-
-    router.push('/sign-in');
-    toast.success('Logout success');
+    useLogout(setShowLogoutModal, t, router);
   };
 
   return (

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/actionOptions';
 import { updateTokensAndContinue } from './app/actions';
@@ -9,7 +10,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch {}
+  } catch { }
   return 'en';
 }
 
