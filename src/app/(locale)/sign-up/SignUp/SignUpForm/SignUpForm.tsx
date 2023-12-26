@@ -12,7 +12,7 @@ import { EmailSentModal } from './EmailSentModal';
 import { FormItem } from './FormItem';
 import { AgreeCheckbox } from './AgreeCheckbox';
 import { toast } from 'react-toastify';
-import { SignUpFormProps, SubmitProps } from './typesSignUp';
+import { SubmitProps } from './typesSignUp';
 import { AuthSubmit } from '@/components/Input';
 import {
   getSignUpFormItemsData,
