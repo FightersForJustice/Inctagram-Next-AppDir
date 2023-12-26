@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import { CreatePost } from '../CreatePost/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
-import { useLogout } from '@/features/customHooks/useLogout';
+import { logout } from '@/features/customHooks/useLogout';
 
 import s from '../MyProfile.module.scss';
 
@@ -45,7 +45,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.nav__btn__modal}>
-            <TransparentBtn onClick={() => useLogout(setShowLogoutModal, t, router)}>
+            <TransparentBtn onClick={() => logout(setShowLogoutModal, t, router)}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>

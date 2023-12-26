@@ -10,7 +10,7 @@ import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
-import { useLogout } from '@/features/customHooks/useLogout';
+import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
 
@@ -103,7 +103,7 @@ export const HeaderMenuMobile = () => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
-            <TransparentBtn onClick={() => useLogout(setShowLogoutModal, t, router)}>
+            <TransparentBtn onClick={() => logout(setShowLogoutModal, t, router)}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { logOutAction } from '@/app/actions';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
-export const useLogout = async (
+export const logout = async (
   setShowLogoutModal: Dispatch<SetStateAction<boolean>>,
   t: any,
   router: AppRouterInstance
