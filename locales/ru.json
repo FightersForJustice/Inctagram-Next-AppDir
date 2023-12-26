@@ -125,7 +125,9 @@
       "question": "Вы действительно хотите выйти из своей учетной записи ",
       "btnYes": "Да",
       "btnNo": "Нет"
-    }
+    },
+    "logoutSuccess": "Вы успешно вышли",
+    "logoutError": "Выход не выполнен"
   },
   "SettingsProfilePage": {
     "GeneralInformationTab": {

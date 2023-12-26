@@ -1,10 +1,11 @@
+'use client'
+
 import { ReactNode, useEffect, useState } from 'react';
-import s from './ForgotPasswordForm.module.scss';
-import f from './EmailSentModal.module.scss';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ReCAPTCHA from 'react-google-recaptcha';
+
 import { usePostPasswordRecoveryMutation } from '@/api/auth.api';
 import { Modal } from '@/components/Modals/Modal';
 import { Loader } from '@/components/Loader';
@@ -12,6 +13,9 @@ import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { handleApiError } from '@/utils';
 import { AuthSubmit } from '@/components/Input';
+
+import s from './ForgotPasswordForm.module.scss';
+import f from './EmailSentModal.module.scss';
 
 type Props = {
   translate: (value: string) => ReactNode;
