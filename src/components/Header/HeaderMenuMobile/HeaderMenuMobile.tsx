@@ -1,27 +1,25 @@
+'use client';
+
 import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
-import { useAppSelector } from '@/redux/hooks/useSelect';
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
 import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
 import { usePostLogoutMutation } from '@/api/auth.api';
-import { setAccessToken } from '@/accessToken';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
+import { logOutAction } from '@/app/actions';
 
 import s from './HeaderMenuMobile.module.scss';
 
-type TProps = {
-  language: string;
-};
-
-export const HeaderMenuMobile = ({ language }: TProps) => {
+export const HeaderMenuMobile = () => {
   const t = useTranslations('Navigation');
-  const userEmail = useAppSelector((state) => state.auth.user?.email);
+  const userEmail = 'mocked'; //mocked
   const [logout, { isLoading }] = usePostLogoutMutation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
@@ -46,18 +44,17 @@ export const HeaderMenuMobile = ({ language }: TProps) => {
     }
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     setShowLogoutModal(false);
-    logout()
-      .unwrap()
-      .then(() => {
-        setAccessToken('');
-        router.push('/sign-in');
-        toast.success('Logout success');
-      })
-      .catch(() => {
-        toast.error('Logout fail');
-      });
+    const refreshToken = Cookies.get('refreshToken');
+    //don`t forget handle bad response
+    const res = await logOutAction(refreshToken);
+
+    Cookies.remove('refreshToken');
+    Cookies.remove('accessToken');
+
+    router.push('/sign-in');
+    toast.success('Logout success');
   };
 
   const logOutMenu = () => {

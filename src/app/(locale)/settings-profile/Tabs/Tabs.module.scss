@@ -1,0 +1,278 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  grid-area: profile;
+  width: 100%;
+  padding: 0px 20px 0px 45px;
+  margin: 0 auto;
+}
+
+.TabsRoot {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  // min-width: 726px;
+  margin: 0 auto;
+  outline: none;
+  padding-top: 35px;
+}
+
+.TabsList {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--dark-100);
+}
+
+.TabsTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+  color: var(--dark-100);
+  height: 45px;
+  flex: 1;
+
+  user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  max-width: 181px;
+
+  transition: all 0.2s linear;
+}
+
+.TabsTrigger:first-child {
+  border-top-left-radius: 6px;
+}
+
+.TabsTrigger:last-child {
+  border-top-right-radius: 6px;
+}
+
+.TabsTrigger:hover {
+  color: var(--primary-500);
+}
+
+.TabsTrigger[data-state='active'] {
+  color: var(--primary-500);
+  box-shadow:
+    inset 0 -1px 0 0 currentColor,
+    0 1px 0 0 currentColor;
+}
+
+/*.TabsTrigger:focus {
+    position: relative;
+    box-shadow: 0 0 0 2px black;
+}*/
+
+.TabsContent {
+  flex-grow: 1;
+  background-color: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  outline: none;
+  position: relative;
+}
+
+/*.TabsContent:focus {
+    box-shadow: 0 0 0 2px black;
+}*/
+
+.Text {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--primary-500);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.Fieldset {
+  margin-bottom: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Label {
+  font-size: 13px;
+  line-height: 1;
+  margin-bottom: 10px;
+  color: var(--primary-500);
+  display: block;
+}
+
+.Input {
+  flex: 1 0 auto;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--primary-500);
+  box-shadow: 0 0 0 1px var(--primary-500);
+  height: 35px;
+}
+
+.Input:focus {
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  height: 35px;
+}
+
+.Button.green {
+  background-color: var(--primary-500);
+  color: var(--primary-500);
+}
+
+.Button.green:hover {
+  background-color: var(--primary-500);
+}
+
+.Button.green:focus {
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid var(--dark-300);
+  padding-bottom: 23px;
+  margin-bottom: 100px;
+
+  &__right {
+    width: 100%;
+
+    form {
+      width: 100%;
+    }
+  }
+
+  &__left {
+    width: 40%;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 55px;
+    right: 70px;
+    cursor: pointer;
+  }
+
+  &__image {
+    border-radius: 50%;
+    margin: 0 auto 50px auto;
+  }
+
+  &__inputFile {
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__loadZone {
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    padding: 2px;
+    max-width: 225px;
+    text-align: center;
+  }
+
+  &__overlay {
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0 -1px;
+    padding-left: 0;
+    cursor: pointer;
+  }
+}
+
+/*-----modal-------*/
+
+.modal {
+  &__container {
+    width: 495px;
+  }
+
+  &__img {
+    margin: 24px auto;
+  }
+
+  &__loadImg {
+    border-radius: 50%;
+    margin: 20px auto 60px;
+  }
+
+  &__loadImg svg {
+    display: none;
+  }
+
+  &__saveBtn {
+    text-align: right;
+  }
+}
+
+@include s.devices(tablet-xl) {
+  .container {
+    grid-area: profile;
+    padding: 0px 25px;
+  }
+  .wrapper {
+    gap: 20px;
+    &__left {
+      max-width: 200px;
+    }
+  }
+  .TabsRoot {
+    padding-bottom: 50px;
+  }
+}
+
+@include s.devices(tablet) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &__left {
+      width: 100%;
+      padding-top: 25px;
+      max-width: 100%;
+    }
+  }
+  .TabsTrigger {
+    min-width: 175px;
+  }
+
+  .TabsList {
+    overflow-x: scroll;
+  }
+}
+
+@include s.devices(mobile) {
+  .wrapper {
+    &__left button {
+      width: 100%;
+    }
+  }
+}

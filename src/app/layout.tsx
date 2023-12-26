@@ -1,9 +1,7 @@
-'use client';
-import './globals.scss';
 import { ReactNode } from 'react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { store } from '@/redux';
-import { Provider } from 'react-redux';
+import Providers from '@/helpers/hocs/Providers';
+
+import './globals.scss';
 
 export default function RootLayout({
   children,
@@ -15,13 +13,7 @@ export default function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <Provider store={store}>
-          <GoogleOAuthProvider
-            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
-          >
-            {children}
-          </GoogleOAuthProvider>
-        </Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
