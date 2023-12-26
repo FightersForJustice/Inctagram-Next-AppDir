@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import s from './InputError.module.scss';
 
-export const useStyle = (id: string, error: string, value: boolean) => {
+export const setStyle = (id: string, error: string, value: boolean) => {
   const signUpStyle = clsx(
     s.container,
     {
