@@ -27,10 +27,6 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const router = useRouter();
   const userEmail = 'mocked';
 
-  const onLogout = async () => {
-    useLogout(setShowLogoutModal, t, router);
-  };
-
   return (
     <>
       <Navigation
@@ -49,7 +45,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.nav__btn__modal}>
-            <TransparentBtn onClick={onLogout}>
+            <TransparentBtn onClick={() => useLogout(setShowLogoutModal, t, router)}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>

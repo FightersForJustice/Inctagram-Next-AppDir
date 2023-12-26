@@ -41,10 +41,6 @@ export const HeaderMenuMobile = () => {
     }
   };
 
-  const onLogout = async () => {
-    useLogout(setShowLogoutModal, t, router);
-  };
-
   const logOutMenu = () => {
     setShowLogoutModal(true);
     setModal(!modal);
@@ -107,7 +103,7 @@ export const HeaderMenuMobile = () => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
-            <TransparentBtn onClick={onLogout}>
+            <TransparentBtn onClick={() => useLogout(setShowLogoutModal, t, router)}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>
