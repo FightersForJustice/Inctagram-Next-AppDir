@@ -2,18 +2,15 @@
 
 import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { useTranslations } from 'next-intl';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
 import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
-import { usePostLogoutMutation } from '@/api/auth.api';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
-import { logOutAction } from '@/app/actions';
+import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
 
@@ -42,22 +39,6 @@ export const HeaderMenuMobile = () => {
     if (e.currentTarget.id === 'dots') {
       return setModal(!modal);
     }
-  };
-
-  const onLogout = async () => {
-    setShowLogoutModal(false);
-    const refreshToken = Cookies.get('refreshToken');
-
-    const res = await logOutAction(refreshToken);
-
-    if (res?.success) {
-      Cookies.remove('refreshToken');
-      Cookies.remove('accessToken');
-      Cookies.remove('userEmail');
-
-      router.push('/sign-in');
-      toast.success(t(res.data));
-    } else toast.error(t(res?.error));
   };
 
   const logOutMenu = () => {
@@ -122,7 +103,7 @@ export const HeaderMenuMobile = () => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
-            <TransparentBtn onClick={onLogout}>
+            <TransparentBtn onClick={() => logout(setShowLogoutModal, t, router)}>
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>
