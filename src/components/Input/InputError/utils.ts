@@ -22,7 +22,7 @@ export const setStyle = (id: string, error: string, value: boolean) => {
 export const errorStyle = (message: string | undefined) => {
   const boilerPlate = [
     'Password must contain 0-9, a-z, A-Z ',
-    'Пароль должен содержать a-я, А-Я, 1-9 ',
+    'Пароль должен содержать 0-9, a-z, A-Z ',
   ];
   return boilerPlate.includes(message ? message : '');
 };
