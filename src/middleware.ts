@@ -10,7 +10,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch { }
+  } catch {}
   return 'en';
 }
 
