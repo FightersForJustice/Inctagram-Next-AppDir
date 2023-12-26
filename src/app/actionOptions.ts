@@ -11,6 +11,42 @@ export const loginOptions = (data: SingInData) => {
   };
 };
 
+export const recoveryPasswordOptions = (data: { email: string, recaptcha: string }) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    next: { revalidate: 0 },
+  };
+};
+
+export const checkRecoveryCodeOptions = (code: string) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ recoveryCode: code }),
+    next: { revalidate: 0 },
+  };
+};
+
+export const newPasswordOptions = (password: string, code: string) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newPassword: password,
+      recoveryCode: code
+    }),
+    next: { revalidate: 0 },
+  };
+};
+
 export const requestUpdateTokensOptions = (
   refreshToken: string | undefined
 ) => {

@@ -36,27 +36,20 @@ export const SignIn = () => {
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SingInData> = async (data) => {
-    const result = await signInAction(data);
+    const signInResult = await signInAction(data);
 
-    if (!result) {
-      console.log('Something went wrong');
-      return;
-    }
+    if (signInResult?.success) {
+      setAuthCookie('accessToken', signInResult.data.accessToken);
+      setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
-    if (result.error) {
-      const statusCode = result.error.statusCode;
+      router.push('/my-profile');
+    } else {
+      const statusCode = signInResult?.error.statusCode;
       const statusMessage = `error${statusCode}`;
       setError('password', {
         type: 'manual',
         message: translate(statusMessage),
       });
-    }
-
-    if (result.data) {
-      setAuthCookie('accessToken', result.data.accessToken);
-      setAuthCookie('refreshToken', result.data.refreshToken);
-
-      router.push('/my-profile');
     }
   };
 

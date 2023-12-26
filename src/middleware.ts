@@ -27,6 +27,8 @@ const authPaths = [
   '/email-expired',
   '/forgot-password',
   '/verification-invalid',
+  '/auth/recovery',
+  '/auth/registration-confirmation',
 ];
 
 export async function middleware(request: NextRequest, response: NextResponse) {

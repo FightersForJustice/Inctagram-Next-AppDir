@@ -42,7 +42,8 @@
     "linkName": "Back to Sign In",
     "descAfterSend": "The link has been sent by email. If you don’t receive an email send link again",
     "btnNameAfterSend": "Send link again",
-    "modal": "We have sent a link to confirm your email to"
+    "modal": "We have sent a link to confirm your email to", 
+    "error400": "Incorrect input data by field or reCaptcha"
   },
   "MergerOfAccountsPage": {
     "title": "Merger of Accounts",
@@ -61,7 +62,9 @@
     "password": "New password",
     "passwordConf": "Password confirmation",
     "desc": "Your password must be between 6 and 20 characters",
-    "btnName": "Create new password"
+    "btnName": "Create new password",
+    "errorCode": "Something is wrong. Try again",
+    "newPasswordSuccess": "You have successfully changed your password"
   },
   "RegistrationConfirmationPage": {
     "title": "Congratulations!",

@@ -1,8 +1,9 @@
 'use client';
 
-import s from './Forgot-Password.module.scss';
 import { useTranslations } from 'next-intl';
 import { ForgotPasswordForm } from '@/components/auth';
+
+import s from './Forgot-Password.module.scss';
 
 const ForgotPassword = () => {
   const t = useTranslations('ForgotPasswordPage');

@@ -3,7 +3,10 @@
 import { routes } from '@/api/routes';
 import { SingInData } from '@/features/schemas/SignInSchema';
 import {
+  checkRecoveryCodeOptions,
   loginOptions,
+  newPasswordOptions,
+  recoveryPasswordOptions,
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
@@ -33,6 +36,67 @@ export async function signInAction(data: SingInData) {
     } catch (error) {
       console.error(error, 'post error');
     }
+  }
+}
+
+export async function forgotPasswordAction(data: { email: string, recaptcha: string }) {
+  if (data) {
+    try {
+      const res = await fetch(routes.PASSWORD_RECOVERY, recoveryPasswordOptions(data));
+
+      if (res.ok) {
+        return { success: true, data: "The link has been sent by email" };
+      } else {
+        return { success: false, error: "errorCode" };
+      }
+    } catch (error) {
+      return { success: false, error: "errorCode" };
+    }
+  }
+}
+
+export async function checkRecoveryCodeAction(code: string | undefined) {
+  if (code) {
+    try {
+      const res = await fetch(routes.CHECK_RECOVERY_CODE, checkRecoveryCodeOptions(code));
+      const responseBody = await res.json();
+
+      if (res.ok) {
+        return { success: true, data: responseBody };
+      } else {
+        console.error('The recovery code is incorrect, expired or already been applied');
+        return { success: false };
+      }
+    } catch (error) {
+      console.error(error, 'checkRecoveryCodeAction fetch error');
+      return { success: false };
+    }
+  } else {
+    console.error("There is no code to recover the password");
+
+    return { success: false };
+  }
+}
+
+export async function newPasswordAction(password: string, newPasswordCode: string | undefined) {
+  if (newPasswordCode) {
+    try {
+      const res = await fetch(routes.NEW_PASSWORD, newPasswordOptions(password, newPasswordCode));
+
+      if (res.ok) {
+        return { success: true };
+      } else {
+        console.error('Incorrect input data by field');
+        return { success: false };
+      }
+    } catch (error) {
+      console.error(error, 'newPasswordAction fetch error');
+      return { success: false };
+    }
+  } else {
+    console.error("There is no code to recover the password");
+
+    return { success: false };
   }
 }
 

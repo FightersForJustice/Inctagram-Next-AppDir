@@ -1,25 +1,30 @@
-import { ReactNode, useEffect, useState } from 'react';
-import s from './CreateNewPasswordForm.module.scss';
+import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { useRouter } from 'next/navigation';
-import {
-  StatusCode,
-  usePostNewPasswordMutation,
-  usePostPasswordCheckRecoveryCodeMutation,
-} from '@/api/auth.api';
-import { Loader } from '@/components/Loader/Loader';
-import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { toast } from 'react-toastify';
+
+import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { CreateFormItem } from './CreateFormItem';
 import { AuthSubmit } from '@/components/Input';
+import {
+  checkRecoveryCodeAction,
+  newPasswordAction,
+  signInAction,
+} from '@/app/actions';
+
+import s from './CreateNewPasswordForm.module.scss';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
 type Props = {
   translate: (value: string) => ReactNode;
+  newPasswordCode: string | undefined;
 };
 
-export const CreateNewPasswordForm = ({ translate }: Props) => {
+export const CreateNewPasswordForm = ({
+  newPasswordCode,
+  translate,
+}: Props) => {
   const {
     register,
     handleSubmit,
@@ -31,51 +36,36 @@ export const CreateNewPasswordForm = ({ translate }: Props) => {
 
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
-  const [isCodeSuccess, setIsCodeSuccess] = useState(false);
-  const [recoveryCode, setRecoveryCode] = useState('');
-  const [serverError, setServerError] = useState('');
   const router = useRouter();
 
-  const [postNewPassword, { isSuccess, isLoading }] =
-    usePostNewPasswordMutation();
-  const [checkCode, { isLoading: isCheckLoading }] =
-    usePostPasswordCheckRecoveryCodeMutation();
+  const onSubmit = async (data: { password: string }) => {
+    const isRecoveryCodeValid = await checkRecoveryCodeAction(newPasswordCode);
 
-  useEffect(() => {
-    setRecoveryCode(sessionStorage.getItem('userEmailRecoveryCode')!);
+    if (isRecoveryCodeValid?.success) {
+      const changePasswordResult = await newPasswordAction(
+        data.password,
+        newPasswordCode
+      );
 
-    if (recoveryCode) {
-      checkCode({ recoveryCode })
-        .unwrap()
-        .then(() => setIsCodeSuccess(true))
-        .catch((err) => {
-          toast.error(err.error);
-          if (err.data.statusCode === StatusCode.badRequest) {
-            setServerError(err.data.messages[0]?.message);
-            //setError("passwordConfirm", { message: err.data.messages[0]?.message });
-          }
-        });
-    }
-  }, [recoveryCode]);
+      if (changePasswordResult.success) {
+        toast.success(translate('newPasswordSuccess'));
+        const { email } = isRecoveryCodeValid.data;
+        const password = data.password;
 
-  useEffect(() => {
-    if (isSuccess) {
-      router.push('/sign-in');
-    }
-  }, [isSuccess, router]);
+        const signInResult = await signInAction({ email, password });
+        if (signInResult?.success) {
+          setAuthCookie('accessToken', signInResult.data.accessToken);
+          setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
-  const onSubmit = (data: { password: string }) => {
-    if (isCodeSuccess) {
-      postNewPassword({ newPassword: data.password, recoveryCode })
-        .unwrap()
-        .catch((err) => toast.error(err.error));
-      sessionStorage.removeItem('userEmailRecoveryCode');
-    }
+          router.push('/my-profile');
+        }
+      } else {
+        toast.error(translate('errorCode'));
+      }
+    } else toast.error(translate('errorCode'));
   };
 
-  return isLoading || isCheckLoading ? (
-    <Loader />
-  ) : (
+  return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <CreateFormItem
         translate={translate}
@@ -99,12 +89,8 @@ export const CreateNewPasswordForm = ({ translate }: Props) => {
         registerName={'passwordConfirm'}
       />
 
-      {serverError && <p className={s.errorMessage}>{serverError}</p>}
       <p className={s.infoText}>{translate('desc')}</p>
-      <AuthSubmit
-        value={String(translate('btnName'))}
-        disabled={!!serverError || !isValid}
-      />
+      <AuthSubmit value={String(translate('btnName'))} disabled={!isValid} />
     </form>
   );
 };
