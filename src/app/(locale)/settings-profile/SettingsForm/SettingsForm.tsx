@@ -57,6 +57,9 @@ export const SettingsForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
+    if (ageError) {
+      setAgeError('');
+    }
     let parts = dateOfBirth.split('.');
     let birthdayDate: Date | string = new Date(
       +parts[2],
@@ -187,7 +190,13 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn disabled={!!ageError}>{translate('saveBtn')}</PrimaryBtn>
+          <PrimaryBtn
+            disabled={
+              !!errors.firstName || !!errors.lastName || !!errors.userName
+            }
+          >
+            {translate('saveBtn')}
+          </PrimaryBtn>
         </div>
       </form>
       {isLoading && <Loader />}

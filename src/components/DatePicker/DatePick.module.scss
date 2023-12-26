@@ -4,16 +4,53 @@
   }
 
   &__label {
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-size: 14px;
-    color: var(--light-900, #8d9094);
+    display: flex;
+    flex-direction: column;
   }
 
   &__icon {
     position: absolute;
     top: 7px;
-    left: 125px;
+    left: calc(100% - 35px);
   }
+}
+
+.border {
+  width: 100%;
+  z-index: 1;
+}
+
+// needs change focuse within visible
+
+.container {
+  display: flex;
+  width: 100%;
+
+  background: var(--dark-900);
+  border: 1px solid var(--dark-100) !important;
+
+  padding: 6px 12px;
+  border-radius: 0.125rem;
+  margin-bottom: 24px;
+
+  cursor: pointer;
+}
+
+.error {
+  display: flex;
+  font-size: 12px;
+  margin-top: -18px;
+  color: red;
+  z-index: 2;
+}
+
+// .container :focus-visible {
+//   border: 1px solid red !important;
+// }
+// .container :focus-within {
+//   border: 1px solid red !important;
+// }
+
+.borderError {
+  border: 1px solid var(--danger-500) !important;
 }
