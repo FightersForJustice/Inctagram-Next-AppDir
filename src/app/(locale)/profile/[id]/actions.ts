@@ -19,7 +19,7 @@ export const actions = {
     }
   },
   async getPosts(id: number) {
-    const apiUrl = `https://inctagram.work/api/v1/public-posts/user/${id}/,?sortDirection=desc`;
+    const apiUrl = `https://inctagram.work/api/v1/public-posts/user/${id}/,?pageSize=8&sortDirection=desc`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) {
