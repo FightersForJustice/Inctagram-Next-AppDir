@@ -1,7 +1,6 @@
 import { SingInData } from '@/features/schemas/SignInSchema';
 
-
-//AUTH OPTIONS 
+//AUTH OPTIONS
 
 export const loginOptions = (data: SingInData) => {
   return {
@@ -98,7 +97,10 @@ export const requestGoogleLoginOptions = (googleCode: string) => {
 
 //SESSION OPTIONS
 
-export const requestDeleteAllSessionsOptions = (accessToken: string | undefined, refreshToken: string | undefined) => {
+export const requestDeleteAllSessionsOptions = (
+  accessToken: string | undefined,
+  refreshToken: string | undefined
+) => {
   return {
     method: 'DELETE',
     headers: {

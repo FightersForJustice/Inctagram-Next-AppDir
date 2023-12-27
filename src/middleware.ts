@@ -10,7 +10,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch { }
+  } catch {}
   return 'en';
 }
 
@@ -75,8 +75,8 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         console.log('Middleware (Bad AccessToken)');
         const updateTokenResult = await updateTokensAndContinue(refreshToken);
         if (updateTokenResult.success) {
-          return updateTokenResult.action
-        } else return updateTokenResult.action
+          return updateTokenResult.action;
+        } else return updateTokenResult.action;
 
       default:
         console.log('Middleware (Not Authorized)');

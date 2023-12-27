@@ -12,5 +12,5 @@ export const routes = Object.freeze({
   CHECK_RECOVERY_CODE: `${baseUrl}auth/check-recovery-code`,
   NEW_PASSWORD: `${baseUrl}auth/new-password`,
   //SESSIONS
-  TERMINATE_ALL_SESSIONS: `${baseUrl}sessions/terminate-all`
+  TERMINATE_ALL_SESSIONS: `${baseUrl}sessions/terminate-all`,
 });

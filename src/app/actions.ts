@@ -164,7 +164,10 @@ export async function loginGoogleAction(code: string) {
 
 //SESSION ACTIONS
 
-export async function deleteAllSessionsAction(accessToken: string | undefined, refreshToken: string | undefined) {
+export async function deleteAllSessionsAction(
+  accessToken: string | undefined,
+  refreshToken: string | undefined
+) {
   if (accessToken) {
     try {
       const res = await fetch(
@@ -242,11 +245,10 @@ export async function updateTokensAndContinue(refreshToken: string) {
         } as any,
       });
 
-      return { success: true, action }
+      return { success: true, action };
     } else {
-      throw new Error("error with updating Tokens");
+      throw new Error('error with updating Tokens');
     }
-
   } catch (error) {
     console.error(error);
 
@@ -259,6 +261,6 @@ export async function updateTokensAndContinue(refreshToken: string) {
       } as any,
     });
 
-    return { success: false, action }
+    return { success: false, action };
   }
 }
