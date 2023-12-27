@@ -48,18 +48,12 @@ export const AgreeCheckbox = ({
           <p>
             {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
-                <Link
-                  className={s.link}
-                  href="./agreements-page/terms-of-service"
-                >
+                <Link className={s.link} href="./agreements/terms-of-service">
                   {chunks}
                 </Link>
               ),
               link2: (chunks: string) => (
-                <Link
-                  className={s.link}
-                  href="./agreements-page/privacy-policy"
-                >
+                <Link className={s.link} href="./agreements/privacy-policy">
                   {chunks}
                 </Link>
               ),

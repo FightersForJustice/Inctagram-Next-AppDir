@@ -27,6 +27,8 @@ const authPaths = [
   '/email-expired',
   '/forgot-password',
   '/verification-invalid',
+  '/agreements/privacy-policy',
+  '/agreements/terms-of-service',
 ];
 
 export async function middleware(request: NextRequest, response: NextResponse) {
