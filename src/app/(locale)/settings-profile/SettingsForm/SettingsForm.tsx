@@ -60,12 +60,12 @@ export const SettingsForm = ({
   const values = getValues();
 
   const isRequiredFormError =
-    !!errors.firstName ||
-    !!errors.lastName ||
-    !!errors.userName ||
-    !values.firstName ||
-    !values.lastName ||
-    !values.userName;
+    !values.firstName &&
+    !values.lastName &&
+    !values.userName &&
+    !!errors.firstName &&
+    !!errors.lastName &&
+    !!errors.userName ? false : false
 
   const onSubmit = handleSubmit((data) => {
     if (ageError) {
