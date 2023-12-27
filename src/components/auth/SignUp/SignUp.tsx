@@ -1,7 +1,7 @@
 'use client';
 
 import s from './SignUp.module.scss';
-import { SignUpForm } from './SignUpForm';
+import { SignUpForm } from '@/components/auth';
 
 export const SignUp = () => {
   return (

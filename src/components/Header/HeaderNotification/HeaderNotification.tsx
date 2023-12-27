@@ -5,8 +5,8 @@ import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
 import { useTranslations } from 'next-intl';
 
-import fillBell from 'public/img/MaskFill.svg';
-import bell from 'public/img/MaskOutline.svg';
+import fillBell from '/public/img/MaskFill.svg';
+import bell from '/public/img/MaskOutline.svg';
 
 import s from './HeaderNotification.module.scss';
 
@@ -46,15 +46,15 @@ export const HeaderNotification = () => {
                 //left marcup for future
 
                 /* <div className={s.popup__item}>
-                <p className={s.popup__item__title}>
-                  Новое уведомление!{' '}
-                  <span className={s.popup__item__new}>Новое</span>
-                </p>
-                <p className={s.popup__desc}>
-                  Следующий платеж у вас спишется через 1 день
-                </p>
-                <p className={s.popup__time}>1 час назад</p>
-              </div> */
+                                <p className={s.popup__item__title}>
+                                  Новое уведомление!{' '}
+                                  <span className={s.popup__item__new}>Новое</span>
+                                </p>
+                                <p className={s.popup__desc}>
+                                  Следующий платеж у вас спишется через 1 день
+                                </p>
+                                <p className={s.popup__time}>1 час назад</p>
+                              </div> */
                 <div className={s.popup__item}>
                   <p className={s.popup__desc}>
                     {t('notifications.zeroNotifications')}

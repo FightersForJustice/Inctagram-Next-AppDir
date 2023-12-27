@@ -29,7 +29,11 @@ export const DatePick: React.FC<Props> = ({
 
   useEffect(() => {
     check13YearsOld(value, setAgeError);
+    var el = document.querySelector('div.rmdp-container');
+    el?.classList.add(s.border);
   }, [value, setAgeError]);
+
+  const finalInput = ageError ? s.container + ' ' + s.borderError : s.container;
 
   return (
     <>
@@ -48,17 +52,8 @@ export const DatePick: React.FC<Props> = ({
           ref={datePickerRef}
           format={'DD.MM.YYYY'}
           className={'bg-dark'}
+          inputClass={finalInput}
           editable={true}
-          style={{
-            background: 'var(--dark-900)',
-            border: '1px solid var(--dark-300)',
-            padding: '6px 12px',
-            height: '36px',
-            borderRadius: '2px',
-            maxWidth: '158px',
-            marginBottom: '24px',
-            cursor: 'pointer',
-          }}
         >
           <button
             style={{ margin: '5px' }}
@@ -75,7 +70,7 @@ export const DatePick: React.FC<Props> = ({
           className={s.datePicker__icon}
         />
         {ageError && (
-          <p className={'text-red-600 text-[12px] absolute top-[40px] left-0'}>
+          <p className={s.error}>
             {ageError}
             <Link
               href={'/agreements/privacy-policy-profile'}

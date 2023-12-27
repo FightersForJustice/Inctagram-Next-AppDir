@@ -1,1 +1,0 @@
-export { RegistrationEmailResend } from './RegistrationEmailResend';

@@ -2,25 +2,22 @@
 
 import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { useTranslations } from 'next-intl';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
 import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
-import { usePostLogoutMutation } from '@/api/auth.api';
 import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
-import { logOutAction } from '@/app/actions';
+import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
 
 export const HeaderMenuMobile = () => {
   const t = useTranslations('Navigation');
   const userEmail = 'mocked'; //mocked
-  const [logout, { isLoading }] = usePostLogoutMutation();
+
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -44,19 +41,6 @@ export const HeaderMenuMobile = () => {
     }
   };
 
-  const onLogout = async () => {
-    setShowLogoutModal(false);
-    const refreshToken = Cookies.get('refreshToken');
-    //don`t forget handle bad response
-    const res = await logOutAction(refreshToken);
-
-    Cookies.remove('refreshToken');
-    Cookies.remove('accessToken');
-
-    router.push('/sign-in');
-    toast.success('Logout success');
-  };
-
   const logOutMenu = () => {
     setShowLogoutModal(true);
     setModal(!modal);
@@ -70,7 +54,7 @@ export const HeaderMenuMobile = () => {
       router.push('/statistics');
     }
     if (ref === 'profileSettings') {
-      router.push('/my-profile');
+      router.push('/settings-profile');
     }
     if (ref === 'favourites') {
       router.push('/favourites');
@@ -119,7 +103,9 @@ export const HeaderMenuMobile = () => {
             {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
-            <TransparentBtn onClick={onLogout}>
+            <TransparentBtn
+              onClick={() => logout(setShowLogoutModal, t, router)}
+            >
               {t('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>

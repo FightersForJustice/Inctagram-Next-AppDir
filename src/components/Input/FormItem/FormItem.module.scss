@@ -22,8 +22,20 @@
   padding-top: 27px;
 }
 
+.signUpContainer {
+  padding-bottom: 24px;
+}
+
+.signUpContainerBottom {
+  padding-bottom: 6px;
+}
+
 .inputContainer {
   display: flex;
   position: relative;
   flex-direction: column;
+}
+
+.containerError {
+  padding-bottom: 3px;
 }

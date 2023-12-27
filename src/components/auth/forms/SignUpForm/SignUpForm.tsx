@@ -8,20 +8,20 @@ import Link from 'next/link';
 import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
 import { SignUpFormSchema } from '@/features/schemas';
 import { Loader } from '@/components/Loader';
-import { EmailSentModal } from '@/components/Modals/EmailSentModal';
-import { FormItem } from '@/components/Input';
-import { AgreeCheckbox } from '@/components/auth';
+
 import { toast } from 'react-toastify';
-import { SignUpFormProps, SubmitProps } from '@/types/signUpTypes';
-import { AuthSubmit } from '@/components/Input';
+import { SubmitProps } from '@/components/auth/SignUp/typesSignUp';
+import { AuthSubmit, FormItem } from '@/components/Input';
 import {
   getSignUpFormItemsData,
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
-import { ServiceAuth } from '@/components/auth';
+import { useTranslations } from 'next-intl';
+import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
 
-export const SignUpForm = ({ translate }: SignUpFormProps) => {
+export const SignUpForm = () => {
   const {
     register,
     handleSubmit,
@@ -37,6 +37,8 @@ export const SignUpForm = ({ translate }: SignUpFormProps) => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  const translate = useTranslations('SignUpPage');
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();

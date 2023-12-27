@@ -47,7 +47,6 @@ const TabsDemo = () => {
   };
 
   const onCloseModal = () => {
-    setUserAvatar('');
     setShowAddAvatarModal(false);
     setFileError('');
   };

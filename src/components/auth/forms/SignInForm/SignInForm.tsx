@@ -1,117 +1,111 @@
-// import { ReactNode, useState } from 'react';
-// import s from './SignInForm.module.scss';
-// import Link from 'next/link';
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { redirect } from 'next/navigation';
-// import { Loader } from '@/components/Loader';
-// import { FormItem } from '@/components/Input';
-// import { SignInSchema } from '@/features/schemas';
-// import { usePostLoginMutation } from '@/api';
-// import { useAppSelector } from '@/redux/hooks/useSelect';
-// import { IUserLoginRequest } from '@/types/userTypes';
-// import { AuthSubmit } from '@/components/Input';
-// import { toast } from 'react-toastify';
-// import { ServerError } from '@/types/serverResponseTypes';
+'use client';
 
-// type Props = {
-//   translate: (value: string) => ReactNode;
-// };
+import { useState } from 'react';
+import Link from 'next/link';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-// export const SignInForm = ({ translate }: Props) => {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors, isValid },
-//     setError,
-//     reset,
-//   } = useForm({
-//     defaultValues: {
-//       email: '',
-//       password: '',
-//     },
-//     resolver: yupResolver(SignInSchema()),
-//     mode: 'onTouched',
-//   });
-//   const [showPass, setShowPass] = useState(true);
-//   const isAuth = useAppSelector((state) => state.auth.isAuth);
-//   const [postLogin, { isLoading }] = usePostLoginMutation();
+import { SignInSchema } from '@/features/schemas';
+import { AuthSubmit, FormItem } from '@/components/Input';
+import { SingInData } from '@/features/schemas/SignInSchema';
+import { signInAction } from '@/app/actions';
 
-//   const onSubmit = async (data: IUserLoginRequest) => {
-//     const { email, password } = data;
-//     try {
-//       await postLogin({ email: email.toLowerCase(), password }).unwrap();
-//       reset();
-//     } catch (error) {
-//       const {
-//         status,
-//         data: { messages },
-//       } = error as ServerError;
-//       if (status < 500) {
-//         const message = `${translate(`error${status}`)}`;
-//         setError('password', {
-//           type: 'custom',
-//           message,
-//         });
-//       } else {
-//         toast.error(messages);
-//       }
-//     }
-//   };
+import s from './SignIn.module.scss';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
-//   if (isAuth) {
-//     redirect('/my-profile');
-//   }
+export const SignInForm = () => {
+  const translate = useTranslations('SignInPage');
+  const router = useRouter();
 
-//   return (
-//     <>
-//       <form onSubmit={handleSubmit(onSubmit)}>
-//         <FormItem
-//           translate={translate}
-//           register={register}
-//           error={errors.email}
-//           errorMessage={errors?.email?.message}
-//           registerName={'email'}
-//           translateName={'email'}
-//           id={'sign-in-email-input'}
-//         />
-//         <FormItem
-//           translate={translate}
-//           register={register}
-//           error={errors.password}
-//           errorMessage={errors?.password?.message}
-//           registerName={'password'}
-//           translateName={'password'}
-//           id={'sign-in-password-input'}
-//           showPasswordIcon={true}
-//           show={showPass}
-//           setShow={setShowPass}
-//         />
-//         <div className={s.forgot}>
-//           <Link
-//             href={'/forgot-password'}
-//             className={errors.password ? s.password : ''}
-//             id={'sign-in-link-forgot-password'}
-//           >
-//             {translate('forgotPass')}
-//           </Link>
-//         </div>
-//         <AuthSubmit
-//           id={'sign-in-submit'}
-//           value={String(translate('btnName'))}
-//           error={errors.password ? errors.password + '' : ''}
-//           disabled={!isValid}
-//         />
-//         <p className={s.alreadyHaveText}>{translate('question')}</p>
-//         <Link
-//           href={'/sign-up'}
-//           className={s.signUpBtn}
-//           id={'sign-in-link-sign-up'}
-//         >
-//           {translate('btnBottomName')}
-//         </Link>
-//       </form>
-//       {isLoading && <Loader />}
-//     </>
-//   );
-// };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    setError,
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: yupResolver(SignInSchema()),
+    mode: 'onTouched',
+  });
+  const [showPass, setShowPass] = useState(true);
+  const processForm: SubmitHandler<SingInData> = async (data) => {
+    const result = await signInAction(data);
+
+    if (!result) {
+      console.log('Something went wrong');
+      return;
+    }
+
+    if (result.error) {
+      const statusCode = result.error.statusCode;
+      const statusMessage = `error${statusCode}`;
+      setError('password', {
+        type: 'manual',
+        message: translate(statusMessage),
+      });
+    }
+
+    if (result.data) {
+      setAuthCookie('accessToken', result.data.accessToken);
+      setAuthCookie('refreshToken', result.data.refreshToken);
+
+      router.push('/my-profile');
+    }
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit(processForm)}>
+        <FormItem
+          translate={translate}
+          register={register}
+          error={errors.email}
+          errorMessage={errors?.email?.message}
+          registerName={'email'}
+          translateName={'email'}
+          id={'sign-in-email-input'}
+        />
+        <FormItem
+          translate={translate}
+          register={register}
+          error={errors.password}
+          errorMessage={errors?.password?.message}
+          registerName={'password'}
+          translateName={'password'}
+          id={'sign-in-password-input'}
+          showPasswordIcon={true}
+          show={showPass}
+          setShow={setShowPass}
+        />
+        <div className={s.forgot}>
+          <Link
+            href={'/forgot-password'}
+            className={errors.password ? s.password : ''}
+            id={'sign-in-link-forgot-password'}
+          >
+            {translate('forgotPass')}
+          </Link>
+        </div>
+        <AuthSubmit
+          id={'sign-in-submit'}
+          value={String(translate('btnName'))}
+          error={errors.password ? errors.password + '' : ''}
+          disabled={!isValid}
+        />
+        <p className={s.alreadyHaveText}>{translate('question')}</p>
+        <Link
+          href={'/sign-up'}
+          className={s.signUpBtn}
+          id={'sign-in-link-sign-up'}
+        >
+          {translate('btnBottomName')}
+        </Link>
+      </form>
+    </>
+  );
+};
