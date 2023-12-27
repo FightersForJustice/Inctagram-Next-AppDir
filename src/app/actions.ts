@@ -7,6 +7,7 @@ import {
   loginOptions,
   newPasswordOptions,
   recoveryPasswordOptions,
+  requestDeleteAllSessionsOptions,
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
@@ -127,7 +128,7 @@ export async function logOutAction(refreshToken: string | undefined) {
       if (res.ok) {
         return { success: true, data: 'logoutSuccess' };
       } else {
-        return { success: false, data: 'logoutFailed' };
+        return { success: false, error: 'logoutFailed' };
       }
     } catch (error) {
       console.error('Logout Error', error);
@@ -159,6 +160,27 @@ export async function loginGoogleAction(code: string) {
   } catch (error) {
     console.error('Logout Error', error);
   }
+}
+
+//SESSION ACTIONS
+
+export async function deleteAllSessionsAction(accessToken: string | undefined, refreshToken: string | undefined) {
+  if (accessToken) {
+    try {
+      const res = await fetch(
+        routes.TERMINATE_ALL_SESSIONS,
+        requestDeleteAllSessionsOptions(accessToken, refreshToken)
+      );
+      if (res.ok) {
+        return { success: true, data: 'deleteAllSessionsSuccess' };
+      } else {
+        console.error(res, 'Delete All Sessions Error');
+        return { success: false, error: 'deleteAllSessionsFailed' };
+      }
+    } catch (error) {
+      console.error('Delete All Sessions Error', error);
+    }
+  } else return { success: false, error: 'deleteAllSessionsFailed' };
 }
 
 // middleware actions

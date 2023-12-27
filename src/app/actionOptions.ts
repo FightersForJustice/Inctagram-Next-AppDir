@@ -1,5 +1,8 @@
 import { SingInData } from '@/features/schemas/SignInSchema';
 
+
+//AUTH OPTIONS 
+
 export const loginOptions = (data: SingInData) => {
   return {
     method: 'POST',
@@ -89,6 +92,19 @@ export const requestGoogleLoginOptions = (googleCode: string) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ code: googleCode }),
+    next: { revalidate: 0 },
+  };
+};
+
+//SESSION OPTIONS
+
+export const requestDeleteAllSessionsOptions = (accessToken: string | undefined, refreshToken: string | undefined) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Cookie: `refreshToken=${refreshToken}`,
+    },
     next: { revalidate: 0 },
   };
 };

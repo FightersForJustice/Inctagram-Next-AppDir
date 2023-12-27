@@ -9,6 +9,7 @@ import { CreateFormItem } from './CreateFormItem';
 import { AuthSubmit } from '@/components/Input';
 import {
   checkRecoveryCodeAction,
+  deleteAllSessionsAction,
   newPasswordAction,
   signInAction,
 } from '@/app/actions';
@@ -57,7 +58,13 @@ export const CreateNewPasswordForm = ({
           setAuthCookie('accessToken', signInResult.data.accessToken);
           setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
-          router.push('/my-profile');
+          const deleteAllSessionsResult = await deleteAllSessionsAction(
+            signInResult.data.accessToken, signInResult.data.refreshToken
+          );
+
+          if (deleteAllSessionsResult?.success) {
+            router.push('/my-profile');
+          }
         }
       } else {
         toast.error(translate('errorCode'));
