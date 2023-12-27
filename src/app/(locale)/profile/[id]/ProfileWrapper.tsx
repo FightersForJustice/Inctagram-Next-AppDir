@@ -16,7 +16,6 @@ export const ProfileWrapper = ({ data, postsData }: Props) => {
   const paidAccount = true;
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
-  console.log(postsData);
 
   return (
     <div className={s.profile__wrapper}>
