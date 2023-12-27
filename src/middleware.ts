@@ -23,6 +23,7 @@ const authPaths = [
   '/sign-in',
   '/sign-up',
   '/auth/registration-confirmation',
+  '/auth/recovery',
   '/email-verification',
   '/email-expired',
   '/forgot-password',
@@ -67,7 +68,11 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         return isAuthPath
           ? NextResponse.redirect(new URL('/my-profile', request.url))
           : NextResponse.next();
-
+      case 201:
+        console.log(meResponse.status, 'isAuth');
+        return isAuthPath
+          ? NextResponse.redirect(new URL('/my-profile', request.url))
+          : NextResponse.next();
       case 401:
         console.log('Middleware (Bad AccessToken)');
         return updateTokensAndContinue(refreshToken);

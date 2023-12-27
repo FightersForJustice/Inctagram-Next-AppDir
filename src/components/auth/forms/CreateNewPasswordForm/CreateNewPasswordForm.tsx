@@ -1,3 +1,4 @@
+'use client';
 import { ReactNode, useEffect, useState } from 'react';
 import s from './CreateNewPasswordForm.module.scss';
 import { useForm } from 'react-hook-form';

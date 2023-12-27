@@ -4,7 +4,7 @@ import { useLoginWithGoogleOAuthMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-import { GetService } from './GetService';
+import { GetService } from '@/components/auth';
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
