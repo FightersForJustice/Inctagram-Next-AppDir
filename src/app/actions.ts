@@ -218,9 +218,7 @@ export async function updateTokenMiddleware(
   }
 }
 
-export async function updateTokensAndContinue(
-  refreshToken: string
-): Promise<NextResponse> {
+export async function updateTokensAndContinue(refreshToken: string) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
@@ -234,7 +232,8 @@ export async function updateTokensAndContinue(
 
     if (updateTokenResponse.status === 200) {
       console.log('MiddleWare (Update Tokens Success)');
-      return NextResponse.next({
+
+      const action = NextResponse.next({
         headers: {
           'Set-Cookie': [
             `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
@@ -242,10 +241,24 @@ export async function updateTokensAndContinue(
           ],
         } as any,
       });
-    }
-  } catch (error) {
-    console.error('error with updating Tokens', error);
-  }
 
-  return NextResponse.next();
+      return { success: true, action }
+    } else {
+      throw new Error("error with updating Tokens");
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    const action = NextResponse.next({
+      headers: {
+        'Set-Cookie': [
+          'accessToken=; Path=/; Secure; SameSite=None; Max-Age=0',
+          'refreshToken=; Path=/; Secure; SameSite=None; Max-Age=0',
+        ],
+      } as any,
+    });
+
+    return { success: false, action }
+  }
 }

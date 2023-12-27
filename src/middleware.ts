@@ -10,7 +10,7 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
     if (preferredLanguage?.startsWith('ru')) {
       return 'ru';
     }
-  } catch {}
+  } catch { }
   return 'en';
 }
 
@@ -38,6 +38,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;
   const cookiesList = request.cookies;
+
   const userAgent = headersList.get('user-agent') || '';
   const defaultLang = getUserPreferredLanguage(
     headersList.get('accept-language')
@@ -72,7 +73,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
           : NextResponse.next();
       case 401:
         console.log('Middleware (Bad AccessToken)');
-        return updateTokensAndContinue(refreshToken);
+        const updateTokenResult = await updateTokensAndContinue(refreshToken);
+        if (updateTokenResult.success) {
+          return updateTokenResult.action
+        } else return updateTokenResult.action
 
       default:
         console.log('Middleware (Not Authorized)');

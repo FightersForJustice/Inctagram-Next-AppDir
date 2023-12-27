@@ -43,36 +43,32 @@ export const CreateNewPasswordForm = ({
   const router = useRouter();
 
   const onSubmit = async (data: { password: string }) => {
-    const isRecoveryCodeValid = await checkRecoveryCodeAction(newPasswordCode);
+    let email: string = '';
 
-    if (isRecoveryCodeValid?.success) {
-      const changePasswordResult = await newPasswordAction(
-        data.password,
-        newPasswordCode
-      );
-
-      if (changePasswordResult.success) {
+    checkRecoveryCodeAction(newPasswordCode)
+      .then((res) => {
+        email = res.data.email;
+        return newPasswordAction(data.password, newPasswordCode);
+      })
+      .then(() => {
         toast.success(translate('newPasswordSuccess'));
-        const { email } = isRecoveryCodeValid.data;
         const password = data.password;
+        return signInAction({ email, password });
+      })
+      .then((signInResult) => {
+        setAuthCookie('accessToken', signInResult?.data.accessToken);
+        setAuthCookie('refreshToken', signInResult?.data.refreshToken);
+        return deleteAllSessionsAction(
+          signInResult?.data.accessToken,
+          signInResult?.data.refreshToken
+        );
+      })
+      .then(() => router.push('/my-profile'))
+      .catch((error) => {
+        console.error('Error during the process:', error);
 
-        const signInResult = await signInAction({ email, password });
-        if (signInResult?.success) {
-          setAuthCookie('accessToken', signInResult.data.accessToken);
-          setAuthCookie('refreshToken', signInResult.data.refreshToken);
-
-          const deleteAllSessionsResult = await deleteAllSessionsAction(
-            signInResult.data.accessToken, signInResult.data.refreshToken
-          );
-
-          if (deleteAllSessionsResult?.success) {
-            router.push('/my-profile');
-          }
-        }
-      } else {
         toast.error(translate('errorCode'));
-      }
-    } else toast.error(translate('errorCode'));
+      });
   };
 
   return (
