@@ -18,4 +18,19 @@ export const actions = {
       return null;
     }
   },
+  async getPosts(id: number) {
+    const apiUrl = `https://inctagram.work/api/v1/public-posts/user/${id}/,?sortDirection=desc`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+        return null;
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return null;
+    }
+  },
 };

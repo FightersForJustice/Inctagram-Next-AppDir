@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import s from './MyProfile.module.scss';
-import { UserProfile } from './types';
+import { ApiResponsePosts, UserProfile } from './types';
 import { ProfileWrapper } from './ProfileWrapper';
+import { Posts } from './Posts';
 
 type Props = {
   userData: UserProfile;
+  postsData: ApiResponsePosts;
 };
-export const Profile = ({ userData }: Props) => {
+export const Profile = ({ userData, postsData }: Props) => {
   return (
     <>
       <div className={s.profile}>
@@ -23,9 +25,11 @@ export const Profile = ({ userData }: Props) => {
             className={s.profile__avatar}
           />
         </div>
-        <ProfileWrapper data={userData} />
+        <ProfileWrapper data={userData} postsData={postsData} />
       </div>
-      <div className={s.profile__posts}>{/* InfiniteScrollMyPosts */}</div>
+      <div className={s.profile__posts}>
+        <Posts postsData={postsData} />
+      </div>
     </>
   );
 };
