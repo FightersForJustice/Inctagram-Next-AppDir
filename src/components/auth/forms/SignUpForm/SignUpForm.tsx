@@ -18,7 +18,8 @@ import {
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
 import { useTranslations } from 'next-intl';
-import { AgreeCheckbox, EmailSentModal, ServiceAuth } from '@/components/auth';
+import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
 
 export const SignUpForm = () => {
   const {
