@@ -34,12 +34,20 @@ export const ShowAddAvatarModal = ({
   fileError,
 }: Props) => {
   const [showModal, setShowModal] = useState(false);
-  // const closeModalHandler =>
+  const closeModalHandler = () => {
+    if (userAvatar) {
+      return setShowModal(true);
+    }
+  };
+  const onCloseHandler = () => {
+    onCloseModal();
+    setUserAvatar('');
+  };
 
   return (
     <Modal
       title={t('AddPhotoModal.title')}
-      onClose={onCloseModal}
+      onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
     >
@@ -47,7 +55,6 @@ export const ShowAddAvatarModal = ({
         {userAvatar ? (
           <div className={s.modal__loadImg}>
             <DynamicCropper
-              setUserAvatar={setUserAvatar}
               userAvatar={userAvatar}
               setCroppedAvatar={setCroppedAvatar}
             />
@@ -87,7 +94,7 @@ export const ShowAddAvatarModal = ({
           <DeleteAvatarModal
             userAvatar={userAvatar}
             setShowModal={setShowModal}
-            onClose={onCloseModal}
+            onClose={onCloseHandler}
           />
         )}
       </div>

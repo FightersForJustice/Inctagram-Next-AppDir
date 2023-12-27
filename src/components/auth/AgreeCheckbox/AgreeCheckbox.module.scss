@@ -2,7 +2,7 @@
 
 .container {
   display: flex;
-  padding: 12px 0;
+  padding: 12px 0 18px 0;
   justify-content: flex-start;
 }
 
@@ -18,8 +18,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: left;
   padding-left: 10px;
-  gap: 6px;
+  gap: 8px;
 
   font-family: Inter;
   font-size: 12px;

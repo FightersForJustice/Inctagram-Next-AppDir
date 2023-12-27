@@ -1,6 +1,6 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { Agreements } from './Agreements';
+import { Agreements } from '@/components/auth';
 
 type Props = {
   params: {

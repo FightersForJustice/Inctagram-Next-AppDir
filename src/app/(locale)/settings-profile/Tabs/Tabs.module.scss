@@ -224,6 +224,10 @@
     margin: 20px auto 60px;
   }
 
+  &__loadImg svg {
+    display: none;
+  }
+
   &__saveBtn {
     text-align: right;
   }
