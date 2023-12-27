@@ -1,39 +1,46 @@
-import s from './ServiceAuth.module.scss';
+'use client';
+
 import { useGoogleLogin } from '@react-oauth/google';
-import { useLoginWithGoogleOAuthMutation } from '@/api';
-import { Loader } from '@/components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-import { GetService } from '@/components/auth';
+import { routes } from '@/api/routes';
+
+import { loginGoogleAction } from '@/app/actions';
+import { useRouter } from 'next/navigation';
+import { setAuthCookie } from '@/utils/cookiesActions';
+import { GetService } from './GetService';
+
+import s from './ServiceAuth.module.scss';
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
 };
-export const ServiceAuth = ({ page }: Props) => {
+const ServiceAuth = ({ page }: Props) => {
   const t = useTranslations(page);
-  const [loginWithGoogle, { isLoading }] = useLoginWithGoogleOAuthMutation();
+  const router = useRouter();
 
   const gitHubAuth = () => {
     //need change on local lang from state (header lang)
-    window.location.assign(
-      `${process.env.NEXT_PUBLIC_BASE_URL}auth/github/login`
-    );
+    window.location.assign(routes.GITHUB_LOGIN);
   };
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     onSuccess: async (codeResponse) => {
-      loginWithGoogle({ code: codeResponse.code })
-        .unwrap()
-        .then((res) => {
-          //need change on local lang from state (header lang)
-          toast.success(`Hello, ${res.email}!`);
-        })
-        .catch((err) => toast.error(err));
+      try {
+        const data = await loginGoogleAction(codeResponse.code);
+
+        setAuthCookie('accessToken', data?.data.accessToken);
+        setAuthCookie('refreshToken', data?.data.refreshToken);
+        setAuthCookie('userEmail', data?.data.email);
+
+        router.push('/my-profile');
+      } catch (error) {
+        console.log('error', error);
+      }
     },
     onError: (errorResponse) => toast.error(errorResponse.error),
   });
-
   return (
     <>
       <p className={s.title}>{t('title')}</p>
@@ -49,7 +56,8 @@ export const ServiceAuth = ({ page }: Props) => {
           alt="github-icon"
         />
       </div>
-      {isLoading && <Loader />}
     </>
   );
 };
+
+export default ServiceAuth;

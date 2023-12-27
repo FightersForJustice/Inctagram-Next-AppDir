@@ -1,8 +1,10 @@
 'use client';
+
 import { SignInForm } from '@/components/auth';
+import ServiceAuth from '@/components/auth/ServiceAuth/ServiceAuth';
 
 import s from './SignIn.module.scss';
-import { ServiceAuth } from '@/components/auth';
+
 
 const SignInPage = () => {
   return (
