@@ -8,7 +8,7 @@ type Props = {
   userData: UserProfile;
 };
 export const Profile = ({ userData }: Props) => {
-  console.log(accessToken + 'kjj');
+  //console.log(accessToken + 'kjj');
   return (
     <>
       <div className={s.profile}>
