@@ -1,19 +1,17 @@
 import Image from 'next/image';
-import { GetResponse } from '@/api/profile.api';
 import s from './MyProfile.module.scss';
 import { UserProfile } from './types';
-import { accessToken } from '@/accessToken';
+import { ProfileWrapper } from './ProfileWrapper';
 
 type Props = {
   userData: UserProfile;
 };
 export const Profile = ({ userData }: Props) => {
-  //console.log(accessToken + 'kjj');
   return (
     <>
       <div className={s.profile}>
         <div className={s.profile__avatar__container}>
-          {/*<Image
+          <Image
             src={`${
               userData?.avatars[0]
                 ? userData.avatars[0].url
@@ -23,9 +21,9 @@ export const Profile = ({ userData }: Props) => {
             width={204}
             height={204}
             className={s.profile__avatar}
-          />*/}
+          />
         </div>
-        {/* ProfileWrapper */}
+        <ProfileWrapper data={userData} />
       </div>
       <div className={s.profile__posts}>{/* InfiniteScrollMyPosts */}</div>
     </>

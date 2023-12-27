@@ -1,8 +1,16 @@
 export const actions = {
-  async getProfile() {
-    const apiUrl = `https://inctagram.work/api/v1/users/profile`;
+  async getProfile(accessToken: string | null) {
+    const apiUrl = 'https://inctagram.work/api/v1/users/profile';
     try {
-      const response = await fetch(apiUrl);
+      const response = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+        return null;
+      }
       const data = await response.json();
       return data;
     } catch (error) {
