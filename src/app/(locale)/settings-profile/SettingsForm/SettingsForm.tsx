@@ -47,6 +47,7 @@ export const SettingsForm = ({
 
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
     setError,
@@ -55,6 +56,16 @@ export const SettingsForm = ({
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
+
+  const values = getValues();
+
+  const isRequiredFormError =
+    !!errors.firstName ||
+    !!errors.lastName ||
+    !!errors.userName ||
+    !values.firstName ||
+    !values.lastName ||
+    !values.userName;
 
   const onSubmit = handleSubmit((data) => {
     if (ageError) {
@@ -190,11 +201,7 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn
-            disabled={
-              !!errors.firstName || !!errors.lastName || !!errors.userName
-            }
-          >
+          <PrimaryBtn disabled={isRequiredFormError}>
             {translate('saveBtn')}
           </PrimaryBtn>
         </div>
