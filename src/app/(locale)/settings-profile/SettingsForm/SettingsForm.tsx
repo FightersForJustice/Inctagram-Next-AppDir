@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import s from './SettingsForm.module.scss';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   PutProfileBody,
   useLazyGetProfileQuery,
@@ -49,23 +49,12 @@ export const SettingsForm = ({
     register,
     getValues,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setError,
   } = useForm<FormValues>({
-    //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
-
-  const values = getValues();
-
-  const isRequiredFormError =
-    !values.firstName &&
-    !values.lastName &&
-    !values.userName &&
-    !!errors.firstName &&
-    !!errors.lastName &&
-    !!errors.userName ? false : false
 
   const onSubmit = handleSubmit((data) => {
     if (ageError) {
@@ -201,7 +190,7 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn disabled={isRequiredFormError}>
+          <PrimaryBtn disabled={!isValid}>
             {translate('saveBtn')}
           </PrimaryBtn>
         </div>
