@@ -3,12 +3,16 @@ import s from './MyProfile.module.scss';
 import { ApiResponsePosts, UserProfile } from './types';
 import { ProfileWrapper } from './ProfileWrapper';
 import { Posts } from './Posts';
+import { LoadMore } from './load-more';
+import { findMinId } from '@/utils/findMinId';
 
 type Props = {
   userData: UserProfile;
   postsData: ApiResponsePosts;
 };
 export const Profile = ({ userData, postsData }: Props) => {
+  let minId = findMinId(postsData);
+
   return (
     <>
       <div className={s.profile}>
@@ -29,6 +33,7 @@ export const Profile = ({ userData, postsData }: Props) => {
       </div>
       <div className={s.profile__posts}>
         <Posts postsData={postsData} />
+        <LoadMore id={userData.id} minIdProps={minId} />
       </div>
     </>
   );

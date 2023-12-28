@@ -11,7 +11,7 @@ const MyProfile = async ({ params }: { params: { id: string } }) => {
   const accessToken = headersList.get('accessToken');
   const id = parseInt(params.id, 10);
   const userdata: UserProfile = await actions.getProfile(accessToken);
-  const postsData: ApiResponsePosts = await actions.getPosts(id);
+  const postsData: ApiResponsePosts = await actions.getPosts(id, 0);
 
   return (
     <>
