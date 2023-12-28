@@ -1,5 +1,5 @@
+'use client';
 import Image from 'next/image';
-
 import s from './Posts.module.scss';
 import { ApiResponsePosts } from './types';
 
@@ -8,6 +8,7 @@ type Props = {
 };
 
 export const Posts = ({ postsData }: Props) => {
+  debugger;
   const postsImages = () => {
     let currentPosts;
     return postsData?.items.map((i) => {

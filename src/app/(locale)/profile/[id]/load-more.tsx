@@ -13,17 +13,10 @@ type Props = {
 
 export function LoadMore({ id, minId }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
-
-  const findMinId = (): number | undefined => {
-    if (posts.length === 0) {
-      return undefined;
-    }
-    const minId = posts.reduce(
-      (min, post) => (post.id < min ? post.id : min),
-      posts[0].id
-    );
-    return minId;
-  };
+  const [newMinId, setNewMinId] = useState<number | null>(null);
+  if (newMinId === null && minId !== undefined) {
+    setNewMinId(minId);
+  }
 
   const { ref, inView } = useInView();
 
@@ -34,7 +27,6 @@ export function LoadMore({ id, minId }: Props) {
     const newPosts: ApiResponsePosts =
       (await actions.getPosts(id, minId)) ?? [];
     setPosts((prevPosts: Post[]) => [...prevPosts, ...newPosts.items]);
-    minId = findMinId();
   };
 
   useEffect(() => {
