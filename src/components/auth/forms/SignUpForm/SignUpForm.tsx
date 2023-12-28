@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
@@ -17,9 +16,11 @@ import {
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
 import { useTranslations } from 'next-intl';
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
-import ServiceAuth from '../../ServiceAuth/ServiceAuth';
+
+import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
   const {
