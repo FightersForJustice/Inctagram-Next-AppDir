@@ -12,14 +12,10 @@ export const logout = async (
 ) => {
   setShowLogoutModal(false);
   const refreshToken = Cookies.get('refreshToken');
-
   const res = await logOutAction(refreshToken);
+  Cookies.remove('refreshToken');
+  Cookies.remove('accessToken');
 
-  if (res?.success) {
-    Cookies.remove('refreshToken');
-    Cookies.remove('accessToken');
-
-    router.push('/sign-in');
-    toast.success(t(res.data));
-  } else toast.error(t(res?.error));
+  toast.success(t(res?.data));
+  router.push('/sign-in');
 };
