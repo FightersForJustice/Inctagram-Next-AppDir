@@ -10,9 +10,10 @@ import Image from 'next/image';
 type Props = {
   data: UserProfile;
   postsData: ApiResponsePosts;
+  myProfile: boolean;
 };
 
-export const ProfileWrapper = ({ data, postsData }: Props) => {
+export const ProfileWrapper = ({ data, postsData, myProfile }: Props) => {
   const paidAccount = true;
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
@@ -26,13 +27,17 @@ export const ProfileWrapper = ({ data, postsData }: Props) => {
             <Image width={24} height={24} src="/img/paidAccount.svg" alt="" />
           )}
         </div>
-        <Link
-          href={'/settings-profile'}
-          className={s.profile__btn}
-          id={'profile-link-to-settings-profile'}
-        >
-          Настройки профиля
-        </Link>
+        {myProfile ? (
+          <Link
+            href={'/settings-profile'}
+            className={s.profile__btn}
+            id={'profile-link-to-settings-profile'}
+          >
+            Настройки профиля
+          </Link>
+        ) : (
+          <></>
+        )}
       </div>
       <div className={s.profile__info}>
         <div

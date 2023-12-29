@@ -9,8 +9,9 @@ import { findMinId } from '@/utils/findMinId';
 type Props = {
   userData: UserProfile;
   postsData: ApiResponsePosts;
+  myProfile: boolean;
 };
-export const Profile = ({ userData, postsData }: Props) => {
+export const Profile = ({ userData, postsData, myProfile }: Props) => {
   let minId = findMinId(postsData);
 
   return (
@@ -29,7 +30,11 @@ export const Profile = ({ userData, postsData }: Props) => {
             className={s.profile__avatar}
           />
         </div>
-        <ProfileWrapper data={userData} postsData={postsData} />
+        <ProfileWrapper
+          data={userData}
+          postsData={postsData}
+          myProfile={myProfile}
+        />
       </div>
       <div className={s.profile__posts}>
         <Posts postsData={postsData} />

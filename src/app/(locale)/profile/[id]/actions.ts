@@ -1,6 +1,6 @@
 export const actions = {
-  async getProfile(accessToken: string | null) {
-    const apiUrl = 'https://inctagram.work/api/v1/users/profile';
+  async getProfile(accessToken: string | null, id: number) {
+    const apiUrl = `https://inctagram.work/api/v1/public-user/profile/${id}`;
     try {
       const response = await fetch(apiUrl, {
         headers: {
