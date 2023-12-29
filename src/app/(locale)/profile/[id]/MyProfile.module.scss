@@ -14,7 +14,19 @@
     'menu profile'
     'menu posts';
 }
-
+.btnPrimary {
+  background: var(--primary-500);
+  padding: 6px 24px;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  margin-right: 20px;
+}
+.listBtn {
+  display: flex;
+}
 .nav {
   grid-area: menu;
   display: flex;
@@ -237,6 +249,9 @@
 }
 
 @include s.devices(tablet-xl) {
+  .btnPrimary {
+    display: none;
+  }
   .wrapper {
     display: grid;
     grid-template-rows: 240px;

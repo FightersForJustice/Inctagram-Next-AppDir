@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
 import Image from 'next/image';
+import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
+import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 
 type Props = {
   data: UserProfile;
@@ -17,7 +19,7 @@ export const ProfileWrapper = ({ data, postsData, myProfile }: Props) => {
   const paidAccount = true;
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
   const [showSubscriptionsModal, setShowSubscriptionsModal] = useState(false);
-
+  const t = (value: string) => `Translated: ${value}`;
   return (
     <div className={s.profile__wrapper}>
       <div className={s.profile__title}>
@@ -36,7 +38,14 @@ export const ProfileWrapper = ({ data, postsData, myProfile }: Props) => {
             Настройки профиля
           </Link>
         ) : (
-          <></>
+          <div className={s.listBtn}>
+            <Link href="#" className={s.btnPrimary}>
+              Follow
+            </Link>
+            <Link href="#" className={s.profile__btn}>
+              Send Message
+            </Link>
+          </div>
         )}
       </div>
       <div className={s.profile__info}>

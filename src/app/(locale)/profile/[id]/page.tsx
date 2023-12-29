@@ -13,7 +13,6 @@ const MyProfile = async ({ params }: { params: { id: string } }) => {
   const id = parseInt(params.id, 10);
   const userdata: UserProfile = await actions.getProfile(accessToken, id);
   const postsData: ApiResponsePosts = await actions.getPosts(id, 0);
-  console.log(userdata);
 
   return (
     <>
