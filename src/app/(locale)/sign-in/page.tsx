@@ -5,7 +5,6 @@ import ServiceAuth from '@/components/auth/ServiceAuth/ServiceAuth';
 
 import s from './SignIn.module.scss';
 
-
 const SignInPage = () => {
   return (
     <div id={'sign-in'} className={s.container}>

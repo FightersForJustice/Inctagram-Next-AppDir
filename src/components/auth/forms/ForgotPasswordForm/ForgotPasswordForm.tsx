@@ -1,17 +1,16 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { toast } from 'react-toastify';
 
-import { usePostPasswordRecoveryMutation } from '@/api/auth.api';
+import { forgotPasswordAction } from '@/app/actions';
 import { Modal } from '@/components/Modals/Modal';
-import { Loader } from '@/components/Loader';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
-import { handleApiError } from '@/utils';
 import { AuthSubmit } from '@/components/Input';
 
 import s from './ForgotPasswordForm.module.scss';
@@ -38,36 +37,29 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
   const [sendLinkAgain, setSendLinkAgain] = useState(false);
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY!;
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-  const [recoveryPassword, { isSuccess, isLoading, error }] =
-    usePostPasswordRecoveryMutation();
+  const onSubmit = async (data: { email: string }) => {
+    const result = await forgotPasswordAction({
+      email: data.email,
+      recaptcha,
+    });
 
-  useEffect(() => {
-    if (isSuccess) {
+    if (result?.success) {
+      setUserEmail(data.email);
+      reset();
       setShowModal(true);
       setSendLinkAgain(true);
-    }
-  }, [isSuccess]);
 
-  const onSubmit = (data: any) => {
-    try {
-      recoveryPassword({
-        email: data.email,
-        recaptcha,
-      });
-      setUserEmail(data.email);
-    } finally {
-      reset();
-    }
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+    } else toast.error(translate('errorCode'));
   };
 
   const reCaptchaHandler = (token: string | null) => {
     setRecaptcha(token!);
   };
-
-  if (error) {
-    handleApiError(error);
-  }
 
   return (
     <>
@@ -101,14 +93,13 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
           {translate('linkName')}
         </Link>
 
-        {!sendLinkAgain && (
-          <ReCAPTCHA
-            sitekey={siteKey}
-            onChange={reCaptchaHandler}
-            className={s.recaptchaContainer}
-            theme="dark"
-          />
-        )}
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={siteKey}
+          onChange={reCaptchaHandler}
+          className={s.recaptchaContainer}
+          theme="dark"
+        />
       </form>
       {showModal && (
         <Modal title={'Email sent'} onClose={() => setShowModal(false)} isOkBtn>
@@ -117,7 +108,6 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
           </p>
         </Modal>
       )}
-      {isLoading && <Loader />}
     </>
   );
 };

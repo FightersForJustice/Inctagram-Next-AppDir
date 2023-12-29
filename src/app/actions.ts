@@ -3,7 +3,11 @@
 import { routes } from '@/api/routes';
 import { SingInData } from '@/features/schemas/SignInSchema';
 import {
+  checkRecoveryCodeOptions,
   loginOptions,
+  newPasswordOptions,
+  recoveryPasswordOptions,
+  requestDeleteAllSessionsOptions,
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
@@ -36,6 +40,84 @@ export async function signInAction(data: SingInData) {
   }
 }
 
+export async function forgotPasswordAction(data: {
+  email: string;
+  recaptcha: string;
+}) {
+  if (data) {
+    try {
+      const res = await fetch(
+        routes.PASSWORD_RECOVERY,
+        recoveryPasswordOptions(data)
+      );
+
+      if (res.ok) {
+        return { success: true, data: 'The link has been sent by email' };
+      } else {
+        return { success: false, error: 'errorCode' };
+      }
+    } catch (error) {
+      return { success: false, error: 'errorCode' };
+    }
+  }
+}
+
+export async function checkRecoveryCodeAction(code: string | undefined) {
+  if (code) {
+    try {
+      const res = await fetch(
+        routes.CHECK_RECOVERY_CODE,
+        checkRecoveryCodeOptions(code)
+      );
+      const responseBody = await res.json();
+
+      if (res.ok) {
+        return { success: true, data: responseBody };
+      } else {
+        console.error(
+          'The recovery code is incorrect, expired or already been applied'
+        );
+        return { success: false };
+      }
+    } catch (error) {
+      console.error(error, 'checkRecoveryCodeAction fetch error');
+      return { success: false };
+    }
+  } else {
+    console.error('There is no code to recover the password');
+
+    return { success: false };
+  }
+}
+
+export async function newPasswordAction(
+  password: string,
+  newPasswordCode: string | undefined
+) {
+  if (newPasswordCode) {
+    try {
+      const res = await fetch(
+        routes.NEW_PASSWORD,
+        newPasswordOptions(password, newPasswordCode)
+      );
+
+      if (res.ok) {
+        return { success: true };
+      } else {
+        console.error('Incorrect input data by field');
+        return { success: false };
+      }
+    } catch (error) {
+      console.error(error, 'newPasswordAction fetch error');
+      return { success: false };
+    }
+  } else {
+    console.error('There is no code to recover the password');
+
+    return { success: false };
+  }
+}
+
 export async function logOutAction(refreshToken: string | undefined) {
   if (refreshToken) {
     try {
@@ -46,7 +128,7 @@ export async function logOutAction(refreshToken: string | undefined) {
       if (res.ok) {
         return { success: true, data: 'logoutSuccess' };
       } else {
-        return { success: false, data: 'logoutFailed' };
+        return { success: false, error: 'logoutFailed' };
       }
     } catch (error) {
       console.error('Logout Error', error);
@@ -78,6 +160,30 @@ export async function loginGoogleAction(code: string) {
   } catch (error) {
     console.error('Logout Error', error);
   }
+}
+
+//SESSION ACTIONS
+
+export async function deleteAllSessionsAction(
+  accessToken: string | undefined,
+  refreshToken: string | undefined
+) {
+  if (accessToken) {
+    try {
+      const res = await fetch(
+        routes.TERMINATE_ALL_SESSIONS,
+        requestDeleteAllSessionsOptions(accessToken, refreshToken)
+      );
+      if (res.ok) {
+        return { success: true, data: 'deleteAllSessionsSuccess' };
+      } else {
+        console.error(res, 'Delete All Sessions Error');
+        return { success: false, error: 'deleteAllSessionsFailed' };
+      }
+    } catch (error) {
+      console.error('Delete All Sessions Error', error);
+    }
+  } else return { success: false, error: 'deleteAllSessionsFailed' };
 }
 
 // middleware actions
@@ -115,9 +221,7 @@ export async function updateTokenMiddleware(
   }
 }
 
-export async function updateTokensAndContinue(
-  refreshToken: string
-): Promise<NextResponse> {
+export async function updateTokensAndContinue(refreshToken: string) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
@@ -131,7 +235,8 @@ export async function updateTokensAndContinue(
 
     if (updateTokenResponse.status === 200) {
       console.log('MiddleWare (Update Tokens Success)');
-      return NextResponse.next({
+
+      const action = NextResponse.next({
         headers: {
           'Set-Cookie': [
             `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
@@ -139,10 +244,23 @@ export async function updateTokensAndContinue(
           ],
         } as any,
       });
+
+      return { success: true, action };
+    } else {
+      throw new Error('error with updating Tokens');
     }
   } catch (error) {
-    console.error('error with updating Tokens', error);
-  }
+    console.error(error);
 
-  return NextResponse.next();
+    const action = NextResponse.next({
+      headers: {
+        'Set-Cookie': [
+          'accessToken=; Path=/; Secure; SameSite=None; Max-Age=0',
+          'refreshToken=; Path=/; Secure; SameSite=None; Max-Age=0',
+        ],
+      } as any,
+    });
+
+    return { success: false, action };
+  }
 }
