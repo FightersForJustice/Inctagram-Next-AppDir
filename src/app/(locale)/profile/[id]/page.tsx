@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server';
 import s from './MyProfile.module.scss';
 import { Profile } from './Profile';
 import { actions } from './actions';

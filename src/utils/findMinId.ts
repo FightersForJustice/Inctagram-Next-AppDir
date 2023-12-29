@@ -1,17 +1,14 @@
-type postsDataType = {
-  items: item[];
-};
-type item = {
+type Items = {
   id: number;
 };
 
-export const findMinId = (postsData: postsDataType): number | undefined => {
-  if (postsData.items.length === 0) {
+export const findMinId = (items: Items[]) => {
+  if (items.length === 0) {
     return 0;
   }
-  const minId = postsData.items.reduce(
+  const minId = items.reduce(
     (min, post) => (post.id < min ? post.id : min),
-    postsData.items[0].id
+    items[0].id
   );
   return minId;
 };

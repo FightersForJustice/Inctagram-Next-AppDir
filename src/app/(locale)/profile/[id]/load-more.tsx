@@ -5,6 +5,7 @@ import { ApiResponsePosts, Post } from './types';
 import { actions } from './actions';
 import Image from 'next/image';
 import s from './Posts.module.scss';
+import { findMinId } from '@/utils/findMinId';
 
 type Props = {
   id: number;
@@ -14,29 +15,19 @@ type Props = {
 export function LoadMore({ id, minId }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [newMinId, setNewMinId] = useState<number | null>(null);
-  console.log(newMinId);
 
   if (newMinId === null && minId !== undefined) {
     setNewMinId(minId);
   }
-  console.log(posts);
-  const findMinId = (posts: Post[]) => {
-    if (posts.length === 0) {
-      return 0;
-    }
-    const minId = posts.reduce(
-      (min, post) => (post.id < min ? post.id : min),
-      posts[0].id
-    );
-    return minId;
-  };
 
   const { ref, inView } = useInView();
 
   const loadMoreBeers = async (newMinId: number | null) => {
     const newPosts: ApiResponsePosts =
       (await actions.getPosts(id, newMinId)) ?? [];
+
     setPosts((prevPosts: Post[]) => [...prevPosts, ...newPosts.items]);
+
     if (newPosts) setNewMinId(findMinId(newPosts.items));
   };
 

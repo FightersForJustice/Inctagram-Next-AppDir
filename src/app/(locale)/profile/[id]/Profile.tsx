@@ -12,7 +12,7 @@ type Props = {
   myProfile: boolean;
 };
 export const Profile = ({ userData, postsData, myProfile }: Props) => {
-  let minId = findMinId(postsData);
+  let minId = findMinId(postsData.items);
 
   return (
     <>
