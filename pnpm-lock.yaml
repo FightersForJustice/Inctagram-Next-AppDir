@@ -13,7 +13,7 @@ dependencies:
     version: 3.1.1(react-hook-form@7.45.1)
   '@paypal/paypal-js':
     specifier: github:paypal/paypal-js
-    version: github.com/paypal/paypal-js/4a61cde9ab144997dcc87f764b415e1ebb8730ed
+    version: github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035
   '@paypal/react-paypal-js':
     specifier: ^8.1.1
     version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -47,6 +47,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  cross-env:
+    specifier: ^7.0.3
+    version: 7.0.3
   eslint:
     specifier: 8.44.0
     version: 8.44.0
@@ -95,6 +98,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.45.1
     version: 7.45.1(react@18.2.0)
+  react-intersection-observer:
+    specifier: ^9.5.3
+    version: 9.5.3(react@18.2.0)
   react-multi-date-picker:
     specifier: ^4.1.2
     version: 4.1.2(react-dom@18.2.0)(react@18.2.0)
@@ -2487,6 +2493,14 @@ packages:
     resolution: {integrity: sha512-F4wsi+XkDHCOMrHMYjrTEE4QBOrsHHN5/2VsVAaRq8P7E5z7xQpT75S+f/9WikmBEailas3+yo+6zPIomW+NOA==}
     dev: false
 
+  /cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: false
+
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -4865,6 +4879,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-intersection-observer@9.5.3(react@18.2.0):
+    resolution: {integrity: sha512-NJzagSdUPS5rPhaLsHXYeJbsvdpbJwL6yCHtMk91hc0ufQ2BnXis+0QQ9NBh6n9n+Q3OyjR6OQLShYbaNBkThQ==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -5846,10 +5868,10 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/paypal/paypal-js/4a61cde9ab144997dcc87f764b415e1ebb8730ed:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/4a61cde9ab144997dcc87f764b415e1ebb8730ed}
+  github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035:
+    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/31d35a66ae3e3f412d578645c7a14b651cb56035}
     name: '@paypal/paypal-js'
-    version: 7.1.0
+    version: 8.0.0
     prepare: true
     requiresBuild: true
     dependencies:
