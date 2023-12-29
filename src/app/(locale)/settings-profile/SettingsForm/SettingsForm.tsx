@@ -189,9 +189,7 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn disabled={!isValid}>
-            {translate('saveBtn')}
-          </PrimaryBtn>
+          <PrimaryBtn disabled={!isValid}>{translate('saveBtn')}</PrimaryBtn>
         </div>
       </form>
       {isLoading && <Loader />}
