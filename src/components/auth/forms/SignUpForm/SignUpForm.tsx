@@ -58,14 +58,12 @@ export const SignUpForm = () => {
     errors.password?.message === 'Пароли не совпадают' &&
     values.password === values.passwordConfirm
   ) {
-    console.log(1);
     clearErrors('password');
   }
   if (
     errors.passwordConfirm?.message === 'Пароли не совпадают' &&
     values.password === values.passwordConfirm
   ) {
-    console.log(2);
     clearErrors('passwordConfirm');
   }
 
