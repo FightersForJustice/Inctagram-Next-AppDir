@@ -47,7 +47,6 @@ export const SettingsForm = ({
 
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors, isValid },
     setError,

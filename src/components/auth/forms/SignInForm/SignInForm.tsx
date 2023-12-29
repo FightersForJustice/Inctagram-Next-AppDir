@@ -11,9 +11,9 @@ import { SignInSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import { SingInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/actions';
+import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './SignIn.module.scss';
-import { setAuthCookie } from '@/utils/cookiesActions';
 
 export const SignInForm = () => {
   const translate = useTranslations('SignInPage');

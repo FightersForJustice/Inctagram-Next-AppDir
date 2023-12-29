@@ -1,17 +1,17 @@
-import { useTranslations } from 'next-intl';
 import * as yup from 'yup';
+import { useTranslations } from 'next-intl';
+
+const passwordCompletly =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
+const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
+const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
+const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
+const emailDomainRegex = /^[A-Za-z0-9]+$/;
+const emailDomainNumberRegex = /^[^\d]*$/;
+const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
 export const SignUpFormSchema = () => {
   const t = useTranslations('Errors');
-  const passwordCompletly =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
-  const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
-  const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
-  const emailDomainRegex = /^[A-Za-z0-9]+$/;
-  const emailDomainNumberRegex = /^[^\d]*$/;
-  const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
-
   return yup
     .object({
       userName: yup
@@ -58,7 +58,6 @@ export const SignUpFormSchema = () => {
             firsLastCharEmail.test(value[0])
           );
         }),
-      // .email(t("email.email")),
       password: yup
         .string()
         .required(t('password.required'))
@@ -67,12 +66,26 @@ export const SignUpFormSchema = () => {
         })
         .min(6, t('password.min'))
         .max(20, t('password.max'))
-        .matches(passwordCompletly, `${t('password.complexity')} `),
+        .matches(passwordCompletly, `${t('password.complexity')} `)
+        .test(
+          'compare-passwordConfirm',
+          t('passwordConfirm.oneOf'),
+          function () {
+            return this.parent.passwordConfirm === this.parent.password;
+          }
+        ),
       passwordConfirm: yup
         .string()
+        .required(t('passwordConfirm.required'))
         .oneOf([yup.ref('password')], t('passwordConfirm.oneOf'))
         .min(6, t('passwordConfirm.min'))
-        .required(t('passwordConfirm.required')),
+        .test(
+          'compare-passwordConfirm2',
+          t('passwordConfirm.oneOf'),
+          function () {
+            return this.parent.passwordConfirm === this.parent.password;
+          }
+        ),
       agreements: yup
         .boolean()
         .oneOf([true], t('agreements.required'))

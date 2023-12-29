@@ -1,15 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import s from './SignUpForm.module.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'next/link';
-import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
-import { SignUpFormSchema } from '@/features/schemas';
-import { Loader } from '@/components/Loader';
-
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
+
+import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
+import { Loader } from '@/components/Loader';
+import { SignUpFormSchema } from '@/features/schemas';
 import { SubmitProps } from '@/components/auth/SignUp/typesSignUp';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import {
@@ -17,20 +17,23 @@ import {
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
-import { useTranslations } from 'next-intl';
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
 import ServiceAuth from '../../ServiceAuth/ServiceAuth';
+
+import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     reset,
+    getValues,
+    clearErrors,
     formState: { errors, isValid },
     setError,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
-    mode: 'onTouched',
+    mode: 'onChange',
   });
 
   const [showPass, setShowPass] = useState(true);
@@ -39,6 +42,7 @@ export const SignUpForm = () => {
   const [userEmail, setUserEmail] = useState('');
 
   const translate = useTranslations('SignUpPage');
+  const values = getValues();
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
@@ -49,6 +53,21 @@ export const SignUpForm = () => {
       reset(resetObjSignUpForm);
     }
   }, [isSuccess]);
+
+  if (
+    errors.password?.message === 'Пароли не совпадают' &&
+    values.password === values.passwordConfirm
+  ) {
+    console.log(1);
+    clearErrors('password');
+  }
+  if (
+    errors.passwordConfirm?.message === 'Пароли не совпадают' &&
+    values.password === values.passwordConfirm
+  ) {
+    console.log(2);
+    clearErrors('passwordConfirm');
+  }
 
   const onSubmit = (data: SubmitProps) => {
     try {

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import { FieldError, UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister, useForm } from 'react-hook-form';
 
 import { InputError } from '@/components/Input';
 import { ShowHidePass } from '@/components/ShowHidePass';
@@ -8,6 +8,7 @@ import { usePlaceholder } from '@/utils/usePlaceholder';
 import { inputTypes } from './utils';
 
 import s from './FormItem.module.scss';
+import { SignUpFormType } from '@/components/auth/forms/SignUpForm/SignUpForm';
 
 export interface FormItemProps {
   translate: (value: string) => ReactNode;
