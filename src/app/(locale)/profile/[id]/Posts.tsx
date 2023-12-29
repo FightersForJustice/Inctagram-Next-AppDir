@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const Posts = ({ postsData }: Props) => {
-  debugger;
   const postsImages = () => {
     let currentPosts;
     return postsData?.items.map((i) => {

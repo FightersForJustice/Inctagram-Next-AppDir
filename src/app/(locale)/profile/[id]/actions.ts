@@ -18,8 +18,8 @@ export const actions = {
       return null;
     }
   },
-  async getPosts(id: number, minId: number | undefined) {
-    const apiUrl = `https://inctagram.work/api/v1/public-posts/user/${id}/${minId}?pageSize=4&sortDirection=desc`;
+  async getPosts(id: number, minId: number | null) {
+    const apiUrl = `https://inctagram.work/api/v1/public-posts/user/${id}/${minId}?pageSize=8&sortDirection=desc`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) {

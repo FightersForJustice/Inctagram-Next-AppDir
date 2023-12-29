@@ -33,7 +33,7 @@ export const Profile = ({ userData, postsData }: Props) => {
       </div>
       <div className={s.profile__posts}>
         <Posts postsData={postsData} />
-        <LoadMore id={userData.id} minIdProps={minId} />
+        <LoadMore id={userData.id} minId={minId} />
       </div>
     </>
   );
