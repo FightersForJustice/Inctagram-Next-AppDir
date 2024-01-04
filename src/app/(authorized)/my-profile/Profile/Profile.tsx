@@ -9,9 +9,9 @@ import { PostsItem } from '@/api/posts.api';
 import { AvatarProfile } from '@/components/Profile/Avatar/AvatarProfile';
 import { UserNameProfile } from '@/components/Profile/UserName/UserNameProfile';
 import { UserInfoProfile } from '@/components/Profile/UserInfo/UserInfoProfile';
+import { SubscriptionsProfile } from '@/components/Profile/Subscriptions/SubscriptionsProfile';
 
 import s from '../MyProfile.module.scss';
-import { SubscriptionsProfile } from '@/components/Profile/Subscriptions/SubscriptionsProfile';
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;

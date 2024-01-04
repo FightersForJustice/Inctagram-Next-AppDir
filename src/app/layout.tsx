@@ -1,8 +1,13 @@
 import { ReactNode } from 'react';
 import Providers from '@/helpers/hocs/Providers';
-
-import './globals.scss';
 import { ToastContainer } from 'react-toastify';
+import { Inter } from 'next/font/google';
+import clsx from 'clsx';
+
+import 'react-toastify/dist/ReactToastify.css';
+import './globals.scss';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -11,6 +16,7 @@ export default function RootLayout({
   children: ReactNode;
   params: { lang: string };
 }) {
+
   return (
     <html lang={params.lang}>
       <body>
@@ -26,7 +32,9 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
         />
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className={clsx(inter.className)}>{children}</div>
+        </Providers>
       </body>
     </html>
   );
