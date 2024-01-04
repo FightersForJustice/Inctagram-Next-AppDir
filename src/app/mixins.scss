@@ -30,4 +30,10 @@
       @content;
     }
   }
+
+  @if $breakpoint == min-laptop {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  }
 }

@@ -34,6 +34,17 @@ body {
   font-weight: 400;
   background: var(--dark-700);
   color: var(--light-100);
+
+  min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@include mixins.devices(min-laptop) {
+  body {
+    border-left: 1px solid var(--dark-300);
+    border-right: 1px solid var(--dark-300);
+  }
 }
 
 @layer base {
@@ -60,16 +71,20 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 10px; /* ширина всей полосы прокрутки */
+  width: 10px;
+  /* ширина всей полосы прокрутки */
 }
 
 body::-webkit-scrollbar-track {
-  background: var(--dark-300); /* цвет зоны отслеживания */
+  background: var(--dark-300);
+  /* цвет зоны отслеживания */
   border-radius: 20px;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: var(--dark-100); /* цвет бегунка */
-  border-radius: 20px; /* округлось бегунка */
+  background-color: var(--dark-100);
+  /* цвет бегунка */
+  border-radius: 20px;
+  /* округлось бегунка */
   border: 1px solid var(--dark-500);
 }

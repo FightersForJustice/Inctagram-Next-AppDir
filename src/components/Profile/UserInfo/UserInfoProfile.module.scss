@@ -1,0 +1,20 @@
+@use '@/app/mixins.scss' as s;
+
+.profileDesc {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+@include s.devices(mobile-sm) {
+  .profileDesc {
+    font-size: 14px;
+  }
+}
+
+@include s.devices(tablet) {
+  .profileDesc {
+    margin-top: 13px;
+  }
+}
