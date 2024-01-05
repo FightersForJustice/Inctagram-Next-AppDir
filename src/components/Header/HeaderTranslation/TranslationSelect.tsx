@@ -5,7 +5,7 @@ import * as Popover from '@radix-ui/react-popover';
 import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
 
-import s from '@/app/(locale)/my-profile/CreatePost/CreatePost.module.scss';
+import s from '@/app/(authorized)/my-profile/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 
 export const TranslationSelect = () => {

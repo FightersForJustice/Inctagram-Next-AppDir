@@ -4,7 +4,7 @@ import { A11y, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { ImageStateType } from '@/app/(locale)/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(authorized)/my-profile/CreatePost/CreatePost';
 import { SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 

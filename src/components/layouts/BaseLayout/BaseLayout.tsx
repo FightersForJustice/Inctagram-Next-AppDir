@@ -9,7 +9,7 @@ type Props = {
 export const BaseLayout = ({ children }: Props) => {
   return (
     <div>
-      <Header />
+      <Header isAuth={false} />
       {children}
     </div>
   );

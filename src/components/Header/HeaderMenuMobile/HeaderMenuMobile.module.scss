@@ -50,6 +50,7 @@
 
 .modal {
   width: 450px;
+
   &__btn {
     display: flex;
     justify-content: flex-end;
@@ -63,5 +64,14 @@
 @include s.devices(tablet-xl) {
   .container {
     display: block;
+  }
+  .profileSettings {
+    display: none;
+  }
+}
+
+@include s.devices(tablet) {
+  .profileSettings {
+    display: flex;
   }
 }

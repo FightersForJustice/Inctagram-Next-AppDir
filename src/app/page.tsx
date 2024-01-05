@@ -1,3 +1,5 @@
-export default function RootPage() {
-  return <></>;
+import { redirect } from 'next/navigation';
+
+export default function IndexPage() {
+  redirect('/my-profile');
 }

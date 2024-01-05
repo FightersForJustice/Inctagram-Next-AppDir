@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import s from './ImagesCollection.module.scss';
 import Image from 'next/image';
-import { ImageStateType } from '@/app/(locale)/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(authorized)/my-profile/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { toast } from 'react-toastify';

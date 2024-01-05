@@ -1,0 +1,44 @@
+@use '@/app/mixins.scss' as s;
+
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentContainer {
+  display: flex;
+  height: calc(100vh - 60px);
+
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.nav {
+  position: relative;
+  height: calc(100vh - 60px);
+  width: 220px;
+  z-index: 10;
+}
+
+.content {
+  width: calc(100% - 220px);
+  margin-left: auto;
+  overflow-y: scroll;
+}
+
+@include s.devices(tablet-xl) {
+  .nav {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: auto;
+    width: auto;
+  }
+
+  .content {
+    width: 100%;
+    margin-left: 0;
+    overflow-y: scroll;
+  }
+}
