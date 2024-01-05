@@ -55,7 +55,7 @@ export const SignUpForm = () => {
     try {
       postAuthorization({
         userName: data.userName,
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: data.password,
       })
         .unwrap()
