@@ -2,7 +2,7 @@ import Image from 'next/image';
 import s from './MyProfile.module.scss';
 import { ApiResponsePosts, UserProfile } from './types';
 import { ProfileWrapper } from './ProfileWrapper';
-import { Posts } from './Posts/Posts';
+import { Posts } from './Posts';
 import { LoadMore } from './load-more';
 import { findMinId } from '@/utils/findMinId';
 
