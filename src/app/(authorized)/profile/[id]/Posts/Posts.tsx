@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import s from './Posts.module.scss';
-import { ApiResponsePosts } from './types';
+import { ApiResponsePosts } from '../types';
 
 type Props = {
   postsData: ApiResponsePosts;

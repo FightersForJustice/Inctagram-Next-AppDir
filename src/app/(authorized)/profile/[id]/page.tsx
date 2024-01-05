@@ -1,9 +1,7 @@
-import s from './MyProfile.module.scss';
 import { Profile } from './Profile';
 import { actions } from './actions';
 import { ApiResponsePosts, UserProfile } from './types';
 import { headers } from 'next/headers';
-import { SideBar } from '../../my-profile/Navigation';
 
 const MyProfile = async ({ params }: { params: { id: string } }) => {
   const idHeaders = 60; // полученый id с headersList.
@@ -15,16 +13,11 @@ const MyProfile = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className={s.container}>
-        <div className={s.wrapper} id={'wrapper'}>
-          <SideBar pathname={'pathname'} paidAccount={true} />
-          <Profile
-            userData={userdata!}
-            postsData={postsData}
-            myProfile={idHeaders === id ? true : false}
-          />
-        </div>
-      </div>
+      <Profile
+        userData={userdata!}
+        postsData={postsData}
+        myProfile={idHeaders === id ? true : false}
+      />
     </>
   );
 };
