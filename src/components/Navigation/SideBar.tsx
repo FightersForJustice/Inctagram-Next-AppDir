@@ -14,11 +14,12 @@ import { logout } from '@/features/customHooks/useLogout';
 import s from './Navigation.module.scss';
 
 type Props = {
+  id: number;
   paidAccount: boolean;
   userData?: GetResponse;
 };
 
-export const SideBar = ({ paidAccount, userData }: Props) => {
+export const SideBar = ({ paidAccount, userData, id }: Props) => {
   const t = useTranslations('Navigation');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
@@ -30,6 +31,7 @@ export const SideBar = ({ paidAccount, userData }: Props) => {
   return (
     <>
       <Navigation
+        id={id}
         paidAccount={paidAccount}
         pathname={pathname}
         setShowCreatePostModal={setShowCreatePostModal}

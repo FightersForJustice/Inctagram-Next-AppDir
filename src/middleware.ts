@@ -70,6 +70,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         console.log(meResponse.status, 'isAuth');
         const response = NextResponse.next();
         response.headers.set('accessToken', `${accessToken}`);
+        const responseData = await meResponse.json();
+        response.headers.set('id', `${responseData.userId}`);
+
         return isAuthPath
           ? NextResponse.redirect(new URL('/my-profile', request.url))
           : response;
