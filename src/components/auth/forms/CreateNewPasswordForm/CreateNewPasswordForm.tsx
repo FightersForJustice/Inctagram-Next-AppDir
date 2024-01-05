@@ -19,6 +19,8 @@ import {
 import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './CreateNewPasswordForm.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { authActions } from '@/redux/reducers/authSlice';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -41,6 +43,7 @@ export const CreateNewPasswordForm = ({
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (data: { password: string }) => {
     let email: string = '';
@@ -58,6 +61,7 @@ export const CreateNewPasswordForm = ({
       .then((signInResult) => {
         setAuthCookie('accessToken', signInResult?.data.accessToken);
         setAuthCookie('refreshToken', signInResult?.data.refreshToken);
+        dispatch(authActions.postLogin());
         return deleteAllSessionsAction(
           signInResult?.data.accessToken,
           signInResult?.data.refreshToken

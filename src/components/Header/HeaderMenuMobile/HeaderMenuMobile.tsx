@@ -13,6 +13,7 @@ import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/Menu
 import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 export const HeaderMenuMobile = () => {
   const t = useTranslations('Navigation');
@@ -22,6 +23,7 @@ export const HeaderMenuMobile = () => {
   const [modal, setModal] = useState(false);
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const onBlurHandler = (e: FocusEvent<HTMLTextAreaElement, Element>) => {
     if (e.relatedTarget?.id === 'mobileMenu') {
       return;
@@ -104,7 +106,7 @@ export const HeaderMenuMobile = () => {
           </div>
           <div className={s.modal__btn}>
             <TransparentBtn
-              onClick={() => logout(setShowLogoutModal, t, router)}
+              onClick={() => logout(setShowLogoutModal, t, router, dispatch)}
             >
               {t('LogoutModal.btnYes')}
             </TransparentBtn>

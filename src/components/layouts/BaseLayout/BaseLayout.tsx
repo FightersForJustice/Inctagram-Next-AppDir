@@ -1,5 +1,8 @@
+'use client';
+
 import { ReactNode } from 'react';
 import { Header } from '@/components/Header';
+import { useAppSelector } from '@/redux/hooks/useSelect';
 
 type Props = {
   title?: string;
@@ -7,9 +10,10 @@ type Props = {
 };
 
 export const BaseLayout = ({ children }: Props) => {
+  const auth = useAppSelector((state) => state.auth.isAuth);
   return (
     <div>
-      <Header />
+      <Header isAuth={auth} />
       {children}
     </div>
   );

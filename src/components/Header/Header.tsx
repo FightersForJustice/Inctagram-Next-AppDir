@@ -1,3 +1,5 @@
+// 'use client'
+
 import Link from 'next/link';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
@@ -6,7 +8,11 @@ import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 
 import s from './Header.module.scss';
 
-export const Header = () => {
+type PropType = {
+  isAuth: boolean;
+};
+
+export const Header = ({ isAuth }: PropType) => {
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
@@ -17,7 +23,7 @@ export const Header = () => {
         <div className={s.notificationContainer}>
           <HeaderNotification />
           <TranslationSelect />
-          <HeaderMenuMobile />
+          {isAuth && <HeaderMenuMobile />}
         </div>
       </div>
     </header>

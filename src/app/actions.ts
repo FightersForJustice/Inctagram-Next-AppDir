@@ -28,7 +28,7 @@ export async function signInAction(data: SingInData) {
           refreshToken: getRefreshToken(res.headers.get('set-cookie')),
         };
 
-        const returnData = { ...responseBody, ...refreshToken };
+        const returnData = { ...responseBody, ...refreshToken, acessSuccess: true };
 
         return { success: true, data: returnData };
       } else {
@@ -149,7 +149,7 @@ export async function loginGoogleAction(code: string) {
       const refreshToken = {
         refreshToken: getRefreshToken(res.headers.get('set-cookie')),
       };
-      const returnData = { ...responseBody, ...refreshToken };
+      const returnData = { ...responseBody, ...refreshToken, acessSuccess: true };
 
       return { success: true, data: returnData };
     } else {

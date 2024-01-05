@@ -11,6 +11,8 @@ import { setAuthCookie } from '@/utils/cookiesActions';
 import { GetService } from './GetService';
 
 import s from './ServiceAuth.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { authActions } from '@/redux/reducers/authSlice';
 
 type Props = {
   page: 'SignInPage' | 'SignUpPage';
@@ -18,6 +20,7 @@ type Props = {
 const ServiceAuth = ({ page }: Props) => {
   const t = useTranslations(page);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const gitHubAuth = () => {
     //need change on local lang from state (header lang)
@@ -33,6 +36,7 @@ const ServiceAuth = ({ page }: Props) => {
         setAuthCookie('accessToken', data?.data.accessToken);
         setAuthCookie('refreshToken', data?.data.refreshToken);
         setAuthCookie('userEmail', data?.data.email);
+        dispatch(authActions.postLogin());
 
         router.push('/my-profile');
       } catch (error) {

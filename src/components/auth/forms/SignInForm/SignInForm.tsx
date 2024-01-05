@@ -14,11 +14,12 @@ import { signInAction } from '@/app/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './SignInForm.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { authActions } from '@/redux/reducers/authSlice';
 
 export const SignInForm = () => {
   const translate = useTranslations('SignInPage');
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -33,15 +34,17 @@ export const SignInForm = () => {
     mode: 'onTouched',
   });
   const [showPass, setShowPass] = useState(true);
+  const dispatch = useAppDispatch();
 
   const processForm: SubmitHandler<SingInData> = async (data) => {
     const signInResult = await signInAction(data);
-
+    console.log('submit');
     if (signInResult?.success) {
       setAuthCookie('accessToken', signInResult.data.accessToken);
       setAuthCookie('refreshToken', signInResult.data.refreshToken);
+      dispatch(authActions.postLogin());
 
-      router.refresh()
+      router.refresh();
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `error${statusCode}`;

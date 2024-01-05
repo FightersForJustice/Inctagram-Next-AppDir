@@ -12,6 +12,7 @@ import { Navigation } from './BarPage';
 import { logout } from '@/features/customHooks/useLogout';
 
 import s from '../MyProfile.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 type Props = {
   pathname: string;
@@ -25,6 +26,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const userEmail = 'mocked';
 
   return (
@@ -46,7 +48,7 @@ export const SideBar = ({ pathname, paidAccount, userData }: Props) => {
           </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn
-              onClick={() => logout(setShowLogoutModal, t, router)}
+              onClick={() => logout(setShowLogoutModal, t, router, dispatch)}
             >
               {t('LogoutModal.btnYes')}
             </TransparentBtn>

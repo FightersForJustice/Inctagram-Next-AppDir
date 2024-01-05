@@ -24,7 +24,7 @@ const authReducerHandler = (
   state: IInitialState,
   action: PayloadAction<LoginResponseType>
 ) => {
-  sessionStorage.setItem('accessToken', action.payload.accessToken);
+  // sessionStorage.setItem('accessToken', action.payload.accessToken);
   state.isAuth = true;
 };
 
@@ -35,26 +35,28 @@ const { actions: authActions, reducer: authReducer } = createSlice({
     setAccessToken: (state, action: PayloadAction<LoginResponseType>) => {
       state.accessToken = action.payload.accessToken;
     },
+    postLogin: (state) => {
+      state.isAuth = !state.isAuth;
+    },
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher(postLogin.matchFulfilled, authReducerHandler)
-      .addMatcher(loginWithGoogleOAuth.matchFulfilled, authReducerHandler)
-      .addMatcher(postLogout.matchFulfilled, (state) => {
-        state.isAuth = false;
-        sessionStorage.clear();
-      })
-      .addMatcher(
-        getAuthMe.matchFulfilled,
-        (state, action: PayloadAction<IUserMeResponseData>) => {
-          state.isAuth = true;
-          state.user = action.payload;
-          sessionStorage.setItem(
-            'userId',
-            JSON.stringify(action.payload.userId)
-          );
-        }
-      );
+    // builder.addCase('postLogin', (state) => (state.isAuth = true));
+    // .addMatcher(loginWithGoogleOAuth.matchFulfilled, authReducerHandler)
+    // .addMatcher(postLogout.matchFulfilled, (state) => {
+    //   state.isAuth = false;
+    //   sessionStorage.clear();
+    // })
+    // .addMatcher(
+    //   getAuthMe.matchFulfilled,
+    //   (state, action: PayloadAction<IUserMeResponseData>) => {
+    //     state.isAuth = true;
+    //     state.user = action.payload;
+    //     sessionStorage.setItem(
+    //       'userId',
+    //       JSON.stringify(action.payload.userId)
+    //     );
+    //   }
+    // );
     // .addMatcher(loginWithGitHubOAuth.matchFulfilled, authReducerHandler);
   },
 });
