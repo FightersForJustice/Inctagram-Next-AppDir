@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
 
 import { GetResponse } from '@/api/profile.api';
 import { ProfileWrapper } from './ProfileWrapper';
@@ -10,6 +9,7 @@ import { PostModal } from '@/components/Modals/PostModal';
 import { PostsItem } from '@/api/posts.api';
 
 import s from '../MyProfile.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -23,7 +23,10 @@ export const Profile = ({
   paidAccount,
   userData,
 }: Props) => {
-  const t = useTranslations('MyProfilePage');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
+
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<number>();
   const [userPosts, setUserPosts] = useState<PostsItem[]>([]);
@@ -52,7 +55,7 @@ export const Profile = ({
         </div>
         <ProfileWrapper
           data={userData}
-          t={t}
+          t={translate}
           setShowSubscriptionsModal={setShowSubscriptionsModal}
           setShowSubscribersModal={setShowSubscribersModal}
           paidAccount={paidAccount}

@@ -1,10 +1,10 @@
 'use client';
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 
 import s from './recovery.module.scss';
 import { CreateNewPasswordForm } from '@/components/auth';
+import { useTranslation } from 'react-i18next';
 
 const CreateNewPassword = ({
   params,
@@ -13,8 +13,8 @@ const CreateNewPassword = ({
   params: { slug: string };
   searchParams: { code: string };
 }) => {
-  const t = useTranslations('RecoveryPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`RecoveryPage.${key}`);
   const parameters = useSearchParams();
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const CreateNewPassword = ({
 
   return (
     <div className={s.container}>
-      <p className={s.title}>{t('title')}</p>
-      <CreateNewPasswordForm translate={t} />
+      <p className={s.title}>{translate('title')}</p>
+      <CreateNewPasswordForm translate={translate} />
     </div>
   );
 };

@@ -48,7 +48,7 @@ export const Confirm = ({ code, translate }: Props) => {
       <h1 className={s.slogan}>{translate('title')}</h1>
       <p className={s.confirmationText}>{translate('desc')}</p>
       <Link href={'/sign-in'} className={s.resendLink}>
-        {translate('btnName')}
+        {translate('btnName')} вцццццц
       </Link>
       <Image
         src={'/img/congrats.svg'}

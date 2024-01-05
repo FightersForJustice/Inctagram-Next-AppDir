@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -14,9 +13,13 @@ import { signInAction } from '@/app/actions';
 
 import s from './SignIn.module.scss';
 import { setAuthCookie } from '@/utils/cookiesActions';
+import { useTranslation } from 'react-i18next';
 
 export const SignInForm = () => {
-  const translate = useTranslations('SignInPage');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SignInPage.${key}`);
+
   const router = useRouter();
 
   const {

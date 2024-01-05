@@ -1,20 +1,21 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
-
 import { Modal } from '../Modal/Modal';
 
 import s from './UnsubscribeModal.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setShowUnsubscribeModal: (value: boolean) => void;
 };
 
 export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
-  const t = useTranslations('MyProfilePage');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
   return (
     <Modal
-      title={t('UnsubscribeModal.title')}
+      title={translate('UnsubscribeModal.title')}
       isOkBtn={false}
       onClose={() => setShowUnsubscribeModal(false)}
     >
@@ -28,18 +29,18 @@ export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
           className={s.deleteModal__avatar}
         />
         <p className={s.deleteModal__text}>
-          {t('UnsubscribeModal.question')} <span>“URLProfiele”</span>?
+          {translate('UnsubscribeModal.question')} <span>“URLProfiele”</span>?
         </p>
       </div>
       <div className={s.deleteModal__wrapper}>
         <button className={s.deleteModal__btn__yes}>
-          {t('UnsubscribeModal.btnYes')}
+          {translate('UnsubscribeModal.btnYes')}
         </button>
         <button
           className={s.deleteModal__btn__no}
           onClick={() => setShowUnsubscribeModal(false)}
         >
-          {t('UnsubscribeModal.btnNo')}
+          {translate('UnsubscribeModal.btnNo')}
         </button>
       </div>
       {/* </div> */}

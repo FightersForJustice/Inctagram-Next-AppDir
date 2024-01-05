@@ -1,8 +1,6 @@
 import React from 'react';
 import s from '../Tabs.module.scss';
 import * as Tabs from '@radix-ui/react-tabs';
-// @ts-ignore
-import { useTranslations } from 'next-intl';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
@@ -13,9 +11,13 @@ import {
   useGetDeviceSessionsQuery,
 } from '@/api/profile.api';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const DevicesTab = () => {
-  const t = useTranslations('SettingsProfilePage.DevicesTab');
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
+
   const { data: sessions, refetch } = useGetDeviceSessionsQuery();
   const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
 
@@ -64,7 +66,7 @@ export const DevicesTab = () => {
     <Tabs.Content className={s.TabsContent} value="devices">
       <div className={s.devices}>
         <ThisDevice
-          t={t}
+          t={translate}
           session={sessions ? sessions[0] : sessionsDefault[0]}
         />
 
@@ -77,7 +79,7 @@ export const DevicesTab = () => {
         )}
         <ActiveSessions
           refetch={refetch}
-          t={t}
+          translate={translate}
           sessions={sessions || sessionsDefault}
         />
       </div>

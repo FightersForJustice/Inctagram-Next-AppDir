@@ -17,9 +17,9 @@ import {
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
 import { translateError } from '@/utils/translateErrorSignUpForm';
-import { useTranslations } from 'next-intl';
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
 import ServiceAuth from '../../ServiceAuth/ServiceAuth';
+import { useTranslation } from 'react-i18next';
 
 export const SignUpForm = () => {
   const {
@@ -38,7 +38,7 @@ export const SignUpForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  const translate = useTranslations('SignUpPage');
+  const { t } = useTranslation();
 
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
@@ -49,6 +49,8 @@ export const SignUpForm = () => {
       reset(resetObjSignUpForm);
     }
   }, [isSuccess]);
+
+  const translate = (key: string): string => t(`SignUpPage.${key}`);
 
   const onSubmit = (data: SubmitProps) => {
     try {

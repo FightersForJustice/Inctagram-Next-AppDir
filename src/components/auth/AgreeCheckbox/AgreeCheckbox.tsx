@@ -10,7 +10,7 @@ export const AgreeCheckbox = ({
   register,
   error,
   errorMessage,
-  registerName,
+  registerName, 
   id,
 }: AgreeCheckboxProps) => {
   const [agree, setAgree] = useState(false);
@@ -45,7 +45,7 @@ export const AgreeCheckbox = ({
             )}
           </svg>
           <p>
-            {translate.rich('agreementsCheckText', {
+            {/* {translate.rich('agreementsCheckText', {
               link: (chunks: string) => (
                 <Link className={s.link} href="./agreements/terms-of-service">
                   {chunks}
@@ -56,7 +56,7 @@ export const AgreeCheckbox = ({
                   {chunks}
                 </Link>
               ),
-            })}
+            })} */}
           </p>
         </div>
 

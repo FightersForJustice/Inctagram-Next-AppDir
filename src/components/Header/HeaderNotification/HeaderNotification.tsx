@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import fillBell from '/public/img/MaskFill.svg';
 import bell from '/public/img/MaskOutline.svg';
@@ -14,8 +14,8 @@ export const HeaderNotification = () => {
   const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
-  const t = useTranslations('Header');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Header.notifications.${key}`);
   const onOpenPopup = () => {
     setShowPopup(!showPopup);
     setAmount(0);
@@ -36,10 +36,7 @@ export const HeaderNotification = () => {
         <Popover.Portal>
           <Popover.Content className="PopoverContent" sideOffset={5}>
             <div className={s.popup}>
-              <h3 className={s.popup__title}>
-                {' '}
-                {t('notifications.notZeroNotifications')}
-              </h3>
+              <h3 className={s.popup__title}> {translate('notZeroNotifications')}</h3>
               {amount ? (
                 'future notifications'
               ) : (
@@ -57,7 +54,7 @@ export const HeaderNotification = () => {
                               </div> */
                 <div className={s.popup__item}>
                   <p className={s.popup__desc}>
-                    {t('notifications.zeroNotifications')}
+                  {translate('zeroNotifications')}
                   </p>
                 </div>
               )}

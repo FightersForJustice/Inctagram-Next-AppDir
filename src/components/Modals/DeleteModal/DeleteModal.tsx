@@ -1,19 +1,20 @@
 import Image from 'next/image';
 import { Modal } from '../Modal/Modal';
-import { useTranslations } from 'next-intl';
 
 import s from './DeleteModal.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setShowDeleteModal: (value: boolean) => void;
 };
 
 export const DeleteModal = ({ setShowDeleteModal }: Props) => {
-  const t = useTranslations('MyProfilePage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
   return (
     <Modal
-      title={t('DeleteModal.title')}
+      title={translate('DeleteModal.title')}
       isOkBtn={false}
       onClose={() => setShowDeleteModal(false)}
       className={s.container}
@@ -27,18 +28,18 @@ export const DeleteModal = ({ setShowDeleteModal }: Props) => {
           className={s.deleteModal__avatar}
         />
         <p className={s.deleteModal__text}>
-          {t('DeleteModal.question')} <span>“URLProfiele”</span>?
+          {translate('DeleteModal.question')} <span>“URLProfiele”</span>?
         </p>
       </div>
       <div className={s.deleteModal__wrapper}>
         <button className={s.deleteModal__btn__yes}>
-          {t('DeleteModal.btnYes')}
+          {translate('DeleteModal.btnYes')}
         </button>
         <button
           className={s.deleteModal__btn__no}
           onClick={() => setShowDeleteModal(false)}
         >
-          {t('DeleteModal.btnNo')}
+          {translate('DeleteModal.btnNo')}
         </button>
       </div>
     </Modal>

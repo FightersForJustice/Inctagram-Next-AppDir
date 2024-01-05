@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import * as Tabs from '@radix-ui/react-tabs';
 import Image from 'next/image';
@@ -12,13 +11,16 @@ import { handleApiError } from '@/utils';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 
 import s from '../Tabs.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const GeneralInformationTab = ({
   setShowAddAvatarModal,
   setLoadedAvatar,
   loadedAvatar,
 }: Props) => {
-  const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.GeneralInformationTab.${key}`);
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
   const [showModal, setShowModal] = useState(false);
@@ -73,7 +75,7 @@ export const GeneralInformationTab = ({
               />
             )}
             <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
-              {t('addBtn')}
+              {translate('addBtn')}
             </TransparentBtn>
           </div>
           <div className={s.wrapper__right}>
@@ -82,7 +84,7 @@ export const GeneralInformationTab = ({
               userBirthday={data?.dateOfBirth ?? ''}
               userCity={userCity}
               setUserCity={setUserCity}
-              translate={t}
+              translate={translate}
             />
           </div>
         </div>

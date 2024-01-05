@@ -1,6 +1,6 @@
 'use client';
-import { useTranslations } from 'next-intl';
 import { Agreements } from '@/components/auth';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   params: {
@@ -12,8 +12,8 @@ type Props = {
 };
 
 const AgreementsPage = (props: Props) => {
-  const t = useTranslations('AgreementsPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`AgreementsPage.${key}`);
   if (
     props.params.agreements === 'privacy-policy' ||
     props.params.agreements === 'privacy-policy-profile'
@@ -33,9 +33,9 @@ const AgreementsPage = (props: Props) => {
   if (props.params.agreements === 'terms-of-service') {
     return (
       <Agreements
-        text={t('TermsOfService.text')}
-        title={t('TermsOfService.title')}
-        btnName={t('btnName')}
+        text={translate('TermsOfService.text')}
+        title={translate('TermsOfService.title')}
+        btnName={translate('btnName')}
       />
     );
   }
