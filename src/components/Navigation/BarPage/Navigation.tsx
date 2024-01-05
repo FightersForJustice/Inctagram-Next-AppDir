@@ -48,12 +48,20 @@ export const Navigation = ({
             <span>{t('create')}</span>
           </button>
         )}
-        {el.href !== 'create' && el.href !== 'statistics' && (
-          <Link href={'/' + el.href} className={style}>
+        {el.href === 'profile' && (
+          <Link href={'/profile/' + id} className={style}>
             <BarComponent>{el.img}</BarComponent>
             <span>{t(el.href === 'profile' ? 'myProfile' : el.href)}</span>
           </Link>
         )}
+        {el.href !== 'create' &&
+          el.href !== 'statistics' &&
+          el.href !== 'profile' && (
+            <Link href={'/' + el.href} className={style}>
+              <BarComponent>{el.img}</BarComponent>
+              <span>{t(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+            </Link>
+          )}
         {el.href === 'statistics' && paidAccount && (
           <Link href={'/' + el.href} className={style}>
             <BarComponent>{el.img}</BarComponent>
