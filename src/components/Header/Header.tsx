@@ -6,7 +6,7 @@ import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 
 import s from './Header.module.scss';
 
-export const Header = () => {
+export const Header = ({ isAuth }: { isAuth: boolean }) => {
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
@@ -15,9 +15,9 @@ export const Header = () => {
         </Link>
 
         <div className={s.notificationContainer}>
-          <HeaderNotification />
+          {isAuth && <HeaderNotification />}
           <TranslationSelect />
-          <HeaderMenuMobile />
+          {isAuth && <HeaderMenuMobile />}
         </div>
       </div>
     </header>

@@ -1,0 +1,12 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  padding: 36px 50px 36px 24px;
+  height: 100%;
+}
+
+@include s.devices(tablet) {
+    .container {
+      padding: 24px 15px;
+    }
+  }
