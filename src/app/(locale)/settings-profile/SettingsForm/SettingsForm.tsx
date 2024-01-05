@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import s from './SettingsForm.module.scss';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   PutProfileBody,
   useLazyGetProfileQuery,
@@ -48,10 +48,9 @@ export const SettingsForm = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setError,
   } = useForm<FormValues>({
-    //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
   });
@@ -190,13 +189,7 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn
-            disabled={
-              !!errors.firstName || !!errors.lastName || !!errors.userName
-            }
-          >
-            {translate('saveBtn')}
-          </PrimaryBtn>
+          <PrimaryBtn disabled={!isValid}>{translate('saveBtn')}</PrimaryBtn>
         </div>
       </form>
       {isLoading && <Loader />}
