@@ -7,7 +7,8 @@ type Props = {
 
 export const ServerSideBar = ({ paidAccount }: Props) => {
   const headersList = headers();
-  const id = headersList.get('id');
+  const idHeaders = headersList.get('id') as string;
+  const id = parseInt(idHeaders, 10);
 
   return (
     <>
