@@ -1,4 +1,3 @@
-'use client';
 import { ReactNode } from 'react';
 
 const RootLayout = ({ children }: { children: ReactNode }) => {

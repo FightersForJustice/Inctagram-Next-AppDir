@@ -3,18 +3,14 @@
 .container {
   grid-area: profile;
   width: 100%;
-  padding: 0px 20px 0px 45px;
-  margin: 0 auto;
 }
 
 .TabsRoot {
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  // min-width: 726px;
   margin: 0 auto;
   outline: none;
-  padding-top: 35px;
 }
 
 .TabsList {
@@ -80,6 +76,14 @@
 /*.TabsContent:focus {
     box-shadow: 0 0 0 2px black;
 }*/
+
+.TabsText{
+  display: block;
+}
+
+.TabsIcon{
+  display: none;
+}
 
 .Text {
   margin-top: 0;
@@ -260,12 +264,21 @@
       max-width: 100%;
     }
   }
-  .TabsTrigger {
-    min-width: 175px;
-  }
-
+  
   .TabsList {
     overflow-x: scroll;
+  }
+
+  .TabsText{
+    display: none;
+  }
+  .TabsTrigger{
+    min-width: 50px;
+  }
+  .TabsIcon{
+    display: block;
+    height: 30px;
+    width: 30px;
   }
 }
 

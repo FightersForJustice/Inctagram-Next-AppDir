@@ -1,20 +1,24 @@
+'use client';
+
 import { ChangeEvent, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import s from './Tabs.module.scss';
-import '../../../globals.scss';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
+import { InfoCircledIcon, DesktopIcon, GearIcon, BackpackIcon } from '@radix-ui/react-icons'
+
 import {
   useLazyGetProfileQuery,
   usePostProfileAvatarMutation,
 } from '@/api/profile.api';
-import { toast } from 'react-toastify';
 import { dataURLtoFile } from '@/utils/dataUrlToFile';
 import { GeneralInformationTab } from './GeneralInformationTab/GeneralInformationTab';
 import { DevicesTab } from './DevicesTab/DevicesTab';
 import { Loader } from '@/components/Loader/Loader';
-import { useTranslations } from 'next-intl';
 import { ShowAddAvatarModal } from './ShowAddAvatarModal/ShowAddAvatarModal';
 import { AccountManagementTab } from './AccountManagementTab/AccountManagementTab';
 import { MyPayments } from '@/app/(authorized)/settings-profile/Tabs/MyPayments';
+
+import s from './Tabs.module.scss';
 
 const TabsDemo = () => {
   const t = useTranslations('SettingsProfilePage');
@@ -77,16 +81,20 @@ const TabsDemo = () => {
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
-            {t('GeneralInformationTab.titleTab')}
+            <p className={s.TabsText}>{t('GeneralInformationTab.titleTab')}</p>
+            <InfoCircledIcon className={s.TabsIcon}/>
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="devices">
-            {t('DevicesTab.titleTab')}
+            <p className={s.TabsText}>{t('DevicesTab.titleTab')}</p>
+            <DesktopIcon className={s.TabsIcon}/>
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="accountManagement">
-            {t('AccountManagementTab.titleTab')}
+            <p className={s.TabsText}>{t('AccountManagementTab.titleTab')}</p>
+            <GearIcon className={s.TabsIcon}/>
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="myPayments">
-            {t('MyPaymentsTab.titleTab')}
+            <p className={s.TabsText}>{t('MyPaymentsTab.titleTab')}</p>
+            <BackpackIcon className={s.TabsIcon}/>
           </Tabs.Trigger>
         </Tabs.List>
         <GeneralInformationTab
