@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 export type SingInData = {
   email: string;
   password: string;
+  userName?: string;
 };
 
 export const SignInSchema = () => {

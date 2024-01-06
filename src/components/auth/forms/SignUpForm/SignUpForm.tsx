@@ -1,76 +1,62 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'next/link';
-import { StatusCode, usePostAuthorizationMutation } from '@/api/auth.api';
-import { SignUpFormSchema } from '@/features/schemas';
-import { Loader } from '@/components/Loader';
-
 import { toast } from 'react-toastify';
-import { SubmitProps } from '@/components/auth/SignUp/typesSignUp';
+
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
+import { SignUpFormSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import {
   getSignUpFormItemsData,
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
-import { translateError } from '@/utils/translateErrorSignUpForm';
-import ServiceAuth from '../../ServiceAuth/ServiceAuth';
-import { useTranslations } from 'next-intl';
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+
+import { signUpAction } from '@/app/actions';
+import { SingInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
+  const translate = useTranslations('SignUpPage');
   const {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors, isValid },
-    setError,
+    // setError,
+    // ^ maybe needs sometime 
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
   });
 
+  const { agreements } = getValues();
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  const translate = useTranslations('SignUpPage');
-
-  const [postAuthorization, { isSuccess, isLoading }] =
-    usePostAuthorizationMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      setShowModal(true);
-      reset(resetObjSignUpForm);
-    }
-  }, [isSuccess]);
-
-  const onSubmit = (data: SubmitProps) => {
+  const processForm = async (data: SingInData) => {
     try {
-      postAuthorization({
-        userName: data.userName,
-        email: data.email,
-        password: data.password,
-      })
-        .unwrap()
-        .catch((err) => {
-          if (err?.data?.statusCode === StatusCode.badRequest) {
-            setError(err.data.messages[0]?.field, {
-              message: translateError(err.data.messages[0]?.message, translate),
-            });
-          } else {
-            toast.error(err.error);
-          }
-        });
-      setUserEmail(data.email);
+      await signUpAction(data).then(() => {
+        setUserEmail(data.email);
+        setShowModal(true);
+        reset(resetObjSignUpForm);
+      });
     } catch (error) {
       toast.error({ error }.toString());
+      // const statusCode = signInResult?.error.statusCode;
+      // const statusMessage = `error${statusCode}`;
+      // setError('password', {
+      //   type: 'manual',
+      //   message: translate(statusMessage),
+      // });
     }
   };
 
@@ -83,11 +69,9 @@ export const SignUpForm = () => {
   });
 
   return (
-    <>
-      <div>
-        <ServiceAuth page={'SignUpPage'} />
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className={s.container}>
+      <ServiceAuth page={'SignUpPage'} />
+      <form onSubmit={handleSubmit(processForm)}>
         <div className={s.formContainer}>
           {formItemsProps.map((formItem) => (
             <FormItem
@@ -100,6 +84,7 @@ export const SignUpForm = () => {
         </div>
 
         <AgreeCheckbox
+          agree={agreements}
           translate={translate}
           register={register}
           error={errors.agreements}
@@ -128,7 +113,6 @@ export const SignUpForm = () => {
           setShowModal={setShowModal}
         />
       )}
-      {isLoading && <Loader />}
-    </>
+    </div>
   );
 };

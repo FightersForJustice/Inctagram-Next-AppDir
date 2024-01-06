@@ -1,16 +1,17 @@
-import { useTranslations } from 'next-intl';
 import * as yup from 'yup';
+import { useTranslations } from 'next-intl';
+
+const passwordCompletly =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
+const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
+const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
+const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
+const emailDomainRegex = /^[A-Za-z0-9]+$/;
+const emailDomainNumberRegex = /^[^\d]*$/;
+const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
 export const SignUpFormSchema = () => {
   const t = useTranslations('Errors');
-  const passwordCompletly =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/;
-  const nameValidationRegex = /^[A-Za-z0-9_—-]+$/;
-  const firsLastCharEmail = /^[^|$%&/=?^*+@!#~'.{}—-]+$/;
-  const emailDomainRegex = /^[A-Za-z0-9]+$/;
-  const emailDomainNumberRegex = /^[^\d]*$/;
-  const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
   return yup
     .object({

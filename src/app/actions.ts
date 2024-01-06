@@ -1,5 +1,6 @@
 'use server';
 
+import { NextResponse } from 'next/server';
 import { routes } from '@/api/routes';
 import { SingInData } from '@/features/schemas/SignInSchema';
 import {
@@ -13,7 +14,6 @@ import {
   requestUpdateTokensOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
-import { NextResponse } from 'next/server';
 import { setCookieExpires } from '@/utils/cookiesActions';
 
 // AUTH ACTIONS
@@ -37,6 +37,22 @@ export async function signInAction(data: SingInData) {
     } catch (error) {
       console.error(error, 'post error');
     }
+  }
+}
+
+export async function signUpAction(data: SingInData) {
+  try {
+    const res = await fetch(routes.SIGN_UP, loginOptions(data));
+    const responseBody = await res.json();
+    if (res.ok) {
+      const returnData = { ...responseBody };
+
+      return { success: true, data: returnData };
+    } else {
+      return { success: false, error: responseBody };
+    }
+  } catch (error) {
+    console.error(error, 'post error');
   }
 }
 
@@ -154,7 +170,7 @@ export async function loginGoogleAction(code: string) {
       return { success: true, data: returnData };
     } else {
       console.log('GoogleAuth Failed');
-      console.log("res", res);
+      console.log('res', res);
 
       return { success: false, error: responseBody };
     }
