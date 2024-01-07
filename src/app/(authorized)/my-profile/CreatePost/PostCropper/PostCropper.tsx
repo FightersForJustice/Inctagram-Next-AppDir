@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { ImageStateType } from '../CreatePost';
@@ -16,11 +16,11 @@ type Props = {
   setLoadedImages: (value: any) => void;
 };
 
-export const PostCropper: React.FC<Props> = ({
+export const PostCropper = ({
   postImage,
   zoomValue,
   setCroppedPostImage,
-}) => {
+}: Props) => {
   const cropperRef = useRef<ReactCropperElement>(null);
   const ratio = useAppSelector((state) => state.post.cropAspectRatio);
   const dispatch = useAppDispatch();
@@ -45,14 +45,14 @@ export const PostCropper: React.FC<Props> = ({
           postImage?.image ? postImage.image : '/img/create-post/test-image.png'
         }`}
         style={{
-          transform: `scale(${+zoomValue / 10})`,
           width: '100%',
-          zIndex: '100',
+          zIndex: '10',
         }}
+        zoomTo={+zoomValue / 10}
         ref={cropperRef}
         cropend={onCropEnd}
         background={false}
-        zoomable={false}
+        zoomable={true}
         checkOrientation={true}
         initialAspectRatio={1}
         crop={onCropEnd}

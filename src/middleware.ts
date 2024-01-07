@@ -67,9 +67,16 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     switch (meResponse.status) {
       case 200:
         console.log(meResponse.status, 'isAuth');
+        const response = NextResponse.next();
+        response.headers.set('accessToken', `${accessToken}`);
+        const responseData = await meResponse.json();
+        response.headers.set('id', `${responseData.userId}`);
+
         return isAuthPath
-          ? NextResponse.redirect(new URL('/my-profile', request.url))
-          : NextResponse.next(); // req.headers (accT)
+          ? NextResponse.redirect(
+              new URL(`/profile${responseData.userId}`, request.url)
+            )
+          : response;
       case 401:
         console.log('Middleware (Bad AccessToken)');
         const updateTokenResult = await updateTokensAndContinue(refreshToken);

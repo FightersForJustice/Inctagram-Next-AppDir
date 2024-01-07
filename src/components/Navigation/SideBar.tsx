@@ -6,7 +6,7 @@ import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { CreatePost } from '../../app/(authorized)/my-profile/CreatePost/CreatePost';
+import { CreatePost } from '@/app/(authorized)/my-profile/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
 import { logout } from '@/features/customHooks/useLogout';
@@ -14,11 +14,12 @@ import { logout } from '@/features/customHooks/useLogout';
 import s from './Navigation.module.scss';
 
 type Props = {
+  id: number;
   paidAccount: boolean;
   userData?: GetResponse;
 };
 
-export const SideBar = ({ paidAccount, userData }: Props) => {
+export const SideBar = ({ paidAccount, userData, id }: Props) => {
   const t = useTranslations('Navigation');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
@@ -30,6 +31,7 @@ export const SideBar = ({ paidAccount, userData }: Props) => {
   return (
     <>
       <Navigation
+        id={id}
         paidAccount={paidAccount}
         pathname={pathname}
         setShowCreatePostModal={setShowCreatePostModal}

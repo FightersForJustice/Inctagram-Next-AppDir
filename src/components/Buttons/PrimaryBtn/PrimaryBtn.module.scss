@@ -5,6 +5,7 @@
   border-radius: 2px;
   transition: all 0.2s linear;
   border: 1px solid var(--primary-700, #2f68cc);
+  cursor: pointer;
 
   &:active {
     background: var(--primary-700, #2f68cc);

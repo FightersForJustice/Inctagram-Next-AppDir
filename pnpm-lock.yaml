@@ -92,6 +92,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.45.1
     version: 7.45.1(react@18.2.0)
+  react-intersection-observer:
+    specifier: ^9.5.3
+    version: 9.5.3(react@18.2.0)
   react-multi-date-picker:
     specifier: ^4.1.2
     version: 4.1.2(react-dom@18.2.0)(react@18.2.0)
@@ -1584,6 +1587,34 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.35)(react@18.2.0)
       '@types/react': 18.2.35
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-tabs@1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.35)(react-dom@18.2.0)(react@18.2.0):
+    resolution: { integrity: sha512-egZfYY/+wRNCflXNHx+dePvnz9FbmssDTJBtgRfDY7e8SE5oIo3Py2eCB1ckAbh1Q7cQ/6yJZThJ++sgbxibog== }
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.2
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.35)(react@18.2.0)
+      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.35)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.35)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.6)(@types/react@18.2.35)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.6)(@types/react@18.2.35)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-roving-focus': 1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.35)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.35)(react@18.2.0)
+      '@types/react': 18.2.35
+      '@types/react-dom': 18.2.6
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.2.35)(react@18.2.0):
@@ -4834,6 +4865,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-intersection-observer@9.5.3(react@18.2.0):
+    resolution: {integrity: sha512-NJzagSdUPS5rPhaLsHXYeJbsvdpbJwL6yCHtMk91hc0ufQ2BnXis+0QQ9NBh6n9n+Q3OyjR6OQLShYbaNBkThQ==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -5815,10 +5854,10 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/31d35a66ae3e3f412d578645c7a14b651cb56035}
+  github.com/paypal/paypal-js/4a61cde9ab144997dcc87f764b415e1ebb8730ed:
+    resolution: { tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/4a61cde9ab144997dcc87f764b415e1ebb8730ed }
     name: '@paypal/paypal-js'
-    version: 8.0.0
+    version: 7.1.0
     prepare: true
     requiresBuild: true
     dependencies:

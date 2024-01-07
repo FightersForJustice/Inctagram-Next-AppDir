@@ -14,7 +14,6 @@ export type SubmitProps = {
   userName: string;
   email: string;
   password: string;
-  passwordConfirm: string;
 };
 
 export type UserEmail = {

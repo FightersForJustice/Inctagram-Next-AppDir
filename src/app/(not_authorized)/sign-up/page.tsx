@@ -1,11 +1,9 @@
-import { SignUp } from '@/components/auth/SignUp';
+'use client';
+
+import { SignUpForm } from '@/components/auth';
 
 const SignUpPage = () => {
-  return (
-    <div>
-      <SignUp />
-    </div>
-  );
+  return <SignUpForm />;
 };
 
 export default SignUpPage;

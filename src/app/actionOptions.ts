@@ -1,8 +1,8 @@
-import { SingInData } from '@/features/schemas/SignInSchema';
+import { SignInData } from '@/features/schemas/SignInSchema';
 
 //AUTH OPTIONS
 
-export const loginOptions = (data: SingInData) => {
+export const loginOptions = (data: SignInData) => {
   return {
     method: 'POST',
     headers: {
