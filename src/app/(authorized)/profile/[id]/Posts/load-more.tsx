@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { ApiResponsePosts, Post } from '../types';
+import { ApiResponsePosts, Post, UserProfile } from '../types';
 import { actions } from '../actions';
 import Image from 'next/image';
 import s from './Posts.module.scss';
@@ -11,9 +11,10 @@ import { PostImg } from './Post';
 type Props = {
   id: number;
   minId: number | undefined;
+  userData: UserProfile;
 };
 
-export function LoadMore({ id, minId }: Props) {
+export function LoadMore({ id, minId, userData }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [newMinId, setNewMinId] = useState<number | null>(null);
 
@@ -42,7 +43,7 @@ export function LoadMore({ id, minId }: Props) {
     <>
       {posts?.map((i) => (
         <div key={i.id} className={s.imageContainer}>
-          <PostImg post={i} />
+          <PostImg post={i} userData={userData} />
         </div>
       ))}
       <div ref={ref} style={{ marginTop: '20px' }}></div>

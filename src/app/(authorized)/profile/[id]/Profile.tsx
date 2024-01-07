@@ -37,8 +37,8 @@ export const Profile = ({ userData, postsData, myProfile }: Props) => {
         />
       </div>
       <div className={s.profile__posts}>
-        <Posts postsData={postsData} />
-        <LoadMore id={userData.id} minId={minId} />
+        <Posts postsData={postsData} userData={userData} />
+        <LoadMore id={userData.id} minId={minId} userData={userData} />
       </div>
     </>
   );

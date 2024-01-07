@@ -33,7 +33,7 @@ export const postsApi = api.injectEndpoints({
     getPost: builder.query<PostResponse, number>({
       query: (postId) => {
         return {
-          url: `posts/p/${postId}`,
+          url: `public-posts/${postId}`,
           method: 'GET',
         };
       },

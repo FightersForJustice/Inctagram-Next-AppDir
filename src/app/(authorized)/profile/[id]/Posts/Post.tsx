@@ -1,18 +1,34 @@
 import Image from 'next/image';
 import s from './Posts.module.scss';
-import { Post } from '../types';
+import { Post, UserProfile } from '../types';
+import { useState } from 'react';
+import { PostModal } from '@/components/Modals/PostModal';
+import { PostFix } from '@/app/(authorized)/my-profile/Profile/PostFix';
 
 type Props = {
   post: Post;
+  userData: UserProfile;
 };
 
-export function PostImg({ post }: Props) {
+export function PostImg({ post, userData }: Props) {
+  const [openPostModal, setOpenPostModal] = useState(false);
   const currentPosts = post.images.filter(
     (postImage) => postImage.width !== 640
   );
 
   return (
     <>
+      {openPostModal && (
+        <PostModal width={'972px'} onClose={() => setOpenPostModal(false)}>
+          <PostFix
+            onClose={() => setOpenPostModal(false)}
+            postId={post.id}
+            avatar={userData?.avatars[0]?.url}
+            userName={userData?.userName}
+            setOpenPostModal={setOpenPostModal}
+          />
+        </PostModal>
+      )}
       <Image
         src={
           post.images[0]?.url
@@ -23,6 +39,9 @@ export function PostImg({ post }: Props) {
         width={234}
         height={228}
         className={s.post}
+        onClick={() => {
+          setOpenPostModal(true);
+        }}
       />
     </>
   );

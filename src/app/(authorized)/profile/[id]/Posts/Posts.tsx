@@ -1,20 +1,21 @@
 'use client';
 import s from './Posts.module.scss';
-import { ApiResponsePosts } from '../types';
+import { ApiResponsePosts, UserProfile } from '../types';
 import { PostImg } from './Post';
 
 type Props = {
   postsData: ApiResponsePosts;
+  userData: UserProfile;
 };
 
-export const Posts = ({ postsData }: Props) => {
+export const Posts = ({ postsData, userData }: Props) => {
   const postsImages = () => {
     let currentPosts;
     return postsData?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
         <div key={i.id} className={s.imageContainer}>
-          <PostImg post={i} />
+          <PostImg post={i} userData={userData} />
         </div>
       );
     });
