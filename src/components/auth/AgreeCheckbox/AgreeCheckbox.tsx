@@ -11,9 +11,10 @@ export const AgreeCheckbox = ({
   error,
   errorMessage,
   registerName,
+  agree,
   id,
 }: AgreeCheckboxProps) => {
-  const [agree, setAgree] = useState(false);
+  const [currentAgree, setAgree] = useState(agree);
   return (
     <div className={s.container}>
       <label htmlFor={id} className={s.checkBoxContainer}>
@@ -21,7 +22,7 @@ export const AgreeCheckbox = ({
           <input
             type="checkbox"
             className={s.checkbox}
-            onClick={() => setAgree(!agree)}
+            onClick={() => setAgree(!currentAgree)}
             {...register(registerName)}
             id={id}
           />
