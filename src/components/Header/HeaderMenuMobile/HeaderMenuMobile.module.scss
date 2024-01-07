@@ -65,13 +65,4 @@
   .container {
     display: block;
   }
-  .profileSettings {
-    display: none;
-  }
-}
-
-@include s.devices(tablet) {
-  .profileSettings {
-    display: flex;
-  }
 }

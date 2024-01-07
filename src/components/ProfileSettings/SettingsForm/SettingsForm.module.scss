@@ -1,7 +1,13 @@
+@use '@/app/mixins.scss' as s;
+
 .form {
   padding-top: 24px;
   width: 494px;
   position: relative;
+
+  &Content{
+    padding-bottom: 24px;
+  }
 
   &__label {
     display: block;
@@ -13,9 +19,6 @@
 
   &__required {
     color: var(--danger-500);
-  }
-
-  &__lastName {
   }
 
   &__textInput {
@@ -79,9 +82,11 @@
   }
 
   &__btn {
-    position: absolute;
-    bottom: -85px;
-    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--dark-300);
+    padding: 24px 0;
+    position: relative;
   }
 
   &__error {
@@ -106,5 +111,11 @@
 
   &__itemWrapper {
     position: relative;
+  }
+}
+
+@include s.devices(tablet-xl) {
+  .form__btn{
+    padding-bottom: 84px;
   }
 }

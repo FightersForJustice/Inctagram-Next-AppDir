@@ -6,7 +6,7 @@ export const routes = Object.freeze({
   LOGIN: `${baseUrl + auth}/login`,
   ME: `${baseUrl + auth}/me`,
   UPDATE_TOKENS: `${baseUrl + auth}/update-tokens`,
-  LOGOUT: `${baseUrl + auth + auth}/logout`,
+  LOGOUT: `${baseUrl + auth}/logout`,
   GITHUB_LOGIN: `${baseUrl + auth}/github/login`,
   GOOGLE_LOGIN: `${baseUrl + auth}/google/login`,
   PASSWORD_RECOVERY: `${baseUrl + auth}/password-recovery`,
@@ -15,4 +15,6 @@ export const routes = Object.freeze({
   SIGN_UP: `${baseUrl + auth}/registration`,
   //SESSIONS
   TERMINATE_ALL_SESSIONS: `${baseUrl}sessions/terminate-all`,
+  //PROFILE
+  USERS_PROFILE:`${baseUrl}users/profile`
 });

@@ -13,14 +13,16 @@ import {
   useLazyGetProfileQuery,
   usePostProfileAvatarMutation,
 } from '@/api';
-import { Loader } from '@/components/Loader';
 import { dataURLtoFile, handleApiError } from '@/utils';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import { ShowAddAvatarModal } from '../ShowAddAvatarModal';
+import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
 
 import s from '../Tabs.module.scss';
 
-export const GeneralInformationTab = () => {
+export const GeneralInformationTab = (userInfo: UserProfileResponse) => {
+  const { avatars , dateOfBirth, city, } = userInfo;
+
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
@@ -38,14 +40,6 @@ export const GeneralInformationTab = () => {
   const [userBirthday, setUserBirthday] = useState('');
   const [userCity, setUserCity] = useState('');
 
-  const { data, isLoading, error } = useGetProfileQuery();
-  useEffect(() => {
-    if (data) {
-      setLoadedAvatar(data?.avatars[0]?.url);
-      setUserBirthday(data?.dateOfBirth);
-      setUserCity(data?.city);
-    }
-  }, [data]);
 
   const onDeleteAvatar = () => {
     deleteAvatar()
@@ -160,7 +154,6 @@ export const GeneralInformationTab = () => {
           fileError={fileError}
         />
       )}
-      {isLoading && <Loader />}
     </>
   );
 };
