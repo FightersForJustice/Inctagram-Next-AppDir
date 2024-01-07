@@ -154,7 +154,7 @@ export async function loginGoogleAction(code: string) {
       return { success: true, data: returnData };
     } else {
       console.log('GoogleAuth Failed');
-      console.log("res", res);
+      console.log('res', res);
 
       return { success: false, error: responseBody };
     }

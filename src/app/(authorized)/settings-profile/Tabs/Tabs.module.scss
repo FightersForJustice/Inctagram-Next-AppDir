@@ -77,11 +77,11 @@
     box-shadow: 0 0 0 2px black;
 }*/
 
-.TabsText{
+.TabsText {
   display: block;
 }
 
-.TabsIcon{
+.TabsIcon {
   display: none;
 }
 
@@ -185,11 +185,9 @@
   }
 
   &__inputFile {
-    font-size: 40px;
     position: absolute;
-    top: 0;
-    right: 0;
     opacity: 0;
+    width: 160px;
     cursor: pointer;
   }
 
@@ -201,14 +199,6 @@
     padding: 2px;
     max-width: 225px;
     text-align: center;
-  }
-
-  &__overlay {
-    border-radius: 4px;
-    display: inline-block;
-    margin: 0 0 0 -1px;
-    padding-left: 0;
-    cursor: pointer;
   }
 }
 
@@ -240,10 +230,11 @@
 @include s.devices(tablet-xl) {
   .container {
     grid-area: profile;
-    padding: 0px 25px;
+    padding: 0 25px;
   }
   .wrapper {
     gap: 20px;
+
     &__left {
       max-width: 200px;
     }
@@ -258,24 +249,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     &__left {
       width: 100%;
       padding-top: 25px;
       max-width: 100%;
     }
   }
-  
+
   .TabsList {
     overflow-x: scroll;
   }
 
-  .TabsText{
+  .TabsText {
     display: none;
   }
-  .TabsTrigger{
+  .TabsTrigger {
     min-width: 50px;
   }
-  .TabsIcon{
+  .TabsIcon {
     display: block;
     height: 30px;
     width: 30px;

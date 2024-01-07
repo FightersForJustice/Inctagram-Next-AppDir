@@ -6,7 +6,7 @@
 }
 
 @include s.devices(tablet) {
-    .container {
-      padding: 24px 15px;
-    }
+  .container {
+    padding: 24px 15px;
   }
+}
