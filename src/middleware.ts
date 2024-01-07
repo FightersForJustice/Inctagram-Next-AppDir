@@ -74,7 +74,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         response.headers.set('id', `${responseData.userId}`);
 
         return isAuthPath
-          ? NextResponse.redirect(new URL('/my-profile', request.url))
+          ? NextResponse.redirect(
+              new URL(`/profile${responseData.userId}`, request.url)
+            )
           : response;
       case 401:
         console.log('Middleware (Bad AccessToken)');
