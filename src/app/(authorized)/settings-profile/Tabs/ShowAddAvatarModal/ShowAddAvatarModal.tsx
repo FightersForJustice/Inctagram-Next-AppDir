@@ -2,7 +2,6 @@ import { ChangeEvent, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { Modal } from '@/components/Modals/Modal';
 import { Alert } from '@/components/Alert';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
@@ -81,13 +80,12 @@ export const ShowAddAvatarModal = ({
           <div className={s.wrapper__loadZone}>
             <input
               type="file"
+              id="file-upload"
               className={s.wrapper__inputFile}
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <div className={s.wrapper__overlay}>
-              <TransparentBtn>{t('AddPhotoModal.selectBtn')}</TransparentBtn>
-            </div>
+            <PrimaryBtn>{t('AddPhotoModal.selectBtn')}</PrimaryBtn>
           </div>
         )}
         {showModal && (

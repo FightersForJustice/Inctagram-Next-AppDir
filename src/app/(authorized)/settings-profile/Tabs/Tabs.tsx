@@ -4,7 +4,12 @@ import { ChangeEvent, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
-import { InfoCircledIcon, DesktopIcon, GearIcon, BackpackIcon } from '@radix-ui/react-icons'
+import {
+  InfoCircledIcon,
+  DesktopIcon,
+  GearIcon,
+  BackpackIcon,
+} from '@radix-ui/react-icons';
 
 import {
   useLazyGetProfileQuery,
@@ -82,19 +87,19 @@ const TabsDemo = () => {
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
             <p className={s.TabsText}>{t('GeneralInformationTab.titleTab')}</p>
-            <InfoCircledIcon className={s.TabsIcon}/>
+            <InfoCircledIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="devices">
             <p className={s.TabsText}>{t('DevicesTab.titleTab')}</p>
-            <DesktopIcon className={s.TabsIcon}/>
+            <DesktopIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="accountManagement">
             <p className={s.TabsText}>{t('AccountManagementTab.titleTab')}</p>
-            <GearIcon className={s.TabsIcon}/>
+            <GearIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="myPayments">
             <p className={s.TabsText}>{t('MyPaymentsTab.titleTab')}</p>
-            <BackpackIcon className={s.TabsIcon}/>
+            <BackpackIcon className={s.TabsIcon} />
           </Tabs.Trigger>
         </Tabs.List>
         <GeneralInformationTab
