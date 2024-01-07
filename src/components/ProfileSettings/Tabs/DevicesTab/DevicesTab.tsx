@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import s from '../Tabs.module.scss';
 import * as Tabs from '@radix-ui/react-tabs';

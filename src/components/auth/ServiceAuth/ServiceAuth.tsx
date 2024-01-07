@@ -27,17 +27,15 @@ const ServiceAuth = ({ page }: Props) => {
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
     onSuccess: async (codeResponse) => {
-      try {
-        const data = await loginGoogleAction(codeResponse.code);
+      const loginGoogleResponse = await loginGoogleAction(codeResponse.code);
 
-        setAuthCookie('accessToken', data?.data.accessToken);
-        setAuthCookie('refreshToken', data?.data.refreshToken);
-        setAuthCookie('userEmail', data?.data.email);
+      if (loginGoogleResponse.success) {
+        setAuthCookie('accessToken', loginGoogleResponse?.data.accessToken);
+        setAuthCookie('refreshToken', loginGoogleResponse?.data.refreshToken);
+        setAuthCookie('userEmail', loginGoogleResponse?.data.email);
 
-        router.push('/my-profile');
-      } catch (error) {
-        console.log('error', error);
-      }
+        router.replace('/my-profile');
+      } else toast.error(loginGoogleResponse.data);
     },
     onError: (errorResponse) => toast.error(errorResponse.error),
   });

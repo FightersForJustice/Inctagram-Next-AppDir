@@ -15,7 +15,7 @@ import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { SettingsFormSchema } from '@/features/schemas';
 import { SettingsFormItem } from './SettingsFormItem';
-import CitySelector from '@/app/(authorized)/settings-profile/SettingsForm/CitySelector/CitySelector';
+import CitySelector from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 
 type Props = {
   userBirthday: string;

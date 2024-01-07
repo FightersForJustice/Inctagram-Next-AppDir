@@ -10,7 +10,7 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
-        <Link href={'/my-profile'} className={s.logo}>
+        <Link href={isAuth ? '/my-profile' : 'sign-in'} className={s.logo}>
           Inctagram
         </Link>
 

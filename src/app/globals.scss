@@ -40,13 +40,6 @@ body {
   margin: 0 auto;
 }
 
-@include mixins.devices(min-laptop) {
-  body {
-    border-left: 1px solid var(--dark-300);
-    border-right: 1px solid var(--dark-300);
-  }
-}
-
 @layer base {
   :root {
     --dark-100: #4c4c4c;

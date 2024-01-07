@@ -17,7 +17,7 @@ export const UserNameProfile = ({
         {paidAccount && <ProfilePaidMark />}
       </div>
       <ButtonLink
-        link="/settings-profile"
+        link="/my-profile/settings-profile/general-information"
         className={s.profileBtn}
         id="profile-link-to-settings-profile"
         btnName="btnName"

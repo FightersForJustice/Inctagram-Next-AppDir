@@ -1,8 +1,10 @@
+'use client';
+
 import { useGetPaymentsQuery } from '@/api';
 import * as Tabs from '@radix-ui/react-tabs';
-import s from '@/app/(authorized)/settings-profile/Tabs/MyPayments.module.scss';
+import s from './MyPayments.module.scss';
 import React, { useState } from 'react';
-import { fakeDataForTesting } from '@/app/(authorized)/settings-profile/Tabs/myPaymentsDATA';
+import { fakeDataForTesting } from '@/components/ProfileSettings/Tabs/MyPaymants/myPaymentsDATA';
 import { Loader } from '@/components/Loader';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { dateToFormat } from '@/utils/dateToFormat';

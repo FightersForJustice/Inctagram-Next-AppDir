@@ -15,7 +15,6 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
 }
 
 export const config = {
-  // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
 
@@ -70,7 +69,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         console.log(meResponse.status, 'isAuth');
         return isAuthPath
           ? NextResponse.redirect(new URL('/my-profile', request.url))
-          : NextResponse.next();
+          : NextResponse.next(); // req.headers (accT)
       case 401:
         console.log('Middleware (Bad AccessToken)');
         const updateTokenResult = await updateTokensAndContinue(refreshToken);

@@ -41,7 +41,7 @@ export const SignInForm = () => {
       setAuthCookie('accessToken', signInResult.data.accessToken);
       setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
-      router.refresh();
+      router.push('/my-profile');
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `error${statusCode}`;

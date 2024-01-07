@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+'use client'
+
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import * as Tabs from '@radix-ui/react-tabs';
@@ -6,19 +8,26 @@ import Image from 'next/image';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { SettingsForm } from '../../SettingsForm/SettingsForm';
-import { useDeleteProfileAvatarMutation, useGetProfileQuery } from '@/api';
+import { useDeleteProfileAvatarMutation, useGetProfileQuery, useLazyGetProfileQuery, usePostProfileAvatarMutation } from '@/api';
 import { Loader } from '@/components/Loader';
-import { handleApiError } from '@/utils';
+import { dataURLtoFile, handleApiError } from '@/utils';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+import { ShowAddAvatarModal } from '../ShowAddAvatarModal';
 
 import s from '../Tabs.module.scss';
 
-export const GeneralInformationTab = ({
-  setShowAddAvatarModal,
-  setLoadedAvatar,
-  loadedAvatar,
-}: Props) => {
+export const GeneralInformationTab = () => {
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
+
+  const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
+  const [userAvatar, setUserAvatar] = useState<string>('');
+  const [croppedAvatar, setCroppedAvatar] = useState('');
+  const [loadedAvatar, setLoadedAvatar] = useState('');
+  const [file, setFile] = useState<File>();
+  const [fileError, setFileError] = useState('');
+
+  const [saveAvatar] = usePostProfileAvatarMutation();
+  const [getUserProfile] = useLazyGetProfileQuery();
 
   const [deleteAvatar] = useDeleteProfileAvatarMutation();
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +53,51 @@ export const GeneralInformationTab = ({
   if (error) {
     handleApiError(error);
   }
+
+  const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size <= maxSize) {
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        setFile(file);
+        console.log(2);
+        setUserAvatar(URL.createObjectURL(file));
+      } else {
+        setFileError('The format of the uploaded photo must be PNG and JPEG');
+      }
+    } else {
+      setFileError('Photo size must be less than 10 MB!');
+    }
+  };
+
+  const onCloseModal = () => {
+    setShowAddAvatarModal(false);
+    setFileError('');
+  };
+
+  const onSaveUserAvatar = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', dataURLtoFile(croppedAvatar), file.name);
+      saveAvatar(formData)
+        .unwrap()
+        .then((res) => {
+          getUserProfile();
+
+          setLoadedAvatar(res.avatars[0].url);
+          toast.success('Avatar successfully uploaded');
+        })
+        .catch((err) => {
+          toast.error(err.error);
+        });
+    }
+    setUserAvatar('');
+    setCroppedAvatar('');
+    setShowAddAvatarModal(false);
+  };
+
+  
 
   return (
     <>
@@ -94,13 +148,19 @@ export const GeneralInformationTab = ({
           onClose={onDeleteAvatar}
         />
       )}
+      {showAddAvatarModal && (
+        <ShowAddAvatarModal
+          t={t}
+          onCloseModal={onCloseModal}
+          userAvatar={userAvatar}
+          setUserAvatar={setUserAvatar}
+          setCroppedAvatar={setCroppedAvatar}
+          onSaveUserAvatar={onSaveUserAvatar}
+          onSetUserAvatar={onSetUserAvatar}
+          fileError={fileError}
+        />
+      )}
       {isLoading && <Loader />}
     </>
   );
-};
-
-type Props = {
-  loadedAvatar: string;
-  setLoadedAvatar: (value: string) => void;
-  setShowAddAvatarModal: (value: boolean) => void;
 };

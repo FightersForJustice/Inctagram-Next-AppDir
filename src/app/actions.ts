@@ -1,3 +1,4 @@
+import { accessToken } from '@/accessToken';
 'use server';
 
 import { routes } from '@/api/routes';
@@ -15,6 +16,9 @@ import {
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { NextResponse } from 'next/server';
 import { setCookieExpires } from '@/utils/cookiesActions';
+import { boolean } from 'yup';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 // AUTH ACTIONS
 
@@ -126,6 +130,8 @@ export async function logOutAction(refreshToken: string | undefined) {
         requestLogoutOptions(refreshToken)
       );
       if (res.ok) {
+        revalidatePath('/sign-in');
+
         return { success: true, data: 'logoutSuccess' };
       } else {
         return { success: false, error: 'logoutFailed' };
@@ -137,30 +143,29 @@ export async function logOutAction(refreshToken: string | undefined) {
 }
 
 export async function loginGoogleAction(code: string) {
-  try {
-    const res = await fetch(
-      routes.GOOGLE_LOGIN,
-      requestGoogleLoginOptions(code)
-    );
-    const responseBody = await res.json();
-    if (res.ok) {
-      console.log('GoogleAuth Success');
+  return fetch(
+    routes.GOOGLE_LOGIN,
+    requestGoogleLoginOptions(code)
+  )
+    .then(async (res) => {
+      if (res.ok) {
+        const responseBody: { accessToken: string, email: string } = await res.json();
 
-      const refreshToken = {
-        refreshToken: getRefreshToken(res.headers.get('set-cookie')),
-      };
-      const returnData = { ...responseBody, ...refreshToken };
+        const returnData = {
+          email: responseBody.email,
+          accessToken: responseBody.accessToken,
+          refreshToken: getRefreshToken(res.headers.get('set-cookie'))
+        };
 
-      return { success: true, data: returnData };
-    } else {
-      console.log('GoogleAuth Failed');
-      console.log("res", res);
+        return { success: true, data: returnData }
+      } else throw new Error(`Error With loginGoogleAction ${res.status}`);
+    })
+    .catch(error => {
+      console.log(error);
 
-      return { success: false, error: responseBody };
-    }
-  } catch (error) {
-    console.error('Logout Error', error);
-  }
+      return { success: false, data: error };
+
+    })
 }
 
 //SESSION ACTIONS
@@ -169,22 +174,18 @@ export async function deleteAllSessionsAction(
   accessToken: string | undefined,
   refreshToken: string | undefined
 ) {
-  if (accessToken) {
-    try {
-      const res = await fetch(
-        routes.TERMINATE_ALL_SESSIONS,
-        requestDeleteAllSessionsOptions(accessToken, refreshToken)
-      );
-      if (res.ok) {
-        return { success: true, data: 'deleteAllSessionsSuccess' };
-      } else {
-        console.error(res, 'Delete All Sessions Error');
-        return { success: false, error: 'deleteAllSessionsFailed' };
-      }
-    } catch (error) {
-      console.error('Delete All Sessions Error', error);
-    }
-  } else return { success: false, error: 'deleteAllSessionsFailed' };
+
+  try {
+    fetch(
+      routes.TERMINATE_ALL_SESSIONS,
+      requestDeleteAllSessionsOptions(accessToken, refreshToken)
+    )
+      .then(res => ({ success: true, data: 'deleteAllSessionsSuccess' }));
+
+  } catch (error) {
+    return { success: false, error: 'deleteAllSessionsFailed' };
+  }
+
 }
 
 // middleware actions

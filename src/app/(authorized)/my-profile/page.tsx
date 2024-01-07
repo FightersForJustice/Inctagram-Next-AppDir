@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
-import { Profile } from './Profile';
+import { Profile } from './Profile/Profile';
 
 import s from './MyProfile.module.scss';
 

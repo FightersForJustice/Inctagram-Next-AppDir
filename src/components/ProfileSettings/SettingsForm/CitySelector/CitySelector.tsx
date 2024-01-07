@@ -1,6 +1,6 @@
 import React, { useState, ReactNode, FormEvent, Fragment } from 'react';
 import Autosuggest from 'react-autosuggest';
-import citiesData from '../../../../../../public/cities.json';
+import citiesData from '../../../../../public/cities.json';
 
 import './CitySelector.scss';
 import { FieldError } from 'react-hook-form';

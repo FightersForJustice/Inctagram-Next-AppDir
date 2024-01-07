@@ -54,7 +54,7 @@ export const HeaderMenuMobile = () => {
       router.push('/statistics');
     }
     if (ref === 'profileSettings') {
-      router.push('/settings-profile');
+      router.push('/my-profile/settings-profile/general-information');
     }
     if (ref === 'favourites') {
       router.push('/favourites');

@@ -17,5 +17,5 @@ export const logout = async (
   Cookies.remove('accessToken');
 
   toast.success(t(res?.data));
-  router.push('/sign-in');
+  router.replace('/sign-in');
 };
