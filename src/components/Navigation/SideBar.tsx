@@ -6,7 +6,7 @@ import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { CreatePost } from '../../app/(authorized)/my-profile/CreatePost/CreatePost';
+import { CreatePost } from '@/app/(authorized)/my-profile/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
 import { logout } from '@/features/customHooks/useLogout';

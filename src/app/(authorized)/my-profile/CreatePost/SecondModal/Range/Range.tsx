@@ -10,7 +10,7 @@ type Props = {
   zoomImage: string;
 };
 
-export const Range: React.FC<Props> = ({ onZoomImage, zoomImage }) => {
+export const Range = ({ onZoomImage, zoomImage }: Props) => {
   const [openZoom, setOpenZoom] = useState(false);
 
   return (
