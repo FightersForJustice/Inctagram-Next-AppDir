@@ -24,7 +24,7 @@
   width: 100%;
   z-index: 10;
 
-  padding: 0px 60px;
+  padding: 0 60px;
   height: 60px;
 }
 
@@ -48,8 +48,9 @@
     gap: 12px;
   }
 }
+
 @include s.devices(mobile) {
   .container {
-    padding: 0px 15px;
+    padding: 0 15px;
   }
 }

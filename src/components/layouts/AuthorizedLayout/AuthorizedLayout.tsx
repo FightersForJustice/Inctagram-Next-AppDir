@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { Header } from '@/components/Header';
-import { SideBar } from '@/components/Navigation';
-
 import styles from './AuthorizedLayout.module.scss';
+import { ServerSideBar } from '@/components/Navigation/serverSideBar';
 
 type Props = {
   title?: string;
@@ -15,7 +14,7 @@ export const AuthorizedLayout = ({ children }: Props) => {
       <Header isAuth />
       <main className={styles.contentContainer}>
         <div className={styles.nav}>
-          <SideBar paidAccount={false} />
+          <ServerSideBar paidAccount={false} />
         </div>
         <div className={styles.content}>{children}</div>
       </main>
