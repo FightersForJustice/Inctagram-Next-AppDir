@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { ApiResponsePosts, Post, UserProfile } from '../types';
 import { actions } from '../actions';
-import Image from 'next/image';
 import s from './Posts.module.scss';
 import { findMinId } from '@/utils/findMinId';
 import { PostImg } from './Post';
