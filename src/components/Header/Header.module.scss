@@ -24,12 +24,11 @@
   width: 100%;
   z-index: 10;
 
-  padding: 0px 60px;
+  padding: 0 60px;
   height: 60px;
 }
 
 .logo {
-  font-family: Inter;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
@@ -49,8 +48,9 @@
     gap: 12px;
   }
 }
+
 @include s.devices(mobile) {
   .container {
-    padding: 0px 15px;
+    padding: 0 15px;
   }
 }

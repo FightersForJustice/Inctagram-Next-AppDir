@@ -10,6 +10,7 @@ const Cropper = ({ setCroppedAvatar, userAvatar }: Props) => {
     <Avatar
       width={300}
       height={300}
+      imageWidth={330}
       onCrop={(preview) => setCroppedAvatar(preview)}
       src={userAvatar}
     />
