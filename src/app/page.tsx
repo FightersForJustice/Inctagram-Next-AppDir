@@ -1,5 +1,9 @@
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export default function IndexPage() {
-  redirect('/my-profile');
+  const headersList = headers();
+  const id = headersList.get('id');
+
+  redirect(`/profile/${id}`);
 }
