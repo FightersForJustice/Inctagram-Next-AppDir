@@ -1,8 +1,5 @@
-'use client'
+'use client';
 
-import React from 'react';
-import s from '../Tabs.module.scss';
-import * as Tabs from '@radix-ui/react-tabs';
 // @ts-ignore
 import { useTranslations } from 'next-intl';
 
@@ -15,6 +12,8 @@ import {
   useGetDeviceSessionsQuery,
 } from '@/api/profile.api';
 import { toast } from 'react-toastify';
+
+import s from '../Tabs.module.scss';
 
 export const DevicesTab = () => {
   const t = useTranslations('SettingsProfilePage.DevicesTab');
@@ -63,26 +62,21 @@ export const DevicesTab = () => {
   };
 
   return (
-    <Tabs.Content className={s.TabsContent} value="devices">
-      <div className={s.devices}>
-        <ThisDevice
-          t={t}
-          session={sessions ? sessions[0] : sessionsDefault[0]}
-        />
+    <div className={s.devices}>
+      <ThisDevice t={t} session={sessions ? sessions[0] : sessionsDefault[0]} />
 
-        {sessions?.length && (
-          <div className={'text-right'}>
-            <TransparentBtn onClick={onDeleteAllSessions}>
-              Terminate all other session
-            </TransparentBtn>
-          </div>
-        )}
-        <ActiveSessions
-          refetch={refetch}
-          t={t}
-          sessions={sessions || sessionsDefault}
-        />
-      </div>
-    </Tabs.Content>
+      {sessions?.length && (
+        <div className={'text-right'}>
+          <TransparentBtn onClick={onDeleteAllSessions}>
+            Terminate all other session
+          </TransparentBtn>
+        </div>
+      )}
+      <ActiveSessions
+        refetch={refetch}
+        t={t}
+        sessions={sessions || sessionsDefault}
+      />
+    </div>
   );
 };

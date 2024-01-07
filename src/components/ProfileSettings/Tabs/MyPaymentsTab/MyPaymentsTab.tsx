@@ -1,15 +1,15 @@
 'use client';
 
 import { useGetPaymentsQuery } from '@/api';
-import * as Tabs from '@radix-ui/react-tabs';
-import s from './MyPayments.module.scss';
-import React, { useState } from 'react';
-import { fakeDataForTesting } from '@/components/ProfileSettings/Tabs/MyPaymants/myPaymentsDATA';
+import  { useState } from 'react';
+import { fakeDataForTesting } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/myPaymentsDATA';
 import { Loader } from '@/components/Loader';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { dateToFormat } from '@/utils/dateToFormat';
 
-export const MyPayments = () => {
+import s from './MyPayments.module.scss';
+
+export const MyPaymentsTab = () => {
   const { data } = useGetPaymentsQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [paymentsPerPage, setPaymentsPerPage] = useState(5);
@@ -25,7 +25,7 @@ export const MyPayments = () => {
   };
 
   return (
-    <Tabs.Content className={s.TabsContent} value="myPayments">
+    <>
       <div className={s.table}>
         <div className={s.tableHeader}>
           <div>Date Of Payment</div>
@@ -60,7 +60,7 @@ export const MyPayments = () => {
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
       />
-    </Tabs.Content>
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
+import { MyPaymentsTab } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/MyPaymentsTab';
+
 const MyPayments = () => {
-  return <>MyPayments</>;
+  return <MyPaymentsTab />;
 };
 
 export default MyPayments;

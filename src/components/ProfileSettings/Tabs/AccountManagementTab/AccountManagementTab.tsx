@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import * as Tabs from '@radix-ui/react-tabs';
+import { useEffect, useState } from 'react';
 
-import s from './AccountManagementTab.module.scss';
 import { AccountTypeRadio } from './AccountTypeRadio';
 import { SubscriptionRadio } from './SubscriptionRadio';
 import { Subscription } from './Subscription';
@@ -13,6 +11,8 @@ import {
   GetCurrentSubscription,
   useGetCurrentSubscriptionQuery,
 } from '@/api/subscriptions.api';
+
+import s from './AccountManagementTab.module.scss';
 
 export const AccountManagementTab = () => {
   const [userSubInfo, setUserSubInfo] = useState<GetCurrentSubscription>({
@@ -43,7 +43,6 @@ export const AccountManagementTab = () => {
   }, [currentSubData]);
 
   return (
-    <Tabs.Content className={s.TabsContent} value="accountManagement">
       <div className={s.tab}>
         {userSubInfo?.data.length > 0 && (
           <Subscription
@@ -77,6 +76,5 @@ export const AccountManagementTab = () => {
           </>
         )}
       </div>
-    </Tabs.Content>
   );
 };

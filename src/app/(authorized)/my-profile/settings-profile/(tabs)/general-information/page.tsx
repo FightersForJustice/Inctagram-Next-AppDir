@@ -1,5 +1,7 @@
+import { GeneralInformationTab } from "@/components/ProfileSettings/Tabs/GeneralInformationTab";
+
 const GeneralInformation = () => {
-  return <>General Info</>;
+  return <GeneralInformationTab/>;
 };
 
 export default GeneralInformation;

@@ -12,7 +12,7 @@ import {
 import { GeneralInformationTab } from './GeneralInformationTab/GeneralInformationTab';
 import { DevicesTab } from './DevicesTab/DevicesTab';
 import { AccountManagementTab } from './AccountManagementTab/AccountManagementTab';
-import { MyPayments } from '@/components/ProfileSettings/Tabs/MyPaymants/MyPayments';
+import { MyPayments } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/MyPaymentsTab';
 
 import s from './Tabs.module.scss';
 

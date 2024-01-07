@@ -1,14 +1,18 @@
-'use client'
+'use client';
 
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
-import * as Tabs from '@radix-ui/react-tabs';
 import Image from 'next/image';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { SettingsForm } from '../../SettingsForm/SettingsForm';
-import { useDeleteProfileAvatarMutation, useGetProfileQuery, useLazyGetProfileQuery, usePostProfileAvatarMutation } from '@/api';
+import {
+  useDeleteProfileAvatarMutation,
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+  usePostProfileAvatarMutation,
+} from '@/api';
 import { Loader } from '@/components/Loader';
 import { dataURLtoFile, handleApiError } from '@/utils';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
@@ -97,50 +101,46 @@ export const GeneralInformationTab = () => {
     setShowAddAvatarModal(false);
   };
 
-  
-
   return (
     <>
-      <Tabs.Content className={s.TabsContent} value="generalInformation">
-        <div className={s.wrapper}>
-          <div className={s.wrapper__left}>
+      <div className={s.wrapper}>
+        <div className={s.wrapper__left}>
+          <Image
+            src={`${
+              loadedAvatar
+                ? loadedAvatar
+                : '/img/settings-profile/load-avatar.svg'
+            }`}
+            alt="load-avatar"
+            width={192}
+            height={192}
+            className={s.wrapper__image}
+            priority={true}
+          />
+          {loadedAvatar && (
             <Image
-              src={`${
-                loadedAvatar
-                  ? loadedAvatar
-                  : '/img/settings-profile/load-avatar.svg'
-              }`}
-              alt="load-avatar"
-              width={192}
-              height={192}
-              className={s.wrapper__image}
-              priority={true}
+              src="/img/settings-profile/delete.svg"
+              alt="delete"
+              width={24}
+              height={24}
+              onClick={() => setShowModal(true)}
+              className={s.wrapper__delete}
             />
-            {loadedAvatar && (
-              <Image
-                src="/img/settings-profile/delete.svg"
-                alt="delete"
-                width={24}
-                height={24}
-                onClick={() => setShowModal(true)}
-                className={s.wrapper__delete}
-              />
-            )}
-            <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
-              {t('addBtn')}
-            </TransparentBtn>
-          </div>
-          <div className={s.wrapper__right}>
-            <SettingsForm
-              userProfile={data}
-              userBirthday={data?.dateOfBirth ?? ''}
-              userCity={userCity}
-              setUserCity={setUserCity}
-              translate={t}
-            />
-          </div>
+          )}
+          <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
+            {t('addBtn')}
+          </TransparentBtn>
         </div>
-      </Tabs.Content>
+        <div className={s.wrapper__right}>
+          <SettingsForm
+            userProfile={data}
+            userBirthday={data?.dateOfBirth ?? ''}
+            userCity={userCity}
+            setUserCity={setUserCity}
+            translate={t}
+          />
+        </div>
+      </div>
       {showModal && (
         <DeleteAvatarModal
           userAvatar={loadedAvatar}

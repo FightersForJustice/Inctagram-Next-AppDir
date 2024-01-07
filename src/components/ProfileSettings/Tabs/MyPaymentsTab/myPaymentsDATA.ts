@@ -1,4 +1,4 @@
-import { myPayment } from '@/components/ProfileSettings/Tabs/MyPaymants/MyPayments';
+import { myPayment } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/MyPaymentsTab';
 
 export const fakeDataForTesting: myPayment[] = [
   {

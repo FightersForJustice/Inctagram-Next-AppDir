@@ -1,5 +1,7 @@
+import { AccountManagementTab } from '@/components/ProfileSettings/Tabs/AccountManagementTab/AccountManagementTab';
+
 const AccountManagement = () => {
-  return <>AccountManagement</>;
+  return <AccountManagementTab />;
 };
 
 export default AccountManagement;
