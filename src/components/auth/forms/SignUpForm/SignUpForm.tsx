@@ -17,7 +17,7 @@ import {
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
 
 import { signUpAction } from '@/app/actions';
-import { SingInData } from '@/features/schemas/SignInSchema';
+import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
 
@@ -42,7 +42,7 @@ export const SignUpForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  const processForm = async (data: SingInData) => {
+  const processForm = async (data: SignInData) => {
     try {
       await signUpAction(data).then(() => {
         setUserEmail(data.email);

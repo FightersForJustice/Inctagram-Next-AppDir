@@ -5,7 +5,7 @@ import {
 } from './validationRegex';
 import { useTranslations } from 'next-intl';
 
-export type SingInData = {
+export type SignInData = {
   email: string;
   password: string;
   userName?: string;

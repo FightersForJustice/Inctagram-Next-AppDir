@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { SignInSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
-import { SingInData } from '@/features/schemas/SignInSchema';
+import { SignInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
 
@@ -34,7 +34,7 @@ export const SignInForm = () => {
   });
   const [showPass, setShowPass] = useState(true);
 
-  const processForm: SubmitHandler<SingInData> = async (data) => {
+  const processForm: SubmitHandler<SignInData> = async (data) => {
     const signInResult = await signInAction(data);
 
     if (signInResult?.success) {

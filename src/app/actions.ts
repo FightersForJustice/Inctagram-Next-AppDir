@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { routes } from '@/api/routes';
-import { SingInData } from '@/features/schemas/SignInSchema';
+import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
   loginOptions,
@@ -18,7 +18,7 @@ import { setCookieExpires } from '@/utils/cookiesActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SingInData) {
+export async function signInAction(data: SignInData) {
   if (data) {
     try {
       const res = await fetch(routes.LOGIN, loginOptions(data));
@@ -40,9 +40,10 @@ export async function signInAction(data: SingInData) {
   }
 }
 
-export async function signUpAction(data: SingInData) {
+export async function signUpAction(data: SignInData) {
   try {
-    const res = await fetch(routes.SIGN_UP, loginOptions(data));
+    const newData = {...data, email: data.email.toLowerCase()}
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     const responseBody = await res.json();
     if (res.ok) {
       const returnData = { ...responseBody };
