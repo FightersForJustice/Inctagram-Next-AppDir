@@ -19,12 +19,12 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
 };
 
-export const ThirdModal: React.FC<Props> = ({
+export const ThirdModal = ({
   showSecondModal,
   showFourthModal,
   zoomValue,
   setShowCreatePostModal,
-}) => {
+}: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesArr = useAppSelector(postImages);
   const changedPostImage = useRef<any>();
