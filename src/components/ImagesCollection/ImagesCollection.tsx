@@ -12,18 +12,14 @@ type Props = {
   setPostImage: (value: string) => void;
 };
 
-export const ImagesCollection: React.FC<Props> = ({
-  loadedImages,
-  setPostImage,
-}) => {
+export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!loadedImages.length) {
       setPostImage('');
     }
-  }, [loadedImages.length]);
-
+  }, [loadedImages.length, setPostImage]);
   const moreThen10Img = loadedImages.length >= 10;
   const onDeleteImageFromCollection = (id: string) => {
     if (loadedImages.length === 1) {
