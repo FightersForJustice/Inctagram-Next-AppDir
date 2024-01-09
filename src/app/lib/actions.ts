@@ -13,7 +13,7 @@ import {
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
-} from './actionOptions';
+} from '../actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { setCookieExpires } from '@/utils/cookiesActions';
 import { boolean } from 'yup';
@@ -283,3 +283,9 @@ export async function updateTokensAndContinue(refreshToken: string) {
     return { success: false, action };
   }
 }
+
+//PROFILE SETTINGS
+
+// export async function name(params:type) {
+  
+// }

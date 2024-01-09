@@ -6,10 +6,10 @@ import { Modal } from '@/components/Modals/Modal';
 import { Alert } from '@/components/Alert';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import s from '../Tabs.module.scss';
+import { useTranslations } from 'next-intl';
 
 type Props = {
-  t: (value: string) => string;
-  onCloseModal: () => void;
+  onCloseAvatarModal: () => void;
   userAvatar: string;
   setUserAvatar: (value: string) => void;
   setCroppedAvatar: (value: string) => void;
@@ -28,25 +28,28 @@ export const ShowAddAvatarModal = ({
   setUserAvatar,
   onSaveUserAvatar,
   onSetUserAvatar,
-  onCloseModal,
-  t,
+  onCloseAvatarModal,
   fileError,
 }: Props) => {
-  const [showModal, setShowModal] = useState(false);
-  const closeModalHandler = () => {
-    if (userAvatar) {
-      return setShowModal(true);
-    }
-  };
-  const onCloseHandler = () => {
-    onCloseModal();
+  const [showModalDelete, setShowModalDelete] = useState(false);
+
+  const t = useTranslations('SettingsProfilePage');
+
+  // const closeModalHandler = () => {
+  //   if (userAvatar) {
+  //     return setShowModal(true);
+  //   }
+  // };
+
+  const onCloseAvatarHandler = () => {
+    onCloseAvatarModal();
     setUserAvatar('');
   };
 
   return (
     <Modal
       title={t('AddPhotoModal.title')}
-      onClose={closeModalHandler}
+      onClose={onCloseAvatarHandler}
       className={s.modal__container}
       isOkBtn={false}
     >
@@ -88,12 +91,13 @@ export const ShowAddAvatarModal = ({
             <PrimaryBtn>{t('AddPhotoModal.selectBtn')}</PrimaryBtn>
           </div>
         )}
-        {showModal && (
-          <DeleteAvatarModal
-            userAvatar={userAvatar}
-            setShowModal={setShowModal}
-            onClose={onCloseHandler}
-          />
+        {showModalDelete && (
+          <></>
+          // <DeleteAvatarModal
+          //   userAvatar={userAvatar}
+          //   setShowModal={setShowModal}
+          //   onClose={onCloseHandler}
+          // />
         )}
       </div>
     </Modal>

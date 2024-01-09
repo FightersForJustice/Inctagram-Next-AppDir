@@ -6,7 +6,7 @@ import s from './Modal.module.scss';
 type Props = {
   title?: string;
   className?: string;
-  onClose?: () => void;
+  onClose: () => void;
   isOkBtn?: boolean;
 };
 

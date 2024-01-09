@@ -16,7 +16,7 @@ import {
 } from '@/utils/data/sign-up-form-items-data';
 import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
 
-import { signUpAction } from '@/app/actions';
+import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';

@@ -1,31 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+// {
+//   "userName": "string",
+//   "firstName": "string",
+//   "lastName": "string",
+//   "city": "string",
+//   "dateOfBirth": "2024-01-08T14:29:12.070Z",
+//   "aboutMe": "string"
+// }
+
+import { useEffect, useRef, useState } from 'react';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
-import s from './DatePick.module.scss';
 import Image from 'next/image';
 import { check13YearsOld, convertToReactDatePickerObject } from '@/utils';
 import Link from 'next/link';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
-// import { DatePickerRef } from 'react-multi-date-picker';
 
-type Props = {
-  setDate: (date: string) => void;
-  userBirthday: string;
-  ageError: string | null;
-  setAgeError: (value: string) => void;
-};
+import s from './DatePick.module.scss';
 
-export const DatePick: React.FC<Props> = ({
-  setDate,
-  userBirthday,
-  ageError,
-  setAgeError,
-}) => {
-  const datePickerRef = useRef<any>(null);
+export const DatePick = ({ userBirthday }: { userBirthday: string | null }) => {
+  const [dateOfBirthText, setDateOfBirthText] = useState(userBirthday);
 
+  const [ageError, setAgeError] = useState('');
   const [value, setValue] = useState<DateObject | DateObject[] | null>(
     userBirthday ? convertToReactDatePickerObject(userBirthday) : null
   );
+
+  const datePickerRef = useRef<any>(null);
 
   useEffect(() => {
     check13YearsOld(value, setAgeError);
@@ -39,14 +41,16 @@ export const DatePick: React.FC<Props> = ({
     <>
       <div className={s.datePicker__wrapper}>
         <DatePicker
-          value={userBirthday ? userBirthday : value}
+          value={value}
           onChange={(e) => {
             if (e instanceof DateObject) {
               const formattedDate = e.format('DD.MM.YYYY');
-              setDate(formattedDate);
+              setDateOfBirthText(formattedDate);
             } else {
-              setDate('');
+              setDateOfBirthText('');
             }
+            console.log(value);
+
             setValue(e);
           }}
           ref={datePickerRef}

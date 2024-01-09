@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SignInSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import { SignInData } from '@/features/schemas/SignInSchema';
-import { signInAction } from '@/app/actions';
+import { signInAction } from '@/app/lib/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './SignInForm.module.scss';

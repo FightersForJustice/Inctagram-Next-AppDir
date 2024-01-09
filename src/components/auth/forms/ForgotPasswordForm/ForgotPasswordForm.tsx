@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
 
-import { forgotPasswordAction } from '@/app/actions';
+import { forgotPasswordAction } from '@/app/lib/actions';
 import { Modal } from '@/components/Modals/Modal';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';

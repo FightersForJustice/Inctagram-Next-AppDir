@@ -1,1 +1,0 @@
-export { GeneralInformationTab } from './GeneralInformationTab';

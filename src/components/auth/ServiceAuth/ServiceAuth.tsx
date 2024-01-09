@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import { routes } from '@/api/routes';
 
-import { loginGoogleAction } from '@/app/actions';
+import { loginGoogleAction } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
 import { setAuthCookie } from '@/utils/cookiesActions';
 import { GetService } from './GetService';

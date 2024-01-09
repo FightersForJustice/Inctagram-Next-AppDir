@@ -6,5 +6,6 @@ export const getMyProfileOptions = (accessToken: string | null ) => {
         Authorization: `Bearer ${accessToken}`,
       },
       next: { revalidate: 0 },
+      //please remind me in PR to remove revalidate , TY
     };
   };

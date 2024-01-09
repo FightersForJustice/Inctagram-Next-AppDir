@@ -7,5 +7,12 @@ export type UserProfileResponse = {
     dateOfBirth: string | null;
     aboutMe: string | null;
     createdAt: string;
-    avatars: string[];
+    avatars: avatars[] | [];
 };
+
+type avatars = {
+    url: string;
+    width: number;
+    height: number,
+    fileSize: number
+}

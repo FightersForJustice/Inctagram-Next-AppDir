@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/actionOptions';
-import { updateTokensAndContinue } from './app/actions';
+import { updateTokensAndContinue } from './app/lib/actions';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
