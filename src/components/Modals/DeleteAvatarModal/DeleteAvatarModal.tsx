@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Modal } from '../Modal/Modal';
 import { useTranslations } from 'next-intl';
 
@@ -15,6 +14,9 @@ export const DeleteAvatarModal = ({
   onClose,
   userAvatar,
 }: Props) => {
+
+  console.log(userAvatar);
+  
   const t = useTranslations('MyProfilePage');
   const closeHandler = (value: boolean) => {
     if (value) {
@@ -24,7 +26,7 @@ export const DeleteAvatarModal = ({
   };
 
   return (
-    userAvatar && (
+
       <Modal
         title={t('DeleteAvatarModal.title')}
         isOkBtn={false}
@@ -51,6 +53,5 @@ export const DeleteAvatarModal = ({
           </button>
         </div>
       </Modal>
-    )
   );
 };

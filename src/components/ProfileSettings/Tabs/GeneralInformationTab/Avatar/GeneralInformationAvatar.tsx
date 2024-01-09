@@ -3,18 +3,22 @@
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
 
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
+import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
+import { dataURLtoFile } from '@/utils';
+import { deleteAvatarAction, uploadAvatarAction } from '@/app/lib/actions';
+import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 
 import s from './GeneralInformationAvatar.module.scss';
-import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
 
 type TProps = {
   currentAvatar: string | null;
 };
 
 export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
 
   const [userAvatar, setUserAvatar] = useState<string>('');
@@ -23,13 +27,18 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
+
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const onDeleteAvatar = () => {
-    // deleteAvatar()
-    //   .unwrap()
-    //   .then(() => setLoadedAvatar(''))
-    //   .catch((err) => toast.error(err.error));
+    console.log('1');
+
+    deleteAvatarAction().then((res) => {
+      if (res.success) {
+        setLoadedAvatar('');
+        toast.success(t(res.modalText));
+      } else toast.error(t(res.modalText));
+    });
   };
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +48,6 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     if (file.size <= maxSize) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         setFile(file);
-        console.log(2);
         setUserAvatar(URL.createObjectURL(file));
       } else {
         setFileError('The format of the uploaded photo must be PNG and JPEG');
@@ -49,24 +57,20 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     }
   };
 
-  const onSaveUserAvatar = () => {
-    // if (file) {
-    //   const formData = new FormData();
-    //   formData.append('file', dataURLtoFile(croppedAvatar), file.name);
-    // saveAvatar(formData)
-    //   .unwrap()
-    //   .then((res) => {
-    //     getUserProfile();
-    //     setLoadedAvatar(res.avatars[0].url);
-    //     toast.success('Avatar successfully uploaded');
-    //   })
-    //   .catch((err) => {
-    //     toast.error(err.error);
-    //   });
+  const onSaveUserAvatar = async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', dataURLtoFile(croppedAvatar), file.name);
+      uploadAvatarAction(formData).then((res) => {
+        res.success
+          ? toast.success(t(res.modalText))
+          : toast.error(t(res.modalText));
+      });
+      setUserAvatar('');
+      setCroppedAvatar('');
+      setShowAddAvatarModal(false);
+    }
   };
-  // setUserAvatar('');
-  // setCroppedAvatar('');
-  // setShowAddAvatarModal(false);
 
   const onCloseAvatarModal = () => {
     setShowAddAvatarModal(false);
@@ -75,34 +79,35 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
 
   return (
     <div className={s.avatarContainer}>
-      <Image
-        src={currentAvatar ?? '/img/settings-profile/load-avatar.svg'}
-        alt="load-avatar"
-        width={192}
-        height={192}
-        className={s.wrapper__image}
-        priority={true}
-      />
-      {currentAvatar && (
+      <div className={s.avatarWithButton}>
         <Image
-          src="/img/settings-profile/delete.svg"
-          alt="delete"
-          width={24}
-          height={24}
-          onClick={() => setShowModal(true)}
-          className={s.wrapper__delete}
+          src={currentAvatar ?? '/img/settings-profile/load-avatar.svg'}
+          alt="load-avatar"
+          width={192}
+          height={192}
+          className={s.wrapper__image}
+          priority={true}
         />
-      )}
+        {currentAvatar && (
+          <Image
+            src="/img/settings-profile/delete.svg"
+            alt="delete"
+            width={24}
+            height={24}
+            onClick={() => setShowDeleteModal(true)}
+            className={s.wrapper__delete}
+          />
+        )}
+      </div>
       <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
         {t('addBtn')}
       </TransparentBtn>
-      {showModal && (
-        // <DeleteAvatarModal
-        //   userAvatar={loadedAvatar}
-        //   setShowModal={setShowModal}
-        //   onClose={onDeleteAvatar}
-        // />
-        <>showModal</>
+      {showDeleteModal && (
+        <DeleteAvatarModal
+          userAvatar={loadedAvatar}
+          setShowModal={setShowDeleteModal}
+          onClose={onDeleteAvatar}
+        />
       )}
       {showAddAvatarModal && (
         <ShowAddAvatarModal

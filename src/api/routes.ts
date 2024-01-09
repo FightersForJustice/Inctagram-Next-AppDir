@@ -16,5 +16,6 @@ export const routes = Object.freeze({
   //SESSIONS
   TERMINATE_ALL_SESSIONS: `${baseUrl}sessions/terminate-all`,
   //PROFILE
-  USERS_PROFILE:`${baseUrl}users/profile`
+  USERS_PROFILE:`${baseUrl}users/profile`,
+  UPLOAD_PROFILE_AVATAR:`${baseUrl}users/profile/avatar`,
 });

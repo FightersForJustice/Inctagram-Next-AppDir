@@ -1,10 +1,9 @@
-'use client'
+'use client';
 
 import { useForm } from 'react-hook-form';
-import s from './SettingsForm.module.scss';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
-import React, { useState } from 'react';
+import { useState } from 'react';
 // import {
 //   PutProfileBody,
 //   useLazyGetProfileQuery,
@@ -20,6 +19,8 @@ import { SettingsFormItem } from './SettingsFormItem';
 import CitySelector from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
 import { useTranslations } from 'next-intl';
+
+import s from './SettingsForm.module.scss';
 
 type FormValues = {
   userName: string;
@@ -46,6 +47,7 @@ export const SettingsForm = ({
     handleSubmit,
     formState: { errors, isValid },
     setError,
+    control,
   } = useForm<FormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
@@ -53,6 +55,8 @@ export const SettingsForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
+    console.log(data);
+
     // if (ageError) {
     //   setAgeError('');
     // }
@@ -139,11 +143,9 @@ export const SettingsForm = ({
 
           <div className={s.form__itemWrapper}>
             <label className={s.form__label}>{translate('birthday')}</label>
-            <DatePick
-              userBirthday={dateOfBirth ?? null}
-            />
+            <DatePick control={control} userBirthday={dateOfBirth ?? null} />
           </div>
-          {/* 
+          {/*           
           <CitySelector
             translate={translate}
             translateName={'city'}
@@ -183,7 +185,9 @@ export const SettingsForm = ({
         </div>
 
         <div className={s.form__btn} id={'settings-profile-btn-container'}>
-          <PrimaryBtn disabled={!isValid}>{translate('saveBtn')}</PrimaryBtn>
+          <PrimaryBtn type="submit" disabled={!isValid}>
+            {translate('saveBtn')}
+          </PrimaryBtn>
         </div>
       </form>
     </>

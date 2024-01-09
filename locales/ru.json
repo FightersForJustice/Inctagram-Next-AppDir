@@ -143,7 +143,11 @@
       "city": "Город",
       "aboutMe": "Обо мне",
       "addBtn": "Добавить фото",
-      "saveBtn": "Сохранить"
+      "saveBtn": "Сохранить",
+      "avatarSuccessfullyUploaded": "Аватар успешно загружен",
+      "avatarUploadFailed": "Ошибка загрузки аватара",
+      "avatarSuccessfullyDeleted": "Аватар успешно удален",
+      "avatarDeleteFailed": "Ошибка удаления аватара"
     },
     "SettingsFormSchema": {
       "userName": {

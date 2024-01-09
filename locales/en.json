@@ -143,7 +143,11 @@
       "city": "Enter your city",
       "aboutMe": "About me",
       "addBtn": "Add a profile photo",
-      "saveBtn": "Save changes"
+      "saveBtn": "Save changes",
+      "avatarSuccessfullyUploaded": "Avatar successfully uploaded",
+      "avatarUploadFailed": "Avatar upload failed",
+      "avatarSuccessfullyDeleted": "Avatar successfully deleted",
+      "avatarDeleteFailed": "Avatar delete failed"
     },
     "SettingsFormSchema": {
       "userName": {

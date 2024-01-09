@@ -1,4 +1,3 @@
-import { accessToken } from '@/accessToken';
 'use server';
 
 import { NextResponse } from 'next/server';
@@ -6,6 +5,7 @@ import { routes } from '@/api/routes';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
+  deleteAvatarOptions,
   loginOptions,
   newPasswordOptions,
   recoveryPasswordOptions,
@@ -13,12 +13,12 @@ import {
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
-} from '../actionOptions';
+  uploadAvatarOptions,
+} from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { setCookieExpires } from '@/utils/cookiesActions';
-import { boolean } from 'yup';
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { headers } from 'next/headers';
 
 // AUTH ACTIONS
 
@@ -46,7 +46,7 @@ export async function signInAction(data: SignInData) {
 
 export async function signUpAction(data: SignInData) {
   try {
-    const newData = {...data, email: data.email.toLowerCase()}
+    const newData = { ...data, email: data.email.toLowerCase() }
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     const responseBody = await res.json();
     if (res.ok) {
@@ -284,8 +284,41 @@ export async function updateTokensAndContinue(refreshToken: string) {
   }
 }
 
-//PROFILE SETTINGS
+//PROFILE
 
-// export async function name(params:type) {
-  
-// }
+export async function uploadAvatarAction(avatar: FormData) {
+  const accessToken = headers().get('accessToken');
+
+  return fetch(routes.UPLOAD_PROFILE_AVATAR, uploadAvatarOptions(accessToken, avatar))
+    .then(res => {
+      if (res.ok) {
+        revalidatePath('/my-profile/settings-profile/general-information');
+        
+        return { success: true, modalText: "avatarSuccessfullyUploaded" }
+      } else {
+        throw new Error(`Error uploadAvatarAction, status ${res.status}`);
+      }
+    })
+    .catch(error => {
+      console.error(error)
+      return { success: false, modalText: "avatarUploadFailed" }
+    })
+}
+export async function deleteAvatarAction() {
+  const accessToken = headers().get('accessToken');
+
+  return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
+    .then(res => {
+      if (res.ok) {
+        revalidatePath('/my-profile/settings-profile/general-information');
+
+        return { success: true, modalText: "avatarSuccessfullyDeleted" }
+      } else {
+        throw new Error(`Error deleteAvatarAction, status ${res.status}`);
+      }
+    })
+    .catch(error => {
+      console.error(error)
+      return { success: false, modalText: "avatarDeleteFailed" }
+    })
+}

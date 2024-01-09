@@ -1,14 +1,5 @@
 'use client';
 
-// {
-//   "userName": "string",
-//   "firstName": "string",
-//   "lastName": "string",
-//   "city": "string",
-//   "dateOfBirth": "2024-01-08T14:29:12.070Z",
-//   "aboutMe": "string"
-// }
-
 import { useEffect, useRef, useState } from 'react';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
@@ -18,8 +9,15 @@ import Link from 'next/link';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 
 import s from './DatePick.module.scss';
+import { Control } from 'react-hook-form';
 
-export const DatePick = ({ userBirthday }: { userBirthday: string | null }) => {
+export const DatePick = ({
+  userBirthday,
+  control,
+}: {
+  userBirthday: string | null;
+  control: Control<any>;
+}) => {
   const [dateOfBirthText, setDateOfBirthText] = useState(userBirthday);
 
   const [ageError, setAgeError] = useState('');
@@ -31,6 +29,8 @@ export const DatePick = ({ userBirthday }: { userBirthday: string | null }) => {
 
   useEffect(() => {
     check13YearsOld(value, setAgeError);
+    console.log('dateOfBirthText', dateOfBirthText);
+
     var el = document.querySelector('div.rmdp-container');
     el?.classList.add(s.border);
   }, [value, setAgeError]);

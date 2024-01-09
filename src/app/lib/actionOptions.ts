@@ -110,3 +110,30 @@ export const requestDeleteAllSessionsOptions = (
     next: { revalidate: 0 },
   };
 };
+
+//PROFILE OPTIONS
+
+export const uploadAvatarOptions = (
+  accessToken: string | null,
+  avatar: FormData,
+) => {
+  return {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
+    body: avatar
+  }
+}
+
+export const deleteAvatarOptions = (
+  accessToken: string | null,
+) => {
+  return {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  }
+}
+
