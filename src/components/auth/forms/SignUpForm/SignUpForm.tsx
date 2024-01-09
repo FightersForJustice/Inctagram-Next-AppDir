@@ -47,7 +47,6 @@ export const SignUpForm = () => {
       await signUpAction(data).then((res) => {
         if (res?.error) {
           const errorMessage = res.error.messages[0].message;
-          console.log(errorMessage);
           setError("email", {
             message: translateError(errorMessage, translate),
           });
