@@ -45,18 +45,16 @@ export const AgreeCheckbox = ({
             )}
           </svg>
           <p>
-            {/* {translate.rich('agreementsCheckText', {
-              link: (chunks: string) => (
+              {translate('legal')}
                 <Link className={s.link} href="./agreements/terms-of-service">
-                  {chunks}
+                  {translate('termsOfService')}
                 </Link>
-              ),
-              link2: (chunks: string) => (
+
+              {translate('and')} 
                 <Link className={s.link} href="./agreements/privacy-policy">
-                  {chunks}
+                   {translate('privacyPolicy')} 
                 </Link>
-              ),
-            })} */}
+
           </p>
         </div>
 

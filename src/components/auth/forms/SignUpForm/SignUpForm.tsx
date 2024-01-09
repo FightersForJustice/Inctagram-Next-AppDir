@@ -40,6 +40,8 @@ export const SignUpForm = () => {
 
   const { t } = useTranslation();
 
+  const translate = (key: string): string => t(`SignUpPage.${key}`);
+
   const [postAuthorization, { isSuccess, isLoading }] =
     usePostAuthorizationMutation();
 
@@ -49,8 +51,6 @@ export const SignUpForm = () => {
       reset(resetObjSignUpForm);
     }
   }, [isSuccess]);
-
-  const translate = (key: string): string => t(`SignUpPage.${key}`);
 
   const onSubmit = (data: SubmitProps) => {
     try {

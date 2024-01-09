@@ -34,7 +34,7 @@ export type FormItemProps = {
 };
 
 export type AgreeCheckboxProps = {
-  translate: any;
+  translate?: any;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
   errorMessage: string | undefined;
