@@ -21,7 +21,8 @@ import { setCookieExpires } from '@/utils/cookiesActions';
 export async function signInAction(data: SignInData) {
   if (data) {
     try {
-      const res = await fetch(routes.LOGIN, loginOptions(data));
+      const newData = {...data, email: data.email.toLowerCase()}
+      const res = await fetch(routes.LOGIN, loginOptions(newData));
       const responseBody = await res.json();
       if (res.ok) {
         const refreshToken = {

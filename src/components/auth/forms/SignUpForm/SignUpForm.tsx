@@ -20,6 +20,7 @@ import { signUpAction } from '@/app/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
+import { translateError } from '@/utils/translateErrorSignUpForm';
 
 export const SignUpForm = () => {
   const translate = useTranslations('SignUpPage');
@@ -29,8 +30,7 @@ export const SignUpForm = () => {
     reset,
     getValues,
     formState: { errors, isValid },
-    // setError,
-    // ^ maybe needs sometime 
+    setError,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -44,19 +44,21 @@ export const SignUpForm = () => {
 
   const processForm = async (data: SignInData) => {
     try {
-      await signUpAction(data).then(() => {
+      await signUpAction(data).then((res) => {
+        if (res?.error) {
+          const errorMessage = res.error.messages[0].message;
+          console.log(errorMessage);
+          setError("email", {
+            message: translateError(errorMessage, translate),
+          });
+          return;
+        }
         setUserEmail(data.email);
         setShowModal(true);
         reset(resetObjSignUpForm);
       });
     } catch (error) {
       toast.error({ error }.toString());
-      // const statusCode = signInResult?.error.statusCode;
-      // const statusMessage = `error${statusCode}`;
-      // setError('password', {
-      //   type: 'manual',
-      //   message: translate(statusMessage),
-      // });
     }
   };
 
