@@ -1,7 +1,8 @@
 'use server';
 
+import { NextResponse } from 'next/server';
 import { routes } from '@/api/routes';
-import { SingInData } from '@/features/schemas/SignInSchema';
+import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
   loginOptions,
@@ -13,12 +14,11 @@ import {
   requestUpdateTokensOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
-import { NextResponse } from 'next/server';
 import { setCookieExpires } from '@/utils/cookiesActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SingInData) {
+export async function signInAction(data: SignInData) {
   if (data) {
     try {
       const res = await fetch(routes.LOGIN, loginOptions(data));
@@ -37,6 +37,23 @@ export async function signInAction(data: SingInData) {
     } catch (error) {
       console.error(error, 'post error');
     }
+  }
+}
+
+export async function signUpAction(data: SignInData) {
+  try {
+    const newData = {...data, email: data.email.toLowerCase()}
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData));
+    const responseBody = await res.json();
+    if (res.ok) {
+      const returnData = { ...responseBody };
+
+      return { success: true, data: returnData };
+    } else {
+      return { success: false, error: responseBody };
+    }
+  } catch (error) {
+    console.error(error, 'post error');
   }
 }
 
@@ -154,7 +171,7 @@ export async function loginGoogleAction(code: string) {
       return { success: true, data: returnData };
     } else {
       console.log('GoogleAuth Failed');
-      console.log("res", res);
+      console.log('res', res);
 
       return { success: false, error: responseBody };
     }

@@ -1,5 +1,3 @@
-
-
 import Tabs from './Tabs/Tabs';
 // import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 

@@ -10,7 +10,7 @@ type Props = {
   setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
   setPostImage: (value: string) => void;
 };
-export const Gallery: React.FC<Props> = ({ setLoadedImages, setPostImage }) => {
+export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
   const currentImages = useAppSelector(imagesGallery);
 
