@@ -7,13 +7,13 @@ import { store } from '../../redux/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { notFound } from 'next/navigation';
 
-async function Providers({ children }: { children: React.ReactNode }) {
+function Providers({ children }: { children: React.ReactNode }) {
   //hardcode locale
   const locale = 'ru';
 
   let messages;
   try {
-    messages = (await import(`../../../locales/${locale}.json`)).default;
+    messages = import(`../../../locales/${locale}.json`);
   } catch (error) {
     notFound();
   }
@@ -22,7 +22,7 @@ async function Providers({ children }: { children: React.ReactNode }) {
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
     >
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <NextIntlClientProvider locale={locale}>
         <Provider store={store}>{children}</Provider>
       </NextIntlClientProvider>
     </GoogleOAuthProvider>
