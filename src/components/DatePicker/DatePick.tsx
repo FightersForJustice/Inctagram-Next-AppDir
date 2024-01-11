@@ -10,13 +10,13 @@ import { useTranslations } from 'next-intl';
 import { Control, Controller, UseFormTrigger } from 'react-hook-form';
 import { FormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
 import { convertToReactDatePickerObject } from '@/utils';
-
-import './DatePick.scss';
-import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 import {
   isLessThen100YearsOld,
   isMoreThen13YearsOld,
 } from '@/utils/checkYears';
+
+import './DatePick.scss';
+import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
 export const DatePick = ({
   control,
@@ -25,9 +25,14 @@ export const DatePick = ({
   control: Control<FormValues>;
   trigger: UseFormTrigger<FormValues>;
 }) => {
-  const [fieldError, setFieldError] = useState<string>('');
+  const [fieldError, setFieldError] = useState<{
+    count: number;
+    message: string;
+  }>({ count: 0, message: '' });
 
   const t = useTranslations('SettingsProfilePage.SettingsFormSchema');
+
+  const isErrorField = !!fieldError.message.length && fieldError.count > 1;
 
   return (
     <div className="rmdp-datePickerWrapper">
@@ -37,7 +42,7 @@ export const DatePick = ({
         render={({ field: { onChange, value } }) => (
           <div
             className={clsx({
-              'rmdp-datePickerError': !!fieldError.length,
+              'rmdp-datePickerError': isErrorField,
             })}
           >
             <DatePicker
@@ -46,6 +51,11 @@ export const DatePick = ({
               calendarPosition="top-right"
               onClose={() => {
                 trigger('dateOfBirth');
+                //adding count to simulate onBlur DatePicker action (there is no onBlur in lib)
+                setFieldError((prev) => ({
+                  count: prev.count + 1,
+                  message: prev.message,
+                }));
               }}
               onChange={(date: typeof value) => {
                 const isAgeMoreThan13 = isMoreThen13YearsOld(
@@ -55,21 +65,23 @@ export const DatePick = ({
                   convertToReactDatePickerObject(date)
                 );
 
-                setFieldError(
-                  !isAgeMoreThan13
+                //set the error manually with count, to avoid first useForm error
+                setFieldError((prev) => ({
+                  count: prev.count + 1,
+                  message: !isAgeMoreThan13
                     ? t('dateOfBirth.ageMore13')
                     : !isAgeLessThan100
                     ? t('dateOfBirth.ageLess100')
-                    : ''
-                );
+                    : '',
+                }));
 
                 onChange(date?.isValid ? date?.toDate() : '');
               }}
               format="DD/MM/YYYY"
             />
-            {!!fieldError.length && (
+            {isErrorField && (
               <p className="rmdp-error">
-                {fieldError}
+                {fieldError.message}
                 <Link
                   href={'/agreements/privacy-policy-profile'}
                   className={'underline pl-[5px]'}
@@ -81,7 +93,7 @@ export const DatePick = ({
             <Image
               className="rmdp-datePickerIcon"
               src={
-                !!fieldError.length
+                isErrorField
                   ? '/img/settings-profile/calendarError.svg'
                   : '/img/settings-profile/calendar.svg'
               }
