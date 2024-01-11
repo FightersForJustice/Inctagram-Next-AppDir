@@ -3,30 +3,26 @@
 import { useForm } from 'react-hook-form';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
-import { useState } from 'react';
-// import {
-//   PutProfileBody,
-//   useLazyGetProfileQuery,
-//   usePutProfileMutation,
-// } from '@/api/profile.api';
 import { StatusCode } from '@/api/auth.api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
-import { handleApiError } from '@/utils';
+import { convertToReactDatePickerObject } from '@/utils';
 import { SettingsFormSchema } from '@/features/schemas';
 import { SettingsFormItem } from './SettingsFormItem';
 import CitySelector from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
 import { useTranslations } from 'next-intl';
 
+
 import s from './SettingsForm.module.scss';
 
-type FormValues = {
+export type FormValues = {
   userName: string;
   firstName: string;
   lastName: string;
   city: string | null;
+  dateOfBirth: any;
   aboutMe: string | null | undefined;
 };
 
@@ -46,15 +42,21 @@ export const SettingsForm = ({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
     control,
+    trigger,
   } = useForm<FormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
+    defaultValues: {
+      dateOfBirth: convertToReactDatePickerObject(dateOfBirth),
+    },
   });
 
   const onSubmit = handleSubmit((data) => {
+    // const { dateOfBirth, ...others } = data;
+    // const formatData = dateOfBirth?.toISOString();
+    // const submitData = { formatData, ...others };
     console.log(data);
 
     // if (ageError) {
@@ -111,8 +113,6 @@ export const SettingsForm = ({
             errorMessage={errors?.userName?.message}
             registerName={'userName'}
             translateName={'username'}
-            minLength={5}
-            maxLength={15}
           />
 
           <SettingsFormItem
@@ -124,8 +124,6 @@ export const SettingsForm = ({
             errorMessage={errors?.firstName?.message}
             registerName={'firstName'}
             translateName={'firstname'}
-            minLength={2}
-            maxLength={15}
           />
 
           <SettingsFormItem
@@ -137,13 +135,11 @@ export const SettingsForm = ({
             errorMessage={errors?.lastName?.message}
             registerName={'lastName'}
             translateName={'lastname'}
-            minLength={2}
-            maxLength={15}
           />
 
           <div className={s.form__itemWrapper}>
             <label className={s.form__label}>{translate('birthday')}</label>
-            <DatePick control={control} userBirthday={dateOfBirth ?? null} />
+            <DatePick trigger={trigger} control={control} />
           </div>
           {/*           
           <CitySelector

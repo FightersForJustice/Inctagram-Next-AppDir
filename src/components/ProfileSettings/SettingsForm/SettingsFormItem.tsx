@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import s from './SettingsForm.module.scss';
 import { FieldError, UseFormRegister } from 'react-hook-form';
+
+import s from './SettingsForm.module.scss';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -10,8 +11,6 @@ type Props = {
   errorMessage: string | undefined;
   registerName: string;
   translateName: string;
-  minLength: number;
-  maxLength: number;
   defaultValue?: string;
 };
 
@@ -23,8 +22,6 @@ export const SettingsFormItem: React.FC<Props> = ({
   error,
   registerName,
   translateName,
-  maxLength,
-  minLength,
   defaultValue,
 }) => {
   return (
@@ -36,7 +33,7 @@ export const SettingsFormItem: React.FC<Props> = ({
       <input
         defaultValue={defaultValue}
         id={id}
-        {...register(registerName, { required: true, minLength, maxLength })}
+        {...register(registerName)}
         className={`${error ? s.form__textInput__error : s.form__textInput}`}
       />
       {error && <p className={s.form__error}>{errorMessage}</p>}

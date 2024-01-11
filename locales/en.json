@@ -22,7 +22,8 @@
     "question": "Don’t have an account?",
     "btnBottomName": "Sign Up",
     "error400": "The email or password are incorrect. Try again please",
-    "error401": "This email is not registered"
+    "error401": "This email is not registered",
+    "errorundefined": "Something is wrong, please try again later"
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -175,6 +176,10 @@
         "matches": "User description can only contain alphabetic characters, numbers and special characters",
         "min": "Minimum 1 character",
         "max": "About yourself should not exceed 200 characters"
+      },
+      "dateOfBirth": {
+        "ageMore13": "The user's age must be over 13 years",
+        "ageLess100": "The user's age must be less than 100 years"
       }
     },
     "DevicesTab": {
