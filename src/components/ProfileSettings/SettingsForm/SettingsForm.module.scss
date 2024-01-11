@@ -54,7 +54,7 @@
     border: 1px solid var(--dark-100, #4c4c4c);
     background: var(--dark-500, #171717);
     min-height: 84px;
-    padding: 5px;
+    padding: 6px 12px;
     color: var(--light-900, #8d9094);
     font-size: 16px;
     font-weight: 400;
@@ -63,6 +63,7 @@
 
     &:focus {
       border: 1px solid var(--primary-500);
+      color: white;
     }
 
     &__error {
@@ -72,8 +73,8 @@
       border: 1px solid var(--danger-500);
       background: var(--dark-500, #171717);
       min-height: 84px;
-      padding: 5px;
-      color: var(--light-900, #8d9094);
+      padding: 6px 12px;
+      color: white;
       font-size: 16px;
       font-weight: 400;
       outline: none;

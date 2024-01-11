@@ -11,10 +11,12 @@ import { Control, Controller, UseFormTrigger } from 'react-hook-form';
 import { FormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
 import { convertToReactDatePickerObject } from '@/utils';
 
-
 import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
-import { isLessThen100YearsOld, isMoreThen13YearsOld } from '@/utils/checkYears';
+import {
+  isLessThen100YearsOld,
+  isMoreThen13YearsOld,
+} from '@/utils/checkYears';
 
 export const DatePick = ({
   control,
@@ -45,19 +47,23 @@ export const DatePick = ({
               onClose={() => {
                 trigger('dateOfBirth');
               }}
-              onChange={function (date: typeof value) {
-                if (
-                  !isMoreThen13YearsOld(convertToReactDatePickerObject(date))
-                ) {
-                  setFieldError(t('dateOfBirth.ageMore13'));
-                } else if (
-                  !isLessThen100YearsOld(convertToReactDatePickerObject(date))
-                ) {
-                  setFieldError(t('dateOfBirth.ageLess100'));
-                } else {
-                  setFieldError('');
-                  onChange(date?.isValid ? date?.toDate() : '');
-                }
+              onChange={(date: typeof value) => {
+                const isAgeMoreThan13 = isMoreThen13YearsOld(
+                  convertToReactDatePickerObject(date)
+                );
+                const isAgeLessThan100 = isLessThen100YearsOld(
+                  convertToReactDatePickerObject(date)
+                );
+
+                setFieldError(
+                  !isAgeMoreThan13
+                    ? t('dateOfBirth.ageMore13')
+                    : !isAgeLessThan100
+                    ? t('dateOfBirth.ageLess100')
+                    : ''
+                );
+
+                onChange(date?.isValid ? date?.toDate() : '');
               }}
               format="DD/MM/YYYY"
             />

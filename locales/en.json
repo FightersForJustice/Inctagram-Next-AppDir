@@ -175,7 +175,7 @@
       "aboutMe": {
         "matches": "User description can only contain alphabetic characters, numbers and special characters",
         "min": "Minimum 1 character",
-        "max": "About yourself should not exceed 200 characters"
+        "max": "About yourself field should not exceed 200 characters"
       },
       "dateOfBirth": {
         "ageMore13": "The user's age must be over 13 years",
