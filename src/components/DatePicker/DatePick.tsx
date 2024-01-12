@@ -17,6 +17,7 @@ import {
 
 import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
+import { convertToISOString } from '@/utils/convertTimeDatePicker';
 
 export const DatePick = ({
   control,
@@ -46,7 +47,7 @@ export const DatePick = ({
             })}
           >
             <DatePicker
-              id='dateOfBirth'
+              id="dateOfBirth"
               className="bg-dark"
               value={value}
               calendarPosition="top-right"
@@ -76,7 +77,7 @@ export const DatePick = ({
                     : '',
                 }));
 
-                onChange(date?.isValid ? date?.toDate() : '');
+                onChange(date?.isValid ? convertToISOString(date) : '');
               }}
               format="DD/MM/YYYY"
             />

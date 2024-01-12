@@ -13,4 +13,4 @@ export {
   formatServerDate,
   formatServerDateWithoutTime,
 } from './formatServerDate';
-export { convertToReactDatePickerObject } from './convertToReactDatePickerObject';
+export { convertToReactDatePickerObject } from './convertTimeDatePicker';

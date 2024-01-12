@@ -47,7 +47,7 @@ export const SettingsForm = ({
     control,
     trigger,
     resetField,
-    reset
+    reset,
   } = useForm<FormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
@@ -58,13 +58,14 @@ export const SettingsForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    const { dateOfBirth, country, city, ...others } = data;
-    const formatData = dateOfBirth;
-    // ?.toISOString();
+    const { country, city, ...others } = data;
     const formatCity = city?.value || '';
-    const submitData = { data: formatData, city: formatCity, ...others };
+    const submitData = { city: formatCity, ...others };
+
     console.log(submitData);
 
+
+    
     // if (ageError) {
     //   setAgeError('');
     // }
@@ -101,7 +102,6 @@ export const SettingsForm = ({
     //     toast.error(err.error);
     //   });
   });
-
 
   return (
     <>
