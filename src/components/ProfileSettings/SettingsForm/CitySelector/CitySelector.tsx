@@ -1,79 +1,123 @@
-import React, { useState, ReactNode, FormEvent, Fragment } from 'react';
-import Autosuggest from 'react-autosuggest';
-import citiesData from '../../../../../public/cities.json';
+'use client';
 
-import './CitySelector.scss';
-import { FieldError } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  UseFormReset,
+  UseFormResetField,
+} from 'react-hook-form';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
-interface City {
-  name: string;
-  country: string;
-}
+import { BaseSelector, optionsType } from '@/components/Selector/Selector';
+import { fetchCountriesList } from '@/app/lib/actions';
+import {
+  ResponseCountries,
+  ResponseCountriesItem,
+} from '@/app/lib/dataResponseTypes';
+import {
+  parseCitiesListIntoOptions,
+  parseCountriesListIntoOptions,
+} from '@/utils/parseIntoSelectOptions';
+import { FormValues } from '../SettingsForm';
 
-interface CitySelectorProps {
-  translate: (value: string) => ReactNode;
-  translateName: string;
-  error: FieldError | undefined;
-  errorMessage: string | undefined;
-  id: string;
-  setUserCity: (value: string) => void;
-  userCity: string;
-}
+import s from './CitySelector.module.scss';
 
-const CitySelector: React.FC<CitySelectorProps> = ({
-  translate,
-  translateName,
-  errorMessage,
-  error,
-  id,
+type CitySelectorProps = {
+  userCity: string | null;
+  control: Control<FormValues>;
+  resetField: UseFormResetField<FormValues>;
+  reset: UseFormReset<FormValues>;
+};
+
+export const CitySelectors: React.FC<CitySelectorProps> = ({
+  resetField,
   userCity,
-  setUserCity,
+  control,
+  reset,
 }) => {
-  const [value, setValue] = useState<string>('');
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const translate = useTranslations(
+    'SettingsProfilePage.GeneralInformationTab'
+  );
 
-  const getSuggestions = (inputValue: string): string[] => {
-    const inputValueLowerCase = inputValue.toLowerCase();
-    return citiesData
-      .filter(
-        (city: City) =>
-          city.name.toLowerCase().includes(inputValueLowerCase) ||
-          city.country.toLowerCase().includes(inputValueLowerCase)
-      )
-      .map((city: City) => `${city.name}, ${city.country}`);
+  const [countriesList, setCountriesList] = useState<
+    ResponseCountriesItem[] | null
+  >(null);
+
+  const [isLoadingCountries, setIsLoadingCountries] = useState(false);
+  const [checkedCountry, setCheckedCountry] = useState<optionsType>({
+    value: '',
+    label: '',
+  });
+  const [citiesList, setCitiesList] = useState<string[] | null>(null);
+
+  const defaultValues = {
+    country: { value: '', label: 'Country' },
+    city: { value: '', label: 'City' },
   };
 
-  const inputProps = {
-    placeholder: 'Enter a city',
-    className: error ? 'inputSelector__error' : 'inputSelector',
-    id: id,
-    value: userCity ? userCity : value,
-    onChange: (event: any, { newValue }: { newValue: string }) => {
-      setValue(newValue);
-      setUserCity(newValue);
-    },
+  const onFocusCountryHandler = () => {
+    if (!isLoadingCountries) {
+      setIsLoadingCountries(true);
+      fetchCountriesList()
+        .then((res: ResponseCountries) => {
+          setCountriesList(res.data);
+        })
+        .then(() => setIsLoadingCountries(false));
+      reset(defaultValues);
+      resetField('city');
+    }
+  };
+
+  const onFocusCityHandler = () => {
+    countriesList?.forEach((countryObject) => {
+      if (countryObject.country === checkedCountry.value) {
+        setCitiesList(countryObject.cities);
+      }
+    });
+  };
+
+  const onCountryChange = (newValue: optionsType) => {
+    setCitiesList(null);
+    setCheckedCountry(newValue);
+    resetField('city');
   };
 
   return (
-    <div className="autosuggest-container">
-      <label className={'labelInput'}>{translate(translateName)}</label>
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={({ value }) => {
-          setValue(value);
-          setSuggestions(getSuggestions(value));
-        }}
-        onSuggestionSelected={(_, { suggestionValue }) =>
-          setValue(suggestionValue)
-        }
-        onSuggestionsClearRequested={() => setSuggestions([])}
-        getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={(suggestion) => <div>{suggestion}</div>}
-        inputProps={inputProps}
+    <div className={s.selectorsContainer}>
+      <BaseSelector
+        selectorsLabelName={translate('country')}
+        name="country"
+        id="country"
+        isLoading={isLoadingCountries}
+        defaultValue={defaultValues.country}
+        isSearchable
+        onFocus={onFocusCountryHandler}
+        options={parseCountriesListIntoOptions(countriesList)}
+        onChange={onCountryChange}
       />
-      {error && <p className={'city__error'}>{errorMessage}</p>}
+
+      <Controller
+        control={control}
+        name="city"
+        render={({ field: { onChange, value } }) => (
+          <BaseSelector
+            selectorsLabelName={translate('city')}
+            value={value}
+            name="city"
+            id="city"
+            defaultValue={defaultValues.city}
+            isDisabled={!userCity && !checkedCountry.value.length}
+            isSearchable
+            onChange={onChange}
+            onFocus={onFocusCityHandler}
+            options={parseCitiesListIntoOptions(
+              citiesList,
+              checkedCountry.value
+            )}
+          />
+        )}
+      />
     </div>
   );
 };
-
-export default CitySelector;

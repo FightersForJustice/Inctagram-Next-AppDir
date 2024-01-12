@@ -16,3 +16,17 @@ type avatars = {
     height: number,
     fileSize: number
 }
+
+
+export type ResponseCountries = {
+    error: boolean;
+    msg: string;
+    data: ResponseCountriesItem[]
+  }
+  
+ export type ResponseCountriesItem = {
+    iso2: string;
+    iso3: string;
+    country: string;
+    cities: string[];
+  }

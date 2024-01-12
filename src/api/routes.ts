@@ -16,6 +16,12 @@ export const routes = Object.freeze({
   //SESSIONS
   TERMINATE_ALL_SESSIONS: `${baseUrl}sessions/terminate-all`,
   //PROFILE
-  USERS_PROFILE:`${baseUrl}users/profile`,
-  UPLOAD_PROFILE_AVATAR:`${baseUrl}users/profile/avatar`,
+  USERS_PROFILE: `${baseUrl}users/profile`,
+  UPLOAD_PROFILE_AVATAR: `${baseUrl}users/profile/avatar`,
 });
+
+const findCountryUrl = 'https://countriesnow.space/api/v0.1';
+
+export const citySelectRoutes = Object.freeze({
+  FIND_COUNTRY: `${findCountryUrl}/countries`
+})

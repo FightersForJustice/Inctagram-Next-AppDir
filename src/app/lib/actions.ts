@@ -1,7 +1,7 @@
 'use server';
 
 import { NextResponse } from 'next/server';
-import { routes } from '@/api/routes';
+import { citySelectRoutes, routes } from '@/api/routes';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
@@ -19,6 +19,7 @@ import { getRefreshToken } from '@/utils/getRefreshToken';
 import { setCookieExpires } from '@/utils/cookiesActions';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
+import next from 'next';
 
 // AUTH ACTIONS
 
@@ -293,7 +294,7 @@ export async function uploadAvatarAction(avatar: FormData) {
     .then(res => {
       if (res.ok) {
         revalidatePath('/my-profile/settings-profile/general-information');
-        
+
         return { success: true, modalText: "avatarSuccessfullyUploaded" }
       } else {
         throw new Error(`Error uploadAvatarAction, status ${res.status}`);
@@ -313,6 +314,22 @@ export async function deleteAvatarAction() {
         revalidatePath('/my-profile/settings-profile/general-information');
 
         return { success: true, modalText: "avatarSuccessfullyDeleted" }
+      } else {
+        throw new Error(`Error deleteAvatarAction, status ${res.status}`);
+      }
+    })
+    .catch(error => {
+      console.error(error)
+      return { success: false, modalText: "avatarDeleteFailed" }
+    })
+}
+
+export async function fetchCountriesList() {
+
+  return fetch(`${citySelectRoutes.FIND_COUNTRY}`)
+    .then(res => {
+      if (res.ok) {
+        return res.json()
       } else {
         throw new Error(`Error deleteAvatarAction, status ${res.status}`);
       }

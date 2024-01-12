@@ -46,6 +46,7 @@ export const DatePick = ({
             })}
           >
             <DatePicker
+              id='dateOfBirth'
               className="bg-dark"
               value={value}
               calendarPosition="top-right"

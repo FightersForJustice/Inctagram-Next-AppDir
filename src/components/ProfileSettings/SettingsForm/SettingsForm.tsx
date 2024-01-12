@@ -1,19 +1,20 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
+
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
 import { StatusCode } from '@/api/auth.api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
 import { convertToReactDatePickerObject } from '@/utils';
 import { SettingsFormSchema } from '@/features/schemas';
 import { SettingsFormItem } from './SettingsFormItem';
-import CitySelector from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
+import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
-import { useTranslations } from 'next-intl';
-
+import { optionsType } from '@/components/Selector/Selector';
 
 import s from './SettingsForm.module.scss';
 
@@ -21,7 +22,8 @@ export type FormValues = {
   userName: string;
   firstName: string;
   lastName: string;
-  city: string | null;
+  city: optionsType;
+  country: optionsType;
   dateOfBirth: any;
   aboutMe: string | null | undefined;
 };
@@ -44,6 +46,8 @@ export const SettingsForm = ({
     formState: { errors, isValid },
     control,
     trigger,
+    resetField,
+    reset
   } = useForm<FormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
@@ -54,10 +58,12 @@ export const SettingsForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    // const { dateOfBirth, ...others } = data;
-    // const formatData = dateOfBirth?.toISOString();
-    // const submitData = { formatData, ...others };
-    console.log(data);
+    const { dateOfBirth, country, city, ...others } = data;
+    const formatData = dateOfBirth;
+    // ?.toISOString();
+    const formatCity = city?.value || '';
+    const submitData = { data: formatData, city: formatCity, ...others };
+    console.log(submitData);
 
     // if (ageError) {
     //   setAgeError('');
@@ -96,9 +102,6 @@ export const SettingsForm = ({
     //   });
   });
 
-  // if (error) {
-  //   handleApiError(error);
-  // }
 
   return (
     <>
@@ -138,22 +141,25 @@ export const SettingsForm = ({
           />
 
           <div className={s.form__itemWrapper}>
-            <label className={s.form__label}>{translate('birthday')}</label>
+            <label htmlFor="dateOfBirth" className={s.form__label}>
+              {translate('birthday')}
+            </label>
             <DatePick trigger={trigger} control={control} />
           </div>
-          {/*           
-          <CitySelector
-            translate={translate}
-            translateName={'city'}
-            error={errors.city}
-            errorMessage={errors?.city?.message}
-            id={'settings-profile-city'}
-            userCity={userCity}
-            setUserCity={setUserCity}
-          /> */}
+
+          <div className={s.form_itemSelector}>
+            <CitySelectors
+              control={control}
+              userCity={city}
+              resetField={resetField}
+              reset={reset}
+            />
+          </div>
 
           <div className={s.form__itemWrapper}>
-            <label className={s.form__label}>{translate('aboutMe')}</label>
+            <label htmlFor="settings-profile-aboutMe" className={s.form__label}>
+              {translate('aboutMe')}
+            </label>
             <textarea
               defaultValue={aboutMe ?? ''}
               id={'settings-profile-aboutMe'}

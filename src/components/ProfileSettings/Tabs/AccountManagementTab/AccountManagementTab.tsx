@@ -6,7 +6,7 @@ import { AccountTypeRadio } from './AccountTypeRadio';
 import { SubscriptionRadio } from './SubscriptionRadio';
 import { Subscription } from './Subscription';
 import { Stripe } from '@/components/Stripe';
-import { PayPal } from '@/components/PayPal';
+// import { PayPal } from '@/components/PayPal';
 import {
   GetCurrentSubscription,
   useGetCurrentSubscriptionQuery,
@@ -69,7 +69,7 @@ export const AccountManagementTab = () => {
               />
             </div>
             <div className={s.tab__container}>
-              <PayPal price={subTypeValue} />
+              {/* <PayPal price={subTypeValue} /> */}
               <p>or</p>
               <Stripe subTypeValue={subTypeValue} baseUrl={baseUrl} />
             </div>

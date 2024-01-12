@@ -14,4 +14,3 @@ export {
   formatServerDateWithoutTime,
 } from './formatServerDate';
 export { convertToReactDatePickerObject } from './convertToReactDatePickerObject';
-export { check13YearsOld } from './checkYears';

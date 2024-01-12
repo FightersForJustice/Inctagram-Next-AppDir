@@ -9,6 +9,10 @@
     padding-bottom: 24px;
   }
 
+  &__itemSelector{
+    display: flex;
+  }
+
   &__label {
     display: block;
     color: var(--light-900, #8d9094);

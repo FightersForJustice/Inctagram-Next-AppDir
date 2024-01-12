@@ -1,0 +1,14 @@
+.selector {
+
+  &Container {
+    width: 100%;
+  }
+
+  &Label {
+    display: block;
+    color: var(--light-900, #8d9094);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
