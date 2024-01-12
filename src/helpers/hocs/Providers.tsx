@@ -46,13 +46,17 @@ async function Providers({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <GoogleOAuthProvider
-      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
-    >
-      <I18nextProvider i18n={i18n}>
+
+      <GoogleOAuthProvider
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
+      >
+        <I18nextProvider i18n={i18n}>
         <Provider store={store}>{children}</Provider>
-      </I18nextProvider>
-    </GoogleOAuthProvider>
+         </I18nextProvider>
+      </GoogleOAuthProvider>
+
+
+
   );
 }
 export default Providers;

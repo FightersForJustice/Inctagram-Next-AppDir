@@ -22,7 +22,8 @@ import { SignInData } from '@/features/schemas/SignInSchema';
 import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
-  const translate = useTranslations('SignUpPage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SignUpPage.${key}`);
   const {
     register,
     handleSubmit,

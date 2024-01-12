@@ -12,13 +12,14 @@ import { dateToFormat } from '@/utils/dateToFormat';
 import { toast } from 'react-toastify';
 
 type Props = {
-  t: (value: string) => string;
+  translate: (value: string) => string;
   sessions: DevicesResponse[];
   refetch: any;
 };
 
-export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
-  const logoutTranslate = useTranslations('Navigation');
+export const ActiveSessions: React.FC<Props> = ({ translate, sessions, refetch }) => {
+  const { t } = useTranslation();
+  const logoutTranslate = (key: string): string => t(`Navigation.${key}`);
   const [deleteSession] = useDeleteSessionsDeviceMutation();
 
   const logoutSession = async (item: DevicesResponse) => {
@@ -69,11 +70,11 @@ export const ActiveSessions: React.FC<Props> = ({ t, sessions, refetch }) => {
 
   return (
     <>
-      <p className={s.devices__active}>{t('active')}</p>
+      <p className={s.devices__active}>{translate('active')}</p>
       {sessions.length > 0 ? (
         activeSessions
       ) : (
-        <p className={s.devices__notLogged}>{t('text')}</p>
+        <p className={s.devices__notLogged}>{translate('text')}</p>
       )}
     </>
   );

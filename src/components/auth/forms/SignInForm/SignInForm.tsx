@@ -16,7 +16,9 @@ import { setAuthCookie } from '@/utils/cookiesActions';
 import s from './SignInForm.module.scss';
 
 export const SignInForm = () => {
-  const translate = useTranslations('SignInPage');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SignInPage.${key}`);
   const router = useRouter();
 
   const {
