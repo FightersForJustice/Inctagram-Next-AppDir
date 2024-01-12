@@ -1,0 +1,1 @@
+export { DotsFriends } from './Dots';

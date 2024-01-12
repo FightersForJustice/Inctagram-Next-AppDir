@@ -9,19 +9,20 @@ import { useRouter } from 'next/navigation';
 type Props = {
   post: Post;
   userData: UserProfile;
+  myProfile: boolean;
 };
 
-export function PostImg({ post, userData }: Props) {
+export function PostImg({ post, userData, myProfile }: Props) {
   const [openPostModal, setOpenPostModal] = useState(false);
   const currentPosts = post.images.filter(
     (postImage) => postImage.width !== 640
   );
   const router = useRouter();
   const openModalWithPost = (id: number) => {
-    router.push(`/profile/60?post=${id}`);
+    router.push(`/profile/${userData.id}?post=${id}`);
   };
   const closeModal = () => {
-    router.push(`/profile/60`);
+    router.push(`/profile/${userData.id}`);
   };
   return (
     <>
@@ -38,6 +39,7 @@ export function PostImg({ post, userData }: Props) {
             avatar={userData?.avatars[0]?.url}
             userName={userData?.userName}
             setOpenPostModal={setOpenPostModal}
+            myProfile={myProfile}
           />
         </PostModal>
       )}

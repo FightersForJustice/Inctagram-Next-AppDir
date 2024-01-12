@@ -13,6 +13,7 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 import s from './PostFix.module.scss';
+import { DotsFriends } from './DotsFriends';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -20,6 +21,7 @@ type Props = {
   avatar: string;
   userName: string;
   setOpenPostModal: (value: boolean) => void;
+  myProfile: boolean;
 };
 
 export const PostFix: React.FC<Props> = ({
@@ -28,6 +30,7 @@ export const PostFix: React.FC<Props> = ({
   avatar,
   userName,
   setOpenPostModal,
+  myProfile,
 }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showDots, setShowDots] = useState(true);
@@ -91,13 +94,20 @@ export const PostFix: React.FC<Props> = ({
                 </div>
 
                 {showDots ? (
-                  <Dots
-                    setVisiblePopup={setVisiblePopup}
-                    visiblePopup={visiblePopup}
-                    setEditPost={setEditPost}
-                    setShowAreYouSureModal={setShowAreYouSureModal}
-                    setShowDots={setShowDots}
-                  />
+                  myProfile ? (
+                    <Dots
+                      setVisiblePopup={setVisiblePopup}
+                      visiblePopup={visiblePopup}
+                      setEditPost={setEditPost}
+                      setShowAreYouSureModal={setShowAreYouSureModal}
+                      setShowDots={setShowDots}
+                    />
+                  ) : (
+                    <DotsFriends
+                      setVisiblePopup={setVisiblePopup}
+                      visiblePopup={visiblePopup}
+                    />
+                  )
                 ) : (
                   <div className={'w-1/12'}></div>
                 )}
