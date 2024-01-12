@@ -17,7 +17,6 @@
 .btnPrimary {
   background: var(--primary-500);
   padding: 6px 24px;
-  font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -96,7 +95,6 @@
     gap: 12px;
     cursor: pointer;
     transition: all 0.2s linear;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -160,7 +158,6 @@
     align-items: center;
 
     padding-bottom: 20px;
-    font-family: Inter;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -188,8 +185,6 @@
 
   &__desc {
     word-break: break-all;
-
-    font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -212,7 +207,6 @@
     background: var(--dark-300);
     padding: 6px 24px;
 
-    font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -377,7 +371,6 @@
       left: -80px;
       top: 10px;
 
-      font-family: Inter;
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
@@ -387,7 +380,6 @@
     &__desc {
       order: 6;
 
-      font-family: Inter;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
@@ -408,7 +400,6 @@
 
       gap: 21px;
 
-      font-family: Inter;
       font-size: 12px;
       font-style: normal;
       font-weight: 400;

@@ -34,7 +34,7 @@ export const ProfileWrapper = ({ data, postsData, myProfile }: Props) => {
             className={s.profile__btn}
             id={'profile-link-to-settings-profile'}
           >
-            Настройки профиля
+            Profile Settings
           </Link>
         ) : (
           <div className={s.listBtn}>
@@ -53,22 +53,23 @@ export const ProfileWrapper = ({ data, postsData, myProfile }: Props) => {
           onClick={() => setShowSubscriptionsModal(true)}
         >
           <p>0</p>
-          <p>Подписки</p>
+          <p>Following</p>
         </div>
         <div
           className={s.profile__info__subscribers}
           onClick={() => setShowSubscribersModal(true)}
         >
           <p>0</p>
-          <p>Подписчики</p>
+          <p>Followers</p>
         </div>
         <div className={s.profile__info__publications}>
           <p>{postsData.totalCount}</p>
-          <p>Публикации</p>
+          <p>Publications</p>
         </div>
       </div>
       <p className={s.profile__desc} id={'profile-aboutMe'}>
-        {data?.aboutMe ?? 'Заполните информацию о себе, сейчас здесь пусто 👁️'}
+        {data?.aboutMe ??
+          "Fill in the information about yourself, it's empty now 👁️"}
       </p>
       {showSubscribersModal && (
         <SubscribersModal setShowSubscribersModal={setShowSubscribersModal} />
