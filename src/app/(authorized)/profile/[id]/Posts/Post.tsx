@@ -3,7 +3,7 @@ import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
 import { useState } from 'react';
 import { PostModal } from '@/components/Modals/PostModal';
-import { PostFix } from '@/app/(authorized)/my-profile/Profile/PostFix';
+import { PostFix } from '@/app/(authorized)/profile/[id]/PostFix';
 import { useRouter } from 'next/navigation';
 
 type Props = {
