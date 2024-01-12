@@ -13,7 +13,7 @@ dependencies:
     version: 3.1.1(react-hook-form@7.45.1)
   '@paypal/paypal-js':
     specifier: github:paypal/paypal-js
-    version: github.com/paypal/paypal-js/4a61cde9ab144997dcc87f764b415e1ebb8730ed
+    version: github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035
   '@paypal/react-paypal-js':
     specifier: ^8.1.1
     version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -59,6 +59,9 @@ dependencies:
   html2canvas:
     specifier: ^1.4.1
     version: 1.4.1
+  i18next:
+    specifier: ^23.7.16
+    version: 23.7.16
   js-cookie:
     specifier: ^3.0.5
     version: 3.0.5
@@ -95,6 +98,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.45.1
     version: 7.45.1(react@18.2.0)
+  react-i18next:
+    specifier: ^14.0.0
+    version: 14.0.0(i18next@23.7.16)(react-dom@18.2.0)(react@18.2.0)
   react-intersection-observer:
     specifier: ^9.5.3
     version: 9.5.3(react@18.2.0)
@@ -3388,6 +3394,12 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: true
 
+  /html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /html2canvas@1.4.1:
     resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==}
     engines: {node: '>=8.0.0'}
@@ -3400,6 +3412,12 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
     dev: true
+
+  /i18next@23.7.16:
+    resolution: {integrity: sha512-SrqFkMn9W6Wb43ZJ9qrO6U2U4S80RsFMA7VYFSqp7oc7RllQOYDCdRfsse6A7Cq/V8MnpxKvJCYgM8++27n4Fw==}
+    dependencies:
+      '@babel/runtime': 7.23.2
+    dev: false
 
   /ignore@5.3.0:
     resolution: {integrity: sha512-g7dmpshy+gD7mh88OC9NwSGTKoc3kyLAZQRU1mt53Aw/vnvfXnbC+F/7F7QoYVKbV+KNvJx8wArewKy1vXMtlg==}
@@ -4868,6 +4886,26 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-i18next@14.0.0(i18next@23.7.16)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-OCrS8rHNAmnr8ggGRDxjakzihrMW7HCbsplduTm3EuuQ6fyvWGT41ksZpqbduYoqJurBmEsEVZ1pILSUWkHZng==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.2
+      html-parse-stringify: 3.0.1
+      i18next: 23.7.16
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-intersection-observer@9.5.3(react@18.2.0):
     resolution: {integrity: sha512-NJzagSdUPS5rPhaLsHXYeJbsvdpbJwL6yCHtMk91hc0ufQ2BnXis+0QQ9NBh6n9n+Q3OyjR6OQLShYbaNBkThQ==}
     peerDependencies:
@@ -5717,6 +5755,11 @@ packages:
       convert-source-map: 2.0.0
     dev: true
 
+  /void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
     dependencies:
@@ -5857,10 +5900,11 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/paypal/paypal-js/4a61cde9ab144997dcc87f764b415e1ebb8730ed:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/4a61cde9ab144997dcc87f764b415e1ebb8730ed}
+  github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035:
+    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/31d35a66ae3e3f412d578645c7a14b651cb56035}
     name: '@paypal/paypal-js'
-    version: 7.1.0
+    version: 8.0.0
+    prepare: true
     requiresBuild: true
     dependencies:
       promise-polyfill: 8.3.0

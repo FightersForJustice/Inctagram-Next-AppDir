@@ -2,7 +2,7 @@ import React from 'react';
 import s from './ActiveSessions.module.scss';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import {
   DevicesResponse,

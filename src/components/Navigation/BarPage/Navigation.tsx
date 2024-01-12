@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import { navigationBar } from './Bardata';
@@ -23,7 +23,9 @@ export const Navigation = ({
   setShowLogoutModal,
   paidAccount,
 }: NavigationType) => {
-  const t = useTranslations('Navigation');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Navigation.${key}`);
 
   const mapNav = navigationBar.map((el) => {
     const style = clsx(
@@ -45,13 +47,13 @@ export const Navigation = ({
         {el.href === 'create' && (
           <button className={style}>
             <BarComponent>{el.img}</BarComponent>
-            <span>{t('create')}</span>
+            <span>{translate('create')}</span>
           </button>
         )}
         {el.href === 'profile' && (
           <Link href={'/profile/' + id} className={style}>
             <BarComponent>{el.img}</BarComponent>
-            <span>{t(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+            <span>{translate(el.href === 'profile' ? 'myProfile' : el.href)}</span>
           </Link>
         )}
         {el.href !== 'create' &&
@@ -59,13 +61,13 @@ export const Navigation = ({
           el.href !== 'profile' && (
             <Link href={'/' + el.href} className={style}>
               <BarComponent>{el.img}</BarComponent>
-              <span>{t(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+              <span>{translate(el.href === 'profile' ? 'myProfile' : el.href)}</span>
             </Link>
           )}
         {el.href === 'statistics' && paidAccount && (
           <Link href={'/' + el.href} className={style}>
             <BarComponent>{el.img}</BarComponent>
-            <span>{t(el.href)}</span>
+            <span>{translate(el.href)}</span>
           </Link>
         )}
       </li>
@@ -76,7 +78,7 @@ export const Navigation = ({
     <nav className={s.nav}>
       <div className={s.nav__container}>
         <ul className={s.nav__list}>{mapNav}</ul>
-        <LogoutBtn btnCallback={setShowLogoutModal} t={t} />
+        <LogoutBtn btnCallback={setShowLogoutModal} t={translate} />
       </div>
     </nav>
   );

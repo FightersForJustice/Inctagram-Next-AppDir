@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Modal } from '../Modal/Modal';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import s from './DeleteModal.module.scss';
 
@@ -9,8 +9,9 @@ type Props = {
 };
 
 export const DeleteModal = ({ setShowDeleteModal }: Props) => {
-  const t = useTranslations('MyProfilePage');
-
+ 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (
     <Modal
       title={t('DeleteModal.title')}

@@ -1,20 +1,21 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import s from './Verification.module.scss';
 
 const EmailVerification = () => {
-  const t = useTranslations('EmailVerificationPage');
-
+ 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`EmailVerificationPage.${key}`);
   return (
     <div>
       <div className={s.container}>
-        <h1 className={s.slogan}>{t('title')}</h1>
-        <p className={s.verificationText}>{t('desc')}</p>
+        <h1 className={s.slogan}>{translate('title')}</h1>
+        <p className={s.verificationText}>{translate('desc')}</p>
         <Link href={'/sign-in'} className={s.resendLink}>
-          {t('btnName')}
+          {translate('btnName')}
         </Link>
         <Image
           src={'/img/congrats.svg'}

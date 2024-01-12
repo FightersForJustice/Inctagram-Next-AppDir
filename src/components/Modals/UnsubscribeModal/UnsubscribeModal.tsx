@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { Modal } from '../Modal/Modal';
 
@@ -10,8 +10,9 @@ type Props = {
 };
 
 export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
-  const t = useTranslations('MyProfilePage');
-
+ 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (
     <Modal
       title={t('UnsubscribeModal.title')}

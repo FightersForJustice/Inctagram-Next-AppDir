@@ -2,11 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 const MergerOfAccounts = () => {
-  const t = useTranslations('MergerOfAccountsPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MergerOfAccountsPage.${key}`);
   return (
     <div
       className={'flex flex-col justify-center items-center mt-[100px] mb-9'}

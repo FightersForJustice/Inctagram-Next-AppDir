@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import {
   InfoCircledIcon,
@@ -26,8 +26,9 @@ import { MyPayments } from '@/app/(authorized)/settings-profile/Tabs/MyPayments'
 import s from './Tabs.module.scss';
 
 const TabsDemo = () => {
-  const t = useTranslations('SettingsProfilePage');
 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SettingsProfilePage.${key}`);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
   const [userAvatar, setUserAvatar] = useState<string>('');
   const [croppedAvatar, setCroppedAvatar] = useState('');
@@ -86,19 +87,19 @@ const TabsDemo = () => {
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
-            <p className={s.TabsText}>{t('GeneralInformationTab.titleTab')}</p>
+            <p className={s.TabsText}>{translate('GeneralInformationTab.titleTab')}</p>
             <InfoCircledIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="devices">
-            <p className={s.TabsText}>{t('DevicesTab.titleTab')}</p>
+            <p className={s.TabsText}>{translate('DevicesTab.titleTab')}</p>
             <DesktopIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="accountManagement">
-            <p className={s.TabsText}>{t('AccountManagementTab.titleTab')}</p>
+            <p className={s.TabsText}>{translate('AccountManagementTab.titleTab')}</p>
             <GearIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="myPayments">
-            <p className={s.TabsText}>{t('MyPaymentsTab.titleTab')}</p>
+            <p className={s.TabsText}>{translate('MyPaymentsTab.titleTab')}</p>
             <BackpackIcon className={s.TabsIcon} />
           </Tabs.Trigger>
         </Tabs.List>
@@ -113,7 +114,7 @@ const TabsDemo = () => {
       </Tabs.Root>
       {showAddAvatarModal && (
         <ShowAddAvatarModal
-          t={t}
+          translate={translate}
           onCloseModal={onCloseModal}
           userAvatar={userAvatar}
           setUserAvatar={setUserAvatar}

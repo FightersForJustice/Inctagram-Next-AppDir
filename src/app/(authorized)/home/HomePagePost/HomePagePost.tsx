@@ -11,7 +11,7 @@ import { HomePostDescription } from './HomePostDescription';
 import { HomePostLikes } from './HomePostLikes';
 import { PostImageCarousel } from '../PostImageCarousel';
 import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   post: PostsItem;
@@ -21,10 +21,12 @@ type Props = {
 export const HomePagePost = ({ post, images }: Props) => {
   const { data } = useGetProfileQuery();
   const language = useGetLanguageFromPath();
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Time.${key}`);
   const test = getTimeAgoText(
     post.createdAt,
     language,
-    useTranslations('Time')
+    translate
   );
 
   return (

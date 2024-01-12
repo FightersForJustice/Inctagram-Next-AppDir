@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { Confirm } from '@/components/auth';
 
 const RegistrationConfirmation = ({
@@ -9,8 +9,10 @@ const RegistrationConfirmation = ({
   params: { slug: string };
   searchParams: { code: string };
 }) => {
-  const t = useTranslations('RegistrationConfirmationPage');
-  return <Confirm code={String(searchParams.code)} translate={t} />;
+ 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`RegistrationConfirmationPage.${key}`);
+  return <Confirm code={String(searchParams.code)} translate={translate} />;
 };
 
 export default RegistrationConfirmation;

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Modal } from '../Modal/Modal';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import s from './DeleteAvatarModal.module.scss';
 
@@ -15,7 +15,9 @@ export const DeleteAvatarModal = ({
   onClose,
   userAvatar,
 }: Props) => {
-  const t = useTranslations('MyProfilePage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
+
   const closeHandler = (value: boolean) => {
     if (value) {
       onClose();
@@ -26,14 +28,14 @@ export const DeleteAvatarModal = ({
   return (
     userAvatar && (
       <Modal
-        title={t('DeleteAvatarModal.title')}
+        title={translate('DeleteAvatarModal.title')}
         isOkBtn={false}
         onClose={() => closeHandler(false)}
         className={s.container}
       >
         <div className={s.deleteModal__info}>
           <p className={s.deleteModal__text}>
-            {t('DeleteAvatarModal.question')}?
+            {translate('DeleteAvatarModal.question')}?
           </p>
         </div>
         <div className={s.deleteModal__wrapper}>
@@ -41,13 +43,13 @@ export const DeleteAvatarModal = ({
             className={s.deleteModal__btn__yes}
             onClick={() => closeHandler(true)}
           >
-            {t('DeleteAvatarModal.btnYes')}
+            {translate('DeleteAvatarModal.btnYes')}
           </button>
           <button
             className={s.deleteModal__btn__no}
             onClick={() => closeHandler(false)}
           >
-            {t('DeleteAvatarModal.btnNo')}
+            {translate('DeleteAvatarModal.btnNo')}
           </button>
         </div>
       </Modal>

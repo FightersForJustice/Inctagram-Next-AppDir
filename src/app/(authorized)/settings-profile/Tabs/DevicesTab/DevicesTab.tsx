@@ -2,7 +2,7 @@ import React from 'react';
 import s from '../Tabs.module.scss';
 import * as Tabs from '@radix-ui/react-tabs';
 // @ts-ignore
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
@@ -15,7 +15,10 @@ import {
 import { toast } from 'react-toastify';
 
 export const DevicesTab = () => {
-  const t = useTranslations('SettingsProfilePage.DevicesTab');
+  const {   } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
+
   const { data: sessions, refetch } = useGetDeviceSessionsQuery();
   const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
 

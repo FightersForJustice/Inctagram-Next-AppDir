@@ -1,7 +1,7 @@
 'use client';
 
 import { Dispatch, SetStateAction } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import s from './SubscriptionsProfile.module.scss';
 
@@ -14,8 +14,9 @@ export const SubscriptionsProfile = ({
   setShowSubscriptionsModal: (value: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
 }) => {
-  const t = useTranslations('MyProfilePage');
 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (
     <div className={s.profileInfoContainer}>
       <div className={s.profileInfo}>

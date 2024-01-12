@@ -8,7 +8,7 @@ import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import s from '../Tabs.module.scss';
 
 type Props = {
-  t: (value: string) => string;
+  translate: (value: string) => string;
   onCloseModal: () => void;
   userAvatar: string;
   setUserAvatar: (value: string) => void;
@@ -29,7 +29,7 @@ export const ShowAddAvatarModal = ({
   onSaveUserAvatar,
   onSetUserAvatar,
   onCloseModal,
-  t,
+  translate,
   fileError,
 }: Props) => {
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +45,7 @@ export const ShowAddAvatarModal = ({
 
   return (
     <Modal
-      title={t('AddPhotoModal.title')}
+      title={translate('AddPhotoModal.title')}
       onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
@@ -73,7 +73,7 @@ export const ShowAddAvatarModal = ({
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
             <PrimaryBtn onClick={onSaveUserAvatar}>
-              {t('AddPhotoModal.saveBtn')}
+              {translate('AddPhotoModal.saveBtn')}
             </PrimaryBtn>
           </div>
         ) : (
@@ -85,7 +85,7 @@ export const ShowAddAvatarModal = ({
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn>{t('AddPhotoModal.selectBtn')}</PrimaryBtn>
+            <PrimaryBtn>{translate('AddPhotoModal.selectBtn')}</PrimaryBtn>
           </div>
         )}
         {showModal && (

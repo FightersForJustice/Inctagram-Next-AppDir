@@ -2,7 +2,7 @@
 
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { routes } from '@/api/routes';
 
 import { loginGoogleAction } from '@/app/actions';
@@ -16,7 +16,9 @@ type Props = {
   page: 'SignInPage' | 'SignUpPage';
 };
 const ServiceAuth = ({ page }: Props) => {
-  const t = useTranslations(page);
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(page+`.${key}`);
+
   const router = useRouter();
 
   const gitHubAuth = () => {
@@ -43,7 +45,7 @@ const ServiceAuth = ({ page }: Props) => {
   });
   return (
     <>
-      <p className={s.title}>{t('title')}</p>
+      <p className={s.title}>{translate('title')}</p>
       <div className={s.container}>
         <GetService
           onClick={googleLogin}

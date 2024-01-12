@@ -3,7 +3,7 @@ import {
   emailValidationRegex,
   passwordValidationRegex,
 } from './validationRegex';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 export type SignInData = {
   email: string;
@@ -12,16 +12,16 @@ export type SignInData = {
 };
 
 export const SignInSchema = () => {
-  const t = useTranslations('Errors');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Errors.${key}`);
   return yup
     .object({
       email: yup
         .string()
-        .matches(emailValidationRegex, t('email.invalidCharacters'))
-        .email(t('email.email'))
-        .required(t('email.required'))
-        .test('valid-domain', t('email.invalidCharacters'), (value) => {
+        .matches(emailValidationRegex, translate('email.invalidCharacters'))
+        .email(translate('email.email'))
+        .required(translate('email.required'))
+        .test('valid-domain', translate('email.invalidCharacters'), (value) => {
           const parts = value.split('@');
           if (parts.length === 2) {
             const [, domain] = parts;
@@ -31,14 +31,14 @@ export const SignInSchema = () => {
         }),
       password: yup
         .string()
-        .required(t('password.required'))
-        .test('not-only-spaces', t('password.spaces'), (value) => {
+        .required(translate('password.required'))
+        .test('not-only-spaces', translate('password.spaces'), (value) => {
           // Проверяем, что пароль не состоит только из пробелов
           return value.trim() !== '' && !/\s/.test(value);
         })
-        .matches(passwordValidationRegex, t('password.invalidCharacters'))
-        .min(6, t('password.min'))
-        .max(20, t('password.max')),
+        .matches(passwordValidationRegex, translate('password.invalidCharacters'))
+        .min(6, translate('password.min'))
+        .max(20, translate('password.max')),
     })
     .required();
 };

@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
 import s from '../HeaderMenuMobile.module.scss';

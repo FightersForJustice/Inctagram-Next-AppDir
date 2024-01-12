@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
 

@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
 export const ButtonLink = ({
@@ -14,8 +14,8 @@ export const ButtonLink = ({
   className: string;
   id?: string;
 }) => {
-  const t = useTranslations(useTranslationsPage);
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(useTranslationsPage + `.${key}`);
   return (
     <Link id={id} className={className} href={link}>
       {t(btnName)}
