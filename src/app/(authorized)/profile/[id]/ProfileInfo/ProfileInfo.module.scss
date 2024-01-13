@@ -1,6 +1,104 @@
+@use '@/app/mixins.scss' as s;
+.profile {
+  display: flex;
+  .left {
+    min-width: 204px;
+    margin: 37px 0px 0px 22px;
+    img {
+      border-radius: 50%;
+    }
+  }
+  .right {
+    .info {
+      margin: 0px 63px 0px 40px;
+      .top {
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 1170px) {
+          flex-direction: column;
+        }
+        .blockUser {
+          .name {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 36px;
+
+            margin: 35px 0px 0px 0px;
+          }
+          .statistics {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 24px;
+            display: flex;
+            gap: 102px;
+
+            margin: 20px 0px 0px 0px;
+
+            div p:first-child {
+              font-weight: 700;
+            }
+          }
+        }
+        .btn {
+          margin: 42px 0px 0px -200px;
+          @media (max-width: 1170px) {
+            margin: 35px 0px 0px 0px;
+          }
+          .settings {
+            border-radius: 2px;
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+            padding: 9px 24px;
+          }
+          .btnPrimary {
+            background: var(--primary-500);
+            padding: 6px 24px;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px;
+            margin-right: 20px;
+          }
+          .message {
+            background: var(--dark-300);
+            padding: 6px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+    .descriptions {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 23px 0px 0px 0px;
+    }
+  }
+}
+@include s.devices(tablet-xl) {
+  .settings {
+    display: none;
+  }
+}
+/*
 .info {
+  .text {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
   .avatar {
     display: flex;
+    position: relative;
     .name {
       color: #fff;
       font-size: 20px;
@@ -21,6 +119,7 @@
     display: flex;
     gap: 102px;
     margin: -150px 0px 0px 264px;
+
     div p:first-child {
       font-weight: 700;
     }
@@ -28,25 +127,35 @@
   .btn {
     text-align: right;
     margin: -97px 65px 0px 0px;
-    .settings {
-      border-radius: 2px;
-      background: #333;
-      color: #fff;
+  }
+  .btnPublic {
+    text-align: right;
+    margin: -97px 65px 0px 0px;
+    @media (max-width: 1100px) {
+      text-align: left;
+      margin: 36px 0px 0px 265px;
+    }
+    .btnPrimary {
+      background: var(--primary-500);
+      padding: 6px 24px;
       font-size: 16px;
+      font-style: normal;
       font-weight: 600;
       line-height: 24px;
-      padding: 9px 24px;
+      margin-right: 20px;
     }
-  }
-  .descriptions {
-    margin: 98px 62px 0px 264px;
-    .text {
-      color: #fff;
-
+    .message {
+      background: var(--dark-300);
+      padding: 6px 24px;
       font-size: 16px;
-
-      font-weight: 400;
+      font-weight: 600;
       line-height: 24px;
     }
   }
 }
+@include s.devices(tablet-xl) {
+  .settings {
+    display: none;
+  }
+}
+*/

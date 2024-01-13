@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 @keyframes placeHolderShimmer {
   0% {
     background-position: -800px 0;
@@ -80,5 +82,10 @@
     background-color: #222;
     margin: 5px 5px;
     border-radius: 12px;
+  }
+}
+@include s.devices(tablet-xl) {
+  .settings {
+    display: none;
   }
 }
