@@ -1,0 +1,52 @@
+.info {
+  .avatar {
+    display: flex;
+    .name {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 36px;
+      margin: 36px 0px 0px 36px;
+    }
+    img {
+      border-radius: 50%;
+      margin: 36px 0px 0px 25px;
+    }
+  }
+  .indicators {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    display: flex;
+    gap: 102px;
+    margin: -150px 0px 0px 264px;
+    div p:first-child {
+      font-weight: 700;
+    }
+  }
+  .btn {
+    text-align: right;
+    margin: -97px 65px 0px 0px;
+    .settings {
+      border-radius: 2px;
+      background: #333;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      padding: 9px 24px;
+    }
+  }
+  .descriptions {
+    margin: 98px 62px 0px 264px;
+    .text {
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+}
