@@ -12,7 +12,7 @@ function Providers({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState(false);
 
   // Hardcode locale
-  const locale = 'en';
+  const locale = 'ru';
 
   useEffect(() => {
     const fetchMessages = async () => {

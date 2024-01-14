@@ -1,13 +1,16 @@
+'use client';
 import Image from 'next/image';
 import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
 import { UserProfile } from '../types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   userData: UserProfile;
   myProfile: boolean;
 };
 export const ProfileInfo = ({ userData, myProfile }: Props) => {
+  const t = useTranslations('MyProfilePage');
   return (
     <>
       <div className={s.profile}>
@@ -22,36 +25,36 @@ export const ProfileInfo = ({ userData, myProfile }: Props) => {
         </div>
         <div className={s.right}>
           <div className={s.info}>
-            <div className={s.top}>
+            <div className={myProfile ? s.topMyProfile : s.top}>
               <div className={s.blockUser}>
                 <div className={s.name}>URLProfiele</div>
                 <div className={s.statistics}>
                   <div>
                     <p>0</p>
-                    <p>Following</p>
+                    <p>{t('subscriptions')}</p>
                   </div>
                   <div>
                     <p>0</p>
-                    <p>Followers</p>
+                    <p>{t('subscribers')}</p>
                   </div>
                   <div>
                     <p>0</p>
-                    <p>Publications</p>
+                    <p>{t('publications')}</p>
                   </div>
                 </div>
               </div>
               <div className={s.btn}>
                 {myProfile ? (
                   <Link href={'/settings-profile'} className={s.settings}>
-                    Profile Settings
+                    {t('btnName')}
                   </Link>
                 ) : (
                   <>
                     <Link href="#" className={s.btnPrimary}>
-                      Follow
+                      {t('SubscribersModal.subBtn')}
                     </Link>
                     <Link href="#" className={s.message}>
-                      Send Message
+                      {t('btnSendMessage')}
                     </Link>
                   </>
                 )}
