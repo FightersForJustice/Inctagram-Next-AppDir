@@ -136,6 +136,21 @@
         margin-right: -35px;
       }
     }
+    .descriptionsPublic {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin: 23px 0px 0px 0px;
+      @media (min-width: 633px) and (max-width: 720px) {
+        margin-top: 47px;
+      }
+      @media (max-width: 720px) {
+        margin-left: calc(
+          -42px + (-232 - (-42)) * ((100vw - 260px) / (720 - 260))
+        );
+      }
+    }
   }
 }
 @include s.devices(tablet-xl) {
