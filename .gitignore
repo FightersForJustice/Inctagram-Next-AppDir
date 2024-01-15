@@ -24,8 +24,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-
 # vercel
 .vercel
 
@@ -33,3 +31,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .idea
+
+# environment
+.env
