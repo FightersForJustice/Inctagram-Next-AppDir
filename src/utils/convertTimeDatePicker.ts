@@ -3,7 +3,6 @@ import { DateObject } from 'react-multi-date-picker';
 export const convertToReactDatePickerObject = (
   dateString: string | null
 ): DateObject | string => {
-
   if (dateString) {
     const date = new Date(dateString);
     const dateObject = new DateObject({
@@ -15,13 +14,20 @@ export const convertToReactDatePickerObject = (
       second: date.getUTCSeconds(),
     });
 
-    return dateObject
-  }
-  else return ''
-}
+    return dateObject;
+  } else return '';
+};
 
 export const convertToISOString = (dateObject: DateObject) => {
-  const formattedDate = new Date(dateObject.year, +dateObject.month, dateObject.day, dateObject.hour, dateObject.minute, dateObject.second, dateObject.millisecond);
+  const formattedDate = new Date(
+    dateObject.year,
+    +dateObject.month,
+    dateObject.day,
+    dateObject.hour,
+    dateObject.minute,
+    dateObject.second,
+    dateObject.millisecond
+  );
 
   return formattedDate.toISOString();
-}
+};

@@ -10,8 +10,8 @@ export const GeneralInformationTab = ({
   userInfo: UserProfileResponse;
 }) => {
   const { avatars } = userInfo;
-  
-  const currentAvatar =  avatars && !!avatars.length ? avatars[0].url : null;
+
+  const currentAvatar = avatars && !!avatars.length ? avatars[0].url : null;
 
   return (
     <div className={s.wrapper}>
@@ -19,7 +19,7 @@ export const GeneralInformationTab = ({
         <GeneralInformationAvatar currentAvatar={currentAvatar} />
       </div>
       <div className={s.wrapper__right}>
-        <SettingsForm userInfo={{...userInfo}} />
+        <SettingsForm userInfo={{ ...userInfo }} />
       </div>
     </div>
   );

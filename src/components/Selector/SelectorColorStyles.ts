@@ -1,4 +1,4 @@
-import { StylesConfig } from "react-select";
+import { StylesConfig } from 'react-select';
 
 export const SelectorColorStyles: StylesConfig = {
   control: (styles, { isDisabled }) => ({
@@ -49,4 +49,4 @@ export const SelectorColorStyles: StylesConfig = {
     ...styles,
     color: 'white',
   }),
-}
+};

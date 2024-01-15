@@ -45,8 +45,7 @@ export const SettingsForm = ({
   const { userName, firstName, lastName, dateOfBirth, city, aboutMe } =
     userInfo;
 
-    console.log(userInfo);
-    
+  console.log(userInfo);
 
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'

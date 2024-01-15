@@ -1,6 +1,6 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const findCountryUrl = process.env.COUNTRIES_URL;
-const auth = 'auth/'
+const auth = 'auth/';
 
 export const routes = Object.freeze({
   //AUTH
@@ -22,5 +22,5 @@ export const routes = Object.freeze({
 });
 
 export const citySelectRoutes = Object.freeze({
-  FIND_COUNTRY: `${findCountryUrl}countries`
-})
+  FIND_COUNTRY: `${findCountryUrl}countries`,
+});

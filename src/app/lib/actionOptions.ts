@@ -116,41 +116,39 @@ export const requestDeleteAllSessionsOptions = (
 
 export const uploadAvatarOptions = (
   accessToken: string | null,
-  avatar: FormData,
+  avatar: FormData
 ) => {
   return {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
     },
     next: { revalidate: 0 },
-    body: avatar
-  }
-}
+    body: avatar,
+  };
+};
 
 export const updateProfileOptions = (
   accessToken: string | null,
-  data: ProfileFormSubmit,
+  data: ProfileFormSubmit
 ) => {
   return {
-    method: "PUT",
+    method: 'PUT',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
     next: { revalidate: 0 },
-  }
-}
+  };
+};
 
-export const deleteAvatarOptions = (
-  accessToken: string | null,
-) => {
+export const deleteAvatarOptions = (accessToken: string | null) => {
   return {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
     },
     next: { revalidate: 0 },
-  }
-}
+  };
+};

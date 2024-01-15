@@ -6,10 +6,9 @@
   & .rmdp-input {
     color: var(--danger-500);
 
-     transition: color 0.2s ease;
+    transition: color 0.2s ease;
   }
 }
-
 
 .rmdp-datePickerWrapper {
   position: relative;
@@ -32,7 +31,7 @@
   border: 1px solid var(--dark-100, #4c4c4c);
   padding: 6px 12px;
   margin-bottom: 24px;
-  
+
   transition: all 0.2s linear;
 }
 

@@ -23,7 +23,7 @@
     "btnBottomName": "Регистрация",
     "error400": "Неверный адрес электронной почты или пароль. Пожалуйста, попробуйте еще раз",
     "error401": "Данный емайл не зарегистрирован",
-    "errorundefined" : "Неизвестная ошибка, попробуйте позже "
+    "errorundefined": "Неизвестная ошибка, попробуйте позже "
   },
   "VerificationInvalidPage": {
     "title": "Ссылка для подтверждения почты недействительна",
@@ -152,7 +152,7 @@
       "avatarDeleteFailed": "Ошибка удаления аватара",
       "updateProfileSuccess": "Вы успешно обновили профайл",
       "updateProfileError": "Ошибка обновления профайла, попробуйте позже",
-      "updateProfileUserExist" : "Юзер с таким логином уже существует"
+      "updateProfileUserExist": "Юзер с таким логином уже существует"
     },
     "SettingsFormSchema": {
       "userName": {

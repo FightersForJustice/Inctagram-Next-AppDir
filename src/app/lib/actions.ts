@@ -48,7 +48,7 @@ export async function signInAction(data: SignInData) {
 
 export async function signUpAction(data: SignInData) {
   try {
-    const newData = { ...data, email: data.email.toLowerCase() }
+    const newData = { ...data, email: data.email.toLowerCase() };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     const responseBody = await res.json();
     if (res.ok) {
@@ -162,29 +162,26 @@ export async function logOutAction(refreshToken: string | undefined) {
 }
 
 export async function loginGoogleAction(code: string) {
-  return fetch(
-    routes.GOOGLE_LOGIN,
-    requestGoogleLoginOptions(code)
-  )
+  return fetch(routes.GOOGLE_LOGIN, requestGoogleLoginOptions(code))
     .then(async (res) => {
       if (res.ok) {
-        const responseBody: { accessToken: string, email: string } = await res.json();
+        const responseBody: { accessToken: string; email: string } =
+          await res.json();
 
         const returnData = {
           email: responseBody.email,
           accessToken: responseBody.accessToken,
-          refreshToken: getRefreshToken(res.headers.get('set-cookie'))
+          refreshToken: getRefreshToken(res.headers.get('set-cookie')),
         };
 
-        return { success: true, data: returnData }
+        return { success: true, data: returnData };
       } else throw new Error(`Error With loginGoogleAction ${res.status}`);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
 
       return { success: false, data: error };
-
-    })
+    });
 }
 
 //SESSION ACTIONS
@@ -193,18 +190,14 @@ export async function deleteAllSessionsAction(
   accessToken: string | undefined,
   refreshToken: string | undefined
 ) {
-
   try {
     fetch(
       routes.TERMINATE_ALL_SESSIONS,
       requestDeleteAllSessionsOptions(accessToken, refreshToken)
-    )
-      .then(res => ({ success: true, data: 'deleteAllSessionsSuccess' }));
-
+    ).then((res) => ({ success: true, data: 'deleteAllSessionsSuccess' }));
   } catch (error) {
     return { success: false, error: 'deleteAllSessionsFailed' };
   }
-
 }
 
 // middleware actions
@@ -291,86 +284,89 @@ export async function updateTokensAndContinue(refreshToken: string) {
 export async function uploadAvatarAction(avatar: FormData) {
   const accessToken = headers().get('accessToken');
 
-  return fetch(routes.UPLOAD_PROFILE_AVATAR, uploadAvatarOptions(accessToken, avatar))
-    .then(res => {
+  return fetch(
+    routes.UPLOAD_PROFILE_AVATAR,
+    uploadAvatarOptions(accessToken, avatar)
+  )
+    .then((res) => {
       if (res.ok) {
         revalidatePath('/my-profile/settings-profile/general-information');
 
-        return { success: true, modalText: "avatarSuccessfullyUploaded" }
+        return { success: true, modalText: 'avatarSuccessfullyUploaded' };
       } else {
         throw new Error(`Error uploadAvatarAction, status ${res.status}`);
       }
     })
-    .catch(error => {
-      console.error(error)
-      return { success: false, modalText: "avatarUploadFailed" }
-    })
+    .catch((error) => {
+      console.error(error);
+      return { success: false, modalText: 'avatarUploadFailed' };
+    });
 }
 export async function deleteAvatarAction() {
   const accessToken = headers().get('accessToken');
 
   return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
-    .then(res => {
+    .then((res) => {
       if (res.ok) {
         revalidatePath('/my-profile/settings-profile/general-information');
 
-        return { success: true, modalText: "avatarSuccessfullyDeleted" }
+        return { success: true, modalText: 'avatarSuccessfullyDeleted' };
       } else {
         throw new Error(`Error deleteAvatarAction, status ${res.status}`);
       }
     })
-    .catch(error => {
-      console.error(error)
-      return { success: false, modalText: "avatarDeleteFailed" }
-    })
+    .catch((error) => {
+      console.error(error);
+      return { success: false, modalText: 'avatarDeleteFailed' };
+    });
 }
 
 export async function fetchCountriesList() {
-
   return fetch(`${citySelectRoutes.FIND_COUNTRY}`)
-    .then(res => {
+    .then((res) => {
       if (res.ok) {
-        return res.json()
+        return res.json();
       } else {
         throw new Error(`Error deleteAvatarAction, status ${res.status}`);
       }
     })
-    .catch(error => {
-      console.error(error)
-      return { success: false, modalText: "avatarDeleteFailed" }
-    })
+    .catch((error) => {
+      console.error(error);
+      return { success: false, modalText: 'avatarDeleteFailed' };
+    });
 }
 
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   const accessToken = headers().get('accessToken');
 
-  return fetch(`${routes.USERS_PROFILE}`, updateProfileOptions(accessToken, data))
-    .then(async (res) => {
+  return fetch(
+    `${routes.USERS_PROFILE}`,
+    updateProfileOptions(accessToken, data)
+  ).then(async (res) => {
+    if (res.ok) {
+      revalidatePath('/my-profile/settings-profile/general-information');
+      return { success: true, modalText: 'updateProfileSuccess' };
+    } else {
+      const errorData = await res.json();
+      const messageField = errorData.messages.field;
 
-      if (res.ok) {
-        revalidatePath('/my-profile/settings-profile/general-information');
-        return { success: true, modalText: "updateProfileSuccess" }
-      } else {
-        const errorData = await res.json();
-        const messageField = errorData.messages.field
+      console.log(data);
 
-        console.log(data);
+      console.error(`Error updateProfileInfoAction`);
+      console.error(errorData);
 
-        console.error(`Error updateProfileInfoAction`)
-        console.error(errorData);
+      let toastMessage;
+      switch (messageField) {
+        case 'userName':
+          toastMessage = 'updateProfileUserExist';
+          break;
 
-        let toastMessage;
-        switch (messageField) {
-          case 'userName':
-            toastMessage = 'updateProfileUserExist'
-            break;
-
-          default:
-            toastMessage = 'updateProfileFailed'
-            break;
-        }
-
-        return { success: false, modalText: toastMessage }
+        default:
+          toastMessage = 'updateProfileFailed';
+          break;
       }
-    })
+
+      return { success: false, modalText: toastMessage };
+    }
+  });
 }

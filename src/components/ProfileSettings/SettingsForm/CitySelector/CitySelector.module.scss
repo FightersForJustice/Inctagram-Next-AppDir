@@ -1,13 +1,13 @@
 @use '@/app/mixins.scss' as s;
 
-.selectorsContainer{
+.selectorsContainer {
   display: flex;
   gap: 24px;
   margin-bottom: 24px;
 }
 
-@include s.devices(mobile){
-  .selectorsContainer{
+@include s.devices(mobile) {
+  .selectorsContainer {
     display: flex;
     flex-direction: column;
   }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useGetPaymentsQuery } from '@/api';
-import  { useState } from 'react';
+import { useState } from 'react';
 import { fakeDataForTesting } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/myPaymentsDATA';
 import { Loader } from '@/components/Loader';
 import { Pagination } from '@/components/Pagination/Pagination';

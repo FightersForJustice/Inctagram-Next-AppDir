@@ -30,7 +30,7 @@ export const SignUpForm = () => {
     getValues,
     formState: { errors, isValid },
     // setError,
-    // ^ maybe needs sometime 
+    // ^ maybe needs sometime
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',

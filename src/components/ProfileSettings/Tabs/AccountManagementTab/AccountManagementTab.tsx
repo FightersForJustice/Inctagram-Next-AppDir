@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -43,38 +43,38 @@ export const AccountManagementTab = () => {
   }, [currentSubData]);
 
   return (
-      <div className={s.tab}>
-        {userSubInfo?.data.length > 0 && (
-          <Subscription
-            expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
-            dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
-            autoRenewal={userSubInfo?.hasAutoRenewal}
-          />
-        )}
+    <div className={s.tab}>
+      {userSubInfo?.data.length > 0 && (
+        <Subscription
+          expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
+          dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
+          autoRenewal={userSubInfo?.hasAutoRenewal}
+        />
+      )}
 
-        <p className={s.tab__name}>Account type:</p>
-        <div className={s.tab__wrapper}>
-          <AccountTypeRadio
-            radioValue={accountTypeValue}
-            setRadioValue={setAccountTypeValue}
-          />
-        </div>
-        {accountTypeValue === 'business' && (
-          <>
-            <p className={s.tab__name}>Your subscription costs:</p>
-            <div className={s.tab__wrapper}>
-              <SubscriptionRadio
-                subTypeValue={subTypeValue}
-                setSubTypeValue={setSubTypeValue}
-              />
-            </div>
-            <div className={s.tab__container}>
-              {/* <PayPal price={subTypeValue} /> */}
-              <p>or</p>
-              <Stripe subTypeValue={subTypeValue} baseUrl={baseUrl} />
-            </div>
-          </>
-        )}
+      <p className={s.tab__name}>Account type:</p>
+      <div className={s.tab__wrapper}>
+        <AccountTypeRadio
+          radioValue={accountTypeValue}
+          setRadioValue={setAccountTypeValue}
+        />
       </div>
+      {accountTypeValue === 'business' && (
+        <>
+          <p className={s.tab__name}>Your subscription costs:</p>
+          <div className={s.tab__wrapper}>
+            <SubscriptionRadio
+              subTypeValue={subTypeValue}
+              setSubTypeValue={setSubTypeValue}
+            />
+          </div>
+          <div className={s.tab__container}>
+            {/* <PayPal price={subTypeValue} /> */}
+            <p>or</p>
+            <Stripe subTypeValue={subTypeValue} baseUrl={baseUrl} />
+          </div>
+        </>
+      )}
+    </div>
   );
 };

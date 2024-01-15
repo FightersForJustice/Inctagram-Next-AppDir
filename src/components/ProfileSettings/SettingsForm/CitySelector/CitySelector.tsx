@@ -63,12 +63,11 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const onFocusCountryHandler = () => {
     if (!isLoadingCountries) {
       setIsLoadingCountries(true);
-      fetchCountriesList()
-        .then((res: ResponseCountries) => {
-          setCountriesList(res.data);
-          setIsLoadingCountries(false);
-          setValue('city', { value: '', label: 'City' });
-        })
+      fetchCountriesList().then((res: ResponseCountries) => {
+        setCountriesList(res.data);
+        setIsLoadingCountries(false);
+        setValue('city', { value: '', label: 'City' });
+      });
     }
   };
 

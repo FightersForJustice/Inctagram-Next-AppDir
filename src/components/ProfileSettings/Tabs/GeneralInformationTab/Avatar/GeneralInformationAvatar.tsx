@@ -27,7 +27,6 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
-
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const onDeleteAvatar = () => {

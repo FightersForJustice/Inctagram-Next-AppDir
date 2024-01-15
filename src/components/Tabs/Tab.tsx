@@ -14,7 +14,6 @@ export const Tab = ({
   icon?: FunctionComponent<any>;
   className: string;
 }) => {
- 
   return (
     <Link href={link} className={className}>
       <p className={s.tabName}>{tabName}</p>

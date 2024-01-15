@@ -5,11 +5,11 @@
   width: 494px;
   position: relative;
 
-  &Content{
+  &Content {
     padding-bottom: 24px;
   }
 
-  &__itemSelector{
+  &__itemSelector {
     display: flex;
   }
 
@@ -120,7 +120,7 @@
 }
 
 @include s.devices(tablet-xl) {
-  .form__btn{
+  .form__btn {
     padding-bottom: 84px;
   }
 }
