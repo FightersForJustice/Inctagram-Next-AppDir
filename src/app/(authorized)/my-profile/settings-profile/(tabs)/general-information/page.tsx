@@ -17,11 +17,9 @@ export default async function GeneralInformation() {
   ] = await Promise.all([fetchGetMyProfile(accessToken), fetchCountriesList()]);
 
   return (
-    <>
-      <GeneralInformationTab
-        countriesList={countriesList}
-        userInfo={{ ...userInfo }}
-      />
-    </>
+    <GeneralInformationTab
+      countriesList={countriesList}
+      userInfo={{ ...userInfo }}
+    />
   );
 }

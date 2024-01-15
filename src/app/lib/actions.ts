@@ -336,13 +336,6 @@ export async function fetchCountriesList() {
     });
 }
 
-
-// updateProfileInfoAction(submitData)
-// .then((res) => {
-//   res.success ? toast.success(translate(res.modalText)) : toast.error(translate(res.modalText));
-// })
-// .catch((errors) => console.log(errors));
-
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   const accessToken = headers().get('accessToken');
 
