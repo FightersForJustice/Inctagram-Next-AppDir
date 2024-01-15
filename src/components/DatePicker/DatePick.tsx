@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { Control, Controller, UseFormTrigger } from 'react-hook-form';
-import { FormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
 import { convertToReactDatePickerObject } from '@/utils';
 import {
   isLessThen100YearsOld,
@@ -18,13 +17,14 @@ import {
 import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
+import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
 
 export const DatePick = ({
   control,
   trigger,
 }: {
-  control: Control<FormValues>;
-  trigger: UseFormTrigger<FormValues>;
+  control: Control<ProfileFormValues>;
+  trigger: UseFormTrigger<ProfileFormValues>;
 }) => {
   const [fieldError, setFieldError] = useState<{
     count: number;

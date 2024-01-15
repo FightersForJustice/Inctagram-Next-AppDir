@@ -6,26 +6,35 @@ import { toast } from 'react-toastify';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
-import { StatusCode } from '@/api/auth.api';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Loader } from '@/components/Loader';
 import { convertToReactDatePickerObject } from '@/utils';
 import { SettingsFormSchema } from '@/features/schemas';
 import { SettingsFormItem } from './SettingsFormItem';
 import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
 import { optionsType } from '@/components/Selector/Selector';
+import { updateProfileInfoAction } from '@/app/lib/actions';
+import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 
 import s from './SettingsForm.module.scss';
 
-export type FormValues = {
+export type ProfileFormValues = {
   userName: string;
   firstName: string;
   lastName: string;
-  city: optionsType;
-  country: optionsType;
-  dateOfBirth: any;
-  aboutMe: string | null | undefined;
+  city?: optionsType | null;
+  country?: optionsType;
+  dateOfBirth?: any;
+  aboutMe?: string | null | undefined;
+};
+
+export type ProfileFormSubmit = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  dateOfBirth?: string;
+  aboutMe: string;
 };
 
 export const SettingsForm = ({
@@ -35,6 +44,9 @@ export const SettingsForm = ({
 }) => {
   const { userName, firstName, lastName, dateOfBirth, city, aboutMe } =
     userInfo;
+
+    console.log(userInfo);
+    
 
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
@@ -46,9 +58,8 @@ export const SettingsForm = ({
     formState: { errors, isValid },
     control,
     trigger,
-    resetField,
-    reset,
-  } = useForm<FormValues>({
+    setValue,
+  } = useForm<ProfileFormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
@@ -58,49 +69,23 @@ export const SettingsForm = ({
   });
 
   const onSubmit = handleSubmit((data) => {
-    const { country, city, ...others } = data;
-    const formatCity = city?.value || '';
-    const submitData = { city: formatCity, ...others };
+    //in case if back will change API , with adding country to endPoint
+    const { country, city, aboutMe, ...others } = data;
 
-    console.log(submitData);
+    const optionsFormatData = {
+      city: city?.value || '',
+      aboutMe: aboutMe || '',
+      ...others,
+    };
 
+    const submitData: ProfileFormSubmit =
+      filterValuesProfileForm(optionsFormatData);
 
-    
-    // if (ageError) {
-    //   setAgeError('');
-    // }
-    // let parts = dateOfBirth.split('.');
-    // let birthdayDate: Date | string = new Date(
-    //   +parts[2],
-    //   +parts[1] - 1,
-    //   +parts[0]
-    // );
-    // const result: PutProfileBody = {
-    //   userName: data.userName,
-    //   firstName: data.firstName,
-    //   lastName: data.lastName,
-    //   city: userCity,
-    //   dateOfBirth: dateOfBirth
-    //     ? String(birthdayDate) === 'Invalid Date'
-    //       ? userBirthday
-    //       : String(birthdayDate)
-    //     : userBirthday,
-    //   aboutMe: data.aboutMe || ' ',
-    // };
-    // updateProfile(result)
-    //   .unwrap()
-    //   .then(() => {
-    //     getUserProfile();
-    //     toast.success('Profile successfully updated');
-    //   })
-    //   .catch((err) => {
-    //     if (err.status === StatusCode.badRequest) {
-    //       setError(err.data.messages[0]?.field, {
-    //         message: err.data.messages[0]?.message,
-    //       });
-    //     }
-    //     toast.error(err.error);
-    //   });
+    updateProfileInfoAction(submitData)
+      .then((res) => {
+        res.success ? toast.success(res.modalText) : toast.error(res.modalText);
+      })
+      .catch((errors) => console.log(errors));
   });
 
   return (
@@ -151,8 +136,7 @@ export const SettingsForm = ({
             <CitySelectors
               control={control}
               userCity={city}
-              resetField={resetField}
-              reset={reset}
+              setValue={setValue}
             />
           </div>
 

@@ -13,13 +13,14 @@ import {
   requestGoogleLoginOptions,
   requestLogoutOptions,
   requestUpdateTokensOptions,
+  updateProfileOptions,
   uploadAvatarOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { setCookieExpires } from '@/utils/cookiesActions';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
-import next from 'next';
+import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 
 // AUTH ACTIONS
 
@@ -337,5 +338,39 @@ export async function fetchCountriesList() {
     .catch(error => {
       console.error(error)
       return { success: false, modalText: "avatarDeleteFailed" }
+    })
+}
+
+export async function updateProfileInfoAction(data: ProfileFormSubmit) {
+  const accessToken = headers().get('accessToken');
+
+  return fetch(`${routes.USERS_PROFILE}`, updateProfileOptions(accessToken, data))
+    .then(async (res) => {
+
+      if (res.ok) {
+        revalidatePath('/my-profile/settings-profile/general-information');
+        return { success: true, modalText: "updateProfileSuccess" }
+      } else {
+        const errorData = await res.json();
+        const messageField = errorData.messages.field
+
+        console.log(data);
+
+        console.error(`Error updateProfileInfoAction`)
+        console.error(errorData);
+
+        let toastMessage;
+        switch (messageField) {
+          case 'userName':
+            toastMessage = 'updateProfileUserExist'
+            break;
+
+          default:
+            toastMessage = 'updateProfileFailed'
+            break;
+        }
+
+        return { success: false, modalText: toastMessage }
+      }
     })
 }

@@ -1,3 +1,4 @@
+import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 //AUTH OPTIONS
@@ -122,7 +123,23 @@ export const uploadAvatarOptions = (
     headers: {
       Authorization: `Bearer ${accessToken}`
     },
+    next: { revalidate: 0 },
     body: avatar
+  }
+}
+
+export const updateProfileOptions = (
+  accessToken: string | null,
+  data: ProfileFormSubmit,
+) => {
+  return {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    next: { revalidate: 0 },
   }
 }
 
@@ -133,6 +150,7 @@ export const deleteAvatarOptions = (
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${accessToken}`
-    }
+    },
+    next: { revalidate: 0 },
   }
 }

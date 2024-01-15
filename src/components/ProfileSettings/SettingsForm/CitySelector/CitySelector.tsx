@@ -5,6 +5,7 @@ import {
   Controller,
   UseFormReset,
   UseFormResetField,
+  UseFormSetValue,
 } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -19,26 +20,29 @@ import {
   parseCitiesListIntoOptions,
   parseCountriesListIntoOptions,
 } from '@/utils/parseIntoSelectOptions';
-import { FormValues } from '../SettingsForm';
+import { ProfileFormValues } from '../SettingsForm';
 
 import s from './CitySelector.module.scss';
 
 type CitySelectorProps = {
   userCity: string | null;
-  control: Control<FormValues>;
-  resetField: UseFormResetField<FormValues>;
-  reset: UseFormReset<FormValues>;
+  control: Control<ProfileFormValues>;
+  setValue: UseFormSetValue<any>;
 };
 
 export const CitySelectors: React.FC<CitySelectorProps> = ({
-  resetField,
   userCity,
   control,
-  reset,
+  setValue,
 }) => {
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
   );
+
+  const cityArr = userCity?.split(',') || '';
+
+  const country = cityArr[0] || '';
+  const city = cityArr[1] || '';
 
   const [countriesList, setCountriesList] = useState<
     ResponseCountriesItem[] | null
@@ -52,8 +56,8 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const [citiesList, setCitiesList] = useState<string[] | null>(null);
 
   const defaultValues = {
-    country: { value: '', label: 'Country' },
-    city: { value: '', label: 'City' },
+    country: { value: country, label: country },
+    city: { value: city, label: city },
   };
 
   const onFocusCountryHandler = () => {
@@ -62,10 +66,9 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
       fetchCountriesList()
         .then((res: ResponseCountries) => {
           setCountriesList(res.data);
+          setIsLoadingCountries(false);
+          setValue('city', { value: '', label: 'City' });
         })
-        .then(() => setIsLoadingCountries(false));
-      reset(defaultValues);
-      resetField('city');
     }
   };
 
@@ -80,7 +83,6 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const onCountryChange = (newValue: optionsType) => {
     setCitiesList(null);
     setCheckedCountry(newValue);
-    resetField('city');
   };
 
   return (

@@ -149,7 +149,10 @@
       "avatarSuccessfullyUploaded": "Avatar successfully uploaded",
       "avatarUploadFailed": "Avatar upload failed",
       "avatarSuccessfullyDeleted": "Avatar successfully deleted",
-      "avatarDeleteFailed": "Avatar delete failed"
+      "avatarDeleteFailed": "Avatar delete failed",
+      "updateProfileSuccess": "Profile updated successfully",
+      "updateProfileError": "Profile update failed, try again later",
+      "updateProfileUserExist" : "User with userName string already exists"
     },
     "SettingsFormSchema": {
       "userName": {
