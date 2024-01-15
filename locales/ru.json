@@ -150,7 +150,7 @@
       "avatarUploadFailed": "Ошибка загрузки аватара",
       "avatarSuccessfullyDeleted": "Аватар успешно удален",
       "avatarDeleteFailed": "Ошибка удаления аватара",
-      "updateProfileSuccess": "Вы успешно обновили профайл",
+      "updateProfileSuccess": "Профиль успешно обновлен",
       "updateProfileError": "Ошибка обновления профайла, попробуйте позже",
       "updateProfileUserExist": "Юзер с таким логином уже существует"
     },

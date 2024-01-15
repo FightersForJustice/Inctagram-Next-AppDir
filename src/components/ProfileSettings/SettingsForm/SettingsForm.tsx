@@ -85,7 +85,7 @@ export const SettingsForm = ({
 
     updateProfileInfoAction(submitData)
       .then((res) => {
-        res.success ? toast.success(res.modalText) : toast.error(res.modalText);
+        res.success ? toast.success(translate(res.modalText)) : toast.error(translate(res.modalText));
       })
       .catch((errors) => console.log(errors));
   });
