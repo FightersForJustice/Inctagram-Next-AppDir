@@ -1,13 +1,18 @@
 import { SettingsForm } from '../../SettingsForm/SettingsForm';
-import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
+import {
+  ResponseCountries,
+  UserProfileResponse,
+} from '@/app/lib/dataResponseTypes';
 import { GeneralInformationAvatar } from './Avatar/GeneralInformationAvatar';
 
 import s from '../Tabs.module.scss';
 
 export const GeneralInformationTab = ({
   userInfo,
+  countriesList,
 }: {
   userInfo: UserProfileResponse;
+  countriesList: ResponseCountries;
 }) => {
   const { avatars } = userInfo;
 
@@ -19,7 +24,10 @@ export const GeneralInformationTab = ({
         <GeneralInformationAvatar currentAvatar={currentAvatar} />
       </div>
       <div className={s.wrapper__right}>
-        <SettingsForm userInfo={{ ...userInfo }} />
+        <SettingsForm
+          countriesList={countriesList}
+          userInfo={{ ...userInfo }}
+        />
       </div>
     </div>
   );

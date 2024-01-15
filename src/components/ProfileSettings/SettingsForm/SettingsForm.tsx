@@ -11,7 +11,10 @@ import { convertToReactDatePickerObject } from '@/utils';
 import { SettingsFormSchema } from '@/features/schemas';
 import { SettingsFormItem } from './SettingsFormItem';
 import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
-import { UserProfileResponse } from '@/app/lib/dataResponseTypes';
+import {
+  ResponseCountries,
+  UserProfileResponse,
+} from '@/app/lib/dataResponseTypes';
 import { optionsType } from '@/components/Selector/Selector';
 import { updateProfileInfoAction } from '@/app/lib/actions';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
@@ -39,13 +42,13 @@ export type ProfileFormSubmit = {
 
 export const SettingsForm = ({
   userInfo,
+  countriesList,
 }: {
   userInfo: UserProfileResponse;
+  countriesList: ResponseCountries;
 }) => {
   const { userName, firstName, lastName, dateOfBirth, city, aboutMe } =
     userInfo;
-
-  console.log(userInfo);
 
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
@@ -133,6 +136,7 @@ export const SettingsForm = ({
 
           <div className={s.form_itemSelector}>
             <CitySelectors
+              countriesList={countriesList}
               control={control}
               userCity={city}
               setValue={setValue}

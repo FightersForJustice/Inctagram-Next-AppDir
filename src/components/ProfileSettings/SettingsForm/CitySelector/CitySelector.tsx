@@ -28,12 +28,14 @@ type CitySelectorProps = {
   userCity: string | null;
   control: Control<ProfileFormValues>;
   setValue: UseFormSetValue<any>;
+  countriesList: ResponseCountries;
 };
 
 export const CitySelectors: React.FC<CitySelectorProps> = ({
   userCity,
   control,
   setValue,
+  countriesList,
 }) => {
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
@@ -44,14 +46,9 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const country = cityArr[0] || '';
   const city = cityArr[1] || '';
 
-  const [countriesList, setCountriesList] = useState<
-    ResponseCountriesItem[] | null
-  >(null);
-
-  const [isLoadingCountries, setIsLoadingCountries] = useState(false);
   const [checkedCountry, setCheckedCountry] = useState<optionsType>({
-    value: '',
-    label: '',
+    value: country ?? '',
+    label: country ?? '',
   });
   const [citiesList, setCitiesList] = useState<string[] | null>(null);
 
@@ -61,18 +58,11 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   };
 
   const onFocusCountryHandler = () => {
-    if (!isLoadingCountries) {
-      setIsLoadingCountries(true);
-      fetchCountriesList().then((res: ResponseCountries) => {
-        setCountriesList(res.data);
-        setIsLoadingCountries(false);
-        setValue('city', { value: '', label: 'City' });
-      });
-    }
+    setValue('city', { value: '', label: 'City' });
   };
 
   const onFocusCityHandler = () => {
-    countriesList?.forEach((countryObject) => {
+    countriesList?.data?.forEach((countryObject) => {
       if (countryObject.country === checkedCountry.value) {
         setCitiesList(countryObject.cities);
       }
@@ -90,11 +80,10 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
         selectorsLabelName={translate('country')}
         name="country"
         id="country"
-        isLoading={isLoadingCountries}
         defaultValue={defaultValues.country}
         isSearchable
         onFocus={onFocusCountryHandler}
-        options={parseCountriesListIntoOptions(countriesList)}
+        options={parseCountriesListIntoOptions(countriesList.data)}
         onChange={onCountryChange}
       />
 
