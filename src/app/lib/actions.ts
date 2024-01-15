@@ -322,7 +322,7 @@ export async function deleteAvatarAction() {
 }
 
 export async function fetchCountriesList() {
-  return fetch(`${citySelectRoutes.FIND_COUNTRY}`)
+  return fetch(citySelectRoutes.FIND_COUNTRY)
     .then((res) => {
       if (res.ok) {
         return res.json();
@@ -336,37 +336,43 @@ export async function fetchCountriesList() {
     });
 }
 
+
+// updateProfileInfoAction(submitData)
+// .then((res) => {
+//   res.success ? toast.success(translate(res.modalText)) : toast.error(translate(res.modalText));
+// })
+// .catch((errors) => console.log(errors));
+
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   const accessToken = headers().get('accessToken');
 
   return fetch(
-    `${routes.USERS_PROFILE}`,
+    routes.USERS_PROFILE,
     updateProfileOptions(accessToken, data)
   ).then(async (res) => {
     if (res.ok) {
       revalidatePath('/my-profile/settings-profile/general-information');
       return { success: true, modalText: 'updateProfileSuccess' };
-    } else {
-      const errorData = await res.json();
-      const messageField = errorData.messages.field;
-
-      console.log(data);
-
-      console.error(`Error updateProfileInfoAction`);
-      console.error(errorData);
-
-      let toastMessage;
-      switch (messageField) {
-        case 'userName':
-          toastMessage = 'updateProfileUserExist';
-          break;
-
-        default:
-          toastMessage = 'updateProfileFailed';
-          break;
-      }
-
-      return { success: false, modalText: toastMessage };
     }
+
+    const errorData = await res.json();
+    const messageField = errorData.messages.field;
+
+    console.error(`Error updateProfileInfoAction`);
+    console.error(errorData);
+
+    let toastMessage;
+    switch (messageField) {
+      case 'userName':
+        toastMessage = 'updateProfileUserExist';
+        break;
+
+      default:
+        toastMessage = 'updateProfileFailed';
+        break;
+    }
+
+    return { success: false, modalText: toastMessage };
+
   });
 }
