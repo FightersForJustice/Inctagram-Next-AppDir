@@ -8,9 +8,11 @@ import { authApi } from '@/api/auth.api';
 // import { postsApi } from '@/api/posts.api';
 // import { subscriptionsApi } from '@/api/subscriptions.api';
 import { api } from '@/api/api';
+import { appSliceReducer } from './reducers/app/appSlice';
 
 const rootReducer = combineReducers({
   app: appReducer,
+  appState: appSliceReducer,
   post: postReducer,
   [authApi.reducerPath]: authApi.reducer,
   // [profileApi.reducerPath]: profileApi.reducer,

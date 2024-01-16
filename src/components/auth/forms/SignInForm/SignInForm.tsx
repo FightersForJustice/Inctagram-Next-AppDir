@@ -12,8 +12,11 @@ import { AuthSubmit, FormItem } from '@/components/Input';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
+import { appSliceActions } from '@/redux/reducers/app/appSlice';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 import s from './SignInForm.module.scss';
+import { useAppLoad } from '@/redux/hooks/useAppLoad';
 
 export const SignInForm = () => {
   const translate = useTranslations('SignInPage');
@@ -35,9 +38,11 @@ export const SignInForm = () => {
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
+    console.log('before action');
     const signInResult = await signInAction(data);
 
     if (signInResult?.success) {
+      useAppLoad(true)
       setAuthCookie('accessToken', signInResult.data.accessToken);
       setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
@@ -49,6 +54,7 @@ export const SignInForm = () => {
         type: 'manual',
         message: translate(statusMessage),
       });
+      // dispatch(appSliceActions.setLoad())
     }
   };
 

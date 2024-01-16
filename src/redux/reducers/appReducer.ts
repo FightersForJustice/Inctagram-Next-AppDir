@@ -32,10 +32,6 @@ const slice = createSlice({
     setTokenIsActive(state, action: PayloadAction<boolean>) {
       state.tokenIsActive = action.payload;
     },
-
-    setTokenRefresh(state, action: PayloadAction<boolean>) {
-      state.stopRefresh = action.payload;
-    },
   },
 });
 
