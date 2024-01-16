@@ -40,7 +40,7 @@
   }
 }
 
-@include s.devices(tablet) {
+@include s.devices(tablet-xl) {
   .profileInfoContainer {
     padding: 0 30px;
   }

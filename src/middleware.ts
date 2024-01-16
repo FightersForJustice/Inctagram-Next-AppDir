@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { routes } from './api/routes';
-import { requestMeOptions } from './app/actionOptions';
-import { updateTokensAndContinue } from './app/actions';
+import { requestMeOptions } from './app/lib/actionOptions';
+import { updateTokensAndContinue } from './app/lib/actions';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -15,7 +15,6 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
 }
 
 export const config = {
-  // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
 

@@ -22,7 +22,8 @@
     "question": "Don’t have an account?",
     "btnBottomName": "Sign Up",
     "error400": "The email or password are incorrect. Try again please",
-    "error401": "This email is not registered"
+    "error401": "This email is not registered",
+    "errorundefined": "Something is wrong, please try again later"
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -140,10 +141,18 @@
       "firstname": "First Name",
       "lastname": "Last Name",
       "birthday": "Date of Birth",
-      "city": "Enter your city",
+      "country": "Select your country",
+      "city": "Select your city",
       "aboutMe": "About me",
       "addBtn": "Add a profile photo",
-      "saveBtn": "Save changes"
+      "saveBtn": "Save changes",
+      "avatarSuccessfullyUploaded": "Avatar successfully uploaded",
+      "avatarUploadFailed": "Avatar upload failed",
+      "avatarSuccessfullyDeleted": "Avatar successfully deleted",
+      "avatarDeleteFailed": "Avatar delete failed",
+      "updateProfileSuccess": "Profile updated successfully",
+      "updateProfileError": "Profile update failed, try again later",
+      "updateProfileUserExist": "User with userName string already exists"
     },
     "SettingsFormSchema": {
       "userName": {
@@ -170,7 +179,11 @@
       "aboutMe": {
         "matches": "User description can only contain alphabetic characters, numbers and special characters",
         "min": "Minimum 1 character",
-        "max": "About yourself should not exceed 200 characters"
+        "max": "About yourself field should not exceed 200 characters"
+      },
+      "dateOfBirth": {
+        "ageMore13": "The user's age must be over 13 years",
+        "ageLess100": "The user's age must be less than 100 years"
       }
     },
     "DevicesTab": {

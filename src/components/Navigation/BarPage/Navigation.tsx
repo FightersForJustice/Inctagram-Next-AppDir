@@ -29,7 +29,7 @@ export const Navigation = ({
     const style = clsx(
       s.nav__item,
       {
-        [s.nav__item__active]: pathname === '/' + el.href,
+        [s.nav__item__active]: pathname.startsWith('/' + el.href),
       },
       {
         [s.statistics]: el.href === 'statistics',
@@ -59,7 +59,7 @@ export const Navigation = ({
           el.href !== 'profile' && (
             <Link href={'/' + el.href} className={style}>
               <BarComponent>{el.img}</BarComponent>
-              <span>{t(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+              <span>{t(el.href === 'my-profile' ? 'myProfile' : el.href)}</span>
             </Link>
           )}
         {el.href === 'statistics' && paidAccount && (

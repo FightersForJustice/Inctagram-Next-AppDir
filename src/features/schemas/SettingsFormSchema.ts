@@ -23,7 +23,6 @@ export const SettingsFormSchema = () => {
       .matches(/^[A-Za-zА-ЯЁа-яё]+$/, t('lastName.matches'))
       .max(50, t('lastName.max'))
       .required(t('lastName.required')),
-    city: yup.string().max(30, t('city.max')).nullable(),
     aboutMe: yup
       .string()
       .min(0, t('aboutMe.min'))
