@@ -19,7 +19,7 @@ export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
     if (!loadedImages.length) {
       setPostImage('');
     }
-  }, [loadedImages.length, setPostImage]);
+  }, [loadedImages.length]);
   const moreThen10Img = loadedImages.length >= 10;
   const onDeleteImageFromCollection = (id: string) => {
     if (loadedImages.length === 1) {
