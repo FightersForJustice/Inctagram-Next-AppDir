@@ -1,11 +1,12 @@
 import { DateObject } from 'react-multi-date-picker';
 
+const today = new Date();
+const birthDate = (date: DateObject) => new Date(date.toDate().toString());
+
 export function isMoreThen13YearsOld(date: DateObject | DateObject[] | string) {
   if (date) {
     // @ts-ignore
-    const birthDate = new Date(date.toDate().toString());
-    const today = new Date();
-    const ageYears = today.getFullYear() - birthDate.getFullYear();
+    const ageYears = today.getFullYear() - birthDate(date).getFullYear();
 
     return !(ageYears < 13);
   }
@@ -18,9 +19,7 @@ export function isLessThen100YearsOld(
 ) {
   if (date) {
     // @ts-ignore
-    const birthDate = new Date(date.toDate().toString());
-    const today = new Date();
-    const ageYears = today.getFullYear() - birthDate.getFullYear();
+    const ageYears = today.getFullYear() - birthDate(date).getFullYear();
 
     return !(ageYears > 100);
   }
