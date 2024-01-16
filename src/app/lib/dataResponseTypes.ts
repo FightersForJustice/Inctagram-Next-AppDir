@@ -7,10 +7,10 @@ export type UserProfileResponse = {
   dateOfBirth: string | null;
   aboutMe: string | null;
   createdAt: string;
-  avatars: avatars[] | [];
+  avatars: Avatars[] | [];
 };
 
-type avatars = {
+type Avatars = {
   url: string;
   width: number;
   height: number;

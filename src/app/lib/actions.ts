@@ -293,9 +293,11 @@ export async function uploadAvatarAction(avatar: FormData) {
         revalidatePath('/my-profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyUploaded' };
-      } else {
-        throw new Error(`Error uploadAvatarAction, status ${res.status}`);
       }
+
+      return Promise.reject(
+        new Error(`Error uploadAvatarAction, status ${res.status}`)
+      );
     })
     .catch((error) => {
       console.error(error);
@@ -311,9 +313,11 @@ export async function deleteAvatarAction() {
         revalidatePath('/my-profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyDeleted' };
-      } else {
-        throw new Error(`Error deleteAvatarAction, status ${res.status}`);
       }
+
+      return Promise.reject(
+        new Error(`Error deleteAvatarAction, status ${res.status}`)
+      );
     })
     .catch((error) => {
       console.error(error);
@@ -323,13 +327,13 @@ export async function deleteAvatarAction() {
 
 export async function fetchCountriesList() {
   return fetch(citySelectRoutes.FIND_COUNTRY)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error(`Error deleteAvatarAction, status ${res.status}`);
-      }
-    })
+    .then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(
+            new Error(`Error deleteAvatarAction, status ${res.status}`)
+          )
+    )
     .catch((error) => {
       console.error(error);
       return { success: false, modalText: 'avatarDeleteFailed' };
@@ -366,6 +370,5 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     }
 
     return { success: false, modalText: toastMessage };
-
   });
 }
