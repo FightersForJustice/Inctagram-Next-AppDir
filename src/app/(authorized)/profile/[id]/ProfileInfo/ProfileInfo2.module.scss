@@ -1,0 +1,274 @@
+@use '@/app/mixins.scss' as s;
+.profile {
+  display: flex;
+  position: absolute;
+  .blockUser {
+    .name {
+      margin: 44px 0px 0px 0px;
+      background-color: #ff7f504f;
+      height: 20px;
+      width: 147px;
+      border-radius: 8px;
+      @media (max-width: 740px) {
+        margin-top: calc(27px + (44 - 27) * ((100vw - 360px) / (740 - 360)));
+        height: calc(15px + (20 - 15) * ((100vw - 360px) / (740 - 360)));
+        width: calc(100px + (147 - 100) * ((100vw - 360px) / (740 - 360)));
+      }
+    }
+    .statistics {
+      display: flex;
+      gap: 83px;
+      margin: 20px 0px 0px 0px;
+      @media (max-width: 740px) {
+        font-size: calc(12px + (14 - 12) * ((100vw - 360px) / (740 - 360)));
+        gap: calc(33px + (83 - 33) * ((100vw - 360px) / (740 - 360)));
+        margin-top: calc(0px + (20 - 0) * ((100vw - 360px) / (740 - 360)));
+      }
+      div p:nth-child(1) {
+        background-color: rgba(20, 136, 239, 0.2509803922);
+        width: 13px;
+        height: 13px;
+        margin: 12px 0px 0px 0px;
+        border-radius: 3px;
+      }
+      div p:nth-child(2) {
+        background-color: rgba(20, 136, 239, 0.2509803922);
+        width: 90px;
+        height: 11px;
+        margin: 13px 0px 0px 0px;
+        @media (max-width: 740px) {
+          width: calc(55px + (90 - 55) * ((100vw - 360px) / (740 - 360)));
+        }
+      }
+    }
+  }
+  .left {
+    width: 204px;
+    min-width: 204px;
+    height: 204px;
+    margin: 37px 0px 0px 22px;
+    background-color: #f0ffff45;
+    border-radius: 50%;
+    @media (max-width: 740px) {
+      margin-top: calc(23px + (37 - 23) * ((100vw - 360px) / (740 - 360)));
+      margin-left: calc(14px + (22 - 14) * ((100vw - 360px) / (740 - 360)));
+      min-width: calc(74px + (204 - 74) * ((100vw - 360px) / (740 - 360)));
+      width: calc(74px + (204 - 74) * ((100vw - 360px) / (740 - 360)));
+      height: calc(74px + (204 - 74) * ((100vw - 360px) / (740 - 360)));
+    }
+  }
+  .right {
+    .info {
+      margin: 0px 63px 0px 40px;
+      width: 100%;
+      @media (max-width: 740px) {
+        margin-left: calc(13px + (40 - 13) * ((100vw - 360px) / (740 - 360)));
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 1170px) {
+          flex-direction: column;
+        }
+
+        .btn {
+          margin: 42px 0px 0px -204px;
+          @media (max-width: 1280px) {
+            margin-left: calc(
+              -313px + (-204 - (-313)) * ((100vw - 1170px) / (1280 - 1170))
+            );
+          }
+          @media (max-width: 1170px) {
+            margin-left: 0;
+          }
+          @media (max-width: 632px) {
+            margin-right: 88px;
+          }
+          @media (max-width: 532px) {
+            margin-top: calc(
+              72px + (27 - (72)) * ((100vw - 532px) / (360 - 532))
+            );
+            margin-left: calc(
+              -150px + (-85 - (-150)) * ((100vw - 532px) / (360 - 532))
+            );
+            margin-right: calc(
+              80px + (63 - 80) * ((100vw - 532px) / (360 - 532))
+            );
+          }
+          .btnPrimary {
+            width: 154px;
+            height: 31px;
+            background-color: rgba(255, 235, 205, 0.3019607843);
+            display: inline-block;
+            margin-right: 20px;
+            @media (max-width: 632px) {
+              margin: 0;
+              width: 100%;
+            }
+          }
+          .message {
+            width: 221px;
+            height: 31px;
+            background-color: rgba(255, 235, 205, 0.3019607843);
+            display: inline-block;
+            @media (max-width: 632px) {
+              margin-top: 15px;
+              width: 100%;
+            }
+          }
+        }
+      }
+      .topMyProfile {
+        display: flex;
+        justify-content: space-between;
+        .btn {
+          margin: 36px 0px 0px -210px;
+          .settings {
+            background-color: #00ffff59;
+            width: 209px;
+            height: 37px;
+            border-radius: 6px;
+            margin-left: 191px;
+            @media (max-width: 1280px) {
+              margin-left: calc(
+                192px + (-91 - 192) * ((100vw - 1280px) / (992 - 1280))
+              );
+            }
+          }
+        }
+      }
+    }
+    .descriptions {
+      margin: 35px 0px 0px 0px;
+      @media (max-width: 993px) {
+        width: calc(436px + (683 - 436) * ((100vw - 740px) / (993 - 740)));
+      }
+      @media (max-width: 740px) {
+        width: calc(366px + (436 - 366) * ((100vw - 600px) / (740 - 600)));
+      }
+      @media (max-width: 600px) {
+        margin-top: calc(38px + (94 - 38) * ((100vw - 360px) / (600 - 360)));
+        margin-left: calc(
+          -81px + (-180 - (-81)) * ((100vw - 360px) / (600 - 360))
+        );
+        width: calc(322px + (548 - 322) * ((100vw - 360px) / (600 - 360)));
+        /*
+        margin-top: 94px;
+        margin-left: -180px;
+        width: 548px;
+        margin-top: 38px;
+        margin-left: -81px;
+        width: 322px;
+    */
+      }
+      .text {
+        width: 100%;
+        height: 10px;
+        background-color: #ff00004f;
+        margin: 15px 0px 0px 0px;
+      }
+    }
+    .descriptionsPublic {
+      margin: 35px 0px 0px 0px;
+      .text {
+        width: 100%;
+        height: 10px;
+        background-color: #ff00004f;
+        margin: 15px 0px 0px 0px;
+      }
+
+      @media (max-width: 1170px) {
+        margin-right: calc(
+          80px + (-67 - 80) * ((100vw - 993px) / (1170 - 993))
+        );
+      }
+      @media (max-width: 993px) {
+        margin-right: calc(
+          101px + (-118 - 101) * ((100vw - 720px) / (993 - 720))
+        );
+      }
+      @media (max-width: 720px) {
+        margin-right: calc(65px + (90 - 65) * ((100vw - 360px) / (720 - 360)));
+        margin-left: calc(
+          -85px + (-231 - (-85)) * ((100vw - 360px) / (720 - 360))
+        );
+      }
+    }
+  }
+}
+@include s.devices(tablet-xl) {
+  .settings {
+    display: none;
+  }
+}
+/*
+.info {
+  .text {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  .avatar {
+    display: flex;
+    position: relative;
+    .name {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 36px;
+      margin: 36px 0px 0px 36px;
+    }
+    img {
+      border-radius: 50%;
+      margin: 36px 0px 0px 25px;
+    }
+  }
+  .indicators {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    display: flex;
+    gap: 102px;
+    margin: -150px 0px 0px 264px;
+
+    div p:first-child {
+      font-weight: 700;
+    }
+  }
+  .btn {
+    text-align: right;
+    margin: -97px 65px 0px 0px;
+  }
+  .btnPublic {
+    text-align: right;
+    margin: -97px 65px 0px 0px;
+    @media (max-width: 1100px) {
+      text-align: left;
+      margin: 36px 0px 0px 265px;
+    }
+    .btnPrimary {
+      background: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      margin-right: 20px;
+    }
+    .message {
+      background: var(--dark-300);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+  }
+}
+@include s.devices(tablet-xl) {
+  .settings {
+    display: none;
+  }
+}
+*/
