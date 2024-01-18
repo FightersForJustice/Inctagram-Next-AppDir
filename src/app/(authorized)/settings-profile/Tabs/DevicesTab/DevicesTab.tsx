@@ -15,7 +15,7 @@ import {
 import { toast } from 'react-toastify';
 
 export const DevicesTab = () => {
-  const {   } = useTranslation();
+  const { t } = useTranslation();
   const translate = (key: string): string =>
     t(`SettingsProfilePage.DevicesTab.${key}`);
 
@@ -67,7 +67,7 @@ export const DevicesTab = () => {
     <Tabs.Content className={s.TabsContent} value="devices">
       <div className={s.devices}>
         <ThisDevice
-          t={t}
+          t={translate}
           session={sessions ? sessions[0] : sessionsDefault[0]}
         />
 
@@ -80,7 +80,7 @@ export const DevicesTab = () => {
         )}
         <ActiveSessions
           refetch={refetch}
-          t={t}
+          translate={translate}
           sessions={sessions || sessionsDefault}
         />
       </div>
