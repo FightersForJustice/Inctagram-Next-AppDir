@@ -1,5 +1,8 @@
 @use '@/app/mixins.scss' as s;
-
+.content::-webkit-scrollbar {
+  width: 3px;
+  background: rgb(137, 136, 136);
+}
 .layoutContainer {
   display: flex;
   flex-direction: column;

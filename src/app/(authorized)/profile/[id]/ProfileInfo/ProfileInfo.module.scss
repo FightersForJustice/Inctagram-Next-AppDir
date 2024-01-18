@@ -1,6 +1,7 @@
 @use '@/app/mixins.scss' as s;
 .profile {
   display: flex;
+  overflow-x: hidden;
   .blockUser {
     .name {
       color: #fff;
