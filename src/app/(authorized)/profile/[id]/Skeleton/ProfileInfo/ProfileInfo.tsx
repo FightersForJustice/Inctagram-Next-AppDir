@@ -1,5 +1,5 @@
 'use client';
-import s from './ProfileInfo2.module.scss';
+import s from './ProfileInfo.module.scss';
 import { useTranslations } from 'next-intl';
 
 type Props = {

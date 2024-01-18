@@ -1,6 +1,6 @@
 import s from './Profile.module.scss';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-import { ProfileInfo2 } from './ProfileInfo/ProfileInfo2';
+import { ProfileInfo2 } from './Skeleton/ProfileInfo/ProfileInfo';
 import { UserProfile } from './types';
 //import { ProfileInfo } from '@/components/Skeleton/Profile/ProfileInfo/ProfileInfo';
 type Props = {
