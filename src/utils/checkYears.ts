@@ -9,19 +9,19 @@ export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
     // @ts-ignore
     const ageYears = today.getFullYear() - birthDate(date).getFullYear();
 
-    return ageYears < 13
+    return ageYears < 13;
   }
 
   return false;
 }
 
 export function isMoreThen100YearsOld(
-  date: DateObject | DateObject[] | string  
+  date: DateObject | DateObject[] | string
 ) {
   if (date) {
     // @ts-ignore
     const ageYears = today.getFullYear() - birthDate(date).getFullYear();
-    return ageYears > 100
+    return ageYears > 100;
   }
 
   return false;
@@ -29,8 +29,8 @@ export function isMoreThen100YearsOld(
 
 export function isAgeValid(inputDateString: string | undefined) {
   if (inputDateString) {
-    const dateObj = convertToReactDatePickerObject(inputDateString)
-    
-    return isMoreThen100YearsOld(dateObj) === isLessThen13YearsOld(dateObj)
+    const dateObj = convertToReactDatePickerObject(inputDateString);
+
+    return isMoreThen100YearsOld(dateObj) === isLessThen13YearsOld(dateObj);
   }
 }

@@ -31,7 +31,7 @@ export const SettingsFormSchema = () => {
       .nullable(),
     dateOfBirth: yup
       .string()
-      .test("ageLimit", "_", (date) => isAgeValid(date))
-      .required()
+      .test('ageLimit', '_', (date) => isAgeValid(date))
+      .required(),
   });
 };

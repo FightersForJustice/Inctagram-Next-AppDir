@@ -30,7 +30,6 @@ export const convertToReactDatePickerObject = (
   });
 };
 
-
 export const convertToISOString = (dateInput: DateObject | string) => {
   let formattedDate = new Date(Date.now());
 
@@ -44,14 +43,10 @@ export const convertToISOString = (dateInput: DateObject | string) => {
       dateInput.second,
       dateInput.millisecond
     );
-
   } else {
-    const [day, month, year] = dateInput.split("/");
-    formattedDate = new Date(
-      +year, +month, +day
-    )
+    const [day, month, year] = dateInput.split('/');
+    formattedDate = new Date(+year, +month, +day);
   }
 
   return formattedDate.toISOString();
-}
-
+};

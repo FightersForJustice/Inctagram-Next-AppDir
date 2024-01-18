@@ -24,9 +24,16 @@ export const validateDatePicker = (input: any) => {
   }
 
   const currentYear = new Date().getFullYear();
-  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0 || year > currentYear) {
+  if (
+    day < 1 ||
+    day > 31 ||
+    month < 1 ||
+    month > 12 ||
+    year < 0 ||
+    year > currentYear
+  ) {
     return false;
   }
 
   return true;
-}
+};

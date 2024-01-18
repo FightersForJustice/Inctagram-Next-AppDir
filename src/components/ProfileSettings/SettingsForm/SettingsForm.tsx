@@ -58,7 +58,7 @@ export const SettingsForm = ({
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
   );
-  
+
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
   let isObsoleteDateOfBirth =
     isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
