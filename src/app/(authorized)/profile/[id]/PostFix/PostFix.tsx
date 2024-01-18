@@ -2,7 +2,6 @@ import React, { MouseEventHandler, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { SwiperSlide } from 'swiper/react';
-
 import { PostContent } from './PostContent';
 import { EditPost } from './EditPost';
 import { Loader } from '@/components/Loader';
@@ -10,7 +9,6 @@ import { Dots } from './Dots';
 import { useDeletePostMutation, useGetPostQuery } from '@/api';
 import { handleApiError } from '@/utils';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 import s from './PostFix.module.scss';
 import { DotsFriends } from './DotsFriends';

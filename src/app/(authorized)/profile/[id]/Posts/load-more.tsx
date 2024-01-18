@@ -11,9 +11,10 @@ type Props = {
   id: number;
   minId: number | undefined;
   userData: UserProfile;
+  myProfile: boolean;
 };
 
-export function LoadMore({ id, minId, userData }: Props) {
+export function LoadMore({ id, minId, userData, myProfile }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [newMinId, setNewMinId] = useState<number | null>(null);
 
@@ -42,7 +43,7 @@ export function LoadMore({ id, minId, userData }: Props) {
     <>
       {posts?.map((i) => (
         <div key={i.id} className={s.imageContainer}>
-          <PostImg post={i} userData={userData} />
+          <PostImg post={i} userData={userData} myProfile={myProfile} />
         </div>
       ))}
       <div ref={ref} style={{ marginTop: '20px' }}></div>

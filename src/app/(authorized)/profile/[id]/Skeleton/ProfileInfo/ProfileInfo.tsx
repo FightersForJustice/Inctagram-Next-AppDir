@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 type Props = {
   myProfile: boolean;
 };
-export const ProfileInfo2 = ({ myProfile }: Props) => {
+export const ProfileInfo = ({ myProfile }: Props) => {
   const t = useTranslations('MyProfilePage');
   return (
     <>

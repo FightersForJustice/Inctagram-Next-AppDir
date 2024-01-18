@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { headers } from 'next/headers';
-import { ProfileInfo2 } from './Skeleton/ProfileInfo/ProfileInfo';
+import { ProfileInfo } from './Skeleton/ProfileInfo/ProfileInfo';
 import ProfileServer from './ProfileServer/ProfileServer';
 import { Posts } from './Skeleton/Posts/Posts';
 
@@ -15,7 +15,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       <Suspense
         fallback={
           <>
-            <ProfileInfo2 myProfile={myId === id ? true : false} />
+            <ProfileInfo myProfile={myId === id ? true : false} />
             <Posts />
           </>
         }
