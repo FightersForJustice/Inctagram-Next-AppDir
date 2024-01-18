@@ -14,9 +14,12 @@ import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
 
-export const HeaderMenuMobile = () => {
+export const HeaderMenuMobile = ({
+  userEmail = 'mocked',
+}: {
+  userEmail: string | null;
+}) => {
   const t = useTranslations('Navigation');
-  const userEmail = 'mocked'; //mocked
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);

@@ -11,8 +11,10 @@ export const ServerSideBar = ({ paidAccount }: Props) => {
   const id = parseInt(idHeaders, 10);
 
   return (
-    <>
-      <SideBar paidAccount={paidAccount} id={id} />
-    </>
+    <SideBar
+      userEmail={headers().get('userEmail')}
+      paidAccount={paidAccount}
+      id={id}
+    />
   );
 };
