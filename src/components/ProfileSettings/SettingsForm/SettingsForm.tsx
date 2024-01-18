@@ -20,6 +20,11 @@ import { updateProfileInfoAction } from '@/app/lib/actions';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 
 import s from './SettingsForm.module.scss';
+import {
+  isMoreThen100YearsOld,
+  isLessThen13YearsOld,
+} from '@/utils/checkYears';
+import { useEffect } from 'react';
 
 export type ProfileFormValues = {
   userName: string;
@@ -27,7 +32,7 @@ export type ProfileFormValues = {
   lastName: string;
   city?: optionsType | null;
   country?: optionsType;
-  dateOfBirth?: any;
+  dateOfBirth: any;
   aboutMe?: string | null | undefined;
 };
 
@@ -36,7 +41,7 @@ export type ProfileFormSubmit = {
   firstName: string;
   lastName: string;
   city: string;
-  dateOfBirth?: string;
+  dateOfBirth: string;
   aboutMe: string;
 };
 
@@ -53,6 +58,10 @@ export const SettingsForm = ({
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
   );
+  
+  const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
+  let isObsoleteDateOfBirth =
+    isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
 
   const {
     register,
@@ -132,8 +141,13 @@ export const SettingsForm = ({
           <div className={s.form__itemWrapper}>
             <label htmlFor="dateOfBirth" className={s.form__label}>
               {translate('birthday')}
+              <span className={s.form__required}>*</span>
             </label>
-            <DatePick trigger={trigger} control={control} />
+            <DatePick
+              isObsoleteDateOfBirth={isObsoleteDateOfBirth}
+              trigger={trigger}
+              control={control}
+            />
           </div>
 
           <div className={s.form_itemSelector}>
