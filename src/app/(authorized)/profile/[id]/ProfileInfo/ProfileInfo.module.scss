@@ -125,6 +125,10 @@
       font-weight: 400;
       line-height: 24px;
       margin: 23px 0px 0px 0px;
+      width: 730px;
+      @media (max-width: 1280px) {
+        width: calc(456px + (730 - 456) * ((100vw - 993px) / (1280 - 993)));
+      }
       @media (max-width: 740px) {
         font-size: calc(14px + (16 - 14) * ((100vw - 360px) / (740 - 360)));
       }
@@ -142,10 +146,18 @@
       font-weight: 400;
       line-height: 24px;
       margin: 23px 0px 0px 0px;
+      width: 730px;
+      @media (max-width: 1280px) {
+        width: calc(456px + (730 - 456) * ((100vw - 993px) / (1280 - 993)));
+      }
+      @media (max-width: 993px) {
+        width: 100%;
+      }
       @media (min-width: 633px) and (max-width: 720px) {
         margin-top: 47px;
       }
       @media (max-width: 720px) {
+        width: calc(325px + (653 - 325) * ((100vw - 360px) / (720 - 360)));
         margin-left: calc(
           -42px + (-232 - (-42)) * ((100vw - 260px) / (720 - 260))
         );

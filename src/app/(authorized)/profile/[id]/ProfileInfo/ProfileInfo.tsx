@@ -2,21 +2,26 @@
 import Image from 'next/image';
 import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
-import { UserProfile } from '../types';
+import { ApiResponsePosts, UserProfile } from '../types';
 import { useTranslations } from 'next-intl';
 
 type Props = {
   userData: UserProfile;
   myProfile: boolean;
+  postsData: ApiResponsePosts;
 };
-export const ProfileInfo = ({ userData, myProfile }: Props) => {
+export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
   const t = useTranslations('MyProfilePage');
   return (
     <>
       <div className={s.profile}>
         <div className={s.left}>
           <Image
-            src="/img/profile/avatar.png"
+            src={
+              userData?.avatars[0]
+                ? userData.avatars[0].url
+                : '/img/create-post/no-image.png'
+            }
             alt="avatar"
             width={204}
             height={204}
@@ -27,7 +32,7 @@ export const ProfileInfo = ({ userData, myProfile }: Props) => {
           <div className={s.info}>
             <div className={myProfile ? s.topMyProfile : s.top}>
               <div className={s.blockUser}>
-                <div className={s.name}>URLProfiele</div>
+                <div className={s.name}>{userData?.userName}</div>
                 <div className={s.statistics}>
                   <div>
                     <p>0</p>
@@ -38,7 +43,7 @@ export const ProfileInfo = ({ userData, myProfile }: Props) => {
                     <p>{t('subscribers')}</p>
                   </div>
                   <div>
-                    <p>0</p>
+                    <p>{postsData.totalCount}</p>
                     <p>{t('publications')}</p>
                   </div>
                 </div>
@@ -61,10 +66,8 @@ export const ProfileInfo = ({ userData, myProfile }: Props) => {
               </div>
             </div>
             <div className={myProfile ? s.descriptions : s.descriptionsPublic}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              {userData?.aboutMe ??
+                "Fill in the information about yourself, it's empty now 👁️"}
             </div>
           </div>
         </div>

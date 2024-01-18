@@ -1,12 +1,8 @@
 'use client';
-import Image from 'next/image';
 import s from './ProfileInfo2.module.scss';
-import Link from 'next/link';
-import { UserProfile } from '../types';
 import { useTranslations } from 'next-intl';
 
 type Props = {
-  userData: UserProfile;
   myProfile: boolean;
 };
 export const ProfileInfo2 = ({ myProfile }: Props) => {

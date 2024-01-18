@@ -11,9 +11,8 @@ export const Profile2 = ({ userData, myProfile }: Props) => {
   return (
     <>
       <div style={{ position: 'relative' }}>
-        <ProfileInfo2 userData={userData} myProfile={myProfile} />
+        <ProfileInfo2 myProfile={myProfile} />
       </div>
-      <ProfileInfo userData={userData} myProfile={myProfile} />
     </>
   );
 };
