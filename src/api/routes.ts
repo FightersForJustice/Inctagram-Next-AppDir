@@ -1,5 +1,5 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const auth = 'auth'
+const auth = 'auth';
 
 export const routes = Object.freeze({
   //AUTH

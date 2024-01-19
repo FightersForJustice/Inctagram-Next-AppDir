@@ -20,8 +20,6 @@ type Props = {
 };
 
 export const SideBar = ({ paidAccount, userData, id }: Props) => {
- 
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
@@ -48,7 +46,8 @@ export const SideBar = ({ paidAccount, userData, id }: Props) => {
           onClose={() => setShowLogoutModal(false)}
         >
           <div>
-            {translate('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+            {translate('LogoutModal.question')}{' '}
+            <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn

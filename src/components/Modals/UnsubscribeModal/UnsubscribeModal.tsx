@@ -10,7 +10,6 @@ type Props = {
 };
 
 export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (

@@ -11,7 +11,6 @@ const emailDomainNumberRegex = /^[^\d]*$/;
 const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
 export const SignUpFormSchema = () => {
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Errors.${key}`);
   return yup

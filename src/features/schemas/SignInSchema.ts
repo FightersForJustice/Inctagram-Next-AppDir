@@ -36,7 +36,10 @@ export const SignInSchema = () => {
           // Проверяем, что пароль не состоит только из пробелов
           return value.trim() !== '' && !/\s/.test(value);
         })
-        .matches(passwordValidationRegex, translate('password.invalidCharacters'))
+        .matches(
+          passwordValidationRegex,
+          translate('password.invalidCharacters')
+        )
         .min(6, translate('password.min'))
         .max(20, translate('password.max')),
     })

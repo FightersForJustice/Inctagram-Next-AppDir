@@ -14,8 +14,6 @@ export const HeaderNotification = () => {
   const [amount, setAmount] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
- 
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Header.${key}`);
   const onOpenPopup = () => {

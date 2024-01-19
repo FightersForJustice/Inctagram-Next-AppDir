@@ -42,7 +42,7 @@ export async function signInAction(data: SignInData) {
 
 export async function signUpAction(data: SignInData) {
   try {
-    const newData = {...data, email: data.email.toLowerCase()}
+    const newData = { ...data, email: data.email.toLowerCase() };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     const responseBody = await res.json();
     if (res.ok) {

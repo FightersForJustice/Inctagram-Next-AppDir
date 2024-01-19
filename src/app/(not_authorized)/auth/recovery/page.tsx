@@ -12,7 +12,6 @@ const CreateNewPassword = ({
     code?: string;
   };
 }) => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`RecoveryPage.${key}`);
   return (

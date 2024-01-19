@@ -23,11 +23,7 @@ export const HomePagePost = ({ post, images }: Props) => {
   const language = useGetLanguageFromPath();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
-  const test = getTimeAgoText(
-    post.createdAt,
-    language,
-    translate
-  );
+  const test = getTimeAgoText(post.createdAt, language, translate);
 
   return (
     <div className={s.post}>

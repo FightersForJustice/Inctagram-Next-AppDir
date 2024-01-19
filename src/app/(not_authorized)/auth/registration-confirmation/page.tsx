@@ -9,9 +9,9 @@ const RegistrationConfirmation = ({
   params: { slug: string };
   searchParams: { code: string };
 }) => {
- 
   const { t } = useTranslation();
-  const translate = (key: string): string => t(`RegistrationConfirmationPage.${key}`);
+  const translate = (key: string): string =>
+    t(`RegistrationConfirmationPage.${key}`);
   return <Confirm code={String(searchParams.code)} translate={translate} />;
 };
 

@@ -14,7 +14,6 @@ export const SubscriptionsProfile = ({
   setShowSubscriptionsModal: (value: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
 }) => {
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (

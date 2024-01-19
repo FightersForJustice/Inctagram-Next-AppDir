@@ -17,7 +17,7 @@ type Props = {
 };
 const ServiceAuth = ({ page }: Props) => {
   const { t } = useTranslation();
-  const translate = (key: string): string => t(page+`.${key}`);
+  const translate = (key: string): string => t(page + `.${key}`);
 
   const router = useRouter();
 

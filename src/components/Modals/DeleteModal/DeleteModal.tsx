@@ -9,7 +9,6 @@ type Props = {
 };
 
 export const DeleteModal = ({ setShowDeleteModal }: Props) => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (

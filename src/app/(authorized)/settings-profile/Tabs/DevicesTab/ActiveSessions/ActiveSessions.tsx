@@ -17,7 +17,11 @@ type Props = {
   refetch: any;
 };
 
-export const ActiveSessions: React.FC<Props> = ({ translate, sessions, refetch }) => {
+export const ActiveSessions: React.FC<Props> = ({
+  translate,
+  sessions,
+  refetch,
+}) => {
   const { t } = useTranslation();
   const logoutTranslate = (key: string): string => t(`Navigation.${key}`);
   const [deleteSession] = useDeleteSessionsDeviceMutation();

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import s from './Verification.module.scss';
 
 const EmailVerification = () => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`EmailVerificationPage.${key}`);
   return (

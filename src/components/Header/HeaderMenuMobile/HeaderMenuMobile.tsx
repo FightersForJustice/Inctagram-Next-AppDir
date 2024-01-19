@@ -15,7 +15,6 @@ import { logout } from '@/features/customHooks/useLogout';
 import s from './HeaderMenuMobile.module.scss';
 
 export const HeaderMenuMobile = () => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
@@ -103,7 +102,8 @@ export const HeaderMenuMobile = () => {
           className={s.modal}
         >
           <div>
-            {translate('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+            {translate('LogoutModal.question')}{' '}
+            <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
             <TransparentBtn

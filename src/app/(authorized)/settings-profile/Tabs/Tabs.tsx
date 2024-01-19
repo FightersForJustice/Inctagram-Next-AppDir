@@ -26,7 +26,6 @@ import { MyPayments } from '@/app/(authorized)/settings-profile/Tabs/MyPayments'
 import s from './Tabs.module.scss';
 
 const TabsDemo = () => {
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`SettingsProfilePage.${key}`);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
@@ -87,7 +86,9 @@ const TabsDemo = () => {
       <Tabs.Root className={s.TabsRoot} defaultValue="generalInformation">
         <Tabs.List className={s.TabsList} aria-label="Manage your account">
           <Tabs.Trigger className={s.TabsTrigger} value="generalInformation">
-            <p className={s.TabsText}>{translate('GeneralInformationTab.titleTab')}</p>
+            <p className={s.TabsText}>
+              {translate('GeneralInformationTab.titleTab')}
+            </p>
             <InfoCircledIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="devices">
@@ -95,7 +96,9 @@ const TabsDemo = () => {
             <DesktopIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="accountManagement">
-            <p className={s.TabsText}>{translate('AccountManagementTab.titleTab')}</p>
+            <p className={s.TabsText}>
+              {translate('AccountManagementTab.titleTab')}
+            </p>
             <GearIcon className={s.TabsIcon} />
           </Tabs.Trigger>
           <Tabs.Trigger className={s.TabsTrigger} value="myPayments">

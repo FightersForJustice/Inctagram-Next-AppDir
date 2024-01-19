@@ -9,7 +9,6 @@ import { store } from '../../redux/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { notFound } from 'next/navigation';
 
-
 i18n.use(initReactI18next).init({
   detection: {
     order: ['localStorage', 'htmlTag', 'path', 'subdomain'],
@@ -40,9 +39,9 @@ async function Providers({ children }: { children: React.ReactNode }) {
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
     >
-       <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18n}>
         <Provider store={store}>{children}</Provider>
-        </I18nextProvider>
+      </I18nextProvider>
     </GoogleOAuthProvider>
   );
 }

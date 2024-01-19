@@ -23,7 +23,6 @@ export const Navigation = ({
   setShowLogoutModal,
   paidAccount,
 }: NavigationType) => {
-
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
@@ -53,7 +52,9 @@ export const Navigation = ({
         {el.href === 'profile' && (
           <Link href={'/profile/' + id} className={style}>
             <BarComponent>{el.img}</BarComponent>
-            <span>{translate(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+            <span>
+              {translate(el.href === 'profile' ? 'myProfile' : el.href)}
+            </span>
           </Link>
         )}
         {el.href !== 'create' &&
@@ -61,7 +62,9 @@ export const Navigation = ({
           el.href !== 'profile' && (
             <Link href={'/' + el.href} className={style}>
               <BarComponent>{el.img}</BarComponent>
-              <span>{translate(el.href === 'profile' ? 'myProfile' : el.href)}</span>
+              <span>
+                {translate(el.href === 'profile' ? 'myProfile' : el.href)}
+              </span>
             </Link>
           )}
         {el.href === 'statistics' && paidAccount && (
