@@ -66,7 +66,7 @@ export function AvatarSkeleton() {
 export function ProfileSettingsSkeleton() {
   return (
     <div className="flex flex-col md:flex-row gap-[40px] w-full">
-      <div className="lg-mt-[25px] mt-[50px]">
+      <div className="mt-[25px] md:mt-[50px]">
         <AvatarSkeleton />
       </div>
       <ProfileSettingsFormSkeleton />
