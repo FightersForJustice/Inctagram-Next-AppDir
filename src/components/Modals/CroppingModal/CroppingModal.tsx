@@ -2,9 +2,9 @@ import { PropsWithChildren } from 'react';
 import Image from 'next/image';
 
 import './CroppingModal.css';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
-  title: string;
   onClose?: () => void;
   width?: string;
   setPostImage: (value: string) => void;
@@ -14,7 +14,6 @@ type Props = {
 
 export const CroppingModal = ({
   onClose,
-  title,
   children,
   width,
   setPostImage,
@@ -23,6 +22,9 @@ export const CroppingModal = ({
   const onNextBtnHandler = () => {
     showThirdModal();
   };
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
 
   return (
     <div className={'modal'} onClick={onClose}>
@@ -40,9 +42,9 @@ export const CroppingModal = ({
             className={'modal__arrow'}
             onClick={() => setPostImage('')}
           />
-          <div className={'modal__title'}>{title}</div>
+          <div className={'modal__title'}>{translate('cropping')}</div>
           <button className={'modal__next'} onClick={onNextBtnHandler}>
-            Next
+            {translate('nextBtn')}
           </button>
         </div>
         <div className={'modal__body2'}>{children}</div>

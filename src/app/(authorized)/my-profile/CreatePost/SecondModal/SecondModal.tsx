@@ -46,7 +46,6 @@ export const SecondModal = ({
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
-        title={'Cropping'}
         setPostImage={setPostImage}
         showThirdModal={showThirdModal}
         onClose={() => setAreYouSureModal(true)}

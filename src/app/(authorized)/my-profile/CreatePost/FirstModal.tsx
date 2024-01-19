@@ -30,7 +30,8 @@ export const FirstModal = ({
   const id = crypto.randomUUID();
 
   const { t } = useTranslation();
-  const translate = (key: string): string => t(`SettingsProfilePage.AddPhotoModal.${key}`);
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -53,7 +54,7 @@ export const FirstModal = ({
 
   return (
     <Modal
-      title={'Add photo'}
+      title={translate('title')}
       className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
@@ -72,11 +73,11 @@ export const FirstModal = ({
             onChange={onSetUserAvatar}
           />
           <div className={s.createPost__overlay}>
-            <PrimaryBtn>Select from computer</PrimaryBtn>
+            <PrimaryBtn>{translate('selectBtn')}</PrimaryBtn>
           </div>
         </div>
         <div className={s.createPost__open}>
-          <TransparentBtn>Open draft</TransparentBtn>
+          <TransparentBtn>{translate('openDraftBtn')}</TransparentBtn>
         </div>
       </div>
     </Modal>

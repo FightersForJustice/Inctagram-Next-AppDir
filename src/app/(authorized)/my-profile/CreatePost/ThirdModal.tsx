@@ -9,6 +9,7 @@ import { postImages } from '@/redux/reducers/post/postSelectors';
 import { filters } from '@/features/data';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import { useTranslation } from 'react-i18next';
 
 import s from './CreatePost.module.scss';
 
@@ -19,12 +20,16 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
 };
 
-export const ThirdModal: React.FC<Props> = ({
+export const ThirdModal = ({
   showSecondModal,
   showFourthModal,
   zoomValue,
   setShowCreatePostModal,
-}) => {
+}: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesArr = useAppSelector(postImages);
   const changedPostImage = useRef<any>();
@@ -38,9 +43,9 @@ export const ThirdModal: React.FC<Props> = ({
   return (
     <>
       <FiltersModal
-        title={'Filters'}
+        title={translate('filters')}
         width={'972px'}
-        buttonName={'Next'}
+        buttonName={translate('nextBtn')}
         showSecondModal={showSecondModal}
         showFourthModal={showFourthModal}
         onClose={() => setAreYouSureModal(true)}

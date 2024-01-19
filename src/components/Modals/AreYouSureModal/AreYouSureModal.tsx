@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 
 import s from './AreYouSureModal.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
@@ -21,17 +22,17 @@ export const AreYouSureModal = ({
   isDeleting,
 }: Props) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
   return (
     <>
       <Modal
-        title={'Close'}
+        title={translate('close')}
         className={s.container}
         onClose={() => toggleAreYouSureModal(false)}
       >
-        <p className={s.modal__text}>
-          Do you really want to close the creation of a publication? If you
-          close everything will be deleted
-        </p>
+        <p className={s.modal__text}>{translate('areYouSureText')}</p>
         <div className={s.modal__btns}>
           <TransparentBtn
             onClick={() => {
@@ -49,10 +50,10 @@ export const AreYouSureModal = ({
               }
             }}
           >
-            Yes
+            {translate('yes')}
           </TransparentBtn>
           <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>
-            No
+            {translate('no')}
           </PrimaryBtn>
         </div>
       </Modal>

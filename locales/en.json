@@ -189,7 +189,15 @@
     "AddPhotoModal": {
       "title": "Add a profile photo",
       "selectBtn": "Select from a computer",
-      "saveBtn": "Save"
+      "saveBtn": "Save",
+      "openDraftBtn": "Open draft",
+      "nextBtn": "Next",
+      "cropping": "Cropping",
+      "close": "Close",
+      "yes": "Yes",
+      "no": "No",
+      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "filters": "Filters"
     }
   },
   "AgreementsPage": {
