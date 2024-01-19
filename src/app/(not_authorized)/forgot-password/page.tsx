@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   return (
     <div className={s.container}>
       <p className={s.title}>{translate('title')}</p>
-      <ForgotPasswordForm translate={t} />
+      <ForgotPasswordForm />
     </div>
   );
 };
