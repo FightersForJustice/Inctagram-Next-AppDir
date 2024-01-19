@@ -33,7 +33,7 @@ function LineSkeleton() {
 
 function SubmitBtnSkeleton() {
   return (
-    <div className="flex flex-row-reverse lg-mb-[24px] mb-[84px]">
+    <div className="flex flex-row-reverse lg:pb-[0px] pb-[60px]">
       <div className="animate-pulse w-[134px] h-[38px] rounded-[2px] bg-neutral-800" />
     </div>
   );
@@ -41,7 +41,7 @@ function SubmitBtnSkeleton() {
 
 export function ProfileSettingsFormSkeleton() {
   return (
-    <div className="flex flex-col my-[24px] gap-[24px]">
+    <div className="flex flex-1 flex-col my-[24px] gap-[24px]">
       <FormItemSkeleton />
       <FormItemSkeleton />
       <FormItemSkeleton />
@@ -56,7 +56,7 @@ export function ProfileSettingsFormSkeleton() {
 
 export function AvatarSkeleton() {
   return (
-    <div className="flex flex-col  gap-[24px] items-center ">
+    <div className="flex flex-col gap-[24px] items-center ">
       <div className="animate-pulse w-[192px] h-[192px] rounded-full  bg-neutral-800" />
       <div className="animate-pulse w-full sm:w-[160px] h-[38px] rounded-[2px] bg-neutral-800" />
     </div>
@@ -65,7 +65,7 @@ export function AvatarSkeleton() {
 
 export function ProfileSettingsSkeleton() {
   return (
-    <div className="flex md-flex-col flex-row gap-[40px]">
+    <div className="flex flex-col md:flex-row gap-[40px] w-full">
       <div className="lg-mt-[25px] mt-[50px]">
         <AvatarSkeleton />
       </div>
