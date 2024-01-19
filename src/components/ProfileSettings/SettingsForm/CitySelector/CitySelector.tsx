@@ -1,21 +1,11 @@
 'use client';
 
-import {
-  Control,
-  Controller,
-  UseFormReset,
-  UseFormResetField,
-  UseFormSetValue,
-} from 'react-hook-form';
+import { Control, Controller, UseFormSetValue } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { BaseSelector, optionsType } from '@/components/Selector/Selector';
-import { fetchCountriesList } from '@/app/lib/actions';
-import {
-  ResponseCountries,
-  ResponseCountriesItem,
-} from '@/app/lib/dataResponseTypes';
+import { ResponseCountries } from '@/app/lib/dataResponseTypes';
 import {
   parseCitiesListIntoOptions,
   parseCountriesListIntoOptions,
@@ -42,7 +32,6 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   );
 
   const cityArr = userCity?.split(',') || '';
-
   const country = cityArr[0] || '';
   const city = cityArr[1] || '';
 
