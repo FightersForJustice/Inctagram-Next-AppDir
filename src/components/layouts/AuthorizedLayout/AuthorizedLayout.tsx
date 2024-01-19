@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { Header } from '@/components/Header';
-import styles from './AuthorizedLayout.module.scss';
 import { ServerSideBar } from '@/components/Navigation/serverSideBar';
+
+import styles from './AuthorizedLayout.module.scss';
 
 type Props = {
   title?: string;
