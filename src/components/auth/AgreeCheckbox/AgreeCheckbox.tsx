@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { AgreeCheckboxProps } from '@/types/signUpTypes';
 import s from './AgreeCheckbox.module.scss';
 import { InputError } from '@/components/Input';
+import { Trans } from 'react-i18next';
 
 export const AgreeCheckbox = ({
   translate,
@@ -46,18 +47,20 @@ export const AgreeCheckbox = ({
             )}
           </svg>
           <p>
-            {translate.rich('agreementsCheckText', {
-              link: (chunks: string) => (
-                <Link className={s.link} href="./agreements/terms-of-service">
-                  {chunks}
-                </Link>
-              ),
-              link2: (chunks: string) => (
-                <Link className={s.link} href="./agreements/privacy-policy">
-                  {chunks}
-                </Link>
-              ),
-            })}
+            <Trans
+              i18nKey="SignUpPage.agreementsCheckText"
+              components={{
+                link1: (
+                  <Link
+                    className={s.link}
+                    href="./agreements/terms-of-service"
+                  />
+                ),
+                link2: (
+                  <Link className={s.link} href="./agreements/privacy-policy" />
+                ),
+              }}
+            ></Trans>
           </p>
         </div>
 

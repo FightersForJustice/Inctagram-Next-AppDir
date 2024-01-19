@@ -6,12 +6,11 @@ import { ForgotPasswordForm } from '@/components/auth';
 import s from './Forgot-Password.module.scss';
 
 const ForgotPassword = () => {
- 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
   return (
     <div className={s.container}>
-      <p className={s.title}>{t('title')}</p>
+      <p className={s.title}>{translate('title')}</p>
       <ForgotPasswordForm translate={t} />
     </div>
   );
