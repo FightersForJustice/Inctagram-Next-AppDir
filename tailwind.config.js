@@ -23,10 +23,10 @@ module.exports = {
       8: '8px',
     },
     screens: {
-      'sm': '522px',
-      'md': '768px',
-      'lg': '993px',
-    }
+      sm: '522px',
+      md: '768px',
+      lg: '993px',
+    },
   },
   plugins: [],
 };
