@@ -1,23 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import DatePicker from 'react-multi-date-picker';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { Control, Controller, UseFormTrigger } from 'react-hook-form';
 import {
   isMoreThen100YearsOld,
   isLessThen13YearsOld,
 } from '@/utils/checkYears';
-
-import './DatePick.scss';
-import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
 import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
 import { validateDatePicker } from '@/utils/dateToFormat';
+
+import './DatePick.scss';
+import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
+import DatePicker from 'react-multi-date-picker';
 
 export const DatePick = ({
   control,
@@ -33,7 +34,9 @@ export const DatePick = ({
     isObsoleteDateOfBirth
   );
 
-  const t = useTranslations('SettingsProfilePage.SettingsFormSchema');
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
   const displayError = !!fieldError.length || isObsoleteAge;
 
@@ -56,6 +59,7 @@ export const DatePick = ({
               onClose={() => {
                 trigger('dateOfBirth');
               }}
+              //@ts-ignore
               onChange={(date: typeof value, { input, isTyping }) => {
                 //validating typing of date input
                 if (isTyping && !validateDatePicker(input)) {
@@ -67,9 +71,9 @@ export const DatePick = ({
                 const isAgeMoreThan100 = isMoreThen100YearsOld(date);
                 setFieldError(
                   isAgeLessThan13
-                    ? t('dateOfBirth.ageMore13')
+                    ? translate('dateOfBirth.ageMore13')
                     : isAgeMoreThan100
-                    ? t('dateOfBirth.ageLess100')
+                    ? translate('dateOfBirth.ageLess100')
                     : ''
                 );
 
@@ -80,7 +84,7 @@ export const DatePick = ({
             {displayError && (
               <p className="rmdp-error">
                 {fieldError}
-                {isObsoleteAge && t('dateOfBirth.ageMessage')}
+                {isObsoleteAge && translate('dateOfBirth.ageMessage')}
                 <Link
                   href={'/agreements/privacy-policy-profile'}
                   className={'underline pl-[5px]'}

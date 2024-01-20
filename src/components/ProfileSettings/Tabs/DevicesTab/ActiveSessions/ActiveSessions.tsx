@@ -1,29 +1,28 @@
-import React from 'react';
-import s from './ActiveSessions.module.scss';
 
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import {
   DevicesResponse,
   useDeleteSessionsDeviceMutation,
 } from '@/api/profile.api';
 import { dateToFormat } from '@/utils/dateToFormat';
-import { toast } from 'react-toastify';
+
+import s from './ActiveSessions.module.scss';
 
 type Props = {
-  translate: (value: string) => string;
   sessions: DevicesResponse[];
   refetch: any;
 };
 
-export const ActiveSessions: React.FC<Props> = ({
-  translate,
-  sessions,
-  refetch,
-}) => {
+export const ActiveSessions: React.FC<Props> = ({ sessions, refetch }) => {
   const { t } = useTranslation();
   const logoutTranslate = (key: string): string => t(`Navigation.${key}`);
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
+
   const [deleteSession] = useDeleteSessionsDeviceMutation();
 
   const logoutSession = async (item: DevicesResponse) => {

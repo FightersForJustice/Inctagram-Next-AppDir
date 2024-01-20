@@ -1,7 +1,7 @@
 'use client';
 
-import { usePathname } from 'next-intl/client';
 import { SearchContent } from './SearchContent';
+import { usePathname } from 'next/navigation';
 
 import s from './Search.module.scss';
 

@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
@@ -19,7 +19,7 @@ type TProps = {
 };
 
 export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(true);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
 
   const [userAvatar, setUserAvatar] = useState<string>('');
@@ -30,7 +30,9 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.GeneralInformationTab.${key}`);
 
   const onDeleteAvatar = () => {
     setIsLoading(true);
@@ -39,7 +41,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
         res.success
           ? setLoadedAvatar('')
           : setTimeout(() => {
-              toast.error(t(res.modalText));
+              toast.error(translate(res.modalText));
             }, 2000);
       })
       .finally(() => {
@@ -74,7 +76,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
         .then((res) => {
           !res.success &&
             setTimeout(() => {
-              toast.error(t(res.modalText));
+              toast.error(translate(res.modalText));
             }, 2000);
         })
         .finally(() => {
@@ -118,7 +120,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
         )}
       </div>
       <TransparentBtn onClick={() => setShowAddAvatarModal(true)}>
-        {t('addBtn')}
+        {translate('addBtn')}
       </TransparentBtn>
       {showDeleteModal && (
         <DeleteAvatarModal
@@ -129,6 +131,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
       )}
       {showAddAvatarModal && (
         <ShowAddAvatarModal
+          translate={translate}
           onCloseAvatarModal={onCloseAvatarModal}
           userAvatar={userAvatar}
           setUserAvatar={setUserAvatar}

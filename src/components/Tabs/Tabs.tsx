@@ -4,13 +4,15 @@ import { ProfileTabsList } from './TabsList';
 import { Tab } from './Tab';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import s from './Tabs.module.scss';
 
 export default function ProfileTabs() {
   const pathname = usePathname();
-  const t = useTranslations('SettingsProfilePage');
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SettingsProfilePage.${key}`);
 
   const renderTabList = () => {
     return ProfileTabsList.map((tab) => (
@@ -20,7 +22,7 @@ export default function ProfileTabs() {
         })}
         key={tab.name}
         link={tab.link}
-        tabName={t(tab.name)}
+        tabName={translate(tab.name)}
         icon={tab.icon}
       />
     ));

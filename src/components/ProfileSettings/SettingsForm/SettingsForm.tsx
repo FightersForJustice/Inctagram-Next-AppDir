@@ -1,8 +1,8 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { DatePick } from '@/components/DatePicker';
@@ -20,13 +20,12 @@ import { updateProfileInfoAction } from '@/app/lib/actions';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
-
-import s from './SettingsForm.module.scss';
 import {
   isMoreThen100YearsOld,
   isLessThen13YearsOld,
 } from '@/utils/checkYears';
-import { useEffect } from 'react';
+
+import s from './SettingsForm.module.scss';
 
 export type ProfileFormValues = {
   userName: string;
@@ -57,9 +56,9 @@ export const SettingsForm = ({
   const { userName, firstName, lastName, dateOfBirth, city, aboutMe } =
     userInfo;
 
-  const translate = useTranslations(
-    'SettingsProfilePage.GeneralInformationTab'
-  );
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SettingsProfilePage.GeneralInformationTab.${key}`);
+  
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

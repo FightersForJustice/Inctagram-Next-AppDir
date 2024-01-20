@@ -5,10 +5,11 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { Modal } from '@/components/Modals/Modal';
 import { Alert } from '@/components/Alert';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+
 import s from '../Tabs.module.scss';
-import { useTranslations } from 'next-intl';
 
 type Props = {
+  translate: (value: string) => string;
   onCloseAvatarModal: () => void;
   userAvatar: string;
   setUserAvatar: (value: string) => void;
@@ -29,27 +30,24 @@ export const ShowAddAvatarModal = ({
   onSaveUserAvatar,
   onSetUserAvatar,
   onCloseAvatarModal,
+  translate,
   fileError,
 }: Props) => {
-  const [showModalDelete, setShowModalDelete] = useState(false);
-
-  const t = useTranslations('SettingsProfilePage');
-
-  // const closeModalHandler = () => {
-  //   if (userAvatar) {
-  //     return setShowModal(true);
-  //   }
-  // };
-
-  const onCloseAvatarHandler = () => {
+  const [showModal, setShowModal] = useState(false);
+  const closeModalHandler = () => {
+    if (userAvatar) {
+      return setShowModal(true);
+    }
+  };
+  const onCloseHandler = () => {
     onCloseAvatarModal();
     setUserAvatar('');
   };
 
   return (
     <Modal
-      title={t('AddPhotoModal.title')}
-      onClose={onCloseAvatarHandler}
+      title={translate('AddPhotoModal.title')}
+      onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
     >
@@ -76,7 +74,7 @@ export const ShowAddAvatarModal = ({
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
             <PrimaryBtn onClick={onSaveUserAvatar}>
-              {t('AddPhotoModal.saveBtn')}
+              {translate('AddPhotoModal.saveBtn')}
             </PrimaryBtn>
           </div>
         ) : (
@@ -88,16 +86,15 @@ export const ShowAddAvatarModal = ({
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn>{t('AddPhotoModal.selectBtn')}</PrimaryBtn>
+            <PrimaryBtn>{translate('AddPhotoModal.selectBtn')}</PrimaryBtn>
           </div>
         )}
-        {showModalDelete && (
-          <></>
-          // <DeleteAvatarModal
-          //   userAvatar={userAvatar}
-          //   setShowModal={setShowModal}
-          //   onClose={onCloseHandler}
-          // />
+        {showModal && (
+          <DeleteAvatarModal
+            userAvatar={userAvatar}
+            setShowModal={setShowModal}
+            onClose={onCloseHandler}
+          />
         )}
       </div>
     </Modal>
