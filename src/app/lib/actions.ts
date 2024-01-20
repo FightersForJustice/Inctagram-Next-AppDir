@@ -326,7 +326,7 @@ export async function deleteAvatarAction() {
 }
 
 export async function fetchCountriesList() {
-  return fetch(citySelectRoutes.FIND_COUNTRY)
+  return fetch(citySelectRoutes.FIND_COUNTRY, { cache: 'force-cache' })
     .then((res) =>
       res.ok
         ? res.json()
