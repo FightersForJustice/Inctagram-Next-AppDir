@@ -10,6 +10,7 @@ import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
 import { dataURLtoFile } from '@/utils';
 import { deleteAvatarAction, uploadAvatarAction } from '@/app/lib/actions';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './GeneralInformationAvatar.module.scss';
 
@@ -27,17 +28,25 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const t = useTranslations('SettingsProfilePage.GeneralInformationTab');
 
   const onDeleteAvatar = () => {
-    console.log('1');
-
-    deleteAvatarAction().then((res) => {
-      if (res.success) {
-        setLoadedAvatar('');
-        toast.success(t(res.modalText));
-      } else toast.error(t(res.modalText));
-    });
+    setIsLoading(true);
+    deleteAvatarAction()
+      .then((res) => {
+        res.success
+          ? setLoadedAvatar('')
+          : setTimeout(() => {
+              toast.error(t(res.modalText));
+            }, 2000);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      });
   };
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,14 +66,22 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   };
 
   const onSaveUserAvatar = async () => {
+    setIsLoading(true);
     if (file) {
       const formData = new FormData();
       formData.append('file', dataURLtoFile(croppedAvatar), file.name);
-      uploadAvatarAction(formData).then((res) => {
-        res.success
-          ? toast.success(t(res.modalText))
-          : toast.error(t(res.modalText));
-      });
+      uploadAvatarAction(formData)
+        .then((res) => {
+          !res.success &&
+            setTimeout(() => {
+              toast.error(t(res.modalText));
+            }, 2000);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 2000);
+        });
       setUserAvatar('');
       setCroppedAvatar('');
       setShowAddAvatarModal(false);
@@ -76,7 +93,9 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setFileError('');
   };
 
-  return (
+  return isLoading ? (
+    <AvatarSkeleton />
+  ) : (
     <div className={s.avatarContainer}>
       <div className={s.avatarWithButton}>
         <Image
