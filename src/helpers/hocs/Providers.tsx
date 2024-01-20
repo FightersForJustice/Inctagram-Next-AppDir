@@ -17,8 +17,8 @@ function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const module = await import(`../../../locales/${locale}.json`);
-        setMessages(module);
+        const moduleImport = await import(`../../../locales/${locale}.json`);
+        setMessages(moduleImport);
       } catch (error) {
         setError(true);
       }
