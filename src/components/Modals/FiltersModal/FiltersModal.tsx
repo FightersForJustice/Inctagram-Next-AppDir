@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
-import { ImageStateType } from '@/app/(authorized)/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 import './FiltersModal.css';
 
