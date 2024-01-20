@@ -6,20 +6,18 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { toast } from 'react-toastify';
-
 import { forgotPasswordAction } from '@/app/actions';
 import { Modal } from '@/components/Modals/Modal';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { AuthSubmit } from '@/components/Input';
+import { useTranslation } from 'react-i18next';
 
 import s from './ForgotPasswordForm.module.scss';
 import f from './EmailSentModal.module.scss';
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 
 export const ForgotPasswordForm = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
 
   const {
@@ -95,12 +93,13 @@ export const ForgotPasswordForm = () => {
         </Link>
 
         <ReCAPTCHA
+          key={i18n.language}
           ref={recaptchaRef}
           sitekey={siteKey}
           onChange={reCaptchaHandler}
           className={s.recaptchaContainer}
           theme="dark"
-          hl={i18next.language}
+          hl={i18n.language}
         />
       </form>
       {showModal && (
