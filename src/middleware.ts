@@ -70,7 +70,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         const response = NextResponse.next();
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();
+
         response.headers.set('id', `${responseData.userId}`);
+        response.headers.set('userEmail', `${responseData.email}`);
+        response.headers.set('userName', `${responseData.email}`);
 
         return isAuthPath
           ? NextResponse.redirect(
