@@ -24,18 +24,18 @@ export const SubscriptionsProfile = ({
           onClick={() => setShowSubscriptionsModal(true)}
         >
           <p>0</p>
-          <p>{t('subscriptions')}</p>
+          <p>{translate('subscriptions')}</p>
         </div>
         <div
           className={s.profileInfoSubscribers}
           onClick={() => setShowSubscribersModal(true)}
         >
           <p>0</p>
-          <p>{t('subscribers')}</p>
+          <p>{translate('subscribers')}</p>
         </div>
         <div className={s.profileInfoPublications}>
           <p>{userPostsLength ?? 0}</p>
-          <p>{t('publications')}</p>
+          <p>{translate('publications')}</p>
         </div>
       </div>
     </div>

@@ -5,9 +5,9 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import en from '../../../locales/en.json';
 import ru from '../../../locales/ru.json';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { store } from '@/redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { notFound } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 
 i18n.use(initReactI18next).init({
   detection: {
@@ -24,16 +24,15 @@ i18n.use(initReactI18next).init({
     },
   },
 });
-async function Providers({ children }: { children: React.ReactNode }) {
-  //hardcode locale
-  const locale = 'ru';
 
-  let messages;
-  try {
-    messages = (await import(`../../../locales/${locale}.json`)).default;
-  } catch (error) {
-    notFound();
-  }
+function Providers({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem('language');
+
+    if (storedLanguage && storedLanguage !== i18n.language) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, []);
 
   return (
     <GoogleOAuthProvider
@@ -45,4 +44,5 @@ async function Providers({ children }: { children: React.ReactNode }) {
     </GoogleOAuthProvider>
   );
 }
+
 export default Providers;

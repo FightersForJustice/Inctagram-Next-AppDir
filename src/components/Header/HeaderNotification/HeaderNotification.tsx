@@ -38,7 +38,7 @@ export const HeaderNotification = () => {
             <div className={s.popup}>
               <h3 className={s.popup__title}>
                 {' '}
-                {t('notifications.notZeroNotifications')}
+                {translate('notifications.notZeroNotifications')}
               </h3>
               {amount ? (
                 'future notifications'
@@ -46,18 +46,18 @@ export const HeaderNotification = () => {
                 //left marcup for future
 
                 /* <div className={s.popup__item}>
-                                <p className={s.popup__item__title}>
-                                  Новое уведомление!{' '}
-                                  <span className={s.popup__item__new}>Новое</span>
-                                </p>
-                                <p className={s.popup__desc}>
-                                  Следующий платеж у вас спишется через 1 день
-                                </p>
-                                <p className={s.popup__time}>1 час назад</p>
-                              </div> */
+                                                                <p className={s.popup__item__title}>
+                                                                  Новое уведомление!{' '}
+                                                                  <span className={s.popup__item__new}>Новое</span>
+                                                                </p>
+                                                                <p className={s.popup__desc}>
+                                                                  Следующий платеж у вас спишется через 1 день
+                                                                </p>
+                                                                <p className={s.popup__time}>1 час назад</p>
+                                                              </div> */
                 <div className={s.popup__item}>
                   <p className={s.popup__desc}>
-                    {t('notifications.zeroNotifications')}
+                    {translate('notifications.zeroNotifications')}
                   </p>
                 </div>
               )}

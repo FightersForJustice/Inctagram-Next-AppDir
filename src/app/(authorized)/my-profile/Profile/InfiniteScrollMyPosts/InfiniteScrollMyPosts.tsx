@@ -8,6 +8,7 @@ import { useScrollFetching } from '@/features/customHooks';
 import { StatusCode } from '@/api/auth.api';
 
 import s from './InfiniteScrollMyPosts.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setOpen: (value: boolean) => void;
@@ -21,6 +22,9 @@ export const InfiniteScrollMyPosts = ({
   setOpen,
   getUserPosts,
 }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
+
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);
@@ -121,7 +125,7 @@ export const InfiniteScrollMyPosts = ({
         postsImages()
       ) : (
         <div className={s.container}>
-          <p className={s.text}>You don&apos;t have any posts yet 😢</p>
+          <p className={s.text}>{translate('noPosts')}</p>
         </div>
       )}
       {/* {isFetching && <Loader />} */}
