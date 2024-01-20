@@ -19,11 +19,7 @@ import { optionsType } from '@/components/Selector/Selector';
 import { updateProfileInfoAction } from '@/app/lib/actions';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { useState } from 'react';
-import {
-  AvatarSkeleton,
-  ProfileSettingsFormSkeleton,
-  ProfileSettingsSkeleton,
-} from '@/components/Skeletons/ProfileSettingsSkeletons';
+import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './SettingsForm.module.scss';
 
@@ -94,12 +90,18 @@ export const SettingsForm = ({
 
     updateProfileInfoAction(submitData)
       .then((res) => {
-        res.success
-          ? toast.success(translate(res.modalText))
-          : toast.error(translate(res.modalText));
+        setTimeout(() => {
+          res.success
+            ? toast.success(translate(res.modalText))
+            : toast.error(translate(res.modalText));
+        }, 2000);
       })
       .catch((errors) => console.log(errors))
-      .finally(() => setIsLoading(false));
+      .finally(() =>
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000)
+      );
   });
 
   return (
@@ -180,9 +182,8 @@ export const SettingsForm = ({
               {errors.aboutMe && (
                 <p
                   className={`${s.form__textareaError} ${
-                    errors.aboutMe.message?.length! > 90
-                      ? `${s.form__textareaError__bottom}`
-                      : ''
+                    errors.aboutMe.message?.length! > 90 &&
+                    s.form__textareaError__bottom
                   } `}
                 >
                   {errors.aboutMe.message}

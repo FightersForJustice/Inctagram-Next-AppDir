@@ -10,9 +10,9 @@ import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
 import { dataURLtoFile } from '@/utils';
 import { deleteAvatarAction, uploadAvatarAction } from '@/app/lib/actions';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './GeneralInformationAvatar.module.scss';
-import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 type TProps = {
   currentAvatar: string | null;
@@ -36,13 +36,16 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setIsLoading(true);
     deleteAvatarAction()
       .then((res) => {
-        if (res.success) {
-          setLoadedAvatar('');
-          toast.success(t(res.modalText));
-        } else toast.error(t(res.modalText));
+        res.success
+          ? setLoadedAvatar('')
+          : setTimeout(() => {
+              toast.error(t(res.modalText));
+            }, 2000);
       })
       .finally(() => {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       });
   };
 
@@ -69,12 +72,15 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
       formData.append('file', dataURLtoFile(croppedAvatar), file.name);
       uploadAvatarAction(formData)
         .then((res) => {
-          res.success
-            ? toast.success(t(res.modalText))
-            : toast.error(t(res.modalText));
+          !res.success &&
+            setTimeout(() => {
+              toast.error(t(res.modalText));
+            }, 2000);
         })
         .finally(() => {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 2000);
         });
       setUserAvatar('');
       setCroppedAvatar('');
