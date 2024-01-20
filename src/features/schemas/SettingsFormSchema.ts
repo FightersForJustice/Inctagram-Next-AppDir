@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { useTranslations } from 'next-intl';
+import { isAgeValid } from '@/utils/checkYears';
 
 export const SettingsFormSchema = () => {
   const t = useTranslations('SettingsProfilePage.SettingsFormSchema');
@@ -28,5 +29,9 @@ export const SettingsFormSchema = () => {
       .min(0, t('aboutMe.min'))
       .max(200, t('aboutMe.max'))
       .nullable(),
+    dateOfBirth: yup
+      .string()
+      .test('ageLimit', '_', (date) => isAgeValid(date))
+      .required(),
   });
 };
