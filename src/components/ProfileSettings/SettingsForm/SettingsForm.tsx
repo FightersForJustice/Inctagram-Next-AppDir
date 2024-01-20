@@ -22,6 +22,11 @@ import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './SettingsForm.module.scss';
+import {
+  isMoreThen100YearsOld,
+  isLessThen13YearsOld,
+} from '@/utils/checkYears';
+import { useEffect } from 'react';
 
 export type ProfileFormValues = {
   userName: string;
@@ -29,7 +34,7 @@ export type ProfileFormValues = {
   lastName: string;
   city?: optionsType | null;
   country?: optionsType;
-  dateOfBirth?: any;
+  dateOfBirth: any;
   aboutMe?: string | null | undefined;
 };
 
@@ -38,7 +43,7 @@ export type ProfileFormSubmit = {
   firstName: string;
   lastName: string;
   city: string;
-  dateOfBirth?: string;
+  dateOfBirth: string;
   aboutMe: string;
 };
 
@@ -57,6 +62,10 @@ export const SettingsForm = ({
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
+  let isObsoleteDateOfBirth =
+    isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
 
   const {
     register,
@@ -144,12 +153,17 @@ export const SettingsForm = ({
               translateName={'lastname'}
             />
 
-            <div className={s.form__itemWrapper}>
-              <label htmlFor="dateOfBirth" className={s.form__label}>
-                {translate('birthday')}
-              </label>
-              <DatePick trigger={trigger} control={control} />
-            </div>
+          <div className={s.form__itemWrapper}>
+            <label htmlFor="dateOfBirth" className={s.form__label}>
+              {translate('birthday')}
+              <span className={s.form__required}>*</span>
+            </label>
+            <DatePick
+              isObsoleteDateOfBirth={isObsoleteDateOfBirth}
+              trigger={trigger}
+              control={control}
+            />
+          </div>
 
             <div className={s.form_itemSelector}>
               <CitySelectors

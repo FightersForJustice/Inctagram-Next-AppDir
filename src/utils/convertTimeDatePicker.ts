@@ -1,11 +1,16 @@
 import { DateObject } from 'react-multi-date-picker';
+import { isISODateFormat } from './dateToFormat';
 
 export const convertToReactDatePickerObject = (
   dateString: string | null
 ): DateObject | string => {
-  if (dateString) {
+  if (!dateString) {
+    return '';
+  }
+
+  if (isISODateFormat(dateString)) {
     const date = new Date(dateString);
-    const dateObject = new DateObject({
+    return new DateObject({
       year: date.getUTCFullYear(),
       month: date.getUTCMonth() + 1,
       day: date.getUTCDate(),
@@ -13,21 +18,35 @@ export const convertToReactDatePickerObject = (
       minute: date.getUTCMinutes(),
       second: date.getUTCSeconds(),
     });
+  }
 
-    return dateObject;
-  } else return '';
+  const [day, month, year] = dateString.split('/');
+  const date = new Date(+year, +month, +day);
+
+  return new DateObject({
+    year: date.getUTCFullYear(),
+    month: date.getUTCMonth() + 1,
+    day: date.getUTCDate(),
+  });
 };
 
-export const convertToISOString = (dateObject: DateObject) => {
-  const formattedDate = new Date(
-    dateObject.year,
-    +dateObject.month,
-    dateObject.day,
-    dateObject.hour,
-    dateObject.minute,
-    dateObject.second,
-    dateObject.millisecond
-  );
+export const convertToISOString = (dateInput: DateObject | string) => {
+  let formattedDate = new Date(Date.now());
+
+  if (dateInput instanceof DateObject) {
+    formattedDate = new Date(
+      dateInput.year,
+      +dateInput.month,
+      dateInput.day,
+      dateInput.hour,
+      dateInput.minute,
+      dateInput.second,
+      dateInput.millisecond
+    );
+  } else {
+    const [day, month, year] = dateInput.split('/');
+    formattedDate = new Date(+year, +month, +day);
+  }
 
   return formattedDate.toISOString();
 };

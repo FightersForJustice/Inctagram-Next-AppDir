@@ -5,6 +5,7 @@ import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
 import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 
 import s from './Header.module.scss';
+import { headers } from 'next/headers';
 
 export const Header = ({ isAuth }: { isAuth: boolean }) => {
   return (
@@ -17,7 +18,9 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
         <div className={s.notificationContainer}>
           {isAuth && <HeaderNotification />}
           <TranslationSelect />
-          {isAuth && <HeaderMenuMobile />}
+          {isAuth && (
+            <HeaderMenuMobile userEmail={headers().get('userEmail')} />
+          )}
         </div>
       </div>
     </header>
