@@ -15,7 +15,7 @@ import {
   deleteAllSessionsAction,
   newPasswordAction,
   signInAction,
-} from '@/app/actions';
+} from '@/app/lib/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './CreateNewPasswordForm.module.scss';

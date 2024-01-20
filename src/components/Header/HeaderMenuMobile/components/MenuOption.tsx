@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 import s from '../HeaderMenuMobile.module.scss';
-import clsx from 'clsx';
 
 type OptionType = {
   className: string;

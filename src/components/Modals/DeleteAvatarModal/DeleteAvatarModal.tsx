@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Modal } from '../Modal/Modal';
 import { useTranslation } from 'react-i18next';
 

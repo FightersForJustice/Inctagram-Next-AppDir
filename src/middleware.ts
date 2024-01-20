@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { routes } from './api/routes';
-import { requestMeOptions } from './app/actionOptions';
-import { updateTokensAndContinue } from './app/actions';
+import { requestMeOptions } from './app/lib/actionOptions';
+import { updateTokensAndContinue } from './app/lib/actions';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -15,7 +15,6 @@ export function getUserPreferredLanguage(acceptLanguage: string | null) {
 }
 
 export const config = {
-  // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
 
@@ -71,7 +70,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         const response = NextResponse.next();
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();
+
         response.headers.set('id', `${responseData.userId}`);
+        response.headers.set('userEmail', `${responseData.email}`);
+        response.headers.set('userName', `${responseData.email}`);
 
         return isAuthPath
           ? NextResponse.redirect(

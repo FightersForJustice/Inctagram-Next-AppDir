@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-toastify';
 
-import { logOutAction } from '@/app/actions';
+import { logOutAction } from '@/app/lib/actions';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
 export const logout = async (
@@ -17,5 +17,5 @@ export const logout = async (
   Cookies.remove('accessToken');
 
   toast.success(t(res?.data));
-  router.push('/sign-in');
+  router.replace('/sign-in');
 };

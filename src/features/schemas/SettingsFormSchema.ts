@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { isAgeValid } from '@/utils/checkYears';
 
 export const SettingsFormSchema = () => {
   const { t } = useTranslation();
@@ -24,11 +25,14 @@ export const SettingsFormSchema = () => {
       .matches(/^[A-Za-zА-ЯЁа-яё]+$/, translate('lastName.matches'))
       .max(50, translate('lastName.max'))
       .required(translate('lastName.required')),
-    city: yup.string().max(30, translate('city.max')).nullable(),
     aboutMe: yup
       .string()
       .min(0, translate('aboutMe.min'))
       .max(200, translate('aboutMe.max'))
       .nullable(),
+    dateOfBirth: yup
+      .string()
+      .test('ageLimit', '_', (date) => isAgeValid(date))
+      .required(),
   });
 };

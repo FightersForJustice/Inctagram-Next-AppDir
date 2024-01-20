@@ -14,11 +14,14 @@ import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
 
-export const HeaderMenuMobile = () => {
+export const HeaderMenuMobile = ({
+  userEmail = 'mocked',
+}: {
+  userEmail: string | null;
+}) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
-  const userEmail = 'mocked'; //mocked
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
@@ -56,7 +59,7 @@ export const HeaderMenuMobile = () => {
       router.push('/statistics');
     }
     if (ref === 'profileSettings') {
-      router.push('/settings-profile');
+      router.push('/my-profile/settings-profile/general-information');
     }
     if (ref === 'favourites') {
       router.push('/favourites');

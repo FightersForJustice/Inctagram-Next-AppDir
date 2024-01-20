@@ -1,0 +1,59 @@
+.rmdp-datePickerError {
+  & .rmdp-container {
+    border: 1px solid var(--danger-500);
+  }
+
+  & .rmdp-input {
+    color: var(--danger-500);
+
+    transition: color 0.2s ease;
+  }
+}
+
+.rmdp-datePickerWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.rmdp-datePickerIcon {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+
+  transition: all 0.2s linear;
+}
+
+.rmdp-container {
+  width: 100%;
+  outline: none;
+  border-radius: 2px;
+  border: 1px solid var(--dark-100, #4c4c4c);
+  padding: 6px 12px;
+  margin-bottom: 24px;
+
+  transition: all 0.2s linear;
+}
+
+.rmdp-input {
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  box-shadow: none !important;
+  border: none !important;
+
+  transition: color 0.2s ease;
+
+  &:active,
+  :focus {
+    border: none;
+  }
+}
+
+.rmdp-error {
+  display: flex;
+  font-size: 12px;
+  margin-top: -18px;
+  color: var(--danger-500);
+  z-index: 2;
+}

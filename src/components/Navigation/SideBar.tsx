@@ -17,9 +17,15 @@ type Props = {
   id: number;
   paidAccount: boolean;
   userData?: GetResponse;
+  userEmail: string | null;
 };
 
-export const SideBar = ({ paidAccount, userData, id }: Props) => {
+export const SideBar = ({
+  userEmail = 'mocked',
+  paidAccount,
+  userData,
+  id,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
@@ -28,7 +34,6 @@ export const SideBar = ({ paidAccount, userData, id }: Props) => {
 
   const pathname = usePathname();
   const router = useRouter();
-  const userEmail = 'mocked';
 
   return (
     <>

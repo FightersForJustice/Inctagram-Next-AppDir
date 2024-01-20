@@ -22,6 +22,12 @@ module.exports = {
       6: '6px',
       8: '8px',
     },
+    screens: {
+      sm: '522px',
+      smd: '660px',
+      md: '768px',
+      lg: '993px',
+    },
   },
   plugins: [],
 };

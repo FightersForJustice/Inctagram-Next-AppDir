@@ -12,8 +12,9 @@ import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/(authorized)/my-profile/CreatePost/CreatePost';
 
 import './FiltersModal.css';
+import Image from 'next/image';
 
-export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
+export const FiltersModal = ({
   onClose,
   title,
   width,
@@ -24,7 +25,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onPublishPost,
   onDeletePostImage,
   zoomValue,
-}) => {
+}: PropsWithChildren<Props>) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
   const images: ImageStateType[] = useAppSelector(postImages);
@@ -40,7 +41,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
         const photoEditingBeforeSending = applyImageFilter(
           imageRef,
           filter,
-          `4:5`,
+          `4:4`,
           zoomValue!
         );
         const formData = new FormData();
@@ -58,7 +59,15 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
       });
     }
   };
-
+  const returnToSecondModal = (images: ImageStateType[]) => {
+    images.forEach((image, index) => {
+      const idToRemove = image.id;
+      dispatch(postActions.removeGalleryImage({ id: idToRemove }));
+      if (index === images.length - 1) {
+        showSecondModal?.();
+      }
+    });
+  };
   return (
     <>
       <div className={'modal'} onClick={onClose}>
@@ -68,7 +77,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className={'modal__header'}>
-            <img
+            <Image
               src={'/img/create-post/arrow-back.svg'}
               alt={'arrow-back'}
               width={24}
@@ -77,7 +86,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
               onClick={() =>
                 buttonName === 'Publish'
                   ? onDeletePostImage?.()
-                  : showSecondModal?.()
+                  : returnToSecondModal(images)
               }
             />
             <div className={'modal__title'}>{title}</div>

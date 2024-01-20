@@ -1,0 +1,23 @@
+.avatarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  // width: 192px;
+  // position: relative;
+  // margin: 0 auto;
+}
+
+.avatarWithButton {
+  display: flex;
+  position: relative;
+}
+
+.wrapper__delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  cursor: pointer;
+}
