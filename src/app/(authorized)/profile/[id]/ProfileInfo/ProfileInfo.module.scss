@@ -136,10 +136,8 @@
       @media (max-width: 740px) {
         font-size: calc(14px + (16 - 14) * ((100vw - 360px) / (740 - 360)));
       }
-      @media (max-width: 740px) {
-        width: calc(325px + (653 - 325) * ((100vw - 360px) / (720 - 360)));
-      }
       @media (max-width: 600px) {
+        width: calc(325px + (544 - 325) * ((100vw - 360px) / (600 - 360)));
         margin-top: calc(8px + (77 - 8) * ((100vw - 300px) / (600 - 300)));
         margin-left: calc(
           -59px + (-180 - (-59)) * ((100vw - 300px) / (600 - 300))
