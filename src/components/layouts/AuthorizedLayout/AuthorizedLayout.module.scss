@@ -3,6 +3,14 @@
   width: 3px;
   background: rgb(137, 136, 136);
 }
+.content::-webkit-scrollbar-track {
+  background: #959595; /* цвет дорожки */
+}
+.content::-webkit-scrollbar-thumb {
+  background-color: rgb(137, 136, 136); /* цвет плашки */
+  border-radius: 20px; /* закругления плашки */
+  border: 3px solid orange; /* padding вокруг плашки */
+}
 .layoutContainer {
   display: flex;
   flex-direction: column;
