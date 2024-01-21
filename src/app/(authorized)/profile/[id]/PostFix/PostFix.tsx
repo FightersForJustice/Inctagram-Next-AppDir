@@ -12,6 +12,8 @@ import { Carousel } from '@/components/Carousel/Carousel';
 
 import s from './PostFix.module.scss';
 import { DotsFriends } from './DotsFriends';
+import Cookies from 'js-cookie';
+import { actions } from '../actions';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -40,14 +42,14 @@ export const PostFix: React.FC<Props> = ({
     postId!
   );
 
-  const onDeletePost = () => {
-    deletePost(postId!)
-      .unwrap()
-      .then(() => {
+  const onDeletePost = async () => {
+    const accessToken = Cookies.get('accessToken');
+    if (postId && accessToken) {
+      const response = await actions.getPostsDelete(postId, accessToken);
+      if (response === 204) {
         setOpenPostModal(false);
-        toast.success('Post was deleted');
-      })
-      .catch((err) => toast.error(err.error));
+      }
+    }
   };
 
   if (error) {
