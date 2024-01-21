@@ -1,6 +1,7 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
-import s from './PrimaryBtn.module.scss';
+import { MouseEventHandler, ReactNode } from 'react';
 import clsx from 'clsx';
+
+import s from './PrimaryBtn.module.scss';
 
 type Props = {
   type?: 'submit';
