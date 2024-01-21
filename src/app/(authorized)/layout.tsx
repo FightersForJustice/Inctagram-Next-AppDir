@@ -1,7 +1,6 @@
 import { AuthorizedLayout } from '@/components/layouts/AuthorizedLayout/AuthorizedLayout';
 import { ReactNode } from 'react';
 
-
 type Props = {
   children: ReactNode;
 };

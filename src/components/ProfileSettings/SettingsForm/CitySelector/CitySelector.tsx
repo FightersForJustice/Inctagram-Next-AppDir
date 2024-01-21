@@ -15,25 +15,23 @@ import { ProfileFormValues } from '../SettingsForm';
 import s from './CitySelector.module.scss';
 
 type CitySelectorProps = {
-  userCity: string | null;
   control: Control<ProfileFormValues>;
   setValue: UseFormSetValue<any>;
   countriesList: ResponseCountries;
+  country: string | null;
+  city: string | null;
 };
 
 export const CitySelectors: React.FC<CitySelectorProps> = ({
-  userCity,
   control,
   setValue,
   countriesList,
+  country,
+  city,
 }) => {
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
   );
-
-  const cityArr = userCity?.split(',') || '';
-  const country = cityArr[0] || '';
-  const city = cityArr[1] || '';
 
   const [checkedCountry, setCheckedCountry] = useState<optionsType>({
     value: country ?? '',
@@ -42,8 +40,8 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const [citiesList, setCitiesList] = useState<string[] | null>(null);
 
   const defaultValues = {
-    country: { value: country, label: country },
-    city: { value: city, label: city },
+    country: { value: country || '', label: country || 'Country' },
+    city: { value: city || '', label: city || 'City' },
   };
 
   const onFocusCountryHandler = () => {
@@ -86,7 +84,7 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
             name="city"
             id="city"
             defaultValue={defaultValues.city}
-            isDisabled={!userCity && !checkedCountry.value.length}
+            isDisabled={!city && !checkedCountry.value.length}
             isSearchable
             onChange={onChange}
             onFocus={onFocusCityHandler}

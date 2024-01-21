@@ -56,6 +56,7 @@ export const DatePick = ({
               onClose={() => {
                 trigger('dateOfBirth');
               }}
+              //@ts-ignore
               onChange={(date: typeof value, { input, isTyping }) => {
                 //validating typing of date input
                 if (isTyping && !validateDatePicker(input)) {
