@@ -20,13 +20,12 @@ import { updateProfileInfoAction } from '@/app/lib/actions';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
-
-import s from './SettingsForm.module.scss';
 import {
   isMoreThen100YearsOld,
   isLessThen13YearsOld,
 } from '@/utils/checkYears';
-import { useEffect } from 'react';
+
+import s from './SettingsForm.module.scss';
 
 export type ProfileFormValues = {
   userName: string;
@@ -56,8 +55,6 @@ export const SettingsForm = ({
 }) => {
   const { userName, firstName, lastName, dateOfBirth, city, aboutMe } =
     userInfo;
-
-  console.log('city', city);
 
   const translate = useTranslations(
     'SettingsProfilePage.GeneralInformationTab'
@@ -104,8 +101,6 @@ export const SettingsForm = ({
 
     const submitData: ProfileFormSubmit =
       filterValuesProfileForm(optionsFormatData);
-
-    console.log('submitData', submitData);
 
     updateProfileInfoAction(submitData)
       .then((res) => {
