@@ -48,6 +48,7 @@ export const PostFix: React.FC<Props> = ({
       const response = await actions.getPostsDelete(postId, accessToken);
       if (response === 204) {
         setOpenPostModal(false);
+        toast.success('Post was deleted');
       }
     }
   };
