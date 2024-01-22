@@ -40,21 +40,32 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = async (data: { email: string }) => {
-    const result = await forgotPasswordAction({
-      email: data.email,
-      recaptcha,
-    });
+    // const result = await forgotPasswordAction({
+    //   email: data.email,
+    //   recaptcha,
+    // });
+    const payload = { email: data.email, recaptcha };
+    const res = await fetch('https://example.com/api/endpoint', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Ошибка:', error));
 
-    if (result?.success) {
-      setUserEmail(data.email);
-      reset();
-      setShowModal(true);
-      setSendLinkAgain(true);
+    // if (result?.success) {
+    //   setUserEmail(data.email);
+    //   reset();
+    //   setShowModal(true);
+    //   setSendLinkAgain(true);
 
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
-    } else toast.error(translate('errorCode'));
+    //   if (recaptchaRef.current) {
+    //     recaptchaRef.current.reset();
+    //   }
+    // } else toast.error(translate('errorCode'));
   };
 
   const reCaptchaHandler = (token: string | null) => {
