@@ -3,7 +3,8 @@ import Image from 'next/image';
 import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
 import { ApiResponsePosts, UserProfile } from '../types';
-import { useTranslations } from 'next-intl';
+import {useTranslation} from "react-i18next";
+
 
 type Props = {
   userData: UserProfile;
@@ -11,7 +12,8 @@ type Props = {
   postsData: ApiResponsePosts;
 };
 export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
-  const t = useTranslations('MyProfilePage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   return (
     <>
       <div className={s.profile}>
@@ -36,30 +38,30 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
                 <div className={s.statistics}>
                   <div>
                     <p>0</p>
-                    <p>{t('subscriptions')}</p>
+                    <p>{translate('subscriptions')}</p>
                   </div>
                   <div>
                     <p>0</p>
-                    <p>{t('subscribers')}</p>
+                    <p>{translate('subscribers')}</p>
                   </div>
                   <div>
                     <p>{postsData.totalCount}</p>
-                    <p>{t('publications')}</p>
+                    <p>{translate('publications')}</p>
                   </div>
                 </div>
               </div>
               <div className={s.btn}>
                 {myProfile ? (
                   <Link href={'/settings-profile'} className={s.settings}>
-                    {t('btnName')}
+                    {translate('btnName')}
                   </Link>
                 ) : (
                   <>
                     <Link href="#" className={s.btnPrimary}>
-                      {t('SubscribersModal.subBtn')}
+                      {translate('SubscribersModal.subBtn')}
                     </Link>
                     <Link href="#" className={s.message}>
-                      {t('btnSendMessage')}
+                      {translate('btnSendMessage')}
                     </Link>
                   </>
                 )}

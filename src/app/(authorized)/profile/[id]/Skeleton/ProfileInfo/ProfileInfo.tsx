@@ -1,12 +1,10 @@
 'use client';
 import s from './ProfileInfo.module.scss';
-import { useTranslations } from 'next-intl';
 
 type Props = {
   myProfile: boolean;
 };
 export const ProfileInfo = ({ myProfile }: Props) => {
-  const t = useTranslations('MyProfilePage');
   return (
     <>
       <div className={s.profile}>
