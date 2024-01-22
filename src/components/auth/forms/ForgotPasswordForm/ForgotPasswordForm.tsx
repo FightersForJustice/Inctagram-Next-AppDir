@@ -15,6 +15,7 @@ import { AuthSubmit } from '@/components/Input';
 
 import s from './ForgotPasswordForm.module.scss';
 import f from './EmailSentModal.module.scss';
+import { routes } from '@/api/routes';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -45,7 +46,7 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
     //   recaptcha,
     // });
     const payload = { email: data.email, recaptcha };
-    const res = await fetch('https://example.com/api/endpoint', {
+    const res = await fetch(routes.PASSWORD_RECOVERY, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
