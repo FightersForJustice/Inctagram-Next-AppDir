@@ -1,7 +1,6 @@
 'use client';
 
 // @ts-ignore
-import { useTranslations } from 'next-intl';
 
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
@@ -16,7 +15,6 @@ import { toast } from 'react-toastify';
 import s from '../Tabs.module.scss';
 
 export const DevicesTab = () => {
-  const t = useTranslations('SettingsProfilePage.DevicesTab');
   const { data: sessions, refetch } = useGetDeviceSessionsQuery();
   const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
 
@@ -63,7 +61,7 @@ export const DevicesTab = () => {
 
   return (
     <div className={s.devices}>
-      <ThisDevice t={t} session={sessions ? sessions[0] : sessionsDefault[0]} />
+      <ThisDevice session={sessions ? sessions[0] : sessionsDefault[0]} />
 
       {sessions?.length && (
         <div className={'text-right'}>
@@ -74,7 +72,6 @@ export const DevicesTab = () => {
       )}
       <ActiveSessions
         refetch={refetch}
-        t={t}
         sessions={sessions || sessionsDefault}
       />
     </div>

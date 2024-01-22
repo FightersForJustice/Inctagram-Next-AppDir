@@ -1,12 +1,15 @@
 import * as yup from 'yup';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 export const ForgotPasswordSchema = () => {
-  const t = useTranslations('Errors');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Errors.${key}`);
   return yup
     .object({
-      email: yup.string().email(t('email.email')).required(t('email.required')),
+      email: yup
+        .string()
+        .email(translate('email.email'))
+        .required(translate('email.required')),
     })
     .required();
 };

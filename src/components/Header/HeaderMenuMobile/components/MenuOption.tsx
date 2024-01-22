@@ -1,5 +1,8 @@
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
+import clsx from 'clsx';
+
+import s from '../HeaderMenuMobile.module.scss';
 
 type OptionType = {
   className: string;
@@ -14,12 +17,16 @@ export const MenuOption = ({
   img,
   actionsHandler,
 }: OptionType) => {
-  const tf = useTranslations('Header');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Header.${key}`);
+  const classNames = clsx(className, {
+    [s.profileSettings]: textRef === 'profileSettings',
+  });
 
   return (
-    <li className={className} onClick={() => actionsHandler(textRef)}>
+    <li className={classNames} onClick={() => actionsHandler(textRef)}>
       <Image src={img} width={24} height={24} alt={textRef} />
-      <span>{tf('mobileMenu.' + textRef)}</span>
+      <span>{translate('mobileMenu.' + textRef)}</span>
     </li>
   );
 };

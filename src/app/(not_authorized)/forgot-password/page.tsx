@@ -1,17 +1,17 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { ForgotPasswordForm } from '@/components/auth';
 
 import s from './Forgot-Password.module.scss';
 
 const ForgotPassword = () => {
-  const t = useTranslations('ForgotPasswordPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
   return (
     <div className={s.container}>
-      <p className={s.title}>{t('title')}</p>
-      <ForgotPasswordForm translate={t} />
+      <p className={s.title}>{translate('title')}</p>
+      <ForgotPasswordForm />
     </div>
   );
 };

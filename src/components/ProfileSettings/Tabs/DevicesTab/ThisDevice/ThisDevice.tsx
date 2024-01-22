@@ -7,12 +7,13 @@ import { dateToFormat } from '@/utils/dateToFormat';
 import { findMatchingString } from '@/utils/findBrowserName';
 
 type Props = {
-  t: (value: string) => string;
   session: DevicesResponse;
 };
 
 export const ThisDevice: React.FC<Props> = ({ session }) => {
   if (session) {
+    
+
     return (
       <>
         <p className={s.devices__title}>{session?.deviceName ?? 'No device'}</p>

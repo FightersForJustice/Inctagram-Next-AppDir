@@ -1,17 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import s from './Verification.module.scss';
 
 const VerificationInvalid = () => {
-  const t = useTranslations('VerificationInvalidPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`VerificationInvalidPage.${key}`);
   return (
     <div className={s.container}>
-      <h1 className={s.slogan}>{t('title')}</h1>
-      <p className={s.verificationText}>{t('desc')}</p>
-      <button className={s.resendLink}>{t('btnName')}</button>
+      <h1 className={s.slogan}>{translate('title')}</h1>
+      <p className={s.verificationText}>{translate('desc')}</p>
+      <button className={s.resendLink}>{translate('btnName')}</button>
       <Image
         src={'/img/verification.svg'}
         alt={'verification'}

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,8 @@ import { SignInData } from '@/features/schemas/SignInSchema';
 import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
-  const translate = useTranslations('SignUpPage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SignUpPage.${key}`);
   const {
     register,
     handleSubmit,

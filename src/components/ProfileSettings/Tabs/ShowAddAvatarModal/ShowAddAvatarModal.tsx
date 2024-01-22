@@ -1,12 +1,13 @@
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { Modal } from '@/components/Modals/Modal';
 import { Alert } from '@/components/Alert';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
+
 import s from '../Tabs.module.scss';
-import { useTranslations } from 'next-intl';
 
 type Props = {
   onCloseAvatarModal: () => void;
@@ -29,27 +30,27 @@ export const ShowAddAvatarModal = ({
   onSaveUserAvatar,
   onSetUserAvatar,
   onCloseAvatarModal,
+
   fileError,
 }: Props) => {
-  const [showModalDelete, setShowModalDelete] = useState(false);
-
-  const t = useTranslations('SettingsProfilePage');
-
-  // const closeModalHandler = () => {
-  //   if (userAvatar) {
-  //     return setShowModal(true);
-  //   }
-  // };
-
-  const onCloseAvatarHandler = () => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+  const [showModal, setShowModal] = useState(false);
+  const closeModalHandler = () => {
+    if (userAvatar) {
+      return setShowModal(true);
+    }
+  };
+  const onCloseHandler = () => {
     onCloseAvatarModal();
     setUserAvatar('');
   };
 
   return (
     <Modal
-      title={t('AddPhotoModal.title')}
-      onClose={onCloseAvatarHandler}
+      title={translate('title')}
+      onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
     >
@@ -76,7 +77,7 @@ export const ShowAddAvatarModal = ({
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
             <PrimaryBtn onClick={onSaveUserAvatar}>
-              {t('AddPhotoModal.saveBtn')}
+              {translate('saveBtn')}
             </PrimaryBtn>
           </div>
         ) : (
@@ -88,16 +89,15 @@ export const ShowAddAvatarModal = ({
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn>{t('AddPhotoModal.selectBtn')}</PrimaryBtn>
+            <PrimaryBtn>{translate('selectBtn')}</PrimaryBtn>
           </div>
         )}
-        {showModalDelete && (
-          <></>
-          // <DeleteAvatarModal
-          //   userAvatar={userAvatar}
-          //   setShowModal={setShowModal}
-          //   onClose={onCloseHandler}
-          // />
+        {showModal && (
+          <DeleteAvatarModal
+            userAvatar={userAvatar}
+            setShowModal={setShowModal}
+            onClose={onCloseHandler}
+          />
         )}
       </div>
     </Modal>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Control, Controller, UseFormSetValue } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 import { BaseSelector, optionsType } from '@/components/Selector/Selector';
@@ -29,9 +29,9 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   country,
   city,
 }) => {
-  const translate = useTranslations(
-    'SettingsProfilePage.GeneralInformationTab'
-  );
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SettingsProfilePage.GeneralInformationTab.${key}`);
 
   const [checkedCountry, setCheckedCountry] = useState<optionsType>({
     value: country ?? '',

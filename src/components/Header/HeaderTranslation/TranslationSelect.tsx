@@ -4,18 +4,22 @@ import { useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
+import { useTranslation } from 'react-i18next';
 
 import s from '@/app/(authorized)/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 
 export const TranslationSelect = () => {
+  const { i18n } = useTranslation();
   const [openChangeSize, setOpenChangeSize] = useState(false);
-
-  //hardcode
-  const [language, setLanguage] = useState('ru');
+  const [language, setLanguage] = useState(() => {
+    const storedLanguage = localStorage.getItem('language');
+    return storedLanguage || 'en';
+  });
 
   const onSelectChange = (value: string) => {
     setLanguage(value);
+    i18n.changeLanguage(value);
     localStorage.setItem('language', String(value));
   };
 

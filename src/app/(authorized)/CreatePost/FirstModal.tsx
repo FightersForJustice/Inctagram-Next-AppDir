@@ -9,6 +9,7 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 import s from './CreatePost.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setPostImage: (value: string) => void;
@@ -27,6 +28,11 @@ export const FirstModal = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const id = crypto.randomUUID();
+
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
@@ -48,7 +54,7 @@ export const FirstModal = ({
 
   return (
     <Modal
-      title={'Add photo'}
+      title={translate('title')}
       className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
@@ -67,11 +73,11 @@ export const FirstModal = ({
             onChange={onSetUserAvatar}
           />
           <div className={s.createPost__overlay}>
-            <PrimaryBtn>Select from computer</PrimaryBtn>
+            <PrimaryBtn>{translate('selectBtn')}</PrimaryBtn>
           </div>
         </div>
         <div className={s.createPost__open}>
-          <TransparentBtn>Open draft</TransparentBtn>
+          <TransparentBtn>{translate('openDraftBtn')}</TransparentBtn>
         </div>
       </div>
     </Modal>

@@ -1,5 +1,5 @@
 import { Modal } from '../Modal/Modal';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import s from './DeleteAvatarModal.module.scss';
 
@@ -14,9 +14,9 @@ export const DeleteAvatarModal = ({
   onClose,
   userAvatar,
 }: Props) => {
-  console.log(userAvatar);
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
-  const t = useTranslations('MyProfilePage');
   const closeHandler = (value: boolean) => {
     if (value) {
       onClose();
@@ -25,31 +25,33 @@ export const DeleteAvatarModal = ({
   };
 
   return (
-    <Modal
-      title={t('DeleteAvatarModal.title')}
-      isOkBtn={false}
-      onClose={() => closeHandler(false)}
-      className={s.container}
-    >
-      <div className={s.deleteModal__info}>
-        <p className={s.deleteModal__text}>
-          {t('DeleteAvatarModal.question')}?
-        </p>
-      </div>
-      <div className={s.deleteModal__wrapper}>
-        <button
-          className={s.deleteModal__btn__yes}
-          onClick={() => closeHandler(true)}
-        >
-          {t('DeleteAvatarModal.btnYes')}
-        </button>
-        <button
-          className={s.deleteModal__btn__no}
-          onClick={() => closeHandler(false)}
-        >
-          {t('DeleteAvatarModal.btnNo')}
-        </button>
-      </div>
-    </Modal>
+    userAvatar && (
+      <Modal
+        title={translate('DeleteAvatarModal.title')}
+        isOkBtn={false}
+        onClose={() => closeHandler(false)}
+        className={s.container}
+      >
+        <div className={s.deleteModal__info}>
+          <p className={s.deleteModal__text}>
+            {translate('DeleteAvatarModal.question')}?
+          </p>
+        </div>
+        <div className={s.deleteModal__wrapper}>
+          <button
+            className={s.deleteModal__btn__yes}
+            onClick={() => closeHandler(true)}
+          >
+            {translate('DeleteAvatarModal.btnYes')}
+          </button>
+          <button
+            className={s.deleteModal__btn__no}
+            onClick={() => closeHandler(false)}
+          >
+            {translate('DeleteAvatarModal.btnNo')}
+          </button>
+        </div>
+      </Modal>
+    )
   );
 };

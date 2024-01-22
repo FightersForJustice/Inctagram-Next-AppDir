@@ -5,7 +5,7 @@ import { Modal } from '@/components/Modals/Modal';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { CreatePost } from '@/app/(authorized)/CreatePost';
 import { GetResponse } from '@/api/profile.api';
 import { Navigation } from './BarPage';
@@ -26,7 +26,9 @@ export const SideBar = ({
   userData,
   id,
 }: Props) => {
-  const t = useTranslations('Navigation');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Navigation.${key}`);
+
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
@@ -45,20 +47,21 @@ export const SideBar = ({
       {showLogoutModal && (
         <Modal
           className={s.modal}
-          title={t('LogoutModal.title')}
+          title={translate('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
         >
           <div>
-            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+            {translate('LogoutModal.question')}{' '}
+            <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn
-              onClick={() => logout(setShowLogoutModal, t, router)}
+              onClick={() => logout(setShowLogoutModal, translate, router)}
             >
-              {t('LogoutModal.btnYes')}
+              {translate('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>
-              {t('LogoutModal.btnNo')}
+              {translate('LogoutModal.btnNo')}
             </PrimaryBtn>
           </div>
         </Modal>

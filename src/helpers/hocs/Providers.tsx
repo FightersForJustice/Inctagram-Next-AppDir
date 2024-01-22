@@ -1,48 +1,67 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import i18n from 'i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import en from '../../../locales/en.json';
+import ru from '../../../locales/ru.json';
 import { Provider } from 'react-redux';
-import { NextIntlClientProvider } from 'next-intl';
-
-import { store } from '../../redux/store';
+import { store } from '@/redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { notFound } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 
-function Providers({ children }: { children: React.ReactNode }) {
-  const [messages, setMessages] = useState<any>(null);
-  const [error, setError] = useState(false);
+i18n.use(initReactI18next).init({
+  detection: {
+    order: ['localStorage', 'cookie', 'htmlTag', 'path', 'subdomain'],
+    caches: ['localStorage', 'cookie'],
+  },
+  lng: 'en',
+  resources: {
+    en: {
+      translation: en,
+    },
+    ru: {
+      translation: ru,
+    },
+  },
+});
 
-  // Hardcode locale
-  const locale = 'ru';
-
+function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const moduleImport = await import(`../../../locales/${locale}.json`);
-        setMessages(moduleImport);
-      } catch (error) {
-        setError(true);
-      }
-    };
+    const storedLanguage = localStorage.getItem('language');
 
-    fetchMessages();
-  }, [locale]);
+    if (storedLanguage && storedLanguage !== i18n.language) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, []);
 
-  if (error) {
-    notFound();
-    return null;
-  }
-
-  if (!messages) {
-    return null;
-  }
-
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         try {
+    //             const moduleImport = await import(`../../../locales/${locale}.json`);
+    //             setMessages(moduleImport);
+    //         } catch (error) {
+    //             setError(true);
+    //         }
+    //     };
+    //
+    //     fetchMessages();
+    // }, [locale]);
+    //
+    // if (error) {
+    //     notFound();
+    //     return null;
+    // }
+    //
+    // if (!messages) {
+    //     return null;
+    // }
   return (
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
     >
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <I18nextProvider i18n={i18n}>
         <Provider store={store}>{children}</Provider>
-      </NextIntlClientProvider>
+      </I18nextProvider>
     </GoogleOAuthProvider>
   );
 }

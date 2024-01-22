@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 const passwordCompletly =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
@@ -11,8 +11,8 @@ const emailDomainNumberRegex = /^[^\d]*$/;
 const emailSubdomainRegex = /^[A-Za-z0-9]+$/;
 
 export const SignUpFormSchema = () => {
-  const t = useTranslations('Errors');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Errors.${key}`);
   return yup
     .object({
       userName: yup

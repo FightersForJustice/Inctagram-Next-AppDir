@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next-intl/client';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
 import { HomePagePost } from './HomePagePost';
@@ -12,7 +11,6 @@ import s from './Home.module.scss';
 import { StatusCode } from '@/api/auth.api';
 
 const Home = () => {
-  const pathname = usePathname();
   const [posts, setPosts] = useState<PostsItem[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [lastLoadedPostId, setLastLoadedPostId] = useState<number>(0);

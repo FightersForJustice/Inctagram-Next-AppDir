@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
 import { Modal } from '../Modal/Modal';
 import { DeleteModal } from '../DeleteModal/DeleteModal';
@@ -12,7 +12,8 @@ type Props = {
 };
 
 export const SubscribersModal = ({ setShowSubscribersModal }: Props) => {
-  const t = useTranslations('MyProfilePage');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const onDeleteSubscriber = () => {
@@ -22,7 +23,7 @@ export const SubscribersModal = ({ setShowSubscribersModal }: Props) => {
   return (
     <>
       <Modal
-        title={`2 358 ${t('SubscribersModal.title')}`}
+        title={`2 358 ${translate('SubscribersModal.title')}`}
         isOkBtn={false}
         className={s.modalClassName}
         onClose={() => setShowSubscribersModal(false)}
@@ -31,7 +32,7 @@ export const SubscribersModal = ({ setShowSubscribersModal }: Props) => {
           <input
             type="text"
             className={s.modal__input}
-            placeholder={t('SubscribersModal.search')}
+            placeholder={translate('SubscribersModal.search')}
           />
           <Image
             className={s.modal__icon}
@@ -56,13 +57,13 @@ export const SubscribersModal = ({ setShowSubscribersModal }: Props) => {
               </div>
               <div className={s.modal__content__right}>
                 <button className={s.modal__content__subscribe}>
-                  {t('SubscribersModal.subBtn')}
+                  {translate('SubscribersModal.subBtn')}
                 </button>
                 <button
                   className={s.modal__content__delete}
                   onClick={onDeleteSubscriber}
                 >
-                  {t('SubscribersModal.deleteBtn')}
+                  {translate('SubscribersModal.deleteBtn')}
                 </button>
               </div>
             </div>

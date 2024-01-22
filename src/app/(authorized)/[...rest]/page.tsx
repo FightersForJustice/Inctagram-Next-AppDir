@@ -1,15 +1,15 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { NotFound } from '@/components/NotFound';
 
 export default function CatchAllPage() {
-  const t = useTranslations('NotFoundPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`NotFoundPage.${key}`);
   return (
     <NotFound>
-      <>{t('title')}</>
-      <>{t('description')}</>
+      <>{translate('title')}</>
+      <>{translate('description')}</>
     </NotFound>
   );
 }

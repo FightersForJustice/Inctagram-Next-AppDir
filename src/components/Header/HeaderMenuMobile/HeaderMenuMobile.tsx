@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
@@ -19,7 +19,9 @@ export const HeaderMenuMobile = ({
 }: {
   userEmail: string | null;
 }) => {
-  const t = useTranslations('Navigation');
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Navigation.${key}`);
+
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
@@ -98,21 +100,22 @@ export const HeaderMenuMobile = ({
 
       {showLogoutModal && (
         <Modal
-          title={t('LogoutModal.title')}
+          title={translate('LogoutModal.title')}
           onClose={() => setShowLogoutModal(false)}
           className={s.modal}
         >
           <div>
-            {t('LogoutModal.question')} <strong>{`"${userEmail}"`}</strong>?
+            {translate('LogoutModal.question')}{' '}
+            <strong>{`"${userEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
             <TransparentBtn
-              onClick={() => logout(setShowLogoutModal, t, router)}
+              onClick={() => logout(setShowLogoutModal, translate, router)}
             >
-              {t('LogoutModal.btnYes')}
+              {translate('LogoutModal.btnYes')}
             </TransparentBtn>
             <PrimaryBtn onClick={() => setShowLogoutModal(false)}>
-              {t('LogoutModal.btnNo')}
+              {translate('LogoutModal.btnNo')}
             </PrimaryBtn>
           </div>
         </Modal>

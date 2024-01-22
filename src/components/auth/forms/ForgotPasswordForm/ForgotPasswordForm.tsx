@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,16 +12,16 @@ import { Modal } from '@/components/Modals/Modal';
 import { EmailForm } from './EmailForm';
 import { ForgotPasswordSchema } from '@/features/schemas';
 import { AuthSubmit } from '@/components/Input';
+import { useTranslation } from 'react-i18next';
 
 import s from './ForgotPasswordForm.module.scss';
 import f from './EmailSentModal.module.scss';
 import { routes } from '@/api/routes';
 
-type Props = {
-  translate: (value: string) => ReactNode;
-};
+export const ForgotPasswordForm = () => {
+  const { t, i18n } = useTranslation();
+  const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
 
-export const ForgotPasswordForm = ({ translate }: Props) => {
   const {
     register,
     handleSubmit,
@@ -106,11 +106,13 @@ export const ForgotPasswordForm = ({ translate }: Props) => {
         </Link>
 
         <ReCAPTCHA
+          key={i18n.language}
           ref={recaptchaRef}
           sitekey={siteKey}
           onChange={reCaptchaHandler}
           className={s.recaptchaContainer}
           theme="dark"
+          hl={i18n.language}
         />
       </form>
       {showModal && (

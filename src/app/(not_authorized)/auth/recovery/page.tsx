@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { CreateNewPasswordForm } from '@/components/auth';
 
 import s from './recovery.module.scss';
@@ -12,14 +12,14 @@ const CreateNewPassword = ({
     code?: string;
   };
 }) => {
-  const t = useTranslations('RecoveryPage');
-
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`RecoveryPage.${key}`);
   return (
     <div className={s.container}>
-      <p className={s.title}>{t('title')}</p>
+      <p className={s.title}>{translate('title')}</p>
       <CreateNewPasswordForm
         newPasswordCode={searchParams?.code}
-        translate={t}
+        translate={translate}
       />
     </div>
   );
