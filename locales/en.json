@@ -85,6 +85,7 @@
     "subscribers": "Followers",
     "publications": "Publications",
     "btnName": "Profile Settings",
+    "btnSendMessage":"Send Message",
     "aboutMe": "Fill in your info, while it's empty",
     "SubscribersModal": {
       "title": "Followers",

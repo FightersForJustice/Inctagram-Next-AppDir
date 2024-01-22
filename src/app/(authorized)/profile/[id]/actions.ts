@@ -37,4 +37,14 @@ export const actions = {
       return null;
     }
   },
+  async getPostsDelete(postId: number, accessToken: string) {
+    const apiUrl = baseUrl + `posts/${postId}`;
+    const response = await fetch(apiUrl, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.status;
+  },
 };

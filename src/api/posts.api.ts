@@ -33,18 +33,24 @@ export const postsApi = api.injectEndpoints({
     getPost: builder.query<PostResponse, number>({
       query: (postId) => {
         return {
-          url: `posts/p/${postId}`,
+          url: `public-posts/${postId}`,
           method: 'GET',
         };
       },
     }),
-    updatePost: builder.mutation<any, { postId: number; description: string }>({
+    updatePost: builder.mutation<
+      any,
+      { postId: number; description: string; accessToken: string }
+    >({
       query: (args) => {
         return {
           url: `posts/${args.postId}`,
           method: 'PUT',
           body: {
             description: args.description,
+          },
+          headers: {
+            Authorization: `Bearer ${args.accessToken}`,
           },
         };
       },
