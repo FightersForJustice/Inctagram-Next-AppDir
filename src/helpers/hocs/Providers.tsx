@@ -34,6 +34,27 @@ function Providers({ children }: { children: ReactNode }) {
     }
   }, []);
 
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         try {
+    //             const moduleImport = await import(`../../../locales/${locale}.json`);
+    //             setMessages(moduleImport);
+    //         } catch (error) {
+    //             setError(true);
+    //         }
+    //     };
+    //
+    //     fetchMessages();
+    // }, [locale]);
+    //
+    // if (error) {
+    //     notFound();
+    //     return null;
+    // }
+    //
+    // if (!messages) {
+    //     return null;
+    // }
   return (
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}

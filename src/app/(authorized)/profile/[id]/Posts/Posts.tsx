@@ -1,32 +1,22 @@
 'use client';
-import Image from 'next/image';
 import s from './Posts.module.scss';
-import { ApiResponsePosts } from './types';
+import { ApiResponsePosts, UserProfile } from '../types';
+import { PostImg } from './Post';
 
 type Props = {
   postsData: ApiResponsePosts;
+  userData: UserProfile;
+  myProfile: boolean;
 };
 
-export const Posts = ({ postsData }: Props) => {
+export const Posts = ({ postsData, userData, myProfile }: Props) => {
   const postsImages = () => {
     let currentPosts;
     return postsData?.items.map((i) => {
       currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
         <div key={i.id} className={s.imageContainer}>
-          <Image
-            // fill
-            src={
-              i.images[0]?.url
-                ? currentPosts[0].url
-                : '/img/profile/posts/post1.png'
-            }
-            alt={'post'}
-            width={234}
-            height={228}
-            key={i.id}
-            className={s.post}
-          />
+          <PostImg post={i} userData={userData} myProfile={myProfile} />
         </div>
       );
     });

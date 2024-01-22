@@ -6,6 +6,7 @@ import { useUpdatePostMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
+import Cookies from 'js-cookie';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -23,6 +24,8 @@ export const EditPost = ({
   const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState(description);
 
+  const accessToken = Cookies.get('accessToken');
+
   const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,13 +35,18 @@ export const EditPost = ({
   };
 
   const onSave = () => {
-    updatePost({ postId: postId!, description: textareaValue })
-      .unwrap()
-      .then(() => {
-        setEditPost(false);
-        setShowDots(true);
-        toast.success('Post was updated');
-      });
+    if (accessToken)
+      updatePost({
+        postId: postId!,
+        description: textareaValue,
+        accessToken: accessToken,
+      })
+        .unwrap()
+        .then(() => {
+          setEditPost(false);
+          setShowDots(true);
+          toast.success('Post was updated');
+        });
   };
 
   return (

@@ -1,26 +1,29 @@
-import { Profile } from './Profile';
-import { actions } from './actions';
-import { ApiResponsePosts, UserProfile } from './types';
+import { Suspense } from 'react';
 import { headers } from 'next/headers';
+import { ProfileInfo } from './Skeleton/ProfileInfo/ProfileInfo';
+import ProfileServer from './ProfileServer/ProfileServer';
+import { Posts } from './Skeleton/Posts/Posts';
 
-const MyProfile = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const headersList = headers();
-  const accessToken = headersList.get('accessToken');
   const idHeaders = headersList.get('id') as string;
   const myId = parseInt(idHeaders, 10);
   const id = parseInt(params.id, 10);
-  const userdata: UserProfile = await actions.getProfile(accessToken, id);
-  const postsData: ApiResponsePosts = await actions.getPosts(id, 0);
 
   return (
     <>
-      <Profile
-        userData={userdata!}
-        postsData={postsData}
-        myProfile={myId === id ? true : false}
-      />
+      <Suspense
+        fallback={
+          <>
+            <ProfileInfo myProfile={myId === id ? true : false} />
+            <Posts />
+          </>
+        }
+      >
+        <ProfileServer id={id} myProfile={myId === id ? true : false} />
+      </Suspense>
     </>
   );
 };
 
-export default MyProfile;
+export default Page;

@@ -66,6 +66,10 @@ export const SettingsForm = ({
   let isObsoleteDateOfBirth =
     isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
 
+  const cityArr = city?.split(',') || '';
+  const usersCountry = cityArr[0] || '';
+  const usersCity = cityArr[1] || '';
+
   const {
     register,
     handleSubmit,
@@ -79,6 +83,8 @@ export const SettingsForm = ({
     mode: 'onTouched',
     defaultValues: {
       dateOfBirth: convertToReactDatePickerObject(dateOfBirth),
+      city: { value: usersCountry + ',' + usersCity, label: usersCity },
+      country: { value: usersCountry, label: usersCountry },
     },
   });
 
@@ -152,23 +158,24 @@ export const SettingsForm = ({
               translateName={'lastname'}
             />
 
-          <div className={s.form__itemWrapper}>
-            <label htmlFor="dateOfBirth" className={s.form__label}>
-              {translate('birthday')}
-              <span className={s.form__required}>*</span>
-            </label>
-            <DatePick
-              isObsoleteDateOfBirth={isObsoleteDateOfBirth}
-              trigger={trigger}
-              control={control}
-            />
-          </div>
+            <div className={s.form__itemWrapper}>
+              <label htmlFor="dateOfBirth" className={s.form__label}>
+                {translate('birthday')}
+                <span className={s.form__required}>*</span>
+              </label>
+              <DatePick
+                isObsoleteDateOfBirth={isObsoleteDateOfBirth}
+                trigger={trigger}
+                control={control}
+              />
+            </div>
 
             <div className={s.form_itemSelector}>
               <CitySelectors
                 countriesList={countriesList}
                 control={control}
-                userCity={city}
+                country={usersCountry}
+                city={usersCity}
                 setValue={setValue}
               />
             </div>

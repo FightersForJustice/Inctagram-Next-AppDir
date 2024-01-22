@@ -1,4 +1,4 @@
-import { AspectRatioType } from '@/app/(authorized)/my-profile/CreatePost/CreatePost';
+import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';

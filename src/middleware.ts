@@ -77,7 +77,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
         return isAuthPath
           ? NextResponse.redirect(
-              new URL(`/profile${responseData.userId}`, request.url)
+              new URL(`/profile/${responseData.userId}`, request.url)
             )
           : response;
       case 401:

@@ -2,7 +2,6 @@ import React, { MouseEventHandler, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { SwiperSlide } from 'swiper/react';
-
 import { PostContent } from './PostContent';
 import { EditPost } from './EditPost';
 import { Loader } from '@/components/Loader';
@@ -10,9 +9,11 @@ import { Dots } from './Dots';
 import { useDeletePostMutation, useGetPostQuery } from '@/api';
 import { handleApiError } from '@/utils';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 import s from './PostFix.module.scss';
+import { DotsFriends } from './DotsFriends';
+import Cookies from 'js-cookie';
+import { actions } from '../actions';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -20,6 +21,7 @@ type Props = {
   avatar: string;
   userName: string;
   setOpenPostModal: (value: boolean) => void;
+  myProfile: boolean;
 };
 
 export const PostFix: React.FC<Props> = ({
@@ -28,6 +30,7 @@ export const PostFix: React.FC<Props> = ({
   avatar,
   userName,
   setOpenPostModal,
+  myProfile,
 }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showDots, setShowDots] = useState(true);
@@ -39,14 +42,15 @@ export const PostFix: React.FC<Props> = ({
     postId!
   );
 
-  const onDeletePost = () => {
-    deletePost(postId!)
-      .unwrap()
-      .then(() => {
+  const onDeletePost = async () => {
+    const accessToken = Cookies.get('accessToken');
+    if (postId && accessToken) {
+      const response = await actions.getPostsDelete(postId, accessToken);
+      if (response === 204) {
         setOpenPostModal(false);
         toast.success('Post was deleted');
-      })
-      .catch((err) => toast.error(err.error));
+      }
+    }
   };
 
   if (error) {
@@ -91,13 +95,20 @@ export const PostFix: React.FC<Props> = ({
                 </div>
 
                 {showDots ? (
-                  <Dots
-                    setVisiblePopup={setVisiblePopup}
-                    visiblePopup={visiblePopup}
-                    setEditPost={setEditPost}
-                    setShowAreYouSureModal={setShowAreYouSureModal}
-                    setShowDots={setShowDots}
-                  />
+                  myProfile ? (
+                    <Dots
+                      setVisiblePopup={setVisiblePopup}
+                      visiblePopup={visiblePopup}
+                      setEditPost={setEditPost}
+                      setShowAreYouSureModal={setShowAreYouSureModal}
+                      setShowDots={setShowDots}
+                    />
+                  ) : (
+                    <DotsFriends
+                      setVisiblePopup={setVisiblePopup}
+                      visiblePopup={visiblePopup}
+                    />
+                  )
                 ) : (
                   <div className={'w-1/12'}></div>
                 )}

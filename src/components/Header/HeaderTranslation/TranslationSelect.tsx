@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
 import { useTranslation } from 'react-i18next';
 
-import s from '@/app/(authorized)/my-profile/CreatePost/CreatePost.module.scss';
+import s from '@/app/(authorized)/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 
 export const TranslationSelect = () => {
