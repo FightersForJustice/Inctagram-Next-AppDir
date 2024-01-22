@@ -131,7 +131,6 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
       )}
       {showAddAvatarModal && (
         <ShowAddAvatarModal
-          translate={translate}
           onCloseAvatarModal={onCloseAvatarModal}
           userAvatar={userAvatar}
           setUserAvatar={setUserAvatar}

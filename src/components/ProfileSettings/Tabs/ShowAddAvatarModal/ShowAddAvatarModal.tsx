@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
@@ -9,7 +10,6 @@ import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import s from '../Tabs.module.scss';
 
 type Props = {
-  translate: (value: string) => string;
   onCloseAvatarModal: () => void;
   userAvatar: string;
   setUserAvatar: (value: string) => void;
@@ -30,9 +30,12 @@ export const ShowAddAvatarModal = ({
   onSaveUserAvatar,
   onSetUserAvatar,
   onCloseAvatarModal,
-  translate,
+
   fileError,
 }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
   const [showModal, setShowModal] = useState(false);
   const closeModalHandler = () => {
     if (userAvatar) {
@@ -46,7 +49,7 @@ export const ShowAddAvatarModal = ({
 
   return (
     <Modal
-      title={translate('AddPhotoModal.title')}
+      title={translate('title')}
       onClose={closeModalHandler}
       className={s.modal__container}
       isOkBtn={false}
@@ -74,7 +77,7 @@ export const ShowAddAvatarModal = ({
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
             <PrimaryBtn onClick={onSaveUserAvatar}>
-              {translate('AddPhotoModal.saveBtn')}
+              {translate('saveBtn')}
             </PrimaryBtn>
           </div>
         ) : (
@@ -86,7 +89,7 @@ export const ShowAddAvatarModal = ({
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn>{translate('AddPhotoModal.selectBtn')}</PrimaryBtn>
+            <PrimaryBtn>{translate('selectBtn')}</PrimaryBtn>
           </div>
         )}
         {showModal && (

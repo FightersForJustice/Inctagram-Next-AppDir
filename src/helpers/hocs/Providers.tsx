@@ -11,8 +11,8 @@ import { ReactNode, useEffect } from 'react';
 
 i18n.use(initReactI18next).init({
   detection: {
-    order: ['localStorage', 'htmlTag', 'path', 'subdomain'],
-    caches: ['localStorage'],
+    order: ['localStorage', 'cookie', 'htmlTag', 'path', 'subdomain'],
+    caches: ['localStorage', 'cookie'],
   },
   lng: 'en',
   resources: {
