@@ -21,6 +21,7 @@ import { routes } from '@/api/routes';
 export const ForgotPasswordForm = () => {
   const { t, i18n } = useTranslation();
   const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
+  const translateError = (key: string): string => t(`Errors.${key}`);
 
   const {
     register,
@@ -81,7 +82,7 @@ export const ForgotPasswordForm = () => {
           register={register}
           error={errors.email}
           registerName="email"
-          errorMessage={errors?.email?.message}
+          errorMessage={errors?.email?.message ? translateError(errors?.email?.message) : ''}
         />
 
         <p className={s.instruction}>{translate('desc')}</p>
