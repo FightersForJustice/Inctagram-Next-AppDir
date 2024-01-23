@@ -1,4 +1,4 @@
-@use './mixins.scss';
+@use './mixins.scss' as s;
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -63,21 +63,27 @@ body {
   }
 }
 
-body::-webkit-scrollbar {
-  width: 10px;
-  /* ширина всей полосы прокрутки */
-}
+* {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    @include s.devices(mobile) {
+      width: 8px;
+      height: 8px;
+    }
+  }
 
-body::-webkit-scrollbar-track {
-  background: var(--dark-300);
-  /* цвет зоны отслеживания */
-  border-radius: 20px;
-}
+  &::-webkit-scrollbar-thumb {
+    background: var(--disabled);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px 0 0 10px;
+  }
 
-body::-webkit-scrollbar-thumb {
-  background-color: var(--dark-100);
-  /* цвет бегунка */
-  border-radius: 20px;
-  /* округлось бегунка */
-  border: 1px solid var(--dark-500);
+  &::-webkit-scrollbar-thumb:horizontal {
+    border-radius: 10px 10px 0 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }

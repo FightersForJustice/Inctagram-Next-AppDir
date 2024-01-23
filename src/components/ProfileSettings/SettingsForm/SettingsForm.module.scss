@@ -119,8 +119,8 @@
   }
 }
 
-@include s.devices(tablet-xl) {
-  .form__btn {
-    padding-bottom: 84px;
+.submit_btn {
+  @include s.devices(mobile) {
+    width: 100%;
   }
 }

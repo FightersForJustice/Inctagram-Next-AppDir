@@ -33,8 +33,8 @@ function LineSkeleton() {
 
 function SubmitBtnSkeleton() {
   return (
-    <div className="flex flex-row-reverse lg:pb-[0px] pb-[60px]">
-      <div className="animate-pulse w-[134px] h-[38px] rounded-[2px] bg-neutral-800" />
+    <div className="flex flex-row-reverse lg:pb-[0px]">
+      <div className="animate-pulse w-full h-[38px] sm:w-[134px] rounded-[2px] bg-neutral-800" />
     </div>
   );
 }

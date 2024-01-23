@@ -213,7 +213,11 @@ export const SettingsForm = ({
           </div>
 
           <div className={s.form__btn} id={'settings-profile-btn-container'}>
-            <PrimaryBtn type="submit" disabled={!isValid}>
+            <PrimaryBtn
+              className={s.submit_btn}
+              type="submit"
+              disabled={!isValid}
+            >
               {translate('saveBtn')}
             </PrimaryBtn>
           </div>
