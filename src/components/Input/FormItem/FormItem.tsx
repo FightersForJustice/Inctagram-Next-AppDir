@@ -8,6 +8,7 @@ import { usePlaceholder } from '@/utils/usePlaceholder';
 import { inputTypes } from './utils';
 
 import s from './FormItem.module.scss';
+import {useTranslation} from "react-i18next";
 
 export interface FormItemProps {
   translate: (value: string) => ReactNode;
@@ -44,6 +45,8 @@ export const FormItem = ({
     { [s.containerError]: error && id.slice(0, 7) === 'sign-up' },
     { [s.containerErrorSignIn]: error && id === 'sign-in-password-input' }
   );
+  const { t } = useTranslation();
+  const translateError = (key: string): string => t(`Errors.${key}`);
 
   return (
     <div className={containerStyle} key={id}>
@@ -61,7 +64,7 @@ export const FormItem = ({
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
 
-        <InputError error={error} errorMessage={errorMessage} id={id} />
+        <InputError error={error} errorMessage={errorMessage ? translateError(errorMessage) : ''} id={id} />
       </div>
     </div>
   );
