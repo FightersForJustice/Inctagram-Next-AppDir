@@ -3,7 +3,7 @@
 import Select from 'react-select';
 import { FocusEventHandler } from 'react';
 
-import { SelectorColorStyles } from './SelectorColorStyles';
+import { SelectorStyles } from './SelectorStyles';
 import s from './Selector.module.scss';
 
 export type optionsType = {
@@ -55,7 +55,7 @@ export const BaseSelector = ({
         isLoading={isLoading}
         isSearchable={isSearchable}
         options={options ?? undefined}
-        styles={SelectorColorStyles}
+        styles={SelectorStyles}
         onFocus={onFocus}
         onChange={onChange}
       />

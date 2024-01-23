@@ -1,6 +1,6 @@
 import { StylesConfig } from 'react-select';
 
-export const SelectorColorStyles: StylesConfig = {
+export const SelectorStyles: StylesConfig = {
   control: (styles, { isDisabled }) => ({
     ...styles,
     opacity: isDisabled ? '0.3' : '1',
@@ -29,8 +29,6 @@ export const SelectorColorStyles: StylesConfig = {
   }),
   menu: (styles) => ({
     ...styles,
-    maxHeight: '160px',
-    overflow: 'hidden',
     backgroundColor: '#0d0d0d',
     outline: '1px solid #2684FF',
     outlineTop: '0',
@@ -39,6 +37,7 @@ export const SelectorColorStyles: StylesConfig = {
   }),
   menuList: (styles) => ({
     ...styles,
+    maxHeight: '160px',
     padding: '0',
   }),
   singleValue: (styles) => ({
