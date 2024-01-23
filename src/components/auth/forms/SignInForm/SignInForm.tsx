@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +17,10 @@ import s from './SignInForm.module.scss';
 
 export const SignInForm = () => {
   const { t } = useTranslation();
-  const translate = (key: string): string => t(`SignInPage.${key}`);
-  const router = useRouter();
 
+  const translate = (key: string): string => t(`SignInPage.${key}`);
+  const translateError = (key: string): string => t(`Errors.${key}`);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -33,6 +34,7 @@ export const SignInForm = () => {
     resolver: yupResolver(SignInSchema()),
     mode: 'onTouched',
   });
+
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
@@ -59,7 +61,7 @@ export const SignInForm = () => {
         translate={translate}
         register={register}
         error={errors.email}
-        errorMessage={errors?.email?.message}
+        errorMessage={errors?.email?.message ? translateError(errors?.email?.message) : ''}
         registerName={'email'}
         translateName={'email'}
         id={'sign-in-email-input'}
@@ -68,7 +70,7 @@ export const SignInForm = () => {
         translate={translate}
         register={register}
         error={errors.password}
-        errorMessage={errors?.password?.message}
+        errorMessage={errors?.password?.message ? translateError(errors?.password?.message) : ''}
         registerName={'password'}
         translateName={'password'}
         id={'sign-in-password-input'}
