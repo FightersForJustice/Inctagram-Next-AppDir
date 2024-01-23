@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 
 import s from './ForgotPasswordForm.module.scss';
 import f from './EmailSentModal.module.scss';
-import { routes } from '@/api/routes';
 
 export const ForgotPasswordForm = () => {
   const { t, i18n } = useTranslation();
@@ -42,32 +41,21 @@ export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = async (data: { email: string }) => {
-    // const result = await forgotPasswordAction({
-    //   email: data.email,
-    //   recaptcha,
-    // });
-    const payload = { email: data.email, recaptcha };
-    const res = await fetch(routes.PASSWORD_RECOVERY, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error('Ошибка:', error));
+    const result = await forgotPasswordAction({
+      email: data.email,
+      recaptcha,
+    });
 
-    // if (result?.success) {
-    //   setUserEmail(data.email);
-    //   reset();
-    //   setShowModal(true);
-    //   setSendLinkAgain(true);
+    if (result?.success) {
+      setUserEmail(data.email);
+      reset();
+      setShowModal(true);
+      setSendLinkAgain(true);
 
-    //   if (recaptchaRef.current) {
-    //     recaptchaRef.current.reset();
-    //   }
-    // } else toast.error(translate('errorCode'));
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+    } else toast.error(translate('errorCode'));
   };
 
   const reCaptchaHandler = (token: string | null) => {
