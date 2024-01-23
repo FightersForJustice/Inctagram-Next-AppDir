@@ -14,7 +14,6 @@ import {
 } from '@/utils/checkYears';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
 import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
-import { validateDatePicker } from '@/utils/dateToFormat';
 
 import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
@@ -59,13 +58,7 @@ export const DatePick = ({
               onClose={() => {
                 trigger('dateOfBirth');
               }}
-              //@ts-ignore
-              onChange={(date: typeof value, { input, isTyping }) => {
-                //validating typing of date input
-                if (isTyping && !validateDatePicker(input)) {
-                  return false;
-                }
-
+              onChange={(date: typeof value) => {
                 isObsoleteAge && setIsObsoleteAge(false);
                 const isAgeLessThan13 = isLessThen13YearsOld(date);
                 const isAgeMoreThan100 = isMoreThen100YearsOld(date);

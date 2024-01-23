@@ -57,8 +57,8 @@ export const SettingsForm = ({
     userInfo;
 
   const { t } = useTranslation();
-  const translate = (key: string): string => t(`SettingsProfilePage.GeneralInformationTab.${key}`);
-  
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.GeneralInformationTab.${key}`);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

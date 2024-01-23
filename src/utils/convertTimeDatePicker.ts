@@ -31,21 +31,24 @@ export const convertToReactDatePickerObject = (
 };
 
 export const convertToISOString = (dateInput: DateObject | string) => {
-  let formattedDate = new Date(Date.now());
+  let formattedDate = new Date();
+
 
   if (dateInput instanceof DateObject) {
     formattedDate = new Date(
-      dateInput.year,
-      +dateInput.month,
-      dateInput.day,
-      dateInput.hour,
-      dateInput.minute,
-      dateInput.second,
-      dateInput.millisecond
-    );
+      Date.UTC(
+        dateInput.year,
+        +dateInput.month - 1,
+        dateInput.day,
+        dateInput.hour,
+        dateInput.minute,
+        dateInput.second,
+        dateInput.millisecond
+      ));
   } else {
     const [day, month, year] = dateInput.split('/');
-    formattedDate = new Date(+year, +month, +day);
+    formattedDate = new Date(
+      Date.UTC(+year, +month, +day));
   }
 
   return formattedDate.toISOString();
