@@ -42,8 +42,10 @@ export const SignUpForm = () => {
   const [userEmail, setUserEmail] = useState('');
 
   const processForm = async (data: SignInData) => {
+    console.log("url", process.env.NEXT_PUBLIC_APP_URL);
+    
     try {
-      await signUpAction(data, process.env.BASE_URL).then(() => {
+      await signUpAction(data, process.env.NEXT_PUBLIC_APP_URL).then(() => {
         setUserEmail(data.email);
         setShowModal(true);
         reset(resetObjSignUpForm);

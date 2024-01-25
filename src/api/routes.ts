@@ -1,5 +1,5 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const findCountryUrl = process.env.COUNTRIES_URL;
+const findCountryUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
 const auth = 'auth/';
 
 export const routes = Object.freeze({
