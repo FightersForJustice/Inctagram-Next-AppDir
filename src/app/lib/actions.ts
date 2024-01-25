@@ -50,8 +50,13 @@ export async function signUpAction(data: SignInData) {
   try {
     const newData = { ...data, email: data.email.toLowerCase() };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
+    console.log("res", res);
+    console.log("res", res.headers);
+    
     const responseBody = await res.json();
+    console.log('responseBody', responseBody);
     if (res.ok) {
+      
       const returnData = { ...responseBody };
 
       return { success: true, data: returnData };
