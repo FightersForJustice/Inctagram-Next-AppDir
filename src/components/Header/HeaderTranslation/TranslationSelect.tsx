@@ -11,18 +11,20 @@ import f from './HeaderTranslation.module.scss';
 
 export const TranslationSelect = () => {
   const { i18n } = useTranslation();
+  const isMobileSize = 768;
+  const isOpen = window.screen.width < isMobileSize ? true : false;
   const [openChangeSize, setOpenChangeSize] = useState(false);
   const [isEn, setEn] = useState(() => {
     const storedLanguage = localStorage.getItem('language');
-    return storedLanguage === 'en' || false});
+    return storedLanguage === 'en' || false;
+  });
   const [language, setLanguage] = useState(() => {
     const storedLanguage = localStorage.getItem('language');
     return storedLanguage || 'en';
   });
 
   const onSelectChange = (value: string) => {
-    if (window.screen.width > 521) {
-      console.log('is shit!1');
+    if (window.screen.width > isMobileSize) {
       setLanguage(value);
       i18n.changeLanguage(value);
       localStorage.setItem('language', String(value));
@@ -31,45 +33,45 @@ export const TranslationSelect = () => {
   };
 
   const mobileHandler = (value: boolean) => {
-    if (window.screen.width < 521 && !isEn && value) {
+    if (window.screen.width < isMobileSize && !isEn && value) {
       setEn(true);
-      console.log(9)
       i18n.changeLanguage('en');
       localStorage.setItem('language', String('en'));
-      return 
+      return;
     }
-    if (window.screen.width < 521 && isEn && !value) {
+    if (window.screen.width < isMobileSize && isEn && !value) {
       setEn(false);
       i18n.changeLanguage('ru');
       return localStorage.setItem('language', String('ru'));
     }
-    
   };
 
   const fullLanguages: any = {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
-  const isOpen = window.screen.width < 768 ? true : false
 
-  const finalImage = window.screen.width < 768 ? fullLanguages['en']['img'] : fullLanguages[language]['img']
-
-  const isMobileLanguage = isEn && window.screen.width < 768 ? f.active : '';
+  const finalTabState =
+    window.screen.width < isMobileSize ? isOpen : openChangeSize;
+  const finalImage =
+    window.screen.width < isMobileSize
+      ? fullLanguages['en']['img']
+      : fullLanguages[language]['img'];
+  const isMobileLanguage =
+    isEn && window.screen.width < isMobileSize ? f.active : '';
 
   return (
     <Popover.Root
-      open={isOpen}
+      open={finalTabState}
       onOpenChange={() => setOpenChangeSize(!openChangeSize)}
     >
-      <div className={s.cropping__wrapper + ' ' + isMobileLanguage} >
-        <Popover.Trigger className={f.container} onClick={()=>mobileHandler(true)}>
+      <div className={s.cropping__wrapper + ' ' + isMobileLanguage}>
+        <Popover.Trigger
+          className={f.container}
+          onClick={() => mobileHandler(true)}
+        >
           <div className={f.select}>
-            <Image
-              alt="flag-image"
-              src={finalImage}
-              width={20}
-              height={20}
-            />
+            <Image alt="flag-image" src={finalImage} width={20} height={20} />
             <span>{fullLanguages[language]['name']}</span>
           </div>
           <Image
@@ -81,13 +83,16 @@ export const TranslationSelect = () => {
           />
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content className={f.popOver} onClick={()=>mobileHandler(false)}>
+          <Popover.Content
+            className={f.popOver}
+            onClick={() => mobileHandler(false)}
+          >
             <LanguagesModal
               closeModal={() => setOpenChangeSize(false)}
               onSelectChange={onSelectChange}
               language={language}
               isEn={isEn}
-              
+              isMobileSize={isMobileSize}
             />
           </Popover.Content>
         </Popover.Portal>

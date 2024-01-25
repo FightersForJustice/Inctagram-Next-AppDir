@@ -34,12 +34,16 @@
 @include s.devices(tablet) {
   .container {
     width: 80px;
-    // border: none;
-    justify-content: flex-end;
     gap: 2px;
+    justify-content: center;
+    border: none;
   }
 
-  .container  img {
+  .translate_select {
+    display: none;
+  }
+
+  .container img {
     width: 24px;
     height: 24px;
   }
@@ -50,16 +54,25 @@
     }
   }
 
+  .popOver {
+    left: 80px;
+    top: -35px;
+    z-index: 100;
+  }
+
   .languagesContainer {
-    border-top: 1px solid var(--dark-300);
-    // margin-top: 12px;
+    position: relative;
+    left: 80px;
+    top: -35px;
+    z-index: 100;
+    border: none;
 
     span {
       display: none;
     }
 
     img {
-      margin-right: 26px;
+      margin: 0;
     }
   }
 }
@@ -71,25 +84,14 @@
     border: none;
   }
 
-  .translate_select {
-    display: none;
-  }
-
-  .popOver {
-    left: 50px;
-    top: -35px;
-    z-index: 100;
-  }
-
   .languagesContainer {
     position: relative;
     left: 50px;
     top: -35px;
     z-index: 100;
     border: none;
-  }
-
-  .languagesContainer img {
-    margin: 0;
+    img {
+      margin: 0;
+    }
   }
 }

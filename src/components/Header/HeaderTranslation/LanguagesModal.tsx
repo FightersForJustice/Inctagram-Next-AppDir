@@ -8,14 +8,17 @@ export const LanguagesModal = function ({
   language,
   onSelectChange,
   isEn,
+  isMobileSize
 }: {
   closeModal: () => void;
   onSelectChange: (value: string) => void;
   language: string;
+  isMobileSize: number;
   isEn: boolean;
 }) {
+  
   const langHandler = (lang: string, e: React.MouseEvent) => {
-    if (window.screen.width > 521 || e.currentTarget.id === 'isMobile') {
+    if (window.screen.width > isMobileSize || e.currentTarget.id === 'isMobile') {
       console.log(e.currentTarget.id, lang)
       closeModal();
       if (lang === 'ru') {
@@ -24,10 +27,9 @@ export const LanguagesModal = function ({
       onSelectChange('ru');
     }
   };
-  console.log(!isEn);
 
-  const finalLang = window.screen.width < 521 ? '/img/flag_russia.svg' : '/img/flag_united_kingdom.svg'
-  const isMobileLanguage = window.screen.width < 521 && !isEn ? f.active : '';
+  const finalLang = window.screen.width < isMobileSize ? '/img/flag_russia.svg' : '/img/flag_united_kingdom.svg'
+  const isMobileLanguage = window.screen.width < isMobileSize && !isEn ? f.active : '';
   const languageForRender = (lang: string) => {
     return (
       <div

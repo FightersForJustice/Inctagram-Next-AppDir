@@ -183,7 +183,7 @@
   max-width: 491px;
 }
 
-@include s.devices(mobile) {
+@include s.devices(tablet) {
   .cropping {
     &__wrapper {
       position: relative;
