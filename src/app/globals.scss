@@ -63,7 +63,6 @@ body {
   }
 }
 
-
 * {
   &::-webkit-scrollbar {
     width: 10px;
@@ -88,15 +87,12 @@ body {
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-
 }
-
 
 //firefox
 * {
   scrollbar-color: var(--disabled) transparent;
   scrollbar-width: thin;
-
 
   &::-moz-scrollbar {
     width: 10px;

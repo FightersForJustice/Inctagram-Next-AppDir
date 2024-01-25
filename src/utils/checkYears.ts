@@ -3,15 +3,20 @@ import { convertToReactDatePickerObject } from './convertTimeDatePicker';
 
 const today = new Date();
 const birthDate = (date: DateObject) => new Date(date.toDate());
-const years13 = new Date(today.getUTCFullYear() - 13, today.getUTCMonth(), today.getUTCDate());
+const years13 = new Date(
+  today.getUTCFullYear() - 13,
+  today.getUTCMonth(),
+  today.getUTCDate()
+);
 const convertToDays = 1000 * 60 * 60 * 24;
 
 export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
   if (!(date instanceof DateObject)) {
-    return false
+    return false;
   }
 
-  const birthDays = (today.getTime() - birthDate(date).getTime()) / convertToDays;
+  const birthDays =
+    (today.getTime() - birthDate(date).getTime()) / convertToDays;
   const neededDays = (today.getTime() - +years13) / convertToDays;
 
   return neededDays > birthDays;
@@ -21,11 +26,11 @@ export function isMoreThen100YearsOld(
   date: DateObject | DateObject[] | string
 ) {
   if (!(date instanceof DateObject)) {
-    return false
+    return false;
   }
   const ageYears = today.getFullYear() - birthDate(date).getFullYear();
   if (Number.isNaN(ageYears)) {
-    return true
+    return true;
   }
 
   return ageYears > 100;

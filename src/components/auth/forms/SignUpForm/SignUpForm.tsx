@@ -20,7 +20,6 @@ import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
-import { routes } from '@/api/routes';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();

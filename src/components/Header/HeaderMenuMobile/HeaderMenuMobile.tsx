@@ -22,7 +22,6 @@ export const HeaderMenuMobile = ({
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
-
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
 
