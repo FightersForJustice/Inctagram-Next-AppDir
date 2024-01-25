@@ -54,10 +54,7 @@ export async function signUpAction(data: SignInData) {
       baseUrl: process.env.BASE_URL,
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
-    if (res.ok) {
-
-      return { success: true, data: {} };
-    } else {
+    if (!res.ok) {
       return { success: false, error: "signUpError" };
     }
   } catch (error) {
