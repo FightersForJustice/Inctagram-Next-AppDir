@@ -20,6 +20,7 @@ import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
+import { routes } from '@/api/routes';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();
@@ -44,21 +45,40 @@ export const SignUpForm = () => {
   const [userEmail, setUserEmail] = useState('');
 
   const processForm = async (data: SignInData) => {
-    try {
-      await signUpAction(data).then(() => {
-        setUserEmail(data.email);
-        setShowModal(true);
-        reset(resetObjSignUpForm);
-      });
-    } catch (error) {
-      toast.error({ error }.toString());
-      // const statusCode = signInResult?.error.statusCode;
-      // const statusMessage = `error${statusCode}`;
-      // setError('password', {
-      //   type: 'manual',
-      //   message: translate(statusMessage),
-      // });
-    }
+    const payload = {
+      email: data.email,
+      password: data.password,
+      userName: data.userName,
+      baseUrl: process.env.BASE_URL
+    };
+    fetch(routes.SIGN_UP, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        console.log('res', response);
+        return response.json();
+      })
+      .then((data) => console.log(data))
+      .catch((error) => console.error('Ошибка:', error));
+    // try {
+    //   await signUpAction(data).then(() => {
+    //     setUserEmail(data.email);
+    //     setShowModal(true);
+    //     reset(resetObjSignUpForm);
+    //   });
+    // } catch (error) {
+    //   toast.error({ error }.toString());
+    //   // const statusCode = signInResult?.error.statusCode;
+    //   // const statusMessage = `error${statusCode}`;
+    //   // setError('password', {
+    //   //   type: 'manual',
+    //   //   message: translate(statusMessage),
+    //   // });
+    // }
   };
 
   const formItemsProps = getSignUpFormItemsData({
