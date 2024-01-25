@@ -31,8 +31,6 @@ export const SignUpForm = () => {
     reset,
     getValues,
     formState: { errors, isValid },
-    // setError,
-    // ^ maybe needs sometime
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -45,40 +43,15 @@ export const SignUpForm = () => {
   const [userEmail, setUserEmail] = useState('');
 
   const processForm = async (data: SignInData) => {
-    const payload = {
-      email: data.email,
-      password: data.password,
-      userName: data.userName,
-      baseUrl: process.env.BASE_URL
-    };
-    fetch(routes.SIGN_UP, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => {
-        console.log('res', response);
-        return response.json();
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error('Ошибка:', error));
-    // try {
-    //   await signUpAction(data).then(() => {
-    //     setUserEmail(data.email);
-    //     setShowModal(true);
-    //     reset(resetObjSignUpForm);
-    //   });
-    // } catch (error) {
-    //   toast.error({ error }.toString());
-    //   // const statusCode = signInResult?.error.statusCode;
-    //   // const statusMessage = `error${statusCode}`;
-    //   // setError('password', {
-    //   //   type: 'manual',
-    //   //   message: translate(statusMessage),
-    //   // });
-    // }
+    try {
+      await signUpAction(data).then(() => {
+        setUserEmail(data.email);
+        setShowModal(true);
+        reset(resetObjSignUpForm);
+      });
+    } catch (error) {
+      toast.error({ error }.toString());
+    }
   };
 
   const formItemsProps = getSignUpFormItemsData({
