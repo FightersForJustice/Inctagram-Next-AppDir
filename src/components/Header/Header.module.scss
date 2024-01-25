@@ -43,13 +43,21 @@
 }
 
 @include s.devices(tablet) {
-  .notificationContainer {
-    gap: 12px;
-  }
+  
 }
 
 @include s.devices(mobile) {
   .container {
     padding: 0 15px;
   }
+  .notificationContainer {
+    justify-content: space-around;
+    width: 60%;
+    gap: 0px;
+  }
+  
+}
+
+@include s.devices(mobile-sm) {
+  
 }

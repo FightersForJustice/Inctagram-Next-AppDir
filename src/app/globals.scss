@@ -86,4 +86,8 @@ body {
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  :focus-visible {
+    outline: none;
+  }
 }

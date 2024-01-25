@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .createPost {
   display: flex;
   flex-direction: column;
@@ -179,4 +181,15 @@
 .firstModal {
   width: 100%;
   max-width: 491px;
+}
+
+@include s.devices(mobile) {
+  .cropping {
+    &__wrapper {
+      position: relative;
+      left: -25px;
+      height: 40px;
+      flex-direction: row;
+    }
+  }
 }
