@@ -46,12 +46,12 @@ export async function signInAction(data: SignInData) {
   }
 }
 
-export async function signUpAction(data: SignInData) {
+export async function signUpAction(data: SignInData, baseUrl : string | undefined) {
   try {
     const newData = {
       ...data,
       email: data.email.toLowerCase(),
-      baseUrl: process.env.BASE_URL,
+      baseUrl,
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     if (!res.ok) {

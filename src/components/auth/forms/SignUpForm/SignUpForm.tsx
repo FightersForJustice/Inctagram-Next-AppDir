@@ -43,7 +43,7 @@ export const SignUpForm = () => {
 
   const processForm = async (data: SignInData) => {
     try {
-      await signUpAction(data).then(() => {
+      await signUpAction(data, process.env.BASE_URL).then(() => {
         setUserEmail(data.email);
         setShowModal(true);
         reset(resetObjSignUpForm);
