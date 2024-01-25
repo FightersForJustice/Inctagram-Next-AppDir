@@ -46,12 +46,12 @@ export async function signInAction(data: SignInData) {
   }
 }
 
-export async function signUpAction(data: SignInData, baseUrl : string | undefined) {
+export async function signUpAction(data: SignInData) {
   try {
     const newData = {
       ...data,
       email: data.email.toLowerCase(),
-      baseUrl,
+      baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     if (!res.ok) {
@@ -330,8 +330,8 @@ export async function fetchCountriesList() {
       res.ok
         ? res.json()
         : Promise.reject(
-            new Error(`Error deleteAvatarAction, status ${res.status}`)
-          )
+          new Error(`Error deleteAvatarAction, status ${res.status}`)
+        )
     )
     .catch((error) => {
       console.error(error);
