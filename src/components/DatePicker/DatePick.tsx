@@ -59,18 +59,18 @@ export const DatePick = ({
                 trigger('dateOfBirth');
               }}
               onChange={(date: typeof value) => {
+                setFieldError('');
+
                 isObsoleteAge && setIsObsoleteAge(false);
                 const isAgeLessThan13 = isLessThen13YearsOld(date);
                 const isAgeMoreThan100 = isMoreThen100YearsOld(date);
-                setFieldError(
-                  isAgeLessThan13
-                    ? translate('dateOfBirth.ageMore13')
-                    : isAgeMoreThan100
-                    ? translate('dateOfBirth.ageLess100')
-                    : ''
-                );
 
-                onChange(date?.isValid ? convertToISOString(date) : '');
+                isAgeLessThan13 &&
+                  setFieldError(translate('dateOfBirth.ageMore13'));
+                isAgeMoreThan100 &&
+                  setFieldError(translate('dateOfBirth.ageLess100'));
+
+                onChange(date ? convertToISOString(date) : '');
               }}
               format="DD/MM/YYYY"
             />

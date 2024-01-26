@@ -15,9 +15,11 @@ export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
     return false;
   }
 
-  const birthDays =
-    (today.getTime() - birthDate(date).getTime()) / convertToDays;
-  const neededDays = (today.getTime() - +years13) / convertToDays;
+  const birthDays = Math.ceil(
+    (today.getTime() - birthDate(date).getTime()) / convertToDays
+  );
+  const neededDays =
+    Math.floor((today.getTime() - +years13) / convertToDays) + 1;
 
   return neededDays > birthDays;
 }

@@ -55,7 +55,7 @@ export async function signUpAction(data: SignInData) {
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     if (!res.ok) {
-      return { success: false, error: "signUpError" };
+      return { success: false, error: 'signUpError' };
     }
   } catch (error) {
     console.error(error, 'post error');
@@ -330,8 +330,8 @@ export async function fetchCountriesList() {
       res.ok
         ? res.json()
         : Promise.reject(
-          new Error(`Error deleteAvatarAction, status ${res.status}`)
-        )
+            new Error(`Error deleteAvatarAction, status ${res.status}`)
+          )
     )
     .catch((error) => {
       console.error(error);
