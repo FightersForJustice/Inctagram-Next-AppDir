@@ -70,8 +70,7 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
               </div>
             </div>
             <div className={myProfile ? s.descriptions : s.descriptionsPublic}>
-              {userData?.aboutMe ??
-                "Fill in the information about yourself, it's empty now 👁️"}
+              {userData?.aboutMe ?? translate('aboutMe')}
             </div>
           </div>
         </div>
