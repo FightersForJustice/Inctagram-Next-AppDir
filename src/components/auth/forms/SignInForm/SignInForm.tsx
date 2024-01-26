@@ -42,7 +42,7 @@ export const SignInForm = () => {
       setAuthCookie('accessToken', signInResult.data.accessToken);
       setAuthCookie('refreshToken', signInResult.data.refreshToken);
 
-      router.push('/my-profile');
+      router.push('/sign-in');
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `error${statusCode}`;
