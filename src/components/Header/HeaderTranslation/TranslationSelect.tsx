@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import Image from 'next/image';
 import { LanguagesModal } from './LanguagesModal';
@@ -52,7 +52,7 @@ export const TranslationSelect = () => {
   };
 
   const finalTabState =
-    window.screen.width < isMobileSize ? isOpen : openChangeSize;
+  window.screen.width < isMobileSize ? isOpen : openChangeSize;
   const finalImage =
     window.screen.width < isMobileSize
       ? fullLanguages['en']['img']

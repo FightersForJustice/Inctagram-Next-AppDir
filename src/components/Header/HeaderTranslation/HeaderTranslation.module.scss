@@ -23,15 +23,20 @@
   gap: 12px;
 }
 
-.active {
-  border-bottom: 4px solid var(--primary-300) !important;
-}
-
 .popOver {
   z-index: 10;
 }
 
+@include s.devices(tablet-xl) {
+  .active {
+    border-bottom: 1px solid var(--dark-100) !important;
+  }
+}
 @include s.devices(tablet) {
+
+  .active {
+    border-bottom: 4px solid var(--primary-300) !important;
+  }
   .container {
     width: 80px;
     gap: 2px;
