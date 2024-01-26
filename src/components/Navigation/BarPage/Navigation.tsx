@@ -31,7 +31,7 @@ export const Navigation = ({
       s.nav__item,
       {
         [s.nav__item__active]:
-          pathname.startsWith('/' + el.href) && pathname === `profile`,
+          pathname.startsWith('/' + el.href) && pathname === `/profile/${id}`,
       },
       {
         [s.statistics]: el.href === 'statistics',
