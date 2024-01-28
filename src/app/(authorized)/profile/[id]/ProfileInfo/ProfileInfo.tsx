@@ -52,7 +52,7 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
               <div className={s.btn}>
                 {myProfile ? (
                   <Link
-                    href={'/my-profile/settings-profile'}
+                    href={'/profile/settings-profile'}
                     className={s.settings}
                   >
                     {translate('btnName')}

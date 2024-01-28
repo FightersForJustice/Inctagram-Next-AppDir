@@ -29,8 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/(authorized)/my-profile/settings-profile/(tabs)/general-information",
-    "src/app/(authorized)/my-profile/settings-profile/(tabs)/general-information"
+    "src/app/(authorized)/profile/settings-profile/(tabs)/general-information",
+    "src/app/(authorized)/profile/settings-profile/(tabs)/general-information"
   ],
   "exclude": ["node_modules"]
 }

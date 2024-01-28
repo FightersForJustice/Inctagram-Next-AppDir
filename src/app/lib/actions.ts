@@ -55,7 +55,7 @@ export async function signUpAction(data: SignInData) {
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
     if (!res.ok) {
-      return { success: false, error: "signUpError" };
+      return { success: false, error: 'signUpError' };
     }
   } catch (error) {
     console.error(error, 'post error');
@@ -289,7 +289,7 @@ export async function uploadAvatarAction(avatar: FormData) {
   )
     .then((res) => {
       if (res.ok) {
-        revalidatePath('/my-profile/settings-profile/general-information');
+        revalidatePath('/profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyUploaded' };
       }
@@ -309,7 +309,7 @@ export async function deleteAvatarAction() {
   return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
     .then((res) => {
       if (res.ok) {
-        revalidatePath('/my-profile/settings-profile/general-information');
+        revalidatePath('/profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyDeleted' };
       }
@@ -330,8 +330,8 @@ export async function fetchCountriesList() {
       res.ok
         ? res.json()
         : Promise.reject(
-          new Error(`Error deleteAvatarAction, status ${res.status}`)
-        )
+            new Error(`Error deleteAvatarAction, status ${res.status}`)
+          )
     )
     .catch((error) => {
       console.error(error);
@@ -347,7 +347,7 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     updateProfileOptions(accessToken, data)
   ).then(async (res) => {
     if (res.ok) {
-      revalidatePath('/my-profile/settings-profile/general-information');
+      revalidatePath('/profile/settings-profile/general-information');
       return { success: true, modalText: 'updateProfileSuccess' };
     }
 
