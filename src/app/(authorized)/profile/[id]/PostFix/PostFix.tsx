@@ -9,11 +9,10 @@ import { Dots } from './Dots';
 import { useDeletePostMutation, useGetPostQuery } from '@/api';
 import { handleApiError } from '@/utils';
 import { Carousel } from '@/components/Carousel/Carousel';
+import { DotsFriends } from './DotsFriends';
+import { getPostsDelete } from '../actions';
 
 import s from './PostFix.module.scss';
-import { DotsFriends } from './DotsFriends';
-import Cookies from 'js-cookie';
-import { actions } from '../actions';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -43,9 +42,8 @@ export const PostFix: React.FC<Props> = ({
   );
 
   const onDeletePost = async () => {
-    const accessToken = Cookies.get('accessToken');
-    if (postId && accessToken) {
-      const response = await actions.getPostsDelete(postId, accessToken);
+    if (postId) {
+      const response = await getPostsDelete(postId);
       if (response === 204) {
         setOpenPostModal(false);
         toast.success('Post was deleted');
