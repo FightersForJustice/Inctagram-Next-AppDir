@@ -3,8 +3,8 @@ import { FieldError, UseFormRegister } from 'react-hook-form';
 import clsx from 'clsx';
 import { usePlaceholder } from '@/utils/usePlaceholder';
 import { dictionary } from '@/features/data/passwordSymbols';
-import s from './CreateFormItem.module.scss';
 import { useTranslation } from 'react-i18next';
+import s from './CreateFormItem.module.scss';
 
 type Props = {
   register: UseFormRegister<any>;
