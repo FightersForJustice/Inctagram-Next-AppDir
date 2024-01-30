@@ -1,12 +1,10 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-
 import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { CreateFormItem } from './CreateFormItem';
 import { AuthSubmit } from '@/components/Input';
@@ -17,9 +15,8 @@ import {
   signInAction,
 } from '@/app/lib/actions';
 import { setAuthCookie } from '@/utils/cookiesActions';
-
-import s from './CreateNewPasswordForm.module.scss';
 import { useTranslation } from 'react-i18next';
+import s from './CreateNewPasswordForm.module.scss';
 
 type Props = {
   translate: (value: string) => ReactNode;
