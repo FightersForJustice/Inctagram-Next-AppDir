@@ -3,8 +3,16 @@ import { convertToReactDatePickerObject } from './convertTimeDatePicker';
 
 const today = new Date();
 const birthDate = (date: DateObject) => new Date(date.toDate());
+const birthDays = (date: DateObject) =>
+  Math.ceil((today.getTime() - birthDate(date).getTime()) / convertToDays);
+
 const years13 = new Date(
   today.getUTCFullYear() - 13,
+  today.getUTCMonth(),
+  today.getUTCDate()
+);
+const years100 = new Date(
+  today.getUTCFullYear() - 100,
   today.getUTCMonth(),
   today.getUTCDate()
 );
@@ -15,13 +23,10 @@ export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
     return false;
   }
 
-  const birthDays = Math.ceil(
-    (today.getTime() - birthDate(date).getTime()) / convertToDays
-  );
   const neededDays =
     Math.floor((today.getTime() - +years13) / convertToDays) + 1;
 
-  return neededDays > birthDays;
+  return neededDays > birthDays(date);
 }
 
 export function isMoreThen100YearsOld(
@@ -30,12 +35,11 @@ export function isMoreThen100YearsOld(
   if (!(date instanceof DateObject)) {
     return false;
   }
-  const ageYears = today.getFullYear() - birthDate(date).getFullYear();
-  if (Number.isNaN(ageYears)) {
-    return true;
-  }
 
-  return ageYears > 100;
+  const limitDays =
+    Math.floor((today.getTime() - +years100) / convertToDays) + 1;
+
+  return birthDays(date) > limitDays;
 }
 
 export function isAgeValid(inputDateString: string | undefined) {

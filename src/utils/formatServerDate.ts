@@ -34,8 +34,6 @@ export const formatServerDateWithoutTime = (dateStr?: string) => {
     const day: number = date.getDate();
     const month: string = months[date.getMonth()];
     const year: number = date.getFullYear();
-    const hours: number = date.getHours();
-    const minutes: number = date.getMinutes();
     return `${month} ${day}, ${year}`;
   }
   return;

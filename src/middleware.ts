@@ -33,7 +33,7 @@ const authPaths = [
   '/agreements/terms-of-service',
 ];
 
-export async function middleware(request: NextRequest, response: NextResponse) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;
   const cookiesList = request.cookies;
