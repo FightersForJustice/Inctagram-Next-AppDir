@@ -1,13 +1,12 @@
-import { ReactNode } from 'react';
 import { ShowHidePass } from '@/components/ShowHidePass';
 import { FieldError, UseFormRegister } from 'react-hook-form';
-import s from './CreateFormItem.module.scss';
 import clsx from 'clsx';
 import { usePlaceholder } from '@/utils/usePlaceholder';
 import { dictionary } from '@/features/data/passwordSymbols';
+import s from './CreateFormItem.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
-  translate: (value: string) => ReactNode;
   register: UseFormRegister<any>;
   showValue: boolean;
   setShowCallback: (value: boolean) => void;
@@ -23,10 +22,11 @@ export const CreateFormItem = ({
   register,
   registerName,
   translateName,
-  translate,
   setShowCallback,
   showValue,
 }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`RecoveryPage.${key}`);
   const inputStyle = clsx(s.input, { [s.error]: error });
   const containerStyle = clsx(s.container, {
     [s.containerTop]: translateName === 'password',

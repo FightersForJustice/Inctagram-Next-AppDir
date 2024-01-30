@@ -19,6 +19,7 @@ import {
 import { setAuthCookie } from '@/utils/cookiesActions';
 
 import s from './CreateNewPasswordForm.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   translate: (value: string) => ReactNode;
@@ -37,7 +38,8 @@ export const CreateNewPasswordForm = ({
     mode: 'onBlur',
     resolver: yupResolver(CreateNewPasswordFormSchema()),
   });
-
+  const { t } = useTranslation();
+  const translateError = (key: string): string => t(`Errors.${key}`);
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const router = useRouter();
@@ -74,23 +76,29 @@ export const CreateNewPasswordForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <CreateFormItem
-        translate={translate}
         register={register}
         showValue={showPass}
         setShowCallback={setShowPass}
         error={errors.password}
-        errorMessage={errors?.password?.message}
+        errorMessage={
+          errors?.password?.message
+            ? translateError(errors?.password?.message)
+            : ''
+        }
         translateName={'password'}
         registerName={'password'}
       />
 
       <CreateFormItem
-        translate={translate}
         register={register}
         showValue={showConfirmPass}
         setShowCallback={setShowConfirmPass}
         error={errors.passwordConfirm}
-        errorMessage={errors?.passwordConfirm?.message}
+        errorMessage={
+          errors?.passwordConfirm?.message
+            ? translateError(errors?.passwordConfirm?.message)
+            : ''
+        }
         translateName={'passwordConf'}
         registerName={'passwordConfirm'}
       />
