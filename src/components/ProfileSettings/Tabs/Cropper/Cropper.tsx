@@ -1,4 +1,5 @@
 import Avatar from 'react-avatar-edit';
+import s from './Cropper.module.scss';
 
 type Props = {
   setCroppedAvatar: (value: string) => void;
@@ -7,13 +8,15 @@ type Props = {
 
 const Cropper = ({ setCroppedAvatar, userAvatar }: Props) => {
   return (
-    <Avatar
-      width={350}
-      height={350}
-      imageWidth={350}
-      onCrop={(preview) => setCroppedAvatar(preview)}
-      src={userAvatar}
-    />
+    <div className={s.cropperContainer}>
+      <Avatar
+        width={400}
+        height={400}
+        imageHeight={400}
+        onCrop={(preview) => setCroppedAvatar(preview)}
+        src={userAvatar}
+      />
+    </div>
   );
 };
 

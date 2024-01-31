@@ -55,15 +55,13 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
-    if (file.size <= maxSize) {
-      if (file.type === 'image/jpeg' || file.type === 'image/png') {
-        setFile(file);
-        setUserAvatar(URL.createObjectURL(file));
-      } else {
-        setFileError('The format of the uploaded photo must be PNG and JPEG');
-      }
-    } else {
+    if (file.size > maxSize) {
       setFileError('Photo size must be less than 10 MB!');
+    } else if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      setFileError('The format of the uploaded photo must be PNG and JPEG');
+    } else {
+      setFile(file);
+      setUserAvatar(URL.createObjectURL(file));
     }
   };
 
