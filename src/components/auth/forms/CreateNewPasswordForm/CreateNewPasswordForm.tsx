@@ -78,9 +78,7 @@ export const CreateNewPasswordForm = ({
         setShowCallback={setShowPass}
         error={errors.password}
         errorMessage={
-          errors?.password?.message
-            ? translateError(errors?.password?.message)
-            : ''
+          errors?.password?.message && translateError(errors?.password?.message)
         }
         translateName={'password'}
         registerName={'password'}
@@ -92,9 +90,8 @@ export const CreateNewPasswordForm = ({
         setShowCallback={setShowConfirmPass}
         error={errors.passwordConfirm}
         errorMessage={
-          errors?.passwordConfirm?.message
-            ? translateError(errors?.passwordConfirm?.message)
-            : ''
+          errors?.passwordConfirm?.message &&
+          translateError(errors?.passwordConfirm?.message)
         }
         translateName={'passwordConf'}
         registerName={'passwordConfirm'}
