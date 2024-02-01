@@ -71,6 +71,7 @@ export async function middleware(request: NextRequest) {
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();
 
+        //all we need in client components
         response.headers.set('id', `${responseData.userId}`);
         response.headers.set('userEmail', `${responseData.email}`);
         response.headers.set('userName', `${responseData.email}`);
@@ -83,10 +84,8 @@ export async function middleware(request: NextRequest) {
       case 401:
         console.log('Middleware (Bad AccessToken)');
         const updateTokenResult = await updateTokensAndContinue(refreshToken);
-        if (updateTokenResult.success) {
-          return updateTokenResult.action;
-        } else return updateTokenResult.action;
 
+        return updateTokenResult.action;
       default:
         console.log('Middleware (Not Authorized)');
         return !isAuthPath

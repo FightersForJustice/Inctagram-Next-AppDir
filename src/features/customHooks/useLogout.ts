@@ -11,11 +11,7 @@ export const logout = async (
   router: AppRouterInstance
 ) => {
   setShowLogoutModal(false);
-  const refreshToken = Cookies.get('refreshToken');
-  const res = await logOutAction(refreshToken);
-  Cookies.remove('refreshToken');
-  Cookies.remove('accessToken');
-
+  const res = await logOutAction();
   toast.success(t(res?.data));
   router.replace('/sign-in');
 };

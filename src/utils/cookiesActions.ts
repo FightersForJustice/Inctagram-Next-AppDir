@@ -2,10 +2,10 @@
 
 import Cookies from 'js-cookie';
 
-const days = 24 * 60 * 60 * 1000;
+export const cookieDays = 24 * 60 * 60 * 1000;
 
 export const setCookieExpires = () => {
-  return new Date(Date.now() + 14 * days).toUTCString();
+  return new Date(Date.now() + 14 * cookieDays).toUTCString();
 };
 
 export const setAuthCookie = (key: string, value: string) => {

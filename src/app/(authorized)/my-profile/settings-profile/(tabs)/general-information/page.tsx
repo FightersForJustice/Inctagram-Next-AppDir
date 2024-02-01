@@ -1,5 +1,3 @@
-import { headers } from 'next/headers';
-
 import { fetchGetMyProfile } from '@/app/lib/data';
 import {
   ResponseCountries,
@@ -9,12 +7,10 @@ import { GeneralInformationTab } from '@/components/ProfileSettings/Tabs/General
 import { fetchCountriesList } from '@/app/lib/actions';
 
 export default async function GeneralInformation() {
-  const accessToken = headers().get('accessToken');
-
   const [userInfo, countriesList]: [
     userInfo: UserProfileResponse,
     countriesList: ResponseCountries,
-  ] = await Promise.all([fetchGetMyProfile(accessToken), fetchCountriesList()]);
+  ] = await Promise.all([fetchGetMyProfile(), fetchCountriesList()]);
 
   return (
     <GeneralInformationTab
