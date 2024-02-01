@@ -51,11 +51,15 @@
   .container img {
     width: 24px;
     height: 24px;
+    content: url('../../../../public/img/flag_russia.svg');
   }
 
   .select {
     span {
       display: none;
+    }
+    img {
+      content: url('../../../../public/img/flag_united_kingdom.svg');
     }
   }
 
