@@ -17,6 +17,7 @@ import s from './SignInForm.module.scss';
 export const SignInForm = () => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`SignInPage.${key}`);
+  const translateErrors = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
 
   const {
@@ -55,7 +56,9 @@ export const SignInForm = () => {
         translate={translate}
         register={register}
         error={errors.email}
-        errorMessage={errors?.email?.message}
+        errorMessage={
+          errors?.email?.message && translateErrors(errors?.email?.message)
+        }
         registerName={'email'}
         translateName={'email'}
         id={'sign-in-email-input'}
@@ -64,7 +67,10 @@ export const SignInForm = () => {
         translate={translate}
         register={register}
         error={errors.password}
-        errorMessage={errors?.password?.message}
+        errorMessage={
+          errors?.password?.message &&
+          translateErrors(errors?.password?.message)
+        }
         registerName={'password'}
         translateName={'password'}
         id={'sign-in-password-input'}
