@@ -38,7 +38,7 @@ export const SignInForm = () => {
     const signInResult = await signInAction(data);
 
     if (signInResult?.success) {
-      router.push('/my-profile');
+      router.push('/api');
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `error${statusCode}`;
