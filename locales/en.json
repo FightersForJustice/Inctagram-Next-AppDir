@@ -257,7 +257,10 @@
     },
     "agreements": {
       "required": "You must accept the agreements"
-    }
+    },
+    "error400": "The email or password are incorrect. Try again please",
+    "error401": "This email is not registered",
+    "errorundefined": "Something is wrong, please try again later"
   },
   "Time": {
     "now": "just now",

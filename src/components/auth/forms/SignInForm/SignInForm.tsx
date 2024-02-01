@@ -45,7 +45,7 @@ export const SignInForm = () => {
       const statusMessage = `error${statusCode}`;
       setError('password', {
         type: 'manual',
-        message: translate(statusMessage),
+        message: statusMessage,
       });
     }
   };
