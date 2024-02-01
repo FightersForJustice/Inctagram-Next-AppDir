@@ -51,7 +51,10 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
               </div>
               <div className={s.btn}>
                 {myProfile ? (
-                  <Link href={'/settings-profile'} className={s.settings}>
+                  <Link
+                    href={'/profile/settings-profile'}
+                    className={s.settings}
+                  >
                     {translate('btnName')}
                   </Link>
                 ) : (
@@ -67,8 +70,7 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
               </div>
             </div>
             <div className={myProfile ? s.descriptions : s.descriptionsPublic}>
-              {userData?.aboutMe ??
-                "Fill in the information about yourself, it's empty now 👁️"}
+              {userData?.aboutMe ?? translate('aboutMe')}
             </div>
           </div>
         </div>

@@ -279,7 +279,7 @@ export async function uploadAvatarAction(avatar: FormData) {
   )
     .then((res) => {
       if (res.ok) {
-        revalidatePath('/my-profile/settings-profile/general-information');
+        revalidatePath('/profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyUploaded' };
       }
@@ -299,7 +299,7 @@ export async function deleteAvatarAction() {
   return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
     .then((res) => {
       if (res.ok) {
-        revalidatePath('/my-profile/settings-profile/general-information');
+        revalidatePath('/profile/settings-profile/general-information');
 
         return { success: true, modalText: 'avatarSuccessfullyDeleted' };
       }
@@ -337,7 +337,7 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     updateProfileOptions(accessToken, data)
   ).then(async (res) => {
     if (res.ok) {
-      revalidatePath('/my-profile/settings-profile/general-information');
+      revalidatePath('/profile/settings-profile/general-information');
       return { success: true, modalText: 'updateProfileSuccess' };
     }
 
