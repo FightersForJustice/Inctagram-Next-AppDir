@@ -30,8 +30,6 @@ export const SignUpForm = () => {
     reset,
     getValues,
     formState: { errors, isValid },
-    // setError,
-    // ^ maybe needs sometime
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -52,12 +50,6 @@ export const SignUpForm = () => {
       });
     } catch (error) {
       toast.error({ error }.toString());
-      // const statusCode = signInResult?.error.statusCode;
-      // const statusMessage = `error${statusCode}`;
-      // setError('password', {
-      //   type: 'manual',
-      //   message: translate(statusMessage),
-      // });
     }
   };
 

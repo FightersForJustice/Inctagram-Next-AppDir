@@ -55,14 +55,7 @@ export const CreateNewPasswordForm = ({
         const password = data.password;
         return signInAction({ email, password });
       })
-      .then((signInResult) => {
-        setAuthCookie('accessToken', signInResult?.data.accessToken);
-        setAuthCookie('refreshToken', signInResult?.data.refreshToken);
-        return deleteAllSessionsAction(
-          signInResult?.data.accessToken,
-          signInResult?.data.refreshToken
-        );
-      })
+      .then(() => deleteAllSessionsAction())
       .then(() => router.push('/my-profile'))
       .catch((error) => {
         console.error('Error during the process:', error);

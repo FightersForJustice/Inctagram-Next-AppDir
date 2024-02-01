@@ -85,7 +85,7 @@
     "subscribers": "Followers",
     "publications": "Publications",
     "btnName": "Profile Settings",
-    "btnSendMessage":"Send Message",
+    "btnSendMessage": "Send Message",
     "aboutMe": "Fill in your info, while it's empty",
     "noPosts": "You don't have any posts yet \uD83D\uDE22",
     "SubscribersModal": {
@@ -186,7 +186,7 @@
       "dateOfBirth": {
         "ageMore13": "The user's age must be over 13 years",
         "ageLess100": "The user's age must be less than 100 years",
-        "ageMessage": "Users must be over 13 years of age"
+        "ageMessage": "The user must be between 13 and 100 years old"
       }
     },
     "DevicesTab": {

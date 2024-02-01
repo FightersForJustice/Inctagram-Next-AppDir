@@ -3,8 +3,7 @@ import Image from 'next/image';
 import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
 import { ApiResponsePosts, UserProfile } from '../types';
-import {useTranslation} from "react-i18next";
-
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   userData: UserProfile;

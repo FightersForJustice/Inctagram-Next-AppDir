@@ -13,7 +13,8 @@ const MergerOfAccounts = () => {
     >
       <h1 className={'text-[20px] mb-[19px]'}>{translate('title')}</h1>
       <p className={'max-w-[300px] text-center mb-[30px]'}>
-        {translate('descBefore')} <span className={'text-blue-500'}>Epam@epam.com</span>{' '}
+        {translate('descBefore')}{' '}
+        <span className={'text-blue-500'}>Epam@epam.com</span>{' '}
         {translate('descAfter')}
       </p>
       <button

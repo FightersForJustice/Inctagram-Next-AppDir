@@ -3,7 +3,13 @@ import { SignInData } from '@/features/schemas/SignInSchema';
 
 //AUTH OPTIONS
 
-export const loginOptions = (data: SignInData) => {
+export const loginOptions = (
+  data: SignInData & {
+    baseUrl?: string | undefined;
+  }
+) => {
+  console.log('data', data);
+
   return {
     method: 'POST',
     headers: {

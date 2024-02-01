@@ -31,8 +31,7 @@ export const convertToReactDatePickerObject = (
 };
 
 export const convertToISOString = (dateInput: DateObject | string) => {
-  let formattedDate = new Date();
-
+  let formattedDate: Date;
 
   if (dateInput instanceof DateObject) {
     formattedDate = new Date(
@@ -44,11 +43,11 @@ export const convertToISOString = (dateInput: DateObject | string) => {
         dateInput.minute,
         dateInput.second,
         dateInput.millisecond
-      ));
+      )
+    );
   } else {
     const [day, month, year] = dateInput.split('/');
-    formattedDate = new Date(
-      Date.UTC(+year, +month, +day));
+    formattedDate = new Date(Date.UTC(+year, +month, +day));
   }
 
   return formattedDate.toISOString();

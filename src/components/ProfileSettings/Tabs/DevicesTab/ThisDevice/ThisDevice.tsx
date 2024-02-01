@@ -12,8 +12,6 @@ type Props = {
 
 export const ThisDevice: React.FC<Props> = ({ session }) => {
   if (session) {
-    
-
     return (
       <>
         <p className={s.devices__title}>{session?.deviceName ?? 'No device'}</p>
