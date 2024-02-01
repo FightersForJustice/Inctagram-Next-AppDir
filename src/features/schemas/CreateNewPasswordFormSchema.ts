@@ -1,26 +1,23 @@
-import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
 export const CreateNewPasswordFormSchema = () => {
-  const { t } = useTranslation();
-  const translate = (key: string): string => t(`Errors.${key}`);
-  const passwordCompletly =
+  const passwordCompletely =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|])[A-Za-z0-9'"`!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|]{6,20}$/;
 
   return yup.object({
     password: yup
       .string()
-      .required(translate('password.required'))
-      .test('not-spaces', translate('password.spaces'), (value) => {
+      .required('password.required')
+      .test('not-spaces', 'password.spaces', (value) => {
         return value.trim() !== '' && !/\s/.test(value);
       })
-      .min(6, translate('password.min'))
-      .max(20, translate('password.max'))
-      .matches(passwordCompletly, `${translate('password.complexity')} `),
+      .min(6, 'password.min')
+      .max(20, 'password.max')
+      .matches(passwordCompletely, `${'password.complexity'} `),
     passwordConfirm: yup
       .string()
-      .oneOf([yup.ref('password')], translate('passwordConfirm.oneOf'))
-      .min(6, translate('passwordConfirm.min'))
-      .required(translate('passwordConfirm.required')),
+      .oneOf([yup.ref('password')], 'passwordConfirm.oneOf')
+      .min(6, 'passwordConfirm.min')
+      .required('passwordConfirm.required'),
   });
 };
