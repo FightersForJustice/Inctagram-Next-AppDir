@@ -1,6 +1,5 @@
-import { actions } from '../actions';
+import { getPosts, getProfile } from '../actions';
 import { ApiResponsePosts, UserProfile } from '../types';
-import { headers } from 'next/headers';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 import s from './ProfileServer.module.scss';
 import { Posts } from '../Posts/Posts';

@@ -17,9 +17,9 @@ import {
   uploadAvatarOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
-import { setCookieExpires } from '@/utils/cookiesActions';
+import { cookieDays, setCookieExpires } from '@/utils/cookiesActions';
 import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 
 // AUTH ACTIONS
@@ -29,17 +29,30 @@ export async function signInAction(data: SignInData) {
     try {
       const res = await fetch(routes.LOGIN, loginOptions(data));
       const responseBody = await res.json();
-      if (res.ok) {
-        const refreshToken = {
-          refreshToken: getRefreshToken(res.headers.get('set-cookie')),
-        };
 
-        const returnData = { ...responseBody, ...refreshToken };
-
-        return { success: true, data: returnData };
-      } else {
+      if (!res.ok) {
         return { success: false, error: responseBody };
       }
+      const accessToken = responseBody.accessToken;
+      const refreshToken = getRefreshToken(res.headers.get('set-cookie'));
+
+      cookies().set({
+        name: 'refreshToken',
+        value: refreshToken,
+        httpOnly: true,
+        path: '/',
+        secure: true,
+        expires: Date.now() + cookieDays * 30,
+      });
+      cookies().set({
+        name: 'accessToken',
+        value: accessToken,
+        httpOnly: true,
+        path: '/',
+        secure: true,
+      });
+
+      return { success: true, data: responseBody };
     } catch (error) {
       console.error(error, 'post error');
     }
@@ -140,24 +153,27 @@ export async function newPasswordAction(
   }
 }
 
-export async function logOutAction(refreshToken: string | undefined) {
+export async function logOutAction() {
+  const refreshToken = cookies().get('refreshToken')?.value;
   if (refreshToken) {
     try {
       const res = await fetch(
         routes.LOGOUT,
         requestLogoutOptions(refreshToken)
       );
-      if (res.ok) {
-        revalidatePath('/sign-in');
-
-        return { success: true, data: 'logoutSuccess' };
-      } else {
-        return { success: false, error: 'logoutFailed' };
+      if (!res.ok) {
+        throw new Error('logoutFailed');
       }
+      cookies().delete('refreshToken');
+      cookies().delete('accessToken');
+      revalidatePath('/sign-in');
+
+      return { success: true, data: 'logoutSuccess' };
     } catch (error) {
       console.error('Logout Error', error);
+      return { success: false, error: error };
     }
-  } else return { success: false, error: 'logoutFailed' };
+  } else return { success: false, error: 'logoutFailed(noRefreshToken)' };
 }
 
 export async function loginGoogleAction(code: string) {
@@ -185,54 +201,28 @@ export async function loginGoogleAction(code: string) {
 
 //SESSION ACTIONS
 
-export async function deleteAllSessionsAction(
-  accessToken: string | undefined,
-  refreshToken: string | undefined
-) {
+export async function deleteAllSessionsAction() {
+  const accessToken = headers().get('accessToken');
+  const refreshToken = headers().get('refreshToken');
+
   try {
-    fetch(
-      routes.TERMINATE_ALL_SESSIONS,
-      requestDeleteAllSessionsOptions(accessToken, refreshToken)
-    ).then((res) => ({ success: true, data: 'deleteAllSessionsSuccess' }));
+    if (accessToken && refreshToken) {
+      const res = await fetch(
+        routes.TERMINATE_ALL_SESSIONS,
+        requestDeleteAllSessionsOptions(accessToken, refreshToken)
+      );
+
+      if (!res.ok) {
+        throw new Error('deleteAllSessionsFailed');
+      }
+      return { success: true, data: 'deleteAllSessionsSuccess' };
+    }
   } catch (error) {
-    return { success: false, error: 'deleteAllSessionsFailed' };
+    return { success: false, error: error };
   }
 }
 
 // middleware actions
-
-export async function updateTokenMiddleware(
-  currentRefreshToken: string | undefined
-) {
-  try {
-    if (currentRefreshToken) {
-      const res = await fetch(
-        routes.UPDATE_TOKENS,
-        requestUpdateTokensOptions(currentRefreshToken)
-      );
-      const responseBody = await res.json();
-      if (res.ok) {
-        const newAccessToken = responseBody.accessToken;
-        const newRefreshToken = getRefreshToken(res.headers.get('set-cookie'));
-
-        return NextResponse.next({
-          headers: {
-            'Set-Cookie': [
-              `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None`,
-              `refreshToken=${newRefreshToken}; Path=/; Secure; SameSite=None`,
-            ],
-          } as any, //any is needed for real, looks like Next bug, when setting multiple cookies
-        });
-      } else {
-        console.log('UpdateToken failed');
-
-        return { success: false, error: responseBody };
-      }
-    } else throw new Error('Refresh Token not found');
-  } catch (error) {
-    console.error('error with updating Tokens', error);
-  }
-}
 
 export async function updateTokensAndContinue(refreshToken: string) {
   try {
@@ -240,30 +230,30 @@ export async function updateTokensAndContinue(refreshToken: string) {
       routes.UPDATE_TOKENS,
       requestUpdateTokensOptions(refreshToken)
     );
+    if (!updateTokenResponse.ok) {
+      console.log('UpdateToken failed', updateTokenResponse);
+      throw new Error('error with updating Tokens');
+    }
+    console.log('MiddleWare (Update Tokens Success)');
+
     const res = await updateTokenResponse.json();
     const newAccessToken = res.accessToken;
     const newRefreshToken = getRefreshToken(
       updateTokenResponse.headers.get('set-cookie')
     );
 
-    if (updateTokenResponse.status === 200) {
-      console.log('MiddleWare (Update Tokens Success)');
+    const action = NextResponse.next({
+      headers: {
+        'Set-Cookie': [
+          `accessToken=${newAccessToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
+          `refreshToken=${newRefreshToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
+        ],
+      } as any,
+    });
 
-      const action = NextResponse.next({
-        headers: {
-          'Set-Cookie': [
-            `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
-            `refreshToken=${newRefreshToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
-          ],
-        } as any,
-      });
-
-      return { success: true, action };
-    } else {
-      throw new Error('error with updating Tokens');
-    }
+    return { success: true, action };
   } catch (error) {
-    console.error(error);
+    console.error('updateTokensAndContinue ERROR', error);
 
     const action = NextResponse.next({
       headers: {

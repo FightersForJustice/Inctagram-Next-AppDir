@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { ApiResponsePosts, Post, UserProfile } from '../types';
-import { actions } from '../actions';
+import { getPosts } from '../actions';
 import s from './Posts.module.scss';
 import { findMinId } from '@/utils/findMinId';
 import { PostImg } from './Post';
@@ -26,7 +26,7 @@ export function LoadMore({ id, minId, userData, myProfile }: Props) {
 
   const loadMoreBeers = async (newMinId: number | null) => {
     const newPosts: ApiResponsePosts =
-      (await actions.getPosts(id, newMinId)) ?? [];
+      (await getPosts(id, newMinId)) ?? [];
 
     setPosts((prevPosts: Post[]) => [...prevPosts, ...newPosts.items]);
 

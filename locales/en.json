@@ -186,7 +186,7 @@
       "dateOfBirth": {
         "ageMore13": "The user's age must be over 13 years",
         "ageLess100": "The user's age must be less than 100 years",
-        "ageMessage": "Users must be over 13 years of age"
+        "ageMessage": "The user must be between 13 and 100 years old"
       }
     },
     "DevicesTab": {
