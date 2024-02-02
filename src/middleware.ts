@@ -31,6 +31,7 @@ const authPaths = [
   '/auth/registration-confirmation',
   '/agreements/privacy-policy',
   '/agreements/terms-of-service',
+  '/profile/null',
 ];
 
 export async function middleware(request: NextRequest) {
@@ -56,7 +57,7 @@ export async function middleware(request: NextRequest) {
     console.log('Middleware (User in NOT auth)');
 
     return isAuthPath
-      ? NextResponse.next()
+      ? NextResponse.redirect(new URL('/', request.url))
       : NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
@@ -88,9 +89,9 @@ export async function middleware(request: NextRequest) {
         return updateTokenResult.action;
       default:
         console.log('Middleware (Not Authorized)');
-        return !isAuthPath
-          ? NextResponse.redirect(new URL('/sign-in', request.url))
-          : NextResponse.next();
+        return (
+          !isAuthPath && NextResponse.redirect(new URL('/sign-in', request.url))
+        );
     }
   } catch (error) {
     console.log('NOT Authorized because of error : ', error);
