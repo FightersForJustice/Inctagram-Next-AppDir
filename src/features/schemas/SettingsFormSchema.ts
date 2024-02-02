@@ -1,34 +1,30 @@
 import * as yup from 'yup';
-import { useTranslation } from 'react-i18next';
 import { isAgeValid } from '@/utils/checkYears';
 
 export const SettingsFormSchema = () => {
-  const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`SettingsProfilePage.SettingsFormSchema.${key}`);
   return yup.object({
     userName: yup
       .string()
-      .min(6, translate('userName.min'))
-      .matches(/^[A-Za-z0-9_-]+$/, translate('userName.matches'))
-      .max(30, translate('userName.max'))
-      .required(translate('userName.required')),
+      .min(6, 'userName.min')
+      .matches(/^[A-Za-z0-9_-]+$/, 'userName.matches')
+      .max(30, 'userName.max')
+      .required('userName.required'),
     firstName: yup
       .string()
-      .min(1, translate('firstName.min'))
-      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, translate('firstName.matches'))
-      .max(50, translate('firstName.max'))
-      .required(translate('firstName.required')),
+      .min(1, 'firstName.min')
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, 'firstName.matches')
+      .max(50, 'firstName.max')
+      .required('firstName.required'),
     lastName: yup
       .string()
-      .min(1, translate('lastName.min'))
-      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, translate('lastName.matches'))
-      .max(50, translate('lastName.max'))
-      .required(translate('lastName.required')),
+      .min(1, 'lastName.min')
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, 'lastName.matches')
+      .max(50, 'lastName.max')
+      .required('lastName.required'),
     aboutMe: yup
       .string()
-      .min(0, translate('aboutMe.min'))
-      .max(200, translate('aboutMe.max'))
+      .min(0, 'aboutMe.min')
+      .max(200, 'aboutMe.max')
       .nullable(),
     dateOfBirth: yup
       .string()

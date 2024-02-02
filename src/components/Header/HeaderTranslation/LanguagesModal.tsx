@@ -8,7 +8,7 @@ export const LanguagesModal = function ({
   language,
   onSelectChange,
   isEn,
-  isMobileSize
+  isMobileSize,
 }: {
   closeModal: () => void;
   onSelectChange: (value: string) => void;
@@ -16,10 +16,12 @@ export const LanguagesModal = function ({
   isMobileSize: number;
   isEn: boolean;
 }) {
-  
   const langHandler = (lang: string, e: React.MouseEvent) => {
-    if (window.screen.width > isMobileSize || e.currentTarget.id === 'isMobile') {
-      console.log(e.currentTarget.id, lang)
+    if (
+      window.screen.width > isMobileSize ||
+      e.currentTarget.id === 'isMobile'
+    ) {
+      console.log(e.currentTarget.id, lang);
       closeModal();
       if (lang === 'ru') {
         return onSelectChange('en');
@@ -28,24 +30,24 @@ export const LanguagesModal = function ({
     }
   };
 
-  const finalLang = window.screen.width < isMobileSize ? '/img/flag_russia.svg' : '/img/flag_united_kingdom.svg'
-  const isMobileLanguage = window.screen.width < isMobileSize && !isEn ? f.active : '';
+  const finalLang =
+    window.screen.width < isMobileSize
+      ? '/img/flag_russia.svg'
+      : '/img/flag_united_kingdom.svg';
+  const isMobileLanguage =
+    window.screen.width < isMobileSize && !isEn ? f.active : '';
   const languageForRender = (lang: string) => {
     return (
       <div
         className={
           f.container + ' ' + f.languagesContainer + ' ' + isMobileLanguage
         }
-        id='isMobile'
+        id="isMobile"
         onClick={(e) => langHandler(lang, e)}
       >
         <Image
           alt="no-image"
-          src={
-            lang === 'en'
-              ? '/img/flag_russia.svg'
-              :  finalLang
-          }
+          src={lang === 'en' ? '/img/flag_russia.svg' : finalLang}
           width={20}
           height={20}
         />

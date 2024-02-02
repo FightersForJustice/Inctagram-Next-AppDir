@@ -5,12 +5,11 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
 
 import { Control, Controller, UseFormTrigger } from 'react-hook-form';
 import {
-  isMoreThen100YearsOld,
   isLessThen13YearsOld,
+  isMoreThen100YearsOld,
 } from '@/utils/checkYears';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
 import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
@@ -23,19 +22,17 @@ export const DatePick = ({
   control,
   trigger,
   isObsoleteDateOfBirth,
+  translateErrors,
 }: {
   control: Control<ProfileFormValues>;
   trigger: UseFormTrigger<ProfileFormValues>;
   isObsoleteDateOfBirth: boolean;
+  translateErrors: (key: string) => string;
 }) => {
   const [fieldError, setFieldError] = useState<string>('');
   const [isObsoleteAge, setIsObsoleteAge] = useState<boolean>(
     isObsoleteDateOfBirth
   );
-
-  const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
   const displayError = !!fieldError.length || isObsoleteAge;
 
@@ -65,10 +62,8 @@ export const DatePick = ({
                 const isAgeLessThan13 = isLessThen13YearsOld(date);
                 const isAgeMoreThan100 = isMoreThen100YearsOld(date);
 
-                isAgeLessThan13 &&
-                  setFieldError(translate('dateOfBirth.ageMore13'));
-                isAgeMoreThan100 &&
-                  setFieldError(translate('dateOfBirth.ageLess100'));
+                isAgeLessThan13 && setFieldError('dateOfBirth.ageMore13');
+                isAgeMoreThan100 && setFieldError('dateOfBirth.ageLess100');
 
                 onChange(date ? convertToISOString(date) : '');
               }}
@@ -76,8 +71,8 @@ export const DatePick = ({
             />
             {displayError && (
               <p className="rmdp-error">
-                {fieldError}
-                {isObsoleteAge && translate('dateOfBirth.ageMessage')}
+                {!!fieldError.length && translateErrors(fieldError)}
+                {isObsoleteAge && translateErrors('dateOfBirth.ageMessage')}
                 <Link
                   href={'/agreements/privacy-policy-profile'}
                   className={'underline pl-[5px]'}

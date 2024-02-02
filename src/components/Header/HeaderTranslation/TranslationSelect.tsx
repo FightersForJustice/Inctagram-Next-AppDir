@@ -52,7 +52,7 @@ export const TranslationSelect = () => {
   };
 
   const finalTabState =
-  window.screen.width < isMobileSize ? isOpen : openChangeSize;
+    window.screen.width < isMobileSize ? isOpen : openChangeSize;
   const finalImage =
     window.screen.width < isMobileSize
       ? fullLanguages['en']['img']
