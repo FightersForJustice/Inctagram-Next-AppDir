@@ -26,7 +26,12 @@ export const Navigation = ({
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
   const styleProfile =
-    pathname === `/profile/${id}`
+    pathname === `/profile/${id}` ||
+    pathname === '/profile/settings-profile' ||
+    pathname === '/profile/settings-profile/general-information' ||
+    pathname === '/profile/settings-profile/devices' ||
+    pathname === '/profile/settings-profile/account-management' ||
+    pathname === '/profile/settings-profile/my-payments'
       ? `${s.nav__item__active} ${s.nav__item}`
       : s.nav__item;
   const mapNav = navigationBar.map((el) => {
