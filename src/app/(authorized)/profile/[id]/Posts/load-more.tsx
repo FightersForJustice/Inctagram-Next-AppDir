@@ -25,8 +25,7 @@ export function LoadMore({ id, minId, userData, myProfile }: Props) {
   const { ref, inView } = useInView();
 
   const loadMoreBeers = async (newMinId: number | null) => {
-    const newPosts: ApiResponsePosts =
-      (await getPosts(id, newMinId)) ?? [];
+    const newPosts: ApiResponsePosts = (await getPosts(id, newMinId)) ?? [];
 
     setPosts((prevPosts: Post[]) => [...prevPosts, ...newPosts.items]);
 

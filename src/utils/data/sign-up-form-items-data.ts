@@ -1,10 +1,12 @@
 export const getSignUpFormItemsData = ({
+  translateErrors,
   errors,
   showPass,
   showConfirmPass,
   setShowPass,
   setShowConfirmPass,
 }: {
+  translateErrors: (key: string) => string;
   errors: any | undefined;
   showPass?: boolean;
   showConfirmPass?: boolean;
@@ -15,21 +17,21 @@ export const getSignUpFormItemsData = ({
   return [
     {
       error: errors.userName,
-      errorMessage: errors?.userName?.message,
+      errorMessage: translateErrors(errors?.userName?.message),
       registerName: 'userName',
       translateName: 'name',
       id: 'sign-up-userName',
     },
     {
       error: errors.email,
-      errorMessage: errors?.email?.message,
+      errorMessage: translateErrors(errors?.email?.message),
       registerName: 'email',
       translateName: 'email',
       id: 'sign-up-email',
     },
     {
       error: errors.password,
-      errorMessage: errors?.password?.message,
+      errorMessage: translateErrors(errors?.password?.message),
       registerName: 'password',
       translateName: 'password',
       id: 'sign-up-password',
@@ -39,7 +41,7 @@ export const getSignUpFormItemsData = ({
     },
     {
       error: errors.passwordConfirm,
-      errorMessage: errors?.passwordConfirm?.message,
+      errorMessage: translateErrors(errors?.passwordConfirm?.message),
       registerName: 'passwordConfirm',
       translateName: 'passwordConf',
       id: 'sign-up-passwordConfirm',

@@ -17,19 +17,19 @@ export const SignUpFormSchema = () => {
     .object({
       userName: yup
         .string()
-        .required(t('userName.required'))
-        .matches(/^[^\s]+$/, t('userName.spaces'))
-        .matches(nameValidationRegex, t('userName.invalidCharacters'))
-        .min(6, t('userName.min'))
-        .max(30, t('userName.max')),
+        .required('userName.required')
+        .matches(/^[^\s]+$/, 'userName.spaces')
+        .matches(nameValidationRegex, 'userName.invalidCharacters')
+        .min(6, 'userName.min')
+        .max(30, 'userName.max'),
       email: yup
         .string()
-        .required(t('email.required'))
-        .matches(emailValidationRegex, t('email.invalidCharacters'))
-        .test('no-spaces', t('email.spaces'), (value) => {
+        .required('email.required')
+        .matches(emailValidationRegex, 'email.invalidCharacters')
+        .test('no-spaces', 'email.spaces', (value) => {
           return !/\s/.test(value);
         })
-        .test('valid-domain', t('email.invalidCharacters'), (value) => {
+        .test('valid-domain', 'email.invalidCharacters', (value) => {
           const parts = value.split('@');
           if (parts.length === 2) {
             const [local, fullDomain] = parts;
@@ -52,7 +52,7 @@ export const SignUpFormSchema = () => {
           }
           return false;
         })
-        .test('firstLastSpec', t('email.invalidCharacters'), (value) => {
+        .test('firstLastSpec', 'email.invalidCharacters', (value) => {
           const lastChar = value.indexOf('@');
           return (
             firsLastCharEmail.test(value[lastChar - 1]) &&
@@ -62,22 +62,22 @@ export const SignUpFormSchema = () => {
       // .email(t("email.email")),
       password: yup
         .string()
-        .required(t('password.required'))
-        .test('not-spaces', t('password.spaces'), (value) => {
+        .required('password.required')
+        .test('not-spaces', 'password.spaces', (value) => {
           return value.trim() !== '' && !/\s/.test(value);
         })
-        .min(6, t('password.min'))
-        .max(20, t('password.max'))
-        .matches(passwordCompletly, `${t('password.complexity')} `),
+        .min(6, 'password.min')
+        .max(20, 'password.max')
+        .matches(passwordCompletly, 'password.complexity'),
       passwordConfirm: yup
         .string()
-        .oneOf([yup.ref('password')], t('passwordConfirm.oneOf'))
-        .min(6, t('passwordConfirm.min'))
-        .required(t('passwordConfirm.required')),
+        .oneOf([yup.ref('password')], 'passwordConfirm.oneOf')
+        .min(6, 'passwordConfirm.min')
+        .required('passwordConfirm.required'),
       agreements: yup
         .boolean()
-        .oneOf([true], t('agreements.required'))
-        .required(t('agreements.required')),
+        .oneOf([true], 'agreements.required')
+        .required('agreements.required'),
     })
     .required();
 };

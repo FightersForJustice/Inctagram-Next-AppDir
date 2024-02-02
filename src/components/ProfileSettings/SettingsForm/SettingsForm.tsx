@@ -21,8 +21,8 @@ import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 import {
-  isMoreThen100YearsOld,
   isLessThen13YearsOld,
+  isMoreThen100YearsOld,
 } from '@/utils/checkYears';
 
 import s from './SettingsForm.module.scss';
@@ -59,6 +59,8 @@ export const SettingsForm = ({
   const { t } = useTranslation();
   const translate = (key: string): string =>
     t(`SettingsProfilePage.GeneralInformationTab.${key}`);
+  const translateErrors = (key: string): string =>
+    t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -131,7 +133,10 @@ export const SettingsForm = ({
               id={'settings-profile-userName'}
               register={register}
               error={errors.userName}
-              errorMessage={errors?.userName?.message}
+              errorMessage={
+                errors?.userName?.message &&
+                translateErrors(errors?.userName?.message)
+              }
               registerName={'userName'}
               translateName={'username'}
             />
@@ -142,7 +147,10 @@ export const SettingsForm = ({
               id={'settings-profile-firstName'}
               register={register}
               error={errors.firstName}
-              errorMessage={errors?.firstName?.message}
+              errorMessage={
+                errors?.firstName?.message &&
+                translateErrors(errors?.firstName?.message)
+              }
               registerName={'firstName'}
               translateName={'firstname'}
             />
@@ -153,7 +161,10 @@ export const SettingsForm = ({
               id={'settings-profile-lastName'}
               register={register}
               error={errors.lastName}
-              errorMessage={errors?.lastName?.message}
+              errorMessage={
+                errors?.lastName?.message &&
+                translateErrors(errors?.lastName?.message)
+              }
               registerName={'lastName'}
               translateName={'lastname'}
             />
@@ -164,6 +175,7 @@ export const SettingsForm = ({
                 <span className={s.form__required}>*</span>
               </label>
               <DatePick
+                translateErrors={translateErrors}
                 isObsoleteDateOfBirth={isObsoleteDateOfBirth}
                 trigger={trigger}
                 control={control}
@@ -206,7 +218,8 @@ export const SettingsForm = ({
                     s.form__textareaError__bottom
                   } `}
                 >
-                  {errors.aboutMe.message}
+                  {errors.aboutMe.message &&
+                    translateErrors(errors.aboutMe.message)}
                 </p>
               )}
             </div>

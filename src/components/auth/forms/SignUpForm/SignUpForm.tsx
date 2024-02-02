@@ -24,6 +24,7 @@ import s from './SignUpForm.module.scss';
 export const SignUpForm = () => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`SignUpPage.${key}`);
+  const translateErrors = (key: string): string => t(`Errors.${key}`);
   const {
     register,
     handleSubmit,
@@ -54,6 +55,7 @@ export const SignUpForm = () => {
   };
 
   const formItemsProps = getSignUpFormItemsData({
+    translateErrors,
     errors,
     showPass,
     showConfirmPass,

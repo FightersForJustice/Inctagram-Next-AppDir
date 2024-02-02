@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import clsx from 'clsx';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
@@ -10,7 +9,7 @@ import { inputTypes } from './utils';
 import s from './FormItem.module.scss';
 
 export interface FormItemProps {
-  translate: (value: string) => ReactNode;
+  translate: (value: string) => string;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
   errorMessage: string | undefined;

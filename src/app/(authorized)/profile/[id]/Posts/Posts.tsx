@@ -2,6 +2,7 @@
 import s from './Posts.module.scss';
 import { ApiResponsePosts, UserProfile } from '../types';
 import { PostImg } from './Post';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   postsData: ApiResponsePosts;
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export const Posts = ({ postsData, userData, myProfile }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const postsImages = () => {
     let currentPosts;
     return postsData?.items.map((i) => {
@@ -28,7 +31,7 @@ export const Posts = ({ postsData, userData, myProfile }: Props) => {
         postsImages()
       ) : (
         <div className={s.container}>
-          <p className={s.text}>You don&apos;t have any posts yet 😢</p>
+          <p className={s.text}>{translate('noPosts')}</p>
         </div>
       )}
     </>

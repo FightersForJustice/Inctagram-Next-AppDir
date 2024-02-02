@@ -7,22 +7,22 @@ import {
 
 export const ProfileTabsList = [
   {
-    link: '/my-profile/settings-profile/general-information',
+    link: '/profile/settings-profile/general-information',
     name: 'GeneralInformationTab.titleTab',
     icon: InfoCircledIcon,
   },
   {
-    link: '/my-profile/settings-profile/devices',
+    link: '/profile/settings-profile/devices',
     name: 'DevicesTab.titleTab',
     icon: DesktopIcon,
   },
   {
-    link: '/my-profile/settings-profile/account-management',
+    link: '/profile/settings-profile/account-management',
     name: 'AccountManagementTab.titleTab',
     icon: GearIcon,
   },
   {
-    link: '/my-profile/settings-profile/my-payments',
+    link: '/profile/settings-profile/my-payments',
     name: 'MyPaymentsTab.titleTab',
     icon: BackpackIcon,
   },

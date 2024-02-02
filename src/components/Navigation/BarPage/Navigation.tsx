@@ -25,7 +25,10 @@ export const Navigation = ({
 }: NavigationType) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
-
+  const styleProfile =
+    pathname === `/profile/${id}`
+      ? `${s.nav__item__active} ${s.nav__item}`
+      : s.nav__item;
   const mapNav = navigationBar.map((el) => {
     const style = clsx(
       s.nav__item,
@@ -50,7 +53,7 @@ export const Navigation = ({
           </button>
         )}
         {el.href === 'profile' && (
-          <Link href={'/profile/' + id} className={style}>
+          <Link href={'/profile/' + id} className={styleProfile}>
             <BarComponent>{el.img}</BarComponent>
             <span>
               {translate(el.href === 'profile' ? 'myProfile' : el.href)}
