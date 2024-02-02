@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 
 import f from './HeaderTranslation.module.scss';
@@ -9,18 +8,17 @@ export const LanguagesModal = function ({
   onSelectChange,
   isEn,
   isMobileSize,
+  currentWidth,
 }: {
   closeModal: () => void;
   onSelectChange: (value: string) => void;
   language: string;
   isMobileSize: number;
+  currentWidth: number;
   isEn: boolean;
 }) {
   const langHandler = (lang: string, e: React.MouseEvent) => {
-    if (
-      window.screen.width > isMobileSize ||
-      e.currentTarget.id === 'isMobile'
-    ) {
+    if (currentWidth > isMobileSize || e.currentTarget.id === 'isMobile') {
       console.log(e.currentTarget.id, lang);
       closeModal();
       if (lang === 'ru') {
@@ -29,13 +27,7 @@ export const LanguagesModal = function ({
       onSelectChange('ru');
     }
   };
-
-  const finalLang =
-    window.screen.width < isMobileSize
-      ? '/img/flag_russia.svg'
-      : '/img/flag_united_kingdom.svg';
-  const isMobileLanguage =
-    window.screen.width < isMobileSize && !isEn ? f.active : '';
+  let isMobileLanguage = currentWidth < isMobileSize && !isEn && f.active;
   const languageForRender = (lang: string) => {
     return (
       <div
@@ -47,7 +39,11 @@ export const LanguagesModal = function ({
       >
         <Image
           alt="no-image"
-          src={lang === 'en' ? '/img/flag_russia.svg' : finalLang}
+          src={
+            lang !== 'en'
+              ? '/img/flag_united_kingdom.svg'
+              : '/img/flag_russia.svg'
+          }
           width={20}
           height={20}
         />
@@ -55,5 +51,5 @@ export const LanguagesModal = function ({
       </div>
     );
   };
-  return <div>{languageForRender(language)}</div>;
+  return languageForRender(language);
 };
