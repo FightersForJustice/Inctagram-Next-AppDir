@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
     console.log('Middleware (User in NOT auth)');
 
     return isAuthPath
-      ? NextResponse.redirect(new URL('/', request.url))
+      ? NextResponse.next()
       : NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
