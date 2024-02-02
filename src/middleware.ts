@@ -89,9 +89,9 @@ export async function middleware(request: NextRequest) {
         return updateTokenResult.action;
       default:
         console.log('Middleware (Not Authorized)');
-        return (
-          !isAuthPath && NextResponse.redirect(new URL('/sign-in', request.url))
-        );
+        return !isAuthPath
+          ? NextResponse.redirect(new URL('/sign-in', request.url))
+          : NextResponse.next();
     }
   } catch (error) {
     console.log('NOT Authorized because of error : ', error);
