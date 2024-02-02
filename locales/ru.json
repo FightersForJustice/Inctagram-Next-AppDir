@@ -154,7 +154,9 @@
       "avatarDeleteFailed": "Ошибка удаления аватара",
       "updateProfileSuccess": "Профиль успешно обновлен",
       "updateProfileError": "Ошибка обновления профайла, попробуйте позже",
-      "updateProfileUserExist": "Юзер с таким логином уже существует"
+      "updateProfileUserExist": "Юзер с таким логином уже существует",
+      "defaultCountry": "Страна",
+      "defaultCity": "Город"
     },
     "SettingsFormSchema": {
       "userName": {

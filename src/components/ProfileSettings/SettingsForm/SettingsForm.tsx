@@ -26,6 +26,7 @@ import {
 } from '@/utils/checkYears';
 
 import s from './SettingsForm.module.scss';
+import { convertToISOString } from '@/utils/convertTimeDatePicker';
 
 export type ProfileFormValues = {
   userName: string;
@@ -93,11 +94,12 @@ export const SettingsForm = ({
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
     //in case if back will change API , with adding country to endPoint
-    const { country, city, aboutMe, ...others } = data;
+    const { country, city, aboutMe, dateOfBirth, ...others } = data;
 
     const optionsFormatData = {
       city: city?.value || '',
       aboutMe: aboutMe || '',
+      dateOfBirth: convertToISOString(dateOfBirth),
       ...others,
     };
 

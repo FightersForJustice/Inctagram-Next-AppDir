@@ -293,6 +293,7 @@ export async function uploadAvatarAction(avatar: FormData) {
       return { success: false, modalText: 'avatarUploadFailed' };
     });
 }
+
 export async function deleteAvatarAction() {
   const accessToken = headers().get('accessToken');
 
@@ -354,7 +355,7 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
         break;
 
       default:
-        toastMessage = 'updateProfileFailed';
+        toastMessage = 'updateProfileError';
         break;
     }
 

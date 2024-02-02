@@ -40,12 +40,18 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
   const [citiesList, setCitiesList] = useState<string[] | null>(null);
 
   const defaultValues = {
-    country: { value: country || '', label: country || 'Country' },
-    city: { value: city || '', label: city || 'City' },
+    country: {
+      value: country || '',
+      label: country || translate('defaultCountry'),
+    },
+    city: {
+      value: city || '',
+      label: city || translate('defaultCity'),
+    },
   };
 
   const onFocusCountryHandler = () => {
-    setValue('city', { value: '', label: 'City' });
+    setValue('city', null);
   };
 
   const onFocusCityHandler = () => {
@@ -58,7 +64,7 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
 
   const onCountryChange = (newValue: optionsType) => {
     setCitiesList(null);
-    setCheckedCountry(newValue);
+    newValue && setCheckedCountry(newValue);
   };
 
   return (
@@ -67,7 +73,11 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
         selectorsLabelName={translate('country')}
         name="country"
         id="country"
-        defaultValue={defaultValues.country}
+        defaultValue={
+          defaultValues.country.value ? defaultValues.country : null
+        }
+        placeholder={defaultValues.country.label}
+        isClearable
         isSearchable
         onFocus={onFocusCountryHandler}
         options={parseCountriesListIntoOptions(countriesList.data)}
@@ -83,7 +93,8 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
             value={value}
             name="city"
             id="city"
-            defaultValue={defaultValues.city}
+            defaultValue={defaultValues.city.value ? defaultValues.city : null}
+            placeholder={defaultValues.city.label}
             isDisabled={!city && !checkedCountry.value.length}
             isSearchable
             onChange={onChange}

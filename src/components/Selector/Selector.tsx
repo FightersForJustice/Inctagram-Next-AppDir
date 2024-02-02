@@ -24,14 +24,16 @@ export const BaseSelector = ({
   placeholder,
   onFocus,
   onChange,
+  isClearable,
 }: {
   value?: any;
   id: string;
   name: string;
-  defaultValue: optionsType | null;
+  defaultValue?: optionsType | null;
   selectorsLabelName: string;
   isSearchable?: boolean;
   isLoading?: boolean;
+  isClearable?: boolean;
   isDisabled?: boolean;
   options: optionsType[] | null;
   placeholder?: string;
@@ -51,6 +53,7 @@ export const BaseSelector = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         className={s.selector}
+        isClearable={isClearable}
         isDisabled={isDisabled}
         isLoading={isLoading}
         isSearchable={isSearchable}

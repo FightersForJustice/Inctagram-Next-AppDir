@@ -154,7 +154,9 @@
       "avatarDeleteFailed": "Avatar delete failed",
       "updateProfileSuccess": "Profile updated successfully",
       "updateProfileError": "Profile update failed, try again later",
-      "updateProfileUserExist": "User with userName string already exists"
+      "updateProfileUserExist": "User with userName string already exists",
+      "defaultCountry": "Country",
+      "defaultCity": "City"
     },
     "SettingsFormSchema": {
       "userName": {
