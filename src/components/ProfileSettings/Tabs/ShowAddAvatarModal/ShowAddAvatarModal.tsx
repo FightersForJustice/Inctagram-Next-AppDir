@@ -50,7 +50,7 @@ export const ShowAddAvatarModal = ({
   return (
     <Modal
       title={translate('title')}
-      onClose={closeModalHandler}
+      onClose={onCloseHandler}
       className={s.modal__container}
       isOkBtn={false}
     >
@@ -94,7 +94,6 @@ export const ShowAddAvatarModal = ({
         )}
         {showModal && (
           <DeleteAvatarModal
-            userAvatar={userAvatar}
             setShowModal={setShowModal}
             onClose={onCloseHandler}
           />

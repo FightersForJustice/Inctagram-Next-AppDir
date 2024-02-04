@@ -19,12 +19,11 @@ type TProps = {
 };
 
 export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
 
   const [userAvatar, setUserAvatar] = useState<string>('');
   const [croppedAvatar, setCroppedAvatar] = useState('');
-  const [loadedAvatar, setLoadedAvatar] = useState('');
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
@@ -38,11 +37,10 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setIsLoading(true);
     deleteAvatarAction()
       .then((res) => {
-        res.success
-          ? setLoadedAvatar('')
-          : setTimeout(() => {
-              toast.error(translate(res.modalText));
-            }, 2000);
+        !res.success &&
+          setTimeout(() => {
+            toast.error(translate(res.modalText));
+          }, 2000);
       })
       .finally(() => {
         setTimeout(() => {
@@ -124,7 +122,6 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
       </TransparentBtn>
       {showDeleteModal && (
         <DeleteAvatarModal
-          userAvatar={loadedAvatar}
           setShowModal={setShowDeleteModal}
           onClose={onDeleteAvatar}
         />
