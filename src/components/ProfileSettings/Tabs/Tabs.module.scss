@@ -133,6 +133,7 @@
 .modal {
   &__container {
     width: 495px;
+    max-height: 80vh;
   }
 
   &__img {
@@ -140,8 +141,9 @@
   }
 
   &__loadImg {
-    border-radius: 50%;
-    margin: 20px auto 60px;
+    overflow: scroll;
+    max-height: 50vh;
+    margin-bottom: 20px;
   }
 
   &__loadImg svg {
