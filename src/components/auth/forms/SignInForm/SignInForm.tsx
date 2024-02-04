@@ -36,6 +36,7 @@ export const SignInForm = () => {
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
+    data.email = data.email.toLowerCase();
     const signInResult = await signInAction(data);
 
     if (signInResult?.success) {
