@@ -58,10 +58,10 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
         setFile(file);
         setUserAvatar(URL.createObjectURL(file));
       } else {
-        setFileError('The format of the uploaded photo must be PNG and JPEG');
+        setFileError('sizeError');
       }
     } else {
-      setFileError('Photo size must be less than 10 MB!');
+      setFileError('formatError');
     }
   };
 
