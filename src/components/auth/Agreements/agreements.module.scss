@@ -4,7 +4,7 @@
   z-index: 11;
 
   .backLinkWrapper {
-    margin-top: 5.25rem;
+    margin-top: 25px;
     margin-left: 5%;
     padding: 5px;
     display: inline-block;
@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0 10%;
+    padding: 0 10% 50px;
 
     .title {
       margin-top: 15px;
@@ -63,12 +63,8 @@
   }
 
   .mainWrapper {
-    .backLinkWrapper {
-      margin-top: 5.5rem;
-    }
-
     .contentWrapper {
-      padding: 0 5%;
+      padding: 0 5% 30px;
       margin-top: -52px;
 
       .title {
