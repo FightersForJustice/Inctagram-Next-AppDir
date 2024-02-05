@@ -43,10 +43,10 @@ export const SignInForm = () => {
       router.push('/api');
     } else {
       const statusCode = signInResult?.error.statusCode;
-      const statusMessage = `error${statusCode}`;
+      const statusMessage = `login.error${statusCode}`;
       setError('password', {
         type: 'manual',
-        message: translate(statusMessage),
+        message: statusMessage,
       });
     }
   };

@@ -19,10 +19,7 @@
     "forgotPass": "Forgot password?",
     "btnName": "Sign In",
     "question": "Don’t have an account?",
-    "btnBottomName": "Sign Up",
-    "error400": "The email or password are incorrect. Try again please",
-    "error401": "This email is not registered",
-    "errorundefined": "Something is wrong, please try again later"
+    "btnBottomName": "Sign Up"
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -259,6 +256,11 @@
     },
     "agreements": {
       "required": "You must accept the agreements"
+    },
+    "login": {
+      "error400": "The email or password are incorrect. Try again please",
+      "error401": "This email is not registered",
+      "errorundefined": "Something is wrong, please try again later"
     }
   },
   "Time": {

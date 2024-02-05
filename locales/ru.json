@@ -19,10 +19,7 @@
     "forgotPass": "Забыли пароль?",
     "btnName": "Логин",
     "question": "Нет аккаунта?",
-    "btnBottomName": "Регистрация",
-    "error400": "Неверный адрес электронной почты или пароль. Пожалуйста, попробуйте еще раз",
-    "error401": "Данный емайл не зарегистрирован",
-    "errorundefined": "Неизвестная ошибка, попробуйте позже "
+    "btnBottomName": "Регистрация"
   },
   "VerificationInvalidPage": {
     "title": "Ссылка для подтверждения почты недействительна",
@@ -259,6 +256,11 @@
     },
     "agreements": {
       "required": "Вы должны принять соглашения"
+    },
+    "login": {
+      "error400": "The email or password are incorrect. Try again please",
+      "error401": "This email is not registered",
+      "errorundefined": "Something is wrong, please try again later"
     }
   },
   "Time": {
