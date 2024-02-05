@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -30,12 +30,17 @@ export const ShowAddAvatarModal = ({
   onSaveUserAvatar,
   onSetUserAvatar,
   onCloseAvatarModal,
-
   fileError,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string =>
     t(`SettingsProfilePage.AddPhotoModal.${key}`);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   const [showModal, setShowModal] = useState(false);
   const closeModalHandler = () => {
     if (userAvatar) {
@@ -64,7 +69,7 @@ export const ShowAddAvatarModal = ({
           </div>
         ) : (
           <div>
-            {fileError && <Alert text={fileError} />}
+            {fileError && <Alert text={translate(fileError)} />}
             <Image
               src="/img/settings-profile/modal-img.png"
               alt="modal-img"
@@ -84,12 +89,15 @@ export const ShowAddAvatarModal = ({
           <div className={s.wrapper__loadZone}>
             <input
               type="file"
+              ref={fileInputRef}
               id="file-upload"
               className={s.wrapper__inputFile}
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn>{translate('selectBtn')}</PrimaryBtn>
+            <PrimaryBtn onClick={handleButtonClick}>
+              {translate('selectBtn')}
+            </PrimaryBtn>
           </div>
         )}
         {showModal && (

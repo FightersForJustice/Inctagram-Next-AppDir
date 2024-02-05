@@ -111,10 +111,7 @@
   }
 
   &__inputFile {
-    position: absolute;
-    opacity: 0;
-    width: 160px;
-    cursor: pointer;
+    display: none;
   }
 
   &__loadZone {

@@ -108,6 +108,10 @@ body {
     }
   }
 
+  ::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+  }
+
   &::-moz-scrollbar-thumb {
     background: var(--disabled);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
