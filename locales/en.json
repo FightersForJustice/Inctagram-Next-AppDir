@@ -10,7 +10,6 @@
     "btnBottomName": "Sign In",
     "agreementsCheckText": "I agree to the <link1>Terms of Service</link1> and <link2>Privacy Policy</link2>",
     "sentEmailConfirm": "We have sent a link to confirm your email to",
-    "nameExist": "User with this username is already registered",
     "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
@@ -236,7 +235,8 @@
       "min": "Username must be at least 6 characters",
       "max": "Username must not exceed 30 characters",
       "invalidCharacters": "Username must contain a-z, A-Z, 1-9",
-      "spaces": "Username must not contain spaces"
+      "spaces": "Username must not contain spaces",
+      "nameExist": "User with this username is already registered"
     },
     "email": {
       "required": "Email is required",

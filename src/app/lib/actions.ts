@@ -67,9 +67,21 @@ export async function signUpAction(data: SignInData) {
       baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
     const res = await fetch(routes.SIGN_UP, loginOptions(newData));
-    if (!res.ok) {
-      return { success: false, error: 'signUpError' };
+    if (res.ok) {
+      return { success: true, data: 'signUpSuccess' };
     }
+
+    const responseBody = await res.json();
+    const field = responseBody.messages[0]?.field;
+
+    if (field === 'email') {
+      // Мы не бросаем ошибку из-за безопасности (XSS)
+      return { success: true, data: 'signUpSuccess' };
+    }
+
+    const error =
+      field === 'userName' ? 'userName.nameExist' : 'unexpectedError';
+    return { success: false, data: error };
   } catch (error) {
     console.error(error, 'post error');
   }

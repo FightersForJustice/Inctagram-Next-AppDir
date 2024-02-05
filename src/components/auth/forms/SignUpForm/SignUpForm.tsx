@@ -29,6 +29,7 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     reset,
+    setError,
     getValues,
     formState: { errors, isValid },
   } = useForm({
@@ -44,12 +45,20 @@ export const SignUpForm = () => {
 
   const processForm = async (data: SignInData) => {
     try {
-      await signUpAction(data).then(() => {
-        setUserEmail(data.email);
-        setShowModal(true);
-        reset(resetObjSignUpForm);
-      });
+      const res = await signUpAction(data);
+      if (!res?.success && res?.data) {
+        if (res?.data === 'userName.nameExist') {
+          return setError('userName', {
+            type: 'manual',
+            message: res?.data,
+          });
+        }
+      }
+      setUserEmail(data.email);
+      setShowModal(true);
+      reset(resetObjSignUpForm);
     } catch (error) {
+      console.log(error);
       toast.error({ error }.toString());
     }
   };
