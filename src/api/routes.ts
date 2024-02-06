@@ -19,6 +19,8 @@ export const routes = Object.freeze({
   //PROFILE
   USERS_PROFILE: `${baseUrl}users/profile`,
   UPLOAD_PROFILE_AVATAR: `${baseUrl}users/profile/avatar`,
+  //CreatePost
+  UPLOAD_POST_IMAGE: `${baseUrl}posts/image`,
 });
 
 export const citySelectRoutes = Object.freeze({

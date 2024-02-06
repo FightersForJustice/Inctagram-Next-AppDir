@@ -13,6 +13,7 @@ import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 import './FiltersModal.css';
 import Image from 'next/image';
+import { UploadPostImage } from '@/app/lib/actions';
 
 export const FiltersModal = ({
   onClose,
@@ -46,14 +47,17 @@ export const FiltersModal = ({
         );
         const formData = new FormData();
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        uploadPostImage(formData)
-          .unwrap()
-          .then((res) => {
-            dispatch(postActions.addImageId(res.images[0]));
+        UploadPostImage(formData, '')
+          .then((res: any) => {
+            console.log(res);
+
+            // dispatch(postActions.addImageId(res.images[0]));
             showFourthModal?.();
             toast.success('Post imageRef uploaded');
           })
-          .catch(() => {
+          .catch((err: any) => {
+            console.log(err.data);
+
             toast.error('Error');
           });
       });

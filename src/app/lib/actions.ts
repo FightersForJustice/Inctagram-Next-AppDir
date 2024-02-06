@@ -374,3 +374,19 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     return { success: false, modalText: toastMessage };
   });
 }
+// CreatePost
+export async function UploadPostImage(formData: FormData, accessToken: string) {
+  return fetch(routes.UPLOAD_POST_IMAGE, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: formData,
+  }).then((res) => {
+    if (res.ok) {
+      return { success: true, data: res };
+    } else {
+      return { success: false, status: res.status, data: res };
+    }
+  });
+}
