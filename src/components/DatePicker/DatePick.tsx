@@ -65,7 +65,7 @@ export const DatePick = ({
                 isAgeLessThan13 && setFieldError('dateOfBirth.ageMore13');
                 isAgeMoreThan100 && setFieldError('dateOfBirth.ageLess100');
 
-                onChange(date ? convertToISOString(date) : '');
+                onChange(date ? date : '');
               }}
               format="DD/MM/YYYY"
             />
