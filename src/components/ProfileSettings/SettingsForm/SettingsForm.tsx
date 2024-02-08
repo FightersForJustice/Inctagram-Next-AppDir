@@ -26,7 +26,6 @@ import {
 } from '@/utils/checkYears';
 
 import s from './SettingsForm.module.scss';
-import { convertToISOString } from '@/utils/convertTimeDatePicker';
 
 export type ProfileFormValues = {
   userName: string;
@@ -99,7 +98,7 @@ export const SettingsForm = ({
     const optionsFormatData = {
       city: city?.value || '',
       aboutMe: aboutMe || '',
-      dateOfBirth: convertToISOString(dateOfBirth),
+      dateOfBirth: dateOfBirth,
       ...others,
     };
 
