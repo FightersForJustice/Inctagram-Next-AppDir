@@ -29,7 +29,7 @@ export const recoveryPasswordOptions = (data: {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ ...data, baseUrl: process.env.NEXT_PUBLIC_APP_URL }),
     next: { revalidate: 0 },
   };
 };

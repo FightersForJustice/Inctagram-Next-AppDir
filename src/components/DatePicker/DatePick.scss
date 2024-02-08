@@ -33,6 +33,10 @@
   margin-bottom: 24px;
 
   transition: all 0.2s linear;
+
+  &:focus {
+    border: 1px solid var(--primary-500)
+  }
 }
 
 .rmdp-input {
@@ -44,10 +48,10 @@
 
   transition: color 0.2s ease;
 
-  &:active,
-  :focus {
-    border: none;
-  }
+  // &:active,
+  // :focus {
+  //   border: none;
+  // }
 }
 
 .rmdp-error {
