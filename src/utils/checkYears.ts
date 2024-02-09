@@ -1,21 +1,21 @@
 import { DateObject } from 'react-multi-date-picker';
 import { convertToReactDatePickerObject } from './convertTimeDatePicker';
 
+
+const getDateYearsAgo = (year: number) => (
+  new Date(
+    today.getUTCFullYear() - year,
+    today.getUTCMonth(),
+    today.getUTCDate() + 1
+  )
+)
+
 const today = new Date();
 const birthDate = (date: DateObject) => new Date(date.toDate());
-const birthDays = (date: DateObject) =>
-  Math.ceil((today.getTime() - birthDate(date).getTime()) / convertToDays);
+const birthDays = (date: DateObject) => {
+  return (Math.ceil((+getDateYearsAgo(0) - birthDate(date).getTime()) / convertToDays));
+}
 
-const years13 = new Date(
-  today.getUTCFullYear() - 13,
-  today.getUTCMonth(),
-  today.getUTCDate()
-);
-const years100 = new Date(
-  today.getUTCFullYear() - 100,
-  today.getUTCMonth(),
-  today.getUTCDate()
-);
 const convertToDays = 1000 * 60 * 60 * 24;
 
 export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
@@ -24,7 +24,7 @@ export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {
   }
 
   const neededDays =
-    Math.floor((today.getTime() - +years13) / convertToDays) + 1;
+    Math.floor((+getDateYearsAgo(0) - +getDateYearsAgo(13)) / convertToDays) + 1;
 
   return neededDays > birthDays(date);
 }
@@ -37,7 +37,7 @@ export function isMoreThen100YearsOld(
   }
 
   const limitDays =
-    Math.floor((today.getTime() - +years100) / convertToDays) + 1;
+    Math.ceil((+getDateYearsAgo(0) - +getDateYearsAgo(100)) / convertToDays) + 1;
 
   return birthDays(date) > limitDays;
 }

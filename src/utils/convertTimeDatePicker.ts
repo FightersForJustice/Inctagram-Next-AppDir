@@ -33,6 +33,8 @@ export const convertToReactDatePickerObject = (
 export const convertToISOString = (dateInput: DateObject | string) => {
   let formattedDate: Date;
 
+  if (!dateInput) return null
+
   if (dateInput instanceof DateObject) {
     formattedDate = new Date(
       Date.UTC(

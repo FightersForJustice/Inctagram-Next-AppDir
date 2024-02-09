@@ -5,6 +5,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import DatePicker from 'react-multi-date-picker';
 
 import { Control, Controller, UseFormTrigger } from 'react-hook-form';
 import {
@@ -16,7 +17,6 @@ import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm'
 
 import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
-import DatePicker from 'react-multi-date-picker';
 
 export const DatePick = ({
   control,
@@ -65,7 +65,7 @@ export const DatePick = ({
                 isAgeLessThan13 && setFieldError('dateOfBirth.ageMore13');
                 isAgeMoreThan100 && setFieldError('dateOfBirth.ageLess100');
 
-                onChange(date ? date : '');
+                onChange(date ? convertToISOString(date) : '');
               }}
               format="DD/MM/YYYY"
             />
