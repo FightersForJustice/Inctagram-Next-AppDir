@@ -16,11 +16,17 @@ export const TranslationSelect = () => {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
-  const [currentWidth, setWidth] = useState(1000);
+  const [currentWidth, setWidth] = useState(window.screen.width);
   const [openChangeSize, setOpenChangeSize] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const [isEn, setEn] = useState(true);
-  const getWidth = () => setWidth(1000);
+  const [language, setLanguage] = useState(() => {
+    const storedLanguage = localStorage.getItem('language');
+    return storedLanguage || 'en';
+  });
+  const [isEn, setEn] = useState(() => {
+    const storedLanguage = localStorage.getItem('language');
+    return storedLanguage === 'en' || false;
+  });
+  const getWidth = () => setWidth(window.screen.width);
   useEffect(() => {
     function setScrollY() {
       window.addEventListener('resize', getWidth);
