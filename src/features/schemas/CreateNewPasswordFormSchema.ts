@@ -13,7 +13,7 @@ export const CreateNewPasswordFormSchema = () => {
       })
       .min(6, 'password.min')
       .max(20, 'password.max')
-      .matches(passwordCompletely, `${'password.complexity'} `),
+      .matches(passwordCompletely, 'password.complexity'),
     passwordConfirm: yup
       .string()
       .oneOf([yup.ref('password')], 'passwordConfirm.oneOf')

@@ -4,7 +4,9 @@ import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+
 import { CreateNewPasswordFormSchema } from '@/features/schemas/CreateNewPasswordFormSchema';
 import { CreateFormItem } from './CreateFormItem';
 import { AuthSubmit } from '@/components/Input';
@@ -14,8 +16,7 @@ import {
   newPasswordAction,
   signInAction,
 } from '@/app/lib/actions';
-import { setAuthCookie } from '@/utils/cookiesActions';
-import { useTranslation } from 'react-i18next';
+
 import s from './CreateNewPasswordForm.module.scss';
 
 type Props = {
@@ -35,10 +36,12 @@ export const CreateNewPasswordForm = ({
     mode: 'onBlur',
     resolver: yupResolver(CreateNewPasswordFormSchema()),
   });
-  const { t } = useTranslation();
-  const translateError = (key: string): string => t(`Errors.${key}`);
+
   const [showPass, setShowPass] = useState(true);
   const [showConfirmPass, setShowConfirmPass] = useState(true);
+
+  const { t } = useTranslation();
+  const translateError = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
 
   const onSubmit = async (data: { password: string }) => {
