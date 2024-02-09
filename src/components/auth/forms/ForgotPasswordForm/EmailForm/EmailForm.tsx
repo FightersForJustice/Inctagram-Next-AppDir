@@ -5,7 +5,8 @@ import { ReactNode } from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Props = {
-  translate: (value: string) => ReactNode;
+  translate: (value: string) => string;
+  translateErrors: (value: string) => string;
   register: UseFormRegister<{ email: string }>;
   error: FieldError | undefined;
   errorMessage: string | undefined;
@@ -14,6 +15,7 @@ type Props = {
 
 export const EmailForm = ({
   translate,
+  translateErrors,
   errorMessage,
   error,
   register,
@@ -30,7 +32,11 @@ export const EmailForm = ({
           placeholder={usePlaceholder(registerName)}
           className={clsx([s.input], { [s.error]: error })}
         />
-        {error && <p className={s.errorMessage}>{errorMessage}</p>}
+        {error && (
+          <p className={s.errorMessage}>
+            {errorMessage && translateErrors(errorMessage)}
+          </p>
+        )}
       </div>
     </div>
   );

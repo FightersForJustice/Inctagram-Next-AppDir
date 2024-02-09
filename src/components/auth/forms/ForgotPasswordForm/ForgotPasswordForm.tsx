@@ -20,6 +20,7 @@ import f from './EmailSentModal.module.scss';
 export const ForgotPasswordForm = () => {
   const { t, i18n } = useTranslation();
   const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
+  const translateErrors = (key: string): string => t(`Errors.${key}`);
 
   const {
     register,
@@ -65,6 +66,7 @@ export const ForgotPasswordForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={s.formContainer}>
         <EmailForm
+          translateErrors={translateErrors}
           translate={translate}
           register={register}
           error={errors.email}
