@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 
 import s from '@/app/(authorized)/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
+import Cookies from 'js-cookie';
+import { headers } from 'next/headers';
 
 export const TranslationSelect = () => {
   const { i18n } = useTranslation();
@@ -16,17 +18,12 @@ export const TranslationSelect = () => {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
-  const [currentWidth, setWidth] = useState(window.screen.width);
+  const [currentWidth, setWidth] = useState(1000);
   const [openChangeSize, setOpenChangeSize] = useState(false);
-  const [language, setLanguage] = useState(() => {
-    const storedLanguage = localStorage.getItem('language');
-    return storedLanguage || 'en';
-  });
-  const [isEn, setEn] = useState(() => {
-    const storedLanguage = localStorage.getItem('language');
-    return storedLanguage === 'en' || false;
-  });
-  const getWidth = () => setWidth(window.screen.width);
+  const [language, setLanguage] = useState('en');
+  const [isEn, setEn] = useState(true);
+  const getWidth = () => setWidth(1000);
+
   useEffect(() => {
     function setScrollY() {
       window.addEventListener('resize', getWidth);
@@ -43,7 +40,7 @@ export const TranslationSelect = () => {
     if (currentWidth > isMobileSize) {
       setLanguage(value);
       i18n.changeLanguage(value);
-      localStorage.setItem('language', String(value));
+      Cookies.set('userLanguage', String(value));
       return;
     }
   };
@@ -53,14 +50,14 @@ export const TranslationSelect = () => {
       setEn(true);
       setLanguage('en');
       i18n.changeLanguage('en');
-      localStorage.setItem('language', String('en'));
+      Cookies.set('userLanguage', String(value));
       return;
     }
     if (currentWidth < isMobileSize && isEn && !value) {
       setEn(false);
       i18n.changeLanguage('ru');
       setLanguage('ru');
-      return localStorage.setItem('language', String('ru'));
+      Cookies.set('userLanguage', String(value));
     }
   };
 

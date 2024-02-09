@@ -12,16 +12,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <Suspense
-        fallback={
-          <>
-            <ProfileInfo myProfile={myId === id ? true : false} />
-            <Posts />
-          </>
-        }
-      >
-        <ProfileServer id={id} myProfile={myId === id ? true : false} />
-      </Suspense>
+      <ProfileServer id={id} myProfile={myId === id ? true : false} />
     </>
   );
 };

@@ -11,6 +11,7 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
   const headersList = headers();
   const idHeaders = headersList.get('id') as string;
   const myId = parseInt(idHeaders, 10);
+
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
