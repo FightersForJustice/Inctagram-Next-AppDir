@@ -58,7 +58,7 @@ export const CreateNewPasswordForm = ({
         return signInAction({ email, password });
       })
       .then(() => deleteAllSessionsAction())
-      .then(() => router.push('/my-profile'))
+      .then(() => router.push('/'))
       .catch((error) => {
         console.error('Error during the process:', error);
 
