@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/lib/actionOptions';
 import { updateTokensAndContinue } from './app/lib/actions';
-import { cookies } from 'next/headers';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {

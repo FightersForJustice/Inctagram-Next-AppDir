@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import s from '@/app/(authorized)/CreatePost/CreatePost.module.scss';
 import f from './HeaderTranslation.module.scss';
 import Cookies from 'js-cookie';
-import { headers } from 'next/headers';
 
 export const TranslationSelect = () => {
   const { i18n } = useTranslation();
@@ -23,7 +22,7 @@ export const TranslationSelect = () => {
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
   const [currentWidth, setWidth] = useState(window.screen.width);
-  const [openChangeSize, setOpenChangeSize] = useState(true);
+  const [openChangeSize, setOpenChangeSize] = useState(false);
   const [language, setLanguage] = useState(() => {
     return Cookies.get('userLanguage') || 'en';
   });
