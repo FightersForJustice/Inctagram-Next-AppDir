@@ -76,7 +76,7 @@ export async function middleware(request: NextRequest) {
         response.headers.set('id', `${responseData.userId}`);
         response.headers.set('userEmail', `${responseData.email}`);
         response.headers.set('userName', `${responseData.email}`);
-        response.cookies.set('userLanguage', lang);
+        //response.cookies.set('userLanguage', lang);
 
         return isAuthPath
           ? NextResponse.redirect(

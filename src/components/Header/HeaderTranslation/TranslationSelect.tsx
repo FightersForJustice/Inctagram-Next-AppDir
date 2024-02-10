@@ -14,15 +14,23 @@ import { headers } from 'next/headers';
 export const TranslationSelect = () => {
   const { i18n } = useTranslation();
   const isMobileSize = 768;
+
+  Cookies.get('userLanguage') === undefined &&
+    Cookies.set('userLanguage', 'en');
+
   const fullLanguages: any = {
     ru: { name: 'Русский', img: '/img/flag_russia.svg' },
     en: { name: 'English', img: '/img/flag_united_kingdom.svg' },
   };
-  const [currentWidth, setWidth] = useState(1000);
-  const [openChangeSize, setOpenChangeSize] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const [isEn, setEn] = useState(true);
-  const getWidth = () => setWidth(1000);
+  const [currentWidth, setWidth] = useState(window.screen.width);
+  const [openChangeSize, setOpenChangeSize] = useState(true);
+  const [language, setLanguage] = useState(() => {
+    return Cookies.get('userLanguage') || 'en';
+  });
+  const [isEn, setEn] = useState(() => {
+    return Cookies.get('userLanguage') === 'en' || false;
+  });
+  const getWidth = () => setWidth(window.screen.width);
 
   useEffect(() => {
     function setScrollY() {
