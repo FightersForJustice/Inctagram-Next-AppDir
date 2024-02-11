@@ -150,7 +150,7 @@
       "avatarDeleteFailed": "Avatar delete failed",
       "updateProfileSuccess": "Profile updated successfully",
       "updateProfileError": "Profile update failed, try again later",
-      "updateProfileUserExist": "User with userName string already exists",
+      "updateProfileUserExist": "A user with the same name already exists",
       "defaultCountry": "Country",
       "defaultCity": "City"
     },
@@ -159,7 +159,8 @@
         "matches": "Invalid characters in username",
         "min": "Username must contain at least 6 characters",
         "max": "Username must not exceed 30 characters",
-        "required": "Username is required"
+        "required": "Username is required",
+        "updateProfileUserExist": "A user with the same name already exists"
       },
       "firstName": {
         "matches": "First Name can only contain alphabetic characters",

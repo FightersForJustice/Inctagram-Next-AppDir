@@ -355,7 +355,7 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     }
 
     const errorData = await res.json();
-    const messageField = errorData.messages.field;
+    const messageField = errorData.messages[0].field;
 
     console.error(`Error updateProfileInfoAction`);
     console.error(errorData);

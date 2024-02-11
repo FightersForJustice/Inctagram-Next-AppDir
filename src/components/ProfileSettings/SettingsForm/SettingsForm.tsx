@@ -78,6 +78,7 @@ export const SettingsForm = ({
     handleSubmit,
     formState: { errors, isValid },
     control,
+    setError,
     trigger,
     setValue,
   } = useForm<ProfileFormValues>({
@@ -85,7 +86,7 @@ export const SettingsForm = ({
     resolver: yupResolver(SettingsFormSchema()),
     mode: 'onTouched',
     defaultValues: {
-      dateOfBirth:dateOfBirth,
+      dateOfBirth: dateOfBirth,
       city: { value: usersCountry + ',' + usersCity, label: usersCity },
       country: { value: usersCountry, label: usersCountry },
     },
@@ -109,6 +110,12 @@ export const SettingsForm = ({
     updateProfileInfoAction(submitData)
       .then((res) => {
         setTimeout(() => {
+          if (!res.success && res.modalText === 'updateProfileUserExist') {
+            setError('userName', {
+              type: 'manual',
+              message: `userName.${res.modalText}`,
+            });
+          }
           res.success
             ? toast.success(translate(res.modalText))
             : toast.error(translate(res.modalText));
