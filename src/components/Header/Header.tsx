@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
 import { HeaderNotification } from '@/components/Header/HeaderNotification';
-import { TranslationSelect } from './HeaderTranslation/TranslationSelect';
 import { HeaderMenuMobile } from './HeaderMenuMobile/HeaderMenuMobile';
 
 import s from './Header.module.scss';
 import { headers } from 'next/headers';
+import { HeaderClient } from './HeaderCleint';
 
 export const Header = ({ isAuth }: { isAuth: boolean }) => {
   const headersList = headers();
@@ -21,7 +21,7 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
 
         <div className={s.notificationContainer}>
           {isAuth && <HeaderNotification />}
-          <TranslationSelect />
+          <HeaderClient />
           {isAuth && (
             <HeaderMenuMobile userEmail={headers().get('userEmail')} />
           )}
