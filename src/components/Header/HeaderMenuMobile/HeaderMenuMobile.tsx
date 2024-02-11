@@ -30,7 +30,7 @@ export const HeaderMenuMobile = ({
     if (e.relatedTarget?.id === 'mobileMenu') {
       return;
     }
-    // setModal(false);
+    setModal(false);
   };
 
   const keyDownHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
