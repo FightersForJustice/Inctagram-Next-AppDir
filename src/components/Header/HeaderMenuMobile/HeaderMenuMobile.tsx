@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FocusEvent, KeyboardEvent, MouseEvent } from 'react';
+import { FocusEvent, KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 
@@ -13,6 +13,7 @@ import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/Menu
 import { logout } from '@/features/customHooks/useLogout';
 
 import s from './HeaderMenuMobile.module.scss';
+import { useOnClickOutside } from '@/utils/useOnClickOutside';
 
 export const HeaderMenuMobile = ({
   userEmail = 'mocked',
@@ -21,10 +22,10 @@ export const HeaderMenuMobile = ({
 }) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
-
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [modal, setModal] = useState(false);
-
+  const modalRef = useRef(null);
+  useOnClickOutside(modalRef, () => setModal(!modal));
   const router = useRouter();
   const onBlurHandler = (e: FocusEvent<HTMLTextAreaElement, Element>) => {
     if (e.relatedTarget?.id === 'mobileMenu') {
@@ -70,7 +71,7 @@ export const HeaderMenuMobile = ({
     <button className={s.container} id="mobileMenu">
       <MenuImage modal={modal} setModal={modalHandler} />
       {modal && (
-        <ul className={s.settingsList}>
+        <ul ref={modalRef} className={s.settingsList}>
           {menuOptions.map(({ ref, img }) => {
             return (
               <MenuOption
