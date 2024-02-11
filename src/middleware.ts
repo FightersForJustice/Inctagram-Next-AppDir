@@ -45,8 +45,8 @@ export async function middleware(request: NextRequest) {
   );
   const changedLang = cookiesList.get('userLanguage')?.value;
   const lang = changedLang || defaultLang;
-  const isMobile = /mobile/i.test(userAgent);
 
+  const isMobile = /mobile/i.test(userAgent);
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
 
@@ -76,6 +76,7 @@ export async function middleware(request: NextRequest) {
         response.headers.set('id', `${responseData.userId}`);
         response.headers.set('userEmail', `${responseData.email}`);
         response.headers.set('userName', `${responseData.email}`);
+        //response.cookies.set('userLanguage', lang);
 
         return isAuthPath
           ? NextResponse.redirect(

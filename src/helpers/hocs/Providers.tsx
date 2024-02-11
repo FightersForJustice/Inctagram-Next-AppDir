@@ -9,31 +9,27 @@ import { store } from '@/redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ReactNode, useEffect } from 'react';
 
-i18n.use(initReactI18next).init({
-  detection: {
-    order: ['localStorage', 'cookie', 'htmlTag', 'path', 'subdomain'],
-    caches: ['localStorage', 'cookie'],
-  },
-  lng: 'en',
-  resources: {
-    en: {
-      translation: en,
+function Providers({ children, lang }: { children: ReactNode; lang: string }) {
+  i18n.use(initReactI18next).init({
+    detection: {
+      order: ['cookie', 'htmlTag', 'path', 'subdomain'],
+      caches: ['cookie'],
     },
-    ru: {
-      translation: ru,
+    lng: lang,
+    resources: {
+      en: {
+        translation: en,
+      },
+      ru: {
+        translation: ru,
+      },
     },
-  },
-});
-
-function Providers({ children }: { children: ReactNode }) {
+  });
   useEffect(() => {
-    const storedLanguage = localStorage.getItem('language');
-
-    if (storedLanguage && storedLanguage !== i18n.language) {
-      i18n.changeLanguage(storedLanguage);
+    if (lang && lang !== i18n.language) {
+      i18n.changeLanguage(lang);
     }
   }, []);
-
   // useEffect(() => {
   //     const fetchMessages = async () => {
   //         try {

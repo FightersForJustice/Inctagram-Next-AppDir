@@ -6,18 +6,15 @@ import clsx from 'clsx';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
+import { cookies } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: { lang: string };
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const lang = cookies().get('userLanguage')?.value || 'en';
+
   return (
-    <html lang={params.lang}>
+    <html lang={lang}>
       <body>
         <ToastContainer
           position="top-right"
@@ -31,7 +28,7 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
         />
-        <Providers>
+        <Providers lang={lang}>
           <div className={clsx(inter.className)}>{children}</div>
         </Providers>
       </body>
