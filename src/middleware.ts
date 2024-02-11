@@ -31,6 +31,7 @@ const authPaths = [
   '/auth/registration-confirmation',
   '/agreements/privacy-policy',
   '/agreements/terms-of-service',
+  '/profile/null',
 ];
 
 export async function middleware(request: NextRequest) {
