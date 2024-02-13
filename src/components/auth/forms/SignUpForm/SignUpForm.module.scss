@@ -1,0 +1,42 @@
+@use '@/app/mixins' as s;
+
+.container {
+  border: 1px solid var(--dark-300);
+  background-color: var(--dark-500);
+  border-radius: 0.125rem;
+  max-width: 380px;
+  text-align: center;
+  margin: 24px auto 0;
+  padding: 1.5rem;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+}
+
+.questionContainer {
+  padding-bottom: 12px;
+}
+
+.redirectSignIn {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--primary-500);
+}
+
+@include s.devices(mobile) {
+  .container {
+    margin: 17px auto;
+    padding: 0px 1rem;
+    background-color: var(--dark-900);
+    border: none;
+  }
+
+  .formContainer {
+    padding-top: 12px;
+  }
+}

@@ -1,27 +1,36 @@
-'use client';
-import './globals.css';
 import { ReactNode } from 'react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { store } from '@/redux';
-import { Provider } from 'react-redux';
+import Providers from '@/helpers/hocs/Providers';
+import { ToastContainer } from 'react-toastify';
+import { Inter } from 'next/font/google';
+import clsx from 'clsx';
 
-export default function RootLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: { lang: string };
-}) {
+import 'react-toastify/dist/ReactToastify.css';
+import './globals.scss';
+import { cookies } from 'next/headers';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const lang = cookies().get('userLanguage')?.value || 'en';
+
   return (
-    <html lang={params.lang}>
+    <html lang={lang}>
       <body>
-        <Provider store={store}>
-          <GoogleOAuthProvider
-            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
-          >
-            {children}
-          </GoogleOAuthProvider>
-        </Provider>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        <Providers lang={lang}>
+          <div className={clsx(inter.className)}>{children}</div>
+        </Providers>
       </body>
     </html>
   );

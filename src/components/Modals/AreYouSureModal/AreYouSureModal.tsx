@@ -1,12 +1,12 @@
-import React from 'react';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn/TransparentBtn';
 import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn/PrimaryBtn';
 import { Modal } from '../Modal/Modal';
 import { Loader } from '../../Loader/Loader';
-
-import s from './AreYouSureModal.module.scss';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+
+import s from './AreYouSureModal.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
@@ -15,20 +15,24 @@ type Props = {
   isDeleting?: boolean;
 };
 
-export const AreYouSureModal: React.FC<Props> = ({
+export const AreYouSureModal = ({
   toggleModal,
   toggleAreYouSureModal,
   onDelete,
   isDeleting,
-}) => {
+}: Props) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
   return (
     <>
-      <Modal title={'Close'} onClose={() => toggleAreYouSureModal(false)}>
-        <p className={s.modal__text}>
-          Do you really want to close the creation of a publication? If you
-          close everything will be deleted
-        </p>
+      <Modal
+        title={translate('close')}
+        className={s.container}
+        onClose={() => toggleAreYouSureModal(false)}
+      >
+        <p className={s.modal__text}>{translate('areYouSureText')}</p>
         <div className={s.modal__btns}>
           <TransparentBtn
             onClick={() => {
@@ -46,10 +50,10 @@ export const AreYouSureModal: React.FC<Props> = ({
               }
             }}
           >
-            Yes
+            {translate('yes')}
           </TransparentBtn>
           <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>
-            No
+            {translate('no')}
           </PrimaryBtn>
         </div>
       </Modal>

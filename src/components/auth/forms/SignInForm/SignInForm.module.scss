@@ -1,0 +1,38 @@
+@use '@/app/mixins' as s;
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  color: var(--light-900);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding-top: 36px;
+}
+
+.alreadyHaveText {
+  padding-bottom: 18px;
+}
+
+.signUpBtn {
+  color: var(--primary-500);
+  font-weight: 600;
+}
+
+@include s.devices(mobile) {
+  .forgot {
+    padding-top: 0px;
+    position: relative;
+    right: 0px;
+  }
+
+  .alreadyHaveText {
+    padding-top: 18px;
+  }
+
+  .password {
+    position: absolute;
+    margin-top: 42px;
+  }
+}

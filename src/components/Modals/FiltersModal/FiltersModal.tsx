@@ -1,18 +1,21 @@
-import React, { MutableRefObject, PropsWithChildren } from 'react';
+import { MutableRefObject, PropsWithChildren } from 'react';
+import { toast } from 'react-toastify';
 
-import './FiltersModal.css';
 import { useUploadPostImageMutation } from '@/api';
 import { Loader } from '../../Loader/Loader';
-import { toast } from 'react-toastify';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
-import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 
-export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
+import './FiltersModal.css';
+import Image from 'next/image';
+import { UploadPostImage } from '@/app/lib/actions';
+
+export const FiltersModal = ({
   onClose,
   title,
   width,
@@ -23,7 +26,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
   onPublishPost,
   onDeletePostImage,
   zoomValue,
-}) => {
+}: PropsWithChildren<Props>) => {
   const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
   const images: ImageStateType[] = useAppSelector(postImages);
@@ -39,25 +42,36 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
         const photoEditingBeforeSending = applyImageFilter(
           imageRef,
           filter,
-          `4:5`,
+          `4:4`,
           zoomValue!
         );
         const formData = new FormData();
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        uploadPostImage(formData)
-          .unwrap()
-          .then((res) => {
-            dispatch(postActions.addImageId(res.images[0]));
+        UploadPostImage(formData, '')
+          .then((res: any) => {
+            console.log(res);
+
+            // dispatch(postActions.addImageId(res.images[0]));
             showFourthModal?.();
             toast.success('Post imageRef uploaded');
           })
-          .catch(() => {
+          .catch((err: any) => {
+            console.log(err.data);
+
             toast.error('Error');
           });
       });
     }
   };
-
+  const returnToSecondModal = (images: ImageStateType[]) => {
+    images.forEach((image, index) => {
+      const idToRemove = image.id;
+      dispatch(postActions.removeGalleryImage({ id: idToRemove }));
+      if (index === images.length - 1) {
+        showSecondModal?.();
+      }
+    });
+  };
   return (
     <>
       <div className={'modal'} onClick={onClose}>
@@ -67,7 +81,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className={'modal__header'}>
-            <img
+            <Image
               src={'/img/create-post/arrow-back.svg'}
               alt={'arrow-back'}
               width={24}
@@ -76,7 +90,7 @@ export const FiltersModal: React.FC<PropsWithChildren<Props>> = ({
               onClick={() =>
                 buttonName === 'Publish'
                   ? onDeletePostImage?.()
-                  : showSecondModal?.()
+                  : returnToSecondModal(images)
               }
             />
             <div className={'modal__title'}>{title}</div>

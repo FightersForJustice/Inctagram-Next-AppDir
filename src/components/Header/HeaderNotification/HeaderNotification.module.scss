@@ -29,7 +29,7 @@
 .popup {
   position: absolute;
   width: 371px;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
   background-color: var(--dark-500);
   top: 16px;
   right: -25px;
@@ -100,14 +100,12 @@
 
 @include s.devices(tablet) {
   .popup {
-    right: -175px;
+    width: 280px;
   }
 }
+
 @include s.devices(mobile) {
   .popup {
-    display: none;
-  }
-  .notification {
-    display: none;
+    left: -140px;
   }
 }

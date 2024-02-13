@@ -1,0 +1,13 @@
+.contentContainer {
+  display: flex;
+  height: calc(100vh - 60px);
+
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.content {
+  width: 100%;
+  overflow-y: scroll;
+  height: 100%;
+}

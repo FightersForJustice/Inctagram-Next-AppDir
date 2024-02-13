@@ -1,0 +1,1 @@
+export { DeleteAvatarModal } from './DeleteAvatarModal';

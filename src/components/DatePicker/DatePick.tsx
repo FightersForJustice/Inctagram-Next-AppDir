@@ -1,91 +1,100 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+import { useState } from 'react';
+
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import DatePicker from 'react-multi-date-picker';
+
+import { Control, Controller, UseFormTrigger } from 'react-hook-form';
+import {
+  isLessThen13YearsOld,
+  isMoreThen100YearsOld,
+} from '@/utils/checkYears';
+import { convertToISOString } from '@/utils/convertTimeDatePicker';
+import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
+
+import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
-import s from './DatePick.module.scss';
-import Image from 'next/image';
-import { check13YearsOld, convertToReactDatePickerObject } from '@/utils';
-import Link from 'next/link';
-import DatePicker, { DateObject } from 'react-multi-date-picker';
-// import { DatePickerRef } from 'react-multi-date-picker';
-
-type Props = {
-  setDate: (date: string) => void;
-  userBirthday: string;
-  ageError: string | null;
-  setAgeError: (value: string) => void;
-};
-
-export const DatePick: React.FC<Props> = ({
-  setDate,
-  userBirthday,
-  ageError,
-  setAgeError,
+export const DatePick = ({
+  control,
+  trigger,
+  isObsoleteDateOfBirth,
+  translateErrors,
+}: {
+  control: Control<ProfileFormValues>;
+  trigger: UseFormTrigger<ProfileFormValues>;
+  isObsoleteDateOfBirth: boolean;
+  translateErrors: (key: string) => string;
 }) => {
-  const datePickerRef = useRef<any>(null);
-
-  const [value, setValue] = useState<DateObject | DateObject[] | null>(
-    userBirthday ? convertToReactDatePickerObject(userBirthday) : null
+  const [fieldError, setFieldError] = useState<string>('');
+  const [isObsoleteAge, setIsObsoleteAge] = useState<boolean>(
+    isObsoleteDateOfBirth
   );
 
-  useEffect(() => {
-    check13YearsOld(value, setAgeError);
-  }, [value, setAgeError]);
+  const displayError = !!fieldError.length || isObsoleteAge;
 
   return (
-    <>
-      <div className={s.datePicker__wrapper}>
-        <DatePicker
-          value={userBirthday ? userBirthday : value}
-          onChange={(e) => {
-            if (e instanceof DateObject) {
-              const formattedDate = e.format('DD.MM.YYYY');
-              setDate(formattedDate);
-            } else {
-              setDate('');
-            }
-            setValue(e);
-          }}
-          ref={datePickerRef}
-          format={'DD.MM.YYYY'}
-          className={'bg-dark'}
-          editable={true}
-          style={{
-            background: 'var(--dark-900)',
-            border: '1px solid var(--dark-300)',
-            padding: '6px 12px',
-            height: '36px',
-            borderRadius: '2px',
-            maxWidth: '158px',
-            marginBottom: '24px',
-            cursor: 'pointer',
-          }}
-        >
-          <button
-            style={{ margin: '5px' }}
-            onClick={() => datePickerRef?.current?.closeCalendar()}
+    <div className="rmdp-datePickerWrapper">
+      <Controller
+        control={control}
+        name="dateOfBirth"
+        render={({ field: { onChange, value } }) => (
+          <div
+            className={clsx({
+              'rmdp-datePickerError': displayError,
+            })}
           >
-            close
-          </button>
-        </DatePicker>
-        <Image
-          src={'/img/settings-profile/calendar.svg'}
-          alt={'calendar'}
-          width={24}
-          height={24}
-          className={s.datePicker__icon}
-        />
-        {ageError && (
-          <p className={'text-red-600 text-[12px] absolute top-[40px] left-0'}>
-            {ageError}
-            <Link
-              href={'/agreements-page/privacy-policy'}
-              className={'underline'}
-            >
-              Privacy policy
-            </Link>
-          </p>
+            <DatePicker
+              id="dateOfBirth"
+              className="bg-dark"
+              value={value}
+              calendarPosition="top-right"
+              onClose={() => {
+                trigger('dateOfBirth');
+              }}
+              onChange={(date: typeof value) => {
+                setFieldError('');
+
+                isObsoleteAge && setIsObsoleteAge(false);
+                const isAgeLessThan13 = isLessThen13YearsOld(date);
+                const isAgeMoreThan100 = isMoreThen100YearsOld(date);
+
+                isAgeLessThan13 && setFieldError('dateOfBirth.ageMore13');
+                isAgeMoreThan100 && setFieldError('dateOfBirth.ageLess100');
+
+                onChange(date ? convertToISOString(date) : '');
+              }}
+              format="DD/MM/YYYY"
+            />
+            {displayError && (
+              <p className="rmdp-error">
+                {!!fieldError.length && translateErrors(fieldError)}
+                {isObsoleteAge && translateErrors('dateOfBirth.ageMessage')}
+                <Link
+                  href={'/agreements/privacy-policy-profile'}
+                  className={'underline pl-[5px]'}
+                >
+                  Privacy policy
+                </Link>
+              </p>
+            )}
+            <Image
+              className="rmdp-datePickerIcon"
+              src={
+                displayError
+                  ? '/img/settings-profile/calendarError.svg'
+                  : '/img/settings-profile/calendar.svg'
+              }
+              alt={'calendar'}
+              width={24}
+              height={24}
+            />
+          </div>
         )}
-      </div>
-    </>
+      />
+    </div>
   );
 };

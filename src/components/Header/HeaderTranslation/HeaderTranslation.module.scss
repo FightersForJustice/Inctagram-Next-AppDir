@@ -27,35 +27,79 @@
   z-index: 10;
 }
 
-@include s.devices(mobile) {
+@include s.devices(tablet-xl) {
+  .active {
+    border-bottom: 1px solid var(--dark-100) !important;
+  }
+}
+@include s.devices(tablet) {
+  .active {
+    border-bottom: 4px solid var(--primary-300) !important;
+  }
   .container {
     width: 80px;
-    border: none;
-    justify-content: flex-end;
     gap: 2px;
+    justify-content: center;
+    border: none;
+  }
+
+  .translate_select {
+    display: none;
   }
 
   .container img {
     width: 24px;
     height: 24px;
+    content: url('../../../../public/img/flag_russia.svg');
   }
 
   .select {
     span {
       display: none;
     }
+    img {
+      content: url('../../../../public/img/flag_united_kingdom.svg');
+    }
+  }
+
+  .popOver {
+    left: 80px;
+    top: -35px;
+    z-index: 100;
   }
 
   .languagesContainer {
-    border-top: 1px solid var(--dark-300);
-    margin-top: 12px;
+    position: relative;
+    left: 80px;
+    top: -35px;
+    z-index: 100;
+    border: none;
 
     span {
       display: none;
     }
 
     img {
-      margin-right: 26px;
+      margin: 0;
+    }
+  }
+}
+
+@include s.devices(mobile) {
+  .container {
+    width: 50px;
+    justify-content: center;
+    border: none;
+  }
+
+  .languagesContainer {
+    position: relative;
+    left: 50px;
+    top: -35px;
+    z-index: 100;
+    border: none;
+    img {
+      margin: 0;
     }
   }
 }

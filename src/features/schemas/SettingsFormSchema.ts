@@ -1,33 +1,34 @@
 import * as yup from 'yup';
-import { useTranslations } from 'next-intl';
+import { isAgeValid } from '@/utils/checkYears';
 
 export const SettingsFormSchema = () => {
-  const t = useTranslations('SettingsProfilePage.SettingsFormSchema');
-
   return yup.object({
     userName: yup
       .string()
-      .matches(/^[A-Za-z0-9_-]+$/, t('userName.matches'))
-      .min(6, t('userName.min'))
-      .max(30, t('userName.max'))
-      .required(t('userName.required')),
+      .min(6, 'userName.min')
+      .matches(/^[A-Za-z0-9_-]+$/, 'userName.matches')
+      .max(30, 'userName.max')
+      .required('userName.required'),
     firstName: yup
       .string()
-      .matches(/^[A-Za-zА-Яа-я]+$/, t('firstName.matches'))
-      .min(1, t('firstName.min'))
-      .max(50, t('firstName.max'))
-      .required(t('firstName.required')),
+      .min(1, 'firstName.min')
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, 'firstName.matches')
+      .max(50, 'firstName.max')
+      .required('firstName.required'),
     lastName: yup
       .string()
-      .matches(/^[A-Za-zА-Яа-я]+$/, t('lastName.matches'))
-      .min(1, t('lastName.min'))
-      .max(50, t('lastName.max'))
-      .required(t('lastName.required')),
-    city: yup.string().max(30, t('city.max')).nullable(),
+      .min(1, 'lastName.min')
+      .matches(/^[A-Za-zА-ЯЁа-яё]+$/, 'lastName.matches')
+      .max(50, 'lastName.max')
+      .required('lastName.required'),
     aboutMe: yup
       .string()
-      .min(0, t('aboutMe.min'))
-      .max(200, t('aboutMe.max'))
+      .min(0, 'aboutMe.min')
+      .max(200, 'aboutMe.max')
       .nullable(),
+    dateOfBirth: yup
+      .string()
+      .test('ageLimit', '_', (date) => isAgeValid(date))
+      .required(),
   });
 };

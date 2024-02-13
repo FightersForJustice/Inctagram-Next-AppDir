@@ -1,0 +1,45 @@
+@use '@/app/mixins.scss' as s;
+
+.nav {
+  &__btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+    transition: all 0.2s linear;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+
+    &:hover {
+      color: var(--primary-500);
+    }
+
+    &__modal {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      margin-top: 50px;
+    }
+  }
+
+  &__btn > svg {
+    fill: var(--light-100);
+  }
+
+  &__btn:hover > svg {
+    transition: all 0.2s linear;
+    fill: var(--primary-500);
+  }
+}
+
+@include s.devices(tablet-xl) {
+  .nav__btn {
+    display: none;
+  }
+}

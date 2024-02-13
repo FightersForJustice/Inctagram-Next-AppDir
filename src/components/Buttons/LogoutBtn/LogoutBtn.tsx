@@ -1,5 +1,4 @@
-import React from 'react';
-import s from '@/app/[locale]/my-profile/MyProfile.module.scss';
+import s from './LogoutBtn.module.scss';
 
 type Props = {
   btnCallback: (value: boolean) => void;

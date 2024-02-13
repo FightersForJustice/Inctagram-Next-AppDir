@@ -4,7 +4,7 @@
   margin-bottom: 18px;
   background-color: var(--primary-500);
   width: 100%;
-  padding: 6px 0px;
+  padding: 6px 0;
   cursor: pointer;
   margin-top: 24px;
 
@@ -16,24 +16,21 @@
 }
 
 .signUp {
-  margin: 0px;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
 }
 
 .signIn {
-  margin: 0px;
-  margin-bottom: 18px;
-  margin-top: 24px;
+  margin: 24px 0 18px;
 }
 
 @include s.devices(mobile) {
   .signIn {
     margin-top: 72px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .submit {
-    padding: 12px 0px;
+    padding: 12px 0;
   }
 
   .errorSubmit {

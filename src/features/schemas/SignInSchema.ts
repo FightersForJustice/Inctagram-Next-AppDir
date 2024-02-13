@@ -1,21 +1,24 @@
-import { useTranslations } from 'next-intl';
 import * as yup from 'yup';
+import {
+  emailValidationRegex,
+  passwordValidationRegex,
+} from './validationRegex';
+
+export type SignInData = {
+  email: string;
+  password: string;
+  userName?: string;
+};
 
 export const SignInSchema = () => {
-  const t = useTranslations('Errors');
-
-  const emailValidationRegex = /^[^|$%&/=?^*+!#~'{}]+$/i;
-  const passwordValidationRegex =
-    /^[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\-=/\\|'“`"]+$/;
-
   return yup
     .object({
       email: yup
         .string()
-        .matches(emailValidationRegex, t('email.invalidCharacters'))
-        .email(t('email.email'))
-        .required(t('email.required'))
-        .test('valid-domain', t('email.invalidCharacters'), (value) => {
+        .matches(emailValidationRegex, 'email.invalidCharacters')
+        .email('email.email')
+        .required('email.required')
+        .test('valid-domain', 'email.invalidCharacters', (value) => {
           const parts = value.split('@');
           if (parts.length === 2) {
             const [, domain] = parts;
@@ -25,14 +28,14 @@ export const SignInSchema = () => {
         }),
       password: yup
         .string()
-        .required(t('password.required'))
-        .test('not-only-spaces', t('password.spaces'), (value) => {
+        .required('password.required')
+        .test('not-only-spaces', 'password.spaces', (value) => {
           // Проверяем, что пароль не состоит только из пробелов
           return value.trim() !== '' && !/\s/.test(value);
         })
-        .matches(passwordValidationRegex, t('password.invalidCharacters'))
-        .min(6, t('password.min'))
-        .max(20, t('password.max')),
+        .matches(passwordValidationRegex, 'password.invalidCharacters')
+        .min(6, 'password.min')
+        .max(20, 'password.max'),
     })
     .required();
 };

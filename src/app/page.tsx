@@ -1,7 +1,9 @@
-'use client';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-// This page only renders when the app is build statically (output: 'export')
-export default function RootPage() {
-  redirect('/en');
+export default function IndexPage() {
+  const headersList = headers();
+  const id = headersList.get('id');
+
+  redirect(`/profile/${id}`);
 }

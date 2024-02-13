@@ -1,0 +1,40 @@
+@use '@/app/mixins.scss' as s;
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  overflow-y: scroll;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-rows: 285px;
+  grid-template-columns: 2fr 10fr;
+  grid-template-areas:
+    'menu profile'
+    'menu profile';
+}
+
+.home {
+  grid-area: profile;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+@include s.devices(laptop) {
+  .wrapper {
+    grid-template-areas:
+      'profile profile'
+      'profile profile';
+  }
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

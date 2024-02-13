@@ -8,9 +8,8 @@
     "btnName": "Sign Up",
     "question": "Do you have an account?",
     "btnBottomName": "Sign In",
-    "agreementsCheckText": "I agree to the <link>Terms of Service</link> and <link2>Privacy Policy</link2>",
+    "agreementsCheckText": "I agree to the <link1>Terms of Service</link1> and <link2>Privacy Policy</link2>",
     "sentEmailConfirm": "We have sent a link to confirm your email to",
-    "nameExist": "User with this username is already registered",
     "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
@@ -20,9 +19,7 @@
     "forgotPass": "Forgot password?",
     "btnName": "Sign In",
     "question": "Don’t have an account?",
-    "btnBottomName": "Sign Up",
-    "error400": "The email or password are incorrect. Try again please",
-    "error401": "This email is not registered"
+    "btnBottomName": "Sign Up"
   },
   "EmailExpiredPage": {
     "title": "Email verification link expired",
@@ -42,7 +39,9 @@
     "linkName": "Back to Sign In",
     "descAfterSend": "The link has been sent by email. If you don’t receive an email send link again",
     "btnNameAfterSend": "Send link again",
-    "modal": "We have sent a link to confirm your email to"
+    "modal": "We have sent a link to confirm your email to",
+    "error400": "Incorrect input data by field or reCaptcha",
+    "errorCode": "Don`t forget about captcha"
   },
   "MergerOfAccountsPage": {
     "title": "Merger of Accounts",
@@ -61,7 +60,9 @@
     "password": "New password",
     "passwordConf": "Password confirmation",
     "desc": "Your password must be between 6 and 20 characters",
-    "btnName": "Create new password"
+    "btnName": "Create new password",
+    "errorCode": "Something is wrong. Try again",
+    "newPasswordSuccess": "You have successfully changed your password"
   },
   "RegistrationConfirmationPage": {
     "title": "Congratulations!",
@@ -76,31 +77,39 @@
     "title": "next-intl example"
   },
   "MyProfilePage": {
-    "subscriptions": "Subscriptions",
-    "subscribers": "Subscribers",
+    "subscriptions": "Following",
+    "subscribers": "Followers",
     "publications": "Publications",
     "btnName": "Profile Settings",
+    "btnSendMessage": "Send Message",
     "aboutMe": "Fill in your info, while it's empty",
+    "noPosts": "You don't have any posts yet \uD83D\uDE22",
     "SubscribersModal": {
-      "title": "Subscribers",
+      "title": "Followers",
       "search": "Search",
-      "subBtn": "Subscribe",
+      "subBtn": "Follow",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
-      "title": "Subscriptions",
+      "title": "Following",
       "search": "Search",
-      "unsubscribe": "Unsubscribe"
+      "unsubscribe": "Unfollow"
     },
     "UnsubscribeModal": {
-      "title": "Unsubscribe",
-      "question": "Do you really want to unsubscribe from this user",
+      "title": "Unfollow",
+      "question": "Do you really want to unfollow from this user",
       "btnYes": "Yes",
       "btnNo": "No"
     },
     "DeleteModal": {
       "title": "Delete Subscriber",
-      "question": "Do you really want to delete a subscriber",
+      "question": "Do you really want to delete a Following",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    },
+    "DeleteAvatarModal": {
+      "title": "Delete a profile photo",
+      "question": "Do you really want to delete your profile photo",
       "btnYes": "Yes",
       "btnNo": "No"
     }
@@ -113,13 +122,15 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
-    "logout": "Log out",
+    "logout": "Log Out",
     "LogoutModal": {
-      "title": "Logout",
+      "title": "Log Out",
       "question": "Are you really want to log out of your account ",
       "btnYes": "Yes",
       "btnNo": "No"
-    }
+    },
+    "logoutSuccess": "Log Out Success",
+    "logoutError": "Log Out Failed"
   },
   "SettingsProfilePage": {
     "GeneralInformationTab": {
@@ -128,29 +139,40 @@
       "firstname": "First Name",
       "lastname": "Last Name",
       "birthday": "Date of Birth",
-      "city": "Enter your city",
+      "country": "Select your country",
+      "city": "Select your city",
       "aboutMe": "About me",
       "addBtn": "Add a profile photo",
-      "saveBtn": "Save changes"
+      "saveBtn": "Save changes",
+      "avatarSuccessfullyUploaded": "Avatar successfully uploaded",
+      "avatarUploadFailed": "Avatar upload failed",
+      "avatarSuccessfullyDeleted": "Avatar successfully deleted",
+      "avatarDeleteFailed": "Avatar delete failed",
+      "updateProfileSuccess": "Profile updated successfully",
+      "updateProfileError": "Profile update failed, try again later",
+      "updateProfileUserExist": "A user with the same name already exists",
+      "defaultCountry": "Country",
+      "defaultCity": "City"
     },
     "SettingsFormSchema": {
       "userName": {
         "matches": "Invalid characters in username",
         "min": "Username must contain at least 6 characters",
         "max": "Username must not exceed 30 characters",
-        "required": "Username is required"
+        "required": "Username is required",
+        "updateProfileUserExist": "A user with the same name already exists"
       },
       "firstName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "Name must contain at least 1 character",
-        "max": "Name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "First Name can only contain alphabetic characters",
+        "min": "First Name must contain at least 1 character",
+        "max": "First Name must not exceed 50 characters",
+        "required": "First Name is required"
       },
       "lastName": {
-        "matches": "Username can only contain alphabetic characters",
-        "min": "The name must contain at least 1 character",
-        "max": "The name must not exceed 50 characters",
-        "required": "Username is required"
+        "matches": "Last Name can only contain alphabetic characters",
+        "min": "Last Name must contain at least 1 character",
+        "max": "Last Name must not exceed 50 characters",
+        "required": "Last Name is required"
       },
       "city": {
         "max": "City must not exceed 15 characters"
@@ -158,7 +180,12 @@
       "aboutMe": {
         "matches": "User description can only contain alphabetic characters, numbers and special characters",
         "min": "Minimum 1 character",
-        "max": "About yourself should not exceed 200 characters"
+        "max": "About yourself field should not exceed 200 characters"
+      },
+      "dateOfBirth": {
+        "ageMore13": "The user's age must be over 13 years",
+        "ageLess100": "The user's age must be less than 100 years",
+        "ageMessage": "The user must be between 13 and 100 years old"
       }
     },
     "DevicesTab": {
@@ -177,11 +204,22 @@
     "AddPhotoModal": {
       "title": "Add a profile photo",
       "selectBtn": "Select from a computer",
-      "saveBtn": "Save"
+      "saveBtn": "Save",
+      "openDraftBtn": "Open draft",
+      "nextBtn": "Next",
+      "cropping": "Cropping",
+      "close": "Close",
+      "yes": "Yes",
+      "no": "No",
+      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "filters": "Filters",
+      "sizeError": "Photo size must be less than 10 MB!",
+      "formatError": "The format of the uploaded photo must be PNG and JPEG"
     }
   },
   "AgreementsPage": {
     "btnName": "Back to Sign Up",
+    "btnName1": "Back to General information",
     "TermsOfService": {
       "title": "Terms of Service",
       "text": "There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious.  There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious. There is a lot of important text here that says you agree to everything indiscriminately, various consents, many different words, it all looks very serious"
@@ -197,7 +235,8 @@
       "min": "Username must be at least 6 characters",
       "max": "Username must not exceed 30 characters",
       "invalidCharacters": "Username must contain a-z, A-Z, 1-9",
-      "spaces": "Username must not contain spaces"
+      "spaces": "Username must not contain spaces",
+      "nameExist": "User with this username is already registered"
     },
     "email": {
       "required": "Email is required",
@@ -220,6 +259,14 @@
     },
     "agreements": {
       "required": "You must accept the agreements"
+    },
+    "login": {
+      "error400": "The email or password are incorrect. Try again please",
+      "error401": "This email is not registered",
+      "errorundefined": "Something is wrong, please try again later"
+    },
+    "common": {
+      "error": "Error!"
     }
   },
   "Time": {
@@ -246,7 +293,15 @@
     }
   },
   "Header": {
-    "notifications": "Notifications",
-    "zeroNotifications": "You don't have notifications yet"
+    "notifications": {
+      "notZeroNotifications": "Notifications",
+      "zeroNotifications": "You don't have notifications yet"
+    },
+    "mobileMenu": {
+      "profileSettings": "Profile Settings",
+      "statistics": "Statistics",
+      "favourites": "Favourites",
+      "logOut": "Log Out"
+    }
   }
 }

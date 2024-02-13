@@ -4,25 +4,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
+
+  height: 60px;
   width: 100%;
   background-color: var(--dark-700);
-  border-bottom: 1px solid var(--dark-300);
+
   z-index: 10;
 }
 
 .container {
+  position: fixed;
+  top: 0;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1280px;
+  border-bottom: 1px solid var(--dark-300);
   width: 100%;
-  padding: 0px 60px;
+  z-index: 10;
+
+  padding: 0 60px;
   height: 60px;
 }
 
 .logo {
-  font-family: Inter;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
@@ -37,8 +42,22 @@
   gap: 54px;
 }
 
-@include s.devices(mobile) {
+@include s.devices(tablet) {
   .container {
-    padding: 0px 15px;
+    padding: 0 15px;
+  }
+
+  .notificationContainer {
+    justify-content: space-around;
+    width: 71%;
+    gap: 0px;
+  }
+}
+
+@include s.devices(mobile) {
+  .notificationContainer {
+    justify-content: space-around;
+    width: 60%;
+    gap: 0px;
   }
 }

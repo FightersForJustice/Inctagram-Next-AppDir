@@ -1,0 +1,195 @@
+@use '@/app/mixins.scss' as s;
+
+.createPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  &__image {
+    padding-top: 42px;
+    margin-bottom: 60px;
+  }
+
+  &__select {
+    position: relative;
+  }
+
+  &__file {
+    opacity: 0;
+    position: relative;
+    z-index: 1;
+    width: 283px;
+    height: 71px;
+    top: -20px;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    right: 35px;
+    width: 214px;
+  }
+
+  &__open {
+    margin-bottom: 20px;
+  }
+}
+
+.cropping {
+  overflow: hidden;
+
+  &__wrapper {
+    overflow: hidden;
+  }
+
+  &__icon1 {
+    position: absolute;
+    bottom: 11px;
+    left: 11px;
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  &__icon2 {
+    position: absolute;
+    bottom: 11px;
+    left: 71px;
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  &__icon3 {
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  &__image {
+    margin-bottom: -25px;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 54px;
+    max-height: 504px;
+
+    &__items {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 372px;
+      padding-top: 24px;
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s linear;
+      margin-bottom: 0;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    &__image {
+      max-height: 504px;
+      object-fit: contain;
+    }
+
+    &__smallImage {
+      width: 108px;
+      height: 108px;
+      object-fit: contain;
+    }
+  }
+
+  &__publication {
+    display: flex;
+    gap: 54px;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 25px;
+      margin-bottom: 25px;
+    }
+
+    &__image {
+      border-radius: 50%;
+      height: 36px;
+      width: 36px;
+    }
+
+    &__text {
+      color: var(--light-900, #8d9094);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &__textarea {
+      border-radius: 2px;
+      border: 1px solid var(--dark-100, #4c4c4c);
+      background: var(--dark-500, #171717);
+      width: 413px;
+      height: 120px;
+      flex-shrink: 0;
+      outline: none;
+      padding: 10px;
+      resize: none;
+    }
+
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    &__box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 480px;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+}
+
+.firstModal {
+  width: 100%;
+  max-width: 491px;
+}
+
+@include s.devices(tablet) {
+  .cropping {
+    &__wrapper {
+      position: relative;
+      left: -25px;
+      height: 40px;
+      flex-direction: row;
+    }
+  }
+}

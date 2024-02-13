@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import s from './ImagesCollection.module.scss';
 import Image from 'next/image';
-import { ImageStateType } from '@/app/[locale]/my-profile/CreatePost/CreatePost';
+import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { toast } from 'react-toastify';
@@ -12,10 +12,7 @@ type Props = {
   setPostImage: (value: string) => void;
 };
 
-export const ImagesCollection: React.FC<Props> = ({
-  loadedImages,
-  setPostImage,
-}) => {
+export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,7 +20,6 @@ export const ImagesCollection: React.FC<Props> = ({
       setPostImage('');
     }
   }, [loadedImages.length]);
-
   const moreThen10Img = loadedImages.length >= 10;
   const onDeleteImageFromCollection = (id: string) => {
     if (loadedImages.length === 1) {

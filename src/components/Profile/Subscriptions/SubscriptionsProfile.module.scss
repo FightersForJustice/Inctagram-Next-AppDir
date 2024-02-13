@@ -1,0 +1,47 @@
+@use '@/app/mixins.scss' as s;
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: 20px;
+
+  font-size: 14px;
+
+  &Subscriptions,
+  &Subscribers,
+  &Publications {
+    cursor: pointer;
+  }
+
+  &Subscriptions :nth-child(1),
+  &Subscribers :nth-child(1),
+  &Publications :nth-child(1) {
+    font-weight: 700;
+  }
+
+  &Container {
+    max-width: 400px;
+    padding: 0;
+    height: 100%;
+  }
+}
+
+@include s.devices(mobile) {
+  .profileInfo {
+    font-size: 12px;
+  }
+}
+
+@include s.devices(mobile-sm) {
+  .profileInfo {
+    font-size: 10px;
+  }
+}
+
+@include s.devices(tablet-xl) {
+  .profileInfoContainer {
+    padding: 0 30px;
+  }
+}
