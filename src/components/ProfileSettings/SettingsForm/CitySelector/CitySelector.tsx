@@ -69,20 +69,44 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
 
   return (
     <div className={s.selectorsContainer}>
-      <BaseSelector
-        selectorsLabelName={translate('country')}
-        name="country"
-        id="country"
-        defaultValue={
-          defaultValues.country.value ? defaultValues.country : null
-        }
-        placeholder={defaultValues.country.label}
-        isClearable
-        isSearchable
-        onFocus={onFocusCountryHandler}
-        options={parseCountriesListIntoOptions(countriesList.data)}
-        onChange={onCountryChange}
+      <Controller
+        render={({ field: { onChange, value } }) => (
+          <BaseSelector
+            value={value}
+            selectorsLabelName={translate('country')}
+            name="country"
+            id="country"
+            defaultValue={
+              defaultValues.country.value ? defaultValues.country : null
+            }
+            placeholder={defaultValues.country.label}
+            isClearable
+            isSearchable
+            onFocus={onFocusCountryHandler}
+            options={parseCountriesListIntoOptions(countriesList.data)}
+            onChange={(newValue) => {
+              onChange(newValue);
+              onCountryChange(newValue);
+            }}
+          />
+        )}
+        name={'country'}
+        control={control}
       />
+      {/*<BaseSelector*/}
+      {/*  selectorsLabelName={translate('country')}*/}
+      {/*  name="country"*/}
+      {/*  id="country"*/}
+      {/*  defaultValue={*/}
+      {/*    defaultValues.country.value ? defaultValues.country : null*/}
+      {/*  }*/}
+      {/*  placeholder={defaultValues.country.label}*/}
+      {/*  isClearable*/}
+      {/*  isSearchable*/}
+      {/*  onFocus={onFocusCountryHandler}*/}
+      {/*  options={parseCountriesListIntoOptions(countriesList.data)}*/}
+      {/*  onChange={onCountryChange}*/}
+      {/*/>*/}
 
       <Controller
         control={control}

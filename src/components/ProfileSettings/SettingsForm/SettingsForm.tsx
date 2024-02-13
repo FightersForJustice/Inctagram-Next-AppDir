@@ -27,6 +27,7 @@ import {
 
 import s from './SettingsForm.module.scss';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
+import useFormPersist from 'react-hook-form-persist';
 
 export type ProfileFormValues = {
   userName: string;
@@ -47,6 +48,8 @@ export type ProfileFormSubmit = {
   aboutMe: string;
 };
 
+const FORM_KEY = 'local-settings-profile';
+
 export const SettingsForm = ({
   userInfo,
   countriesList,
@@ -66,6 +69,7 @@ export const SettingsForm = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
+
   let isObsoleteDateOfBirth =
     isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
 
@@ -80,6 +84,7 @@ export const SettingsForm = ({
     control,
     setError,
     trigger,
+    watch,
     setValue,
   } = useForm<ProfileFormValues>({
     //@ts-ignore
@@ -91,6 +96,8 @@ export const SettingsForm = ({
       country: { value: usersCountry, label: usersCountry },
     },
   });
+
+  useFormPersist(FORM_KEY, { watch, setValue });
 
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
@@ -120,6 +127,9 @@ export const SettingsForm = ({
             ? toast.success(translate(res.modalText))
             : toast.error(translate(res.modalText));
         }, 2000);
+      })
+      .then(() => {
+        localStorage.removeItem(FORM_KEY);
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
