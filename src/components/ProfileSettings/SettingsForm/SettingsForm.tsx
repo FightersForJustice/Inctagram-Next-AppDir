@@ -27,7 +27,7 @@ import {
 
 import s from './SettingsForm.module.scss';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
-import useFormPersist from 'react-hook-form-persist';
+import useFormPersist from '@/utils/useFormPersist';
 
 export type ProfileFormValues = {
   userName: string;
