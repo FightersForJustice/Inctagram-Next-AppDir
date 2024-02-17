@@ -1,32 +1,33 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { DatePick } from '@/components/DatePicker';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { convertToReactDatePickerObject } from '@/utils';
-import { SettingsFormSchema } from '@/features/schemas';
-import { SettingsFormItem } from './SettingsFormItem';
-import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
+import { updateProfileInfoAction } from '@/app/lib/actions';
 import {
   ResponseCountries,
   UserProfileResponse,
 } from '@/app/lib/dataResponseTypes';
+import { DatePick } from '@/components/DatePicker';
+import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { optionsType } from '@/components/Selector/Selector';
-import { updateProfileInfoAction } from '@/app/lib/actions';
-import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
-import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
+import { SettingsFormSchema } from '@/features/schemas';
+import { convertToReactDatePickerObject } from '@/utils';
 import {
   isLessThen13YearsOld,
   isMoreThen100YearsOld,
 } from '@/utils/checkYears';
+import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
+import { SettingsFormItem } from './SettingsFormItem';
 
-import s from './SettingsForm.module.scss';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
+import useFormPersist from '@/utils/useFormPersist';
+import s from './SettingsForm.module.scss';
 
 export type ProfileFormValues = {
   userName: string;
@@ -47,6 +48,8 @@ export type ProfileFormSubmit = {
   aboutMe: string;
 };
 
+const FORM_KEY = 'local-settings-profile';
+
 export const SettingsForm = ({
   userInfo,
   countriesList,
@@ -64,7 +67,6 @@ export const SettingsForm = ({
     t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
   let isObsoleteDateOfBirth =
     isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
@@ -80,7 +82,9 @@ export const SettingsForm = ({
     control,
     setError,
     trigger,
+    watch,
     setValue,
+    getValues,
   } = useForm<ProfileFormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
@@ -91,6 +95,8 @@ export const SettingsForm = ({
       country: { value: usersCountry, label: usersCountry },
     },
   });
+
+  useFormPersist(FORM_KEY, { watch, setValue });
 
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
@@ -120,6 +126,9 @@ export const SettingsForm = ({
             ? toast.success(translate(res.modalText))
             : toast.error(translate(res.modalText));
         }, 2000);
+      })
+      .then(() => {
+        localStorage.removeItem(FORM_KEY);
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
@@ -188,6 +197,7 @@ export const SettingsForm = ({
                 isObsoleteDateOfBirth={isObsoleteDateOfBirth}
                 trigger={trigger}
                 control={control}
+                getValues={getValues}
               />
             </div>
 

@@ -7,32 +7,52 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DatePicker from 'react-multi-date-picker';
 
-import { Control, Controller, UseFormTrigger } from 'react-hook-form';
+import {
+  convertToISOString,
+  convertToReactDatePickerObject,
+} from '@/utils/convertTimeDatePicker';
+import {
+  Control,
+  Controller,
+  UseFormGetValues,
+  UseFormTrigger,
+} from 'react-hook-form';
+import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
+
 import {
   isLessThen13YearsOld,
   isMoreThen100YearsOld,
 } from '@/utils/checkYears';
-import { convertToISOString } from '@/utils/convertTimeDatePicker';
-import { ProfileFormValues } from '../ProfileSettings/SettingsForm/SettingsForm';
-
-import './DatePick.scss';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
+import './DatePick.scss';
 
 export const DatePick = ({
   control,
   trigger,
   isObsoleteDateOfBirth,
   translateErrors,
+  getValues,
 }: {
   control: Control<ProfileFormValues>;
   trigger: UseFormTrigger<ProfileFormValues>;
   isObsoleteDateOfBirth: boolean;
   translateErrors: (key: string) => string;
+  getValues: UseFormGetValues<ProfileFormValues>;
 }) => {
   const [fieldError, setFieldError] = useState<string>('');
   const [isObsoleteAge, setIsObsoleteAge] = useState<boolean>(
     isObsoleteDateOfBirth
   );
+
+  const values = convertToReactDatePickerObject(getValues('dateOfBirth'));
+
+  if (
+    (isLessThen13YearsOld(values) || isMoreThen100YearsOld(values)) &&
+    !fieldError.length
+  ) {
+    isLessThen13YearsOld(values) && setFieldError('dateOfBirth.ageMore13');
+    isMoreThen100YearsOld(values) && setFieldError('dateOfBirth.ageLess100');
+  }
 
   const displayError = !!fieldError.length || isObsoleteAge;
 

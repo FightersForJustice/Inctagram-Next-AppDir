@@ -5929,7 +5929,6 @@ packages:
     resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/31d35a66ae3e3f412d578645c7a14b651cb56035}
     name: '@paypal/paypal-js'
     version: 8.0.0
-    prepare: true
     requiresBuild: true
     dependencies:
       promise-polyfill: 8.3.0
