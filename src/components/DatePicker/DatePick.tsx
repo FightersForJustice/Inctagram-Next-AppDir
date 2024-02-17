@@ -78,7 +78,6 @@ export const DatePick = ({
               onChange={(date: typeof value) => {
                 setFieldError('');
 
-                console.log('date', date);
                 isObsoleteAge && setIsObsoleteAge(false);
                 const isAgeLessThan13 = isLessThen13YearsOld(date);
                 const isAgeMoreThan100 = isMoreThen100YearsOld(date);

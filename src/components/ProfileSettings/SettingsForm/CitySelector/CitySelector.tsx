@@ -1,11 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { Control, Controller, UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 
-import { BaseSelector, optionsType } from '@/components/Selector/Selector';
 import { ResponseCountries } from '@/app/lib/dataResponseTypes';
+import { BaseSelector, optionsType } from '@/components/Selector/Selector';
 import {
   parseCitiesListIntoOptions,
   parseCountriesListIntoOptions,
@@ -93,20 +93,6 @@ export const CitySelectors: React.FC<CitySelectorProps> = ({
         name={'country'}
         control={control}
       />
-      {/*<BaseSelector*/}
-      {/*  selectorsLabelName={translate('country')}*/}
-      {/*  name="country"*/}
-      {/*  id="country"*/}
-      {/*  defaultValue={*/}
-      {/*    defaultValues.country.value ? defaultValues.country : null*/}
-      {/*  }*/}
-      {/*  placeholder={defaultValues.country.label}*/}
-      {/*  isClearable*/}
-      {/*  isSearchable*/}
-      {/*  onFocus={onFocusCountryHandler}*/}
-      {/*  options={parseCountriesListIntoOptions(countriesList.data)}*/}
-      {/*  onChange={onCountryChange}*/}
-      {/*/>*/}
 
       <Controller
         control={control}
