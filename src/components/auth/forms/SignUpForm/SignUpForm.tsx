@@ -20,6 +20,7 @@ import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
 import s from './SignUpForm.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();
@@ -103,7 +104,7 @@ export const SignUpForm = () => {
         />
         <p className={s.questionContainer}>{translate('question')}</p>
         <Link
-          href={'/sign-in'}
+          href={AUTH_ROUTES.SIGN_IN}
           className={s.redirectSignIn}
           id={'sign-up-link-to-sign-in'}
         >

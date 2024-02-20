@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/lib/actionOptions';
 import { updateTokensAndContinue } from './app/lib/actions';
+import { AUTH_ROUTES, AUTH_ROUTES_ARRAY, ROUTES } from './appRoutes/routes';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -18,20 +19,6 @@ export const config = {
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
 
-const authPaths = [
-  '/sign-in',
-  '/sign-up',
-  '/auth/registration-confirmation',
-  '/auth/recovery',
-  '/email-verification',
-  '/email-expired',
-  '/forgot-password',
-  '/verification-invalid',
-  '/auth/recovery',
-  '/auth/registration-confirmation',
-  '/agreements/privacy-policy',
-  '/agreements/terms-of-service',
-];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -49,7 +36,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
 
-  const isAuthPath = authPaths.some((path) => pathname === path);
+  const isAuthPath = AUTH_ROUTES_ARRAY.some((path) => pathname === path);
 
   //definitely not auth user
   if (!refreshToken) {
@@ -57,7 +44,7 @@ export async function middleware(request: NextRequest) {
 
     return isAuthPath
       ? NextResponse.next()
-      : NextResponse.redirect(new URL('/sign-in', request.url));
+      : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
   }
 
   //checking auth refactor
@@ -79,7 +66,7 @@ export async function middleware(request: NextRequest) {
 
         return isAuthPath
           ? NextResponse.redirect(
-              new URL(`/profile/${responseData.userId}`, request.url)
+              new URL(`${ROUTES.PROFILE}/${responseData.userId}`, request.url)
             )
           : response;
       case 401:
@@ -90,7 +77,7 @@ export async function middleware(request: NextRequest) {
       default:
         console.log('Middleware (Not Authorized)');
         return !isAuthPath
-          ? NextResponse.redirect(new URL('/sign-in', request.url))
+          ? NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url))
           : NextResponse.next();
     }
   } catch (error) {

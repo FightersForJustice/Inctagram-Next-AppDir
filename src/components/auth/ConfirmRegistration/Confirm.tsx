@@ -7,6 +7,7 @@ import { usePostRegistrationConfirmationMutation } from '@/api/auth.api';
 import { toast } from 'react-toastify';
 import { Loader } from '@/components/Loader';
 import s from './Confirm.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 type Props = {
   code: string;
@@ -33,7 +34,7 @@ export const Confirm = ({ code, translate }: Props) => {
           registrationConfirm({ confirmationCode: actualCode }).catch((err) => {
             toast.error('Error confirmation');
             if (err.data.error) {
-              router.push('/email-expired');
+              router.push(AUTH_ROUTES.EMAIL_EXPIRED);
             }
           });
         });
@@ -47,7 +48,7 @@ export const Confirm = ({ code, translate }: Props) => {
     <div className={s.container}>
       <h1 className={s.slogan}>{translate('title')}</h1>
       <p className={s.confirmationText}>{translate('desc')}</p>
-      <Link href={'/sign-in'} className={s.resendLink}>
+      <Link href={AUTH_ROUTES.SIGN_IN} className={s.resendLink}>
         {translate('btnName')}
       </Link>
       <Image

@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 import s from './ForgotPasswordForm.module.scss';
 import f from './EmailSentModal.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 export const ForgotPasswordForm = () => {
   const { t, i18n } = useTranslation();
@@ -91,7 +92,7 @@ export const ForgotPasswordForm = () => {
           />
         </div>
 
-        <Link href={'/sign-in'} className={s.forgotRedirect}>
+        <Link href={AUTH_ROUTES.SIGN_IN} className={s.forgotRedirect}>
           {translate('linkName')}
         </Link>
 
