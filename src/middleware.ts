@@ -19,7 +19,6 @@ export const config = {
   matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
 
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;

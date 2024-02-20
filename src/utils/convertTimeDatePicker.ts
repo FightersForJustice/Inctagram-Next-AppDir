@@ -32,10 +32,10 @@ export const convertToReactDatePickerObject = (
 
 export const convertToISOString = (dateInput: DateObject | string) => {
   let formattedDate: Date;
-  if (!dateInput) return null
+  if (!dateInput) return null;
 
-  if (typeof (dateInput) === "string" && isISODateFormat(dateInput)) {
-    return dateInput
+  if (typeof dateInput === 'string' && isISODateFormat(dateInput)) {
+    return dateInput;
   }
 
   if (dateInput instanceof DateObject) {
