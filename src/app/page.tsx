@@ -10,5 +10,5 @@ export default function IndexPage() {
     redirect(ROUTES.HOME_PAGE);
   }
 
-  redirect(`${ROUTES.PROFILE}${id}`);
+  redirect(`${ROUTES.PROFILE}/${id}`);
 }
