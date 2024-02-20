@@ -7,7 +7,7 @@ export default function IndexPage() {
   const id = headersList.get('id');
 
   if (id === null || id === undefined) {
-    redirect('/');
+    redirect(ROUTES.HOME_PAGE);
   }
 
   redirect(`${ROUTES.PROFILE}${id}`);
