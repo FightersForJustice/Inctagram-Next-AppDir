@@ -5,6 +5,7 @@ import { AgreeCheckboxProps } from '@/types/signUpTypes';
 import s from './AgreeCheckbox.module.scss';
 import { InputError } from '@/components/Input';
 import { Trans } from 'react-i18next';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 export const AgreeCheckbox = ({
   translate,
@@ -53,11 +54,11 @@ export const AgreeCheckbox = ({
                 link1: (
                   <Link
                     className={s.link}
-                    href="./agreements/terms-of-service"
+                    href={AUTH_ROUTES.TERMS_OF_SERVICE}
                   />
                 ),
                 link2: (
-                  <Link className={s.link} href="./agreements/privacy-policy" />
+                  <Link className={s.link} href={AUTH_ROUTES.PRIVACY_POLICY} />
                 ),
               }}
             ></Trans>

@@ -21,6 +21,7 @@ import { cookieDays, setCookieExpires } from '@/utils/cookiesActions';
 import { revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 // AUTH ACTIONS
 
@@ -75,7 +76,7 @@ export async function signUpAction(data: SignInData) {
     const field = responseBody.messages[0]?.field;
 
     if (field === 'email') {
-      // Мы не бросаем ошибку из-за безопасности (XSS)
+      // Мы не выводим ошибку из-за безопасности (XSS)
       return { success: true, data: 'signUpSuccess' };
     }
 
@@ -178,7 +179,7 @@ export async function logOutAction() {
       }
       cookies().delete('refreshToken');
       cookies().delete('accessToken');
-      revalidatePath('/sign-in');
+      revalidatePath(AUTH_ROUTES.SIGN_IN);
 
       return { success: true, data: 'logoutSuccess' };
     } catch (error) {

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import s from './Verification.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 const EmailVerification = () => {
   const { t } = useTranslation();
@@ -13,7 +14,7 @@ const EmailVerification = () => {
       <div className={s.container}>
         <h1 className={s.slogan}>{translate('title')}</h1>
         <p className={s.verificationText}>{translate('desc')}</p>
-        <Link href={'/sign-in'} className={s.resendLink}>
+        <Link href={AUTH_ROUTES.SIGN_IN} className={s.resendLink}>
           {translate('btnName')}
         </Link>
         <Image

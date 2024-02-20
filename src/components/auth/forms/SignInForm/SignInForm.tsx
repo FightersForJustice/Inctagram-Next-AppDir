@@ -13,6 +13,7 @@ import { SignInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/lib/actions';
 
 import s from './SignInForm.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 export const SignInForm = () => {
   const { t } = useTranslation();
@@ -81,7 +82,7 @@ export const SignInForm = () => {
       />
       <div className={s.forgot}>
         <Link
-          href={'/forgot-password'}
+          href={AUTH_ROUTES.FORGOT_PASSWORD}
           className={errors.password ? s.password : ''}
           id={'sign-in-link-forgot-password'}
         >
@@ -96,7 +97,7 @@ export const SignInForm = () => {
       />
       <p className={s.alreadyHaveText}>{translate('question')}</p>
       <Link
-        href={'/sign-up'}
+        href={AUTH_ROUTES.SIGN_UP}
         className={s.signUpBtn}
         id={'sign-in-link-sign-up'}
       >

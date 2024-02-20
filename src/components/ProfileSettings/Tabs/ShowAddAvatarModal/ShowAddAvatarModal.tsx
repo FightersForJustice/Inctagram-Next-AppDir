@@ -42,7 +42,7 @@ export const ShowAddAvatarModal = ({
     }
   };
   const [showModal, setShowModal] = useState(false);
- 
+
   const onCloseHandler = () => {
     onCloseAvatarModal();
     setUserAvatar('');
