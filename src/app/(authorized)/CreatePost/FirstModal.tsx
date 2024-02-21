@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import s from './CreatePost.module.scss';
 
 type Props = {
-  setStep: Dispatch<SetStateAction<number>>
+  setStep: Dispatch<SetStateAction<number>>;
   setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
   setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;

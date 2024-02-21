@@ -56,7 +56,7 @@ export const FiltersModal = ({
   const onSendPostImage = () => {
     if (images) {
       const formData = new FormData();
-      
+
       images.map(({ image, id, filter }) => {
         const imageRef = document.createElement('img');
         imageRef.src = image;

@@ -162,24 +162,30 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
 
 //POST OPTIONS
 
-export const createPostOptions = (accessToken: string | null, body: createPostOptionsType) => {
+export const createPostOptions = (
+  accessToken: string | null,
+  body: createPostOptionsType
+) => {
   return {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      'accept': 'application/json',
-      'Content-Type': 'application/json'
+      accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  }
+  };
 };
 
-export const uploadPostOptions = (accessToken: string | null, formData: FormData) => {
+export const uploadPostOptions = (
+  accessToken: string | null,
+  formData: FormData
+) => {
   return {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     body: formData,
-  }
+  };
 };

@@ -334,8 +334,8 @@ export async function fetchCountriesList() {
       res.ok
         ? res.json()
         : Promise.reject(
-          new Error(`Error deleteAvatarAction, status ${res.status}`)
-        )
+            new Error(`Error deleteAvatarAction, status ${res.status}`)
+          )
     )
     .catch((error) => {
       console.error(error);
@@ -374,39 +374,43 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   });
 }
 
-
 // POST
 
 export async function uploadPostImage(formData: FormData) {
   try {
-    const res = await fetch(routes.UPLOAD_POST_IMAGE, uploadPostOptions(accessToken(), formData))
+    const res = await fetch(
+      routes.UPLOAD_POST_IMAGE,
+      uploadPostOptions(accessToken(), formData)
+    );
     const responseBody = await res.json();
     if (!res.ok) {
-      Promise.reject(res.statusText)
+      Promise.reject(res.statusText);
     }
 
-    return { success: true, data: responseBody.images }
+    return { success: true, data: responseBody.images };
   } catch (error) {
     console.error('uploadPostImage error', error);
 
-    return { success: false, data: 'uploadPostImageError' }
+    return { success: false, data: 'uploadPostImageError' };
   }
 }
 
-
 export async function createPost(body: createPostOptionsType) {
   try {
-    const res = await fetch(routes.CREATE_POST, createPostOptions(accessToken(), body))
+    const res = await fetch(
+      routes.CREATE_POST,
+      createPostOptions(accessToken(), body)
+    );
     const responseBody = await res.json();
     if (!res.ok) {
-      Promise.reject(res.statusText)
+      Promise.reject(res.statusText);
     }
-    revalidatePath(ROUTES.PROFILE)
+    revalidatePath(ROUTES.PROFILE);
 
     return { success: true, data: responseBody.images };
   } catch (error) {
     console.error('createPost error', error);
 
-    return { success: false, data: 'createPostError' }
+    return { success: false, data: 'createPostError' };
   }
 }

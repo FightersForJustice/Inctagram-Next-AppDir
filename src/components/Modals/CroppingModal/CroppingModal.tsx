@@ -37,7 +37,7 @@ export const CroppingModal = ({
     setStep(3);
   };
 
-  const onBackBtnHandler = () => { 
+  const onBackBtnHandler = () => {
     dispatch(postActions.removeAllGalleryImages());
     setStep((prev) => (prev = prev - 1));
   };

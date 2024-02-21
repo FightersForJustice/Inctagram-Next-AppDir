@@ -37,7 +37,7 @@ export const SecondModal = ({
 }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesGalleryImages = useAppSelector(imagesGallery);
-  const onZoomImage =(value: string) => {
+  const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
 
@@ -51,10 +51,7 @@ export const SecondModal = ({
       >
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery
-          setStep={setStep}
-          setLoadedImages={setLoadedImages}
-        />
+        <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
 
         <PostCropper
           postImage={postImage}

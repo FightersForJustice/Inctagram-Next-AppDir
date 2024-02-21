@@ -43,7 +43,7 @@ export const ThirdModal = ({
       <FiltersModal
         title={translate('filters')}
         width={'972px'}
-        buttonName='Next'
+        buttonName="Next"
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         zoomValue={zoomValue}

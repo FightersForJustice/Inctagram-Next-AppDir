@@ -20,7 +20,7 @@ export const CreatePost = ({
   userData,
 }: Props) => {
   const [step, setStep] = useState<number>(1);
-  
+
   const [file, setFile] = useState<File[]>();
   const [croppedPostImage, setCroppedPostImage] = useState('');
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
