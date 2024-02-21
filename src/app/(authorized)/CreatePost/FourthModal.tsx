@@ -3,15 +3,13 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
-import { useDeletePostImageMutation } from '@/api';
-import { Loader } from '@/components/Loader';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { GetResponse } from '@/api/profile.api';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
-import { createPost } from '@/app/lib/actions';
+import { createPost, deleteUploadedPostImage } from '@/app/lib/actions';
 
 import s from './CreatePost.module.scss';
 
@@ -32,9 +30,10 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
-  const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
-  const imagesUploadIds = useAppSelector((state) => state.post.postImagesIds);
+  const imagesUploaded = JSON.parse(
+    sessionStorage.getItem('userPostImage') || ''
+  );
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -43,8 +42,7 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = async () => {
-    const images = JSON.parse(sessionStorage.getItem('userPostImage') || '');
-    const childrenMetadata = images.map((cloudUploadId: string) => {
+    const childrenMetadata = imagesUploaded.map((cloudUploadId: string) => {
       return {
         uploadId: cloudUploadId,
       };
@@ -63,20 +61,22 @@ export const FourthModal: React.FC<Props> = ({
       dispatch(postActions.removeAllImages());
       dispatch(postActions.removeImageIds());
       dispatch(postActions.removeAllGalleryImages());
-      sessionStorage.removeItem('userPostImage');
       setShowCreatePostModal(false);
     }
   };
 
-  const onDeletePostImage = () => {
-    imagesUploadIds.map((uploadId: any) => {
-      if (uploadId.uploadId)
-        deleteImage(uploadId.uploadId)
-          .unwrap()
-          .then(() => {
-            toast.success('Post image deleted');
-          });
-    });
+  const onDeletePostImage = async () => {
+    try {
+      const deletePromises = imagesUploaded.map((uploadId: number) =>
+        deleteUploadedPostImage(uploadId)
+      );
+
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error(error);
+    }
+
+    sessionStorage.removeItem('userPostImage');
     dispatch(postActions.removeImageIds());
     setStep(3);
   };
@@ -139,10 +139,8 @@ export const FourthModal: React.FC<Props> = ({
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
           onDelete={onDeletePostImage}
-          isDeleting={isDeleting}
         />
       )}
-      {isDeleting && <Loader />}
     </>
   );
 };

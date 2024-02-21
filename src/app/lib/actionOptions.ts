@@ -189,3 +189,12 @@ export const uploadPostOptions = (
     body: formData,
   };
 };
+
+export const deleteUploadedPostOptions = (accessToken: string | null) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};

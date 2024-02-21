@@ -7,6 +7,7 @@ import {
   checkRecoveryCodeOptions,
   createPostOptions,
   deleteAvatarOptions,
+  deleteUploadedPostOptions,
   loginOptions,
   newPasswordOptions,
   recoveryPasswordOptions,
@@ -393,6 +394,18 @@ export async function uploadPostImage(formData: FormData) {
 
     return { success: false, data: 'uploadPostImageError' };
   }
+}
+
+export async function deleteUploadedPostImage(uploadId: number) {
+  const response = await fetch(
+    `${routes.UPLOAD_POST_IMAGE}/${uploadId}`,
+    deleteUploadedPostOptions(accessToken())
+  );
+  if (!response.ok) {
+    throw new Error(`Error deleting image ${uploadId}: ${response.statusText}`);
+  }
+
+  return response.statusText;
 }
 
 export async function createPost(body: createPostOptionsType) {

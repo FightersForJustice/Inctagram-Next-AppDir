@@ -31,6 +31,11 @@ export const CreatePost = ({
   const currentImage =
     postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
 
+  const closeCreatePostModal = (value: boolean) => {
+    setShowCreatePostModal(value);
+    sessionStorage.removeItem('userPostImage');
+  };
+
   return (
     <>
       {showCreatePostModal && step === 1 && (
@@ -38,7 +43,7 @@ export const CreatePost = ({
           setStep={setStep}
           currentFile={file}
           setFile={setFile}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setShowCreatePostModal={closeCreatePostModal}
           setLoadedImages={setLoadedImages}
           loadedImages={loadedImages}
         />
@@ -51,7 +56,7 @@ export const CreatePost = ({
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setShowCreatePostModal={closeCreatePostModal}
           setLoadedImages={setLoadedImages}
           setCroppedPostImage={setCroppedPostImage}
           croppedPostImage={croppedPostImage}
@@ -61,13 +66,13 @@ export const CreatePost = ({
         <ThirdModal
           setStep={setStep}
           zoomValue={zoomValue}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setShowCreatePostModal={closeCreatePostModal}
         />
       )}
       {step === 4 && (
         <FourthModal
           setStep={setStep}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setShowCreatePostModal={closeCreatePostModal}
           userData={userData}
         />
       )}
