@@ -1,8 +1,7 @@
 import { MutableRefObject, PropsWithChildren } from 'react';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
-import { useUploadPostImageMutation } from '@/api';
-import { Loader } from '../../Loader/Loader';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
@@ -10,10 +9,17 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { uploadPostImage } from '@/app/lib/actions';
 
 import './FiltersModal.css';
-import Image from 'next/image';
-import { UploadPostImage } from '@/app/lib/actions';
+
+type ImageData = {
+    url: string;
+    width: number;
+    height: number;
+    fileSize: number;
+    uploadId: string;
+};
 
 export const FiltersModal = ({
   onClose,
@@ -27,7 +33,7 @@ export const FiltersModal = ({
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
-  const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
+
   const dispatch = useAppDispatch();
   const images: ImageStateType[] = useAppSelector(postImages);
   const onSendPostImage = () => {
@@ -47,18 +53,17 @@ export const FiltersModal = ({
         );
         const formData = new FormData();
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        UploadPostImage(formData, '')
-          .then((res: any) => {
-            console.log(res);
-
-            // dispatch(postActions.addImageId(res.images[0]));
-            showFourthModal?.();
-            toast.success('Post imageRef uploaded');
+        
+        uploadPostImage(formData)
+          .then(async (res: {success: boolean, data: ImageData[]}) => {
+            if (res.success) {
+              sessionStorage.setItem('userPostImage', res.data[0].uploadId);
+              showFourthModal?.();
+            }
           })
           .catch((err: any) => {
             console.log(err.data);
-
-            toast.error('Error');
+            toast.error(err.data); //translate after
           });
       });
     }
@@ -106,7 +111,6 @@ export const FiltersModal = ({
           <div className={'modal__body1'}>{children}</div>
         </div>
       </div>
-      {isLoading && <Loader />}
     </>
   );
 };

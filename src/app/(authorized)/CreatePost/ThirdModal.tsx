@@ -45,7 +45,7 @@ export const ThirdModal = ({
       <FiltersModal
         title={translate('filters')}
         width={'972px'}
-        buttonName={translate('nextBtn')}
+        buttonName='Next'
         showSecondModal={showSecondModal}
         showFourthModal={showFourthModal}
         onClose={() => setAreYouSureModal(true)}

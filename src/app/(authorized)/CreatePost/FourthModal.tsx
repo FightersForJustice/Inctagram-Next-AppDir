@@ -3,15 +3,15 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
-import { useCreatePostMutation, useDeletePostImageMutation } from '@/api';
+import { useDeletePostImageMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { GetResponse } from '@/api/profile.api';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImagesIds } from '@/redux/reducers/post/postSelectors';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import { createPost } from '@/app/lib/actions';
 
 import s from './CreatePost.module.scss';
 
@@ -32,8 +32,6 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
-  const imagesIds = useAppSelector(postImagesIds);
-  const [createPost, { isLoading }] = useCreatePostMutation();
   const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
   const imagesUploadIds = useAppSelector((state) => state.post.postImagesIds);
@@ -44,24 +42,24 @@ export const FourthModal: React.FC<Props> = ({
     setTextareaValue(e.currentTarget.value);
   };
 
-  const onPublishPost = () => {
-    createPost({
-      description: textareaValue,
-      childrenMetadata: imagesIds,
-    })
-      .unwrap()
-      .then(() => {
-        toast.success('Post created');
-        setShowCreatePostModal(false);
-      })
-      .catch(() => {
+  const onPublishPost = async () => {
+    const images = sessionStorage.getItem('userPostImage');
+    if (!!images?.length) {
+      const body = {
+        description: textareaValue,
+        childrenMetadata: [
+          {
+            uploadId: images,
+          },
+        ],
+      };
+      const res = await createPost(body);
+      if (!res.success) {
         toast.error('Error');
-      })
-      .finally(() => {
-        dispatch(postActions.removeAllImages());
-        dispatch(postActions.removeImageIds());
-        dispatch(postActions.removeAllGalleryImages());
-      });
+      } else toast.success('Post created');
+
+      setShowCreatePostModal(false);
+    }
   };
 
   const onDeletePostImage = () => {
@@ -139,7 +137,6 @@ export const FourthModal: React.FC<Props> = ({
         />
       )}
       {isDeleting && <Loader />}
-      {isLoading && <Loader />}
     </>
   );
 };

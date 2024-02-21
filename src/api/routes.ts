@@ -21,6 +21,7 @@ export const routes = Object.freeze({
   UPLOAD_PROFILE_AVATAR: `${baseUrl}users/profile/avatar`,
   //CreatePost
   UPLOAD_POST_IMAGE: `${baseUrl}posts/image`,
+  CREATE_POST: `${baseUrl}posts`,
 });
 
 export const citySelectRoutes = Object.freeze({
