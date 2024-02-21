@@ -1,4 +1,9 @@
-import { MutableRefObject, PropsWithChildren } from 'react';
+import {
+  Dispatch,
+  MutableRefObject,
+  PropsWithChildren,
+  SetStateAction,
+} from 'react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 
@@ -14,11 +19,25 @@ import { uploadPostImage } from '@/app/lib/actions';
 import './FiltersModal.css';
 
 type ImageData = {
-    url: string;
-    width: number;
-    height: number;
-    fileSize: number;
-    uploadId: string;
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  uploadId: string;
+};
+
+type Props = {
+  setStep?: Dispatch<SetStateAction<number>>;
+  title: string;
+  onClose?: () => void;
+  width?: string;
+  buttonName: string;
+  showSecondModal?: () => void;
+  showFourthModal?: () => void;
+  onPublishPost?: () => void;
+  onDeletePostImage?: () => void;
+  changedPostImage?: MutableRefObject<any>;
+  zoomValue?: string;
 };
 
 export const FiltersModal = ({
@@ -27,13 +46,11 @@ export const FiltersModal = ({
   width,
   children,
   buttonName,
-  showSecondModal,
-  showFourthModal,
+  setStep,
   onPublishPost,
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
-
   const dispatch = useAppDispatch();
   const images: ImageStateType[] = useAppSelector(postImages);
   const onSendPostImage = () => {
@@ -53,12 +70,12 @@ export const FiltersModal = ({
         );
         const formData = new FormData();
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        
+
         uploadPostImage(formData)
-          .then(async (res: {success: boolean, data: ImageData[]}) => {
+          .then(async (res: { success: boolean; data: ImageData[] }) => {
             if (res.success) {
               sessionStorage.setItem('userPostImage', res.data[0].uploadId);
-              showFourthModal?.();
+              setStep?.(4);
             }
           })
           .catch((err: any) => {
@@ -73,7 +90,7 @@ export const FiltersModal = ({
       const idToRemove = image.id;
       dispatch(postActions.removeGalleryImage({ id: idToRemove }));
       if (index === images.length - 1) {
-        showSecondModal?.();
+        setStep?.(2);
       }
     });
   };
@@ -113,17 +130,4 @@ export const FiltersModal = ({
       </div>
     </>
   );
-};
-
-type Props = {
-  title: string;
-  onClose?: () => void;
-  width?: string;
-  buttonName: string;
-  showSecondModal?: () => void;
-  showFourthModal?: () => void;
-  onPublishPost?: () => void;
-  onDeletePostImage?: () => void;
-  changedPostImage?: MutableRefObject<any>;
-  zoomValue?: string;
 };

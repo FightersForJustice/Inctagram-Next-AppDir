@@ -13,7 +13,7 @@ dependencies:
     version: 3.1.1(react-hook-form@7.45.1)
   '@paypal/paypal-js':
     specifier: github:paypal/paypal-js
-    version: github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035
+    version: github.com/paypal/paypal-js/f829b81bc826d67edf24fe8484e6c016c740624b
   '@paypal/react-paypal-js':
     specifier: ^8.1.1
     version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -125,6 +125,9 @@ dependencies:
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
+  use-debounce:
+    specifier: ^10.0.0
+    version: 10.0.0(react@18.2.0)
   yup:
     specifier: ^1.2.0
     version: 1.2.0
@@ -5719,6 +5722,15 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /use-debounce@10.0.0(react@18.2.0):
+    resolution: {integrity: sha512-XRjvlvCB46bah9IBXVnq/ACP2lxqXyZj0D9hj4K5OzNroMDpTEBg8Anuh1/UfRTRs7pLhQ+RiNxxwZu9+MVl1A==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.35)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
@@ -5925,11 +5937,10 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/paypal/paypal-js/31d35a66ae3e3f412d578645c7a14b651cb56035:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/31d35a66ae3e3f412d578645c7a14b651cb56035}
-    name: '@paypal/paypal-js'
-    version: 8.0.0
+  github.com/paypal/paypal-js/f829b81bc826d67edf24fe8484e6c016c740624b:
+    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/f829b81bc826d67edf24fe8484e6c016c740624b}
+    name: '@paypal/paypal-js-root'
+    version: 0.0.0
+    prepare: true
     requiresBuild: true
-    dependencies:
-      promise-polyfill: 8.3.0
     dev: false

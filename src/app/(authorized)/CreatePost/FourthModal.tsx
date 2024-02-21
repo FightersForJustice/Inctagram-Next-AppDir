@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 
@@ -16,13 +16,13 @@ import { createPost } from '@/app/lib/actions';
 import s from './CreatePost.module.scss';
 
 type Props = {
-  showThirdModal: () => void;
+  setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
 };
 
 export const FourthModal: React.FC<Props> = ({
-  showThirdModal,
+  setStep,
   setShowCreatePostModal,
   userData,
 }) => {
@@ -58,6 +58,9 @@ export const FourthModal: React.FC<Props> = ({
         toast.error('Error');
       } else toast.success('Post created');
 
+      dispatch(postActions.removeAllImages());
+      dispatch(postActions.removeImageIds());
+      dispatch(postActions.removeAllGalleryImages());
       setShowCreatePostModal(false);
     }
   };
@@ -72,7 +75,7 @@ export const FourthModal: React.FC<Props> = ({
           });
     });
     dispatch(postActions.removeImageIds());
-    showThirdModal?.();
+    setStep(3)
   };
 
   return (

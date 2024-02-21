@@ -7,11 +7,12 @@ import { Modal } from '@/components/Modals/Modal';
 import { ImageStateType } from './CreatePost';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-
-import s from './CreatePost.module.scss';
 import { useTranslation } from 'react-i18next';
 
+import s from './CreatePost.module.scss';
+
 type Props = {
+  setStep: Dispatch<SetStateAction<number>>
   setPostImage: (value: string) => void;
   setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
@@ -20,6 +21,7 @@ type Props = {
   currentFile?: File[];
 };
 export const FirstModal = ({
+  setStep,
   currentFile,
   setPostImage,
   setFile,
@@ -48,8 +50,8 @@ export const FirstModal = ({
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
     setPostImage(URL.createObjectURL(file));
-
     dispatch(postActions.addImage({ id, image: URL.createObjectURL(file) }));
+    setStep(2);
   };
 
   return (

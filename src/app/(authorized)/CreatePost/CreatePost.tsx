@@ -22,12 +22,15 @@ export const CreatePost = ({
   userData,
 }: Props) => {
   const [file, setFile] = useState<File[]>();
+
+  const [step, setStep] = useState<number>(1);
+
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
   const [postImage, setPostImage] = useState('');
   const [croppedPostImage, setCroppedPostImage] = useState('');
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
-  const [zoomValue, setZoomValue] = useState('10');
+  const [zoomValue, setZoomValue] = useState('0');
   const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
 
   const dispatch = useAppDispatch();
@@ -36,29 +39,11 @@ export const CreatePost = ({
   const currentImage =
     postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
 
-  const showSecondModal = () => {
-    setThird(false);
-    setFourth(false);
-  };
-
-  const showThirdModal = () => {
-    dispatch(postActions.removeAllImages());
-    imagesGalleryArr.map((i: any) => {
-      dispatch(postActions.addImage(i));
-    });
-    setThird(true);
-    setFourth(false);
-  };
-
-  const showFourthModal = () => {
-    setThird(false);
-    setFourth(true);
-  };
-
   return (
     <>
-      {showCreatePostModal && !postImage && (
+      {showCreatePostModal && step === 1 && (
         <FirstModal
+          setStep={setStep}
           currentFile={file}
           setFile={setFile}
           setPostImage={setPostImage}
@@ -68,11 +53,11 @@ export const CreatePost = ({
         />
       )}
 
-      {postImage && (
+      {step === 2 && (
         <SecondModal
           postImage={currentImage}
           setPostImage={setPostImage}
-          showThirdModal={showThirdModal}
+          setStep={setStep}
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}
           zoomValue={zoomValue}
@@ -82,17 +67,16 @@ export const CreatePost = ({
           croppedPostImage={croppedPostImage}
         />
       )}
-      {third && (
+      {step === 3 && (
         <ThirdModal
-          showSecondModal={showSecondModal}
-          showFourthModal={showFourthModal}
+          setStep={setStep}
           zoomValue={zoomValue}
           setShowCreatePostModal={setShowCreatePostModal}
         />
       )}
-      {fourth && (
+      {step === 4 && (
         <FourthModal
-          showThirdModal={showThirdModal}
+          setStep={setStep}
           setShowCreatePostModal={setShowCreatePostModal}
           userData={userData}
         />

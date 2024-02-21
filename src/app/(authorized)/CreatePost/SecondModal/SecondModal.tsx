@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { AspectRatio } from './AspectRatio';
@@ -9,13 +9,14 @@ import { AspectRatioType, ImageStateType } from '../CreatePost';
 import { PostCropper } from '../PostCropper/PostCropper';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import { useDebouncedCallback } from 'use-debounce';
 
 import s from '../CreatePost.module.scss';
 
 type Props = {
+  setStep: Dispatch<SetStateAction<number>>;
   postImage: ImageStateType;
   setPostImage: (value: string) => void;
-  showThirdModal: () => void;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
@@ -26,9 +27,9 @@ type Props = {
 };
 
 export const SecondModal = ({
+  setStep,
   postImage,
   setPostImage,
-  showThirdModal,
   aspectRatio,
   setZoomValue,
   zoomValue,
@@ -39,15 +40,15 @@ export const SecondModal = ({
 }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesGalleryImages = useAppSelector(imagesGallery);
-  const onZoomImage = (value: string) => {
+  const onZoomImage = useDebouncedCallback((value: string) => {
     setZoomValue(value);
-  };
+  }, 300);
 
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
         setPostImage={setPostImage}
-        showThirdModal={showThirdModal}
+        setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
         width={'492px'}
