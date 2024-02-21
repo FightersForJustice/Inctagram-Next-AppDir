@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { AspectRatio } from './AspectRatio';
@@ -13,9 +13,8 @@ import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 import s from '../CreatePost.module.scss';
 
 type Props = {
+  setStep: Dispatch<SetStateAction<number>>;
   postImage: ImageStateType;
-  setPostImage: (value: string) => void;
-  showThirdModal: () => void;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
@@ -26,9 +25,8 @@ type Props = {
 };
 
 export const SecondModal = ({
+  setStep,
   postImage,
-  setPostImage,
-  showThirdModal,
   aspectRatio,
   setZoomValue,
   zoomValue,
@@ -46,18 +44,14 @@ export const SecondModal = ({
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
-        setPostImage={setPostImage}
-        showThirdModal={showThirdModal}
+        setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
         width={'492px'}
       >
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery
-          setLoadedImages={setLoadedImages}
-          setPostImage={setPostImage}
-        />
+        <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
 
         <PostCropper
           postImage={postImage}

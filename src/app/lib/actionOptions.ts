@@ -1,5 +1,6 @@
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { SignInData } from '@/features/schemas/SignInSchema';
+import { createPostOptionsType } from './optionsTypes';
 
 //AUTH OPTIONS
 
@@ -156,5 +157,44 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
       Authorization: `Bearer ${accessToken}`,
     },
     next: { revalidate: 0 },
+  };
+};
+
+//POST OPTIONS
+
+export const createPostOptions = (
+  accessToken: string | null,
+  body: createPostOptionsType
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+
+export const uploadPostOptions = (
+  accessToken: string | null,
+  formData: FormData
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: formData,
+  };
+};
+
+export const deleteUploadedPostOptions = (accessToken: string | null) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   };
 };

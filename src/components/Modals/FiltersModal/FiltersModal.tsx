@@ -1,8 +1,12 @@
-import { MutableRefObject, PropsWithChildren } from 'react';
+import {
+  Dispatch,
+  MutableRefObject,
+  PropsWithChildren,
+  SetStateAction,
+} from 'react';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 
-import { useUploadPostImageMutation } from '@/api';
-import { Loader } from '../../Loader/Loader';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
@@ -10,10 +14,31 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { uploadPostImage } from '@/app/lib/actions';
 
 import './FiltersModal.css';
-import Image from 'next/image';
-import { UploadPostImage } from '@/app/lib/actions';
+
+type ImageData = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  uploadId: string;
+};
+
+type Props = {
+  setStep?: Dispatch<SetStateAction<number>>;
+  title: string;
+  onClose?: () => void;
+  width?: string;
+  buttonName: string;
+  showSecondModal?: () => void;
+  showFourthModal?: () => void;
+  onPublishPost?: () => void;
+  onDeletePostImage?: () => void;
+  changedPostImage?: MutableRefObject<any>;
+  zoomValue?: string;
+};
 
 export const FiltersModal = ({
   onClose,
@@ -21,17 +46,17 @@ export const FiltersModal = ({
   width,
   children,
   buttonName,
-  showSecondModal,
-  showFourthModal,
+  setStep,
   onPublishPost,
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
-  const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
   const dispatch = useAppDispatch();
   const images: ImageStateType[] = useAppSelector(postImages);
   const onSendPostImage = () => {
     if (images) {
+      const formData = new FormData();
+
       images.map(({ image, id, filter }) => {
         const imageRef = document.createElement('img');
         imageRef.src = image;
@@ -45,22 +70,28 @@ export const FiltersModal = ({
           `4:4`,
           zoomValue!
         );
-        const formData = new FormData();
+
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        UploadPostImage(formData, '')
-          .then((res: any) => {
-            console.log(res);
-
-            // dispatch(postActions.addImageId(res.images[0]));
-            showFourthModal?.();
-            toast.success('Post imageRef uploaded');
-          })
-          .catch((err: any) => {
-            console.log(err.data);
-
-            toast.error('Error');
-          });
       });
+
+      uploadPostImage(formData)
+        .then(async (res: { success: boolean; data: ImageData[] }) => {
+          if (res.success) {
+            sessionStorage.setItem(
+              'userPostImage',
+              JSON.stringify(
+                res.data
+                  .filter((photo) => photo.height !== 360)
+                  .map((item) => item.uploadId)
+              )
+            );
+            setStep?.(4);
+          }
+        })
+        .catch((err: any) => {
+          console.log(err.data);
+          toast.error(err.data); //translate after
+        });
     }
   };
   const returnToSecondModal = (images: ImageStateType[]) => {
@@ -68,7 +99,7 @@ export const FiltersModal = ({
       const idToRemove = image.id;
       dispatch(postActions.removeGalleryImage({ id: idToRemove }));
       if (index === images.length - 1) {
-        showSecondModal?.();
+        setStep?.(2);
       }
     });
   };
@@ -106,20 +137,6 @@ export const FiltersModal = ({
           <div className={'modal__body1'}>{children}</div>
         </div>
       </div>
-      {isLoading && <Loader />}
     </>
   );
-};
-
-type Props = {
-  title: string;
-  onClose?: () => void;
-  width?: string;
-  buttonName: string;
-  showSecondModal?: () => void;
-  showFourthModal?: () => void;
-  onPublishPost?: () => void;
-  onDeletePostImage?: () => void;
-  changedPostImage?: MutableRefObject<any>;
-  zoomValue?: string;
 };

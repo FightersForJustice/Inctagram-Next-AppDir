@@ -5,7 +5,9 @@ import { citySelectRoutes, routes } from '@/api/routes';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
+  createPostOptions,
   deleteAvatarOptions,
+  deleteUploadedPostOptions,
   loginOptions,
   newPasswordOptions,
   recoveryPasswordOptions,
@@ -15,13 +17,16 @@ import {
   requestUpdateTokensOptions,
   updateProfileOptions,
   uploadAvatarOptions,
+  uploadPostOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { cookieDays, setCookieExpires } from '@/utils/cookiesActions';
 import { revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
-import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
+import { createPostOptionsType } from './optionsTypes';
+import { accessToken } from '@/utils/serverActions';
 
 // AUTH ACTIONS
 
@@ -284,11 +289,9 @@ export async function updateTokensAndContinue(refreshToken: string) {
 //PROFILE
 
 export async function uploadAvatarAction(avatar: FormData) {
-  const accessToken = headers().get('accessToken');
-
   return fetch(
     routes.UPLOAD_PROFILE_AVATAR,
-    uploadAvatarOptions(accessToken, avatar)
+    uploadAvatarOptions(accessToken(), avatar)
   )
     .then((res) => {
       if (res.ok) {
@@ -308,9 +311,7 @@ export async function uploadAvatarAction(avatar: FormData) {
 }
 
 export async function deleteAvatarAction() {
-  const accessToken = headers().get('accessToken');
-
-  return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
+  return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken()))
     .then((res) => {
       if (res.ok) {
         revalidatePath('/profile/settings-profile/general-information');
@@ -344,11 +345,9 @@ export async function fetchCountriesList() {
 }
 
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
-  const accessToken = headers().get('accessToken');
-
   return fetch(
     routes.USERS_PROFILE,
-    updateProfileOptions(accessToken, data)
+    updateProfileOptions(accessToken(), data)
   ).then(async (res) => {
     if (res.ok) {
       revalidatePath('/profile/settings-profile/general-information');
@@ -375,19 +374,56 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     return { success: false, modalText: toastMessage };
   });
 }
-// CreatePost
-export async function UploadPostImage(formData: FormData, accessToken: string) {
-  return fetch(routes.UPLOAD_POST_IMAGE, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: formData,
-  }).then((res) => {
-    if (res.ok) {
-      return { success: true, data: res };
-    } else {
-      return { success: false, status: res.status, data: res };
+
+// POST
+
+export async function uploadPostImage(formData: FormData) {
+  try {
+    const res = await fetch(
+      routes.UPLOAD_POST_IMAGE,
+      uploadPostOptions(accessToken(), formData)
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
     }
-  });
+
+    return { success: true, data: responseBody.images };
+  } catch (error) {
+    console.error('uploadPostImage error', error);
+
+    return { success: false, data: 'uploadPostImageError' };
+  }
+}
+
+export async function deleteUploadedPostImage(uploadId: number) {
+  const response = await fetch(
+    `${routes.UPLOAD_POST_IMAGE}/${uploadId}`,
+    deleteUploadedPostOptions(accessToken())
+  );
+  if (!response.ok) {
+    throw new Error(`Error deleting image ${uploadId}: ${response.statusText}`);
+  }
+
+  return response.statusText;
+}
+
+export async function createPost(body: createPostOptionsType) {
+  try {
+    const res = await fetch(
+      routes.CREATE_POST,
+      createPostOptions(accessToken(), body)
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody.images };
+  } catch (error) {
+    console.error('createPost error', error);
+
+    return { success: false, data: 'createPostError' };
+  }
 }

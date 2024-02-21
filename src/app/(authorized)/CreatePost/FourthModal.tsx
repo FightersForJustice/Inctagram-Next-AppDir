@@ -1,28 +1,26 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
-import { useCreatePostMutation, useDeletePostImageMutation } from '@/api';
-import { Loader } from '@/components/Loader';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { GetResponse } from '@/api/profile.api';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImagesIds } from '@/redux/reducers/post/postSelectors';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import { createPost, deleteUploadedPostImage } from '@/app/lib/actions';
 
 import s from './CreatePost.module.scss';
 
 type Props = {
-  showThirdModal: () => void;
+  setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
 };
 
 export const FourthModal: React.FC<Props> = ({
-  showThirdModal,
+  setStep,
   setShowCreatePostModal,
   userData,
 }) => {
@@ -32,11 +30,10 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
-  const imagesIds = useAppSelector(postImagesIds);
-  const [createPost, { isLoading }] = useCreatePostMutation();
-  const [deleteImage, { isLoading: isDeleting }] = useDeletePostImageMutation();
   const images = useAppSelector((state) => state.post.postImages);
-  const imagesUploadIds = useAppSelector((state) => state.post.postImagesIds);
+  const imagesUploaded = JSON.parse(
+    sessionStorage.getItem('userPostImage') || ''
+  );
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -44,37 +41,44 @@ export const FourthModal: React.FC<Props> = ({
     setTextareaValue(e.currentTarget.value);
   };
 
-  const onPublishPost = () => {
-    createPost({
-      description: textareaValue,
-      childrenMetadata: imagesIds,
-    })
-      .unwrap()
-      .then(() => {
-        toast.success('Post created');
-        setShowCreatePostModal(false);
-      })
-      .catch(() => {
+  const onPublishPost = async () => {
+    const childrenMetadata = imagesUploaded.map((cloudUploadId: string) => {
+      return {
+        uploadId: cloudUploadId,
+      };
+    });
+
+    if (!!images?.length) {
+      const body = {
+        description: textareaValue,
+        childrenMetadata,
+      };
+      const res = await createPost(body);
+      if (!res.success) {
         toast.error('Error');
-      })
-      .finally(() => {
-        dispatch(postActions.removeAllImages());
-        dispatch(postActions.removeImageIds());
-        dispatch(postActions.removeAllGalleryImages());
-      });
+      } else toast.success('Post created');
+
+      dispatch(postActions.removeAllImages());
+      dispatch(postActions.removeImageIds());
+      dispatch(postActions.removeAllGalleryImages());
+      setShowCreatePostModal(false);
+    }
   };
 
-  const onDeletePostImage = () => {
-    imagesUploadIds.map((uploadId: any) => {
-      if (uploadId.uploadId)
-        deleteImage(uploadId.uploadId)
-          .unwrap()
-          .then(() => {
-            toast.success('Post image deleted');
-          });
-    });
+  const onDeletePostImage = async () => {
+    try {
+      const deletePromises = imagesUploaded.map((uploadId: number) =>
+        deleteUploadedPostImage(uploadId)
+      );
+
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error(error);
+    }
+
+    sessionStorage.removeItem('userPostImage');
     dispatch(postActions.removeImageIds());
-    showThirdModal?.();
+    setStep(3);
   };
 
   return (
@@ -135,11 +139,8 @@ export const FourthModal: React.FC<Props> = ({
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
           onDelete={onDeletePostImage}
-          isDeleting={isDeleting}
         />
       )}
-      {isDeleting && <Loader />}
-      {isLoading && <Loader />}
     </>
   );
 };

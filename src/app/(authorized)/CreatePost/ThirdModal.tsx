@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
@@ -14,15 +14,13 @@ import { useTranslation } from 'react-i18next';
 import s from './CreatePost.module.scss';
 
 type Props = {
-  showSecondModal: () => void;
-  showFourthModal: () => void;
+  setStep: Dispatch<SetStateAction<number>>;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
 };
 
 export const ThirdModal = ({
-  showSecondModal,
-  showFourthModal,
+  setStep,
   zoomValue,
   setShowCreatePostModal,
 }: Props) => {
@@ -45,9 +43,8 @@ export const ThirdModal = ({
       <FiltersModal
         title={translate('filters')}
         width={'972px'}
-        buttonName={translate('nextBtn')}
-        showSecondModal={showSecondModal}
-        showFourthModal={showFourthModal}
+        buttonName="Next"
+        setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         zoomValue={zoomValue}
         changedPostImage={changedPostImage}
