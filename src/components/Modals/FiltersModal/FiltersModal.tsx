@@ -55,6 +55,8 @@ export const FiltersModal = ({
   const images: ImageStateType[] = useAppSelector(postImages);
   const onSendPostImage = () => {
     if (images) {
+      const formData = new FormData();
+      
       images.map(({ image, id, filter }) => {
         const imageRef = document.createElement('img');
         imageRef.src = image;
@@ -68,21 +70,28 @@ export const FiltersModal = ({
           `4:4`,
           zoomValue!
         );
-        const formData = new FormData();
-        formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
 
-        uploadPostImage(formData)
-          .then(async (res: { success: boolean; data: ImageData[] }) => {
-            if (res.success) {
-              sessionStorage.setItem('userPostImage', res.data[0].uploadId);
-              setStep?.(4);
-            }
-          })
-          .catch((err: any) => {
-            console.log(err.data);
-            toast.error(err.data); //translate after
-          });
+        formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
       });
+
+      uploadPostImage(formData)
+        .then(async (res: { success: boolean; data: ImageData[] }) => {
+          if (res.success) {
+            sessionStorage.setItem(
+              'userPostImage',
+              JSON.stringify(
+                res.data
+                  .filter((photo) => photo.height !== 360)
+                  .map((item) => item.uploadId)
+              )
+            );
+            setStep?.(4);
+          }
+        })
+        .catch((err: any) => {
+          console.log(err.data);
+          toast.error(err.data); //translate after
+        });
     }
   };
   const returnToSecondModal = (images: ImageStateType[]) => {

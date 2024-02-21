@@ -1,23 +1,24 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import s from './ImagesCollection.module.scss';
 import Image from 'next/image';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { toast } from 'react-toastify';
 
+import s from './ImagesCollection.module.scss';
+
 type Props = {
   loadedImages: ImageStateType[];
   setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
-  setPostImage: (value: string) => void;
+  setStep: Dispatch<SetStateAction<number>>;
 };
 
-export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
+export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!loadedImages.length) {
-      setPostImage('');
+      setStep(1);
     }
   }, [loadedImages.length]);
   const moreThen10Img = loadedImages.length >= 10;
@@ -41,7 +42,7 @@ export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
         height={36}
         width={36}
         className={s.collection__plusBtn}
-        onClick={() => !moreThen10Img && setPostImage('')}
+        onClick={() => !moreThen10Img && setStep(1)}
       />
       <div className={s.collection__items}>
         {loadedImages.map((item, index) => {
@@ -49,7 +50,7 @@ export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
             <div
               key={index}
               className={s.collection__item}
-              onClick={() => setPostImage(item.image)}
+              onClick={() => console.log(item.image)} //we can change current item here
             >
               <Image
                 src={item.image}

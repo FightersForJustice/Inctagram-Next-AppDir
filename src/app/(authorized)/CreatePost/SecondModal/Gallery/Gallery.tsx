@@ -8,9 +8,9 @@ import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
   setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
-  setPostImage: (value: string) => void;
+  setStep: Dispatch<SetStateAction<number>>;
 };
-export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
+export const Gallery = ({ setLoadedImages, setStep }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
   const currentImages = useAppSelector(imagesGallery);
 
@@ -55,7 +55,7 @@ export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
           <ImagesCollection
             loadedImages={currentImages}
             setLoadedImages={setLoadedImages}
-            setPostImage={setPostImage}
+            setStep={setStep}
           />
         </Popover.Content>
       </Popover.Portal>

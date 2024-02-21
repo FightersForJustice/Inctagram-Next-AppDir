@@ -9,14 +9,12 @@ import { AspectRatioType, ImageStateType } from '../CreatePost';
 import { PostCropper } from '../PostCropper/PostCropper';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
-import { useDebouncedCallback } from 'use-debounce';
 
 import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   postImage: ImageStateType;
-  setPostImage: (value: string) => void;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
@@ -29,7 +27,6 @@ type Props = {
 export const SecondModal = ({
   setStep,
   postImage,
-  setPostImage,
   aspectRatio,
   setZoomValue,
   zoomValue,
@@ -40,14 +37,13 @@ export const SecondModal = ({
 }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const imagesGalleryImages = useAppSelector(imagesGallery);
-  const onZoomImage = useDebouncedCallback((value: string) => {
+  const onZoomImage =(value: string) => {
     setZoomValue(value);
-  }, 300);
+  };
 
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal
-        setPostImage={setPostImage}
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
@@ -56,8 +52,8 @@ export const SecondModal = ({
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
         <Gallery
+          setStep={setStep}
           setLoadedImages={setLoadedImages}
-          setPostImage={setPostImage}
         />
 
         <PostCropper

@@ -13,7 +13,6 @@ import s from './CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>
-  setPostImage: (value: string) => void;
   setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
   setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
@@ -23,7 +22,6 @@ type Props = {
 export const FirstModal = ({
   setStep,
   currentFile,
-  setPostImage,
   setFile,
   setShowCreatePostModal,
   loadedImages,
@@ -49,7 +47,6 @@ export const FirstModal = ({
     let newImagesArr: any = loadedImages;
     newImagesArr.push({ id, image: URL.createObjectURL(file) });
 
-    setPostImage(URL.createObjectURL(file));
     dispatch(postActions.addImage({ id, image: URL.createObjectURL(file) }));
     setStep(2);
   };

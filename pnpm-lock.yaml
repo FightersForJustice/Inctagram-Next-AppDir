@@ -125,9 +125,6 @@ dependencies:
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
-  use-debounce:
-    specifier: ^10.0.0
-    version: 10.0.0(react@18.2.0)
   yup:
     specifier: ^1.2.0
     version: 1.2.0
@@ -5720,15 +5717,6 @@ packages:
       '@types/react': 18.2.35
       react: 18.2.0
       tslib: 2.6.2
-    dev: false
-
-  /use-debounce@10.0.0(react@18.2.0):
-    resolution: {integrity: sha512-XRjvlvCB46bah9IBXVnq/ACP2lxqXyZj0D9hj4K5OzNroMDpTEBg8Anuh1/UfRTRs7pLhQ+RiNxxwZu9+MVl1A==}
-    engines: {node: '>= 16.0.0'}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.35)(react@18.2.0):

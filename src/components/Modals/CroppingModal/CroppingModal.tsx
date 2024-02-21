@@ -12,7 +12,6 @@ type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   onClose?: () => void;
   width?: string;
-  setPostImage: (value: string) => void;
   croppedPostImage: string;
 };
 
@@ -21,7 +20,6 @@ export const CroppingModal = ({
   onClose,
   children,
   width,
-  setPostImage,
 }: PropsWithChildren<Props>) => {
   const { t } = useTranslation();
   const translate = (key: string): string =>
@@ -39,10 +37,8 @@ export const CroppingModal = ({
     setStep(3);
   };
 
-  const onBackBtnHandler = () => {
-    setPostImage('');    
+  const onBackBtnHandler = () => { 
     dispatch(postActions.removeAllGalleryImages());
-
     setStep((prev) => (prev = prev - 1));
   };
 

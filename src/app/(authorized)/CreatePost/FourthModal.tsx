@@ -43,15 +43,17 @@ export const FourthModal: React.FC<Props> = ({
   };
 
   const onPublishPost = async () => {
-    const images = sessionStorage.getItem('userPostImage');
+    const images = JSON.parse(sessionStorage.getItem('userPostImage') || '');
+    const childrenMetadata = images.map((cloudUploadId: string) => {
+      return {
+        uploadId: cloudUploadId,
+      };
+    });
+
     if (!!images?.length) {
       const body = {
         description: textareaValue,
-        childrenMetadata: [
-          {
-            uploadId: images,
-          },
-        ],
+        childrenMetadata,
       };
       const res = await createPost(body);
       if (!res.success) {
@@ -61,6 +63,7 @@ export const FourthModal: React.FC<Props> = ({
       dispatch(postActions.removeAllImages());
       dispatch(postActions.removeImageIds());
       dispatch(postActions.removeAllGalleryImages());
+      sessionStorage.removeItem('userPostImage');
       setShowCreatePostModal(false);
     }
   };
@@ -75,7 +78,7 @@ export const FourthModal: React.FC<Props> = ({
           });
     });
     dispatch(postActions.removeImageIds());
-    setStep(3)
+    setStep(3);
   };
 
   return (

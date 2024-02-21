@@ -5,10 +5,8 @@ import { FirstModal } from './FirstModal';
 import { SecondModal } from './SecondModal';
 import { ThirdModal } from './ThirdModal';
 import { FourthModal } from './FourthModal';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery, postImages } from '@/redux/reducers/post/postSelectors';
+import { postImages } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
   showCreatePostModal: boolean;
@@ -21,21 +19,15 @@ export const CreatePost = ({
   setShowCreatePostModal,
   userData,
 }: Props) => {
-  const [file, setFile] = useState<File[]>();
-
   const [step, setStep] = useState<number>(1);
-
-  const [third, setThird] = useState(false);
-  const [fourth, setFourth] = useState(false);
-  const [postImage, setPostImage] = useState('');
+  
+  const [file, setFile] = useState<File[]>();
   const [croppedPostImage, setCroppedPostImage] = useState('');
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
   const [zoomValue, setZoomValue] = useState('0');
   const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
 
-  const dispatch = useAppDispatch();
   const postImagesArr = useAppSelector(postImages);
-  const imagesGalleryArr = useAppSelector(imagesGallery);
   const currentImage =
     postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
 
@@ -46,7 +38,6 @@ export const CreatePost = ({
           setStep={setStep}
           currentFile={file}
           setFile={setFile}
-          setPostImage={setPostImage}
           setShowCreatePostModal={setShowCreatePostModal}
           setLoadedImages={setLoadedImages}
           loadedImages={loadedImages}
@@ -56,7 +47,6 @@ export const CreatePost = ({
       {step === 2 && (
         <SecondModal
           postImage={currentImage}
-          setPostImage={setPostImage}
           setStep={setStep}
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}
