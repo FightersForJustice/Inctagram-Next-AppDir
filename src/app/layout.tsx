@@ -1,10 +1,9 @@
 import Providers from '@/helpers/hocs/Providers';
 import clsx from 'clsx';
 import { Inter } from 'next/font/google';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import { Loader } from '@/components/Loader';
 import { cookies } from 'next/headers';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
@@ -29,11 +28,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           pauseOnHover
           theme="dark"
         />
-        <Suspense fallback={<Loader />}>
-          <Providers lang={lang}>
-            <div className={clsx(inter.className)}>{children}</div>
-          </Providers>
-        </Suspense>
+        <Providers lang={lang}>
+          <div className={clsx(inter.className)}>{children}</div>
+        </Providers>
       </body>
     </html>
   );
