@@ -1,25 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/navigation';
-import { yupResolver } from '@hookform/resolvers/yup';
 
-import { SignInSchema } from '@/features/schemas';
-import { AuthSubmit, FormItem } from '@/components/Input';
-import { SignInData } from '@/features/schemas/SignInSchema';
 import { signInAction } from '@/app/lib/actions';
+import { AuthSubmit, FormItem } from '@/components/Input';
+import { SignInSchema } from '@/features/schemas';
+import { SignInData } from '@/features/schemas/SignInSchema';
 
-import s from './SignInForm.module.scss';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { Loader } from '@/components/Loader';
+import s from './SignInForm.module.scss';
 
 export const SignInForm = () => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`SignInPage.${key}`);
   const translateErrors = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -37,8 +39,10 @@ export const SignInForm = () => {
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
+    setLoading(true);
     data.email = data.email.toLowerCase();
     const signInResult = await signInAction(data);
+    // setLoading(false);
 
     if (signInResult?.success) {
       router.push('/api');
@@ -103,6 +107,7 @@ export const SignInForm = () => {
       >
         {translate('btnBottomName')}
       </Link>
+      {loading && <Loader />}
     </form>
   );
 };

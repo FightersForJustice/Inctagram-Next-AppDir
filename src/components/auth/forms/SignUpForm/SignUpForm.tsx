@@ -1,26 +1,27 @@
 'use client';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import ServiceAuth from '../../ServiceAuth/ServiceAuth';
-import { SignUpFormSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
+import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import { SignUpFormSchema } from '@/features/schemas';
 import {
   getSignUpFormItemsData,
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
-import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
 
 import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
-import s from './SignUpForm.module.scss';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { Loader } from '@/components/Loader';
+import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
   const { t } = useTranslation();
@@ -43,9 +44,11 @@ export const SignUpForm = () => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const processForm = async (data: SignInData) => {
     try {
+      setLoading(true);
       const res = await signUpAction(data);
       if (!res?.success && res?.data) {
         if (res?.data === 'userName.nameExist') {
@@ -61,6 +64,8 @@ export const SignUpForm = () => {
     } catch (error) {
       console.log(error);
       toast.error({ error }.toString());
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,6 +123,7 @@ export const SignUpForm = () => {
           setShowModal={setShowModal}
         />
       )}
+      {loading && <Loader />}
     </div>
   );
 };
