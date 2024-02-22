@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
 import Providers from '@/helpers/hocs/Providers';
-import { ToastContainer } from 'react-toastify';
-import { Inter } from 'next/font/google';
 import clsx from 'clsx';
+import { Inter } from 'next/font/google';
+import { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
+import { cookies } from 'next/headers';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
-import { cookies } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] });
 
