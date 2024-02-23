@@ -31,6 +31,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers lang={lang}>
           <div className={clsx(inter.className)}>{children}</div>
         </Providers>
+        <div id="headerPortal" />
+        <div id="portal" />
       </body>
     </html>
   );
