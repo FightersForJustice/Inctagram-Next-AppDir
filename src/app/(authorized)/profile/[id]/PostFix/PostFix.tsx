@@ -1,16 +1,16 @@
-import React, { MouseEventHandler, useState } from 'react';
+import { useDeletePostMutation, useGetPostQuery } from '@/api';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { Loader } from '@/components/Loader';
+import { handleApiError } from '@/utils';
 import Image from 'next/image';
+import React, { MouseEventHandler, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SwiperSlide } from 'swiper/react';
-import { PostContent } from './PostContent';
-import { EditPost } from './EditPost';
-import { Loader } from '@/components/Loader';
-import { Dots } from './Dots';
-import { useDeletePostMutation, useGetPostQuery } from '@/api';
-import { handleApiError } from '@/utils';
-import { Carousel } from '@/components/Carousel/Carousel';
-import { DotsFriends } from './DotsFriends';
 import { getPostsDelete } from '../actions';
+import { Dots } from './Dots';
+import { DotsFriends } from './DotsFriends';
+import { EditPost } from './EditPost';
+import { PostContent } from './PostContent';
 
 import s from './PostFix.module.scss';
 
@@ -67,7 +67,13 @@ export const PostFix: React.FC<Props> = ({
                     if (i.width !== 640) {
                       return (
                         <SwiperSlide key={index} className={'w-full'}>
-                          <img src={i.url} alt={'err'} />
+                          {/* <img src={i.url} alt={'err'} /> */}
+                          <Image
+                            width={491}
+                            height={491}
+                            alt="err"
+                            src={i.url}
+                          />
                         </SwiperSlide>
                       );
                     }

@@ -112,6 +112,9 @@
       "question": "Вы действительно хотите удалить фото профиля",
       "btnYes": "Да",
       "btnNo": "Нет"
+    },
+    "CreatePostModal": {
+      "title": "Добавить фото"
     }
   },
   "Navigation": {

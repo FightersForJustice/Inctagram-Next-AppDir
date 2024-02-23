@@ -1,13 +1,12 @@
-import React, { FC, ReactNode } from 'react';
-import { Swiper } from 'swiper/react';
-import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
+import Image from 'next/image';
+import { FC, ReactNode } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
-import { SwiperSlide } from 'swiper/react';
-import Image from 'next/image';
-
+import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import s from './carousel.module.scss';
 interface SlidesStyles {
   width: number;
   height: number;
@@ -31,6 +30,7 @@ export const Carousel: FC<IProps> = ({
 }) => {
   return (
     <Swiper
+      className={s.wrapper}
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={0}
       slidesPerView={1}
