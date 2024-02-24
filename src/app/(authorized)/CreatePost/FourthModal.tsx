@@ -85,7 +85,6 @@ export const FourthModal: React.FC<Props> = ({
     <>
       <FiltersModal
         title={'Publication'}
-        width={'972px'}
         buttonName={'Publish'}
         onPublishPost={onPublishPost}
         onClose={() => setAreYouSureModal(true)}
@@ -108,7 +107,7 @@ export const FourthModal: React.FC<Props> = ({
               />
               <p>{`${userData ? userData.userName : ''}`}</p>
             </div>
-            <div>
+            <div className={s.cropping__publication__container}>
               <div className={s.cropping__publication__wrapper}>
                 <p className={s.cropping__publication__text}>
                   Add publication descriptions
