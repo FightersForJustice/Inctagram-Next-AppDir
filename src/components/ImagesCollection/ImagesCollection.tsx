@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import Image from 'next/image';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import Image from 'next/image';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import s from './ImagesCollection.module.scss';
@@ -30,6 +30,7 @@ export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
       dispatch(postActions.removeGalleryImage({ id }));
     }
   };
+  const setCurrentImage = () => {};
   return (
     <div className={s.collection__container}>
       <Image
@@ -50,7 +51,7 @@ export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
             <div
               key={index}
               className={s.collection__item}
-              onClick={() => console.log(item.image)} //we can change current item here
+              onClick={() => console.log(item)} //we can change current item here
             >
               <Image
                 src={item.image}

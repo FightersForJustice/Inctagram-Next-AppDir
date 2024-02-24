@@ -1,12 +1,12 @@
-import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import Image from 'next/image';
+import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 
-import './CroppingModal.css';
-import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postActions } from '@/redux/reducers/post/postReducer';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import { useTranslation } from 'react-i18next';
+import './CroppingModal.css';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;

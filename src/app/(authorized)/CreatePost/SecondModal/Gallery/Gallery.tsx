@@ -7,7 +7,7 @@ import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
-  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
+  setLoadedImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
 };
 export const Gallery = ({ setLoadedImages, setStep }: Props) => {

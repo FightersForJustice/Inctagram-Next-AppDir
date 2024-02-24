@@ -1,37 +1,35 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { CroppingModal } from '@/components/Modals/CroppingModal';
-import { AspectRatio } from './AspectRatio';
-import { Range } from './Range/Range';
-import { Gallery } from './Gallery';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { AspectRatioType, ImageStateType } from '../CreatePost';
-import { PostCropper } from '../PostCropper/PostCropper';
+import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import { AspectRatioType, ImageStateType } from '../CreatePost';
+import { PostCropper } from '../PostCropper/PostCropper';
+import { AspectRatio } from './AspectRatio';
+import { Gallery } from './Gallery';
+import { Range } from './Range/Range';
 
 import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  postImage: ImageStateType;
+  currentImage: ImageStateType;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
-  setLoadedImages: (value: any) => void;
   setCroppedPostImage: (value: string) => void;
   croppedPostImage: string;
 };
 
 export const SecondModal = ({
   setStep,
-  postImage,
+  currentImage,
   aspectRatio,
   setZoomValue,
   zoomValue,
   setShowCreatePostModal,
-  setLoadedImages,
   setCroppedPostImage,
   croppedPostImage,
 }: Props) => {
@@ -51,15 +49,13 @@ export const SecondModal = ({
       >
         <AspectRatio />
         <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
+        <Gallery setStep={setStep} />
 
         <PostCropper
-          postImage={postImage}
+          postImage={currentImage}
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
-          loadedImages={imagesGalleryImages}
-          setLoadedImages={setLoadedImages}
         />
       </CroppingModal>
       {areYouSureModal && (

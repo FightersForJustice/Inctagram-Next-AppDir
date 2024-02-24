@@ -16,15 +16,18 @@
     position: relative;
   }
 
-  &__file {
-    opacity: 0;
-    position: relative;
-    z-index: 1;
-    width: 283px;
-    height: 71px;
-    top: -20px;
-    right: 0;
-    cursor: pointer;
+  &__fileInput {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+
+    clip: rect(0 0 0 0);
+    border: 0;
   }
 
   &__overlay {
@@ -181,6 +184,10 @@
 .firstModal {
   width: 100%;
   max-width: 491px;
+
+  .button {
+    margin-bottom: 24px;
+  }
 }
 
 @include s.devices(tablet) {
