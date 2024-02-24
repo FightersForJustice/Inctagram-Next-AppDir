@@ -46,7 +46,7 @@
   }
 }
 
-.itemsContainer{
+.itemsContainer {
   z-index: 100;
   position: absolute;
   bottom: 0;
@@ -59,7 +59,7 @@
   justify-content: space-between;
 }
 
-.leftItems{
+.leftItems {
   display: flex;
   align-items: center;
   gap: 24px;
@@ -89,14 +89,23 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 54px;
-    max-height: 504px;
+    gap: 20px;
+    max-height: 660px;
+    padding: 20px;
+
+    overflow-y: scroll;
 
     &__items {
       display: flex;
       flex-wrap: wrap;
-      max-width: 372px;
-      padding-top: 24px;
+      max-width: 345px;
+      justify-content: center;
+      gap: 10px;
+      max-height: 490px;
+      margin: auto;
+
+      overflow-y: scroll;
+
     }
 
     &__item {
@@ -117,18 +126,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       width: 100%;
+      height: auto;
+      min-width: 335px;
     }
 
     &__image {
-      max-height: 504px;
+      max-height: 600px;
       object-fit: contain;
     }
 
     &__smallImage {
-      width: 108px;
-      height: 108px;
+      width: 100px;
+      height: 100px;
       object-fit: contain;
     }
   }
@@ -195,7 +205,24 @@
 }
 
 @include s.devices(tablet) {
-  .createPost__image {
-    padding-top: 0px;
+  .cropping {
+    &__filters {
+      flex-direction: column;
+      max-height: 504px;
+
+      &__items {
+        max-width: 100%;
+        overflow-y: visible;
+        gap: 10px;
+      }
+    }
+
+    &__image {
+      padding-top: 0px;
+    }
+
+    &__items {
+      max-width: 100%;
+    }
   }
 }
