@@ -47,12 +47,7 @@ export const SecondModal = ({
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
-        width={'492px'}
       >
-        <AspectRatio />
-        <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
-
         <PostCropper
           postImage={postImage}
           aspectRatio={aspectRatio}
@@ -61,6 +56,13 @@ export const SecondModal = ({
           loadedImages={imagesGalleryImages}
           setLoadedImages={setLoadedImages}
         />
+        <div className={s.itemsContainer}>
+          <div className={s.leftItems}>
+            <AspectRatio />
+            <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
+          </div>
+          <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
+        </div>
       </CroppingModal>
       {areYouSureModal && (
         <AreYouSureModal

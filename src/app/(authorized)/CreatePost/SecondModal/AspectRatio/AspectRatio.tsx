@@ -8,10 +8,9 @@ export const AspectRatio = () => {
 
   return (
     <Popover.Root onOpenChange={() => setOpenChangeSize(!openChangeSize)}>
-      <div className={s.cropping__wrapper}>
         <Popover.Trigger>
           <svg
-            className={s.cropping__icon1}
+            className={s.cropping__icons}
             width="36"
             height="36"
             viewBox="0 0 36 36"
@@ -46,7 +45,6 @@ export const AspectRatio = () => {
             <CroppingSizeModal />
           </Popover.Content>
         </Popover.Portal>
-      </div>
     </Popover.Root>
   );
 };

@@ -203,7 +203,7 @@
     },
     "AddPhotoModal": {
       "title": "Add a profile photo",
-      "selectBtn": "Select from a computer",
+      "selectBtn": "Select from computer",
       "saveBtn": "Save",
       "openDraftBtn": "Open draft",
       "nextBtn": "Next",
@@ -214,7 +214,8 @@
       "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
       "filters": "Filters",
       "sizeError": "Photo size must be less than 10 MB!",
-      "formatError": "The format of the uploaded photo must be PNG and JPEG"
+      "formatError": "The format of the uploaded photo must be PNG and JPEG",
+      "tooltipText" : "Functionality is not available yet"
     }
   },
   "AgreementsPage": {

@@ -7,6 +7,13 @@
   align-items: center;
   width: 100%;
 
+  &ButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
   &__image {
     padding-top: 42px;
     margin-bottom: 60px;
@@ -17,26 +24,45 @@
   }
 
   &__file {
+    width: 0.1px;
+    height: 0.1px;
     opacity: 0;
-    position: relative;
-    z-index: 1;
-    width: 283px;
-    height: 71px;
-    top: -20px;
-    right: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
     cursor: pointer;
   }
 
   &__overlay {
-    position: absolute;
-    top: 0;
-    right: 35px;
-    width: 214px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: block;
   }
 
   &__open {
-    margin-bottom: 20px;
+    width: 100%;
   }
+}
+
+.itemsContainer{
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftItems{
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .cropping {
@@ -46,28 +72,13 @@
     overflow: hidden;
   }
 
-  &__icon1 {
-    position: absolute;
-    bottom: 11px;
-    left: 11px;
-    cursor: pointer;
-    z-index: 11;
-  }
-
-  &__icon2 {
-    position: absolute;
-    bottom: 11px;
-    left: 71px;
+  &__icons {
     cursor: pointer;
     z-index: 11;
   }
 
   &__icon3 {
-    position: absolute;
-    bottom: 11px;
-    right: 11px;
-    cursor: pointer;
-    z-index: 11;
+    justify-self: end;
   }
 
   &__image {
@@ -184,12 +195,7 @@
 }
 
 @include s.devices(tablet) {
-  .cropping {
-    &__wrapper {
-      position: relative;
-      left: -25px;
-      height: 40px;
-      flex-direction: row;
-    }
+  .createPost__image {
+    padding-top: 0px;
   }
 }

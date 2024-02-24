@@ -11,7 +11,6 @@ import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   onClose?: () => void;
-  width?: string;
   croppedPostImage: string;
 };
 
@@ -19,7 +18,6 @@ export const CroppingModal = ({
   setStep,
   onClose,
   children,
-  width,
 }: PropsWithChildren<Props>) => {
   const { t } = useTranslation();
   const translate = (key: string): string =>
@@ -46,7 +44,6 @@ export const CroppingModal = ({
     <div className={'modal'} onClick={onClose}>
       <div
         className={'modal__content'}
-        style={{ width }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={'modal__header'}>
