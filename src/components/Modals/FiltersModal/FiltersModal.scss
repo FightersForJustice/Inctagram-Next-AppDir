@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .modal {
   position: fixed;
   top: 0;
@@ -11,7 +13,8 @@
 }
 
 .modal__content1 {
-  width: 400px;
+  width: 100%;
+  max-width: 970px;
   background-color: var(--dark-300);
   border-radius: 5px;
   border: 1px solid var(--dark-100);
@@ -35,10 +38,11 @@ modal__footer {
   text-align: left;
   font-size: 16px;
   line-height: 24px;
-  height: 504px;
+  max-height: 660px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .modal__footer {
@@ -72,4 +76,10 @@ modal__footer {
   color: var(--primary-500);
   outline: none;
   border: none;
+}
+
+@include s.devices(tablet) {
+  .modal__body1 {
+    max-height: 504px;
+  }
 }

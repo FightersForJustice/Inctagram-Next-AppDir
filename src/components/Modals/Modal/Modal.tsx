@@ -46,6 +46,6 @@ export const Modal = ({
         )}
       </div>
     </div>,
-    document.getElementById("portal") as HTMLElement
+    document.getElementById('portal') as HTMLElement
   );
 };

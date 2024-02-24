@@ -42,7 +42,6 @@ export const ThirdModal = ({
     <>
       <FiltersModal
         title={translate('filters')}
-        width={'972px'}
         buttonName="Next"
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
@@ -71,7 +70,7 @@ export const ThirdModal = ({
                     alt={'image-filter'}
                     width={108}
                     height={108}
-                    style={{ filter, marginRight: '10px' }}
+                    style={{ filter }}
                     className={s.cropping__filters__smallImage}
                     ref={changedPostImage}
                   />
