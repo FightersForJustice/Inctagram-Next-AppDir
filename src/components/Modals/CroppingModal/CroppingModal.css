@@ -12,7 +12,8 @@
 }
 
 .modal__content {
-  width: 400px;
+  width: 100%;
+  max-width: 491px;
   background-color: var(--dark-300);
   border-radius: 5px;
   border: 1px solid var(--dark-100);

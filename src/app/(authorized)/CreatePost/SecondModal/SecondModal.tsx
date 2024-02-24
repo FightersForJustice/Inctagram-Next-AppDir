@@ -45,18 +45,20 @@ export const SecondModal = ({
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         croppedPostImage={croppedPostImage}
-        width={'492px'}
       >
-        <AspectRatio />
-        <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
-        <Gallery setStep={setStep} />
-
         <PostCropper
           postImage={currentImage}
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
           setCroppedPostImage={setCroppedPostImage}
         />
+        <div className={s.itemsContainer}>
+          <div className={s.leftItems}>
+            <AspectRatio />
+            <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
+          </div>
+          <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
+        </div>
       </CroppingModal>
       {areYouSureModal && (
         <AreYouSureModal

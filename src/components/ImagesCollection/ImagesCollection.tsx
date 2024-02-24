@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import s from './ImagesCollection.module.scss';
+import clsx from 'clsx';
 
 type Props = {
   loadedImages: ImageStateType[];
@@ -33,18 +34,6 @@ export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
   const setCurrentImage = () => {};
   return (
     <div className={s.collection__container}>
-      <Image
-        src={
-          moreThen10Img
-            ? '/img/create-post/plus-disable.svg'
-            : '/img/create-post/plus.svg'
-        }
-        alt={'plus'}
-        height={36}
-        width={36}
-        className={s.collection__plusBtn}
-        onClick={() => !moreThen10Img && setStep(1)}
-      />
       <div className={s.collection__items}>
         {loadedImages.map((item, index) => {
           return (
@@ -71,6 +60,18 @@ export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
             </div>
           );
         })}
+        <Image
+          src={
+            moreThen10Img
+              ? '/img/create-post/plus-disable.svg'
+              : '/img/create-post/plus.svg'
+          }
+          alt={'plus'}
+          height={36}
+          width={36}
+          className={clsx(s.collection__plusBtn)}
+          onClick={() => !moreThen10Img && setStep(1)}
+        />
       </div>
     </div>
   );

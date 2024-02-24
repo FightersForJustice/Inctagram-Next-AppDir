@@ -1,10 +1,12 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
+import clsx from 'clsx';
 import * as Popover from '@radix-ui/react-popover';
-import s from '../../CreatePost.module.scss';
 import { ImagesCollection } from '@/components/ImagesCollection';
 import { ImageStateType } from '../../CreatePost';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+
+import s from '../../CreatePost.module.scss';
 
 type Props = {
   setLoadedImages?: Dispatch<SetStateAction<ImageStateType[]>>;
@@ -25,7 +27,7 @@ export const Gallery = ({ setLoadedImages, setStep }: Props) => {
           viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={s.cropping__icon3}
+          className={clsx(s.cropping__icon3, s.cropping_icons)}
         >
           <rect opacity="0.8" width="36" height="36" rx="2" fill="#171717" />
           <g clipPath="url(#clip0_10893_17125)">

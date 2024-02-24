@@ -63,6 +63,7 @@ export const FirstModal = ({
           height={228}
           className={s.createPost__image}
         />
+<<<<<<< HEAD
         <input
           ref={inputRef}
           multiple
@@ -81,6 +82,32 @@ export const FirstModal = ({
         <TransparentBtn className={s.button}>
           {translate('openDraftBtn')}
         </TransparentBtn>
+=======
+        <div className={s.createPostButtonsContainer}>
+          <div className={s.createPost__select}>
+            <label htmlFor="download_image" className={s.createPost__overlay}>
+              <PrimaryBtn isInsideLabel isFullWidth>
+                {translate('selectBtn')}
+              </PrimaryBtn>
+              <input
+                id="download_image"
+                type="file"
+                className={s.createPost__file}
+                onChange={onSetUserAvatar}
+              />
+            </label>
+          </div>
+          <div className={s.createPost__open}>
+            <TransparentBtn
+              isFullWidth
+              isDisabled
+              tooltipText={translate('tooltipText')}
+            >
+              {translate('openDraftBtn')}
+            </TransparentBtn>
+          </div>
+        </div>
+>>>>>>> develop
       </div>
     </Modal>
   );

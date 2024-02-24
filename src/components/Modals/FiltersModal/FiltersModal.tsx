@@ -16,7 +16,7 @@ import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { uploadPostImage } from '@/app/lib/actions';
 
-import './FiltersModal.css';
+import './FiltersModal.scss';
 
 type ImageData = {
   url: string;
@@ -30,7 +30,6 @@ type Props = {
   setStep?: Dispatch<SetStateAction<number>>;
   title: string;
   onClose?: () => void;
-  width?: string;
   buttonName: string;
   showSecondModal?: () => void;
   showFourthModal?: () => void;
@@ -43,7 +42,6 @@ type Props = {
 export const FiltersModal = ({
   onClose,
   title,
-  width,
   children,
   buttonName,
   setStep,
@@ -106,11 +104,7 @@ export const FiltersModal = ({
   return (
     <>
       <div className={'modal'} onClick={onClose}>
-        <div
-          className={'modal__content1'}
-          style={{ width }}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={'modal__content1'} onClick={(e) => e.stopPropagation()}>
           <div className={'modal__header'}>
             <Image
               src={'/img/create-post/arrow-back.svg'}

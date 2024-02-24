@@ -8,6 +8,15 @@
   border-radius: 2px;
   cursor: pointer;
 
+  &FullWidth {
+    width: 100%;
+  }
+
+  &Disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+
   &:active {
     border: 1px solid var(--primary-700);
     color: var(--primary-700);

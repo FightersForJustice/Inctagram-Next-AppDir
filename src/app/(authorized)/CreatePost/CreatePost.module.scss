@@ -7,6 +7,13 @@
   align-items: center;
   width: 100%;
 
+  &ButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
   &__image {
     padding-top: 42px;
     margin-bottom: 60px;
@@ -16,6 +23,7 @@
     position: relative;
   }
 
+<<<<<<< HEAD
   &__fileInput {
     position: absolute;
 
@@ -28,18 +36,48 @@
 
     clip: rect(0 0 0 0);
     border: 0;
+=======
+  &__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+    cursor: pointer;
+>>>>>>> develop
   }
 
   &__overlay {
-    position: absolute;
-    top: 0;
-    right: 35px;
-    width: 214px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: block;
   }
 
   &__open {
-    margin-bottom: 20px;
+    width: 100%;
   }
+}
+
+.itemsContainer {
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftItems {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .cropping {
@@ -49,28 +87,13 @@
     overflow: hidden;
   }
 
-  &__icon1 {
-    position: absolute;
-    bottom: 11px;
-    left: 11px;
-    cursor: pointer;
-    z-index: 11;
-  }
-
-  &__icon2 {
-    position: absolute;
-    bottom: 11px;
-    left: 71px;
+  &__icons {
     cursor: pointer;
     z-index: 11;
   }
 
   &__icon3 {
-    position: absolute;
-    bottom: 11px;
-    right: 11px;
-    cursor: pointer;
-    z-index: 11;
+    justify-self: end;
   }
 
   &__image {
@@ -81,14 +104,22 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 54px;
-    max-height: 504px;
+    gap: 20px;
+    max-height: 660px;
+    padding: 20px;
+
+    overflow-y: scroll;
 
     &__items {
       display: flex;
       flex-wrap: wrap;
-      max-width: 372px;
-      padding-top: 24px;
+      max-width: 345px;
+      justify-content: center;
+      gap: 10px;
+      max-height: 490px;
+      margin: auto;
+
+      overflow-y: scroll;
     }
 
     &__item {
@@ -109,28 +140,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       width: 100%;
+      height: auto;
+      min-width: 335px;
     }
 
     &__image {
-      max-height: 504px;
+      max-height: 600px;
       object-fit: contain;
     }
 
     &__smallImage {
-      width: 108px;
-      height: 108px;
+      width: 100px;
+      height: 100px;
       object-fit: contain;
     }
   }
 
   &__publication {
     display: flex;
-    gap: 54px;
+    flex-direction: row;
+    gap: 20px;
     justify-content: space-between;
     width: 100%;
-    padding: 0 10px;
+    max-height: 600px;
+    padding: 20px;
+
+    &__container {
+      flex-grow: 0;
+    }
 
     &__header {
       display: flex;
@@ -156,7 +194,9 @@
       border-radius: 2px;
       border: 1px solid var(--dark-100, #4c4c4c);
       background: var(--dark-500, #171717);
-      width: 413px;
+      width: 100%;
+      margin-bottom: 10px;
+      min-width: 330px;
       height: 120px;
       flex-shrink: 0;
       outline: none;
@@ -171,12 +211,13 @@
     }
 
     &__box {
+      min-width: 335px;
+      flex-grow: 1;
+      margin: 0 auto;
+
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 480px;
-      overflow: hidden;
-      width: 100%;
     }
   }
 }
@@ -192,11 +233,32 @@
 
 @include s.devices(tablet) {
   .cropping {
-    &__wrapper {
-      position: relative;
-      left: -25px;
-      height: 40px;
-      flex-direction: row;
+    &__filters {
+      flex-direction: column;
+      max-height: 504px;
+
+      &__items {
+        max-width: 100%;
+        overflow-y: visible;
+        gap: 10px;
+      }
+    }
+
+    &__publication {
+      max-height: 504px;
+      flex-direction: column;
+
+      &__box {
+        width: 100%;
+      }
+    }
+
+    &__image {
+      padding-top: 0px;
+    }
+
+    &__items {
+      max-width: 100%;
     }
   }
 }
