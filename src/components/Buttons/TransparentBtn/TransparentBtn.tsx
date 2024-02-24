@@ -19,7 +19,7 @@ export const TransparentBtn: React.FC<Props> = ({
   style,
   isFullWidth = false,
   isDisabled = false,
-  tooltipText = ''
+  tooltipText = '',
 }) => {
   return (
     <>

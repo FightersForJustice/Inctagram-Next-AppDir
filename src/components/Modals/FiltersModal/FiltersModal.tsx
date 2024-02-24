@@ -104,10 +104,7 @@ export const FiltersModal = ({
   return (
     <>
       <div className={'modal'} onClick={onClose}>
-        <div
-          className={'modal__content1'}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={'modal__content1'} onClick={(e) => e.stopPropagation()}>
           <div className={'modal__header'}>
             <Image
               src={'/img/create-post/arrow-back.svg'}

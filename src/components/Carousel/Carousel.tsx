@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { A11y, Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react'; 
+import { Swiper, SwiperSlide } from 'swiper/react';
 import './carousel.scss';
 interface SlidesStyles {
   width: number;
@@ -36,7 +36,6 @@ export const Carousel: FC<IProps> = ({
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      
     >
       {loadedImages
         ? loadedImages.map(({ image, id, filter }) => {

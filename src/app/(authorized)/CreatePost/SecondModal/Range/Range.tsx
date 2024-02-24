@@ -48,7 +48,10 @@ export const Range = ({ onZoomImage, zoomImage }: Props) => {
         </svg>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="PopoverContent z-30 absolute left-0 bottom-0" sideOffset={5}>
+        <Popover.Content
+          className="PopoverContent z-30 absolute left-0 bottom-0"
+          sideOffset={5}
+        >
           <InputRange onZoomImage={onZoomImage} zoomImage={zoomImage} />
         </Popover.Content>
       </Popover.Portal>

@@ -68,7 +68,9 @@ export const FirstModal = ({
         <div className={s.createPostButtonsContainer}>
           <div className={s.createPost__select}>
             <label htmlFor="download_image" className={s.createPost__overlay}>
-              <PrimaryBtn isInsideLabel isFullWidth>{translate('selectBtn')}</PrimaryBtn>
+              <PrimaryBtn isInsideLabel isFullWidth>
+                {translate('selectBtn')}
+              </PrimaryBtn>
               <input
                 id="download_image"
                 type="file"
@@ -78,7 +80,11 @@ export const FirstModal = ({
             </label>
           </div>
           <div className={s.createPost__open}>
-            <TransparentBtn isFullWidth isDisabled tooltipText={translate('tooltipText')}>
+            <TransparentBtn
+              isFullWidth
+              isDisabled
+              tooltipText={translate('tooltipText')}
+            >
               {translate('openDraftBtn')}
             </TransparentBtn>
           </div>

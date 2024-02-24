@@ -20,7 +20,7 @@ export const PrimaryBtn = ({
   onClick,
   type,
   className,
-  isInsideLabel
+  isInsideLabel,
 }: Props) => {
   const classNames = clsx(s.primaryBtn, className, {
     [s.primaryBtnFullWidth]: isFullWidth,
