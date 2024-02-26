@@ -4,7 +4,7 @@ import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
-import { AspectRatioType, ImageStateType } from '../CreatePost';
+import { AspectRatioType } from '../CreatePost';
 import { PostCropper } from '../PostCropper/PostCropper';
 import { AspectRatio } from './AspectRatio';
 import { Gallery } from './Gallery';
@@ -14,7 +14,7 @@ import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  currentImage: ImageStateType;
+  // currentImage: ImageStateType;
   aspectRatio: AspectRatioType;
   setZoomValue: (value: string) => void;
   zoomValue: string;
@@ -25,7 +25,7 @@ type Props = {
 
 export const SecondModal = ({
   setStep,
-  currentImage,
+  // currentImage,
   aspectRatio,
   setZoomValue,
   zoomValue,
@@ -34,10 +34,13 @@ export const SecondModal = ({
   croppedPostImage,
 }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
+  // const [] = useState();
   const imagesGalleryImages = useAppSelector(imagesGallery);
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
+
+  const currentImage = imagesGalleryImages[imagesGalleryImages.length - 1];
 
   return (
     <div className={s.cropping__wrapper}>

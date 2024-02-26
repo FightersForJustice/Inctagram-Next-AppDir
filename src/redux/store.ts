@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { authApi } from '@/api/auth.api';
 import { appReducer } from '@/redux/reducers';
 import { postReducer } from '@/redux/reducers/post/postReducer';
 import { listenerMiddleware } from '@/utils/authMiddleware';
-import { authApi } from '@/api/auth.api';
 // import { profileApi } from '@/api/profile.api';
 // import { postsApi } from '@/api/posts.api';
 // import { subscriptionsApi } from '@/api/subscriptions.api';

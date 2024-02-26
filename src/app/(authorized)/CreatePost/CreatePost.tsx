@@ -22,7 +22,6 @@ export const CreatePost = ({
   const [step, setStep] = useState<number>(1);
 
   // ONE STEP STATE
-  const [images, setImages] = useState<File[]>([]);
 
   const [croppedPostImage, setCroppedPostImage] = useState('');
   const [zoomValue, setZoomValue] = useState('0');
@@ -30,7 +29,7 @@ export const CreatePost = ({
   const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
 
   const postImagesArr = useAppSelector(postImages);
-  const currentImage = postImagesArr[postImagesArr.length - 1];
+  // const currentImage = images[images.length - 1];
 
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
@@ -42,15 +41,15 @@ export const CreatePost = ({
       {showCreatePostModal && step === 1 && (
         <FirstModal
           setStep={setStep}
-          images={images}
-          setImage={setImages}
+          // images={images}
+          // setImage={setImages}
           setShowCreatePostModal={closeCreatePostModal}
         />
       )}
 
       {step === 2 && (
         <SecondModal
-          currentImage={currentImage}
+          // currentImage={currentImage}
           setStep={setStep}
           aspectRatio={aspectRatio}
           setZoomValue={setZoomValue}

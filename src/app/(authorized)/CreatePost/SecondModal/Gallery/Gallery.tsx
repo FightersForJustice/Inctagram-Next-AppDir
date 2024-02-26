@@ -15,7 +15,7 @@ type Props = {
 export const Gallery = ({ setLoadedImages, setStep }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
   const currentImages = useAppSelector(imagesGallery);
-
+  console.log('currentImages', currentImages);
   return (
     <Popover.Root
       onOpenChange={() => setOpenCollectionImages(!openCollectionImages)}
