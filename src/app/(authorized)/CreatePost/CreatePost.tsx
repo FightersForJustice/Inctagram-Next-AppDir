@@ -24,7 +24,7 @@ export const CreatePost = ({
   const [file, setFile] = useState<File[]>();
   const [croppedPostImage, setCroppedPostImage] = useState('');
   const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
-  const [zoomValue, setZoomValue] = useState('0');
+  const [zoomValue, setZoomValue] = useState('3');
   const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
 
   const postImagesArr = useAppSelector(postImages);
