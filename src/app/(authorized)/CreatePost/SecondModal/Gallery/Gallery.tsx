@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import clsx from 'clsx';
-import * as Popover from '@radix-ui/react-popover';
 import { ImagesCollection } from '@/components/ImagesCollection';
-import { ImageStateType } from '../../CreatePost';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import * as Popover from '@radix-ui/react-popover';
+import clsx from 'clsx';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { ImageStateType } from '../../CreatePost';
 
 import s from '../../CreatePost.module.scss';
 
@@ -53,10 +53,10 @@ export const Gallery = ({ setLoadedImages, setStep }: Props) => {
         </svg>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="PopoverContent z-30" sideOffset={5}>
+        <Popover.Content className="z-30">
           <ImagesCollection
             loadedImages={currentImages}
-            setLoadedImages={setLoadedImages}
+            // setLoadedImages={setLoadedImages}
             setStep={setStep}
           />
         </Popover.Content>

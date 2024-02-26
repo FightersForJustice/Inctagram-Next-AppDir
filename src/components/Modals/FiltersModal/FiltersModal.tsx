@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {
   Dispatch,
   MutableRefObject,
@@ -5,16 +6,15 @@ import {
   SetStateAction,
 } from 'react';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 
-import { applyImageFilter } from '@/utils';
-import { dataURLToBlob } from '@/utils/dataUrlToBlob';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { uploadPostImage } from '@/app/lib/actions';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postActions } from '@/redux/reducers/post/postReducer';
+import { postImages } from '@/redux/reducers/post/postSelectors';
+import { applyImageFilter } from '@/utils';
+import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 
 import './FiltersModal.scss';
 

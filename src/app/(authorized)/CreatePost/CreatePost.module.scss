@@ -23,20 +23,6 @@
     position: relative;
   }
 
-<<<<<<< HEAD
-  &__fileInput {
-    position: absolute;
-
-    overflow: hidden;
-
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-
-    clip: rect(0 0 0 0);
-    border: 0;
-=======
   &__file {
     width: 0.1px;
     height: 0.1px;
@@ -46,7 +32,6 @@
     z-index: -1;
 
     cursor: pointer;
->>>>>>> develop
   }
 
   &__overlay {

@@ -57,7 +57,7 @@ export const SecondModal = ({
             <AspectRatio />
             <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
           </div>
-          <Gallery setStep={setStep} setLoadedImages={setLoadedImages} />
+          <Gallery setStep={setStep} />
         </div>
       </CroppingModal>
       {areYouSureModal && (
