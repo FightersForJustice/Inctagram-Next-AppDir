@@ -34,6 +34,7 @@ export const Carousel: FC<IProps> = ({
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={0}
       slidesPerView={1}
+      autoHeight
       navigation
       pagination={{ clickable: true }}
     >
