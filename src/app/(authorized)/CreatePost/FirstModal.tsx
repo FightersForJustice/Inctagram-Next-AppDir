@@ -12,18 +12,17 @@ import s from './CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  // setImage: (image: File[]) => void;
+  setImage?: (image: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
-  // images: File[];
+  images?: File[];
 };
 export const FirstModal = ({
   setStep,
-  // images,
-  // setImage,
+  images,
+  setImage,
   setShowCreatePostModal,
 }: Props) => {
   const dispatch = useAppDispatch();
-  // const [images, setImage] = useState<File[]>([]);
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const translate = (key: string): string =>
@@ -34,18 +33,15 @@ export const FirstModal = ({
 
     const files = [...e.target.files];
 
-    files.forEach((file) => {
-      // images.push(file);
-      dispatch(
-        postActions.addImage({
+    dispatch(
+      postActions.addImage(
+        files.map((file) => ({
+          filter: '',
           id: crypto.randomUUID(),
           image: URL.createObjectURL(file),
-        })
-      );
-      console.log(file);
-    });
-
-    // setImage(images);
+        }))
+      )
+    );
 
     setStep(2);
   };

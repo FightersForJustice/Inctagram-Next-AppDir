@@ -1,6 +1,4 @@
 import { ImagesCollection } from '@/components/ImagesCollection';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -11,15 +9,26 @@ import s from '../../CreatePost.module.scss';
 type Props = {
   setLoadedImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
+  images: ImageStateType[];
+  currentImage: ImageStateType;
 };
-export const Gallery = ({ setLoadedImages, setStep }: Props) => {
+export const Gallery = ({
+  setLoadedImages,
+  setStep,
+  images,
+  currentImage,
+}: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
-  const currentImages = useAppSelector(imagesGallery);
-  console.log('currentImages', currentImages);
+  console.log('gallery render');
+
+  const closeGallery = () => {
+    setOpenCollectionImages(false);
+  };
+  const openGallery = () => {
+    setOpenCollectionImages(!openCollectionImages);
+  };
   return (
-    <Popover.Root
-      onOpenChange={() => setOpenCollectionImages(!openCollectionImages)}
-    >
+    <Popover.Root onOpenChange={openGallery} open={openCollectionImages}>
       <Popover.Trigger>
         <svg
           width="36"
@@ -55,8 +64,8 @@ export const Gallery = ({ setLoadedImages, setStep }: Props) => {
       <Popover.Portal>
         <Popover.Content className="z-30">
           <ImagesCollection
-            loadedImages={currentImages}
-            // setLoadedImages={setLoadedImages}
+            closeGallery={closeGallery}
+            images={images}
             setStep={setStep}
           />
         </Popover.Content>

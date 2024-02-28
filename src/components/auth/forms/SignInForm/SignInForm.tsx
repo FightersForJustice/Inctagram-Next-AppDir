@@ -43,6 +43,7 @@ export const SignInForm = () => {
     data.email = data.email.toLowerCase();
     const signInResult = await signInAction(data);
 
+    setLoading(false);
     if (signInResult?.success) {
       router.push('/api');
     } else {

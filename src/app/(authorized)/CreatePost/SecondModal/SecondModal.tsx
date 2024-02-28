@@ -2,65 +2,53 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { CroppingModal } from '@/components/Modals/CroppingModal';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
-import { AspectRatioType } from '../CreatePost';
 import { PostCropper } from '../PostCropper/PostCropper';
 import { AspectRatio } from './AspectRatio';
 import { Gallery } from './Gallery';
 import { Range } from './Range/Range';
 
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  // currentImage: ImageStateType;
-  aspectRatio: AspectRatioType;
-  setZoomValue: (value: string) => void;
-  zoomValue: string;
   setShowCreatePostModal: (value: boolean) => void;
-  setCroppedPostImage: (value: string) => void;
-  croppedPostImage: string;
 };
 
-export const SecondModal = ({
-  setStep,
-  // currentImage,
-  aspectRatio,
-  setZoomValue,
-  zoomValue,
-  setShowCreatePostModal,
-  setCroppedPostImage,
-  croppedPostImage,
-}: Props) => {
+export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  // const [] = useState();
-  const imagesGalleryImages = useAppSelector(imagesGallery);
+  const [zoomValue, setZoomValue] = useState('0');
+
+  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
+  const currentImage = useAppSelector((state) => state.post.currentImage);
+
+  const images = useAppSelector(imagesGallery);
+
+  console.log('second modal render');
+  console.log(images);
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
 
-  const currentImage = imagesGalleryImages[imagesGalleryImages.length - 1];
-
   return (
     <div className={s.cropping__wrapper}>
-      <CroppingModal
-        setStep={setStep}
-        onClose={() => setAreYouSureModal(true)}
-        croppedPostImage={croppedPostImage}
-      >
+      <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
           postImage={currentImage}
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
-          setCroppedPostImage={setCroppedPostImage}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
             <AspectRatio />
             <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
           </div>
-          <Gallery setStep={setStep} />
+          <Gallery
+            images={images}
+            setStep={setStep}
+            currentImage={currentImage!}
+          />
         </div>
       </CroppingModal>
       {areYouSureModal && (

@@ -1,11 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialAppState: PostStateType = {
   postImagesIds: [],
   postImages: [],
   imagesGallery: [],
   cropAspectRatio: 1,
+  currentImage: null,
 };
 
 const slice = createSlice({
@@ -18,18 +19,22 @@ const slice = createSlice({
     removeImageIds(state) {
       state.postImagesIds = [];
     },
-    addImage(state, action: PayloadAction<any>) {
-      if (state.postImages.findIndex((i) => i.id === action.payload.id) > -1) {
-        return;
+    addImage(state, action: PayloadAction<ImageStateType[]>) {
+      state.postImages.push(...action.payload);
+      state.imagesGallery.push(...action.payload);
+
+      if (state.currentImage) {
+        state.currentImage = action.payload[action.payload.length - 1];
       }
-      state.postImages = [...state.postImages, action.payload];
-      state.imagesGallery.push(action.payload);
+      console.log('images add');
+    },
+    changeCurrentImage(state, action: PayloadAction<ImageStateType>) {
+      state.currentImage = action.payload;
     },
     changeImage(state, action: PayloadAction<ImageStateType>) {
-      const index = state.postImages.findIndex(
-        (image) => image.id === action.payload.id
+      state.imagesGallery.map((image) =>
+        image.id === action.payload.id ? action.payload : image
       );
-      if (index !== -1) state.postImages[index] = action.payload;
     },
     setImageFilter(
       state,
@@ -92,4 +97,5 @@ export type PostStateType = {
   postImages: ImageStateType[];
   imagesGallery: ImageStateType[];
   cropAspectRatio: number;
+  currentImage: ImageStateType | null;
 };

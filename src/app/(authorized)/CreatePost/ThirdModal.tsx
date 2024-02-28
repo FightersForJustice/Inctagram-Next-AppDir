@@ -15,7 +15,7 @@ import s from './CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  zoomValue: string;
+  zoomValue?: string;
   setShowCreatePostModal: (value: boolean) => void;
 };
 

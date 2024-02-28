@@ -1,16 +1,17 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { FiltersModal } from '@/components/Modals/FiltersModal';
-import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { GetResponse } from '@/api/profile.api';
-import { Carousel } from '@/components/Carousel/Carousel';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
 import { createPost, deleteUploadedPostImage } from '@/app/lib/actions';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { FiltersModal } from '@/components/Modals/FiltersModal';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postActions } from '@/redux/reducers/post/postReducer';
 
+import { postImages } from '@/redux/reducers/post/postSelectors';
 import s from './CreatePost.module.scss';
 
 type Props = {
@@ -30,7 +31,7 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
-  const images = useAppSelector((state) => state.post.postImages);
+  const images = useAppSelector(postImages);
   const imagesUploaded = JSON.parse(
     sessionStorage.getItem('userPostImage') || ''
   );

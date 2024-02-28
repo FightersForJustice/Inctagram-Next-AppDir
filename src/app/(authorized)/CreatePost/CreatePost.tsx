@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
 import { GetResponse } from '@/api/profile.api';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
 import { FirstModal } from './FirstModal';
 import { FourthModal } from './FourthModal';
 import { SecondModal } from './SecondModal';
@@ -21,16 +19,7 @@ export const CreatePost = ({
 }: Props) => {
   const [step, setStep] = useState<number>(1);
 
-  // ONE STEP STATE
-
-  const [croppedPostImage, setCroppedPostImage] = useState('');
-  const [zoomValue, setZoomValue] = useState('0');
-
-  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
-
-  const postImagesArr = useAppSelector(postImages);
-  // const currentImage = images[images.length - 1];
-
+  console.log('root render');
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
     sessionStorage.removeItem('userPostImage');
@@ -41,28 +30,19 @@ export const CreatePost = ({
       {showCreatePostModal && step === 1 && (
         <FirstModal
           setStep={setStep}
-          // images={images}
-          // setImage={setImages}
           setShowCreatePostModal={closeCreatePostModal}
         />
       )}
 
       {step === 2 && (
         <SecondModal
-          // currentImage={currentImage}
           setStep={setStep}
-          aspectRatio={aspectRatio}
-          setZoomValue={setZoomValue}
-          zoomValue={zoomValue}
           setShowCreatePostModal={closeCreatePostModal}
-          setCroppedPostImage={setCroppedPostImage}
-          croppedPostImage={croppedPostImage}
         />
       )}
       {step === 3 && (
         <ThirdModal
           setStep={setStep}
-          zoomValue={zoomValue}
           setShowCreatePostModal={closeCreatePostModal}
         />
       )}
