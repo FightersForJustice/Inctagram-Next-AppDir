@@ -18,7 +18,7 @@ export const Agreements = ({ title, text, btnName }: Props) => {
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
         <Link
-          href={'/profile/settings-profile/general-information'}
+          href={''}
           onClick={handler}
           className={s.linkRedirect}
         >
