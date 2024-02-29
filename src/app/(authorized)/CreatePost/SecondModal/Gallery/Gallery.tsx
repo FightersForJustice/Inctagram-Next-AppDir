@@ -10,16 +10,16 @@ type Props = {
   setLoadedImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
   images: ImageStateType[];
-  currentImage: ImageStateType;
+  changeCurrentImage: Dispatch<SetStateAction<ImageStateType>>;
 };
 export const Gallery = ({
   setLoadedImages,
   setStep,
   images,
-  currentImage,
+  changeCurrentImage,
 }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
-  console.log('gallery render');
+  // console.log('gallery render');
 
   const closeGallery = () => {
     setOpenCollectionImages(false);
@@ -67,6 +67,7 @@ export const Gallery = ({
             closeGallery={closeGallery}
             images={images}
             setStep={setStep}
+            changeCurrentImage={changeCurrentImage}
           />
         </Popover.Content>
       </Popover.Portal>

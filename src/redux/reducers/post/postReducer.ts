@@ -23,18 +23,24 @@ const slice = createSlice({
       state.postImages.push(...action.payload);
       state.imagesGallery.push(...action.payload);
 
-      if (state.currentImage) {
+      if (!state.currentImage) {
         state.currentImage = action.payload[action.payload.length - 1];
       }
-      console.log('images add');
     },
     changeCurrentImage(state, action: PayloadAction<ImageStateType>) {
       state.currentImage = action.payload;
     },
-    changeImage(state, action: PayloadAction<ImageStateType>) {
-      state.imagesGallery.map((image) =>
-        image.id === action.payload.id ? action.payload : image
+    changeImage(state, action: PayloadAction<{ image: string; id: string }>) {
+      console.log('image changed redux', action.payload.id);
+
+      const index = state.imagesGallery.findIndex(
+        (image) => image.id === action.payload.id
       );
+
+      if (index) {
+        console.log(index);
+        state.imagesGallery[index].image = action.payload.image;
+      }
     },
     setImageFilter(
       state,

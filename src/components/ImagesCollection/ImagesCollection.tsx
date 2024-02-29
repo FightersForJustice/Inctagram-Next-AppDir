@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 import clsx from 'clsx';
 import s from './ImagesCollection.module.scss';
 
@@ -13,14 +15,18 @@ type Props = {
   setImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
   closeGallery: () => void;
+  changeCurrentImage: Dispatch<SetStateAction<ImageStateType>>;
 };
 
-export const ImagesCollection = ({ images, setStep, closeGallery }: Props) => {
+export const ImagesCollection = ({
+  setStep,
+  closeGallery,
+  changeCurrentImage,
+}: Props) => {
   const dispatch = useAppDispatch();
+  const images = useAppSelector(imagesGallery);
 
-  const changeCurrentImage = (item: ImageStateType) => {
-    dispatch(postActions.changeCurrentImage(item));
-  };
+  console.log('images gallery changed', images);
   useEffect(() => {
     if (!images.length) {
       setStep(1);

@@ -21,12 +21,10 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const [zoomValue, setZoomValue] = useState('0');
 
   const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
-  const currentImage = useAppSelector((state) => state.post.currentImage);
 
   const images = useAppSelector(imagesGallery);
 
-  console.log('second modal render');
-  console.log(images);
+  const [currentImage, setCurrentImage] = useState(images[images.length - 1]);
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
@@ -35,9 +33,9 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
-          postImage={currentImage}
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
+          currentImage={currentImage}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
@@ -46,8 +44,8 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
           </div>
           <Gallery
             images={images}
+            changeCurrentImage={setCurrentImage}
             setStep={setStep}
-            currentImage={currentImage!}
           />
         </div>
       </CroppingModal>
