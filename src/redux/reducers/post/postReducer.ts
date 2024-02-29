@@ -30,7 +30,7 @@ const slice = createSlice({
     changeCurrentImage(state, action: PayloadAction<ImageStateType>) {
       state.currentImage = action.payload;
     },
-    changeImage(state, action: PayloadAction<{ image: string; id: string }>) {
+    changeImage(state, action: PayloadAction<{ image: string; id?: string }>) {
       console.log('image changed redux', action.payload.id);
 
       const index = state.imagesGallery.findIndex(

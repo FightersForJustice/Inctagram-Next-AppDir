@@ -7,11 +7,11 @@ import { useEffect, useRef } from 'react';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 
-export const PostCropper = ({ zoomValue, currentImage }: Props) => {
+export const PostCropper = ({ zoomValue }: Props) => {
   const cropperRef = useRef<ReactCropperElement>(null);
   const ratio = useAppSelector((state) => state.post.cropAspectRatio);
-  // const currentImage = useAppSelector((state) => state.post.currentImage);
-
+  const currentImage = useAppSelector((state) => state.post.currentImage);
+  const currentImageId = useAppSelector((state) => state.post.currentImage?.id);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export const PostCropper = ({ zoomValue, currentImage }: Props) => {
   const onCropEnd = () => {
     const cropper = cropperRef.current?.cropper;
     const value = cropper?.getCroppedCanvas().toDataURL()!;
-
+    console.log(currentImageId);
     if (currentImage) {
-      console.log(currentImage.id);
+      console.log(currentImageId);
       dispatch(
         postActions.changeImage({
-          id: currentImage.id,
+          id: currentImageId,
           image: value,
         })
       );
@@ -58,5 +58,5 @@ export const PostCropper = ({ zoomValue, currentImage }: Props) => {
 type Props = {
   aspectRatio: number;
   zoomValue: string;
-  currentImage: ImageStateType;
+  currentImage?: ImageStateType;
 };

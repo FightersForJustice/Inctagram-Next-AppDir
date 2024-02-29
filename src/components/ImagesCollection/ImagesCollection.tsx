@@ -15,14 +15,14 @@ type Props = {
   setImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
   closeGallery: () => void;
-  changeCurrentImage: Dispatch<SetStateAction<ImageStateType>>;
+  changeCurrentImage?: Dispatch<SetStateAction<ImageStateType>>;
 };
 
 export const ImagesCollection = ({
   setStep,
   closeGallery,
-  changeCurrentImage,
-}: Props) => {
+} // changeCurrentImage,
+: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(imagesGallery);
 
@@ -32,7 +32,12 @@ export const ImagesCollection = ({
       setStep(1);
     }
   }, [images.length]);
+
   const moreThen10Img = images.length >= 10;
+
+  const changeCurrentImage = (image: ImageStateType) => {
+    dispatch(postActions.changeCurrentImage(image));
+  };
   const onDeleteImageFromCollection = (id: string) => {
     if (images.length === 1) {
       toast.error("Your can't delete one image");

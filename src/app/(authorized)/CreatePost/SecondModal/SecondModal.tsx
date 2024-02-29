@@ -24,7 +24,8 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
 
   const images = useAppSelector(imagesGallery);
 
-  const [currentImage, setCurrentImage] = useState(images[images.length - 1]);
+  // const [currentImage, setCurrentImage] = useState(images[images.length - 1]);
+
   const onZoomImage = (value: string) => {
     setZoomValue(value);
   };
@@ -35,7 +36,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
         <PostCropper
           aspectRatio={aspectRatio}
           zoomValue={zoomValue}
-          currentImage={currentImage}
+          // currentImage={currentImage}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
@@ -44,7 +45,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
           </div>
           <Gallery
             images={images}
-            changeCurrentImage={setCurrentImage}
+            // changeCurrentImage={setCurrentImage}
             setStep={setStep}
           />
         </div>
