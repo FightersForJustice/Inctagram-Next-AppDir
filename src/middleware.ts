@@ -54,7 +54,6 @@ export async function middleware(request: NextRequest) {
       case 200:
         console.log(meResponse.status, 'isAuth');
         const response = NextResponse.next();
-        console.log(response)
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();
         //all we need in client components
@@ -62,7 +61,6 @@ export async function middleware(request: NextRequest) {
         response.headers.set('userEmail', `${responseData.email}`);
         response.headers.set('userName', `${responseData.email}`);
         //response.cookies.set('userLanguage', lang);
-        console.log(isAuthPath, request.url, AUTH_ROUTES_ARRAY);
         return isAuthPath
           ? NextResponse.redirect(
               new URL(`${ROUTES.PROFILE}/${responseData.userId}`, request.url)
