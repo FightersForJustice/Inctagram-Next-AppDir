@@ -13,7 +13,6 @@ type Props = {
 
 const AgreementsPage = (props: Props) => {
   const { t } = useTranslation();
-  console.log(2999);
   const translate = (key: string): string => t(`AgreementsPage.${key}`);
   if (
     props.params.agreements === 'privacy-policy' ||
