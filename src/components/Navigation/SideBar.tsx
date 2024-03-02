@@ -42,6 +42,7 @@ export const SideBar = ({
         paidAccount={paidAccount}
         pathname={pathname}
         setShowCreatePostModal={setShowCreatePostModal}
+        showCreatePostModal={showCreatePostModal}
         setShowLogoutModal={setShowLogoutModal}
       />
       {showLogoutModal && (

@@ -218,6 +218,24 @@
       "tooltipText": "Functionality is not available yet"
     }
   },
+  "CreatePost": {
+    "AddPhotoModal": {
+      "title": "Add photo",
+      "selectBtn": "Select from computer",
+      "saveBtn": "Save",
+      "openDraftBtn": "Open draft",
+      "nextBtn": "Next",
+      "cropping": "Cropping",
+      "close": "Close",
+      "yes": "Yes",
+      "no": "No",
+      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "filters": "Filters",
+      "sizeError": "Photo size must be less than 20 MB!",
+      "formatError": "The format of the uploaded photo must be PNG and JPEG",
+      "tooltipText": "Functionality is not available yet"
+    }
+  },
   "AgreementsPage": {
     "btnName": "Back to Sign Up",
     "btnName1": "Back to General information",
