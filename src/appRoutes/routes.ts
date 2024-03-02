@@ -8,6 +8,7 @@ export const AUTH_ROUTES = Object.freeze({
   FORGOT_PASSWORD: '/forgot-password',
   VERIFICATION_INVALID: '/verification-invalid',
   PRIVACY_POLICY: '/agreements/privacy-policy',
+  // PRIVACY_POLICY_PROFILE: '/agreements/privacy-policy-profile',
   TERMS_OF_SERVICE: '/agreements/terms-of-service',
   PROFILE_NULL: '/profile/null',
 });
