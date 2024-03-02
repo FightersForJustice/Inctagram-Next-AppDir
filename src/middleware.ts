@@ -56,13 +56,11 @@ export async function middleware(request: NextRequest) {
         const response = NextResponse.next();
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();
-
         //all we need in client components
         response.headers.set('id', `${responseData.userId}`);
         response.headers.set('userEmail', `${responseData.email}`);
         response.headers.set('userName', `${responseData.email}`);
         //response.cookies.set('userLanguage', lang);
-
         return isAuthPath
           ? NextResponse.redirect(
               new URL(`${ROUTES.PROFILE}/${responseData.userId}`, request.url)

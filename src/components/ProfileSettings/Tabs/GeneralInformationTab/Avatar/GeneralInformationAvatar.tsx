@@ -53,8 +53,8 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
-    if (file.size <= maxSize) {
-      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+    if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        if (file.size <= maxSize) {
         setFile(file);
         setUserAvatar(URL.createObjectURL(file));
       } else {

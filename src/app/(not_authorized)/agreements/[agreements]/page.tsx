@@ -6,8 +6,8 @@ type Props = {
   params: {
     agreements:
       | 'privacy-policy'
-      | 'terms-of-service'
-      | 'privacy-policy-profile';
+      | 'privacy-policy-profile'
+      | 'terms-of-service';
   };
 };
 
@@ -23,9 +23,9 @@ const AgreementsPage = (props: Props) => {
         text={translate('PrivacyPolicy.text')}
         title={translate('PrivacyPolicy.title')}
         btnName={translate(
-          props.params.agreements === 'privacy-policy-profile'
-            ? 'btnName1'
-            : 'btnName'
+          props.params.agreements === 'privacy-policy'
+            ? 'btnName'
+            : 'btnName1'
         )}
       />
     );

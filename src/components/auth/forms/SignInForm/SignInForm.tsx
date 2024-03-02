@@ -48,6 +48,7 @@ export const SignInForm = () => {
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `login.error${statusCode}`;
+      setLoading(false);
       setError('password', {
         type: 'manual',
         message: statusMessage,
