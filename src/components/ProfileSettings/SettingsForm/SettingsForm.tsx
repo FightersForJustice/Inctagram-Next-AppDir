@@ -21,7 +21,7 @@ import {
 } from '@/utils/checkYears';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { SettingsFormItem } from './SettingsFormItem';
 
@@ -96,13 +96,6 @@ export const SettingsForm = ({
       country: { value: usersCountry, label: usersCountry },
     },
   });
-  useEffect(() => {
-    // console.log(pathname);
-
-    return () => {
-      console.log(pathname);
-    };
-  }, []);
 
   const formStorage = useFormPersist(FORM_KEY, { setValue });
 
