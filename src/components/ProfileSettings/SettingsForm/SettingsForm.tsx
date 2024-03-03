@@ -21,7 +21,7 @@ import {
 } from '@/utils/checkYears';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { SettingsFormItem } from './SettingsFormItem';
 
@@ -66,6 +66,7 @@ export const SettingsForm = ({
   const translateErrors = (key: string): string =>
     t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
+  const router = usePathname();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
   let isObsoleteDateOfBirth =
@@ -141,6 +142,7 @@ export const SettingsForm = ({
       );
   });
 
+  useEffect(() => {}, []);
   return (
     <>
       {isLoading ? (
