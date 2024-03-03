@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { SetFieldValue } from 'react-hook-form';
+import { SetFieldValue, UseFormTrigger } from 'react-hook-form';
 
 export interface FormPersistConfig {
   storage?: Storage;
@@ -12,6 +12,7 @@ export interface FormPersistConfig {
   touch?: boolean;
   onTimeout?: () => void;
   timeout?: number;
+  trigger?: UseFormTrigger<any>;
 }
 
 const useFormPersist = (
@@ -27,9 +28,9 @@ const useFormPersist = (
     touch = false,
     onTimeout,
     timeout,
+    trigger,
   }: FormPersistConfig
 ) => {
-  const watchedValues = watch?.();
   const getStorage = () => storage || window.sessionStorage;
 
   const clearStorage = () => getStorage().removeItem(name);
@@ -57,6 +58,7 @@ const useFormPersist = (
             shouldDirty: dirty,
             shouldTouch: touch,
           });
+          trigger?.().finally(() => getStorage().removeItem(name));
         }
       });
 
@@ -65,21 +67,6 @@ const useFormPersist = (
       }
     }
   }, [storage, name, onDataRestored, setValue]);
-
-  // useEffect(() => {
-  //   const values = exclude.length
-  //     ? Object.entries(watchedValues)
-  //         .filter(([key]) => !exclude.includes(key))
-  //         .reduce((obj, [key, val]) => Object.assign(obj, { [key]: val }), {})
-  //     : Object.assign({}, watchedValues);
-  //
-  //   if (Object.entries(values).length) {
-  //     if (timeout !== undefined) {
-  //       values._timestamp = Date.now();
-  //     }
-  //     getStorage().setItem(name, JSON.stringify(values));
-  //   }
-  // }, [watchedValues, timeout]);
 
   return {
     clear: () => getStorage().removeItem(name),

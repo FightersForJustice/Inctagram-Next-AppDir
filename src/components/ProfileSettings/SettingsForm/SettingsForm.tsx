@@ -21,7 +21,7 @@ import {
 } from '@/utils/checkYears';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { SettingsFormItem } from './SettingsFormItem';
 
@@ -67,6 +67,7 @@ export const SettingsForm = ({
   const translateErrors = (key: string): string =>
     t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
+  const router = usePathname();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
   let isObsoleteDateOfBirth =
@@ -75,7 +76,6 @@ export const SettingsForm = ({
   const cityArr = city?.split(',') || '';
   const usersCountry = cityArr[0] || '';
   const usersCity = cityArr[1] || '';
-  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -97,7 +97,7 @@ export const SettingsForm = ({
     },
   });
 
-  const formStorage = useFormPersist(FORM_KEY, { setValue });
+  const formStorage = useFormPersist(FORM_KEY, { setValue, trigger });
 
   const saveToSessionStorage = (key: string, data: any) => {
     sessionStorage.setItem(key, JSON.stringify(data));
@@ -133,7 +133,7 @@ export const SettingsForm = ({
         }, 2000);
       })
       .then(() => {
-        localStorage.removeItem(FORM_KEY);
+        formStorage.clear();
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
@@ -143,6 +143,7 @@ export const SettingsForm = ({
       );
   });
 
+  useEffect(() => {}, []);
   return (
     <>
       {isLoading ? (
