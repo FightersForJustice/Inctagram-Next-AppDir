@@ -3,7 +3,7 @@ import { SetFieldValue } from 'react-hook-form';
 
 export interface FormPersistConfig {
   storage?: Storage;
-  watch: (names?: string | string[]) => any;
+  watch?: (names?: string | string[]) => any;
   setValue: SetFieldValue<any>;
   exclude?: string[];
   onDataRestored?: (data: any) => void;
@@ -29,8 +29,7 @@ const useFormPersist = (
     timeout,
   }: FormPersistConfig
 ) => {
-  const watchedValues = watch();
-
+  const watchedValues = watch?.();
   const getStorage = () => storage || window.sessionStorage;
 
   const clearStorage = () => getStorage().removeItem(name);
@@ -67,20 +66,20 @@ const useFormPersist = (
     }
   }, [storage, name, onDataRestored, setValue]);
 
-  useEffect(() => {
-    const values = exclude.length
-      ? Object.entries(watchedValues)
-          .filter(([key]) => !exclude.includes(key))
-          .reduce((obj, [key, val]) => Object.assign(obj, { [key]: val }), {})
-      : Object.assign({}, watchedValues);
-
-    if (Object.entries(values).length) {
-      if (timeout !== undefined) {
-        values._timestamp = Date.now();
-      }
-      getStorage().setItem(name, JSON.stringify(values));
-    }
-  }, [watchedValues, timeout]);
+  // useEffect(() => {
+  //   const values = exclude.length
+  //     ? Object.entries(watchedValues)
+  //         .filter(([key]) => !exclude.includes(key))
+  //         .reduce((obj, [key, val]) => Object.assign(obj, { [key]: val }), {})
+  //     : Object.assign({}, watchedValues);
+  //
+  //   if (Object.entries(values).length) {
+  //     if (timeout !== undefined) {
+  //       values._timestamp = Date.now();
+  //     }
+  //     getStorage().setItem(name, JSON.stringify(values));
+  //   }
+  // }, [watchedValues, timeout]);
 
   return {
     clear: () => getStorage().removeItem(name),

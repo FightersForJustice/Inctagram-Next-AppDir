@@ -32,12 +32,14 @@ export const DatePick = ({
   isObsoleteDateOfBirth,
   translateErrors,
   getValues,
+  onClickPrivacyPolicy,
 }: {
   control: Control<ProfileFormValues>;
   trigger: UseFormTrigger<ProfileFormValues>;
   isObsoleteDateOfBirth: boolean;
   translateErrors: (key: string) => string;
   getValues: UseFormGetValues<ProfileFormValues>;
+  onClickPrivacyPolicy: () => void;
 }) => {
   const [fieldError, setFieldError] = useState<string>('');
   const [isObsoleteAge, setIsObsoleteAge] = useState<boolean>(
@@ -96,6 +98,7 @@ export const DatePick = ({
                 <Link
                   href={'/agreements/privacy-policy-profile'}
                   className={'underline pl-[5px]'}
+                  onClick={onClickPrivacyPolicy}
                 >
                   Privacy policy
                 </Link>

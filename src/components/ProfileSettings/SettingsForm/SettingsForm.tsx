@@ -21,13 +21,14 @@ import {
 } from '@/utils/checkYears';
 import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { SettingsFormItem } from './SettingsFormItem';
 
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
 import useFormPersist from '@/utils/useFormPersist';
 import s from './SettingsForm.module.scss';
+import { usePathname } from 'next/navigation';
 
 export type ProfileFormValues = {
   userName: string;
@@ -74,7 +75,7 @@ export const SettingsForm = ({
   const cityArr = city?.split(',') || '';
   const usersCountry = cityArr[0] || '';
   const usersCity = cityArr[1] || '';
-
+  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -95,8 +96,19 @@ export const SettingsForm = ({
       country: { value: usersCountry, label: usersCountry },
     },
   });
+  useEffect(() => {
+    // console.log(pathname);
 
-  useFormPersist(FORM_KEY, { watch, setValue });
+    return () => {
+      console.log(pathname);
+    };
+  }, []);
+
+  const formStorage = useFormPersist(FORM_KEY, { setValue });
+
+  const saveToSessionStorage = (key: string, data: any) => {
+    sessionStorage.setItem(key, JSON.stringify(data));
+  };
 
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
@@ -193,6 +205,9 @@ export const SettingsForm = ({
                 <span className={s.form__required}>*</span>
               </label>
               <DatePick
+                onClickPrivacyPolicy={() =>
+                  saveToSessionStorage(FORM_KEY, Object.assign({}, watch()))
+                }
                 translateErrors={translateErrors}
                 isObsoleteDateOfBirth={isObsoleteDateOfBirth}
                 trigger={trigger}
