@@ -28,7 +28,6 @@ import { SettingsFormItem } from './SettingsFormItem';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
 import useFormPersist from '@/utils/useFormPersist';
 import s from './SettingsForm.module.scss';
-import { usePathname } from 'next/navigation';
 
 export type ProfileFormValues = {
   userName: string;
@@ -75,7 +74,6 @@ export const SettingsForm = ({
   const cityArr = city?.split(',') || '';
   const usersCountry = cityArr[0] || '';
   const usersCity = cityArr[1] || '';
-  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -97,7 +95,7 @@ export const SettingsForm = ({
     },
   });
 
-  const formStorage = useFormPersist(FORM_KEY, { setValue });
+  const formStorage = useFormPersist(FORM_KEY, { setValue, trigger });
 
   const saveToSessionStorage = (key: string, data: any) => {
     sessionStorage.setItem(key, JSON.stringify(data));
@@ -133,7 +131,7 @@ export const SettingsForm = ({
         }, 2000);
       })
       .then(() => {
-        localStorage.removeItem(FORM_KEY);
+        formStorage.clear();
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
