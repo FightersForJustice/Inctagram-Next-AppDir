@@ -10,7 +10,6 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 
 import s from './CreatePost.module.scss';
-import { Alert } from '@/components/Alert';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -23,8 +22,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const translate = (key: string): string =>
     t(`CreatePost.AddPhotoModal.${key}`);
 
-
-  const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+  const onSetUserImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const files = [...e.target.files];
@@ -48,7 +46,6 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
       className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
-      {fileError && <Alert text={translate(fileError)} />}
       <div className={s.createPost}>
         <Image
           src={'/img/create-post/no-image.png'}
@@ -74,9 +71,8 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
                 multiple
                 id="download_image"
                 type="file"
-                accept="image/png, image/jpeg"
                 className={s.createPost__file}
-                onChange={onSetUserPost}
+                onChange={onSetUserImage}
               />
             </label>
           </div>
