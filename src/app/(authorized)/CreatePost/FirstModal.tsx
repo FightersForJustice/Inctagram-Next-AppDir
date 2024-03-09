@@ -12,16 +12,9 @@ import s from './CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  setImage?: (image: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
-  images?: File[];
 };
-export const FirstModal = ({
-  setStep,
-  images,
-  setImage,
-  setShowCreatePostModal,
-}: Props) => {
+export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
