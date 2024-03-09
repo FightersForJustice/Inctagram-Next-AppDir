@@ -10,8 +10,6 @@ import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';
-
-import { postImages } from '@/redux/reducers/post/postSelectors';
 import s from './CreatePost.module.scss';
 
 type Props = {
@@ -31,7 +29,7 @@ export const FourthModal: React.FC<Props> = ({
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
-  const images = useAppSelector(postImages);
+  const images = useAppSelector((state) => state.post.changedImages);
   const imagesUploaded = JSON.parse(
     sessionStorage.getItem('userPostImage') || ''
   );
@@ -59,9 +57,7 @@ export const FourthModal: React.FC<Props> = ({
         toast.error('Error');
       } else toast.success('Post created');
 
-      dispatch(postActions.removeAllImages());
-      dispatch(postActions.removeImageIds());
-      dispatch(postActions.removeAllGalleryImages());
+      dispatch(postActions.clearPostState());
       setShowCreatePostModal(false);
     }
   };
@@ -78,7 +74,6 @@ export const FourthModal: React.FC<Props> = ({
     }
 
     sessionStorage.removeItem('userPostImage');
-    dispatch(postActions.removeImageIds());
     setStep(3);
   };
 

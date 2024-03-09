@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import { postImages } from '@/redux/reducers/post/postSelectors';
 import clsx from 'clsx';
 import s from './ImagesCollection.module.scss';
 
@@ -20,11 +20,10 @@ type Props = {
 
 export const ImagesCollection = ({
   setStep,
-  closeGallery,
-} // changeCurrentImage,
-: Props) => {
+  closeGallery, // changeCurrentImage,
+}: Props) => {
   const dispatch = useAppDispatch();
-  const images = useAppSelector(imagesGallery);
+  const images = useAppSelector(postImages);
 
   console.log('images gallery changed', images);
   useEffect(() => {

@@ -77,12 +77,12 @@ dependencies:
   react-avatar-edit:
     specifier: ^1.2.0
     version: 1.2.0(react@18.2.0)
-  react-cropper:
-    specifier: ^2.3.3
-    version: 2.3.3(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-easy-crop:
+    specifier: ^5.0.5
+    version: 5.0.5(react-dom@18.2.0)(react@18.2.0)
   react-google-recaptcha:
     specifier: ^3.1.0
     version: 3.1.0(react@18.2.0)
@@ -2537,10 +2537,6 @@ packages:
       - ts-node
     dev: true
 
-  /cropperjs@1.6.1:
-    resolution: {integrity: sha512-F4wsi+XkDHCOMrHMYjrTEE4QBOrsHHN5/2VsVAaRq8P7E5z7xQpT75S+f/9WikmBEailas3+yo+6zPIomW+NOA==}
-    dev: false
-
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -4484,6 +4480,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /normalize-wheel@1.0.1:
+    resolution: {integrity: sha512-1OnlAPZ3zgrk8B91HyRj+eVv+kS5u+Z0SCsak6Xil/kmgEia50ga7zfkumayonZrImffAxPU/5WcyGhzetHNPA==}
+    dev: false
+
   /npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
@@ -4840,15 +4840,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-cropper@2.3.3(react@18.2.0):
-    resolution: {integrity: sha512-zghiEYkUb41kqtu+2jpX2Ntigf+Jj1dF9ew4lAobPzI2adaPE31z0p+5TcWngK6TvmWQUwK3lj4G+NDh1PDQ1w==}
-    peerDependencies:
-      react: '>=17.0.2'
-    dependencies:
-      cropperjs: 1.6.1
-      react: 18.2.0
-    dev: false
-
   /react-date-object@2.1.8:
     resolution: {integrity: sha512-94zg/9r29v/VsKsJT0E5+tPg85IyMirkU/B7qBWlhT7RDSuf9x5dczfbQOsj9TbzSVUK/Vx/ZDboOBy9hA381w==}
     dev: false
@@ -4861,6 +4852,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-easy-crop@5.0.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-GH7Jw3898ytSaN4i4Oxi7j3BKzapZ2pVgnKIl+gFIUjA+NsDgdBSIpiBQUrPFIvHzSnPmz0kGCpX95X6NgsDzA==}
+    peerDependencies:
+      react: '>=16.4.0'
+      react-dom: '>=16.4.0'
+    dependencies:
+      normalize-wheel: 1.0.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.0.1
     dev: false
 
   /react-element-popper@2.1.6(react-dom@18.2.0)(react@18.2.0):
@@ -5622,6 +5625,10 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: false
+
+  /tslib@2.0.1:
+    resolution: {integrity: sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==}
     dev: false
 
   /tslib@2.6.2:

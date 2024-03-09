@@ -63,9 +63,3 @@ export enum AspectRatioType {
   three = 4 / 5,
   four = 16 / 9,
 }
-
-export type ImageStateType = {
-  id: string;
-  image: string;
-  filter: string;
-};

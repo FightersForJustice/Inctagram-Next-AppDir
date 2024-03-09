@@ -7,14 +7,14 @@ import s from './CroppingSizeModal.module.scss';
 
 export const CroppingSizeModal = () => {
   const dispatch = useAppDispatch();
-  const ratio = useAppSelector((state) => state.post.cropAspectRatio);
+  const ratio = useAppSelector((state) => state.post.aspectRatio);
   return (
     <div className={s.cropping__size}>
       <div className={s.cropping__items}>
         <div
           className={s.cropping__item}
           onClick={() => {
-            dispatch(postActions.setCropAspectRatio(AspectRatioType.one));
+            dispatch(postActions.setAspectRatio(AspectRatioType.one));
           }}
         >
           <p
@@ -53,7 +53,7 @@ export const CroppingSizeModal = () => {
         <div
           className={s.cropping__item}
           onClick={() =>
-            dispatch(postActions.setCropAspectRatio(AspectRatioType.two))
+            dispatch(postActions.setAspectRatio(AspectRatioType.two))
           }
         >
           <p
@@ -86,7 +86,7 @@ export const CroppingSizeModal = () => {
         <div
           className={s.cropping__item}
           onClick={() =>
-            dispatch(postActions.setCropAspectRatio(AspectRatioType.three))
+            dispatch(postActions.setAspectRatio(AspectRatioType.three))
           }
         >
           <p
@@ -119,7 +119,7 @@ export const CroppingSizeModal = () => {
         <div
           className={s.cropping__item}
           onClick={() =>
-            dispatch(postActions.setCropAspectRatio(AspectRatioType.four))
+            dispatch(postActions.setAspectRatio(AspectRatioType.four))
           }
         >
           <p

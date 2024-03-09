@@ -7,12 +7,9 @@ import {
 } from 'react';
 import { toast } from 'react-toastify';
 
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { uploadPostImage } from '@/app/lib/actions';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { postImages } from '@/redux/reducers/post/postSelectors';
+import { ChangedImage } from '@/redux/reducers/post/postReducer';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 
@@ -49,8 +46,9 @@ export const FiltersModal = ({
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
-  const dispatch = useAppDispatch();
-  const images: ImageStateType[] = useAppSelector(postImages);
+  const images: ChangedImage[] = useAppSelector(
+    (state) => state.post.changedImages
+  );
   const onSendPostImage = () => {
     if (images) {
       const formData = new FormData();
@@ -92,14 +90,17 @@ export const FiltersModal = ({
         });
     }
   };
-  const returnToSecondModal = (images: ImageStateType[]) => {
-    images.forEach((image, index) => {
-      const idToRemove = image.id;
-      dispatch(postActions.removeGalleryImage({ id: idToRemove }));
-      if (index === images.length - 1) {
-        setStep?.(2);
-      }
-    });
+  // const returnToSecondModal = (images: ImageStateType[]) => {
+  //   images.forEach((image, index) => {
+  //     const idToRemove = image.id;
+  //     dispatch(postActions.removeGalleryImage({ id: idToRemove }));
+  //     if (index === images.length - 1) {
+  //       setStep?.(2);
+  //     }
+  //   });
+  // };
+  const returnToSecondModal = () => {
+    setStep?.(2);
   };
   return (
     <>
@@ -115,7 +116,7 @@ export const FiltersModal = ({
               onClick={() =>
                 buttonName === 'Publish'
                   ? onDeletePostImage?.()
-                  : returnToSecondModal(images)
+                  : returnToSecondModal()
               }
             />
             <div className={'modal__title'}>{title}</div>

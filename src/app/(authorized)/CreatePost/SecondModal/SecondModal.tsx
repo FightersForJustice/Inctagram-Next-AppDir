@@ -8,8 +8,9 @@ import { Gallery } from './Gallery';
 import { Range } from './Range/Range';
 
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
 import s from '../CreatePost.module.scss';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -18,34 +19,39 @@ type Props = {
 
 export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const [zoomValue, setZoomValue] = useState('0');
+  const currentImageId = useAppSelector((state) => state.post.currentImageId);
+  const zoom = useAppSelector((state) => state.post.zoom);
+  const dispatch = useAppDispatch();
+  const images = useAppSelector((state) => state.post.postImages);
+  const aspectRatio = useAppSelector((state) => state.post.aspectRatio);
 
-  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
-
-  const images = useAppSelector(imagesGallery);
-
-  // const [currentImage, setCurrentImage] = useState(images[images.length - 1]);
-
-  const onZoomImage = (value: string) => {
-    setZoomValue(value);
+  const changeCurrentImage = (id: string) => {
+    dispatch(postActions.changeCurrentImage({ id }));
   };
+  const onZoomImage = (value: number) => {
+    dispatch(postActions.setZoom(value));
+  };
+
+  if (!currentImageId) {
+    return null;
+  }
 
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
+          zoom={zoom}
           aspectRatio={aspectRatio}
-          zoomValue={zoomValue}
-          // currentImage={currentImage}
+          currentImageId={currentImageId}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
             <AspectRatio />
-            <Range onZoomImage={onZoomImage} zoomImage={zoomValue} />
+            <Range onValueChange={onZoomImage} value={zoom} />
           </div>
           <Gallery
             images={images}
-            // changeCurrentImage={setCurrentImage}
+            changeCurrentImage={changeCurrentImage}
             setStep={setStep}
           />
         </div>
