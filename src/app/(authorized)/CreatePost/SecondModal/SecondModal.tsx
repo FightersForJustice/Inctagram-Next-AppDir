@@ -22,12 +22,8 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
   const zoom = useAppSelector((state) => state.post.zoom);
   const dispatch = useAppDispatch();
-  const images = useAppSelector((state) => state.post.postImages);
   const aspectRatio = useAppSelector((state) => state.post.aspectRatio);
 
-  const changeCurrentImage = (id: string) => {
-    dispatch(postActions.changeCurrentImage({ id }));
-  };
   const onZoomImage = (value: number) => {
     dispatch(postActions.setZoom(value));
   };
@@ -49,11 +45,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
             <AspectRatio />
             <Range onValueChange={onZoomImage} value={zoom} />
           </div>
-          <Gallery
-            images={images}
-            changeCurrentImage={changeCurrentImage}
-            setStep={setStep}
-          />
+          <Gallery setStep={setStep} />
         </div>
       </CroppingModal>
       {areYouSureModal && (

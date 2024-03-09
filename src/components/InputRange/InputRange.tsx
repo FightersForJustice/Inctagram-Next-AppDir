@@ -7,8 +7,6 @@ type Props = {
 };
 
 export const InputRange = ({ onValueChange, value }: Props) => {
-  // const [value, setValue] = useState(zoomImage ? zoomImage : '0');
-
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onValueChange(+e.currentTarget.value);
     console.log(+e.currentTarget.value);

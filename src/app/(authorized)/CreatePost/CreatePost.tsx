@@ -19,7 +19,6 @@ export const CreatePost = ({
 }: Props) => {
   const [step, setStep] = useState<number>(1);
 
-  // console.log('root render');
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
     sessionStorage.removeItem('userPostImage');

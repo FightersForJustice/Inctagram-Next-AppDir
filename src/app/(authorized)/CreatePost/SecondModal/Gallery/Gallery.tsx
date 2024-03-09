@@ -4,15 +4,11 @@ import clsx from 'clsx';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import s from '../../CreatePost.module.scss';
-import { PostImage } from '@/redux/reducers/post/postReducer';
 
 type Props = {
-  setLoadedImages?: Dispatch<SetStateAction<PostImage[]>>;
   setStep: Dispatch<SetStateAction<number>>;
-  images: PostImage[];
-  changeCurrentImage?: (id: string) => void;
 };
-export const Gallery = ({ setStep, images }: Props) => {
+export const Gallery = ({ setStep }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
 
   const closeGallery = () => {
@@ -57,12 +53,7 @@ export const Gallery = ({ setStep, images }: Props) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="z-30">
-          <ImagesCollection
-            closeGallery={closeGallery}
-            images={images}
-            setStep={setStep}
-            // changeCurrentImage={changeCurrentImage}
-          />
+          <ImagesCollection closeGallery={closeGallery} setStep={setStep} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

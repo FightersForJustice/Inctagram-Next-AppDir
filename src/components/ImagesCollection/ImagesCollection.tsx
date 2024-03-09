@@ -1,6 +1,5 @@
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
+import { postActions, PostImage } from '@/redux/reducers/post/postReducer';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -11,17 +10,11 @@ import clsx from 'clsx';
 import s from './ImagesCollection.module.scss';
 
 type Props = {
-  images: ImageStateType[];
-  setImages?: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
   closeGallery: () => void;
-  changeCurrentImage?: Dispatch<SetStateAction<ImageStateType>>;
 };
 
-export const ImagesCollection = ({
-  setStep,
-  closeGallery, // changeCurrentImage,
-}: Props) => {
+export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(postImages);
 
@@ -34,7 +27,7 @@ export const ImagesCollection = ({
 
   const moreThen10Img = images.length >= 10;
 
-  const changeCurrentImage = (image: ImageStateType) => {
+  const changeCurrentImage = (image: PostImage) => {
     dispatch(postActions.changeCurrentImage(image));
   };
   const onDeleteImageFromCollection = (id: string) => {
@@ -42,10 +35,10 @@ export const ImagesCollection = ({
       toast.error("Your can't delete one image");
       return;
     } else {
-      dispatch(postActions.removeGalleryImage({ id }));
+      dispatch(postActions.deleteImage({ id }));
     }
   };
-  const onChangeCurrentImage = (item: ImageStateType) => {
+  const onChangeCurrentImage = (item: PostImage) => {
     closeGallery();
 
     changeCurrentImage(item);
