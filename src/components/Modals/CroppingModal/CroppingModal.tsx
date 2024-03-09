@@ -1,17 +1,11 @@
-import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import Image from 'next/image';
-
-import './CroppingModal.css';
+import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import './CroppingModal.css';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   onClose?: () => void;
-  croppedPostImage: string;
 };
 
 export const CroppingModal = ({
@@ -23,21 +17,13 @@ export const CroppingModal = ({
   const translate = (key: string): string =>
     t(`SettingsProfilePage.AddPhotoModal.${key}`);
 
-  const dispatch = useAppDispatch();
-  const imagesGalleryArr = useAppSelector(imagesGallery);
-
   const onNextBtnHandler = () => {
-    dispatch(postActions.removeAllImages());
-    imagesGalleryArr.map((i: any) => {
-      dispatch(postActions.addImage(i));
-    });
-
     setStep(3);
   };
 
   const onBackBtnHandler = () => {
-    dispatch(postActions.removeAllGalleryImages());
-    setStep((prev) => (prev = prev - 1));
+    // dispatch(postActions.removeAllGalleryImages());
+    setStep((prev) => prev - 1);
   };
 
   return (

@@ -1,4 +1,3 @@
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 import 'swiper/css';
@@ -7,6 +6,8 @@ import 'swiper/css/pagination';
 import { A11y, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import './carousel.scss';
+import { ChangedImage } from '@/redux/reducers/post/postReducer';
+
 interface SlidesStyles {
   width: number;
   height: number;
@@ -15,10 +16,10 @@ interface SlidesStyles {
 
 interface IProps {
   children?: ReactNode;
-  loadedImages?: ImageStateType[];
+  loadedImages?: Omit<ChangedImage, 'croppedArea'>[];
   slidesStyles?: SlidesStyles;
   ref?: any;
-  setActive?: (value: string) => void;
+  setActive?: (id: string) => void;
 }
 
 export const Carousel: FC<IProps> = ({
@@ -43,7 +44,10 @@ export const Carousel: FC<IProps> = ({
             return (
               <SwiperSlide key={id} className={'w-full'}>
                 {({ isActive }) => {
-                  if (isActive && setActive) setActive(image);
+                  if (isActive && setActive) {
+                    console.log(id);
+                    setActive(id);
+                  }
                   return (
                     <Image
                       src={image}

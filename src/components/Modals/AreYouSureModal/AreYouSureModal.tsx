@@ -36,8 +36,7 @@ export const AreYouSureModal = ({
         <div className={s.modal__btns}>
           <TransparentBtn
             onClick={() => {
-              dispatch(postActions.removeAllImages());
-              dispatch(postActions.removeAllGalleryImages());
+              dispatch(postActions.clearPostState());
               onDelete?.();
               if (onDelete) {
                 setTimeout(() => {

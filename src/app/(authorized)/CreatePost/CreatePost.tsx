@@ -2,11 +2,9 @@ import { useState } from 'react';
 
 import { GetResponse } from '@/api/profile.api';
 import { FirstModal } from './FirstModal';
+import { FourthModal } from './FourthModal';
 import { SecondModal } from './SecondModal';
 import { ThirdModal } from './ThirdModal';
-import { FourthModal } from './FourthModal';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
   showCreatePostModal: boolean;
@@ -21,18 +19,9 @@ export const CreatePost = ({
 }: Props) => {
   const [step, setStep] = useState<number>(1);
 
-  const [file, setFile] = useState<File[]>();
-  const [croppedPostImage, setCroppedPostImage] = useState('');
-  const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
-  const [zoomValue, setZoomValue] = useState('3');
-  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
+  const closeCreatePostModal = (show: boolean) => {
+    setShowCreatePostModal(show);
 
-  const postImagesArr = useAppSelector(postImages);
-  const currentImage =
-    postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
-
-  const closeCreatePostModal = (value: boolean) => {
-    setShowCreatePostModal(value);
     sessionStorage.removeItem('userPostImage');
   };
 
@@ -41,31 +30,19 @@ export const CreatePost = ({
       {showCreatePostModal && step === 1 && (
         <FirstModal
           setStep={setStep}
-          currentFile={file}
-          setFile={setFile}
           setShowCreatePostModal={closeCreatePostModal}
-          setLoadedImages={setLoadedImages}
-          loadedImages={loadedImages}
         />
       )}
 
       {step === 2 && (
         <SecondModal
-          postImage={currentImage}
           setStep={setStep}
-          aspectRatio={aspectRatio}
-          setZoomValue={setZoomValue}
-          zoomValue={zoomValue}
           setShowCreatePostModal={closeCreatePostModal}
-          setLoadedImages={setLoadedImages}
-          setCroppedPostImage={setCroppedPostImage}
-          croppedPostImage={croppedPostImage}
         />
       )}
       {step === 3 && (
         <ThirdModal
           setStep={setStep}
-          zoomValue={zoomValue}
           setShowCreatePostModal={closeCreatePostModal}
         />
       )}
@@ -86,9 +63,3 @@ export enum AspectRatioType {
   three = 4 / 5,
   four = 16 / 9,
 }
-
-export type ImageStateType = {
-  id: string;
-  image: string;
-  filter: string;
-};

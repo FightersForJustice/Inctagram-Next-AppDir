@@ -6,11 +6,11 @@ import { InputRange } from '@/components/InputRange';
 import s from '../../CreatePost.module.scss';
 
 type Props = {
-  onZoomImage: (value: string) => void;
-  zoomImage: string;
+  onValueChange: (value: number) => void;
+  value: number;
 };
 
-export const Range = ({ onZoomImage, zoomImage }: Props) => {
+export const Range = ({ onValueChange, value }: Props) => {
   const [openZoom, setOpenZoom] = useState(false);
 
   return (
@@ -52,7 +52,7 @@ export const Range = ({ onZoomImage, zoomImage }: Props) => {
           className="PopoverContent z-30 absolute left-0 bottom-0"
           sideOffset={5}
         >
-          <InputRange onZoomImage={onZoomImage} zoomImage={zoomImage} />
+          <InputRange onValueChange={onValueChange} value={value} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

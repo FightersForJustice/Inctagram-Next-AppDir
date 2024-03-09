@@ -2,14 +2,14 @@ import { ChangeEvent } from 'react';
 import './InputRange.scss';
 
 type Props = {
-  onZoomImage: (value: string) => void;
-  zoomImage: string;
+  onValueChange: (value: number) => void;
+  value: number;
 };
 
-export const InputRange = ({ onZoomImage, zoomImage }: Props) => {
-
+export const InputRange = ({ onValueChange, value }: Props) => {
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onZoomImage(e.currentTarget.value);
+    onValueChange(+e.currentTarget.value);
+    console.log(+e.currentTarget.value);
   };
 
   return (
@@ -17,8 +17,8 @@ export const InputRange = ({ onZoomImage, zoomImage }: Props) => {
       <input
         type="range"
         min="1"
-        max="100"
-        value={zoomImage}
+        max="10"
+        value={value}
         onChange={onChangeHandler}
       />
     </div>

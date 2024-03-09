@@ -1,45 +1,57 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import Image from 'next/image';
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
+import { postActions, PostImage } from '@/redux/reducers/post/postReducer';
+import Image from 'next/image';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import s from './ImagesCollection.module.scss';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postImages } from '@/redux/reducers/post/postSelectors';
 import clsx from 'clsx';
+import s from './ImagesCollection.module.scss';
 
 type Props = {
-  loadedImages: ImageStateType[];
-  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
   setStep: Dispatch<SetStateAction<number>>;
+  closeGallery: () => void;
 };
 
-export const ImagesCollection = ({ loadedImages, setStep }: Props) => {
+export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
   const dispatch = useAppDispatch();
+  const images = useAppSelector(postImages);
 
+  console.log('images gallery changed', images);
   useEffect(() => {
-    if (!loadedImages.length) {
+    if (!images.length) {
       setStep(1);
     }
-  }, [loadedImages.length]);
-  const moreThen10Img = loadedImages.length >= 10;
+  }, [images.length]);
+
+  const moreThen10Img = images.length >= 10;
+
+  const changeCurrentImage = (image: PostImage) => {
+    dispatch(postActions.changeCurrentImage(image));
+  };
   const onDeleteImageFromCollection = (id: string) => {
-    if (loadedImages.length === 1) {
+    if (images.length === 1) {
       toast.error("Your can't delete one image");
       return;
     } else {
-      dispatch(postActions.removeGalleryImage({ id }));
+      dispatch(postActions.deleteImage({ id }));
     }
+  };
+  const onChangeCurrentImage = (item: PostImage) => {
+    closeGallery();
+
+    changeCurrentImage(item);
   };
   return (
     <div className={s.collection__container}>
       <div className={s.collection__items}>
-        {loadedImages.map((item, index) => {
+        {images.map((item, index) => {
           return (
             <div
               key={index}
               className={s.collection__item}
-              onClick={() => console.log(item.image)} //we can change current item here
+              onClick={() => onChangeCurrentImage(item)} //we can change current item here
             >
               <Image
                 src={item.image}

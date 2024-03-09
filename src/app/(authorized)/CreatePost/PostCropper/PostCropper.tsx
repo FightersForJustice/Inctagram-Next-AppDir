@@ -1,62 +1,74 @@
 'use client';
-import { useEffect, useRef } from 'react';
-import Cropper, { ReactCropperElement } from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
-import { ImageStateType } from '../CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
 import { useAppSelector } from '@/redux/hooks/useSelect';
+import { useState } from 'react';
+import Cropper, { Area, Point } from 'react-easy-crop';
+import { getCroppedImg } from '@/app/(authorized)/CreatePost/PostCropper/cropperUtils';
+import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
+import { postImageById } from '@/redux/reducers/post/postSelectors';
+import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
-type Props = {
-  postImage: ImageStateType;
-  aspectRatio: number;
-  zoomValue: string;
-  setCroppedPostImage: (value: any) => void;
-  loadedImages: ImageStateType[];
-  setLoadedImages: (value: any) => void;
-};
-
-export const PostCropper = ({
-  postImage,
-  zoomValue,
-  setCroppedPostImage,
-}: Props) => {
-  const cropperRef = useRef<ReactCropperElement>(null);
-  const ratio = useAppSelector((state) => state.post.cropAspectRatio);
+export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
+  const currentImage = useAppSelector((state) =>
+    postImageById(state, currentImageId)
+  );
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    cropperRef.current?.cropper.setAspectRatio(ratio);
-  }, [ratio]);
-  const onCropEnd = () => {
-    const cropper = cropperRef.current?.cropper;
-    const value = cropper?.getCroppedCanvas().toDataURL()!;
-    setCroppedPostImage(value);
-    if (postImage) {
-      const image = { id: postImage.id, image: postImage.image, filter: '' };
-      image.image = value;
-      dispatch(postActions.changeImageFromPostGallery(image));
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
+
+  const onCropEnd = async (croppedArea: Area, croppedAreaPixels: Area) => {
+    console.log('croppedArea', croppedArea);
+    console.log('croppedAreaPixels', croppedAreaPixels);
+    try {
+      if (currentImage) {
+        const image = await getCroppedImg(
+          currentImage.image,
+          croppedAreaPixels,
+          rotation
+        );
+
+        if (image) {
+          const croppedImage: Omit<ChangedImage, 'filter' | 'cropAspectRatio'> =
+            {
+              image,
+              croppedArea: croppedAreaPixels,
+              id: currentImage.id,
+            };
+          console.log('donee', { croppedImage });
+          dispatch(postActions.setCropImage(croppedImage));
+        }
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
+
+  const setZoom = (zoom: number) => {
+    dispatch(postActions.setZoom(zoom));
+  };
+
   return (
-    <>
-      <Cropper
-        src={`${
-          postImage?.image ? postImage.image : '/img/create-post/test-image.png'
-        }`}
-        style={{
-          width: '100%',
-          zIndex: '10',
-        }}
-        zoomTo={+zoomValue / 10}
-        ref={cropperRef}
-        cropend={onCropEnd}
-        background={false}
-        zoomable={true}
-        checkOrientation={true}
-        initialAspectRatio={1}
-        crop={onCropEnd}
-      />
-    </>
+    <Cropper
+      image={`${
+        currentImage ? currentImage.image : '/img/create-post/test-image.png'
+      }`}
+      zoom={zoom}
+      crop={crop}
+      aspect={aspectRatio}
+      onCropChange={setCrop}
+      onZoomChange={setZoom}
+      onRotationChange={setRotation}
+      minZoom={1}
+      maxZoom={10}
+      onCropComplete={onCropEnd}
+      showGrid={false}
+    />
   );
+};
+
+type Props = {
+  currentImageId: string;
+  aspectRatio: AspectRatioType;
+  zoom: number;
 };

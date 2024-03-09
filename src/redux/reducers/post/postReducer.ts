@@ -1,82 +1,82 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { Area } from 'react-easy-crop';
+import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 const initialAppState: PostStateType = {
-  postImagesIds: [],
   postImages: [],
-  imagesGallery: [],
-  cropAspectRatio: 1,
+  changedImages: [],
+  currentImageId: null,
+  aspectRatio: AspectRatioType.one,
+  zoom: 1,
 };
 
 const slice = createSlice({
   name: 'postReducer',
   initialState: initialAppState,
   reducers: {
-    addImageId(state, action: PayloadAction<IUploadImageId>) {
-      state.postImagesIds.push(action.payload);
-    },
-    removeImageIds(state) {
-      state.postImagesIds = [];
-    },
-    addImage(state, action: PayloadAction<any>) {
-      if (state.postImages.findIndex((i) => i.id === action.payload.id) > -1) {
-        return;
+    addImage(state, action: PayloadAction<PostImage[]>) {
+      state.postImages.push(...action.payload);
+      action.payload.forEach((image) => {
+        state.changedImages.push({
+          image: image.image,
+          id: image.id,
+          filter: '',
+          croppedArea: null,
+        });
+      });
+
+      if (!state.currentImageId) {
+        state.currentImageId = action.payload[action.payload.length - 1].id;
       }
-      state.postImages = [...state.postImages, action.payload];
-      state.imagesGallery.push(action.payload);
     },
-    changeImage(state, action: PayloadAction<ImageStateType>) {
-      const index = state.postImages.findIndex(
-        (image) => image.id === action.payload.id
+    deleteImage(state, action: PayloadAction<{ id: string }>) {
+      state.postImages = state.postImages.filter(
+        (image) => image.id !== action.payload.id
       );
-      if (index !== -1) state.postImages[index] = action.payload;
+      state.changedImages = state.changedImages.filter(
+        (image) => image.id !== action.payload.id
+      );
+    },
+    clearPostState(state) {
+      state.postImages = [];
+      state.changedImages = [];
+      state.currentImageId = null;
+    },
+    changeCurrentImage(state, action: PayloadAction<{ id: string }>) {
+      state.currentImageId = action.payload.id;
+    },
+    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter'>>) {
+      state.changedImages.map((image) => {
+        if (image.id === action.payload.id) {
+          image.image = action.payload.image;
+          image.croppedArea = action.payload.croppedArea;
+
+          return image;
+        }
+
+        return image;
+      });
+    },
+    setAspectRatio(state, action: PayloadAction<AspectRatioType>) {
+      state.aspectRatio = action.payload;
+    },
+    setZoom(state, action: PayloadAction<number>) {
+      state.zoom = action.payload;
     },
     setImageFilter(
       state,
-      action: PayloadAction<{ image: string; filter: string }>
+      action: PayloadAction<Omit<ChangedImage, 'croppedArea'>>
     ) {
-      const index = state.postImages.findIndex(
-        (image) => image.image === action.payload.image
-      );
-      if (index !== -1) {
-        state.postImages[index] = {
-          image: action.payload.image,
-          id: state.postImages[index].id,
-          filter: action.payload.filter,
-        };
-      }
-    },
-    removeImage(state, action: PayloadAction<string>) {
-      const index = state.postImages.findIndex(
-        (image) => image.id === action.payload
-      );
-      if (index !== -1) state.postImages.splice(index, 1);
-      if (state.imagesGallery.length < 10) {
-      }
-    },
-    removeAllImages(state) {
-      state.postImages = [];
-    },
-    addImageToPostGallery(state, action: PayloadAction<ImageStateType>) {
-      state.imagesGallery.push(action.payload);
-    },
-    changeImageFromPostGallery(state, action: PayloadAction<ImageStateType>) {
-      const index = state.imagesGallery.findIndex(
-        (image) => image.id === action.payload.id
-      );
-      if (index !== -1) state.imagesGallery[index] = action.payload;
-    },
-    removeGalleryImage(state, action: PayloadAction<{ id: string }>) {
-      const index = state.imagesGallery.findIndex(
-        (image) => image.id === action.payload.id
-      );
-      if (index !== -1) state.imagesGallery.splice(index, 1);
-    },
-    removeAllGalleryImages(state) {
-      state.imagesGallery = [];
-    },
-    setCropAspectRatio(state, action: PayloadAction<number>) {
-      state.cropAspectRatio = action.payload;
+      state.changedImages.map((image) => {
+        if (image.id === action.payload.id) {
+          image.image = action.payload.image;
+          image.filter = action.payload.filter;
+
+          return image;
+        }
+
+        return image;
+      });
     },
   },
 });
@@ -87,9 +87,20 @@ export interface IUploadImageId {
   uploadId: string;
 }
 
+export type PostImage = {
+  id: string;
+  image: string;
+};
+
+export type ChangedImage = {
+  croppedArea: Area | null;
+  filter: string;
+} & PostImage;
+
 export type PostStateType = {
-  postImagesIds: IUploadImageId[];
-  postImages: ImageStateType[];
-  imagesGallery: ImageStateType[];
-  cropAspectRatio: number;
+  postImages: PostImage[];
+  changedImages: ChangedImage[];
+  currentImageId: string | null;
+  aspectRatio: AspectRatioType;
+  zoom: number;
 };

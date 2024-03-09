@@ -211,6 +211,10 @@
 .firstModal {
   width: 100%;
   max-width: 491px;
+
+  .button {
+    margin-bottom: 24px;
+  }
 }
 
 @include s.devices(tablet) {

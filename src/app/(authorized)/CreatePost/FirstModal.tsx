@@ -1,57 +1,43 @@
 import Image from 'next/image';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
+import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
+
+import { Modal } from '@/components/Modals/Modal';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { postActions } from '@/redux/reducers/post/postReducer';
+import { useTranslation } from 'react-i18next';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
-import { Modal } from '@/components/Modals/Modal';
-import { ImageStateType } from './CreatePost';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { useTranslation } from 'react-i18next';
 
 import s from './CreatePost.module.scss';
-import { Alert } from '@/components/Alert';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  setFile: (file: File[]) => void;
   setShowCreatePostModal: (value: boolean) => void;
-  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
-  loadedImages: ImageStateType[];
-  currentFile?: File[];
 };
-export const FirstModal = ({
-  setStep,
-  currentFile,
-  // setFile,
-  setShowCreatePostModal,
-  loadedImages,
-}: Props) => {
+export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const dispatch = useAppDispatch();
-  const id = crypto.randomUUID();
-  const [fileError, setFileError] = useState('');
-
   const { t } = useTranslation();
+  const inputRef = useRef<HTMLInputElement>(null);
   const translate = (key: string): string =>
     t(`CreatePost.AddPhotoModal.${key}`);
 
-  const onSetUserPost = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const size = Math.round((file.size / 1024 / 1024) * 100) / 100;
-      if (size <= 15) {
-        if (currentFile) {
-          let newImagesArr: any = loadedImages;
-          newImagesArr.push({ id, image: URL.createObjectURL(file) });
-        }
-      } else {
-        return setFileError('sizeError');
-      }
-      dispatch(postActions.addImage({ id, image: URL.createObjectURL(file) }));
-      setStep(2);
-      e.target.files = null;
-      e.target.value = '';
-    }
+  const onSetUserImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    const files = [...e.target.files];
+
+    dispatch(
+      postActions.addImage(
+        files.map((file) => ({
+          filter: '',
+          id: crypto.randomUUID(),
+          image: URL.createObjectURL(file),
+        }))
+      )
+    );
+
+    setStep(2);
   };
 
   return (
@@ -60,7 +46,6 @@ export const FirstModal = ({
       className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
-      {fileError && <Alert text={translate(fileError)} />}
       <div className={s.createPost}>
         <Image
           src={'/img/create-post/no-image.png'}
@@ -73,15 +58,21 @@ export const FirstModal = ({
         <div className={s.createPostButtonsContainer}>
           <div className={s.createPost__select}>
             <label htmlFor="download_image" className={s.createPost__overlay}>
-              <PrimaryBtn isInsideLabel isFullWidth>
+              <PrimaryBtn
+                onClick={() => inputRef.current?.click()}
+                isInsideLabel
+                isFullWidth
+              >
                 {translate('selectBtn')}
               </PrimaryBtn>
               <input
+                ref={inputRef}
+                accept="image/*"
+                multiple
                 id="download_image"
                 type="file"
-                accept="image/png, image/jpeg"
                 className={s.createPost__file}
-                onChange={onSetUserPost}
+                onChange={onSetUserImage}
               />
             </label>
           </div>

@@ -3,19 +3,19 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
 import { filters } from '@/features/data';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useTranslation } from 'react-i18next';
 
 import s from './CreatePost.module.scss';
+import { Carousel } from '@/components/Carousel/Carousel';
+import { changedImageById } from '@/redux/reducers/post/postSelectors';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
-  zoomValue: string;
+  zoomValue?: string;
   setShowCreatePostModal: (value: boolean) => void;
 };
 
@@ -25,18 +25,25 @@ export const ThirdModal = ({
   setShowCreatePostModal,
 }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const translate = (key: string): string =>
     t(`SettingsProfilePage.AddPhotoModal.${key}`);
-
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const imagesArr = useAppSelector(postImages);
+  const currentImageId = useAppSelector((state) => state.post.currentImageId);
+  const images = useAppSelector((state) => state.post.changedImages);
+  const imageById = useAppSelector((state) =>
+    changedImageById(state, currentImageId || undefined)
+  );
   const changedPostImage = useRef<any>();
-  const dispatch = useAppDispatch();
-  const [activeImage, setActiveImage] = useState<string>(imagesArr[0].image);
 
-  const onSetActiveHandle = (image: string) => {
-    setActiveImage(image);
+  const setActiveImage = (id: string) => {
+    dispatch(postActions.changeCurrentImage({ id }));
   };
+
+  if (!imageById) {
+    return null;
+  }
 
   return (
     <>
@@ -50,13 +57,17 @@ export const ThirdModal = ({
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
-            <Carousel loadedImages={imagesArr} setActive={onSetActiveHandle} />
+            <Carousel loadedImages={images} setActive={setActiveImage} />
           </div>
           <div className={s.cropping__filters__items}>
             {filters.map(({ name, filter }) => {
               const onSelectFilter = (filter: string) => {
                 dispatch(
-                  postActions.setImageFilter({ image: activeImage, filter })
+                  postActions.setImageFilter({
+                    image: imageById.image,
+                    filter,
+                    id: imageById.id,
+                  })
                 );
               };
               return (
@@ -66,7 +77,10 @@ export const ThirdModal = ({
                   onClick={() => onSelectFilter(filter)}
                 >
                   <Image
-                    src={activeImage}
+                    //@ts-ignore
+                    src={
+                      images.find((image) => image.id === currentImageId)?.image
+                    }
                     alt={'image-filter'}
                     width={108}
                     height={108}
