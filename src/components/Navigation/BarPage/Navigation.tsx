@@ -14,31 +14,27 @@ type NavigationType = {
   paidAccount: boolean;
   setShowCreatePostModal: (value: boolean) => void;
   setShowLogoutModal: (value: boolean) => void;
+  showCreatePostModal: boolean;
 };
 
 export const Navigation = ({
   id,
   pathname,
   setShowCreatePostModal,
+  showCreatePostModal,
   setShowLogoutModal,
   paidAccount,
 }: NavigationType) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
-  const styleProfile =
-    pathname === `/profile/${id}` ||
-    pathname === '/profile/settings-profile' ||
-    pathname === '/profile/settings-profile/general-information' ||
-    pathname === '/profile/settings-profile/devices' ||
-    pathname === '/profile/settings-profile/account-management' ||
-    pathname === '/profile/settings-profile/my-payments'
-      ? `${s.nav__item__active} ${s.nav__item}`
-      : s.nav__item;
   const mapNav = navigationBar.map((el) => {
     const style = clsx(
       s.nav__item,
       {
-        [s.nav__item__active]: pathname.startsWith('/' + el.href),
+        [s.nav__item__active]: !showCreatePostModal && pathname.startsWith('/' + el.href),
+      },
+      {
+        [s.nav__item__active]: showCreatePostModal && el.href === 'create',
       },
       {
         [s.statistics]: el.href === 'statistics',
@@ -58,7 +54,7 @@ export const Navigation = ({
           </button>
         )}
         {el.href === 'profile' && (
-          <Link href={'/profile/' + id} className={styleProfile}>
+          <Link href={'/profile/' + id} className={style}>
             <BarComponent>{el.img}</BarComponent>
             <span>
               {translate(el.href === 'profile' ? 'myProfile' : el.href)}

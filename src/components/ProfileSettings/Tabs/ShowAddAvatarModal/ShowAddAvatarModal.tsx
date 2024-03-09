@@ -91,7 +91,7 @@ export const ShowAddAvatarModal = ({
               onChange={onSetUserAvatar}
               accept=".jpg, .jpeg, .png"
             />
-            <PrimaryBtn onClick={handleButtonClick}>
+            <PrimaryBtn onClick={handleButtonClick} isFullWidth>
               {translate('selectBtn')}
             </PrimaryBtn>
           </div>

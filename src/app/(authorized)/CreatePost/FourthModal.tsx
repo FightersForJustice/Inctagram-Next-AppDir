@@ -103,7 +103,6 @@ export const FourthModal: React.FC<Props> = ({
               />
               <p>{`${userData ? userData.userName : ''}`}</p>
             </div>
-            <div className={s.cropping__publication__container}>
               <div className={s.cropping__publication__wrapper}>
                 <p className={s.cropping__publication__text}>
                   Add publication descriptions
@@ -127,7 +126,6 @@ export const FourthModal: React.FC<Props> = ({
               />
             </div>
           </div>
-        </div>
       </FiltersModal>
       {areYouSureModal && (
         <AreYouSureModal

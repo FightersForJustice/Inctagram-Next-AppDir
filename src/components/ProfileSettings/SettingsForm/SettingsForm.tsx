@@ -74,7 +74,6 @@ export const SettingsForm = ({
   const cityArr = city?.split(',') || '';
   const usersCountry = cityArr[0] || '';
   const usersCity = cityArr[1] || '';
-
   const {
     register,
     handleSubmit,
@@ -96,7 +95,11 @@ export const SettingsForm = ({
     },
   });
 
-  useFormPersist(FORM_KEY, { watch, setValue });
+  const formStorage = useFormPersist(FORM_KEY, { setValue, trigger });
+
+  const saveToSessionStorage = (key: string, data: any) => {
+    sessionStorage.setItem(key, JSON.stringify(data));
+  };
 
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
@@ -128,7 +131,7 @@ export const SettingsForm = ({
         }, 2000);
       })
       .then(() => {
-        localStorage.removeItem(FORM_KEY);
+        formStorage.clear();
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
@@ -193,6 +196,9 @@ export const SettingsForm = ({
                 <span className={s.form__required}>*</span>
               </label>
               <DatePick
+                onClickPrivacyPolicy={() =>
+                  saveToSessionStorage(FORM_KEY, Object.assign({}, watch()))
+                }
                 translateErrors={translateErrors}
                 isObsoleteDateOfBirth={isObsoleteDateOfBirth}
                 trigger={trigger}

@@ -25,7 +25,6 @@ import {
 } from '@/utils/checkYears';
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 import './DatePick.scss';
-import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 export const DatePick = ({
   control,
@@ -33,12 +32,14 @@ export const DatePick = ({
   isObsoleteDateOfBirth,
   translateErrors,
   getValues,
+  onClickPrivacyPolicy,
 }: {
   control: Control<ProfileFormValues>;
   trigger: UseFormTrigger<ProfileFormValues>;
   isObsoleteDateOfBirth: boolean;
   translateErrors: (key: string) => string;
   getValues: UseFormGetValues<ProfileFormValues>;
+  onClickPrivacyPolicy: () => void;
 }) => {
   const [fieldError, setFieldError] = useState<string>('');
   const [isObsoleteAge, setIsObsoleteAge] = useState<boolean>(
@@ -95,8 +96,9 @@ export const DatePick = ({
                 {!!fieldError.length && translateErrors(fieldError)}
                 {isObsoleteAge && translateErrors('dateOfBirth.ageMessage')}
                 <Link
-                  href={AUTH_ROUTES.PRIVACY_POLICY_PROFILE}
+                  href={'/agreements/privacy-policy-profile'}
                   className={'underline pl-[5px]'}
+                  onClick={onClickPrivacyPolicy}
                 >
                   Privacy policy
                 </Link>
