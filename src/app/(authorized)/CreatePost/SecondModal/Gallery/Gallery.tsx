@@ -2,22 +2,21 @@ import { ImagesCollection } from '@/components/ImagesCollection';
 import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ImageStateType } from '../../CreatePost';
 
 import s from '../../CreatePost.module.scss';
+import { PostImage } from '@/redux/reducers/post/postReducer';
 
 type Props = {
-  setLoadedImages?: Dispatch<SetStateAction<ImageStateType[]>>;
+  setLoadedImages?: Dispatch<SetStateAction<PostImage[]>>;
   setStep: Dispatch<SetStateAction<number>>;
-  images: ImageStateType[];
-  changeCurrentImage?: Dispatch<SetStateAction<ImageStateType>>;
+  images: PostImage[];
+  changeCurrentImage?: Dispatch<SetStateAction<PostImage>>;
 };
 export const Gallery = ({
   setLoadedImages,
   setStep,
-  images,
-} // changeCurrentImage,
-: Props) => {
+  images, // changeCurrentImage,
+}: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
   // console.log('gallery render');
 
