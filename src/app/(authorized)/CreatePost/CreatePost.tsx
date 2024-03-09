@@ -21,6 +21,7 @@ export const CreatePost = ({
 
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
+
     sessionStorage.removeItem('userPostImage');
   };
 

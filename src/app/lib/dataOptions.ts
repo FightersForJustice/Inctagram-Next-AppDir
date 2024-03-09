@@ -5,5 +5,9 @@ export const getMyProfileOptions = (accessToken: string | null) => {
       Accept: 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
+    next: {
+      revalidate: 3600,
+      tags: ['myProfile']
+    }
   };
 };

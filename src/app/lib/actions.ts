@@ -21,7 +21,7 @@ import {
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { cookieDays, setCookieExpires } from '@/utils/cookiesActions';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
@@ -296,6 +296,7 @@ export async function uploadAvatarAction(avatar: FormData) {
     .then((res) => {
       if (res.ok) {
         revalidatePath('/profile/settings-profile/general-information');
+        revalidateTag('myProfile');
 
         return { success: true, modalText: 'avatarSuccessfullyUploaded' };
       }
@@ -315,6 +316,7 @@ export async function deleteAvatarAction() {
     .then((res) => {
       if (res.ok) {
         revalidatePath('/profile/settings-profile/general-information');
+        revalidateTag('myProfile');
 
         return { success: true, modalText: 'avatarSuccessfullyDeleted' };
       }
@@ -351,6 +353,7 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   ).then(async (res) => {
     if (res.ok) {
       revalidatePath('/profile/settings-profile/general-information');
+      revalidateTag('myProfile');
       return { success: true, modalText: 'updateProfileSuccess' };
     }
 

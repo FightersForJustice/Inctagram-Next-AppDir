@@ -14,9 +14,7 @@ export const Posts = ({ postsData, userData, myProfile }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const postsImages = () => {
-    let currentPosts;
     return postsData?.items.map((i) => {
-      currentPosts = i.images.filter((postImage) => postImage.width !== 640);
       return (
         <div key={i.id} className={s.imageContainer}>
           <PostImg post={i} userData={userData} myProfile={myProfile} />

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
 
 import { Modal } from '@/components/Modals/Modal';
@@ -9,6 +10,7 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 
 import s from './CreatePost.module.scss';
+import { Alert } from '@/components/Alert';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -26,7 +28,8 @@ export const FirstModal = ({
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const translate = (key: string): string =>
-    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+    t(`CreatePost.AddPhotoModal.${key}`);
+
 
   const onSetUserAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -52,6 +55,7 @@ export const FirstModal = ({
       className={s.firstModal}
       onClose={() => setShowCreatePostModal(false)}
     >
+      {fileError && <Alert text={translate(fileError)} />}
       <div className={s.createPost}>
         <Image
           src={'/img/create-post/no-image.png'}
@@ -60,6 +64,7 @@ export const FirstModal = ({
           height={228}
           className={s.createPost__image}
         />
+
         <div className={s.createPostButtonsContainer}>
           <div className={s.createPost__select}>
             <label htmlFor="download_image" className={s.createPost__overlay}>
@@ -76,8 +81,9 @@ export const FirstModal = ({
                 multiple
                 id="download_image"
                 type="file"
+                accept="image/png, image/jpeg"
                 className={s.createPost__file}
-                onChange={onSetUserAvatar}
+                onChange={onSetUserPost}
               />
             </label>
           </div>

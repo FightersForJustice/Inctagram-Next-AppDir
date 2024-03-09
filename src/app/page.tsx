@@ -1,4 +1,4 @@
-import { ROUTES } from '@/appRoutes/routes';
+import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -7,7 +7,7 @@ export default function IndexPage() {
   const id = headersList.get('id');
 
   if (id === null || id === undefined) {
-    redirect(ROUTES.HOME_PAGE);
+    redirect(AUTH_ROUTES.SIGN_IN);
   }
 
   redirect(`${ROUTES.PROFILE}/${id}`);

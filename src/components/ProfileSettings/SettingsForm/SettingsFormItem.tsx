@@ -24,6 +24,7 @@ export const SettingsFormItem: React.FC<Props> = ({
   translateName,
   defaultValue,
 }) => {
+  console.log('error', error);
   return (
     <div className={s.form__itemWrapper}>
       <label htmlFor={id} className={s.form__label}>
