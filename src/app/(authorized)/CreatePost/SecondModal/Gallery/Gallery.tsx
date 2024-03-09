@@ -10,15 +10,10 @@ type Props = {
   setLoadedImages?: Dispatch<SetStateAction<PostImage[]>>;
   setStep: Dispatch<SetStateAction<number>>;
   images: PostImage[];
-  changeCurrentImage?: Dispatch<SetStateAction<PostImage>>;
+  changeCurrentImage?: (id: string) => void;
 };
-export const Gallery = ({
-  setLoadedImages,
-  setStep,
-  images, // changeCurrentImage,
-}: Props) => {
+export const Gallery = ({ setStep, images }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
-  // console.log('gallery render');
 
   const closeGallery = () => {
     setOpenCollectionImages(false);
