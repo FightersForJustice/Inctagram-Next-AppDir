@@ -35,7 +35,7 @@ export const EditPost = ({
   };
 
   const onSave = () => {
-    if (accessToken)
+    if (accessToken) {
       updatePost({
         postId: postId!,
         description: textareaValue,
@@ -47,7 +47,10 @@ export const EditPost = ({
           setShowDots(true);
           toast.success('Post was updated');
         });
+    }
   };
+
+  console.log('accessToken', accessToken);
 
   return (
     <>
