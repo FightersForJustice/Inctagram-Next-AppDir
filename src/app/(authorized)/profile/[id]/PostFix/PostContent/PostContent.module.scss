@@ -1,9 +1,9 @@
 .post {
   &__desc {
-    margin-top: 19px;
     display: flex;
     gap: 12px;
-    padding: 0 24px 0 24px;
+    border-top: 1px solid var(--dark-100);
+    padding: 19px 24px 0 24px;
     margin-bottom: 12px;
 
     &__name {
@@ -21,7 +21,7 @@
       font-size: 12px;
       font-weight: 300;
       line-height: 16px;
-      letter-spacing: 0em;
+      letter-spacing: 0;
     }
   }
 

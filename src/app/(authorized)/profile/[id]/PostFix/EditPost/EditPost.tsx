@@ -51,10 +51,7 @@ export const EditPost = ({
     }
   };
 
-  const changeEditStatus = () => {
-    setEditPost(false);
-    setShowDots(true)
-  };
+
 
   console.log('accessToken', accessToken);
 
@@ -80,7 +77,6 @@ export const EditPost = ({
           {textareaLength} / 500
         </p>
         <div className={s.post__btn}>
-          <TransparentBtn onClick={changeEditStatus}>Cancel</TransparentBtn>
           <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>
         </div>
       </div>

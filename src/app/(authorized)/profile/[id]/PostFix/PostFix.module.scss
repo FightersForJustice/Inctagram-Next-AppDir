@@ -14,12 +14,23 @@
     width: 480px;
   }
 
+  &__editTitle {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 24px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--dark-100);
+  }
+
+  &__editCancel:hover {
+    cursor: pointer;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 230px;
-    border-bottom: 1px solid var(--dark-100);
     padding: 11px 24px 10px 34px;
 
     &__wrapper {
