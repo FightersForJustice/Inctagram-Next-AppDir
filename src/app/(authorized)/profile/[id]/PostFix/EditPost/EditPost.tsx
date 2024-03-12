@@ -7,6 +7,8 @@ import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
+import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
+import { Controller } from 'react-hook-form';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -16,12 +18,12 @@ type Props = {
 };
 
 export const EditPost = ({
-  setEditPost,
-  description,
-  postId,
-  setShowDots,
-}: Props) => {
-  const [textareaLength, setTextareaLength] = useState(0);
+                           setEditPost,
+                           description,
+                           postId,
+                           setShowDots,
+                         }: Props) => {
+  const [textareaLength, setTextareaLength] = useState(description.length);
   const [textareaValue, setTextareaValue] = useState(description);
 
   const accessToken = Cookies.get('accessToken');
@@ -50,6 +52,11 @@ export const EditPost = ({
     }
   };
 
+  const changeEditStatus = () => {
+    setEditPost(false);
+    setShowDots(true)
+  };
+
   console.log('accessToken', accessToken);
 
   return (
@@ -74,6 +81,7 @@ export const EditPost = ({
           {textareaLength} / 500
         </p>
         <div className={s.post__btn}>
+          <TransparentBtn onClick={changeEditStatus}>Cancel</TransparentBtn>
           <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>
         </div>
       </div>
