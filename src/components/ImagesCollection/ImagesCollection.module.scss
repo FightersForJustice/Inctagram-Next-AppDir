@@ -42,6 +42,7 @@
     right: 2px;
     cursor: pointer;
     transition: all 0.2s linear;
+    z-index: 0;
 
     &:hover {
       transform: scale(1.1);

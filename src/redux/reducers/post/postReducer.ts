@@ -24,10 +24,7 @@ const slice = createSlice({
           croppedArea: null,
         });
       });
-
-      if (!state.currentImageId) {
         state.currentImageId = action.payload[action.payload.length - 1].id;
-      }
     },
     deleteImage(state, action: PayloadAction<{ id: string }>) {
       state.postImages = state.postImages.filter(
