@@ -40,6 +40,9 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
       toast.error(
         'Фотография должна быть размером менее 20 Мб и иметь формат JPEG или PNG'
       );
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
       return;
     }
 
