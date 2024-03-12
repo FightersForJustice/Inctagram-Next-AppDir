@@ -7,6 +7,7 @@ import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
+import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -16,12 +17,12 @@ type Props = {
 };
 
 export const EditPost = ({
-  setEditPost,
-  description,
-  postId,
-  setShowDots,
-}: Props) => {
-  const [textareaLength, setTextareaLength] = useState(0);
+                           setEditPost,
+                           description,
+                           postId,
+                           setShowDots,
+                         }: Props) => {
+  const [textareaLength, setTextareaLength] = useState(description.length);
   const [textareaValue, setTextareaValue] = useState(description);
 
   const accessToken = Cookies.get('accessToken');
@@ -49,6 +50,8 @@ export const EditPost = ({
         });
     }
   };
+
+
 
   console.log('accessToken', accessToken);
 

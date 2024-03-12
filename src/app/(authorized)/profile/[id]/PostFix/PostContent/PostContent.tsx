@@ -45,7 +45,6 @@ export const PostContent = ({
       </div>
       <PostComment />
       <PostComment />
-
       <PostLikes />
       {showAreYouSureModal && (
         <AreYouSureModal
