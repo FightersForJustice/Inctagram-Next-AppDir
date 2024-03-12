@@ -8,7 +8,6 @@ import { Loader } from '@/components/Loader';
 import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
-import { Controller } from 'react-hook-form';
 
 type Props = {
   setEditPost: (value: boolean) => void;
