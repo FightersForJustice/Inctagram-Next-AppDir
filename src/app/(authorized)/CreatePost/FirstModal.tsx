@@ -10,6 +10,7 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 
 import s from './CreatePost.module.scss';
+import { toast } from 'react-toastify';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -26,6 +27,21 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     if (!e.target.files) return;
 
     const files = [...e.target.files];
+
+    const validImages = files.filter((file) => {
+      const isJpgOrPng =
+        file.type === 'image/jpeg' || file.type === 'image/png';
+      const isSizeValid = file.size <= 20 * 1024 * 1024; // 20 MB
+
+      return isJpgOrPng && isSizeValid;
+    });
+
+    if (validImages.length !== files.length) {
+      toast.error(
+        'Фотография должна быть размером менее 20 Мб и иметь формат JPEG или PNG'
+      );
+      return;
+    }
 
     dispatch(
       postActions.addImage(
