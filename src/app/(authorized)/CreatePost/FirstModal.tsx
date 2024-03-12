@@ -37,9 +37,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     });
 
     if (validImages.length !== files.length) {
-      toast.error(
-        'Фотография должна быть размером менее 20 Мб и иметь формат JPEG или PNG'
-      );
+      toast.error(translate('errorValid'));
       if (inputRef.current) {
         inputRef.current.value = '';
       }
