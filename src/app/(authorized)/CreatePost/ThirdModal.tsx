@@ -62,9 +62,9 @@ export const ThirdModal = ({
               const onSelectFilter = (filter: string) => {
                 dispatch(
                   postActions.setImageFilter({
-                    image: imageById.image,
+                    image:images.find((image) => image.id === currentImageId)?.image as string,
                     filter,
-                    id: imageById.id,
+                    id:images.find((image) => image.id === currentImageId)?.id as string,
                   })
                 );
               };
@@ -75,9 +75,8 @@ export const ThirdModal = ({
                   onClick={() => onSelectFilter(filter)}
                 >
                   <Image
-                    //@ts-ignore
                     src={
-                      images.find((image) => image.id === currentImageId)?.image
+                      images.find((image) => image.id === currentImageId)?.image as string
                     }
                     alt={'image-filter'}
                     width={108}
