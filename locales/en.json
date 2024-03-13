@@ -234,7 +234,9 @@
       "sizeError": "Photo size must be less than 20 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
       "tooltipText": "Functionality is not available yet",
-      "errorValid": "The photo must be less than 20 Mb and have JPEG or PNG format"
+      "errorValidFormat": "The format of the uploaded photo must be PNG and JPEG",
+      "errorValidSize": "Photo size must be less than",
+      "error": "Error!"
     }
   },
   "AgreementsPage": {
