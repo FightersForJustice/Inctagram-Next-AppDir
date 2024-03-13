@@ -11,12 +11,17 @@ import {
   useGetDeviceSessionsQuery,
 } from '@/api/profile.api';
 import { toast } from 'react-toastify';
-
 import s from '../Tabs.module.scss';
+import { userSessions } from './actions';
 
 export const DevicesTab = () => {
   const { data: sessions, refetch } = useGetDeviceSessionsQuery();
   const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
+
+  const AllSessions = async () => {
+    const sessions = await userSessions();
+    console.log(sessions);
+  };
 
   const sessionsDefault: DevicesResponse[] = [
     {
@@ -62,7 +67,7 @@ export const DevicesTab = () => {
   return (
     <div className={s.devices}>
       <ThisDevice session={sessions ? sessions[0] : sessionsDefault[0]} />
-
+      <button onClick={AllSessions}>AllSessions</button>
       {sessions?.length && (
         <div className={'text-right'}>
           <TransparentBtn onClick={onDeleteAllSessions}>
