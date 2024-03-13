@@ -30,10 +30,10 @@ import { accessToken } from '@/utils/serverActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SignInData) {
+export async function signInAction(data: SignInData, userAgent: string) {
   if (data) {
     try {
-      const res = await fetch(routes.LOGIN, loginOptions(data));
+      const res = await fetch(routes.LOGIN, loginOptions(data, userAgent));
       const responseBody = await res.json();
 
       if (!res.ok) {
@@ -72,7 +72,7 @@ export async function signUpAction(data: SignInData) {
       email: data.email.toLowerCase(),
       baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
-    const res = await fetch(routes.SIGN_UP, loginOptions(newData));
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData, ''));
     if (res.ok) {
       return { success: true, data: 'signUpSuccess' };
     }

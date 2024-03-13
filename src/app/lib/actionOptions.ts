@@ -5,7 +5,8 @@ import { createPostOptionsType } from './optionsTypes';
 //AUTH OPTIONS
 
 export const loginOptions = (
-  data: SignInData & {
+  data: SignInData,
+  userAgent: string & {
     baseUrl?: string | undefined;
   }
 ) => {
@@ -15,6 +16,7 @@ export const loginOptions = (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'user-agent': userAgent,
     },
     body: JSON.stringify(data),
     next: { revalidate: 0 },
