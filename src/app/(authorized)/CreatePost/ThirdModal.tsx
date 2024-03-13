@@ -32,9 +32,7 @@ export const ThirdModal = ({
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
   const images = useAppSelector((state) => state.post.changedImages);
-  const imageById = useAppSelector((state) =>
-    changedImageById(state, currentImageId || undefined)
-  );
+  const imageById = images[0]
   const changedPostImage = useRef<any>();
 
   const setActiveImage = (id: string) => {
