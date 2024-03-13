@@ -6,6 +6,7 @@ import { Posts } from '../Posts/Posts';
 import { LoadMore } from '../Posts/load-more';
 import { findMinId } from '@/utils/findMinId';
 import { headers } from 'next/headers';
+
 type Props = {
   id: number;
   myProfile: boolean;
@@ -24,6 +25,7 @@ const ProfileServer = async ({ id, myProfile }: Props) => {
         postsData={postsData}
         myProfile={myProfile}
       />
+
       <div className={s.posts}>
         <Posts
           postsData={postsData}
