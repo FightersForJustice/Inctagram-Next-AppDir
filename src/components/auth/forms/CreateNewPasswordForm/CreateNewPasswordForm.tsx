@@ -55,7 +55,7 @@ export const CreateNewPasswordForm = ({
       .then(() => {
         toast.success(translate('newPasswordSuccess'));
         const password = data.password;
-        return signInAction({ email, password });
+        return signInAction({ email, password }, '');
       })
       .then(() => deleteAllSessionsAction())
       .then(() => router.push('/'))
