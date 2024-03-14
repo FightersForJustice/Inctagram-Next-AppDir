@@ -1,49 +1,41 @@
 import { PropsWithChildren } from 'react';
-import Image from 'next/image';
 
-import style from './EditPostModal.module.css';
+import style from './EditPostModal.module.scss';
+import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
+import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
+import { Modal } from '@/components/Modals/Modal';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title?: string;
-  onClose?: () => void;
-  width?: string;
-  isOkBtn?: boolean;
+  onClose: () => void;
+  onSubmit: () => void
 };
 
 export const EditPostModal = ({
-  onClose,
-  title,
-  children,
-  width,
-  isOkBtn,
-}: PropsWithChildren<Props>) => {
+                                onClose,
+                                title,
+                                children,
+                                onSubmit,
+                              }: PropsWithChildren<Props>) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`CreatePost.EditPost.${key}`);
   return (
-    <div className={style.modal} onClick={onClose}>
-      <div
-        className={style.modal__content}
-        style={{ width }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className={style.modal__header}>
-          <div className={style.modal__title}>{title}</div>
-          <Image
-            className={style.modal__close}
-            src={'/img/close.svg'}
-            alt={'close'}
-            width={24}
-            height={24}
-            onClick={onClose}
-          />
-        </div>
+    <>
+      <Modal title={title} onClose={onClose}>
         <div className={style.modal__body}>{children}</div>
-        {isOkBtn && (
-          <div className={style.modal__footer}>
-            <button className={style.modal__btn} onClick={onClose}>
-              OK
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
+        <div className={style.modal__footer}>
+          <TransparentBtn className={style.modal__btn} onClick={onSubmit}>
+            {translate('submit')}
+          </TransparentBtn>
+          <PrimaryBtn className={style.modal__btn} onClick={onClose}>
+            {translate('cancel')}
+
+          </PrimaryBtn>
+        </div>
+
+      </Modal>
+    </>
   );
 };

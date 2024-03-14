@@ -14,7 +14,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <ProfileServer id={id} myProfile={myId === id ? true : false} />
+      <ProfileServer id={id} myProfile={myId === id} />
     </>
   );
 };

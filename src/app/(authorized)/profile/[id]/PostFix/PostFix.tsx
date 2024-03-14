@@ -13,6 +13,8 @@ import { EditPost } from './EditPost';
 import { PostContent } from './PostContent';
 import close from 'public/img/close.svg';
 import s from './PostFix.module.scss';
+import { EditPostModal } from '@/components/Modals/EditPostModal';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   onClose: MouseEventHandler<HTMLButtonElement>;
@@ -35,12 +37,15 @@ export const PostFix: React.FC<Props> = ({
   const [showDots, setShowDots] = useState(true);
   const [editPost, setEditPost] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  const [showCloseEditModal, setShowCloseEditModal] = useState(false);
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
     postId!,
   );
-
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`CreatePost.EditPost.${key}`);
   const onDeletePost = async () => {
     if (postId) {
       const response = await getPostsDelete(postId);
@@ -54,18 +59,25 @@ export const PostFix: React.FC<Props> = ({
   if (error) {
     handleApiError(error);
   }
+  const onCloseEditMode = ()=>{
+    setShowCloseEditModal(false)
+  }
   const changeEditStatus = () => {
     setEditPost(false);
-    setShowDots(true)
+    setShowDots(true);
+    setShowCloseEditModal(false)
   };
   return (
     <>
       {data ? (
         <div className={'relative'}>
-          {editPost && <div className={s.post__editTitle}>
-            <h1>Edit Post</h1>
-            <Image onClick={changeEditStatus} src={close} alt={'close not found'}  className={s.post__editCancel}/>
-          </div>}
+          {editPost &&
+            <div className={s.post__editTitle}>
+              <h1>Edit Post</h1>
+              {showCloseEditModal &&
+                <EditPostModal title={translate('title')} onSubmit={changeEditStatus} onClose={onCloseEditMode}>{translate('editModalText')}</EditPostModal>}
+              <Image onClick={()=>setShowCloseEditModal(true)} src={close} alt={'close'} className={s.post__editCancel} />
+            </div>}
           <div className={s.post}>
             {isSuccess ? (
               <div className={s.post__img}>
@@ -126,10 +138,10 @@ export const PostFix: React.FC<Props> = ({
               </div>
               {editPost ? (
                 <EditPost
-                  setEditPost={setEditPost}
-                  description={data.description}
                   postId={postId}
+                  setEditPost={setEditPost}
                   setShowDots={setShowDots}
+                  description={data.description}
                 />
               ) : (
                 <PostContent

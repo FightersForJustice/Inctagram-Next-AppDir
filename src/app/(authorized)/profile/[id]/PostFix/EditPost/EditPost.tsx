@@ -7,7 +7,6 @@ import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
-import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -22,7 +21,6 @@ export const EditPost = ({
                            postId,
                            setShowDots,
                          }: Props) => {
-  const [textareaLength, setTextareaLength] = useState(description.length);
   const [textareaValue, setTextareaValue] = useState(description);
 
   const accessToken = Cookies.get('accessToken');
@@ -30,8 +28,7 @@ export const EditPost = ({
   const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.currentTarget.value.length > 500) return;
-    setTextareaLength(e.currentTarget.value.length);
+    if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
 
@@ -69,12 +66,12 @@ export const EditPost = ({
         />
         <p
           style={{
-            color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+            color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
             textAlign: 'right',
             fontSize: '12px',
           }}
         >
-          {textareaLength} / 500
+          {textareaValue.length} / 500
         </p>
         <div className={s.post__btn}>
           <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>
