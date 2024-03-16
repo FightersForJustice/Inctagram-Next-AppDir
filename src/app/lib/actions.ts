@@ -242,11 +242,14 @@ export async function deleteAllSessionsAction() {
 
 // middleware actions
 
-export async function updateTokensAndContinue(refreshToken: string) {
+export async function updateTokensAndContinue(
+  refreshToken: string,
+  userAgent: string
+) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
-      requestUpdateTokensOptions(refreshToken)
+      requestUpdateTokensOptions(refreshToken, userAgent)
     );
     if (!updateTokenResponse.ok) {
       console.log('UpdateToken failed', updateTokenResponse);

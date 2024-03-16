@@ -63,12 +63,14 @@ export const newPasswordOptions = (password: string, code: string) => {
 };
 
 export const requestUpdateTokensOptions = (
-  refreshToken: string | undefined
+  refreshToken: string | undefined,
+  userAgent: string
 ) => {
   return {
     method: 'POST',
     headers: {
       Cookie: `refreshToken=${refreshToken}`,
+      'user-agent': userAgent,
     },
     next: { revalidate: 0 },
   };
