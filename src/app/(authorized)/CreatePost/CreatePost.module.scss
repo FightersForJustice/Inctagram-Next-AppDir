@@ -44,6 +44,20 @@
   &__open {
     width: 100%;
   }
+  .error {
+    border: 1px solid #cc1439;
+    border-radius: 2px;
+    background-color: #660a1d;
+    padding: 5px 15px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: -20px;
+    .title {
+      font-weight: 700;
+    }
+  }
 }
 
 .itemsContainer {

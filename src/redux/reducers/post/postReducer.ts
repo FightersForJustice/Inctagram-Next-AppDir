@@ -6,7 +6,7 @@ const initialAppState: PostStateType = {
   postImages: [],
   changedImages: [],
   currentImageId: null,
-  aspectRatio: AspectRatioType.one,
+  aspectRatio: 1,
   zoom: 1,
 };
 
