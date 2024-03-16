@@ -13,6 +13,8 @@ import {
 import { toast } from 'react-toastify';
 import s from '../Tabs.module.scss';
 import { userSessions } from './actions';
+import UAParser from 'ua-parser-js';
+import { useEffect } from 'react';
 
 export const DevicesTab = () => {
   const { data: sessions, refetch } = useGetDeviceSessionsQuery();
@@ -22,6 +24,15 @@ export const DevicesTab = () => {
     const sessions = await userSessions();
     console.log(sessions);
   };
+
+  useEffect(() => {
+    const userAgent = window.navigator.userAgent;
+    console.log(userAgent);
+
+    const parser = new UAParser();
+    const userAgentArray = parser.setUA(userAgent).getResult();
+    console.log(userAgentArray);
+  }, []);
 
   const sessionsDefault: DevicesResponse[] = [
     {
