@@ -1,7 +1,4 @@
 'use client';
-
-// @ts-ignore
-
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
 import s from '../Tabs.module.scss';
