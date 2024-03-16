@@ -14,7 +14,9 @@ export const ThisDevice: React.FC<Props> = ({ session }) => {
   if (session) {
     return (
       <>
-        <p className={s.devices__title}>{session?.deviceName ?? 'No device'}</p>
+        <p className={s.devices__title}>
+          {session?.deviceName ?? 'Current device'}
+        </p>
         <div className={s.devices__wrapper}>
           <Image
             src={findMatchingString(session?.browserName) ?? 'none'}
