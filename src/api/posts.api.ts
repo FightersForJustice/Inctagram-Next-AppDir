@@ -40,7 +40,7 @@ export const postsApi = api.injectEndpoints({
     }),
     updatePost: builder.mutation<
       any,
-      { postId: number; description: string; accessToken: string }
+      { postId: number; description: string; accessToken?: string }
     >({
       query: (args) => {
         return {

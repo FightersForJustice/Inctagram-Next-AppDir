@@ -22,6 +22,7 @@ export const config = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;
+  console.log('>>> request >>>', request);
   const cookiesList = request.cookies;
 
   const userAgent = headersList.get('user-agent') || '';

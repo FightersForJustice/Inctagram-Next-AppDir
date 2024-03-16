@@ -1,6 +1,8 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
+import { ROUTES } from '@/appRoutes/routes';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -53,4 +55,25 @@ export const getPostsDelete = async (postId: number) => {
     },
   });
   return response.status;
+};
+
+export const updatePost = async (formData: FormData, postId: number) => {
+  const accessToken = cookies().get('accessToken');
+  console.log('accessToken', accessToken);
+  console.log('formData', formData.get('description'));
+  const apiUrl = baseUrl + `posts/${postId}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+    revalidatePath(ROUTES.PROFILE);
+    return response.status;
+  } catch (error) {
+    console.log(error);
+  }
 };

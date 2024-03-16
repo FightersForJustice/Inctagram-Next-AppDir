@@ -1,13 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { useUpdatePostMutation } from '@/api';
-import { Loader } from '@/components/Loader';
-
 import s from './EditPost.module.scss';
-import Cookies from 'js-cookie';
-import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
+import { updatePost } from '@/app/(authorized)/profile/[id]/actions';
+import { toast } from 'react-toastify';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -17,17 +13,13 @@ type Props = {
 };
 
 export const EditPost = ({
-                           setEditPost,
-                           description,
-                           postId,
-                           setShowDots,
-                         }: Props) => {
+  setEditPost,
+  description,
+  postId,
+  setShowDots,
+}: Props) => {
   const [textareaLength, setTextareaLength] = useState(description.length);
   const [textareaValue, setTextareaValue] = useState(description);
-
-  const accessToken = Cookies.get('accessToken');
-
-  const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -35,52 +27,40 @@ export const EditPost = ({
     setTextareaValue(e.currentTarget.value);
   };
 
-  const onSave = () => {
-    if (accessToken) {
-      updatePost({
-        postId: postId!,
-        description: textareaValue,
-        accessToken: accessToken,
-      })
-        .unwrap()
-        .then(() => {
-          setEditPost(false);
-          setShowDots(true);
-          toast.success('Post was updated');
-        });
+  const onSave = (formData: FormData) => {
+    if (postId) {
+      updatePost(formData, postId).then(() => {
+        setEditPost(false);
+        setShowDots(false);
+        toast.success('Post Updated');
+      });
     }
   };
 
-
-
-  console.log('accessToken', accessToken);
-
   return (
-    <>
-      <div className={s.post}>
-        <p className={s.post__title}>Add publication descriptions</p>
-        <textarea
-          className={s.post__textarea}
-          cols={30}
-          rows={10}
-          maxLength={500}
-          value={textareaValue}
-          onChange={onTextareaHandler}
-        />
-        <p
-          style={{
-            color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
-            textAlign: 'right',
-            fontSize: '12px',
-          }}
-        >
-          {textareaLength} / 500
-        </p>
-        <div className={s.post__btn}>
-          <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>
-        </div>
+    <form action={onSave} className={s.post}>
+      <p className={s.post__title}>Add publication descriptions</p>
+      <textarea
+        className={s.post__textarea}
+        name={'description'}
+        cols={30}
+        rows={10}
+        maxLength={500}
+        value={textareaValue}
+        onChange={onTextareaHandler}
+      />
+      <p
+        style={{
+          color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+          textAlign: 'right',
+          fontSize: '12px',
+        }}
+      >
+        {textareaLength} / 500
+      </p>
+      <div className={s.post__btn}>
+        <PrimaryBtn>Save Changes</PrimaryBtn>
       </div>
-      {isLoading && <Loader />}
-    </>
+    </form>
   );
 };
