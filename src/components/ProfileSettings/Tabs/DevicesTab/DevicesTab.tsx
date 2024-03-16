@@ -18,7 +18,6 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
 
   const parser = new UAParser();
   const userAgentArray = parser.setUA(userAgent).getResult();
-  console.log(userAgentArray);
 
   const currentDevice = sessions.find(
     (item: any) =>
@@ -28,7 +27,15 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
       item.osVersion === userAgentArray.os.version
   );
   console.log(currentDevice);
+  const otherDevice = sessions.filter(
+    (item: any) =>
+      item.browserName !== userAgentArray.browser.name ||
+      item.browserVersion !== userAgentArray.browser.version ||
+      item.osName !== userAgentArray.os.name ||
+      item.osVersion !== userAgentArray.os.version
+  );
 
+  console.log(otherDevice);
   const onDeleteAllSessions = async () => {};
 
   return (
