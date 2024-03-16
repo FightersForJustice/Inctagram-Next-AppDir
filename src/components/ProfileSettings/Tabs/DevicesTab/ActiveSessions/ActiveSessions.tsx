@@ -13,10 +13,9 @@ import s from './ActiveSessions.module.scss';
 
 type Props = {
   sessions: DevicesResponse[];
-  refetch: any;
 };
 
-export const ActiveSessions: React.FC<Props> = ({ sessions, refetch }) => {
+export const ActiveSessions: React.FC<Props> = ({ sessions }) => {
   const { t } = useTranslation();
   const logoutTranslate = (key: string): string => t(`Navigation.${key}`);
   const translate = (key: string): string =>
@@ -31,7 +30,6 @@ export const ActiveSessions: React.FC<Props> = ({ sessions, refetch }) => {
     }
     await deleteSession(item.deviceId.toString());
     try {
-      refetch();
       toast.success(`session of ${item.deviceName} device was closed`);
     } catch (e: any) {}
   };
@@ -41,9 +39,9 @@ export const ActiveSessions: React.FC<Props> = ({ sessions, refetch }) => {
       <div className={s.devices__wrapper} key={index}>
         <Image
           src={`${
-            item.osName === 'Mac OS'
-              ? '/img/settings-profile/devices-tab/desktop_mac.svg'
-              : '/img/settings-profile/devices-tab/phone_iphone.svg'
+            item.deviceType === 'mobile'
+              ? '/img/settings-profile/devices-tab/phone_iphone.svg'
+              : '/img/settings-profile/devices-tab/desktop_mac.svg'
           }`}
           alt={'device'}
           width={36}

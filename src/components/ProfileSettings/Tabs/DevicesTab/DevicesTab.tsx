@@ -3,6 +3,7 @@ import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
 import s from '../Tabs.module.scss';
 import UAParser from 'ua-parser-js';
+import { ActiveSessions } from './ActiveSessions';
 
 type Props = {
   userAgent: string;
@@ -45,6 +46,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
           </TransparentBtn>
         </div>
       )}
+      <ActiveSessions sessions={sessions} />
     </div>
   );
 };
