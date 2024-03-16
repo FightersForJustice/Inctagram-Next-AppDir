@@ -1,6 +1,7 @@
 .selector {
   &Container {
     width: 100%;
+    max-width: 359px;
   }
 
   &Label {

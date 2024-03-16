@@ -233,10 +233,17 @@
       "filters": "Filters",
       "sizeError": "Photo size must be less than 20 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
+
       "tooltipText": "Functionality is not available yet",
       "errorValidFormat": "The format of the uploaded photo must be PNG and JPEG",
       "errorValidSize": "Photo size must be less than",
       "error": "Error!"
+    },
+    "EditPost": {
+      "title": "Close Post",
+      "editModalText": "Do you really want to close the edition of the publication? If you close changes won't be saved",
+      "submit": "Yes",
+      "cancel": "No"
     }
   },
   "AgreementsPage": {

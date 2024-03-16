@@ -32,9 +32,7 @@ export const ThirdModal = ({
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
   const images = useAppSelector((state) => state.post.changedImages);
-  const imageById = useAppSelector((state) =>
-    changedImageById(state, currentImageId || undefined)
-  );
+  const imageById = images[0]
   const changedPostImage = useRef<any>();
 
   const setActiveImage = (id: string) => {
@@ -64,9 +62,9 @@ export const ThirdModal = ({
               const onSelectFilter = (filter: string) => {
                 dispatch(
                   postActions.setImageFilter({
-                    image: imageById.image,
+                    image:images.find((image) => image.id === currentImageId)?.image as string,
                     filter,
-                    id: imageById.id,
+                    id:images.find((image) => image.id === currentImageId)?.id as string,
                   })
                 );
               };
@@ -77,9 +75,8 @@ export const ThirdModal = ({
                   onClick={() => onSelectFilter(filter)}
                 >
                   <Image
-                    //@ts-ignore
                     src={
-                      images.find((image) => image.id === currentImageId)?.image
+                      images.find((image) => image.id === currentImageId)?.image as string
                     }
                     alt={'image-filter'}
                     width={108}

@@ -16,12 +16,11 @@ type Props = {
 };
 
 export const EditPost = ({
-  setEditPost,
-  description,
-  postId,
-  setShowDots,
-}: Props) => {
-  const [textareaLength, setTextareaLength] = useState(0);
+                           setEditPost,
+                           description,
+                           postId,
+                           setShowDots,
+                         }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
 
   const accessToken = Cookies.get('accessToken');
@@ -29,8 +28,7 @@ export const EditPost = ({
   const [updatePost, { isLoading }] = useUpdatePostMutation();
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.currentTarget.value.length > 500) return;
-    setTextareaLength(e.currentTarget.value.length);
+    if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
 
@@ -50,6 +48,8 @@ export const EditPost = ({
     }
   };
 
+
+
   console.log('accessToken', accessToken);
 
   return (
@@ -66,12 +66,12 @@ export const EditPost = ({
         />
         <p
           style={{
-            color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+            color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
             textAlign: 'right',
             fontSize: '12px',
           }}
         >
-          {textareaLength} / 500
+          {textareaValue.length} / 500
         </p>
         <div className={s.post__btn}>
           <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>

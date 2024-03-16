@@ -37,6 +37,7 @@ export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
     } else {
       dispatch(postActions.deleteImage({ id }));
     }
+    dispatch(postActions.changeCurrentImage({id:images[0].id}))
   };
   const onChangeCurrentImage = (item: PostImage) => {
     closeGallery();
