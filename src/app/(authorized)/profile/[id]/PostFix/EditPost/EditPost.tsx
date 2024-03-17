@@ -29,7 +29,10 @@ export const EditPost = ({
 
   const onSave = (formData: FormData) => {
     if (postId) {
-      updatePost(formData, postId).then(() => {
+      updatePost(
+         postId,
+         formData
+      ).then(() => {
         setEditPost(false);
         setShowDots(false);
         toast.success('Post Updated');

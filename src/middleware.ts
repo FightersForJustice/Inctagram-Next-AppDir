@@ -22,7 +22,7 @@ export const config = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const headersList = request.headers;
-  console.log('>>> request >>>', request);
+  // console.log('>>> request >>>', request);
   const cookiesList = request.cookies;
 
   const userAgent = headersList.get('user-agent') || '';
@@ -33,6 +33,7 @@ export async function middleware(request: NextRequest) {
   const lang = changedLang || defaultLang;
 
   const isMobile = /mobile/i.test(userAgent);
+
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
 
@@ -47,13 +48,18 @@ export async function middleware(request: NextRequest) {
       : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
   }
 
+  // const signInResponse = await fetch(AUTH_ROUTES.SIGN_IN)
+
+  // console.log('>>> signInResponse >>>', signInResponse)
+
   //checking auth refactor
   try {
     const meResponse = await fetch(routes.ME, requestMeOptions(accessToken));
 
     switch (meResponse.status) {
       case 200:
-        console.log(meResponse.status, 'isAuth');
+        // console.log('>>> meResponse >>>', meResponse);
+        console.log('>>> meResponse headers>>>', meResponse.headers.get('Set-Cookie'));
         const response = NextResponse.next();
         response.headers.set('accessToken', `${accessToken}`);
         const responseData = await meResponse.json();

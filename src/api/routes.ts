@@ -22,6 +22,8 @@ export const routes = Object.freeze({
   //CreatePost
   UPLOAD_POST_IMAGE: `${baseUrl}posts/image`,
   CREATE_POST: `${baseUrl}posts`,
+  //UpdatePost
+  UPDATE_POST: `${baseUrl}posts`
 });
 
 export const citySelectRoutes = Object.freeze({

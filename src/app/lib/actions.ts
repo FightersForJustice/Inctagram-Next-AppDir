@@ -39,8 +39,12 @@ export async function signInAction(data: SignInData) {
       if (!res.ok) {
         return { success: false, error: responseBody };
       }
+
       const accessToken = responseBody.accessToken;
       const refreshToken = getRefreshToken(res.headers.get('set-cookie'));
+
+      console.log('>>> RES >>>', res.headers)
+      console.log('>>> RESPONSE_BODY >>>', responseBody)
 
       cookies().set({
         name: 'refreshToken',

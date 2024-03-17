@@ -1,8 +1,10 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { revalidatePath } from 'next/cache';
+import {revalidatePath, revalidateTag} from 'next/cache';
 import { ROUTES } from '@/appRoutes/routes';
+import {routes} from "@/api/routes";
+import {accessToken} from "@/utils/serverActions";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -57,23 +59,39 @@ export const getPostsDelete = async (postId: number) => {
   return response.status;
 };
 
-export const updatePost = async (formData: FormData, postId: number) => {
-  const accessToken = cookies().get('accessToken');
-  console.log('accessToken', accessToken);
-  console.log('formData', formData.get('description'));
-  const apiUrl = baseUrl + `posts/${postId}`;
 
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: formData,
-    });
-    revalidatePath(ROUTES.PROFILE);
-    return response.status;
-  } catch (error) {
-    console.log(error);
-  }
+export const updatePost = async (postId: number, data: FormData ) => {
+  const apiUrl = routes.UPDATE_POST + `/${postId}`;
+
+  console.log('ALOOOOOOOOOOOOOOO GDE VISOV')
+  console.log('DATAAAAAAAAAAA', JSON.stringify(data))
+  console.log('DATAAAAAAAAAAA', data)
+  return fetch(
+     apiUrl,
+     {
+       credentials: 'include',
+       headers: {
+         Authorization: `Bearer ${accessToken()}`,
+         'Content-Type': 'application/json',
+       },
+       method: 'PUT',
+       body: JSON.stringify(
+          {
+            description: data.get('description')
+          }
+       )
+     }
+  )
+     .then(res => {
+
+       console.log('>>> res >>>', res)
+       if (res.ok) {
+         revalidatePath('/profile/[id]/page')
+          revalidateTag('')
+         console.log('OKKKKKKKKKKKKKKK')
+       }
+     })
+     .catch(error => {
+       console.log('>>> error >>>', error)
+     })
 };
