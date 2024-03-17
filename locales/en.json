@@ -193,7 +193,13 @@
       "title": "This device",
       "status": "Online",
       "active": "Active sessions",
-      "text": "You have not yet logged in from other devices"
+      "text": "You have not yet logged in from other devices",
+      "allSession": "Terminate all other session",
+      "currentDevice": "Current device",
+      "AllSessionsClosed" : "All sessions are closed",
+      "sessionClosed" : "The session is closed",
+      "lastVisit" : "Last visit",
+      "browserName" : "Browser Name"
     },
     "AccountManagementTab": {
       "titleTab": "Account Management"

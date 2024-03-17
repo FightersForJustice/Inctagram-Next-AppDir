@@ -4,8 +4,11 @@ import { ThisDevice } from './ThisDevice';
 import s from '../Tabs.module.scss';
 import UAParser from 'ua-parser-js';
 import { ActiveSessions } from './ActiveSessions';
-import { deleteAllSessions } from './actions';
+import { deleteAllSessions, userSessions } from './actions';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { findDevice } from './utils/findDevice';
+import { useState } from 'react';
 
 type Props = {
   userAgent: string;
@@ -13,21 +16,19 @@ type Props = {
 };
 
 export const DevicesTab = ({ userAgent, sessions }: Props) => {
-  // console.log(userAgent);
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
+
   console.log(sessions);
+
+  const [stateSessions, setStateSessions] = useState(sessions);
 
   const parser = new UAParser();
   const userAgentArray = parser.setUA(userAgent).getResult();
 
-  const currentDevice = sessions.find(
-    (item: any) =>
-      item.browserName === userAgentArray.browser.name &&
-      item.browserVersion === userAgentArray.browser.version &&
-      item.osName === userAgentArray.os.name &&
-      item.osVersion === userAgentArray.os.version
-  );
-  //console.log(currentDevice);
-  const otherDevice = sessions.filter(
+  const currentDevice = findDevice(stateSessions, userAgentArray);
+  const otherDevice = stateSessions.filter(
     (item: any) =>
       item.browserName !== userAgentArray.browser.name ||
       item.browserVersion !== userAgentArray.browser.version ||
@@ -35,11 +36,12 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
       item.osVersion !== userAgentArray.os.version
   );
 
-  //console.log(otherDevice);
   const onDeleteAllSessions = async () => {
     const statusCode = await deleteAllSessions(userAgent);
     if (statusCode === 204) {
-      toast.success('Все сессии закрыты');
+      toast.success(translate('AllSessionsClosed'));
+      const sessions = await userSessions();
+      setStateSessions(sessions);
     }
   };
 
@@ -49,11 +51,14 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
       {sessions?.length && (
         <div className={'text-right'}>
           <TransparentBtn onClick={onDeleteAllSessions}>
-            Terminate all other session
+            {translate('allSession')}
           </TransparentBtn>
         </div>
       )}
-      <ActiveSessions sessions={otherDevice} />
+      <ActiveSessions
+        sessions={otherDevice}
+        setStateSessions={setStateSessions}
+      />
     </div>
   );
 };

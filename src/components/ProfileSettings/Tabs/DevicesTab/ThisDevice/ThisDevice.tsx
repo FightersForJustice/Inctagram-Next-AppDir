@@ -5,17 +5,21 @@ import s from './ThisDeviceTab.module.scss';
 import { DevicesResponse } from '@/api/profile.api';
 import { dateToFormat } from '@/utils/dateToFormat';
 import { findMatchingString } from '@/utils/findBrowserName';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   session: DevicesResponse;
 };
 
 export const ThisDevice: React.FC<Props> = ({ session }) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
   if (session) {
     return (
       <>
         <p className={s.devices__title}>
-          {session?.deviceName ?? 'Current device'}
+          {session?.deviceName ?? translate('currentDevice')}
         </p>
         <div className={s.devices__wrapper}>
           <Image

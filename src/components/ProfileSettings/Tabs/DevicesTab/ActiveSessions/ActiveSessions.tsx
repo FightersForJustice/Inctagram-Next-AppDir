@@ -5,13 +5,18 @@ import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
 import { DevicesResponse } from '@/api/profile.api';
 import { dateToFormat } from '@/utils/dateToFormat';
 import s from './ActiveSessions.module.scss';
-import { deleteSession } from '../actions';
+import { deleteSession, userSessions } from '../actions';
+import { Dispatch, useState } from 'react';
 
 type Props = {
   sessions: DevicesResponse[];
+  setStateSessions: Dispatch<any>;
 };
 
-export const ActiveSessions: React.FC<Props> = ({ sessions }) => {
+export const ActiveSessions: React.FC<Props> = ({
+  sessions,
+  setStateSessions,
+}) => {
   const { t } = useTranslation();
   const logoutTranslate = (key: string): string => t(`Navigation.${key}`);
   const translate = (key: string): string =>
@@ -20,11 +25,13 @@ export const ActiveSessions: React.FC<Props> = ({ sessions }) => {
   const logoutSession = async (item: DevicesResponse) => {
     const statusCode = await deleteSession(item.deviceId.toString());
     if (statusCode === 204) {
-      toast.success('Сессия закрыта');
+      toast.success(translate('sessionClosed'));
+      const sessions = await userSessions();
+      setStateSessions(sessions);
     }
   };
 
-  const activeSessions = sessions.map((item, index) => {
+  const activeSessions = sessions.map((item: any, index: any) => {
     return (
       <div className={s.devices__wrapper} key={index}>
         <Image
@@ -42,10 +49,11 @@ export const ActiveSessions: React.FC<Props> = ({ sessions }) => {
           <p className={s.devices__content__title}>{item.deviceName}</p>
           <p className={s.devices__content__address}>IP: {item.ip}</p>
           <p className={s.devices__content__visit}>
-            Last visit: <span>{dateToFormat(item.lastActive)}</span>
+            {translate('lastVisit')}:{' '}
+            <span>{dateToFormat(item.lastActive)}</span>
           </p>
           <p className={s.devices__content__visit}>
-            Browser Name: <span>{item.browserName}</span>
+            {translate('browserName')}: <span>{item.browserName}</span>
           </p>
         </div>
         <div className={'mt-auto mb-auto ml-auto'}>
