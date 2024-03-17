@@ -24,13 +24,13 @@ type Props = {
 };
 
 export const PostFix: React.FC<Props> = ({
-                                           onClose,
-                                           postId,
-                                           avatar,
-                                           userName,
-                                           setOpenPostModal,
-                                           myProfile,
-                                         }) => {
+  onClose,
+  postId,
+  avatar,
+  userName,
+  setOpenPostModal,
+  myProfile,
+}) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showDots, setShowDots] = useState(true);
   const [editPost, setEditPost] = useState(false);
@@ -38,7 +38,7 @@ export const PostFix: React.FC<Props> = ({
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
-    postId!,
+    postId!
   );
 
   const onDeletePost = async () => {
@@ -56,16 +56,24 @@ export const PostFix: React.FC<Props> = ({
   }
   const changeEditStatus = () => {
     setEditPost(false);
-    setShowDots(true)
+    setShowDots(true);
   };
+
   return (
     <>
       {data ? (
         <div className={'relative'}>
-          {editPost && <div className={s.post__editTitle}>
-            <h1>Edit Post</h1>
-            <Image onClick={changeEditStatus} src={close} alt={'close not found'}  className={s.post__editCancel}/>
-          </div>}
+          {editPost && (
+            <div className={s.post__editTitle}>
+              <h1>Edit Post</h1>
+              <Image
+                onClick={changeEditStatus}
+                src={close}
+                alt={'close not found'}
+                className={s.post__editCancel}
+              />
+            </div>
+          )}
           <div className={s.post}>
             {isSuccess ? (
               <div className={s.post__img}>

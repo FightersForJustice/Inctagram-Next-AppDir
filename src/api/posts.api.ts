@@ -37,6 +37,7 @@ export const postsApi = api.injectEndpoints({
           method: 'GET',
         };
       },
+      providesTags: ['Post'],
     }),
     updatePost: builder.mutation<
       any,

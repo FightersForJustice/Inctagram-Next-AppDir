@@ -4,6 +4,7 @@ import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import s from './EditPost.module.scss';
 import { updatePost } from '@/app/(authorized)/profile/[id]/actions';
 import { toast } from 'react-toastify';
+import { postsApi } from '@/api/posts.api';
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -20,6 +21,7 @@ export const EditPost = ({
 }: Props) => {
   const [textareaLength, setTextareaLength] = useState(description.length);
   const [textareaValue, setTextareaValue] = useState(description);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
@@ -29,13 +31,14 @@ export const EditPost = ({
 
   const onSave = (formData: FormData) => {
     if (postId) {
-      updatePost(
-         postId,
-         formData
-      ).then(() => {
+      setIsLoading(true);
+      updatePost(postId, formData).then(() => {
         setEditPost(false);
-        setShowDots(false);
+        // setShowDots(false);
         toast.success('Post Updated');
+        postsApi.util.invalidateTags(['Post']);
+        // console.log('invalidate POST');
+        setIsLoading(false);
       });
     }
   };
