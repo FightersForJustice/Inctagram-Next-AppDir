@@ -40,6 +40,10 @@ export const ThisDevice: React.FC<Props> = ({ session }) => {
       </>
     );
   } else {
-    return <div></div>;
+    return (
+      <div className={s.sessionDelete}>
+        Текущая сессия удалена и скоро она не будет доступна
+      </div>
+    );
   }
 };
