@@ -4,6 +4,7 @@ import { ThisDevice } from './ThisDevice';
 import s from '../Tabs.module.scss';
 import UAParser from 'ua-parser-js';
 import { ActiveSessions } from './ActiveSessions';
+import { deleteAllSessions } from './actions';
 
 type Props = {
   userAgent: string;
@@ -34,7 +35,10 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
   );
 
   console.log(otherDevice);
-  const onDeleteAllSessions = async () => {};
+  const onDeleteAllSessions = async () => {
+    const result = await deleteAllSessions();
+    console.log(result);
+  };
 
   return (
     <div className={s.devices}>
