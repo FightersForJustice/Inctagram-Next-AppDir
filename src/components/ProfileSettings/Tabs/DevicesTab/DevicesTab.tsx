@@ -5,6 +5,7 @@ import s from '../Tabs.module.scss';
 import UAParser from 'ua-parser-js';
 import { ActiveSessions } from './ActiveSessions';
 import { deleteAllSessions } from './actions';
+import { toast } from 'react-toastify';
 
 type Props = {
   userAgent: string;
@@ -12,7 +13,7 @@ type Props = {
 };
 
 export const DevicesTab = ({ userAgent, sessions }: Props) => {
-  console.log(userAgent);
+  // console.log(userAgent);
   console.log(sessions);
 
   const parser = new UAParser();
@@ -25,7 +26,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
       item.osName === userAgentArray.os.name &&
       item.osVersion === userAgentArray.os.version
   );
-  console.log(currentDevice);
+  //console.log(currentDevice);
   const otherDevice = sessions.filter(
     (item: any) =>
       item.browserName !== userAgentArray.browser.name ||
@@ -34,10 +35,12 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
       item.osVersion !== userAgentArray.os.version
   );
 
-  console.log(otherDevice);
+  //console.log(otherDevice);
   const onDeleteAllSessions = async () => {
-    const result = await deleteAllSessions(userAgent);
-    console.log(result);
+    const statusCode = await deleteAllSessions(userAgent);
+    if (statusCode === 204) {
+      toast.success('Все сессии закрыты');
+    }
   };
 
   return (

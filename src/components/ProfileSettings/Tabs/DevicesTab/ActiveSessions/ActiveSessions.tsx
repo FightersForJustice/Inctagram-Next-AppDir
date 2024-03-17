@@ -1,15 +1,11 @@
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-
 import { LogoutBtn } from '@/components/Buttons/LogoutBtn';
-import {
-  DevicesResponse,
-  useDeleteSessionsDeviceMutation,
-} from '@/api/profile.api';
+import { DevicesResponse } from '@/api/profile.api';
 import { dateToFormat } from '@/utils/dateToFormat';
-
 import s from './ActiveSessions.module.scss';
+import { deleteSession } from '../actions';
 
 type Props = {
   sessions: DevicesResponse[];
@@ -21,17 +17,11 @@ export const ActiveSessions: React.FC<Props> = ({ sessions }) => {
   const translate = (key: string): string =>
     t(`SettingsProfilePage.DevicesTab.${key}`);
 
-  const [deleteSession] = useDeleteSessionsDeviceMutation();
-
   const logoutSession = async (item: DevicesResponse) => {
-    if (sessions.length <= 1) {
-      toast.error('You authorize only this device');
-      return;
+    const statusCode = await deleteSession(item.deviceId.toString());
+    if (statusCode === 204) {
+      toast.success('Сессия закрыта');
     }
-    await deleteSession(item.deviceId.toString());
-    try {
-      toast.success(`session of ${item.deviceName} device was closed`);
-    } catch (e: any) {}
   };
 
   const activeSessions = sessions.map((item, index) => {

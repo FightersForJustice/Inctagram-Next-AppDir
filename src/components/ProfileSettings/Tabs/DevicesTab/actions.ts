@@ -30,8 +30,23 @@ export async function deleteAllSessions(userAgent: string) {
         'https://inctagram.work/api/v1/sessions/terminate-all',
         deleteOptions(token, userAgent)
       );
-      const responseBody = await res.json();
-      return responseBody;
+      const statusCode = res.status;
+      return statusCode;
+    }
+  } catch (error) {
+    console.error(error, 'delete error');
+  }
+}
+export async function deleteSession(id: string) {
+  try {
+    const token = accessToken();
+    if (token) {
+      const res = await fetch(
+        `https://inctagram.work/api/v1/sessions/${id}`,
+        deleteUploadedPostOptions(token)
+      );
+      const statusCode = res.status;
+      return statusCode;
     }
   } catch (error) {
     console.error(error, 'delete error');
