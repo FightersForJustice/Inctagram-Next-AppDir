@@ -36,7 +36,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
 
   console.log(otherDevice);
   const onDeleteAllSessions = async () => {
-    const result = await deleteAllSessions();
+    const result = await deleteAllSessions(userAgent);
     console.log(result);
   };
 
@@ -50,7 +50,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
           </TransparentBtn>
         </div>
       )}
-      <ActiveSessions sessions={sessions} />
+      <ActiveSessions sessions={otherDevice} />
     </div>
   );
 };

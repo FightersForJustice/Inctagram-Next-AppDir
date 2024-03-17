@@ -202,3 +202,15 @@ export const deleteUploadedPostOptions = (accessToken: string | null) => {
     },
   };
 };
+export const deleteOptions = (
+  accessToken: string | null,
+  userAgent: string
+) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'user-agent': userAgent,
+    },
+  };
+};

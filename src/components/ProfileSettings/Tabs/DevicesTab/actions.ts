@@ -1,5 +1,6 @@
 'use server';
 import {
+  deleteOptions,
   deleteUploadedPostOptions,
   requestMeOptions,
 } from '@/app/lib/actionOptions';
@@ -21,13 +22,13 @@ export async function userSessions() {
   }
 }
 
-export async function deleteAllSessions() {
+export async function deleteAllSessions(userAgent: string) {
   try {
     const token = accessToken();
     if (token) {
       const res = await fetch(
         'https://inctagram.work/api/v1/sessions/terminate-all',
-        deleteUploadedPostOptions(token)
+        deleteOptions(token, userAgent)
       );
       const responseBody = await res.json();
       return responseBody;
