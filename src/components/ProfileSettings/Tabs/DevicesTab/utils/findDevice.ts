@@ -1,7 +1,12 @@
-export function findDevice(sessions: any, userAgentArray: any) {
+import { DevicesResponse } from '@/api/profile.api';
+
+export function findDevice(
+  sessions: DevicesResponse[],
+  userAgentArray: UAParser.IResult
+) {
   if (sessions) {
     return sessions.find(
-      (item: any) =>
+      (item: DevicesResponse) =>
         item.browserName === userAgentArray.browser.name &&
         item.browserVersion === userAgentArray.browser.version &&
         item.osName === userAgentArray.os.name &&

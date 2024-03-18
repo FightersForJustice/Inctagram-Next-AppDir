@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { findDevice } from './utils/findDevice';
 import { useState } from 'react';
 import { DevicesResponse } from '@/api/profile.api';
+import { otherDeviceFilter } from './utils/otherDeviceFilter';
 
 type Props = {
   userAgent: string;
@@ -29,13 +30,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
   const userAgentArray = parser.setUA(userAgent).getResult();
 
   const currentDevice = findDevice(stateSessions, userAgentArray);
-  const otherDevice = stateSessions.filter(
-    (item: DevicesResponse) =>
-      item.browserName !== userAgentArray.browser.name ||
-      item.browserVersion !== userAgentArray.browser.version ||
-      item.osName !== userAgentArray.os.name ||
-      item.osVersion !== userAgentArray.os.version
-  );
+  const otherDevice = otherDeviceFilter(stateSessions, userAgentArray);
 
   const onDeleteAllSessions = async () => {
     const statusCode = await deleteAllSessions(userAgent);

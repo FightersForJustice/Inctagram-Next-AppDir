@@ -8,7 +8,7 @@ import { findMatchingString } from '@/utils/findBrowserName';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  session: DevicesResponse;
+  session: DevicesResponse | undefined;
 };
 
 export const ThisDevice: React.FC<Props> = ({ session }) => {
