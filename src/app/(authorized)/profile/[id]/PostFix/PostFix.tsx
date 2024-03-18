@@ -1,3 +1,5 @@
+'use client';
+
 import { useDeletePostMutation, useGetPostQuery } from '@/api';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { Loader } from '@/components/Loader';
@@ -37,10 +39,12 @@ export const PostFix: React.FC<Props> = ({
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
+
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
     postId!
   );
 
+  console.log('>>> POST DATA >>>', data);
   const onDeletePost = async () => {
     if (postId) {
       const response = await getPostsDelete(postId);

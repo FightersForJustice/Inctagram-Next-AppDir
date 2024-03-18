@@ -33,11 +33,9 @@ export const EditPost = ({
     if (postId) {
       setIsLoading(true);
       updatePost(postId, formData).then(() => {
-        setEditPost(false);
-        // setShowDots(false);
-        toast.success('Post Updated');
         postsApi.util.invalidateTags(['Post']);
-        // console.log('invalidate POST');
+        setEditPost(false);
+        toast.success('Post Updated');
         setIsLoading(false);
       });
     }
