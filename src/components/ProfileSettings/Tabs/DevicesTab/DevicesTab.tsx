@@ -9,10 +9,11 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { findDevice } from './utils/findDevice';
 import { useState } from 'react';
+import { DevicesResponse } from '@/api/profile.api';
 
 type Props = {
   userAgent: string;
-  sessions: any;
+  sessions: DevicesResponse[];
 };
 
 export const DevicesTab = ({ userAgent, sessions }: Props) => {
@@ -29,7 +30,7 @@ export const DevicesTab = ({ userAgent, sessions }: Props) => {
 
   const currentDevice = findDevice(stateSessions, userAgentArray);
   const otherDevice = stateSessions.filter(
-    (item: any) =>
+    (item: DevicesResponse) =>
       item.browserName !== userAgentArray.browser.name ||
       item.browserVersion !== userAgentArray.browser.version ||
       item.osName !== userAgentArray.os.name ||

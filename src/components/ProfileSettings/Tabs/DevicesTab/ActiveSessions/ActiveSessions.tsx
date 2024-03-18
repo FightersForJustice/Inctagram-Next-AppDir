@@ -6,11 +6,11 @@ import { DevicesResponse } from '@/api/profile.api';
 import { dateToFormat } from '@/utils/dateToFormat';
 import s from './ActiveSessions.module.scss';
 import { deleteSession, userSessions } from '../actions';
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
 
 type Props = {
   sessions: DevicesResponse[];
-  setStateSessions: Dispatch<any>;
+  setStateSessions: Dispatch<DevicesResponse[]>;
 };
 
 export const ActiveSessions: React.FC<Props> = ({
@@ -31,40 +31,42 @@ export const ActiveSessions: React.FC<Props> = ({
     }
   };
 
-  const activeSessions = sessions.map((item: any, index: any) => {
-    return (
-      <div className={s.devices__wrapper} key={index}>
-        <Image
-          src={`${
-            item.deviceType === 'mobile'
-              ? '/img/settings-profile/devices-tab/phone_iphone.svg'
-              : '/img/settings-profile/devices-tab/desktop_mac.svg'
-          }`}
-          alt={'device'}
-          width={36}
-          height={36}
-          className={s.devices__icon}
-        />
-        <div className={s.devices__content}>
-          <p className={s.devices__content__title}>{item.deviceName}</p>
-          <p className={s.devices__content__address}>IP: {item.ip}</p>
-          <p className={s.devices__content__visit}>
-            {translate('lastVisit')}:{' '}
-            <span>{dateToFormat(item.lastActive)}</span>
-          </p>
-          <p className={s.devices__content__visit}>
-            {translate('browserName')}: <span>{item.browserName}</span>
-          </p>
-        </div>
-        <div className={'mt-auto mb-auto ml-auto'}>
-          <LogoutBtn
-            btnCallback={() => logoutSession(item)}
-            t={logoutTranslate}
+  const activeSessions = sessions.map(
+    (item: DevicesResponse, index: number) => {
+      return (
+        <div className={s.devices__wrapper} key={index}>
+          <Image
+            src={`${
+              item.deviceType === 'mobile'
+                ? '/img/settings-profile/devices-tab/phone_iphone.svg'
+                : '/img/settings-profile/devices-tab/desktop_mac.svg'
+            }`}
+            alt={'device'}
+            width={36}
+            height={36}
+            className={s.devices__icon}
           />
+          <div className={s.devices__content}>
+            <p className={s.devices__content__title}>{item.deviceName}</p>
+            <p className={s.devices__content__address}>IP: {item.ip}</p>
+            <p className={s.devices__content__visit}>
+              {translate('lastVisit')}:{' '}
+              <span>{dateToFormat(item.lastActive)}</span>
+            </p>
+            <p className={s.devices__content__visit}>
+              {translate('browserName')}: <span>{item.browserName}</span>
+            </p>
+          </div>
+          <div className={'mt-auto mb-auto ml-auto'}>
+            <LogoutBtn
+              btnCallback={() => logoutSession(item)}
+              t={logoutTranslate}
+            />
+          </div>
         </div>
-      </div>
-    );
-  });
+      );
+    }
+  );
 
   return (
     <>
