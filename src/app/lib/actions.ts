@@ -53,7 +53,7 @@ export async function signInAction(data: SignInData) {
       cookies().set({
         name: 'accessToken',
         value: accessToken,
-        httpOnly: true,
+        httpOnly: false,
         path: '/',
         secure: true,
       });
@@ -263,7 +263,7 @@ export async function updateTokensAndContinue(refreshToken: string) {
     const action = NextResponse.next({
       headers: {
         'Set-Cookie': [
-          `accessToken=${newAccessToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
+          `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
           `refreshToken=${newRefreshToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
         ],
       } as any,
