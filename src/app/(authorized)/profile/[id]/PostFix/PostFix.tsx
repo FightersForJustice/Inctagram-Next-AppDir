@@ -39,26 +39,7 @@ export const PostFix: React.FC<Props> = ({
   // const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   // const [showCloseEditModal, setShowCloseEditModal] = useState(false);
   // const [isPostChanged, setIsPostChanged] = useState(false);
-  // const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  // const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
-  //   postId!,
-  // );
-  // const { t } = useTranslation();
-  // const translate = (key: string): string =>
-  //   t(`CreatePost.EditPost.${key}`);
-  // const onDeletePost = async () => {
-  //   if (postId) {
-  //     const response = await getPostsDelete(postId);
-  //     if (response === 204) {
-  //       setOpenPostModal(false);
-  //       toast.success('Post was deleted');
-  //     }
-  //   }
-  // };
-  //
-  // if (error) {
-  //   handleApiError(error);
-  // }
+
   // const onCloseEditMode = () => {
   //   setShowCloseEditModal(false);
   // };

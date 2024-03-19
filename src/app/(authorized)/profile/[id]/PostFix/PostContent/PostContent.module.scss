@@ -1,4 +1,22 @@
 .post {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 24px 10px 24px;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+    &__user{
+      gap: 12px;
+      display: flex;
+      align-items: center;
+    }
+  }
   &__desc {
     display: flex;
     gap: 12px;
@@ -23,6 +41,7 @@
       line-height: 16px;
       letter-spacing: 0;
     }
+
   }
 
   &__avatar {

@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import close from 'public/img/close.svg';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { useUpdatePostMutation } from '@/api';
@@ -7,26 +8,28 @@ import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
+import { EditPostModal } from '@/components/Modals/EditPostModal';
 
 type Props = {
   setEditPost: (value: boolean) => void;
   description: string;
   postId: number | undefined;
-  isPostChanged: (value: boolean) => void;
-  setShowDots: (value: boolean) => void;
+  // isPostChanged: (value: boolean) => void;
+  // setShowDots: (value: boolean) => void;
 };
 
 export const EditPost = ({
                            setEditPost,
                            description,
-                           isPostChanged,
+                           // isPostChanged,
                            postId,
-                           setShowDots,
+                           // setShowDots,
                          }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
-  useEffect(() => {
-    isPostChanged(textareaValue !== description);
-  }, [textareaValue, description, isPostChanged]);
+  // useEffect(() => {
+  //   isPostChanged(textareaValue !== description);
+  // }, [textareaValue, description, isPostChanged]);
   const accessToken = Cookies.get('accessToken');
 
   const [updatePost, { isLoading }] = useUpdatePostMutation();
@@ -45,17 +48,33 @@ export const EditPost = ({
         .unwrap()
         .then(() => {
           setEditPost(false);
-          setShowDots(true);
+          // setShowDots(true);
           toast.success('Post was updated');
         });
     }
   };
-
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`CreatePost.EditPost.${key}`);
 
   console.log('accessToken', accessToken);
 
   return (
     <>
+      {/*<div className={s.post__editTitle}>*/}
+      {/*  <h1>Edit Post</h1>*/}
+        {/*{showCloseEditModal && isPostChanged &&*/}
+        {/*<EditPostModal title={translate('title')}*/}
+        {/*               onSubmit={()=>{}}*/}
+        {/*               // onSubmit={changeEditStatus}*/}
+        {/*               // onClose={onCloseEditMode}*/}
+        {/*               onClose={()=>{}}*/}
+        {/*>{translate('editModalText')}</EditPostModal>*/}
+        {/*}*/}
+        {/*<Image onClick={onCloseClick} src={close} alt={'close'} className={s.post__editCancel} />*/}
+      {/*</div>*/}
+      {/*{editPost &&*/}
+      {/*}*/}
       <div className={s.post}>
         <p className={s.post__title}>Add publication descriptions</p>
         <textarea
