@@ -33,14 +33,15 @@ export function PostImg({ post, userData, myProfile }: Props) {
             setOpenPostModal(false), closeModal();
           }}
         >
-          <PostFix
-            onClose={() => setOpenPostModal(false)}
-            postId={post.id}
-            avatar={userData?.avatars[0]?.url}
-            userName={userData?.userName}
-            setOpenPostModal={setOpenPostModal}
-            myProfile={myProfile}
-          />
+          Hello
+          {/*<PostFix*/}
+          {/*  onClose={() => setOpenPostModal(false)}*/}
+          {/*  postId={post.id}*/}
+          {/*  avatar={userData?.avatars[0]?.url}*/}
+          {/*  userName={userData?.userName}*/}
+          {/*  setOpenPostModal={setOpenPostModal}*/}
+          {/*  myProfile={myProfile}*/}
+          {/*/>*/}
         </PostModal>
       )}
       <Image

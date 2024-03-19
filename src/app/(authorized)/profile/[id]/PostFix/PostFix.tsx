@@ -33,149 +33,149 @@ export const PostFix: React.FC<Props> = ({
                                            setOpenPostModal,
                                            myProfile,
                                          }) => {
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [showDots, setShowDots] = useState(true);
-  const [editPost, setEditPost] = useState(false);
-  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
-  const [showCloseEditModal, setShowCloseEditModal] = useState(false);
-  const [isPostChanged, setIsPostChanged] = useState(false);
-  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
-    postId!,
-  );
-  const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`CreatePost.EditPost.${key}`);
-  const onDeletePost = async () => {
-    if (postId) {
-      const response = await getPostsDelete(postId);
-      if (response === 204) {
-        setOpenPostModal(false);
-        toast.success('Post was deleted');
-      }
-    }
-  };
-
-  if (error) {
-    handleApiError(error);
-  }
-  const onCloseEditMode = () => {
-    setShowCloseEditModal(false);
-  };
-  const changeEditStatus = () => {
-    setEditPost(false);
-    setShowDots(true);
-    setShowCloseEditModal(false);
-  };
-
-  const onCloseClick = () => {
-    if (isPostChanged) {
-      setShowCloseEditModal(true);
-    } else {
-      changeEditStatus();
-    }
-  };
+  // const [visiblePopup, setVisiblePopup] = useState(false);
+  // const [showDots, setShowDots] = useState(true);
+  // const [editPost, setEditPost] = useState(false);
+  // const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  // const [showCloseEditModal, setShowCloseEditModal] = useState(false);
+  // const [isPostChanged, setIsPostChanged] = useState(false);
+  // const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
+  // const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
+  //   postId!,
+  // );
+  // const { t } = useTranslation();
+  // const translate = (key: string): string =>
+  //   t(`CreatePost.EditPost.${key}`);
+  // const onDeletePost = async () => {
+  //   if (postId) {
+  //     const response = await getPostsDelete(postId);
+  //     if (response === 204) {
+  //       setOpenPostModal(false);
+  //       toast.success('Post was deleted');
+  //     }
+  //   }
+  // };
+  //
+  // if (error) {
+  //   handleApiError(error);
+  // }
+  // const onCloseEditMode = () => {
+  //   setShowCloseEditModal(false);
+  // };
+  // const changeEditStatus = () => {
+  //   setEditPost(false);
+  //   setShowDots(true);
+  //   setShowCloseEditModal(false);
+  // };
+  //
+  // const onCloseClick = () => {
+  //   if (isPostChanged) {
+  //     setShowCloseEditModal(true);
+  //   } else {
+  //     changeEditStatus();
+  //   }
+  // };
 
 
   return (
     <>
-      {data ? (
-        <div className={'relative'}>
-          {editPost &&
-            <div className={s.post__editTitle}>
-              <h1>Edit Post</h1>
-              {showCloseEditModal && isPostChanged &&
-                <EditPostModal title={translate('title')} onSubmit={changeEditStatus}
-                               onClose={onCloseEditMode}>{translate('editModalText')}</EditPostModal>}
-              <Image onClick={onCloseClick} src={close} alt={'close'}
-                     className={s.post__editCancel} />
-            </div>}
-          <div className={s.post}>
-            {isSuccess ? (
-              <div className={s.post__img}>
-                <Carousel>
-                  {data.images.map((i, index) => {
-                    if (i.width !== 640) {
-                      return (
-                        <SwiperSlide key={index} className={'w-full'}>
-                          {/* <img src={i.url} alt={'err'} /> */}
-                          <Image
-                            width={491}
-                            height={491}
-                            alt="err"
-                            src={i.url}
-                          />
-                        </SwiperSlide>
-                      );
-                    }
-                    return;
-                  })}
-                </Carousel>
-              </div>
-            ) : (
-              <Loader />
-            )}
+      {/*{data ? (*/}
+      {/*  <div className={'relative'}>*/}
+      {/*    {editPost &&*/}
+      {/*      <div className={s.post__editTitle}>*/}
+      {/*        <h1>Edit Post</h1>*/}
+      {/*        {showCloseEditModal && isPostChanged &&*/}
+      {/*          <EditPostModal title={translate('title')} onSubmit={changeEditStatus}*/}
+      {/*                         onClose={onCloseEditMode}>{translate('editModalText')}</EditPostModal>}*/}
+      {/*        <Image onClick={onCloseClick} src={close} alt={'close'}*/}
+      {/*               className={s.post__editCancel} />*/}
+      {/*      </div>}*/}
+      {/*    <div className={s.post}>*/}
+      {/*      {isSuccess ? (*/}
+      {/*        <div className={s.post__img}>*/}
+      {/*          <Carousel>*/}
+      {/*            {data.images.map((i, index) => {*/}
+      {/*              if (i.width !== 640) {*/}
+      {/*                return (*/}
+      {/*                  <SwiperSlide key={index} className={'w-full'}>*/}
+      {/*                    /!* <img src={i.url} alt={'err'} /> *!/*/}
+      {/*                    <Image*/}
+      {/*                      width={491}*/}
+      {/*                      height={491}*/}
+      {/*                      alt="err"*/}
+      {/*                      src={i.url}*/}
+      {/*                    />*/}
+      {/*                  </SwiperSlide>*/}
+      {/*                );*/}
+      {/*              }*/}
+      {/*              return;*/}
+      {/*            })}*/}
+      {/*          </Carousel>*/}
+      {/*        </div>*/}
+      {/*      ) : (*/}
+      {/*        <Loader />*/}
+      {/*      )}*/}
 
-            <div className={s.post__container}>
-              <div className={s.post__header}>
-                <div className={s.post__header__wrapper}>
-                  <Image
-                    src={avatar ?? '/img/create-post/no-image.png'}
-                    alt={'ava'}
-                    width={36}
-                    height={36}
-                    className={s.post__header__img}
-                  />
-                  <p>{userName}</p>
-                </div>
+      {/*      <div className={s.post__container}>*/}
+      {/*        <div className={s.post__header}>*/}
+      {/*          <div className={s.post__header__wrapper}>*/}
+      {/*            <Image*/}
+      {/*              src={avatar ?? '/img/create-post/no-image.png'}*/}
+      {/*              alt={'ava'}*/}
+      {/*              width={36}*/}
+      {/*              height={36}*/}
+      {/*              className={s.post__header__img}*/}
+      {/*            />*/}
+      {/*            <p>{userName}</p>*/}
+      {/*          </div>*/}
 
-                {showDots ? (
-                    myProfile ? (
-                      <Dots
-                        setVisiblePopup={setVisiblePopup}
-                        visiblePopup={visiblePopup}
-                        setEditPost={setEditPost}
-                        setShowAreYouSureModal={setShowAreYouSureModal}
-                        setShowDots={setShowDots}
-                      />
-                    ) : (
-                      <DotsFriends
-                        setVisiblePopup={setVisiblePopup}
-                        visiblePopup={visiblePopup}
-                      />
-                    )
-                  )
-                  : (
-                    <div className={'w-1/12'}></div>
-                  )}
-              </div>
-              {editPost ? (
-                <EditPost
-                  isPostChanged={setIsPostChanged}
-                  postId={postId}
-                  setEditPost={setEditPost}
-                  setShowDots={setShowDots}
-                  description={data.description}
-                />
-              ) : (
-                <PostContent
-                  avatar={avatar}
-                  userName={userName}
-                  description={data.description}
-                  setVisiblePopup={setVisiblePopup}
-                  showAreYouSureModal={showAreYouSureModal}
-                  setShowAreYouSureModal={setShowAreYouSureModal}
-                  onDeletePost={onDeletePost}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Loader /> //при ошибке постоянно крутиться лоадер
-      )}
-      {isLoading && !isError && <Loader />}
-      {isDeleting && <Loader />}
+      {/*          {showDots ? (*/}
+      {/*              myProfile ? (*/}
+      {/*                <Dots*/}
+      {/*                  setVisiblePopup={setVisiblePopup}*/}
+      {/*                  visiblePopup={visiblePopup}*/}
+      {/*                  setEditPost={setEditPost}*/}
+      {/*                  setShowAreYouSureModal={setShowAreYouSureModal}*/}
+      {/*                  setShowDots={setShowDots}*/}
+      {/*                />*/}
+      {/*              ) : (*/}
+      {/*                <DotsFriends*/}
+      {/*                  setVisiblePopup={setVisiblePopup}*/}
+      {/*                  visiblePopup={visiblePopup}*/}
+      {/*                />*/}
+      {/*              )*/}
+      {/*            )*/}
+      {/*            : (*/}
+      {/*              <div className={'w-1/12'}></div>*/}
+      {/*            )}*/}
+      {/*        </div>*/}
+      {/*        {editPost ? (*/}
+      {/*          <EditPost*/}
+      {/*            isPostChanged={setIsPostChanged}*/}
+      {/*            postId={postId}*/}
+      {/*            setEditPost={setEditPost}*/}
+      {/*            setShowDots={setShowDots}*/}
+      {/*            description={data.description}*/}
+      {/*          />*/}
+      {/*        ) : (*/}
+      {/*          <PostContent*/}
+      {/*            avatar={avatar}*/}
+      {/*            userName={userName}*/}
+      {/*            description={data.description}*/}
+      {/*            setVisiblePopup={setVisiblePopup}*/}
+      {/*            showAreYouSureModal={showAreYouSureModal}*/}
+      {/*            setShowAreYouSureModal={setShowAreYouSureModal}*/}
+      {/*            onDeletePost={onDeletePost}*/}
+      {/*          />*/}
+      {/*        )}*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*) : (*/}
+      {/*  <Loader /> //при ошибке постоянно крутиться лоадер*/}
+      {/*)}*/}
+      {/*{isLoading && !isError && <Loader />}*/}
+      {/*{isDeleting && <Loader />}*/}
     </>
   );
 };
