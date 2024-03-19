@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
@@ -12,17 +12,21 @@ type Props = {
   setEditPost: (value: boolean) => void;
   description: string;
   postId: number | undefined;
+  isPostChanged: (value: boolean) => void;
   setShowDots: (value: boolean) => void;
 };
 
 export const EditPost = ({
                            setEditPost,
                            description,
+                           isPostChanged,
                            postId,
                            setShowDots,
                          }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
-
+  useEffect(() => {
+    isPostChanged(textareaValue !== description);
+  }, [textareaValue, description, isPostChanged]);
   const accessToken = Cookies.get('accessToken');
 
   const [updatePost, { isLoading }] = useUpdatePostMutation();
@@ -31,7 +35,6 @@ export const EditPost = ({
     if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
-
   const onSave = () => {
     if (accessToken) {
       updatePost({
@@ -47,7 +50,6 @@ export const EditPost = ({
         });
     }
   };
-
 
 
   console.log('accessToken', accessToken);

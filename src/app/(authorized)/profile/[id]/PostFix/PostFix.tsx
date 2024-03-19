@@ -38,7 +38,7 @@ export const PostFix: React.FC<Props> = ({
   const [editPost, setEditPost] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
-
+  const [isPostChanged, setIsPostChanged] = useState(false);
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
     postId!,
@@ -59,14 +59,24 @@ export const PostFix: React.FC<Props> = ({
   if (error) {
     handleApiError(error);
   }
-  const onCloseEditMode = ()=>{
-    setShowCloseEditModal(false)
-  }
+  const onCloseEditMode = () => {
+    setShowCloseEditModal(false);
+  };
   const changeEditStatus = () => {
     setEditPost(false);
     setShowDots(true);
-    setShowCloseEditModal(false)
+    setShowCloseEditModal(false);
   };
+
+  const onCloseClick = () => {
+    if (isPostChanged) {
+      setShowCloseEditModal(true);
+    } else {
+      changeEditStatus();
+    }
+  };
+
+
   return (
     <>
       {data ? (
@@ -74,9 +84,11 @@ export const PostFix: React.FC<Props> = ({
           {editPost &&
             <div className={s.post__editTitle}>
               <h1>Edit Post</h1>
-              {showCloseEditModal &&
-                <EditPostModal title={translate('title')} onSubmit={changeEditStatus} onClose={onCloseEditMode}>{translate('editModalText')}</EditPostModal>}
-              <Image onClick={()=>setShowCloseEditModal(true)} src={close} alt={'close'} className={s.post__editCancel} />
+              {showCloseEditModal && isPostChanged &&
+                <EditPostModal title={translate('title')} onSubmit={changeEditStatus}
+                               onClose={onCloseEditMode}>{translate('editModalText')}</EditPostModal>}
+              <Image onClick={onCloseClick} src={close} alt={'close'}
+                     className={s.post__editCancel} />
             </div>}
           <div className={s.post}>
             {isSuccess ? (
@@ -118,26 +130,28 @@ export const PostFix: React.FC<Props> = ({
                 </div>
 
                 {showDots ? (
-                  myProfile ? (
-                    <Dots
-                      setVisiblePopup={setVisiblePopup}
-                      visiblePopup={visiblePopup}
-                      setEditPost={setEditPost}
-                      setShowAreYouSureModal={setShowAreYouSureModal}
-                      setShowDots={setShowDots}
-                    />
-                  ) : (
-                    <DotsFriends
-                      setVisiblePopup={setVisiblePopup}
-                      visiblePopup={visiblePopup}
-                    />
+                    myProfile ? (
+                      <Dots
+                        setVisiblePopup={setVisiblePopup}
+                        visiblePopup={visiblePopup}
+                        setEditPost={setEditPost}
+                        setShowAreYouSureModal={setShowAreYouSureModal}
+                        setShowDots={setShowDots}
+                      />
+                    ) : (
+                      <DotsFriends
+                        setVisiblePopup={setVisiblePopup}
+                        visiblePopup={visiblePopup}
+                      />
+                    )
                   )
-                ) : (
-                  <div className={'w-1/12'}></div>
-                )}
+                  : (
+                    <div className={'w-1/12'}></div>
+                  )}
               </div>
               {editPost ? (
                 <EditPost
+                  isPostChanged={setIsPostChanged}
                   postId={postId}
                   setEditPost={setEditPost}
                   setShowDots={setShowDots}
@@ -156,17 +170,6 @@ export const PostFix: React.FC<Props> = ({
               )}
             </div>
           </div>
-          <button
-            className={'absolute top-[-14px] right-[-37px]'}
-            onClick={onClose}
-          >
-            <Image
-              src={'/img/close.svg'}
-              alt={'close'}
-              width={24}
-              height={24}
-            />
-          </button>
         </div>
       ) : (
         <Loader /> //при ошибке постоянно крутиться лоадер
