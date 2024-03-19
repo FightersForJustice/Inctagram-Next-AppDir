@@ -1,4 +1,14 @@
+@use '@/app/mixins.scss' as s;
+
 .post {
+  display: flex;
+  justify-content: center;
+  height: 481px;
+
+  &__container {
+    background-color: var(--dark-300);
+    width: 480px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -153,5 +163,21 @@
         color: var(--primary-100);
       }
     }
+  }
+}
+@include s.devices(tablet-xl) {
+  .imageContainer {
+    max-width: 32.2%;
+    width: 100%;
+  }
+
+  .imageContainer img {
+    max-width: 100%;
+  }
+}
+
+@include s.devices(tablet) {
+  .imageContainer {
+    max-width: 32.6%;
   }
 }

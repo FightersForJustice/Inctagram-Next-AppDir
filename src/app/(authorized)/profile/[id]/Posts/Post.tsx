@@ -27,7 +27,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
   const { data, isLoading, isSuccess, error, isError } = useGetPostQuery(
-    post.id,
+    post.id!,
   );
   const onDeletePost = async () => {
     if (post.id) {
@@ -79,33 +79,33 @@ export function PostImg({ post, userData, myProfile }: Props) {
                   {/*    <Image onClick={onCloseClick} src={close} alt={'close'}*/}
                   {/*           className={s.post__editCancel} />*/}
                   {/*  </div>}*/}
-                  <div className={s.post}>
+                  {/*<div className={s.post}>*/}
                     {/*{isSuccess ? (*/}
-                    <div className={s.post__img}>
-                      <Carousel >
-                        {data?.images.map((i, index) => {
-                          if (i.width !== 640) {
-                            return (
-                              <SwiperSlide key={index} className={'w-full'}>
-                                {/* <img src={i.url} alt={'err'} /> */}
-                                <Image
-                                  width={491}
-                                  height={491}
-                                  alt="err"
-                                  src={i.url}
-                                />
-                              </SwiperSlide>
-                            );
-                          }
-                          return;
-                        })}
-                      </Carousel>
-                    </div>
+                    {/*<div className={s.post__img}>*/}
+                    {/*  <Carousel >*/}
+                    {/*    {data?.images.map((i, index) => {*/}
+                    {/*      if (i.width !== 640) {*/}
+                    {/*        return (*/}
+                    {/*          <SwiperSlide key={index} >*/}
+                    {/*            /!* <img src={i.url} alt={'err'} /> *!/*/}
+                    {/*            <Image*/}
+                    {/*              width={491}*/}
+                    {/*              height={491}*/}
+                    {/*              alt="err"*/}
+                    {/*              src={i.url}*/}
+                    {/*            />*/}
+                    {/*          </SwiperSlide>*/}
+                    {/*        );*/}
+                    {/*      }*/}
+                    {/*      return;*/}
+                    {/*    })}*/}
+                    {/*  </Carousel>*/}
+                    {/*</div>*/}
                     {/*) : (*/}
                     {/*   <Loader />*/}
                     {/* )}*/}
 
-                    <div className={s.post__container}>
+                    {/*<div className={s.post__container}>*/}
                       {/*<div className={s.post__header}>*/}
                       {/*<div className={s.post__header__wrapper}>*/}
                       {/*  <Image*/}
@@ -120,13 +120,16 @@ export function PostImg({ post, userData, myProfile }: Props) {
 
                       {editPost ? (
                         <EditPost
+                          images={data.images}
                           postId={post.id}
                           setEditPost={setEditPost}
+                          avatar={userData?.avatars[0]?.url}
+                          userName={userData?.userName}
                           description={data.description}
                         />
                       ) : (
                         <PostContent
-                          isPostLoaded={isSuccess}
+                          images={data.images}
                           myProfile={myProfile}
                           avatar={userData?.avatars[0]?.url}
                           userName={userData?.userName}
@@ -136,8 +139,8 @@ export function PostImg({ post, userData, myProfile }: Props) {
                         />
                       )}
                     </div>
-                  </div>
-                </div>
+                  {/*</div>*/}
+                {/*</div>*/}
                 {isLoading && !isError && <Loader />}
                 {isDeleting && <Loader />}
               </>
