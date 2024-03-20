@@ -31,6 +31,10 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   if (!currentImageId) {
     return null;
   }
+  const onCloseCropping = (value:boolean) =>{
+    setAreYouSureModal(value)
+    setStep(prevState => prevState - 1)
+  }
 
   return (
     <div className={s.cropping__wrapper}>
@@ -51,7 +55,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
       {areYouSureModal && (
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
-          toggleModal={setShowCreatePostModal}
+          toggleModal={onCloseCropping}
         />
       )}
     </div>
