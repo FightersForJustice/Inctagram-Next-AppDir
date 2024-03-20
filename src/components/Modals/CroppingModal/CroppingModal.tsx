@@ -21,10 +21,6 @@ export const CroppingModal = ({
     setStep(3);
   };
 
-  const onBackBtnHandler = () => {
-    // dispatch(postActions.removeAllGalleryImages());
-    setStep((prev) => prev - 1);
-  };
 
   return (
     <div className={'modal'} onClick={onClose}>
@@ -36,7 +32,7 @@ export const CroppingModal = ({
             width={24}
             height={24}
             className={'modal__arrow'}
-            onClick={onBackBtnHandler}
+            onClick={onClose}
           />
           <div className={'modal__title'}>{translate('cropping')}</div>
           <button className={'modal__next'} onClick={onNextBtnHandler}>
