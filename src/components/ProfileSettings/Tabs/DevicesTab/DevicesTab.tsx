@@ -1,78 +1,59 @@
 'use client';
-
-// @ts-ignore
-
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
 import { ThisDevice } from './ThisDevice';
-import { ActiveSessions } from './ActiveSessions';
-import {
-  DevicesResponse,
-  useDeleteSessionsTerminateAllMutation,
-  useGetDeviceSessionsQuery,
-} from '@/api/profile.api';
-import { toast } from 'react-toastify';
-
 import s from '../Tabs.module.scss';
+import UAParser from 'ua-parser-js';
+import { ActiveSessions } from './ActiveSessions';
+import { deleteAllSessions, userSessions } from './actions';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { findDevice } from './utils/findDevice';
+import { useState } from 'react';
+import { DevicesResponse } from '@/api/profile.api';
+import { otherDeviceFilter } from './utils/otherDeviceFilter';
 
-export const DevicesTab = () => {
-  const { data: sessions, refetch } = useGetDeviceSessionsQuery();
-  const [deleteAllSessions] = useDeleteSessionsTerminateAllMutation();
+type Props = {
+  userAgent: string;
+  sessions: DevicesResponse[];
+};
 
-  const sessionsDefault: DevicesResponse[] = [
-    {
-      deviceName: 'Apple iMac 27',
-      ip: '192.168.1.10',
-      lastActive: '22.09.2022',
-      deviceType: 'PC',
-      deviceId: 0,
-      browserName: 'google',
-      osName: 'MAC OS',
-      browserVersion: '1.0.0',
-      osVersion: 'Catalina',
-    },
-    {
-      deviceName: 'Samsung',
-      ip: '192.168.1.20',
-      lastActive: '22.09.2022',
-      deviceType: 'mobile',
-      deviceId: 1,
-      browserName: 'google',
-      osName: 'WINDOWS',
-      browserVersion: '1.0.0',
-      osVersion: 'WINDOWS 11',
-    },
-  ];
+export const DevicesTab = ({ userAgent, sessions }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.DevicesTab.${key}`);
+
+  console.log(sessions);
+
+  const [stateSessions, setStateSessions] = useState(sessions);
+
+  const parser = new UAParser();
+  const userAgentArray = parser.setUA(userAgent).getResult();
+
+  const currentDevice = findDevice(stateSessions, userAgentArray);
+  const otherDevice = otherDeviceFilter(stateSessions, userAgentArray);
 
   const onDeleteAllSessions = async () => {
-    if (sessions) {
-      if (sessions.length <= 1) {
-        toast.error('You authorize only this device');
-      } else {
-        await deleteAllSessions();
-        try {
-          refetch();
-          toast.success('All sessions except current was deleted');
-        } catch (e: any) {
-          toast.error(e.error);
-        }
-      }
+    const statusCode = await deleteAllSessions(userAgent);
+    if (statusCode === 204) {
+      toast.success(translate('AllSessionsClosed'));
+      const sessions = await userSessions();
+      setStateSessions(sessions);
     }
   };
 
   return (
     <div className={s.devices}>
-      <ThisDevice session={sessions ? sessions[0] : sessionsDefault[0]} />
-
+      <ThisDevice session={currentDevice} />
       {sessions?.length && (
         <div className={'text-right'}>
           <TransparentBtn onClick={onDeleteAllSessions}>
-            Terminate all other session
+            {translate('allSession')}
           </TransparentBtn>
         </div>
       )}
       <ActiveSessions
-        refetch={refetch}
-        sessions={sessions || sessionsDefault}
+        sessions={otherDevice}
+        setStateSessions={setStateSessions}
       />
     </div>
   );

@@ -30,10 +30,10 @@ import { accessToken } from '@/utils/serverActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SignInData) {
+export async function signInAction(data: SignInData, userAgent: string) {
   if (data) {
     try {
-      const res = await fetch(routes.LOGIN, loginOptions(data));
+      const res = await fetch(routes.LOGIN, loginOptions(data, userAgent));
       const responseBody = await res.json();
 
       if (!res.ok) {
@@ -72,7 +72,7 @@ export async function signUpAction(data: SignInData) {
       email: data.email.toLowerCase(),
       baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
-    const res = await fetch(routes.SIGN_UP, loginOptions(newData));
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData, ''));
     if (res.ok) {
       return { success: true, data: 'signUpSuccess' };
     }
@@ -242,11 +242,14 @@ export async function deleteAllSessionsAction() {
 
 // middleware actions
 
-export async function updateTokensAndContinue(refreshToken: string) {
+export async function updateTokensAndContinue(
+  refreshToken: string,
+  userAgent: string
+) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
-      requestUpdateTokensOptions(refreshToken)
+      requestUpdateTokensOptions(refreshToken, userAgent)
     );
     if (!updateTokenResponse.ok) {
       console.log('UpdateToken failed', updateTokenResponse);

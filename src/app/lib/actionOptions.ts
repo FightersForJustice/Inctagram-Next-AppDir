@@ -5,7 +5,8 @@ import { createPostOptionsType } from './optionsTypes';
 //AUTH OPTIONS
 
 export const loginOptions = (
-  data: SignInData & {
+  data: SignInData,
+  userAgent: string & {
     baseUrl?: string | undefined;
   }
 ) => {
@@ -15,6 +16,7 @@ export const loginOptions = (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'user-agent': userAgent,
     },
     body: JSON.stringify(data),
     next: { revalidate: 0 },
@@ -61,12 +63,14 @@ export const newPasswordOptions = (password: string, code: string) => {
 };
 
 export const requestUpdateTokensOptions = (
-  refreshToken: string | undefined
+  refreshToken: string | undefined,
+  userAgent: string
 ) => {
   return {
     method: 'POST',
     headers: {
       Cookie: `refreshToken=${refreshToken}`,
+      'user-agent': userAgent,
     },
     next: { revalidate: 0 },
   };
@@ -195,6 +199,18 @@ export const deleteUploadedPostOptions = (accessToken: string | null) => {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+export const deleteOptions = (
+  accessToken: string | null,
+  userAgent: string
+) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'user-agent': userAgent,
     },
   };
 };

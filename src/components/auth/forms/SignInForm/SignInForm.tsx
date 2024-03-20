@@ -40,8 +40,10 @@ export const SignInForm = () => {
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
     setLoading(true);
+    const userAgent = window.navigator.userAgent;
+    console.log(userAgent);
     data.email = data.email.toLowerCase();
-    const signInResult = await signInAction(data);
+    const signInResult = await signInAction(data, userAgent);
 
     setLoading(false);
     if (signInResult?.success) {

@@ -68,7 +68,10 @@ export async function middleware(request: NextRequest) {
           : response;
       case 401:
         console.log('Middleware (Bad AccessToken)');
-        const updateTokenResult = await updateTokensAndContinue(refreshToken);
+        const updateTokenResult = await updateTokensAndContinue(
+          refreshToken,
+          userAgent
+        );
 
         return updateTokenResult.action;
       default:
