@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
+import { PostModal } from '@/components/Modals/PostModal';
 
 type Props = {
   avatar: string;
@@ -18,6 +19,7 @@ type Props = {
   description: string;
   myProfile: boolean
   images: ImageType[]
+  closeModalAction:()=>void
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
 };
@@ -26,6 +28,7 @@ export const PostContent = ({
                               description,
                               userName,
                               avatar,
+                              closeModalAction,
                               myProfile, images,
                               setEditPost,
                               onDeletePost,
@@ -34,6 +37,11 @@ export const PostContent = ({
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   return (
     <>
+      <PostModal
+        width={'972px'}
+        onClose={closeModalAction}
+      >
+
       <div className={s.post}>
         <Carousel>
           {images.map((i, index) => {
@@ -98,6 +106,8 @@ export const PostContent = ({
           )}
         </div>
       </div>
+      </PostModal>
+
     </>
   );
 };
