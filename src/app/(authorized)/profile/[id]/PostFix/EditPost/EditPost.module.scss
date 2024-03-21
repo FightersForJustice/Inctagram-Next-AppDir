@@ -1,5 +1,33 @@
+.editTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--dark-100);
+
+  & .editCancel:hover {
+    cursor: pointer;
+  }
+}
+
 .post {
-  padding: 24px 24px 0 24px;
+  display: flex;
+  justify-content: center;
+  height: 481px;
+  padding-right: 24px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+
+    &__user {
+      gap: 12px;
+      display: flex;
+      align-items: center;
+    }
+  }
 
   &__title {
     font-size: 14px;

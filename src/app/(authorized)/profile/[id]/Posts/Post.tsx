@@ -2,9 +2,14 @@ import Image from 'next/image';
 import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
 import { useState } from 'react';
-import { PostModal } from '@/components/Modals/PostModal';
-import { PostFix } from '@/app/(authorized)/profile/[id]/PostFix';
 import { useRouter } from 'next/navigation';
+import { useDeletePostMutation, useGetPostQuery } from '@/api';
+import { Loader } from '@/components/Loader';
+import { handleApiError } from '@/utils';
+import { toast } from 'react-toastify';
+import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
+import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
+import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 
 type Props = {
   post: Post;
@@ -14,8 +19,34 @@ type Props = {
 
 export function PostImg({ post, userData, myProfile }: Props) {
   const [openPostModal, setOpenPostModal] = useState(false);
+  const [editPost, setEditPost] = useState(false);
+
+  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
+  const { data, isLoading,  error, isError } = useGetPostQuery(
+    post.id!,
+  );
+
+  const onOpenPost = () => {
+    setOpenPostModal(true);
+    openModalWithPost(post.id);
+  };
+
+  const onDeletePost = async () => {
+    if (post.id) {
+      const response = await getPostsDelete(post.id);
+      if (response === 204) {
+        setOpenPostModal(false);
+        toast.success('Post was deleted');
+      }
+    }
+  };
+
+  if (error) {
+    handleApiError(error);
+  }
+
   const currentPosts = post.images.filter(
-    (postImage) => postImage.width !== 640
+    (postImage) => postImage.width !== 640,
   );
   const router = useRouter();
   const openModalWithPost = (id: number) => {
@@ -24,25 +55,47 @@ export function PostImg({ post, userData, myProfile }: Props) {
   const closeModal = () => {
     router.push(`/profile/${userData.id}`);
   };
-  return (
-    <>
-      {openPostModal && (
-        <PostModal
-          width={'972px'}
-          onClose={() => {
-            setOpenPostModal(false), closeModal();
-          }}
-        >
-          <PostFix
-            onClose={() => setOpenPostModal(false)}
-            postId={post.id}
-            avatar={userData?.avatars[0]?.url}
-            userName={userData?.userName}
-            setOpenPostModal={setOpenPostModal}
-            myProfile={myProfile}
-          />
-        </PostModal>
-      )}
+  if (!data) {
+    return <Loader />;
+  }
+
+  const closeModalAction = () => {
+    setOpenPostModal(false);
+    closeModal();
+  };
+
+  return <>
+      {
+        openPostModal &&
+        <>
+          <div className={'relative'}>
+            {editPost ? (
+              <EditPost
+                images={data.images}
+                postId={post.id}
+                setEditPost={setEditPost}
+                avatar={userData?.avatars[0]?.url}
+                userName={userData?.userName}
+                description={data.description}
+              />
+            ) : (
+              <PostContent
+                closeModalAction={closeModalAction}
+                images={data.images}
+                myProfile={myProfile}
+                avatar={userData?.avatars[0]?.url}
+                userName={userData?.userName}
+                description={data.description}
+                setEditPost={setEditPost}
+                onDeletePost={onDeletePost}
+              />
+            )}
+            {isLoading && !isError && <Loader />}
+            {isDeleting && <Loader />}
+          </div>
+        </>
+      }
+
       <Image
         src={
           post.images[0]?.url
@@ -52,11 +105,8 @@ export function PostImg({ post, userData, myProfile }: Props) {
         alt={'post'}
         width={234}
         height={228}
-        className={s.post}
-        onClick={() => {
-          setOpenPostModal(true), openModalWithPost(post.id);
-        }}
+        className={s.imagePost}
+        onClick={onOpenPost}
       />
     </>
-  );
 }

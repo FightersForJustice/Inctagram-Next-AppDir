@@ -7,7 +7,6 @@ type Props = {
   visiblePopup: boolean;
   setEditPost: (value: boolean) => void;
   setShowAreYouSureModal: (value: boolean) => void;
-  setShowDots: (value: boolean) => void;
 };
 
 export const Dots = ({
@@ -15,7 +14,6 @@ export const Dots = ({
   setVisiblePopup,
   setEditPost,
   setShowAreYouSureModal,
-  setShowDots,
 }: Props) => {
   return (
     <Popover.Root onOpenChange={() => setVisiblePopup(!visiblePopup)}>
@@ -52,7 +50,6 @@ export const Dots = ({
             setEditPost={setEditPost}
             setVisiblePopup={setVisiblePopup}
             toggleShowAreYouSureModal={() => setShowAreYouSureModal(true)}
-            setShowDots={setShowDots}
           />
         </Popover.Content>
       </Popover.Portal>

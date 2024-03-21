@@ -7,7 +7,7 @@
   max-width: 23%;
 }
 
-.post {
+.imagePost {
   display: flex;
   max-width: 230px;
   width: 100%;
@@ -30,19 +30,3 @@
   }
 }
 
-@include s.devices(tablet-xl) {
-  .imageContainer {
-    max-width: 32.2%;
-    width: 100%;
-  }
-
-  .imageContainer img {
-    max-width: 100%;
-  }
-}
-
-@include s.devices(tablet) {
-  .imageContainer {
-    max-width: 32.6%;
-  }
-}

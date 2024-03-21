@@ -4,17 +4,14 @@ type Props = {
   setEditPost: (value: boolean) => void;
   setVisiblePopup: (value: boolean) => void;
   toggleShowAreYouSureModal: () => void;
-  setShowDots: (value: boolean) => void;
 };
 
 export const PostPopup = ({
   setEditPost,
   setVisiblePopup,
   toggleShowAreYouSureModal,
-  setShowDots,
 }: Props) => {
   const onEditPost = () => {
-    setShowDots(false);
     setVisiblePopup(false);
     setEditPost(true);
   };
