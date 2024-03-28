@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import s from './PostPopup.module.scss';
 
 type Props = {
@@ -11,6 +12,9 @@ export const PostPopup = ({
   setVisiblePopup,
   toggleShowAreYouSureModal,
 }: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
+
   const onEditPost = () => {
     setVisiblePopup(false);
     setEditPost(true);
@@ -36,7 +40,7 @@ export const PostPopup = ({
               fill="white"
             />
           </svg>
-          <p className={s.popup__item__name}>Edit Post</p>
+          <p className={s.popup__item__name}>{translate('editPost')}</p>
         </div>
         <div className={s.popup__item} onClick={toggleShowAreYouSureModal}>
           <svg
@@ -51,7 +55,7 @@ export const PostPopup = ({
               fill="white"
             />
           </svg>
-          <p className={s.popup__item__name}>Delete Post</p>
+          <p className={s.popup__item__name}>{translate('deletePost')}</p>
         </div>
       </div>
     </>

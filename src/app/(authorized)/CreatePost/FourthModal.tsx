@@ -11,6 +11,7 @@ import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import s from './CreatePost.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -23,9 +24,13 @@ export const FourthModal: React.FC<Props> = ({
   setShowCreatePostModal,
   userData,
 }) => {
+  const { t } = useTranslation();
+
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+
   const dispatch = useAppDispatch();
 
-  const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -36,7 +41,6 @@ export const FourthModal: React.FC<Props> = ({
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
-    setTextareaLength(e.currentTarget.value.length);
     setTextareaValue(e.currentTarget.value);
   };
 
@@ -55,7 +59,7 @@ export const FourthModal: React.FC<Props> = ({
       const res = await createPost(body);
       if (!res.success) {
         toast.error('Error');
-      } else toast.success('Post created');
+      } else toast.success(translate('publicationsCreated'));
 
       dispatch(postActions.clearPostState());
       setShowCreatePostModal(false);
@@ -80,8 +84,8 @@ export const FourthModal: React.FC<Props> = ({
   return (
     <>
       <FiltersModal
-        title={'Publication'}
-        buttonName={'Publish'}
+        title={translate('publication')}
+        buttonName={translate('publish')}
         onPublishPost={onPublishPost}
         onClose={() => setAreYouSureModal(true)}
         onDeletePostImage={onDeletePostImage}
@@ -103,29 +107,29 @@ export const FourthModal: React.FC<Props> = ({
               />
               <p>{`${userData ? userData.userName : ''}`}</p>
             </div>
-              <div className={s.cropping__publication__wrapper}>
-                <p className={s.cropping__publication__text}>
-                  Add publication descriptions
-                </p>
-                <p
-                  style={{
-                    color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
-                  }}
-                >
-                  {textareaLength} / 500
-                </p>
-              </div>
-              <textarea
-                cols={30}
-                rows={10}
-                className={s.cropping__publication__textarea}
-                placeholder={'Description...'}
-                maxLength={500}
-                onChange={onTextareaHandler}
-                value={textareaValue}
-              />
+            <div className={s.cropping__publication__wrapper}>
+              <p className={s.cropping__publication__text}>
+                {translate('addPublicationDescriptions')}
+              </p>
+              <p
+                style={{
+                  color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
+                }}
+              >
+                {textareaValue.length} / 500
+              </p>
             </div>
+            <textarea
+              cols={30}
+              rows={10}
+              className={s.cropping__publication__textarea}
+              placeholder={translate('description') + '...'}
+              maxLength={500}
+              onChange={onTextareaHandler}
+              value={textareaValue}
+            />
           </div>
+        </div>
       </FiltersModal>
       {areYouSureModal && (
         <AreYouSureModal

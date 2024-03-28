@@ -224,8 +224,12 @@
       "filters": "Фильтры",
       "sizeError": "Размер фото должен быть меньше 10 МБ!",
       "formatError": "Формат загружаемого фото должен быть PNG и JPEG",
-      "tooltipText": "Этот функционал пока недоступен"
-      
+      "tooltipText": "Этот функционал пока недоступен",
+      "publication" : "Публикация",
+      "publish" : "Опубликовать",
+      "addPublicationDescriptions" : "Добавление описаний публикаций",
+      "description" : "Описание",
+      "publicationsCreated" : "Публикация создана"
     }
   },
   "CreatePost": {
@@ -252,7 +256,13 @@
       "title": "Закрыть сообщение",
       "editModalText": "Вы действительно хотите закрыть редакцию поста? \nЕсли вы закроете изменения не сохранятся",
       "submit": "Да",
-      "cancel": "Нет"
+      "cancel": "Нет",
+      "editPost" : "Редактировать публикацию",
+      "deletePost" : "Удалить публикацию",
+      "addComment" : "Добавить комментарий",
+      "publish" : "Опубликовать",
+      "addPublicationDescriptions": "Добавить описание публикации",
+      "saveChanges" : "Сохранить"
     }
   },
   "AgreementsPage": {
