@@ -260,7 +260,9 @@
       "editPost" : "Редактировать публикацию",
       "deletePost" : "Удалить публикацию",
       "addComment" : "Добавить комментарий",
-      "publish" : "Опубликовать"
+      "publish" : "Опубликовать",
+      "addPublicationDescriptions": "Добавить описание публикации",
+      "saveChanges" : "Сохранить"
     }
   },
   "AgreementsPage": {

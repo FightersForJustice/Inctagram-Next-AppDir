@@ -258,7 +258,9 @@
       "editPost" : "Edit Post",
       "deletePost" : "Delete Post",
       "addComment" : "Add a Comment",
-      "publish" : "Publish"
+      "publish" : "Publish",
+      "addPublicationDescriptions": "Add publication descriptions",
+      "saveChanges" : "Save Changes"
     }
   },
   "AgreementsPage": {

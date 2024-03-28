@@ -22,19 +22,20 @@ type Props = {
   postId: number | undefined;
   avatar: string;
   userName: string;
-  images: ImageType[]
+  images: ImageType[];
 };
 
 export const EditPost = ({
-                           setEditPost,
-                           description,
-                           userName, avatar, images,
-                           postId,
-                         }: Props) => {
+  setEditPost,
+  description,
+  userName,
+  avatar,
+  images,
+  postId,
+}: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`CreatePost.EditPost.${key}`);
+  const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
 
   const [updatePost, { isLoading }] = useUpdatePostMutation();
@@ -68,7 +69,6 @@ export const EditPost = ({
     setShowCloseEditModal(false);
   };
 
-
   const closeModalAction = () => {
     if (description === textareaValue) {
       setEditPost(false);
@@ -79,36 +79,33 @@ export const EditPost = ({
 
   return (
     <>
-      <PostModal
-        width={'972px'}
-        onClose={closeModalAction}
-      >
+      <PostModal width={'972px'} onClose={closeModalAction}>
         <div className={s.editTitle}>
-          <h1>Edit Post</h1>
-          {showCloseEditModal &&
-            <EditPostModal title={translate('title')}
-                           onSubmit={onExitFromEdit}
-                           onClose={onCancelCloseEdit}
-            >{translate('editModalText')}</EditPostModal>
-          }
+          <h1>{translate('editPost')}</h1>
+          {showCloseEditModal && (
+            <EditPostModal
+              title={translate('title')}
+              onSubmit={onExitFromEdit}
+              onClose={onCancelCloseEdit}
+            >
+              {translate('editModalText')}
+            </EditPostModal>
+          )}
           <Image
             onClick={closeModalAction}
-            src={close} alt={'close'} className={s.editCancel} />
+            src={close}
+            alt={'close'}
+            className={s.editCancel}
+          />
         </div>
         <div className={s.post}>
-
           <Carousel>
             {images.map((i, index) => {
               if (i.width !== 640) {
                 return (
                   <SwiperSlide key={index} className={'w-full'}>
                     {/* <img src={i.url} alt={'err'} /> */}
-                    <Image
-                      width={491}
-                      height={491}
-                      alt="err"
-                      src={i.url}
-                    />
+                    <Image width={491} height={491} alt="err" src={i.url} />
                   </SwiperSlide>
                 );
               }
@@ -117,7 +114,6 @@ export const EditPost = ({
           </Carousel>
           {/*</div>*/}
           <div>
-
             <div className={s.post__header}>
               <div className={s.post__header__user}>
                 <Image
@@ -130,7 +126,9 @@ export const EditPost = ({
                 <span>{userName}</span>
               </div>
             </div>
-            <p className={s.post__title}>Add publication descriptions</p>
+            <p className={s.post__title}>
+              {translate('addPublicationDescriptions')}
+            </p>
             <textarea
               className={s.post__textarea}
               cols={30}
@@ -149,7 +147,9 @@ export const EditPost = ({
               {textareaValue.length} / 500
             </p>
             <div className={s.post__btn}>
-              <PrimaryBtn onClick={onSave}>Save Changes</PrimaryBtn>
+              <PrimaryBtn onClick={onSave}>
+                {translate('saveChanges')}
+              </PrimaryBtn>
             </div>
             {isLoading && <Loader />}
           </div>
