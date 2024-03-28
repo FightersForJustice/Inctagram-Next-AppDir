@@ -120,7 +120,7 @@ export const FiltersModal = ({
               height={24}
               className={'modal__arrow'}
               onClick={() =>
-                buttonName === 'Publish'
+                buttonName === translate('publish')
                   ? onDeletePostImage?.()
                   : returnToSecondModal()
               }

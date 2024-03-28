@@ -224,8 +224,12 @@
       "filters": "Фильтры",
       "sizeError": "Размер фото должен быть меньше 10 МБ!",
       "formatError": "Формат загружаемого фото должен быть PNG и JPEG",
-      "tooltipText": "Этот функционал пока недоступен"
-      
+      "tooltipText": "Этот функционал пока недоступен",
+      "publication" : "Публикация",
+      "publish" : "Опубликовать",
+      "addPublicationDescriptions" : "Добавление описаний публикаций",
+      "description" : "Описание",
+      "publicationsCreated" : "Публикация создана"
     }
   },
   "CreatePost": {

@@ -221,7 +221,12 @@
       "filters": "Filters",
       "sizeError": "Photo size must be less than 10 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
-      "tooltipText": "Functionality is not available yet"
+      "tooltipText": "Functionality is not available yet",
+      "publication" : "Publication",
+      "publish" : "Publish",
+      "addPublicationDescriptions" : "Add publication descriptions",
+      "description" : "Description",
+      "publicationsCreated" : "Publications created"
     }
   },
   "CreatePost": {
