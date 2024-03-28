@@ -31,7 +31,6 @@ export const FourthModal: React.FC<Props> = ({
 
   const dispatch = useAppDispatch();
 
-  const [textareaLength, setTextareaLength] = useState(0);
   const [textareaValue, setTextareaValue] = useState('');
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
@@ -42,7 +41,6 @@ export const FourthModal: React.FC<Props> = ({
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
-    setTextareaLength(e.currentTarget.value.length);
     setTextareaValue(e.currentTarget.value);
   };
 
@@ -115,10 +113,10 @@ export const FourthModal: React.FC<Props> = ({
               </p>
               <p
                 style={{
-                  color: `${textareaLength > 499 ? 'red' : '#8D9094'}`,
+                  color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
                 }}
               >
-                {textareaLength} / 500
+                {textareaValue.length} / 500
               </p>
             </div>
             <textarea
