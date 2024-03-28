@@ -32,7 +32,7 @@ export const ThirdModal = ({
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
   const images = useAppSelector((state) => state.post.changedImages);
-  const imageById = images[0]
+  const imageById = images[0];
   const changedPostImage = useRef<any>();
 
   const setActiveImage = (id: string) => {
@@ -47,7 +47,7 @@ export const ThirdModal = ({
     <>
       <FiltersModal
         title={translate('filters')}
-        buttonName="Next"
+        buttonName={translate('nextBtn')}
         setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         zoomValue={zoomValue}
@@ -62,9 +62,11 @@ export const ThirdModal = ({
               const onSelectFilter = (filter: string) => {
                 dispatch(
                   postActions.setImageFilter({
-                    image:images.find((image) => image.id === currentImageId)?.image as string,
+                    image: images.find((image) => image.id === currentImageId)
+                      ?.image as string,
                     filter,
-                    id:images.find((image) => image.id === currentImageId)?.id as string,
+                    id: images.find((image) => image.id === currentImageId)
+                      ?.id as string,
                   })
                 );
               };
@@ -76,7 +78,8 @@ export const ThirdModal = ({
                 >
                   <Image
                     src={
-                      images.find((image) => image.id === currentImageId)?.image as string
+                      images.find((image) => image.id === currentImageId)
+                        ?.image as string
                     }
                     alt={'image-filter'}
                     width={108}

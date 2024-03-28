@@ -14,6 +14,7 @@ import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
 
 import './FiltersModal.scss';
+import { useTranslation } from 'react-i18next';
 
 type ImageData = {
   url: string;
@@ -46,6 +47,11 @@ export const FiltersModal = ({
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
+  const { t } = useTranslation();
+
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+
   const images: ChangedImage[] = useAppSelector(
     (state) => state.post.changedImages
   );
@@ -123,7 +129,9 @@ export const FiltersModal = ({
             <button
               className={'modal__next'}
               onClick={() =>
-                buttonName === 'Next' ? onSendPostImage() : onPublishPost?.()
+                buttonName === translate('nextBtn')
+                  ? onSendPostImage()
+                  : onPublishPost?.()
               }
             >
               {buttonName}
