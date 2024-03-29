@@ -85,7 +85,7 @@ export const SignUpForm = () => {
   useEffect(() => {
     if (getValues('passwordConfirm')) {
       watch().password != watch().passwordConfirm
-        ? setPasswordMismatch('Пароли не совпадают')
+        ? setPasswordMismatch(translateErrors('passwordConfirm.oneOf'))
         : setPasswordMismatch('');
     }
   }, [watchedData]);
