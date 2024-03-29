@@ -2,7 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -34,6 +34,7 @@ export const SignUpForm = () => {
     setError,
     getValues,
     formState: { errors, isValid },
+    watch,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -78,6 +79,17 @@ export const SignUpForm = () => {
     setShowConfirmPass,
   });
 
+  const [passwordMismatch, setPasswordMismatch] = useState('');
+  const watchedData = watch();
+
+  useEffect(() => {
+    if (getValues('passwordConfirm')) {
+      watch().password != watch().passwordConfirm
+        ? setPasswordMismatch('Пароли не совпадают')
+        : setPasswordMismatch('');
+    }
+  }, [watchedData]);
+
   return (
     <div className={s.container}>
       <ServiceAuth page={'SignUpPage'} />
@@ -85,6 +97,7 @@ export const SignUpForm = () => {
         <div className={s.formContainer}>
           {formItemsProps.map((formItem) => (
             <FormItem
+              passwordMismatch={passwordMismatch}
               translate={translate}
               register={register}
               {...formItem}
