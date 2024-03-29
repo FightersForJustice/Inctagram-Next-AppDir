@@ -9,7 +9,7 @@ import { inputTypes } from './utils';
 import s from './FormItem.module.scss';
 
 export interface FormItemProps {
-  passwordMismatch: string;
+  passwordMismatch?: string;
   translate: (value: string) => string;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
