@@ -9,6 +9,7 @@ import { inputTypes } from './utils';
 import s from './FormItem.module.scss';
 
 export interface FormItemProps {
+  passwordMismatch?: string;
   translate: (value: string) => string;
   register: UseFormRegister<any>;
   error: FieldError | undefined;
@@ -23,6 +24,7 @@ export interface FormItemProps {
 }
 
 export const FormItem = ({
+  passwordMismatch,
   errorMessage,
   error,
   register,
@@ -59,7 +61,11 @@ export const FormItem = ({
           autoComplete={inputTypes[id] ?? null}
         />
         {showPasswordIcon && <ShowHidePass show={show!} setShow={setShow!} />}
-
+        {id === 'sign-up-passwordConfirm' && (
+          <p className={s.errorPassword}>
+            {passwordMismatch != '' && passwordMismatch}
+          </p>
+        )}
         <InputError error={error} errorMessage={errorMessage} id={id} />
       </div>
     </div>
