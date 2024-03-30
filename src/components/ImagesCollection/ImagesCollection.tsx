@@ -18,7 +18,6 @@ export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(postImages);
 
-  console.log('images gallery changed', images);
   useEffect(() => {
     if (!images.length) {
       setStep(1);

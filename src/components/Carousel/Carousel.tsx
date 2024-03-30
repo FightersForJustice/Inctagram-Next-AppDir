@@ -45,7 +45,6 @@ export const Carousel: FC<IProps> = ({
               <SwiperSlide key={id} className={'w-full'}>
                 {({ isActive }) => {
                   if (isActive && setActive) {
-                    console.log(id);
                     setActive(id);
                   }
                   return (

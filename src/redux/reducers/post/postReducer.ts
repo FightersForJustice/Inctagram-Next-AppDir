@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Area } from 'react-easy-crop';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { image } from 'html2canvas/dist/types/css/types/image';
 
 const initialAppState: PostStateType = {
   postImages: [],
   changedImages: [],
   currentImageId: null,
-  aspectRatio: 1,
-  zoom: 1,
 };
 
 const slice = createSlice({
@@ -22,16 +21,18 @@ const slice = createSlice({
           id: image.id,
           filter: '',
           croppedArea: null,
+          aspectRatio: AspectRatioType.one,
+          zoom: 1,
         });
       });
-        state.currentImageId = action.payload[action.payload.length - 1].id;
+      state.currentImageId = action.payload[action.payload.length - 1].id;
     },
     deleteImage(state, action: PayloadAction<{ id: string }>) {
       state.postImages = state.postImages.filter(
-        (image) => image.id !== action.payload.id
+        (image) => image.id !== action.payload.id,
       );
       state.changedImages = state.changedImages.filter(
-        (image) => image.id !== action.payload.id
+        (image) => image.id !== action.payload.id,
       );
     },
     clearPostState(state) {
@@ -42,27 +43,29 @@ const slice = createSlice({
     changeCurrentImage(state, action: PayloadAction<{ id: string }>) {
       state.currentImageId = action.payload.id;
     },
-    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter'>>) {
-      state.changedImages.map((image) => {
-        if (image.id === action.payload.id) {
-          image.image = action.payload.image;
-          image.croppedArea = action.payload.croppedArea;
-
-          return image;
-        }
-
-        return image;
-      });
+    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter' | 'aspectRatio'>>) {
+      state.changedImages.map(el => el.id === action.payload.id ? {
+        ...el,
+        image: action.payload.image,
+        croppedArea: action.payload.croppedArea,
+      } : el);
     },
-    setAspectRatio(state, action: PayloadAction<AspectRatioType>) {
-      state.aspectRatio = action.payload;
+    setAspectRatio(state, action: PayloadAction<{ aspectRatio: AspectRatioType, id: string }>) {
+      state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
+        ...image,
+        aspectRatio: action.payload.aspectRatio,
+      } : image);
     },
-    setZoom(state, action: PayloadAction<number>) {
-      state.zoom = action.payload;
+    setZoom(state, action: PayloadAction<{ zoom: number, id: string }>) {
+      state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
+          ...image,
+          zoom: action.payload.zoom,
+        } :
+        image);
     },
     setImageFilter(
       state,
-      action: PayloadAction<Omit<ChangedImage, 'croppedArea'>>
+      action: PayloadAction<{ id: string, filter: string, image: string }>,
     ) {
       state.changedImages.map((image) => {
         if (image.id === action.payload.id) {
@@ -90,7 +93,9 @@ export type PostImage = {
 };
 
 export type ChangedImage = {
+  aspectRatio: AspectRatioType
   croppedArea: Area | null;
+  zoom: number;
   filter: string;
 } & PostImage;
 
@@ -98,6 +103,4 @@ export type PostStateType = {
   postImages: PostImage[];
   changedImages: ChangedImage[];
   currentImageId: string | null;
-  aspectRatio: AspectRatioType;
-  zoom: number;
 };
