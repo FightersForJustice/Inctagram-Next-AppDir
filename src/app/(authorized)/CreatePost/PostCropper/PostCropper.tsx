@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { getCroppedImg } from '@/app/(authorized)/CreatePost/PostCropper/cropperUtils';
 import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
-import {postImageById, postImages} from '@/redux/reducers/post/postSelectors';
+import { postImageById, postImages } from '@/redux/reducers/post/postSelectors';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
@@ -20,8 +20,6 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
 
 
   const onCropEnd = async (croppedArea: Area, croppedAreaPixels: Area) => {
-    console.log('croppedArea', croppedArea);
-    console.log('croppedAreaPixels', croppedAreaPixels);
     try {
       if (currentImage) {
         const image = await getCroppedImg(
@@ -36,8 +34,8 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
               image,
               croppedArea: croppedAreaPixels,
               id: currentImage.id,
+              aspectRatio:aspectRatio
             };
-          console.log('donee', { croppedImage });
           dispatch(postActions.setCropImage(croppedImage));
         }
       }

@@ -11,6 +11,7 @@ import { useAppSelector } from '@/redux/hooks/useSelect';
 import s from '../CreatePost.module.scss';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -22,31 +23,31 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
   const zoom = useAppSelector((state) => state.post.zoom);
   const dispatch = useAppDispatch();
-  const aspectRatio = useAppSelector((state) => state.post.aspectRatio);
-
+  const aspectRatio = useAppSelector((state) => state.post.changedImages.filter(el => el.id === currentImageId));
   const onZoomImage = (value: number) => {
     dispatch(postActions.setZoom(value));
   };
 
+  console.log(currentImageId);
   if (!currentImageId) {
     return null;
   }
-  const onCloseCropping = (value:boolean) =>{
-    setAreYouSureModal(value)
-    setStep(prevState => prevState - 1)
-  }
+  const onCloseCropping = (value: boolean) => {
+    setAreYouSureModal(value);
+    setStep(prevState => prevState - 1);
+  };
 
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
           zoom={zoom}
-          aspectRatio={aspectRatio}
+          aspectRatio={aspectRatio[0].aspectRatio??AspectRatioType.one}
           currentImageId={currentImageId}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
-            <AspectRatio />
+            <AspectRatio imageId={currentImageId} />
             <Range onValueChange={onZoomImage} value={zoom} />
           </div>
           <Gallery setStep={setStep} />

@@ -6,7 +6,6 @@ const initialAppState: PostStateType = {
   postImages: [],
   changedImages: [],
   currentImageId: null,
-  aspectRatio: 1,
   zoom: 1,
 };
 
@@ -22,16 +21,17 @@ const slice = createSlice({
           id: image.id,
           filter: '',
           croppedArea: null,
+          aspectRatio: AspectRatioType.one,
         });
       });
-        state.currentImageId = action.payload[action.payload.length - 1].id;
+      state.currentImageId = action.payload[action.payload.length - 1].id;
     },
     deleteImage(state, action: PayloadAction<{ id: string }>) {
       state.postImages = state.postImages.filter(
-        (image) => image.id !== action.payload.id
+        (image) => image.id !== action.payload.id,
       );
       state.changedImages = state.changedImages.filter(
-        (image) => image.id !== action.payload.id
+        (image) => image.id !== action.payload.id,
       );
     },
     clearPostState(state) {
@@ -42,27 +42,29 @@ const slice = createSlice({
     changeCurrentImage(state, action: PayloadAction<{ id: string }>) {
       state.currentImageId = action.payload.id;
     },
-    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter'>>) {
+    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter' | 'aspectRatio'>>) {
       state.changedImages.map((image) => {
         if (image.id === action.payload.id) {
           image.image = action.payload.image;
           image.croppedArea = action.payload.croppedArea;
-
           return image;
         }
 
         return image;
       });
     },
-    setAspectRatio(state, action: PayloadAction<AspectRatioType>) {
-      state.aspectRatio = action.payload;
+    setAspectRatio(state, action: PayloadAction<{ aspectRatio: AspectRatioType, id: string }>) {
+      state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
+        ...image,
+        aspectRatio: action.payload.aspectRatio,
+      } : image);
     },
     setZoom(state, action: PayloadAction<number>) {
       state.zoom = action.payload;
     },
     setImageFilter(
       state,
-      action: PayloadAction<Omit<ChangedImage, 'croppedArea'>>
+      action: PayloadAction<Omit<ChangedImage, 'croppedArea'>>,
     ) {
       state.changedImages.map((image) => {
         if (image.id === action.payload.id) {
@@ -87,6 +89,7 @@ export interface IUploadImageId {
 export type PostImage = {
   id: string;
   image: string;
+  aspectRatio: AspectRatioType
 };
 
 export type ChangedImage = {
@@ -98,6 +101,5 @@ export type PostStateType = {
   postImages: PostImage[];
   changedImages: ChangedImage[];
   currentImageId: string | null;
-  aspectRatio: AspectRatioType;
   zoom: number;
 };
