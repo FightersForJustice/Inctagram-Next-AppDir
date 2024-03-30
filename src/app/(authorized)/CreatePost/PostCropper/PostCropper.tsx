@@ -10,7 +10,7 @@ import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
   const currentImage = useAppSelector((state) =>
-    postImageById(state, currentImageId)
+    postImageById(state, currentImageId),
   );
   const dispatch = useAppDispatch();
 
@@ -25,7 +25,7 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
         const image = await getCroppedImg(
           currentImage.image,
           croppedAreaPixels,
-          rotation
+          rotation,
         );
 
         if (image) {
@@ -34,7 +34,8 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
               image,
               croppedArea: croppedAreaPixels,
               id: currentImage.id,
-              aspectRatio:aspectRatio
+              aspectRatio: aspectRatio,
+              zoom: 1,
             };
           dispatch(postActions.setCropImage(croppedImage));
         }
@@ -45,7 +46,7 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
   };
 
   const setZoom = (zoom: number) => {
-    dispatch(postActions.setZoom(zoom));
+    dispatch(postActions.setZoom({ id: currentImageId, zoom }));
   };
 
   return (

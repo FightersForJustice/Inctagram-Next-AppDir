@@ -21,11 +21,12 @@ type Props = {
 export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const zoom = useAppSelector((state) => state.post.zoom);
+  const zoom = useAppSelector((state) => state.post.changedImages.filter(el => el.id === currentImageId));
   const dispatch = useAppDispatch();
   const aspectRatio = useAppSelector((state) => state.post.changedImages.filter(el => el.id === currentImageId));
   const onZoomImage = (value: number) => {
-    dispatch(postActions.setZoom(value));
+    if (currentImageId)
+      dispatch(postActions.setZoom({ id: currentImageId, zoom: value }));
   };
 
   console.log(currentImageId);
@@ -41,14 +42,14 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
-          zoom={zoom}
-          aspectRatio={aspectRatio[0].aspectRatio??AspectRatioType.one}
+          zoom={zoom[0].zoom}
+          aspectRatio={aspectRatio[0].aspectRatio ?? AspectRatioType.one}
           currentImageId={currentImageId}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
             <AspectRatio imageId={currentImageId} />
-            <Range onValueChange={onZoomImage} value={zoom} />
+            <Range onValueChange={onZoomImage} value={zoom[0].zoom} />
           </div>
           <Gallery setStep={setStep} />
         </div>

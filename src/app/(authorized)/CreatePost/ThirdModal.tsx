@@ -20,10 +20,10 @@ type Props = {
 };
 
 export const ThirdModal = ({
-  setStep,
-  zoomValue,
-  setShowCreatePostModal,
-}: Props) => {
+                             setStep,
+                             zoomValue,
+                             setShowCreatePostModal,
+                           }: Props) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -34,7 +34,7 @@ export const ThirdModal = ({
   const images = useAppSelector((state) => state.post.changedImages);
   const imageById = images[0];
   const changedPostImage = useRef<any>();
-
+  console.log('ssda');
   const setActiveImage = (id: string) => {
     dispatch(postActions.changeCurrentImage({ id }));
   };
@@ -60,15 +60,12 @@ export const ThirdModal = ({
           <div className={s.cropping__filters__items}>
             {filters.map(({ name, filter }) => {
               const onSelectFilter = (filter: string) => {
-                dispatch(
-                  postActions.setImageFilter({
-                    image: images.find((image) => image.id === currentImageId)
-                      ?.image as string,
-                    filter,
-                    id: images.find((image) => image.id === currentImageId)
-                      ?.id as string,
-                  })
-                );
+                const image = images.find(el => el.id === currentImageId);
+                if (image && currentImageId)
+                  dispatch(
+                    postActions.setImageFilter({ filter: filter, id: currentImageId, image: image.image },
+                    ),
+                  );
               };
               return (
                 <div

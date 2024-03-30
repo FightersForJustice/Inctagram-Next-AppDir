@@ -6,7 +6,6 @@ const initialAppState: PostStateType = {
   postImages: [],
   changedImages: [],
   currentImageId: null,
-  zoom: 1,
 };
 
 const slice = createSlice({
@@ -22,6 +21,7 @@ const slice = createSlice({
           filter: '',
           croppedArea: null,
           aspectRatio: AspectRatioType.one,
+          zoom: 1,
         });
       });
       state.currentImageId = action.payload[action.payload.length - 1].id;
@@ -59,12 +59,16 @@ const slice = createSlice({
         aspectRatio: action.payload.aspectRatio,
       } : image);
     },
-    setZoom(state, action: PayloadAction<number>) {
-      state.zoom = action.payload;
+    setZoom(state, action: PayloadAction<{ zoom: number, id: string }>) {
+      state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
+          ...image,
+          zoom: action.payload.zoom,
+        } :
+        image);
     },
     setImageFilter(
       state,
-      action: PayloadAction<Omit<ChangedImage, 'croppedArea'>>,
+      action: PayloadAction<{ id: string, filter: string, image: string }>,
     ) {
       state.changedImages.map((image) => {
         if (image.id === action.payload.id) {
@@ -89,11 +93,12 @@ export interface IUploadImageId {
 export type PostImage = {
   id: string;
   image: string;
-  aspectRatio: AspectRatioType
 };
 
 export type ChangedImage = {
+  aspectRatio: AspectRatioType
   croppedArea: Area | null;
+  zoom: number;
   filter: string;
 } & PostImage;
 
@@ -101,5 +106,4 @@ export type PostStateType = {
   postImages: PostImage[];
   changedImages: ChangedImage[];
   currentImageId: string | null;
-  zoom: number;
 };
