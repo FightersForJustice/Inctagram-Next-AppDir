@@ -34,7 +34,6 @@ export const ThirdModal = ({
   const images = useAppSelector((state) => state.post.changedImages);
   const imageById = images[0];
   const changedPostImage = useRef<any>();
-  console.log('ssda');
   const setActiveImage = (id: string) => {
     dispatch(postActions.changeCurrentImage({ id }));
   };

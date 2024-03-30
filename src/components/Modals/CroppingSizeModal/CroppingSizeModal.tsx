@@ -12,7 +12,6 @@ type Props = {
 export const CroppingSizeModal = ({ imageId }: Props) => {
   const dispatch = useAppDispatch();
   const ratio = useAppSelector((state) => state.post.changedImages.find(el => el.id === imageId));
-  console.log(ratio);
   return (
     <div className={s.cropping__size}>
       <div className={s.cropping__items}>

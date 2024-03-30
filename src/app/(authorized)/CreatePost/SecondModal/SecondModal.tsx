@@ -29,7 +29,6 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
       dispatch(postActions.setZoom({ id: currentImageId, zoom: value }));
   };
 
-  console.log(currentImageId);
   if (!currentImageId) {
     return null;
   }

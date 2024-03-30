@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Area } from 'react-easy-crop';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { image } from 'html2canvas/dist/types/css/types/image';
 
 const initialAppState: PostStateType = {
   postImages: [],
@@ -43,15 +44,11 @@ const slice = createSlice({
       state.currentImageId = action.payload.id;
     },
     setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter' | 'aspectRatio'>>) {
-      state.changedImages.map((image) => {
-        if (image.id === action.payload.id) {
-          image.image = action.payload.image;
-          image.croppedArea = action.payload.croppedArea;
-          return image;
-        }
-
-        return image;
-      });
+      state.changedImages.map(el => el.id === action.payload.id ? {
+        ...el,
+        image: action.payload.image,
+        croppedArea: action.payload.croppedArea,
+      } : el);
     },
     setAspectRatio(state, action: PayloadAction<{ aspectRatio: AspectRatioType, id: string }>) {
       state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
