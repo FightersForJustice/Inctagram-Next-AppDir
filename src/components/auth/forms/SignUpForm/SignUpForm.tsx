@@ -83,7 +83,7 @@ export const SignUpForm = () => {
   const watchedData = watch();
 
   useEffect(() => {
-    if (getValues('passwordConfirm')) {
+    if (getValues('password')) {
       watch().password != watch().passwordConfirm
         ? setPasswordMismatch(translateErrors('passwordConfirm.oneOf'))
         : setPasswordMismatch('');
@@ -118,7 +118,7 @@ export const SignUpForm = () => {
         <AuthSubmit
           id={'sign-up-submit'}
           value={String(translate('btnName'))}
-          disabled={!isValid}
+          disabled={isValid && passwordMismatch === '' ? false : true}
         />
         <p className={s.questionContainer}>{translate('question')}</p>
         <Link
