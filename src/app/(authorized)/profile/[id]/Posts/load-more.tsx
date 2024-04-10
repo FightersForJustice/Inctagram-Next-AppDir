@@ -42,7 +42,13 @@ export function LoadMore({ id, minId, userData, myProfile }: Props) {
     <>
       {posts?.map((i) => (
         <div key={i.id} className={s.imageContainer}>
-          <PostImg post={i} userData={userData} myProfile={myProfile} />
+          <PostImg
+            post={i}
+            userData={userData}
+            myProfile={myProfile}
+            posts={posts}
+            setPosts={setPosts}
+          />
         </div>
       ))}
       <div ref={ref} style={{ marginTop: '20px' }}></div>

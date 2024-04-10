@@ -1,5 +1,5 @@
 'use server';
-
+import { accessToken } from '@/utils/serverActions';
 import { cookies } from 'next/headers';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -30,7 +30,7 @@ export const getPosts = async (id: number, minId: number | null) => {
   const apiUrl =
     baseUrl + `public-posts/user/${id}/${minId}?pageSize=8&sortDirection=desc`;
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, { next: { revalidate: 0 } });
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;
@@ -44,12 +44,11 @@ export const getPosts = async (id: number, minId: number | null) => {
 };
 
 export const getPostsDelete = async (postId: number) => {
-  const accessToken = cookies().get('accessToken');
   const apiUrl = baseUrl + `posts/${postId}`;
   const response = await fetch(apiUrl, {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken()}`,
     },
   });
   return response.status;
