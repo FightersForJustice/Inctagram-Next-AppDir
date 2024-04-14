@@ -3,14 +3,13 @@ import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDeletePostMutation, useGetPostQuery } from '@/api';
+import { useGetPostQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { toast } from 'react-toastify';
 import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
 import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
-import { deletePostById } from './deletePostById';
 
 type Props = {
   post: Post;
