@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { signInAction } from '@/app/lib/actions';
+import { getIpAddress, signInAction } from '@/app/lib/actions';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import { SignInSchema } from '@/features/schemas';
 import { SignInData } from '@/features/schemas/SignInSchema';
@@ -43,7 +43,8 @@ export const SignInForm = () => {
     const userAgent = window.navigator.userAgent;
     console.log(userAgent);
     data.email = data.email.toLowerCase();
-    const signInResult = await signInAction(data, userAgent);
+    const ipAddress = await getIpAddress();
+    const signInResult = await signInAction(data, userAgent, ipAddress);
 
     setLoading(false);
     if (signInResult?.success) {

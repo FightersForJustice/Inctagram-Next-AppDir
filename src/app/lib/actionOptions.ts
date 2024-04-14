@@ -8,7 +8,8 @@ export const loginOptions = (
   data: SignInData,
   userAgent: string & {
     baseUrl?: string | undefined;
-  }
+  },
+  ipAddress: string
 ) => {
   console.log('data', data);
 
@@ -17,6 +18,7 @@ export const loginOptions = (
     headers: {
       'Content-Type': 'application/json',
       'user-agent': userAgent,
+      'X-Forwarded-For': ipAddress,
     },
     body: JSON.stringify(data),
     next: { revalidate: 0 },
