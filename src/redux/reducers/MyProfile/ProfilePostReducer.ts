@@ -11,6 +11,9 @@ const slice = createSlice({
   name: 'ProfilePostReducer',
   initialState: initialAppState,
   reducers: {
+    addItemsRequest: (state, action: PayloadAction<Items[]>) => {
+      state.items = [...action.payload];
+    },
     addItems: (state, action: PayloadAction<Items[]>) => {
       state.items.push(...action.payload);
     },

@@ -30,7 +30,7 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
 
   if (request) {
     setRequest(false);
-    dispatch(ProfilePostActions.addItems(postsData.items));
+    dispatch(ProfilePostActions.addItemsRequest(postsData.items));
   }
 
   let minId = findMinId(items);
