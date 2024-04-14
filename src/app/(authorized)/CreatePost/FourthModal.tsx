@@ -62,7 +62,6 @@ export const FourthModal: React.FC<Props> = ({
         toast.error('Error');
       } else {
         toast.success(translate('publicationsCreated'));
-        console.log(res.data);
         dispatch(ProfilePostActions.addFirstItems([res.data]));
       }
       dispatch(postActions.clearPostState());
