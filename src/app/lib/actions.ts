@@ -426,7 +426,7 @@ export async function createPost(body: createPostOptionsType) {
     }
     revalidatePath(ROUTES.PROFILE);
 
-    return { success: true, data: responseBody.images };
+    return { success: true, data: responseBody };
   } catch (error) {
     console.error('createPost error', error);
 

@@ -10,6 +10,8 @@ import { toast } from 'react-toastify';
 import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
 import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
+import { useDispatch } from 'react-redux';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 type Props = {
   post: Post;
@@ -19,7 +21,7 @@ type Props = {
 
 export function PostImg({ post, userData, myProfile }: Props) {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
 
@@ -36,6 +38,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
       if (response === 204) {
         setOpenPostModal(false);
         toast.success('Post was deleted');
+        dispatch(ProfilePostActions.removeItemById(post.id));
       }
     }
   };

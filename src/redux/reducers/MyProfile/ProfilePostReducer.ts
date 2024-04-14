@@ -17,6 +17,12 @@ const slice = createSlice({
     addItems: (state, action: PayloadAction<Items[]>) => {
       state.items.push(...action.payload);
     },
+    addFirstItems: (state, action: PayloadAction<Items[]>) => {
+      state.items.unshift(...action.payload);
+    },
+    removeItemById: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
   },
 });
 export const ProfilePostReducer = slice.reducer;
