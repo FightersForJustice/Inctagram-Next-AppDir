@@ -3,14 +3,10 @@ import { UserProfile } from '../types';
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 import s from './ProfileServer.module.scss';
 import { Posts } from '../Posts/Posts';
-import { LoadMore } from '../Posts/load-more';
-import { findMinId } from '@/utils/findMinId';
+
 import { headers } from 'next/headers';
 
-import {
-  ApiResponsePosts,
-  ProfilePostActions,
-} from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 type Props = {
   id: number;
