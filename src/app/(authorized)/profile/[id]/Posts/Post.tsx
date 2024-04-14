@@ -16,11 +16,9 @@ type Props = {
   post: Post;
   userData: UserProfile;
   myProfile: boolean;
-  posts?: any;
-  setPosts?: any;
 };
 
-export function PostImg({ post, userData, myProfile, posts, setPosts }: Props) {
+export function PostImg({ post, userData, myProfile }: Props) {
   const router = useRouter();
 
   const [openPostModal, setOpenPostModal] = useState(false);
@@ -39,10 +37,6 @@ export function PostImg({ post, userData, myProfile, posts, setPosts }: Props) {
       if (response === 204) {
         setOpenPostModal(false);
         toast.success('Post was deleted');
-        router.push(`/profile/${userData.id}`);
-        if (posts) {
-          setPosts(deletePostById(posts, post.id));
-        }
       }
     }
   };

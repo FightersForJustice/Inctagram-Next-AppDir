@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialAppState: Posts = {
+const initialAppState: ApiResponsePosts = {
+  totalCount: 0,
+  pageSize: 0,
+  totalUsers: 0,
   items: [],
 };
 
@@ -8,21 +11,22 @@ const slice = createSlice({
   name: 'ProfilePostReducer',
   initialState: initialAppState,
   reducers: {
-    addItem(state, action: PayloadAction<Item>) {
-      state.items.push(action.payload);
-    },
-    removeItem(state, action: PayloadAction<number>) {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+    addItems: (state, action: PayloadAction<Items[]>) => {
+      state.items.push(...action.payload);
     },
   },
 });
 export const ProfilePostReducer = slice.reducer;
 export const ProfilePostActions = slice.actions;
 
-export type Posts = {
-  items: Item[];
+export type ApiResponsePosts = {
+  totalCount: number;
+  pageSize: number;
+  totalUsers: number;
+  items: Items[];
 };
-export type Item = {
+
+export type Items = {
   id: number;
   userName: string;
   description: string;

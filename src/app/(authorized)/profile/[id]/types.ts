@@ -27,16 +27,17 @@ export interface postImage {
 
 export interface Post {
   id: number;
+  userName: string;
   ownerId: number;
   description: string;
-  location: null | string;
+  location: string;
   images: postImage[];
   createdAt: string;
   updatedAt: string;
   avatarOwner: string;
   owner: {
-    firstName: null | string;
-    lastName: null | string;
+    firstName: string;
+    lastName: string;
   };
 }
 
