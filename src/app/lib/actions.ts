@@ -30,10 +30,17 @@ import { accessToken } from '@/utils/serverActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SignInData, userAgent: string) {
+export async function signInAction(
+  data: SignInData,
+  userAgent: string,
+  ipAddress: string
+) {
   if (data) {
     try {
-      const res = await fetch(routes.LOGIN, loginOptions(data, userAgent));
+      const res = await fetch(
+        routes.LOGIN,
+        loginOptions(data, userAgent, ipAddress)
+      );
       const responseBody = await res.json();
 
       if (!res.ok) {
@@ -72,7 +79,7 @@ export async function signUpAction(data: SignInData) {
       email: data.email.toLowerCase(),
       baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
-    const res = await fetch(routes.SIGN_UP, loginOptions(newData, ''));
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData, '', ''));
     if (res.ok) {
       return { success: true, data: 'signUpSuccess' };
     }
@@ -433,3 +440,16 @@ export async function createPost(body: createPostOptionsType) {
     return { success: false, data: 'createPostError' };
   }
 }
+
+export const getIpAddress = async () => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    const ipAddress = data.ip;
+    console.log('IP адрес пользователя:', ipAddress);
+    return ipAddress;
+  } catch (error) {
+    console.error('Ошибка при получении IP адреса:', error);
+    return null;
+  }
+};
