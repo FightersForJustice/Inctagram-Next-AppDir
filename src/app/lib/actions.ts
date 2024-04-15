@@ -283,16 +283,7 @@ export async function updateTokensAndContinue(
   } catch (error) {
     console.error('updateTokensAndContinue ERROR', error);
 
-    const action = NextResponse.next({
-      headers: {
-        'Set-Cookie': [
-          'accessToken=; Path=/; Secure; SameSite=None; Max-Age=0',
-          'refreshToken=; Path=/; Secure; SameSite=None; Max-Age=0',
-        ],
-      } as any,
-    });
-
-    return { success: false, action };
+    return { success: false };
   }
 }
 

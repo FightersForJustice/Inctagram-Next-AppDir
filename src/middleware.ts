@@ -72,8 +72,11 @@ export async function middleware(request: NextRequest) {
           refreshToken,
           userAgent
         );
-
-        return updateTokenResult.action;
+        if (updateTokenResult.success) {
+          return updateTokenResult.action;
+        } else {
+          NextResponse.redirect(new URL('/error', request.url));
+        }
       default:
         console.log('Middleware (Not Authorized)');
         return !isAuthPath
