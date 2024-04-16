@@ -19,10 +19,10 @@ export const Modal = ({
   isOkBtn,
 }: PropsWithChildren<Props>) => {
   return createPortal(
-    <div className={s.modal} onClick={onClose}>
+    <div className={s.modal} onMouseDown={onClose}>
       <div
         className={s.modal__content + ' ' + className}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className={s.modal__header}>
           <div className={s.modal__title}>{title}</div>
