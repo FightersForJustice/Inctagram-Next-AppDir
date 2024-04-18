@@ -435,5 +435,5 @@ export async function createPost(body: createPostOptionsType) {
 export const getIpAddress = async () => {
   const headersList = headers();
   const ip = headersList.get('x-forwarded-for');
-  return ip;
+  return ip ?? '';
 };
