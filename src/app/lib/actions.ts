@@ -433,14 +433,7 @@ export async function createPost(body: createPostOptionsType) {
 }
 
 export const getIpAddress = async () => {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    const ipAddress = data.ip;
-    console.log('IP адрес пользователя:', ipAddress);
-    return ipAddress;
-  } catch (error) {
-    console.error('Ошибка при получении IP адреса:', error);
-    return null;
-  }
+  const headersList = headers();
+  const ip = headersList.get('x-forwarded-for');
+  return ip;
 };
