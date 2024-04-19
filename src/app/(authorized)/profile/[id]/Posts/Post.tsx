@@ -3,13 +3,15 @@ import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDeletePostMutation, useGetPostQuery } from '@/api';
+import { useGetPostQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { toast } from 'react-toastify';
 import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
 import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
+import { useDispatch } from 'react-redux';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 type Props = {
   post: Post;
@@ -18,13 +20,12 @@ type Props = {
 };
 
 export function PostImg({ post, userData, myProfile }: Props) {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
 
-  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-  const { data, isLoading,  error, isError } = useGetPostQuery(
-    post.id!,
-  );
+  const { data, isLoading, error, isError } = useGetPostQuery(post.id!);
 
   const onOpenPost = () => {
     setOpenPostModal(true);
@@ -37,6 +38,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
       if (response === 204) {
         setOpenPostModal(false);
         toast.success('Post was deleted');
+        dispatch(ProfilePostActions.removeItemById(post.id));
       }
     }
   };
@@ -46,14 +48,14 @@ export function PostImg({ post, userData, myProfile }: Props) {
   }
 
   const currentPosts = post.images.filter(
-    (postImage) => postImage.width !== 640,
+    (postImage) => postImage.width !== 640
   );
-  const router = useRouter();
+
   const openModalWithPost = (id: number) => {
-    router.push(`/profile/${userData.id}?post=${id}`);
+    router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
   };
   const closeModal = () => {
-    router.push(`/profile/${userData.id}`);
+    router.push(`/profile/${userData.id}`, { scroll: false });
   };
   if (!data) {
     return <Loader />;
@@ -64,9 +66,9 @@ export function PostImg({ post, userData, myProfile }: Props) {
     closeModal();
   };
 
-  return <>
-      {
-        openPostModal &&
+  return (
+    <>
+      {openPostModal && (
         <>
           <div className={'relative'}>
             {editPost ? (
@@ -91,10 +93,9 @@ export function PostImg({ post, userData, myProfile }: Props) {
               />
             )}
             {isLoading && !isError && <Loader />}
-            {isDeleting && <Loader />}
           </div>
         </>
-      }
+      )}
 
       <Image
         src={
@@ -109,4 +110,5 @@ export function PostImg({ post, userData, myProfile }: Props) {
         onClick={onOpenPost}
       />
     </>
+  );
 }

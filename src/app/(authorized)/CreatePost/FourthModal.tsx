@@ -12,6 +12,7 @@ import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import s from './CreatePost.module.scss';
 import { useTranslation } from 'react-i18next';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -59,8 +60,10 @@ export const FourthModal: React.FC<Props> = ({
       const res = await createPost(body);
       if (!res.success) {
         toast.error('Error');
-      } else toast.success(translate('publicationsCreated'));
-
+      } else {
+        toast.success(translate('publicationsCreated'));
+        dispatch(ProfilePostActions.addFirstItems([res.data]));
+      }
       dispatch(postActions.clearPostState());
       setShowCreatePostModal(false);
     }
