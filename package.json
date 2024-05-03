@@ -28,6 +28,7 @@
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "fs": "^0.0.1-security",
+    "gsap": "^3.12.5",
     "html2canvas": "^1.4.1",
     "i18next": "^23.7.16",
     "js-cookie": "^3.0.5",

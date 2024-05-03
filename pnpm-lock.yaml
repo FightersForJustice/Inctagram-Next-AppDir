@@ -13,7 +13,7 @@ dependencies:
     version: 3.1.1(react-hook-form@7.45.1)
   '@paypal/paypal-js':
     specifier: github:paypal/paypal-js
-    version: github.com/paypal/paypal-js/f829b81bc826d67edf24fe8484e6c016c740624b
+    version: github.com/paypal/paypal-js/c0badf32d64edee54487c0b7e8451a764b6c255c
   '@paypal/react-paypal-js':
     specifier: ^8.1.1
     version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -53,6 +53,9 @@ dependencies:
   fs:
     specifier: ^0.0.1-security
     version: 0.0.1-security
+  gsap:
+    specifier: ^3.12.5
+    version: 3.12.5
   html2canvas:
     specifier: ^1.4.1
     version: 1.4.1
@@ -3400,6 +3403,10 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: false
 
+  /gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
+    dev: false
+
   /has-bigints@1.0.2:
     resolution: {integrity: sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==}
     dev: false
@@ -5976,8 +5983,8 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/paypal/paypal-js/f829b81bc826d67edf24fe8484e6c016c740624b:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/f829b81bc826d67edf24fe8484e6c016c740624b}
+  github.com/paypal/paypal-js/c0badf32d64edee54487c0b7e8451a764b6c255c:
+    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/c0badf32d64edee54487c0b7e8451a764b6c255c}
     name: '@paypal/paypal-js-root'
     version: 0.0.0
     prepare: true
