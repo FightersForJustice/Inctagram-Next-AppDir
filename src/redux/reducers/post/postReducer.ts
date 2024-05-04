@@ -44,11 +44,20 @@ const slice = createSlice({
       state.currentImageId = action.payload.id;
     },
     setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter' | 'aspectRatio'>>) {
-      state.changedImages.map(el => el.id === action.payload.id ? {
-        ...el,
-        image: action.payload.image,
-        croppedArea: action.payload.croppedArea,
-      } : el);
+      const targetImg = state.changedImages.find(
+          (el) => el.id === action.payload.id
+      );
+
+      if (targetImg) {
+        const index = state.changedImages.indexOf(targetImg);
+
+        const croppedImage = {
+          ...targetImg,
+          image: action.payload.image,
+          croppedArea: action.payload.croppedArea,
+        };
+        state.changedImages.splice(index, 1, croppedImage);
+      }
     },
     setAspectRatio(state, action: PayloadAction<{ aspectRatio: AspectRatioType, id: string }>) {
       state.changedImages = state.changedImages.map(image => image.id === action.payload.id ? {
