@@ -36,6 +36,7 @@
     }
   }
   &__desc {
+    overflow-y: scroll;
     display: flex;
     gap: 12px;
     border-top: 1px solid var(--dark-100);
