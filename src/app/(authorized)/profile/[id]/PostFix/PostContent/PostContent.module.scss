@@ -1,6 +1,7 @@
 @use '@/app/mixins.scss' as s;
 
 .post {
+  flex: 1;
   display: flex;
   justify-content: center;
   height: 481px;
@@ -9,6 +10,13 @@
     background-color: var(--dark-300);
     width: 480px;
   }
+
+  &Info{
+    flex: 1;
+    max-height: 481px;
+    overflow: scroll;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
