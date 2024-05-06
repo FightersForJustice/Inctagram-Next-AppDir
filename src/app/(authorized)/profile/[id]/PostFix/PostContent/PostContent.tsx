@@ -61,7 +61,7 @@ export const PostContent = ({
             return;
           })}
         </Carousel>
-        <div>
+        <div className={s.postInfo}>
           <div className={s.post__header}>
             <div className={s.post__header__user}>
               <Image
