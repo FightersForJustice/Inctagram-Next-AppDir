@@ -27,7 +27,7 @@ const PostHeader = ({
         <Image
           src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
           alt={'ava'}
-          width={66}
+          width={36}
           height={36}
           className={s.header__img}
         />
