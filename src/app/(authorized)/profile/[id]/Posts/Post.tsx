@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGetPostQuery } from '@/api';
 import { Loader } from '@/components/Loader';
@@ -12,6 +12,7 @@ import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import { PostContentMobile } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostContentMobile';
 
 type Props = {
   post: Post;
@@ -19,13 +20,27 @@ type Props = {
   myProfile: boolean;
 };
 
-export function PostImg({ post, userData, myProfile }: Props) {
+export function Post({ post, userData, myProfile }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
+  const [width, setWidth] = useState(1920);
 
   const { data, isLoading, error, isError } = useGetPostQuery(post.id!);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    handleResize()
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const onOpenPost = () => {
     setOpenPostModal(true);
@@ -80,21 +95,30 @@ export function PostImg({ post, userData, myProfile }: Props) {
                 description={data.description}
               />
             ) : (
-              <PostContent
-                closeModalAction={closeModalAction}
-                images={data.images}
-                myProfile={myProfile}
-                user={userData}
-                description={data.description}
-                setEditPost={setEditPost}
-                onDeletePost={onDeletePost}
-              />
+                width <= 521 ?
+                <PostContentMobile
+                  closeModalAction={closeModalAction}
+                  images={data.images}
+                  myProfile={myProfile}
+                  user={userData}
+                  description={data.description}
+                  setEditPost={setEditPost}
+                  onDeletePost={onDeletePost}
+                /> :
+                <PostContent
+                  closeModalAction={closeModalAction}
+                  images={data.images}
+                  myProfile={myProfile}
+                  user={userData}
+                  description={data.description}
+                  setEditPost={setEditPost}
+                  onDeletePost={onDeletePost}
+                />
             )}
             {isLoading && !isError && <Loader />}
           </div>
         </>
       )}
-
       <Image
         src={
           post.images[0]?.url

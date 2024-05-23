@@ -29,12 +29,15 @@
       justify-content: space-between;
       width: 100%;
     }
+
     &__user{
       gap: 12px;
       display: flex;
       align-items: center;
+      font-weight: 600;
     }
   }
+
   &__desc {
     overflow-y: scroll;
     display: flex;
@@ -137,22 +140,20 @@
 
   &__form {
     display: flex;
-    padding-top: 18px;
-    margin-bottom: 17px;
-    padding-left: 19px;
-    padding-right: 24px;
-    gap: 55px;
+    justify-content: space-between;
+    padding: 18px;
 
     &__input {
+      width: 100%;
       background: transparent;
       outline: none;
       color: var(--light-900);
       font-size: 14px;
-      width: 327px;
       padding: 2px 5px;
       border: 1px solid transparent;
       border-radius: 2px;
       transition: all 0.2s linear;
+      margin-right: 18px;
 
       &::placeholder {
         color: var(--light-900);
@@ -174,25 +175,10 @@
     }
   }
 }
-//@include s.devices(tablet-xl) {
-//  .imageContainer {
-//    max-width: 32.2%;
-//    width: 100%;
-//  }
-//
-//  .imageContainer img {
-//    max-width: 100%;
-//  }
-//}
-//
-//@include s.devices(tablet) {
-//  .imageContainer {
-//    max-width: 32.6%;
-//  }
-//}
 
-@include s.devices(mobile-sm) {
+@include s.devices(mobile) {
   .post {
     flex-direction: column;
+    height: calc(100vh - 120px);
   }
 }

@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .post__modal {
   position: fixed;
   top: 0;
@@ -21,10 +23,6 @@
 
 .post__modal__header {
   border-bottom: 1px solid var(--dark-100);
-}
-
-.post__modal__header,
-post__modal__footer {
 }
 
 .post__modal__body {
@@ -54,4 +52,10 @@ post__modal__footer {
   font-size: 20px;
   font-weight: 700;
   line-height: 36px;
+}
+
+@include s.devices(mobile) {
+  .post__modal {
+    background-color: transparent;
+  }
 }
