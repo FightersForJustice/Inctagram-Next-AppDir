@@ -12,6 +12,8 @@ import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHeader';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
+import { PostForm } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostForm';
+import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
 
 type Props = {
   user: UserProfile;
@@ -81,6 +83,8 @@ export const PostContent = ({
           <PostComment />
           <PostComment />
           <PostLikes />
+          <PostAmount />
+          <PostForm />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
