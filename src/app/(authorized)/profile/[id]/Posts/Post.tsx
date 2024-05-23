@@ -76,8 +76,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
                 images={data.images}
                 postId={post.id}
                 setEditPost={setEditPost}
-                avatar={userData?.avatars[0]?.url}
-                userName={userData?.userName}
+                user={userData}
                 description={data.description}
               />
             ) : (
@@ -85,8 +84,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
                 closeModalAction={closeModalAction}
                 images={data.images}
                 myProfile={myProfile}
-                avatar={userData?.avatars[0]?.url}
-                userName={userData?.userName}
+                user={userData}
                 description={data.description}
                 setEditPost={setEditPost}
                 onDeletePost={onDeletePost}

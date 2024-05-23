@@ -15,21 +15,20 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
+import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 
 type Props = {
   setEditPost: (value: boolean) => void;
   description: string;
   postId: number | undefined;
-  avatar: string;
-  userName: string;
+  user: UserProfile;
   images: ImageType[];
 };
 
 export const EditPost = ({
   setEditPost,
   description,
-  userName,
-  avatar,
+  user,
   images,
   postId,
 }: Props) => {
@@ -117,13 +116,13 @@ export const EditPost = ({
             <div className={s.post__header}>
               <div className={s.post__header__user}>
                 <Image
-                  src={avatar ?? '/img/create-post/no-image.png'}
+                  src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
                   alt={'ava'}
                   width={36}
                   height={36}
                   className={s.header__img}
                 />
-                <span>{userName}</span>
+                <span>{user?.userName}</span>
               </div>
             </div>
             <p className={s.post__title}>

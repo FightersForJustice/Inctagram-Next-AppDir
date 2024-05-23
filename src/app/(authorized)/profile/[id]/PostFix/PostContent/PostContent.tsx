@@ -12,10 +12,10 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
+import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 
 type Props = {
-  avatar: string;
-  userName: string;
+  user: UserProfile;
   description: string;
   myProfile: boolean
   images: ImageType[]
@@ -26,8 +26,7 @@ type Props = {
 
 export const PostContent = ({
                               description,
-                              userName,
-                              avatar,
+                              user,
                               closeModalAction,
                               myProfile, images,
                               setEditPost,
@@ -80,7 +79,7 @@ export const PostContent = ({
           </div>
           <div className={s.post__desc}>
             <Image
-              src={avatar ?? '/img/create-post/no-image.png'}
+              src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
               alt={'ava'}
               width={36}
               height={36}
@@ -88,7 +87,7 @@ export const PostContent = ({
             />
             <div>
               <p className={s.post__desc__text}>
-                <span className={s.post__desc__name}>{userName} </span>
+                <span className={s.post__desc__name}>{user?.userName} </span>
                 {description}
               </p>
               <p className={s.post__desc__time}>2 hours ago</p>
