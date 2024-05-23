@@ -12,6 +12,9 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
+import { getTimeAgoText } from '@/utils';
+import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   avatar: string;
@@ -22,6 +25,7 @@ type Props = {
   closeModalAction:()=>void
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
+  createdPostTime: string;
 };
 
 export const PostContent = ({
@@ -32,9 +36,16 @@ export const PostContent = ({
                               myProfile, images,
                               setEditPost,
                               onDeletePost,
+                              createdPostTime,
                             }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+
+  const language = useGetLanguageFromPath();
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Time.${key}`);
+  const time = getTimeAgoText(createdPostTime, language, translate);
+
   return (
     <>
       <PostModal
@@ -91,7 +102,7 @@ export const PostContent = ({
                 <span className={s.post__desc__name}>{userName} </span>
                 {description}
               </p>
-              <p className={s.post__desc__time}>2 hours ago</p>
+              <p className={s.post__desc__time}>{time}</p>
             </div>
           </div>
           <PostComment />
