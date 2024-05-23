@@ -1,13 +1,19 @@
 .post {
   &__comment {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap: 12px;
     padding: 0 24px 0 24px;
     margin-bottom: 12px;
 
+    svg {
+      min-width: 16px;
+      margin-top: 10px;
+    }
+
     &__avatar {
       width: 36px;
+      min-width: 36px;
       height: 36px;
       border-radius: 50%;
     }

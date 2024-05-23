@@ -174,19 +174,25 @@
     }
   }
 }
-@include s.devices(tablet-xl) {
-  .imageContainer {
-    max-width: 32.2%;
-    width: 100%;
-  }
+//@include s.devices(tablet-xl) {
+//  .imageContainer {
+//    max-width: 32.2%;
+//    width: 100%;
+//  }
+//
+//  .imageContainer img {
+//    max-width: 100%;
+//  }
+//}
+//
+//@include s.devices(tablet) {
+//  .imageContainer {
+//    max-width: 32.6%;
+//  }
+//}
 
-  .imageContainer img {
-    max-width: 100%;
-  }
-}
-
-@include s.devices(tablet) {
-  .imageContainer {
-    max-width: 32.6%;
+@include s.devices(mobile-sm) {
+  .post {
+    flex-direction: column;
   }
 }

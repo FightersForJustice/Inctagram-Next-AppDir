@@ -67,7 +67,7 @@ export const PostContent = ({
               <Image
                 src={avatar ?? '/img/create-post/no-image.png'}
                 alt={'ava'}
-                width={36}
+                width={66}
                 height={36}
                 className={s.header__img}
               />
