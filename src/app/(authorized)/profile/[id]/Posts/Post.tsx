@@ -90,6 +90,7 @@ export function PostImg({ post, userData, myProfile }: Props) {
                 description={data.description}
                 setEditPost={setEditPost}
                 onDeletePost={onDeletePost}
+                createdPostTime={data.createdAt}
               />
             )}
             {isLoading && !isError && <Loader />}
