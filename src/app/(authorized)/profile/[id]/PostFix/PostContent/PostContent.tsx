@@ -5,13 +5,12 @@ import { PostComment } from './PostComment';
 import { PostLikes } from './PostLikes';
 
 import s from './PostContent.module.scss';
-import { Dots } from '@/app/(authorized)/profile/[id]/PostFix/Dots';
-import { DotsFriends } from '@/app/(authorized)/profile/[id]/PostFix/DotsFriends';
 import { useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
+import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHeader';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 
 type Props = {
@@ -61,22 +60,8 @@ export const PostContent = ({
           })}
         </Carousel>
         <div className={s.postInfo}>
-          <div className={s.post__header}>
-            <div className={s.post__header__user}>
-              <Image
-                src={avatar ?? '/img/create-post/no-image.png'}
-                alt={'ava'}
-                width={66}
-                height={36}
-                className={s.header__img}
-              />
-              <span>{userName}</span>
-            </div>
-            {myProfile ?
-              <Dots setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-                    setShowAreYouSureModal={setShowAreYouSureModal} /> :
-              <DotsFriends setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} />}
-          </div>
+          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
+                      setShowAreYouSureModal={setShowAreYouSureModal}/>
           <div className={s.post__desc}>
             <Image
               src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
