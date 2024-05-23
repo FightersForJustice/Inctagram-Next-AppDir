@@ -1,9 +1,7 @@
 .carousel__wrapper {
   width: 100%;
   flex: 1;
+  display: flex;
+  align-items: center;
 
-  .swiper-wrapper {
-    display: flex;
-    align-items: center;
-  }
 }
