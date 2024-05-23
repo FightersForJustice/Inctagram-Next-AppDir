@@ -217,7 +217,7 @@
       "close": "Close",
       "yes": "Yes",
       "no": "No",
-      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "areYouSureText": "Are you sure you want to delete this post?",
       "filters": "Filters",
       "sizeError": "Photo size must be less than 10 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
