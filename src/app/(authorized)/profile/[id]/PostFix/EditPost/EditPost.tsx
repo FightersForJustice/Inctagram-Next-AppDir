@@ -26,12 +26,12 @@ type Props = {
 };
 
 export const EditPost = ({
-  setEditPost,
-  description,
-  user,
-  images,
-  postId,
-}: Props) => {
+                           setEditPost,
+                           description,
+                           user,
+                           images,
+                           postId,
+                         }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
@@ -111,8 +111,7 @@ export const EditPost = ({
               return;
             })}
           </Carousel>
-          {/*</div>*/}
-          <div>
+          <div className={s.post__wrapper}>
             <div className={s.post__header}>
               <div className={s.post__header__user}>
                 <Image
@@ -128,6 +127,7 @@ export const EditPost = ({
             <p className={s.post__title}>
               {translate('addPublicationDescriptions')}
             </p>
+            <div className={s.post__area}>
             <textarea
               className={s.post__textarea}
               cols={30}
@@ -136,11 +136,13 @@ export const EditPost = ({
               value={textareaValue}
               onChange={onTextareaHandler}
             />
+            </div>
             <p
               style={{
                 color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
                 textAlign: 'right',
                 fontSize: '12px',
+                padding: '0 24px',
               }}
             >
               {textareaValue.length} / 500
@@ -150,8 +152,8 @@ export const EditPost = ({
                 {translate('saveChanges')}
               </PrimaryBtn>
             </div>
-            {isLoading && <Loader />}
           </div>
+          {isLoading && <Loader />}
         </div>
       </PostModal>
     </>
