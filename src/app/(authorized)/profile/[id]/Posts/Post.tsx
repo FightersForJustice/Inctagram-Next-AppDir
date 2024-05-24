@@ -8,7 +8,7 @@ import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { toast } from 'react-toastify';
 import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
-import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
+import { EditPost, EditPostMobile } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
@@ -87,6 +87,14 @@ export function Post({ post, userData, myProfile }: Props) {
         <>
           <div className={'relative'}>
             {editPost ? (
+              width <= 521 ?
+                <EditPostMobile
+                  images={data.images}
+                  postId={post.id}
+                  setEditPost={setEditPost}
+                  user={userData}
+                  description={data.description}
+                /> :
               <EditPost
                 images={data.images}
                 postId={post.id}
