@@ -13,7 +13,6 @@ import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostComment } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostComment';
 import { PostLikes } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostLikes';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
-import { PostForm } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostForm';
 
 type Props = {
   user: UserProfile;

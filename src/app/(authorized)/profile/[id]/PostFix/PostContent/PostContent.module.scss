@@ -180,5 +180,15 @@
   .post {
     flex-direction: column;
     height: calc(100vh - 120px);
+
+    img {
+      margin: 0 auto;
+    }
+
+    &__desc {
+      img {
+        margin: 0;
+      }
+    }
   }
 }
