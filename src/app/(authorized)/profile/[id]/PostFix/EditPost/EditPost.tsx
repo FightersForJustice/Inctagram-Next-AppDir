@@ -138,11 +138,9 @@ export const EditPost = ({
             />
             </div>
             <p
+              className={s.post__area__characters}
               style={{
                 color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
-                textAlign: 'right',
-                fontSize: '12px',
-                padding: '0 24px',
               }}
             >
               {textareaValue.length} / 500
