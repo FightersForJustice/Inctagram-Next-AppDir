@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useUpdatePostMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
@@ -14,6 +13,8 @@ import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
+import { updatePost } from '@/app/(authorized)/profile/[id]/actions';
+
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -34,24 +35,26 @@ export const EditPostMobile = ({
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
-
-  const [updatePost, { isLoading }] = useUpdatePostMutation();
+  const [loading, setLoading] = useState(false);
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
+
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
   const onSave = () => {
-    if (accessToken) {
-      updatePost({
-        postId: postId!,
-        description: textareaValue,
-        accessToken: accessToken,
-      })
-        .unwrap()
+    if (accessToken && postId) {
+      setLoading(!loading)
+      updatePost(
+        postId,
+        textareaValue
+      )
         .then(() => {
+
+
           setEditPost(false);
+          setLoading(!loading)
           toast.success('Post was updated');
         });
     }
@@ -147,7 +150,7 @@ export const EditPostMobile = ({
               {textareaValue.length} / 500
             </p>
           </div>
-          {isLoading && <Loader />}
+          {loading && <Loader />}
         </div>
       </PostModal>
     </>
