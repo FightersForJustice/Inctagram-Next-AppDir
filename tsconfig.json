@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es6",
+    "types": ["cypress", "cypress-plugin-snapshots"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -33,4 +34,5 @@
     "src/app/(authorized)/profile/settings-profile/(tabs)/general-information"
   ],
   "exclude": ["node_modules"]
+  
 }

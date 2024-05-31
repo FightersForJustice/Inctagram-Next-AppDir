@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "cy:open": "cypress open",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
-    "test": "jest",
-    "cypress:open": "cypress open"
+    "test": "npm run build && npm run start",
+    "e2e:chrome": "cypress run --browser chrome"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",
@@ -64,6 +65,11 @@
     "@types/react-google-recaptcha": "^2.1.5",
     "@types/redux-thunk": "^2.1.0",
     "@types/ua-parser-js": "^0.7.39",
+    "cypress": "^13.10.0",
+    "cypress-image-diff-html-report": "^2.1.2",
+    "cypress-image-diff-js": "^2.2.1",
+    "cypress-image-snapshot": "^4.0.1",
+    "cypress-plugin-snapshots": "^1.4.4",
     "jest": "^29.6.1",
     "prettier": "3.0.0"
   }

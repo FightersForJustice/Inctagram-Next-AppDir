@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+/cypress-image-diff-html-report
+/cypress-image-diff-screenshots/comparison
+/cypress-image-diff-screenshots/diff
 /.pnp
 .pnp.js
 
