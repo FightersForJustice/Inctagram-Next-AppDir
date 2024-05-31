@@ -13,7 +13,7 @@
     "emailExist": "User with this email is already registered"
   },
   "SignInPage": {
-    "title": "Sign In65656",
+    "title": "Sign InPush",
     "email": "Email",
     "password": "Password",
     "forgotPass": "Forgot password?",
