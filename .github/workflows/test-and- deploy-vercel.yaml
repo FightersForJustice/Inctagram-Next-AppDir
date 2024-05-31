@@ -3,11 +3,7 @@ name: test and deploy vercel
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-on:
-  pull_request:
-    branches:
-      - addCypress
-    workflow_dispatch:
+on: [push]
 
 jobs:
   cypress-run:
