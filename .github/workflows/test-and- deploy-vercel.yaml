@@ -6,7 +6,7 @@ env:
 on:
   pull_request:
     branches:
-      - main
+      - addCypress
     workflow_dispatch:
 
 jobs:
