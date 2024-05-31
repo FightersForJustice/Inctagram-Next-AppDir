@@ -16,8 +16,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          build: npm run test
-          start: npm e2e:chrome
+          build: npm run build
+          start: npm start
   Lint:
     name: ESLint
     runs-on: ubuntu-latest
