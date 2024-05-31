@@ -1,9 +1,10 @@
 describe('agreements', () => {
   beforeEach(() => {
     cy.visit('/agreements/terms-of-service');
+    cy.viewport('macbook-15');
   });
   it('screenshot desktop agreements/terms-of-service', () => {
-    cy.viewport(1080, 1920).compareSnapshot({
+    cy.compareSnapshot({
       name: 'sign-up-desktop-screenshot',
       testThreshold: 0,
     });

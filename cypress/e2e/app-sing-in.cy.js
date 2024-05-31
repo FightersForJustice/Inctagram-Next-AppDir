@@ -1,6 +1,7 @@
 describe('sign-in', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.viewport('macbook-15')
   });
   it('sign-in-content-tests', () => {
     cy.get('#sign-in-submit').should('be.disabled');
@@ -11,7 +12,7 @@ describe('sign-in', () => {
     cy.get('input').contains('Sign In');
   });
   it('screenshot desktop sign-in', () => {
-    cy.viewport(1080, 1920).compareSnapshot({
+    cy.compareSnapshot({
       name: 'sign-in-desktop-screenshot',
       testThreshold: 0,
     });

@@ -1,9 +1,10 @@
 describe('agreements privacy-policy', () => {
   beforeEach(() => {
     cy.visit('/agreements/privacy-policy');
+    cy.viewport('macbook-15');
   });
   it('screenshot desktop privacy-policy', () => {
-    cy.viewport(1080, 1920).compareSnapshot({
+    cy.compareSnapshot({
       name: 'sign-up-desktop-screenshot',
       testThreshold: 0,
     });
