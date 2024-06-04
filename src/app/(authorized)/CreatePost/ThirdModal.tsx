@@ -20,10 +20,10 @@ type Props = {
 };
 
 export const ThirdModal = ({
-                             setStep,
-                             zoomValue,
-                             setShowCreatePostModal,
-                           }: Props) => {
+  setStep,
+  zoomValue,
+  setShowCreatePostModal,
+}: Props) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -59,11 +59,14 @@ export const ThirdModal = ({
           <div className={s.cropping__filters__items}>
             {filters.map(({ name, filter }) => {
               const onSelectFilter = (filter: string) => {
-                const image = images.find(el => el.id === currentImageId);
+                const image = images.find((el) => el.id === currentImageId);
                 if (image && currentImageId)
                   dispatch(
-                    postActions.setImageFilter({ filter: filter, id: currentImageId, image: image.image },
-                    ),
+                    postActions.setImageFilter({
+                      filter: filter,
+                      id: currentImageId,
+                      image: image.image,
+                    })
                   );
               };
               return (
@@ -95,6 +98,7 @@ export const ThirdModal = ({
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
+          type={'cancelCreating'}
         />
       )}
     </>

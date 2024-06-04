@@ -80,7 +80,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     setStep(2);
   };
 
-  const onCloseCreatePostModal = (value: boolean) => {
+  const onCancelCreating = (value: boolean) => {
     setAreYouSureModal(value);
     setShowCreatePostModal(false);
   };
@@ -150,7 +150,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
       {areYouSureModal && (
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
-          toggleModal={onCloseCreatePostModal}
+          toggleModal={onCancelCreating}
         />
       )}
     </>
