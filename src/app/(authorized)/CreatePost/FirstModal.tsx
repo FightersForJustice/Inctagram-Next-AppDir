@@ -151,6 +151,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={onCancelCreating}
+          type={'cancelCreating'}
         />
       )}
     </>
