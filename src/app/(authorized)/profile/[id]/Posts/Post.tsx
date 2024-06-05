@@ -7,7 +7,7 @@ import { useGetPostQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { toast } from 'react-toastify';
-import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
+import { getPostsDelete, updatePost } from '@/app/(authorized)/profile/[id]/actions';
 import { EditPost, EditPostMobile } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
@@ -26,8 +26,7 @@ export function Post({ post, userData, myProfile }: Props) {
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
-
-  const { data, isLoading, error, isError } = useGetPostQuery(post.id!);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,8 +57,17 @@ export function Post({ post, userData, myProfile }: Props) {
     }
   };
 
-  if (error) {
-    handleApiError(error);
+  const onUpdatePost = async (postId: number, textareaValue: string) => {
+    setLoading(true);
+    const status = await updatePost(postId, textareaValue);
+    if (status === 204) {
+      dispatch(ProfilePostActions.updateItemById({ postId, textareaValue }));
+      setEditPost(false);
+      toast.success('Post was updated');
+    } else {
+      toast.error('Failed to update post');
+    }
+    setLoading(false);
   }
 
   const currentPosts = post.images.filter(
@@ -72,9 +80,6 @@ export function Post({ post, userData, myProfile }: Props) {
   const closeModal = () => {
     router.push(`/profile/${userData.id}`, { scroll: false });
   };
-  if (!data) {
-    return <Loader />;
-  }
 
   const closeModalAction = () => {
     setOpenPostModal(false);
@@ -89,41 +94,44 @@ export function Post({ post, userData, myProfile }: Props) {
             {editPost ? (
               width <= 521 ?
                 <EditPostMobile
-                  images={data.images}
+                  images={post.images}
                   postId={post.id}
                   setEditPost={setEditPost}
                   user={userData}
-                  description={data.description}
+                  description={post.description}
+                  loading={loading}
+                  onUpdatePost={onUpdatePost}
                 /> :
               <EditPost
-                images={data.images}
+                images={post.images}
                 postId={post.id}
                 setEditPost={setEditPost}
                 user={userData}
-                description={data.description}
+                description={post.description}
+                loading={loading}
+                onUpdatePost={onUpdatePost}
               />
             ) : (
                 width <= 521 ?
                 <PostContentMobile
                   closeModalAction={closeModalAction}
-                  images={data.images}
+                  images={post.images}
                   myProfile={myProfile}
                   user={userData}
-                  description={data.description}
+                  description={post.description}
                   setEditPost={setEditPost}
                   onDeletePost={onDeletePost}
                 /> :
                 <PostContent
                   closeModalAction={closeModalAction}
-                  images={data.images}
+                  images={post.images}
                   myProfile={myProfile}
                   user={userData}
-                  description={data.description}
+                  description={post.description}
                   setEditPost={setEditPost}
                   onDeletePost={onDeletePost}
                 />
             )}
-            {isLoading && !isError && <Loader />}
           </div>
         </>
       )}

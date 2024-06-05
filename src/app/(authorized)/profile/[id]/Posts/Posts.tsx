@@ -22,16 +22,14 @@ type Props = {
 };
 
 export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
-  const [request, setRequest] = useState(true);
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
   const { t } = useTranslation();
 
-  if (request) {
-    setRequest(false);
+  useEffect(()=>{
     dispatch(ProfilePostActions.addItemsRequest(postsData.items));
-  }
+  },[])
 
   let minId = findMinId(items);
 

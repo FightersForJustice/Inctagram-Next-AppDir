@@ -13,8 +13,6 @@ import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
-import { updatePost } from '@/app/(authorized)/profile/[id]/actions';
-
 
 type Props = {
   setEditPost: (value: boolean) => void;
@@ -22,6 +20,8 @@ type Props = {
   postId: number | undefined;
   user: UserProfile;
   images: ImageType[];
+  loading: boolean
+  onUpdatePost: (postId: number, textareaValue: string) => void
 };
 
 export const EditPostMobile = ({
@@ -30,12 +30,13 @@ export const EditPostMobile = ({
                                  user,
                                  images,
                                  postId,
+                                 loading,
+                                 onUpdatePost
                                }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
-  const [loading, setLoading] = useState(false);
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
 
 
@@ -43,20 +44,10 @@ export const EditPostMobile = ({
     if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
+
   const onSave = () => {
     if (accessToken && postId) {
-      setLoading(!loading)
-      updatePost(
-        postId,
-        textareaValue
-      )
-        .then(() => {
-
-
-          setEditPost(false);
-          setLoading(!loading)
-          toast.success('Post was updated');
-        });
+      onUpdatePost(postId, textareaValue)
     }
   };
 

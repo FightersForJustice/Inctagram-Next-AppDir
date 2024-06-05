@@ -23,6 +23,8 @@ type Props = {
   postId: number | undefined;
   user: UserProfile;
   images: ImageType[];
+  loading: boolean;
+  onUpdatePost: (postId: number, textareaValue: string) => void;
 };
 
 export const EditPost = ({
@@ -31,31 +33,25 @@ export const EditPost = ({
                            user,
                            images,
                            postId,
+                           loading,
+                           onUpdatePost
                          }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
 
-  const [updatePost, { isLoading }] = useUpdatePostMutation();
+  // const [updatePost, { isLoading }] = useUpdatePostMutation();
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaValue.length > 500) return;
     setTextareaValue(e.currentTarget.value);
   };
+
   const onSave = () => {
-    if (accessToken) {
-      updatePost({
-        postId: postId!,
-        description: textareaValue,
-        accessToken: accessToken,
-      })
-        .unwrap()
-        .then(() => {
-          setEditPost(false);
-          toast.success('Post was updated');
-        });
+    if (accessToken && postId) {
+      onUpdatePost(postId, textareaValue)
     }
   };
 
@@ -151,7 +147,7 @@ export const EditPost = ({
               </PrimaryBtn>
             </div>
           </div>
-          {isLoading && <Loader />}
+          {loading && <Loader />}
         </div>
       </PostModal>
     </>
