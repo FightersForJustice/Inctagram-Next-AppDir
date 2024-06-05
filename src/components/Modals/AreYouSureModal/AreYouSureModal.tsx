@@ -25,11 +25,11 @@ export const AreYouSureModal = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const prefix =
-    type === 'deletePost'
-      ? 'SettingsProfilePage.AddPhotoModal.'
-      : 'CreatePost.AddPhotoModal.';
   const translate = (key: string): string => {
+    const prefix =
+      type === 'deletePost'
+        ? 'SettingsProfilePage.AddPhotoModal.'
+        : 'CreatePost.AddPhotoModal.';
     return t(prefix + key);
   };
   return (
