@@ -16,6 +16,8 @@ const birthDays = (date: DateObject) => {
   );
 };
 
+
+
 const convertToDays = 1000 * 60 * 60 * 24;
 
 export function isLessThen13YearsOld(date: DateObject | DateObject[] | string) {

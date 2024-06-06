@@ -195,6 +195,8 @@ export async function logOutAction() {
 
       return { success: true, data: 'logoutSuccess' };
     } catch (error) {
+      cookies().delete('refreshToken');
+      cookies().delete('accessToken');
       console.error('Logout Error', error);
       return { success: false, error: error };
     }
