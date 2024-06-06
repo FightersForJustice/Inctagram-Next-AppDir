@@ -14,6 +14,9 @@ import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHea
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostForm } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostForm';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
+import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
+import { useTranslation } from 'react-i18next';
+import { getTimeAgoText } from '@/utils';
 
 type Props = {
   user: UserProfile;
