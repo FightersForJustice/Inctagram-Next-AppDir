@@ -1,8 +1,6 @@
 import Image from 'next/image';
 
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { PostComment } from './PostComment';
-import { PostLikes } from './PostLikes';
 
 import s from './PostContent.module.scss';
 import { useState } from 'react';
@@ -12,11 +10,9 @@ import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHeader';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
-import { PostForm } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostForm';
+import { PostComment } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostComment';
+import { PostLikes } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostLikes';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
-import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
-import { useTranslation } from 'react-i18next';
-import { getTimeAgoText } from '@/utils';
 
 type Props = {
   user: UserProfile;
@@ -26,26 +22,18 @@ type Props = {
   closeModalAction:()=>void
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
-  createdPostTime: string;
 };
 
-export const PostContent = ({
+export const PostContentMobile = ({
                               description,
                               user,
                               closeModalAction,
                               myProfile, images,
                               setEditPost,
                               onDeletePost,
-                              createdPostTime,
                             }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
-
-  const language = useGetLanguageFromPath();
-  const { t } = useTranslation();
-  const translate = (key: string): string => t(`Time.${key}`);
-  const time = getTimeAgoText(createdPostTime, language, translate);
-
   return (
     <>
       <PostModal
@@ -54,6 +42,8 @@ export const PostContent = ({
       >
 
       <div className={s.post}>
+        <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
+                    setShowAreYouSureModal={setShowAreYouSureModal}/>
         <Carousel>
           {images.map((i, index) => {
             if (i.width !== 640) {
@@ -72,9 +62,9 @@ export const PostContent = ({
             return;
           })}
         </Carousel>
+        <PostLikes />
+        <PostAmount />
         <div className={s.postInfo}>
-          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-                      setShowAreYouSureModal={setShowAreYouSureModal}/>
           <div className={s.post__desc}>
             <Image
               src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
@@ -88,14 +78,11 @@ export const PostContent = ({
                 <span className={s.post__desc__name}>{user?.userName} </span>
                 {description}
               </p>
-              <p className={s.post__desc__time}>{time}</p>
+              <p className={s.post__desc__time}>2 hours ago</p>
             </div>
           </div>
           <PostComment />
           <PostComment />
-          <PostLikes />
-          <PostAmount />
-          <PostForm />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
@@ -106,7 +93,6 @@ export const PostContent = ({
         </div>
       </div>
       </PostModal>
-
     </>
   );
 };

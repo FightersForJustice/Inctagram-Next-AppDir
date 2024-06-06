@@ -24,7 +24,7 @@ export const TranslationSelect = () => {
   const [currentWidth, setWidth] = useState(window.screen.width);
   const [openChangeSize, setOpenChangeSize] = useState(false);
   const [language, setLanguage] = useState(() => {
-    return Cookies.get('userLanguage') || 'en';
+    return localStorage.getItem('userLanguage') || 'en';
   });
   const [isEn, setEn] = useState(() => {
     return Cookies.get('userLanguage') === 'en' || false;

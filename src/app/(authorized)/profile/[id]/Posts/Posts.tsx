@@ -1,7 +1,7 @@
 'use client';
 import s from './Posts.module.scss';
 import { UserProfile } from '../types';
-import { PostImg } from './Post';
+import { Post } from './Post';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { getPosts } from '../actions';
@@ -22,16 +22,14 @@ type Props = {
 };
 
 export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
-  const [request, setRequest] = useState(true);
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
   const { t } = useTranslation();
 
-  if (request) {
-    setRequest(false);
+  useEffect(()=>{
     dispatch(ProfilePostActions.addItemsRequest(postsData.items));
-  }
+  },[])
 
   let minId = findMinId(items);
 
@@ -52,7 +50,7 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
     return items.map((i) => {
       return (
         <div key={i.id} className={s.imageContainer}>
-          <PostImg post={i} userData={userData} myProfile={myProfile} />
+          <Post post={i} userData={userData} myProfile={myProfile} />
         </div>
       );
     });
