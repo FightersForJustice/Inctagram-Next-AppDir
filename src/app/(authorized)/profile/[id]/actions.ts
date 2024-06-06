@@ -53,3 +53,16 @@ export const getPostsDelete = async (postId: number) => {
   });
   return response.status;
 };
+
+export const updatePost = async (postId: number, postData: string) => {
+  const apiUrl = baseUrl + `posts/${postId}`;
+  const response = await fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken()}`,
+    },
+    body: JSON.stringify({ description: postData }),
+  });
+  return response.status;
+};

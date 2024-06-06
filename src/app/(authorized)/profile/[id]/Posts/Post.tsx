@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGetPostQuery } from '@/api';
 import { Loader } from '@/components/Loader';
 import { handleApiError } from '@/utils';
 import { toast } from 'react-toastify';
-import { getPostsDelete } from '@/app/(authorized)/profile/[id]/actions';
-import { EditPost } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
+import { getPostsDelete, updatePost } from '@/app/(authorized)/profile/[id]/actions';
+import { EditPost, EditPostMobile } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import { PostContentMobile } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostContentMobile';
 
 type Props = {
   post: Post;
@@ -19,13 +20,26 @@ type Props = {
   myProfile: boolean;
 };
 
-export function PostImg({ post, userData, myProfile }: Props) {
+export function Post({ post, userData, myProfile }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
+  const [width, setWidth] = useState(1920);
+  const [loading, setLoading] = useState(false);
 
-  const { data, isLoading, error, isError } = useGetPostQuery(post.id!);
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    handleResize()
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const onOpenPost = () => {
     setOpenPostModal(true);
@@ -43,8 +57,17 @@ export function PostImg({ post, userData, myProfile }: Props) {
     }
   };
 
-  if (error) {
-    handleApiError(error);
+  const onUpdatePost = async (postId: number, textareaValue: string) => {
+    setLoading(true);
+    const status = await updatePost(postId, textareaValue);
+    if (status === 204) {
+      dispatch(ProfilePostActions.updateItemById({ postId, textareaValue }));
+      setEditPost(false);
+      toast.success('Post was updated');
+    } else {
+      toast.error('Failed to update post');
+    }
+    setLoading(false);
   }
 
   const currentPosts = post.images.filter(
@@ -57,9 +80,6 @@ export function PostImg({ post, userData, myProfile }: Props) {
   const closeModal = () => {
     router.push(`/profile/${userData.id}`, { scroll: false });
   };
-  if (!data) {
-    return <Loader />;
-  }
 
   const closeModalAction = () => {
     setOpenPostModal(false);
@@ -72,32 +92,49 @@ export function PostImg({ post, userData, myProfile }: Props) {
         <>
           <div className={'relative'}>
             {editPost ? (
+              width <= 521 ?
+                <EditPostMobile
+                  images={post.images}
+                  postId={post.id}
+                  setEditPost={setEditPost}
+                  user={userData}
+                  description={post.description}
+                  loading={loading}
+                  onUpdatePost={onUpdatePost}
+                /> :
               <EditPost
-                images={data.images}
+                images={post.images}
                 postId={post.id}
                 setEditPost={setEditPost}
-                avatar={userData?.avatars[0]?.url}
-                userName={userData?.userName}
-                description={data.description}
+                user={userData}
+                description={post.description}
+                loading={loading}
+                onUpdatePost={onUpdatePost}
               />
             ) : (
-              <PostContent
-                closeModalAction={closeModalAction}
-                images={data.images}
-                myProfile={myProfile}
-                avatar={userData?.avatars[0]?.url}
-                userName={userData?.userName}
-                description={data.description}
-                setEditPost={setEditPost}
-                onDeletePost={onDeletePost}
-                createdPostTime={data.createdAt}
-              />
+                width <= 521 ?
+                <PostContentMobile
+                  closeModalAction={closeModalAction}
+                  images={post.images}
+                  myProfile={myProfile}
+                  user={userData}
+                  description={post.description}
+                  setEditPost={setEditPost}
+                  onDeletePost={onDeletePost}
+                /> :
+                <PostContent
+                  closeModalAction={closeModalAction}
+                  images={post.images}
+                  myProfile={myProfile}
+                  user={userData}
+                  description={post.description}
+                  setEditPost={setEditPost}
+                  onDeletePost={onDeletePost}
+                />
             )}
-            {isLoading && !isError && <Loader />}
           </div>
         </>
       )}
-
       <Image
         src={
           post.images[0]?.url

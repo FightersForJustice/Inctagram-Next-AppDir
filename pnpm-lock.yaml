@@ -11,12 +11,6 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.1.1
     version: 3.1.1(react-hook-form@7.45.1)
-  '@paypal/paypal-js':
-    specifier: github:paypal/paypal-js
-    version: github.com/paypal/paypal-js/c0badf32d64edee54487c0b7e8451a764b6c255c
-  '@paypal/react-paypal-js':
-    specifier: ^8.1.1
-    version: 8.1.1(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-checkbox':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.35)(react-dom@18.2.0)(react@18.2.0)
@@ -1067,30 +1061,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
-    dev: false
-
-  /@paypal/paypal-js@6.0.1:
-    resolution: {integrity: sha512-bvYetmkg2GEC6onsUJQx1E9hdAJWff2bS3IPeiZ9Sh9U7h26/fIgMKm240cq/908sbSoDjHys75XXd8at9OpQA==}
-    dependencies:
-      promise-polyfill: 8.3.0
-    dev: false
-
-  /@paypal/react-paypal-js@8.1.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-aPcdvhUEFrZqGpPLetFd5c3qgJW1WEy6RTgeQRI7iadPcfUuCHplfyY4sS8xRI9/k0MjRysXGORRpFOr6gLc3g==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@paypal/paypal-js': 6.0.1
-      '@paypal/sdk-constants': 1.0.133
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@paypal/sdk-constants@1.0.133:
-    resolution: {integrity: sha512-NWV0IWrHwQQrNLaUYxQ1GsytvHbDu+x63kRpNJfw1OQeDcUca4B0I4LoBktWQl5gICi090hD56n2Wg08dAl44g==}
-    dependencies:
-      hi-base32: 0.5.1
     dev: false
 
   /@radix-ui/number@1.0.1:
@@ -3448,10 +3418,6 @@ packages:
     dependencies:
       function-bind: 1.1.2
 
-  /hi-base32@0.5.1:
-    resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
-    dev: false
-
   /hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
@@ -4799,10 +4765,6 @@ packages:
       react-is: 18.2.0
     dev: true
 
-  /promise-polyfill@8.3.0:
-    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
-    dev: false
-
   /prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
@@ -5981,12 +5943,4 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-    dev: false
-
-  github.com/paypal/paypal-js/c0badf32d64edee54487c0b7e8451a764b6c255c:
-    resolution: {tarball: https://codeload.github.com/paypal/paypal-js/tar.gz/c0badf32d64edee54487c0b7e8451a764b6c255c}
-    name: '@paypal/paypal-js-root'
-    version: 0.0.0
-    prepare: true
-    requiresBuild: true
     dev: false

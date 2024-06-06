@@ -1,9 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import close from 'public/img/close.svg';
 
-import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { useUpdatePostMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
@@ -23,26 +20,25 @@ type Props = {
   postId: number | undefined;
   user: UserProfile;
   images: ImageType[];
-  loading: boolean;
-  onUpdatePost: (postId: number, textareaValue: string) => void;
+  loading: boolean
+  onUpdatePost: (postId: number, textareaValue: string) => void
 };
 
-export const EditPost = ({
-                           setEditPost,
-                           description,
-                           user,
-                           images,
-                           postId,
-                           loading,
-                           onUpdatePost
-                         }: Props) => {
+export const EditPostMobile = ({
+                                 setEditPost,
+                                 description,
+                                 user,
+                                 images,
+                                 postId,
+                                 loading,
+                                 onUpdatePost
+                               }: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
-
-  // const [updatePost, { isLoading }] = useUpdatePostMutation();
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
+
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaValue.length > 500) return;
@@ -75,25 +71,26 @@ export const EditPost = ({
   return (
     <>
       <PostModal width={'972px'} onClose={closeModalAction}>
-        <div className={s.editTitle}>
-          <h1>{translate('editPost')}</h1>
-          {showCloseEditModal && (
-            <EditPostModal
-              title={translate('title')}
-              onSubmit={onExitFromEdit}
-              onClose={onCancelCloseEdit}
-            >
-              {translate('editModalText')}
-            </EditPostModal>
-          )}
-          <Image
-            onClick={closeModalAction}
-            src={close}
-            alt={'close'}
-            className={s.editCancel}
-          />
-        </div>
         <div className={s.post}>
+          <div className={s.editTitle}>
+            <button
+              onClick={closeModalAction} className={s.editCancel}>
+              <h3>{translate('Сancel')}</h3>
+            </button>
+            <h1>{translate('editPost')}</h1>
+            {showCloseEditModal && (
+              <EditPostModal
+                title={translate('title')}
+                onSubmit={onExitFromEdit}
+                onClose={onCancelCloseEdit}
+              >
+                {translate('editModalText')}
+              </EditPostModal>
+            )}
+            <button onClick={onSave} className={s.editCancel}>
+              <h3>{translate('save')}</h3>
+            </button>
+          </div>
           <Carousel>
             {images.map((i, index) => {
               if (i.width !== 640) {
@@ -134,18 +131,15 @@ export const EditPost = ({
             />
             </div>
             <p
-              className={s.post__area__characters}
               style={{
                 color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
+                textAlign: 'right',
+                fontSize: '12px',
+                padding: '0 24px',
               }}
             >
               {textareaValue.length} / 500
             </p>
-            <div className={s.post__btn}>
-              <PrimaryBtn onClick={onSave}>
-                {translate('saveChanges')}
-              </PrimaryBtn>
-            </div>
           </div>
           {loading && <Loader />}
         </div>
