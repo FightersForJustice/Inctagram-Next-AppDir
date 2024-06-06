@@ -13,7 +13,7 @@ type Props = {
   toggleModal: (value: boolean) => void;
   onDelete?: () => void;
   isDeleting?: boolean;
-  type: 'cancelCreating' | 'deletePost';
+  type?: 'cancelCreating' | 'deletePost';
 };
 
 export const AreYouSureModal = ({
