@@ -13,6 +13,9 @@ import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostComment } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostComment';
 import { PostLikes } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostLikes';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
+import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
+import { useTranslation } from 'react-i18next';
+import { getTimeAgoText } from '@/utils';
 
 type Props = {
   user: UserProfile;
@@ -22,6 +25,7 @@ type Props = {
   closeModalAction:()=>void
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
+  createdPostTime: string;
 };
 
 export const PostContentMobile = ({
@@ -31,9 +35,16 @@ export const PostContentMobile = ({
                               myProfile, images,
                               setEditPost,
                               onDeletePost,
+                              createdPostTime
                             }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+
+  const language = useGetLanguageFromPath();
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Time.${key}`);
+  const time = getTimeAgoText(createdPostTime, language, translate);
+
   return (
     <>
       <PostModal
@@ -78,7 +89,7 @@ export const PostContentMobile = ({
                 <span className={s.post__desc__name}>{user?.userName} </span>
                 {description}
               </p>
-              <p className={s.post__desc__time}>2 hours ago</p>
+              <p className={s.post__desc__time}>{time}</p>
             </div>
           </div>
           <PostComment />

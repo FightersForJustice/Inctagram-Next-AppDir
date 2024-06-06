@@ -31,15 +31,14 @@ type Props = {
 
 export const PostContent = ({
   description,
-  userName,
-  avatar,
+  user,
   closeModalAction,
   myProfile,
   images,
   setEditPost,
   onDeletePost,
   createdPostTime,
-  user
+
 }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);

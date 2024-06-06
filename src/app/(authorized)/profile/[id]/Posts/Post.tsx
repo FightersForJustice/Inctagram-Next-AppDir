@@ -121,6 +121,7 @@ export function Post({ post, userData, myProfile }: Props) {
                   description={post.description}
                   setEditPost={setEditPost}
                   onDeletePost={onDeletePost}
+                  createdPostTime={post.createdAt}
                 /> :
                 <PostContent
                   closeModalAction={closeModalAction}
@@ -130,6 +131,7 @@ export function Post({ post, userData, myProfile }: Props) {
                   description={post.description}
                   setEditPost={setEditPost}
                   onDeletePost={onDeletePost}
+                  createdPostTime={post.createdAt}
                 />
             )}
           </div>
