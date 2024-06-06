@@ -21,23 +21,26 @@ import { getTimeAgoText } from '@/utils';
 type Props = {
   user: UserProfile;
   description: string;
-  myProfile: boolean
-  images: ImageType[]
-  closeModalAction:()=>void
+  myProfile: boolean;
+  images: ImageType[];
+  closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
   createdPostTime: string;
 };
 
 export const PostContent = ({
-                              description,
-                              user,
-                              closeModalAction,
-                              myProfile, images,
-                              setEditPost,
-                              onDeletePost,
-                              createdPostTime,
-                            }: Props) => {
+  description,
+  userName,
+  avatar,
+  closeModalAction,
+  myProfile,
+  images,
+  setEditPost,
+  onDeletePost,
+  createdPostTime,
+  user
+}: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
@@ -106,7 +109,6 @@ export const PostContent = ({
         </div>
       </div>
       </PostModal>
-
     </>
   );
 };

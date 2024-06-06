@@ -13,6 +13,7 @@ type Props = {
   toggleModal: (value: boolean) => void;
   onDelete?: () => void;
   isDeleting?: boolean;
+  type: 'cancelCreating' | 'deletePost';
 };
 
 export const AreYouSureModal = ({
@@ -20,11 +21,17 @@ export const AreYouSureModal = ({
   toggleAreYouSureModal,
   onDelete,
   isDeleting,
+  type,
 }: Props) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+  const translate = (key: string): string => {
+    const prefix =
+      type === 'deletePost'
+        ? 'SettingsProfilePage.AddPhotoModal.'
+        : 'CreatePost.AddPhotoModal.';
+    return t(prefix + key);
+  };
   return (
     <>
       <Modal

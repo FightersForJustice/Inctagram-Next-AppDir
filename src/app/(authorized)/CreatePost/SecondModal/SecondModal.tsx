@@ -21,9 +21,13 @@ type Props = {
 export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const zoom = useAppSelector((state) => state.post.changedImages.filter(el => el.id === currentImageId));
+  const zoom = useAppSelector((state) =>
+    state.post.changedImages.filter((el) => el.id === currentImageId)
+  );
   const dispatch = useAppDispatch();
-  const aspectRatio = useAppSelector((state) => state.post.changedImages.filter(el => el.id === currentImageId));
+  const aspectRatio = useAppSelector((state) =>
+    state.post.changedImages.filter((el) => el.id === currentImageId)
+  );
   const onZoomImage = (value: number) => {
     if (currentImageId)
       dispatch(postActions.setZoom({ id: currentImageId, zoom: value }));
@@ -34,7 +38,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   }
   const onCloseCropping = (value: boolean) => {
     setAreYouSureModal(value);
-    setStep(prevState => prevState - 1);
+    setStep((prevState) => prevState - 1);
   };
 
   return (
@@ -57,6 +61,7 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={onCloseCropping}
+          type={'cancelCreating'}
         />
       )}
     </div>

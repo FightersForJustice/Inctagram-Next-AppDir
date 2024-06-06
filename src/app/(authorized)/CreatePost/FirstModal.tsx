@@ -8,6 +8,8 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import { useTranslation } from 'react-i18next';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
+import { AreYouSureModal } from 'src/components/Modals/AreYouSureModal';
+import { useAppSelector } from 'src/redux/hooks/useSelect';
 
 import s from './CreatePost.module.scss';
 import { toast } from 'react-toastify';
@@ -17,9 +19,11 @@ type Props = {
   setShowCreatePostModal: (value: boolean) => void;
 };
 export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
   const dispatch = useAppDispatch();
+  const changedImages = useAppSelector((state) => state.post.changedImages);
   const { t } = useTranslation();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const translate = (key: string): string =>
     t(`CreatePost.AddPhotoModal.${key}`);
 
@@ -76,59 +80,80 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     setStep(2);
   };
 
+  const onCancelCreating = (value: boolean) => {
+    setAreYouSureModal(value);
+    setShowCreatePostModal(false);
+  };
+
+  const onCloseModal = () => {
+    changedImages.length
+      ? setAreYouSureModal(true)
+      : setShowCreatePostModal(false);
+  };
+
   return (
-    <Modal
-      title={translate('title')}
-      className={s.firstModal}
-      onClose={() => setShowCreatePostModal(false)}
-    >
-      <div className={s.createPost}>
-        {errorMessage && (
-          <div className={s.error}>
-            <span className={s.title}>{translate('error')}</span> {errorMessage}
-          </div>
-        )}
+    <>
+      <Modal
+        title={translate('title')}
+        className={s.firstModal}
+        onClose={onCloseModal}
+      >
+        <div className={s.createPost}>
+          {errorMessage && (
+            <div className={s.error}>
+              <span className={s.title}>{translate('error')}</span>{' '}
+              {errorMessage}
+            </div>
+          )}
 
-        <Image
-          src={'/img/create-post/no-image.png'}
-          alt={'no-image'}
-          width={222}
-          height={228}
-          className={s.createPost__image}
-        />
+          <Image
+            src={'/img/create-post/no-image.png'}
+            alt={'no-image'}
+            width={222}
+            height={228}
+            className={s.createPost__image}
+          />
 
-        <div className={s.createPostButtonsContainer}>
-          <div className={s.createPost__select}>
-            <label htmlFor="download_image" className={s.createPost__overlay}>
-              <PrimaryBtn
-                onClick={() => inputRef.current?.click()}
-                isInsideLabel
+          <div className={s.createPostButtonsContainer}>
+            <div className={s.createPost__select}>
+              <label htmlFor="download_image" className={s.createPost__overlay}>
+                <PrimaryBtn
+                  onClick={() => inputRef.current?.click()}
+                  isInsideLabel
+                  isFullWidth
+                >
+                  {translate('selectBtn')}
+                </PrimaryBtn>
+                <input
+                  ref={inputRef}
+                  accept="image/*"
+                  multiple
+                  id="download_image"
+                  type="file"
+                  className={s.createPost__file}
+                  onChange={onSetUserImage}
+                />
+              </label>
+            </div>
+            <div className={s.createPost__open}>
+              <TransparentBtn
                 isFullWidth
+                isDisabled
+                tooltipText={translate('tooltipText')}
               >
-                {translate('selectBtn')}
-              </PrimaryBtn>
-              <input
-                ref={inputRef}
-                accept="image/*"
-                multiple
-                id="download_image"
-                type="file"
-                className={s.createPost__file}
-                onChange={onSetUserImage}
-              />
-            </label>
-          </div>
-          <div className={s.createPost__open}>
-            <TransparentBtn
-              isFullWidth
-              isDisabled
-              tooltipText={translate('tooltipText')}
-            >
-              {translate('openDraftBtn')}
-            </TransparentBtn>
+                {translate('openDraftBtn')}
+              </TransparentBtn>
+            </div>
           </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+      {areYouSureModal && (
+        <AreYouSureModal
+          toggleAreYouSureModal={setAreYouSureModal}
+          toggleModal={onCancelCreating}
+          type={'cancelCreating'}
+        />
+      )}
+    </>
   );
 };

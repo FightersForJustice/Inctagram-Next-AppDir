@@ -139,6 +139,7 @@ export const FourthModal: React.FC<Props> = ({
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
           onDelete={onDeletePostImage}
+          type={'cancelCreating'}
         />
       )}
     </>
