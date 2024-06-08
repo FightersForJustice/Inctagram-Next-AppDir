@@ -265,6 +265,13 @@
       "addPublicationDescriptions": "Добавить описание публикации",
       "saveChanges" : "Сохранить",
       "save" : "Сохранить"
+    },
+    "DeletePostModal": {
+      "title": "Удаление поста",
+      "areYouSureText": "Вы действительно хотите удалить публикацию?",
+      "yes": "Да",
+      "no": "Нет",
+      "close":"Закрыть"
     }
   },
   "AgreementsPage": {

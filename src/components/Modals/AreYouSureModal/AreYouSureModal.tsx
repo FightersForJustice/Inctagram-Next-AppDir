@@ -8,12 +8,14 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import s from './AreYouSureModal.module.scss';
 import { useTranslation } from 'react-i18next';
 
+type SureType = 'cancelCreating' | 'deletePost' | 'deletePostPost';
+
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
   toggleModal: (value: boolean) => void;
   onDelete?: () => void;
   isDeleting?: boolean;
-  type?: 'cancelCreating' | 'deletePost';
+  type?: SureType;
 };
 
 export const AreYouSureModal = ({
@@ -26,11 +28,12 @@ export const AreYouSureModal = ({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const translate = (key: string): string => {
-    const prefix =
-      type === 'deletePost'
-        ? 'SettingsProfilePage.AddPhotoModal.'
-        : 'CreatePost.AddPhotoModal.';
-    return t(prefix + key);
+    const prefix: any = {
+      deletePost: 'SettingsProfilePage.AddPhotoModal.',
+      deletePostPost: 'CreatePost.DeletePostModal.',
+      cancelCreating: 'CreatePost.AddPhotoModal.',
+    };
+    return t(prefix ? prefix[type as string] + key : key);
   };
   return (
     <>

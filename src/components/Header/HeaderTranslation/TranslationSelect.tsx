@@ -29,7 +29,7 @@ export const TranslationSelect = () => {
   const [isEn, setEn] = useState(() => {
     return Cookies.get('userLanguage') === 'en' || false;
   });
-  const getWidth = () => setWidth(window.screen.width);
+  const getWidth = () => setWidth(window.innerWidth);
 
   useEffect(() => {
     function setScrollY() {
