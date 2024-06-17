@@ -11,7 +11,7 @@
 }
 @include s.devices(tablet-xl) {
   .posts {
-    padding: 0 24px;
+    padding: 0 0 0 24px;
   }
 }
 @include s.devices(tablet) {
@@ -22,7 +22,7 @@
 
 @include s.devices(mobile) {
   .posts {
-    padding: 0 5px 0 15px;
+    padding: 0 0 0 15px;
     gap: 2px;
   }
 }
