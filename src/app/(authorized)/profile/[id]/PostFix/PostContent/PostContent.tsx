@@ -103,6 +103,7 @@ export const PostContent = ({
               toggleAreYouSureModal={setShowAreYouSureModal}
               toggleModal={setVisiblePopup}
               onDelete={onDeletePost}
+              type={'deletePostPost'}
             />
           )}
         </div>

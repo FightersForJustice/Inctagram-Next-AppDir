@@ -13,6 +13,7 @@ import {
 import { selectProfilePostItems } from '@/redux/reducers/MyProfile/ProfilePostSelectors';
 import { findMinId } from '@/utils/findMinId';
 import { useInView } from 'react-intersection-observer';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   postsData: ApiResponsePosts;
@@ -26,10 +27,12 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-    dispatch(ProfilePostActions.addItemsRequest(postsData.items));
-  },[])
+  useEffect( () => {
+      dispatch(ProfilePostActions.addItemsRequest(postsData.items));
+      setLoading(false);
+  }, []);
 
   let minId = findMinId(items);
 
@@ -55,6 +58,10 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
       );
     });
   };
+
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <>
