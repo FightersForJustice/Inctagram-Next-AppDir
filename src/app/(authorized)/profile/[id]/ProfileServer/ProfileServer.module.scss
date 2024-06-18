@@ -1,21 +1,17 @@
 @use '@/app/mixins.scss' as s;
 
 .posts {
-  grid-area: posts;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  max-width: 100%;
   width: 100%;
-  height: 230px;
   gap: 12px;
-  padding: 0px 25px;
+  padding: 0 22px;
   margin-top: 21px;
 }
 @include s.devices(tablet-xl) {
   .posts {
-    height: 107px;
-    padding: 0 24px;
+    padding: 0 0 0 24px;
   }
 }
 @include s.devices(tablet) {
@@ -26,7 +22,7 @@
 
 @include s.devices(mobile) {
   .posts {
-    padding: 0 15px;
+    padding: 0 0 0 15px;
     gap: 2px;
   }
 }
