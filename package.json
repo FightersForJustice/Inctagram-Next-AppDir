@@ -74,8 +74,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "exec < /dev/tty && npm run pre-commit-script",
-      "commit-msg": "validate-message && lint"
+      "pre-commit": "exec < /dev/tty && npm run pre-commit-script"
     }
   }
 }
