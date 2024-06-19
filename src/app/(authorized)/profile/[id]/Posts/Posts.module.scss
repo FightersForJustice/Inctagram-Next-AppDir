@@ -5,12 +5,11 @@
   align-items: center;
   justify-content: flex-start;
   max-width: 23%;
+  min-width: 108px;
 }
 
 .imagePost {
   display: flex;
-  max-width: 230px;
-  width: 100%;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.2s linear;
@@ -30,3 +29,8 @@
   }
 }
 
+@include s.devices(tablet) {
+  .imageContainer {
+    max-width: 32%;
+  }
+}
