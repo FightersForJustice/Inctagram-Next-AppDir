@@ -71,5 +71,11 @@
     "husky": "^9.0.11",
     "jest": "^29.6.1",
     "prettier": "3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "exec < /dev/tty && npm run pre-commit-script",
+      "commit-msg": "validate-message && lint"
+    }
   }
 }
