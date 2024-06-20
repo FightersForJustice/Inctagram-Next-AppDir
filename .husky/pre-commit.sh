@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-. ".husky/husky.sh"
+. ".husky/_/husky.sh"
 
 if [ -z "\\$1" ]; then
   echo "Error: Missing argument for commit message file."
