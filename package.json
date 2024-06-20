@@ -75,8 +75,7 @@
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
-      "prettier --write",
-      "eslint"
+      "pnpm format"
     ],
     "**/*.{json,yaml,yml,toml}": [
       "prettier --write"
