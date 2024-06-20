@@ -4,7 +4,7 @@ module.exports = {
       issuePrefixes: ['VP-'],
     },
   },
-  'references-empty': [2, 'never'],
+
   rules: {
     'body-leading-blank': [2, 'always'],
     'body-max-line-length': [2, 'always', 100],
@@ -15,6 +15,7 @@ module.exports = {
     'subject-empty': [2, 'never'],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
+    'references-empty': [2, 'never'],
     'type-enum': [
       2,
       'always',
