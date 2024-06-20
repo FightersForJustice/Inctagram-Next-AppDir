@@ -1,6 +1,16 @@
 module.exports = {
   rules: {
-    'type-enum': [2, 'always', ['fix', 'feat', 'bug']],
+  'type-enum': [
+      2,
+      'always',
+      [
+        'feat', // Фича
+        'fix', // Исправление бага
+        'refactor', // Рефакторинг кода
+        'chore', // Изменение файлов, которые не являются частью проекта (Конфиги, библиотеки)
+        'docs', // исправление документации
+      ],
+    ],
     'header-pattern': [2, 'always', /^(fix|bug|feat)(\(.+\))?: .+/]
   },
 };
