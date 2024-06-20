@@ -21,9 +21,10 @@
     z-index: 2;
   }
 
-  .wire, .ball {
-    stroke-width:2px;
+  .wire,
+  .ball {
+    stroke-width: 2px;
     stroke: rgb(60, 60, 60);
-    stroke-linecap:round;
+    stroke-linecap: round;
   }
 }

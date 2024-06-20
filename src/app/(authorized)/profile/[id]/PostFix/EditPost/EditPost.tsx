@@ -28,14 +28,14 @@ type Props = {
 };
 
 export const EditPost = ({
-                           setEditPost,
-                           description,
-                           user,
-                           images,
-                           postId,
-                           loading,
-                           onUpdatePost
-                         }: Props) => {
+  setEditPost,
+  description,
+  user,
+  images,
+  postId,
+  loading,
+  onUpdatePost,
+}: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
@@ -51,7 +51,7 @@ export const EditPost = ({
 
   const onSave = () => {
     if (accessToken && postId) {
-      onUpdatePost(postId, textareaValue)
+      onUpdatePost(postId, textareaValue);
     }
   };
 
@@ -124,14 +124,14 @@ export const EditPost = ({
               {translate('addPublicationDescriptions')}
             </p>
             <div className={s.post__area}>
-            <textarea
-              className={s.post__textarea}
-              cols={30}
-              rows={10}
-              maxLength={500}
-              value={textareaValue}
-              onChange={onTextareaHandler}
-            />
+              <textarea
+                className={s.post__textarea}
+                cols={30}
+                rows={10}
+                maxLength={500}
+                value={textareaValue}
+                onChange={onTextareaHandler}
+              />
             </div>
             <p
               className={s.post__area__characters}

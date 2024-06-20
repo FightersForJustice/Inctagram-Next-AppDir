@@ -9,18 +9,17 @@ import { useTranslation } from 'react-i18next';
 type Props = {
   title?: string;
   onClose: () => void;
-  onSubmit: () => void
+  onSubmit: () => void;
 };
 
 export const EditPostModal = ({
-                                onClose,
-                                title,
-                                children,
-                                onSubmit,
-                              }: PropsWithChildren<Props>) => {
+  onClose,
+  title,
+  children,
+  onSubmit,
+}: PropsWithChildren<Props>) => {
   const { t } = useTranslation();
-  const translate = (key: string): string =>
-    t(`CreatePost.EditPost.${key}`);
+  const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   return (
     <>
       <Modal title={title} onClose={onClose}>
@@ -31,10 +30,8 @@ export const EditPostModal = ({
           </TransparentBtn>
           <PrimaryBtn className={style.modal__btn} onClick={onClose}>
             {translate('cancel')}
-
           </PrimaryBtn>
         </div>
-
       </Modal>
     </>
   );

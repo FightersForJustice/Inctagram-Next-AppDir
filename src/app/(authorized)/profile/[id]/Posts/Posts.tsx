@@ -29,9 +29,9 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
 
-  useEffect( () => {
-      dispatch(ProfilePostActions.addItemsRequest(postsData.items));
-      setLoading(false);
+  useEffect(() => {
+    dispatch(ProfilePostActions.addItemsRequest(postsData.items));
+    setLoading(false);
   }, []);
 
   let minId = findMinId(items);
@@ -59,8 +59,8 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
     });
   };
 
-  if(loading){
-    return <Loader/>
+  if (loading) {
+    return <Loader />;
   }
 
   return (

@@ -6,21 +6,22 @@ import { DotsFriends } from '@/app/(authorized)/profile/[id]/PostFix/DotsFriends
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 
 type Props = {
-  user: UserProfile,
-  myProfile: boolean,
+  user: UserProfile;
+  myProfile: boolean;
   setVisiblePopup: (value: boolean) => void;
   visiblePopup: boolean;
   setEditPost: (value: boolean) => void;
   setShowAreYouSureModal: (value: boolean) => void;
-}
-
+};
 
 const PostHeader = ({
-                      user, myProfile, visiblePopup,
-                      setVisiblePopup,
-                      setEditPost,
-                      setShowAreYouSureModal,
-                    }: Props) => {
+  user,
+  myProfile,
+  visiblePopup,
+  setVisiblePopup,
+  setEditPost,
+  setShowAreYouSureModal,
+}: Props) => {
   return (
     <div className={s.post__header}>
       <div className={s.post__header__user}>
@@ -33,10 +34,19 @@ const PostHeader = ({
         />
         <span>{user?.userName}</span>
       </div>
-      {myProfile ?
-        <Dots setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-              setShowAreYouSureModal={setShowAreYouSureModal} /> :
-        <DotsFriends setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} />}
+      {myProfile ? (
+        <Dots
+          setVisiblePopup={setVisiblePopup}
+          visiblePopup={visiblePopup}
+          setEditPost={setEditPost}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+        />
+      ) : (
+        <DotsFriends
+          setVisiblePopup={setVisiblePopup}
+          visiblePopup={visiblePopup}
+        />
+      )}
     </div>
   );
 };

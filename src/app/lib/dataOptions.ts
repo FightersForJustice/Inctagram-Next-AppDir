@@ -7,7 +7,7 @@ export const getMyProfileOptions = (accessToken: string | null) => {
     },
     next: {
       revalidate: 3600,
-      tags: ['myProfile']
-    }
+      tags: ['myProfile'],
+    },
   };
 };

@@ -21,10 +21,12 @@ export const CroppingModal = ({
     setStep(3);
   };
 
-
   return (
     <div className={'modal'} onMouseDown={onClose}>
-      <div className={'modal__content'} onMouseDown={(e) => e.stopPropagation()}>
+      <div
+        className={'modal__content'}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
         <div className={'modal__header'}>
           <Image
             src={'/img/create-post/arrow-back.svg'}

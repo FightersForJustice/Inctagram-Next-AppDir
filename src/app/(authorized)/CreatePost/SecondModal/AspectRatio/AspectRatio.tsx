@@ -3,11 +3,11 @@ import * as Popover from '@radix-ui/react-popover';
 import s from '../../CreatePost.module.scss';
 import { CroppingSizeModal } from '@/components/Modals/CroppingSizeModal';
 
-type Props ={
-  imageId:string
-}
+type Props = {
+  imageId: string;
+};
 
-export const AspectRatio = ({imageId}:Props) => {
+export const AspectRatio = ({ imageId }: Props) => {
   const [openChangeSize, setOpenChangeSize] = useState(false);
 
   return (
@@ -46,7 +46,7 @@ export const AspectRatio = ({imageId}:Props) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="PopoverContent z-30" sideOffset={5}>
-          <CroppingSizeModal imageId={imageId}/>
+          <CroppingSizeModal imageId={imageId} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

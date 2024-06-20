@@ -31,7 +31,8 @@ export const Navigation = ({
     const style = clsx(
       s.nav__item,
       {
-        [s.nav__item__active]: !showCreatePostModal && pathname.startsWith('/' + el.href),
+        [s.nav__item__active]:
+          !showCreatePostModal && pathname.startsWith('/' + el.href),
       },
       {
         [s.nav__item__active]: showCreatePostModal && el.href === 'create',

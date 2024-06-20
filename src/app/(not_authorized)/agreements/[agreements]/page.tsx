@@ -23,9 +23,7 @@ const AgreementsPage = (props: Props) => {
         text={translate('PrivacyPolicy.text')}
         title={translate('PrivacyPolicy.title')}
         btnName={translate(
-          props.params.agreements === 'privacy-policy'
-            ? 'btnName'
-            : 'btnName1'
+          props.params.agreements === 'privacy-policy' ? 'btnName' : 'btnName1'
         )}
       />
     );

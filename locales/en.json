@@ -196,10 +196,10 @@
       "text": "You have not yet logged in from other devices",
       "allSession": "Terminate all other session",
       "currentDevice": "Current device",
-      "AllSessionsClosed" : "All sessions are closed",
-      "sessionClosed" : "The session is closed",
-      "lastVisit" : "Last visit",
-      "browserName" : "Browser Name"
+      "AllSessionsClosed": "All sessions are closed",
+      "sessionClosed": "The session is closed",
+      "lastVisit": "Last visit",
+      "browserName": "Browser Name"
     },
     "AccountManagementTab": {
       "titleTab": "Account Management"
@@ -222,11 +222,11 @@
       "sizeError": "Photo size must be less than 10 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
       "tooltipText": "Functionality is not available yet",
-      "publication" : "Publication",
-      "publish" : "Publish",
-      "addPublicationDescriptions" : "Add publication descriptions",
-      "description" : "Description",
-      "publicationsCreated" : "Publications created"
+      "publication": "Publication",
+      "publish": "Publish",
+      "addPublicationDescriptions": "Add publication descriptions",
+      "description": "Description",
+      "publicationsCreated": "Publications created"
     }
   },
   "CreatePost": {
@@ -257,20 +257,20 @@
       "submit": "Yes",
       "cancel": "No",
       "Сancel": "Сancel",
-      "editPost" : "Edit Post",
-      "deletePost" : "Delete Post",
-      "addComment" : "Add a Comment",
-      "publish" : "Publish",
+      "editPost": "Edit Post",
+      "deletePost": "Delete Post",
+      "addComment": "Add a Comment",
+      "publish": "Publish",
       "addPublicationDescriptions": "Add publication descriptions",
-      "saveChanges" : "Save Changes",
-      "save" : "Save"
+      "saveChanges": "Save Changes",
+      "save": "Save"
     },
     "DeletePostModal": {
       "title": "Close Post",
       "areYouSureText": "Are you sure you want to delete this post?",
       "yes": "Yes",
       "no": "No",
-      "close":"Close"
+      "close": "Close"
     }
   },
   "AgreementsPage": {

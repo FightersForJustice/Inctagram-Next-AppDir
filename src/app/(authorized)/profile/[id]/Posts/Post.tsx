@@ -4,8 +4,14 @@ import { Post, UserProfile } from '../types';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { getPostsDelete, updatePost } from '@/app/(authorized)/profile/[id]/actions';
-import { EditPost, EditPostMobile } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
+import {
+  getPostsDelete,
+  updatePost,
+} from '@/app/(authorized)/profile/[id]/actions';
+import {
+  EditPost,
+  EditPostMobile,
+} from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
@@ -30,7 +36,7 @@ export function Post({ post, userData, myProfile }: Props) {
       setWidth(window.innerWidth);
     };
 
-    handleResize()
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -65,7 +71,7 @@ export function Post({ post, userData, myProfile }: Props) {
       toast.error('Failed to update post');
     }
     setLoading(false);
-  }
+  };
 
   const currentPosts = post.images.filter(
     (postImage) => postImage.width !== 640
@@ -89,7 +95,7 @@ export function Post({ post, userData, myProfile }: Props) {
         <>
           <div className={'relative'}>
             {editPost ? (
-              width <= 521 ?
+              width <= 521 ? (
                 <EditPostMobile
                   images={post.images}
                   postId={post.id}
@@ -98,38 +104,40 @@ export function Post({ post, userData, myProfile }: Props) {
                   description={post.description}
                   loading={loading}
                   onUpdatePost={onUpdatePost}
-                /> :
-              <EditPost
+                />
+              ) : (
+                <EditPost
+                  images={post.images}
+                  postId={post.id}
+                  setEditPost={setEditPost}
+                  user={userData}
+                  description={post.description}
+                  loading={loading}
+                  onUpdatePost={onUpdatePost}
+                />
+              )
+            ) : width <= 521 ? (
+              <PostContentMobile
+                closeModalAction={closeModalAction}
                 images={post.images}
-                postId={post.id}
-                setEditPost={setEditPost}
+                myProfile={myProfile}
                 user={userData}
                 description={post.description}
-                loading={loading}
-                onUpdatePost={onUpdatePost}
+                setEditPost={setEditPost}
+                onDeletePost={onDeletePost}
+                createdPostTime={post.createdAt}
               />
             ) : (
-                width <= 521 ?
-                <PostContentMobile
-                  closeModalAction={closeModalAction}
-                  images={post.images}
-                  myProfile={myProfile}
-                  user={userData}
-                  description={post.description}
-                  setEditPost={setEditPost}
-                  onDeletePost={onDeletePost}
-                  createdPostTime={post.createdAt}
-                /> :
-                <PostContent
-                  closeModalAction={closeModalAction}
-                  images={post.images}
-                  myProfile={myProfile}
-                  user={userData}
-                  description={post.description}
-                  setEditPost={setEditPost}
-                  onDeletePost={onDeletePost}
-                  createdPostTime={post.createdAt}
-                />
+              <PostContent
+                closeModalAction={closeModalAction}
+                images={post.images}
+                myProfile={myProfile}
+                user={userData}
+                description={post.description}
+                setEditPost={setEditPost}
+                onDeletePost={onDeletePost}
+                createdPostTime={post.createdAt}
+              />
             )}
           </div>
         </>

@@ -197,12 +197,12 @@
       "status": "Онлайн",
       "active": "Активные сессии",
       "text": "Вы еще не вошли в систему с других устройств",
-      "allSession":"Завершите все сеансы",
-      "currentDevice" : "Текущее устройство",
-      "AllSessionsClosed" : "Все сессии закрыты",
-      "sessionClosed" : "Сессия закрыта",
-      "lastVisit" : "Последний визит",
-      "browserName" : "Имя браузера"
+      "allSession": "Завершите все сеансы",
+      "currentDevice": "Текущее устройство",
+      "AllSessionsClosed": "Все сессии закрыты",
+      "sessionClosed": "Сессия закрыта",
+      "lastVisit": "Последний визит",
+      "browserName": "Имя браузера"
     },
     "AccountManagementTab": {
       "titleTab": "Управление"
@@ -225,11 +225,11 @@
       "sizeError": "Размер фото должен быть меньше 10 МБ!",
       "formatError": "Формат загружаемого фото должен быть PNG и JPEG",
       "tooltipText": "Этот функционал пока недоступен",
-      "publication" : "Публикация",
-      "publish" : "Опубликовать",
-      "addPublicationDescriptions" : "Добавление описаний публикаций",
-      "description" : "Описание",
-      "publicationsCreated" : "Публикация создана"
+      "publication": "Публикация",
+      "publish": "Опубликовать",
+      "addPublicationDescriptions": "Добавление описаний публикаций",
+      "description": "Описание",
+      "publicationsCreated": "Публикация создана"
     }
   },
   "CreatePost": {
@@ -258,20 +258,20 @@
       "submit": "Да",
       "cancel": "Нет",
       "Сancel": "Закрыть",
-      "editPost" : "Редактировать публикацию",
-      "deletePost" : "Удалить публикацию",
-      "addComment" : "Добавить комментарий",
-      "publish" : "Опубликовать",
+      "editPost": "Редактировать публикацию",
+      "deletePost": "Удалить публикацию",
+      "addComment": "Добавить комментарий",
+      "publish": "Опубликовать",
       "addPublicationDescriptions": "Добавить описание публикации",
-      "saveChanges" : "Сохранить",
-      "save" : "Сохранить"
+      "saveChanges": "Сохранить",
+      "save": "Сохранить"
     },
     "DeletePostModal": {
       "title": "Удаление поста",
       "areYouSureText": "Вы действительно хотите удалить публикацию?",
       "yes": "Да",
       "no": "Нет",
-      "close":"Закрыть"
+      "close": "Закрыть"
     }
   },
   "AgreementsPage": {

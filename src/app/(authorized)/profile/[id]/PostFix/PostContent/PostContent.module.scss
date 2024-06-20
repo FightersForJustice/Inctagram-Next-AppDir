@@ -11,7 +11,7 @@
     width: 480px;
   }
 
-  &Info{
+  &Info {
     flex: 1;
     max-height: 481px;
     overflow: scroll;
@@ -30,7 +30,7 @@
       width: 100%;
     }
 
-    &__user{
+    &__user {
       gap: 12px;
       display: flex;
       align-items: center;
@@ -63,7 +63,6 @@
       line-height: 16px;
       letter-spacing: 0;
     }
-
   }
 
   &__avatar {

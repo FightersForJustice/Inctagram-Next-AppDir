@@ -17,11 +17,7 @@ export const Agreements = ({ title, text, btnName }: Props) => {
   return (
     <div className={s.mainWrapper}>
       <div className={s.backLinkWrapper}>
-        <Link
-          href={''}
-          onClick={handler}
-          className={s.linkRedirect}
-        >
+        <Link href={''} onClick={handler} className={s.linkRedirect}>
           <div>
             <svg
               width="24"

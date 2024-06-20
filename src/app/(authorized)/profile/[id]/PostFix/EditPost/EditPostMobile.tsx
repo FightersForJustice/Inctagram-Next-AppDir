@@ -20,25 +20,24 @@ type Props = {
   postId: number | undefined;
   user: UserProfile;
   images: ImageType[];
-  loading: boolean
-  onUpdatePost: (postId: number, textareaValue: string) => void
+  loading: boolean;
+  onUpdatePost: (postId: number, textareaValue: string) => void;
 };
 
 export const EditPostMobile = ({
-                                 setEditPost,
-                                 description,
-                                 user,
-                                 images,
-                                 postId,
-                                 loading,
-                                 onUpdatePost
-                               }: Props) => {
+  setEditPost,
+  description,
+  user,
+  images,
+  postId,
+  loading,
+  onUpdatePost,
+}: Props) => {
   const [textareaValue, setTextareaValue] = useState(description);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
-
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaValue.length > 500) return;
@@ -47,7 +46,7 @@ export const EditPostMobile = ({
 
   const onSave = () => {
     if (accessToken && postId) {
-      onUpdatePost(postId, textareaValue)
+      onUpdatePost(postId, textareaValue);
     }
   };
 
@@ -73,8 +72,7 @@ export const EditPostMobile = ({
       <PostModal width={'972px'} onClose={closeModalAction}>
         <div className={s.post}>
           <div className={s.editTitle}>
-            <button
-              onClick={closeModalAction} className={s.editCancel}>
+            <button onClick={closeModalAction} className={s.editCancel}>
               <h3>{translate('Сancel')}</h3>
             </button>
             <h1>{translate('editPost')}</h1>
@@ -121,14 +119,14 @@ export const EditPostMobile = ({
               {translate('addPublicationDescriptions')}
             </p>
             <div className={s.post__area}>
-            <textarea
-              className={s.post__textarea}
-              cols={30}
-              rows={10}
-              maxLength={500}
-              value={textareaValue}
-              onChange={onTextareaHandler}
-            />
+              <textarea
+                className={s.post__textarea}
+                cols={30}
+                rows={10}
+                maxLength={500}
+                value={textareaValue}
+                onChange={onTextareaHandler}
+              />
             </div>
             <p
               style={{
