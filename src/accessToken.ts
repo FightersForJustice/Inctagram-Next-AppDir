@@ -3,4 +3,4 @@ export function setAccessToken(str: string) {
   accessToken = str;
 }
 
-console.log(3)
+console.log(32)
