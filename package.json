@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -72,21 +73,13 @@
     "jest": "^29.6.1",
     "prettier": "3.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "sh .husky/_/commit-msg.sh"
-    }
-  },
   "lint-staged": {
-    "**/*.{js,ts,tsx}": [
-      "prettier --write",
-      "eslint"
-    ],
-    "**/*.{json,yaml,yml,toml}": [
-      "prettier --write"
-    ]
-  }
-  
-  
+      "**/*.{js,ts,tsx}": [
+        "prettier --write",
+        "eslint"
+      ],
+      "**/*.{json,yaml,yml,toml}": [
+        "prettier --write"
+      ]
+    }
 }
