@@ -77,8 +77,16 @@
       "pre-commit": "lint-staged",
       "commit-msg": "sh .husky/_/commit-msg.sh"
     }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint"
+    ],
+    "**/*.{json,yaml,yml,toml}": [
+      "prettier --write"
+    ]
   }
-
   
   
 }
