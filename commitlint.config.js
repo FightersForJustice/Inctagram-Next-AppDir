@@ -1,10 +1,4 @@
 module.exports = {
-  parserPreset: {
-    parserOpts: {
-      issuePrefixes: ['VP-'],
-    },
-  },
-  'references-empty': [2, 'never'],
   rules: {
     'body-leading-blank': [2, 'always'],
     'body-max-line-length': [2, 'always', 100],
@@ -26,6 +20,5 @@ module.exports = {
         'docs', // исправление документации
       ],
     ],
-    'header-pattern': [2, 'always', /^(fix|bug|feat)(\(.+\))?: .+/],
   },
 };
