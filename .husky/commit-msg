@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . ".husky/_/husky.sh"
 
-yarn commitlint --edit
+pnpm commitlint --edit
