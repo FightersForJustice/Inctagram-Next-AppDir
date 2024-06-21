@@ -16,6 +16,8 @@ const rootReducer = combineReducers({
   ProfilePost: ProfilePostReducer,
   [authApi.reducerPath]: authApi.reducer,
   // [profileApi.reducerPath]: profileApi.reducer,
+  // [postsApi.reducerPath]: postsApi.reducer,
+  // [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
 });
 
 export const store = configureStore({
