@@ -23,7 +23,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const changedImages = useAppSelector((state) => state.post.changedImages);
   const { t } = useTranslation();
-  const postDraftString = localStorage.getItem('postDraft')
+  const postDraftString = localStorage.getItem('postDraft');
 
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<undefined | string>(undefined);
@@ -34,17 +34,43 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const MAX_FILE_SIZE_MB = 20;
 
   const onOpenDraft = () => {
-    if (postDraftString !== null) {
-      const postDraft = JSON.parse(postDraftString)
-
-      dispatch(postActions.addImage(postDraft.images))
-      dispatch(postActions.setDescription({description: postDraft.description}))
-
-      setStep(2);
+    if (postDraftString === null) {
+      return;
     }
-  }
 
-  const onSetUserImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const postDraft = JSON.parse(postDraftString);
+
+    for (let i = 0; i < postDraft.images.length; i++) {
+      const base64Image = postDraft.images[i].base64Image.split(',')[1];
+      const binaryString = window.atob(base64Image);
+      const bytes = new Uint8Array(binaryString.length);
+
+      for (let t = 0; t < binaryString.length; t++) {
+        bytes[t] = binaryString.charCodeAt(t);
+      }
+
+      const imageData = new Blob([bytes], { type: 'image/png' });
+      const url = URL.createObjectURL(imageData);
+
+      postDraft.images[i].image = url;
+      postDraft.images[i].originalImage = url;
+    }
+
+    dispatch(postActions.addImage(postDraft.images));
+    dispatch(postActions.setDescription({ description: postDraft.description }));
+
+    setStep(2);
+  };
+
+  const convertToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const onSetUserImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const files = [...e.target.files];
@@ -62,7 +88,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     } else {
       if (validImagesSize.length !== files.length) {
         setErrorMessage(
-          `${translate('errorValidSize')} ${MAX_FILE_SIZE_MB} MB!`
+          `${translate('errorValidSize')} ${MAX_FILE_SIZE_MB} MB!`,
         );
         if (inputRef.current) {
           inputRef.current.value = '';
@@ -71,20 +97,23 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
       }
     }
 
-    dispatch(
-      postActions.addImage(
-        files.map((file) => ({
+    const imagesWithBase64 = await Promise.all(
+      files.map(async (file) => {
+        const base64 = await convertToBase64(file);
+        return {
           id: crypto.randomUUID(),
           originalImage: URL.createObjectURL(file),
           image: URL.createObjectURL(file),
+          base64Image: base64,
           filter: '',
           croppedArea: undefined,
           aspectRatio: AspectRatioType.one,
           zoom: 1,
-        }))
-      )
+        };
+      }),
     );
 
+    dispatch(postActions.addImage(imagesWithBase64));
     setStep(2);
   };
 
