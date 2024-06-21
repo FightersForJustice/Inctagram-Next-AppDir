@@ -24,6 +24,7 @@
   width: calc(100% - 220px);
   margin-left: auto;
   height: 100%;
+  overflow-y: auto;
 }
 
 @include s.devices(tablet-xl) {
@@ -39,7 +40,7 @@
   .content {
     width: 100%;
     margin-left: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: calc(100% - 60px);
   }
 }
