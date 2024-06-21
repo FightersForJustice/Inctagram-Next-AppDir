@@ -32,7 +32,7 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
         );
 
         if (image) {
-          const croppedImage: Omit<ChangedImage, 'filter' | 'cropAspectRatio' | 'originalImage'> =
+          const croppedImage: Omit<ChangedImage, 'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'> =
             {
               image,
               croppedArea: croppedAreaPixels,

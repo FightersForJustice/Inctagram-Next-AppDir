@@ -4,7 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { Modal } from '@/components/Modals/Modal';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
+import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
 import { useTranslation } from 'react-i18next';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from 'src/components/Buttons/TransparentBtn';
@@ -40,21 +40,16 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
 
     const postDraft = JSON.parse(postDraftString);
 
-    for (let i = 0; i < postDraft.images.length; i++) {
-      const base64Image = postDraft.images[i].base64Image.split(',')[1];
-      const binaryString = window.atob(base64Image);
-      const bytes = new Uint8Array(binaryString.length);
-
-      for (let t = 0; t < binaryString.length; t++) {
-        bytes[t] = binaryString.charCodeAt(t);
-      }
-
+    postDraft.images.forEach((image: ChangedImage) => {
+      const base64Image = image.base64Image.split(',')[1];
+      const binaryString = atob(base64Image);
+      const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
       const imageData = new Blob([bytes], { type: 'image/png' });
       const url = URL.createObjectURL(imageData);
 
-      postDraft.images[i].image = url;
-      postDraft.images[i].originalImage = url;
-    }
+      image.image = url;
+      image.originalImage = url;
+    });
 
     dispatch(postActions.addImage(postDraft.images));
     dispatch(postActions.setDescription({ description: postDraft.description }));
@@ -100,10 +95,11 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     const imagesWithBase64 = await Promise.all(
       files.map(async (file) => {
         const base64 = await convertToBase64(file);
+        const url = URL.createObjectURL(file);
         return {
           id: crypto.randomUUID(),
-          originalImage: URL.createObjectURL(file),
-          image: URL.createObjectURL(file),
+          originalImage: url,
+          image: url,
           base64Image: base64,
           filter: '',
           croppedArea: undefined,
@@ -142,7 +138,6 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
               {errorMessage}
             </div>
           )}
-
           <Image
             src={'/img/create-post/no-image.png'}
             alt={'no-image'}

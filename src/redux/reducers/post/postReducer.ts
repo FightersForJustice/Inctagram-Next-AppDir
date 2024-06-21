@@ -42,7 +42,7 @@ const slice = createSlice({
     changeCurrentImage(state, action: PayloadAction<{ id: string }>) {
       state.currentImageId = action.payload.id;
     },
-    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'filter' | 'aspectRatio' | 'originalImage'>>) {
+    setCropImage(state, action: PayloadAction<Omit<ChangedImage, 'base64Image' |'filter' | 'aspectRatio' | 'originalImage'>>) {
       const targetImg = state.changedImages.find(
           (el) => el.id === action.payload.id
       );
@@ -97,6 +97,8 @@ export interface IUploadImageId {
   uploadId: string;
 }
 
+
+
 export type PostImage = {
   id: string;
   image: string;
@@ -104,6 +106,7 @@ export type PostImage = {
 };
 
 export type ChangedImage = {
+  base64Image: string;
   aspectRatio: AspectRatioType
   croppedArea: Area | undefined;
   zoom: number;
