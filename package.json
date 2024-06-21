@@ -73,18 +73,16 @@
     "lint-staged": "^11.2.6",
     "prettier": "3.0.0"
   },
-  "lint-staged": {
-    "**/*.{js,ts,tsx}": [
-      "pnpm format"
-    ],
-    "**/*.{json,yaml,yml,toml}": [
-      "prettier --write"
-    ],
-    "*.+(js|jsx|ts|tsx|json|css|scss|md)": "prettier --write"
-  },
   "husky": {
-  "hooks": {
-    "pre-commit": "lint-staged"
-  }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
 }
 }
