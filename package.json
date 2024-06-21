@@ -81,5 +81,10 @@
       "prettier --write"
     ],
     "*.+(js|jsx|ts|tsx|json|css|scss|md)": "prettier --write"
+  },
+  "husky": {
+  "hooks": {
+    "pre-commit": "lint-staged"
   }
+}
 }
