@@ -13,7 +13,8 @@ type SureType = 'cancelCreating' | 'deletePost' | 'deletePostPost';
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
   toggleModal: (value: boolean) => void;
-  onDelete?: () => void;
+  onYes?: () => void;
+  onNo?: () => void;
   isDeleting?: boolean;
   type?: SureType;
 };
@@ -21,7 +22,8 @@ type Props = {
 export const AreYouSureModal = ({
   toggleModal,
   toggleAreYouSureModal,
-  onDelete,
+  onYes,
+  onNo,
   isDeleting,
   type,
 }: Props) => {
@@ -47,21 +49,20 @@ export const AreYouSureModal = ({
           <TransparentBtn
             onClick={() => {
               dispatch(postActions.clearPostState());
-              onDelete?.();
-              if (onDelete) {
-                setTimeout(() => {
-                  toggleModal(false);
-                  toggleAreYouSureModal(false);
-                }, 1000);
-              } else {
-                toggleModal(false);
-                toggleAreYouSureModal(false);
-              }
+              localStorage.removeItem('postDraft')
+              onYes?.();
+              toggleModal(false);
+              toggleAreYouSureModal(false);
             }}
           >
             {translate('yes')}
           </TransparentBtn>
-          <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>
+          <PrimaryBtn
+            onClick={() => {
+              onNo?.()
+              toggleAreYouSureModal(false)
+            }}
+          >
             {translate('no')}
           </PrimaryBtn>
         </div>

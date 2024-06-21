@@ -13,17 +13,20 @@ import { postActions } from '@/redux/reducers/post/postReducer';
 import s from './CreatePost.module.scss';
 import { useTranslation } from 'react-i18next';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import { store } from '@/redux';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
+  onSaveDraft: () => void;
 };
 
 export const FourthModal: React.FC<Props> = ({
   setStep,
   setShowCreatePostModal,
   userData,
+  onSaveDraft,
 }) => {
   const { t } = useTranslation();
 
@@ -32,7 +35,7 @@ export const FourthModal: React.FC<Props> = ({
 
   const dispatch = useAppDispatch();
 
-  const [textareaValue, setTextareaValue] = useState('');
+  const [textareaValue, setTextareaValue] = useState(store.getState().post.description);
   const [areYouSureModal, setAreYouSureModal] = useState(false);
 
   const images = useAppSelector((state) => state.post.changedImages);
@@ -43,6 +46,8 @@ export const FourthModal: React.FC<Props> = ({
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 500) return;
     setTextareaValue(e.currentTarget.value);
+
+    dispatch(postActions.setDescription({ description: e.currentTarget.value }))
   };
 
   const onPublishPost = async () => {
@@ -138,7 +143,8 @@ export const FourthModal: React.FC<Props> = ({
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
-          onDelete={onDeletePostImage}
+          onYes={onDeletePostImage}
+          onNo={onSaveDraft}
           type={'cancelCreating'}
         />
       )}

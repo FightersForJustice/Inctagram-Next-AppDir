@@ -98,7 +98,7 @@ export const PostContentMobile = ({
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
               toggleModal={setVisiblePopup}
-              onDelete={onDeletePost}
+              onYes={onDeletePost}
             />
           )}
         </div>

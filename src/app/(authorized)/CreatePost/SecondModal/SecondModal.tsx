@@ -16,18 +16,19 @@ import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
+  onSaveDraft: () => void;
 };
 
-export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
-  const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const zoom = useAppSelector((state) =>
-    state.post.changedImages.filter((el) => el.id === currentImageId)
-  );
+export const SecondModal = ({ setStep, setShowCreatePostModal, onSaveDraft }: Props) => {
   const dispatch = useAppDispatch();
-  const aspectRatio = useAppSelector((state) =>
-    state.post.changedImages.filter((el) => el.id === currentImageId)
+
+  const currentImageId = useAppSelector((state) => state.post.currentImageId);
+  const currentImage = useAppSelector((state) =>
+    state.post.changedImages.filter((el) => el.id === currentImageId)[0]
   );
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
+
   const onZoomImage = (value: number) => {
     if (currentImageId)
       dispatch(postActions.setZoom({ id: currentImageId, zoom: value }));
@@ -36,23 +37,19 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
   if (!currentImageId) {
     return null;
   }
-  const onCloseCropping = (value: boolean) => {
-    setAreYouSureModal(value);
-    setStep((prevState) => prevState - 1);
-  };
 
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
         <PostCropper
-          zoom={zoom[0].zoom}
-          aspectRatio={aspectRatio[0].aspectRatio ?? AspectRatioType.one}
+          zoom={currentImage.zoom}
+          aspectRatio={currentImage.aspectRatio ?? AspectRatioType.one}
           currentImageId={currentImageId}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
             <AspectRatio imageId={currentImageId} />
-            <Range onValueChange={onZoomImage} value={zoom[0].zoom} />
+            <Range onValueChange={onZoomImage} value={currentImage.zoom} />
           </div>
           <Gallery setStep={setStep} />
         </div>
@@ -60,8 +57,9 @@ export const SecondModal = ({ setStep, setShowCreatePostModal }: Props) => {
       {areYouSureModal && (
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
-          toggleModal={onCloseCropping}
+          toggleModal={setShowCreatePostModal}
           type={'cancelCreating'}
+          onNo={onSaveDraft}
         />
       )}
     </div>

@@ -5,12 +5,15 @@ import { useState } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { getCroppedImg } from '@/app/(authorized)/CreatePost/PostCropper/cropperUtils';
 import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
-import { postImageById, postImages } from '@/redux/reducers/post/postSelectors';
+import { changedImageById, postImageById, postImages } from '@/redux/reducers/post/postSelectors';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
   const currentImage = useAppSelector((state) =>
     postImageById(state, currentImageId),
+  );
+  const currentChangedImage = useAppSelector((state) =>
+    changedImageById(state, currentImageId),
   );
   const dispatch = useAppDispatch();
 
@@ -23,13 +26,13 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
     try {
       if (currentImage) {
         const image = await getCroppedImg(
-          currentImage.image,
+          currentImage.originalImage,
           croppedAreaPixels,
           rotation,
         );
 
         if (image) {
-          const croppedImage: Omit<ChangedImage, 'filter' | 'cropAspectRatio'> =
+          const croppedImage: Omit<ChangedImage, 'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'> =
             {
               image,
               croppedArea: croppedAreaPixels,
@@ -52,10 +55,11 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
   return (
     <Cropper
       image={`${
-        currentImage ? currentImage.image : images[0].image
+        currentImage ? currentImage.originalImage : images[0].originalImage
       }`}
       zoom={zoom}
       crop={crop}
+      initialCroppedAreaPixels={currentChangedImage?.croppedArea}
       aspect={aspectRatio}
       onCropChange={setCrop}
       onZoomChange={setZoom}
