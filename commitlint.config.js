@@ -4,7 +4,6 @@ module.exports = {
       issuePrefixes: ['VP-'],
     },
   },
-
   rules: {
     'body-leading-blank': [2, 'always'],
     'body-max-line-length': [2, 'always', 100],
