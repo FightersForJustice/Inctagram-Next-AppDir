@@ -102,7 +102,7 @@ export const PostContent = ({
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
               toggleModal={setVisiblePopup}
-              onDelete={onDeletePost}
+              onYes={onDeletePost}
               type={'deletePostPost'}
             />
           )}

@@ -5,6 +5,9 @@ import { FirstModal } from './FirstModal';
 import { FourthModal } from './FourthModal';
 import { SecondModal } from './SecondModal';
 import { ThirdModal } from './ThirdModal';
+import { postActions} from '@/redux/reducers/post/postReducer';
+import { store } from '@/redux';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
 
 type Props = {
   showCreatePostModal: boolean;
@@ -17,6 +20,7 @@ export const CreatePost = ({
   setShowCreatePostModal,
   userData,
 }: Props) => {
+  const dispatch = useAppDispatch();
   const [step, setStep] = useState<number>(1);
 
   const closeCreatePostModal = (show: boolean) => {
@@ -24,6 +28,17 @@ export const CreatePost = ({
 
     sessionStorage.removeItem('userPostImage');
   };
+
+  const saveDraft = () => {
+    const postState = store.getState()
+    localStorage.setItem('postDraft', JSON.stringify({
+      images: postState.post.changedImages,
+      description: postState.post.description
+    }))
+
+    dispatch(postActions.clearPostState());
+    closeCreatePostModal(false)
+  }
 
   return (
     <>
@@ -38,12 +53,14 @@ export const CreatePost = ({
         <SecondModal
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
       {step === 3 && (
         <ThirdModal
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
       {step === 4 && (
@@ -51,6 +68,7 @@ export const CreatePost = ({
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
           userData={userData}
+          onSaveDraft={saveDraft}
         />
       )}
     </>

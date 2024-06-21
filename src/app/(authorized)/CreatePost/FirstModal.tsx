@@ -12,42 +12,46 @@ import { AreYouSureModal } from 'src/components/Modals/AreYouSureModal';
 import { useAppSelector } from 'src/redux/hooks/useSelect';
 
 import s from './CreatePost.module.scss';
-import { toast } from 'react-toastify';
+import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
 };
 export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
-  const [areYouSureModal, setAreYouSureModal] = useState(false);
   const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const changedImages = useAppSelector((state) => state.post.changedImages);
   const { t } = useTranslation();
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const postDraftString = localStorage.getItem('postDraft')
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<undefined | string>(undefined);
+
   const translate = (key: string): string =>
     t(`CreatePost.AddPhotoModal.${key}`);
 
   const MAX_FILE_SIZE_MB = 20;
 
-  const [errorMessage, setErrorMessage] = useState<undefined | string>(
-    undefined
-  );
+  const onOpenDraft = () => {
+    if (postDraftString !== null) {
+      const postDraft = JSON.parse(postDraftString)
+
+      dispatch(postActions.addImage(postDraft.images))
+      dispatch(postActions.setDescription({description: postDraft.description}))
+
+      setStep(2);
+    }
+  }
+
   const onSetUserImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const files = [...e.target.files];
 
-    const validImagesFormat = files.filter((file) => {
-      const isJpgOrPng =
-        file.type === 'image/jpeg' || file.type === 'image/png';
-      return isJpgOrPng;
-    });
+    const validImagesFormat = files.filter((file) => file.type === 'image/jpeg' || file.type === 'image/png');
 
-    const validImagesSize = files.filter((file) => {
-      const isSizeValid = file.size <= MAX_FILE_SIZE_MB * 1024 * 1024;
-
-      return isSizeValid;
-    });
+    const validImagesSize = files.filter((file) => file.size <= MAX_FILE_SIZE_MB * 1024 * 1024);
 
     if (validImagesFormat.length !== files.length) {
       setErrorMessage(translate('errorValidFormat'));
@@ -70,9 +74,13 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     dispatch(
       postActions.addImage(
         files.map((file) => ({
-          filter: '',
           id: crypto.randomUUID(),
+          originalImage: URL.createObjectURL(file),
           image: URL.createObjectURL(file),
+          filter: '',
+          croppedArea: undefined,
+          aspectRatio: AspectRatioType.one,
+          zoom: 1,
         }))
       )
     );
@@ -138,8 +146,8 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
             <div className={s.createPost__open}>
               <TransparentBtn
                 isFullWidth
-                isDisabled
-                tooltipText={translate('tooltipText')}
+                onClick={onOpenDraft}
+                isDisabled={postDraftString === null}
               >
                 {translate('openDraftBtn')}
               </TransparentBtn>
