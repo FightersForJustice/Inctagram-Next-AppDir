@@ -79,6 +79,7 @@
     ],
     "**/*.{json,yaml,yml,toml}": [
       "prettier --write"
-    ]
+    ],
+    "*.+(js|jsx|ts|tsx|json|css|scss|md)": "prettier --write"
   }
 }
