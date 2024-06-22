@@ -75,7 +75,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpm lint-staged"
+      "pre-commit": "yarn lint-staged"
     }
   },
   "lint-staged": {
