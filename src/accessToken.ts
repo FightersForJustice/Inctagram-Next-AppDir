@@ -6,3 +6,6 @@ export function setAccessToken(str: string) {
 console.log('check cash1')
 console.log('check cash1')
 console.log('check cash1')
+console.log('check cash1')
+console.log('check cash1')
+console.log('check cash1')
