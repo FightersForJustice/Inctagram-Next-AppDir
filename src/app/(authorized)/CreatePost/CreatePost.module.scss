@@ -107,8 +107,6 @@
     max-height: 660px;
     padding: 20px;
 
-    overflow-y: scroll;
-
     &__items {
       display: flex;
       flex-wrap: wrap;
@@ -118,7 +116,6 @@
       max-height: 490px;
       margin: auto;
 
-      overflow-y: scroll;
     }
 
     &__item {
@@ -170,7 +167,6 @@
 
     &__header {
       width: 100%;
-      overflow-x: scroll;
       display: flex;
       align-items: center;
       gap: 12px;
