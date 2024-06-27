@@ -21,14 +21,18 @@ export const PostCropper = ({
   image,
   skip,
 }: Props) => {
-  const currentImage = image
-    ? image
-    : useAppSelector((state) => postImageById(state, currentImageId));
+  const images = useAppSelector(postImages);
+  const dispatch = useAppDispatch();
+  let currentImage: any;
+  currentImage = useAppSelector((state) =>
+    postImageById(state, currentImageId)
+  );
+  if (image) {
+    currentImage = image;
+  }
   const currentChangedImage = useAppSelector((state) =>
     changedImageById(state, currentImageId)
   );
-  const images = useAppSelector(postImages);
-  const dispatch = useAppDispatch();
 
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -44,19 +48,19 @@ export const PostCropper = ({
 
         if (image) {
           const croppedImage: Omit<
-          ChangedImage,
-          'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'
-        > = {
-          image,
-          croppedArea: croppedAreaPixels,
-          id: currentImage.id,
-          aspectRatio: aspectRatio,
-          zoom: 1,
-        };
-        if (skip && setCroppedAvatar) {
-          console.log('2',typeof image)
-          return setCroppedAvatar(croppedImage)
-        }
+            ChangedImage,
+            'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'
+          > = {
+            image,
+            croppedArea: croppedAreaPixels,
+            id: currentImage.id,
+            aspectRatio: aspectRatio,
+            zoom: 1,
+          };
+          if (skip && setCroppedAvatar) {
+            console.log('2', typeof image);
+            return setCroppedAvatar(croppedImage);
+          }
           dispatch(postActions.setCropImage(croppedImage));
         }
       }
@@ -94,9 +98,12 @@ type Props = {
   currentImageId: string;
   image?: { originalImage: string; id: string };
   onValueChange: (id: number) => void;
-  setCroppedAvatar?: (value: Omit<
-    ChangedImage,
-    'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'>) => void;
+  setCroppedAvatar?: (
+    value: Omit<
+      ChangedImage,
+      'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'
+    >
+  ) => void;
   aspectRatio?: AspectRatioType;
   zoom?: number;
   skip?: boolean;

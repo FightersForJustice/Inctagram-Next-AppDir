@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { changedImages } from 'src/redux/reducers/post/postSelectors';
-import { PostCropper } from '../PostCropper/PostCropper';
+import { PostCropper } from '../../../../components/PostCropper/PostCropper';
 
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';

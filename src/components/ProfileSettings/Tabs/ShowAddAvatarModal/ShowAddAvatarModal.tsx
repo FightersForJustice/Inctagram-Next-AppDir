@@ -9,7 +9,7 @@ import { Alert } from '@/components/Alert';
 import { Range } from '@/components/CropperControls/Range';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 
-import { PostCropper } from '@/app/(authorized)/CreatePost/PostCropper';
+import { PostCropper } from '@/components/PostCropper';
 import { ChangedImage } from '@/redux/reducers/post/postReducer';
 import s from '../Tabs.module.scss';
 
