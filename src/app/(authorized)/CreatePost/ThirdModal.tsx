@@ -8,6 +8,7 @@ import { filters } from '@/features/data';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useTranslation } from 'react-i18next';
+import { changedImages } from 'src/redux/reducers/post/postSelectors';
 
 import s from './CreatePost.module.scss';
 import { Carousel } from '@/components/Carousel/Carousel';
@@ -32,7 +33,7 @@ export const ThirdModal = ({
     t(`SettingsProfilePage.AddPhotoModal.${key}`);
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const images = useAppSelector((state) => state.post.changedImages);
+  const images = useAppSelector(changedImages);
   const changedPostImage = useRef<any>();
   const setActiveImage = (id: string) => {
     dispatch(postActions.changeCurrentImage({ id }));

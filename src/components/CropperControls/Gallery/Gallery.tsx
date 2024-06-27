@@ -7,8 +7,9 @@ import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
+  changeCurrentImage: (imageId: string) => void;
 };
-export const Gallery = ({ setStep }: Props) => {
+export const Gallery = ({ setStep, changeCurrentImage }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
 
   const closeGallery = () => {
@@ -53,7 +54,11 @@ export const Gallery = ({ setStep }: Props) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="z-30">
-          <ImagesCollection closeGallery={closeGallery} setStep={setStep} />
+          <ImagesCollection
+            closeGallery={closeGallery}
+            changeCurrentImage={changeCurrentImage}
+            setStep={setStep}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
