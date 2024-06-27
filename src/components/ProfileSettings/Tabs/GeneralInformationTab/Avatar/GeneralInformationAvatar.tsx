@@ -13,6 +13,7 @@ import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './GeneralInformationAvatar.module.scss';
+import { convertBlobUrlToBase64 } from '@/utils/dataUrlBlobToBase64';
 
 type TProps = {
   currentAvatar: string | null;
@@ -71,7 +72,9 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
       const formData = new FormData();
       console.log(croppedAvatar.image)
       console.log(typeof croppedAvatar.image)
-      formData.append('file', dataURLtoFile(croppedAvatar.image), file.name);
+      const avatarData = await convertBlobUrlToBase64(croppedAvatar.image).then((res)=>res)
+      console.log(avatarData)
+      formData.append('file', dataURLtoFile(avatarData), file.name);
       uploadAvatarAction(formData)
         .then((res) => {
           !res.success &&
