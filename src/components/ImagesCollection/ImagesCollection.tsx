@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions, PostImage } from '@/redux/reducers/post/postReducer';
+import { postActions } from '@/redux/reducers/post/postReducer';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -12,9 +12,14 @@ import s from './ImagesCollection.module.scss';
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   closeGallery: () => void;
+  changeCurrentImage: (imageId: string) => void;
 };
 
-export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
+export const ImagesCollection = ({
+  setStep,
+  closeGallery,
+  changeCurrentImage,
+}: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(postImages);
 
@@ -26,9 +31,6 @@ export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
 
   const moreThen10Img = images.length >= 10;
 
-  const changeCurrentImage = (image: PostImage) => {
-    dispatch(postActions.changeCurrentImage(image));
-  };
   const onDeleteImageFromCollection = (id: string) => {
     if (images.length === 1) {
       toast.error("Your can't delete one image");
@@ -36,12 +38,12 @@ export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
     } else {
       dispatch(postActions.deleteImage({ id }));
     }
-    dispatch(postActions.changeCurrentImage({id:images[0].id}))
+    dispatch(postActions.changeCurrentImage({ id: images[0].id }));
   };
-  const onChangeCurrentImage = (item: PostImage) => {
+  const onChangeCurrentImage = (imageId: string) => {
     closeGallery();
 
-    changeCurrentImage(item);
+    changeCurrentImage(imageId);
   };
   return (
     <div className={s.collection__container}>
@@ -51,7 +53,7 @@ export const ImagesCollection = ({ setStep, closeGallery }: Props) => {
             <div
               key={index}
               className={s.collection__item}
-              onClick={() => onChangeCurrentImage(item)} //we can change current item here
+              onClick={() => onChangeCurrentImage(item.id)} //we can change current item here
             >
               <Image
                 src={item.image}

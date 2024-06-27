@@ -99,7 +99,7 @@ export async function getCroppedImg(
         resolve(URL.createObjectURL(file));
       }
     }, 'image/png');
-  });
+  }) as Promise<string>;
 }
 
 export async function getRotatedImage(
