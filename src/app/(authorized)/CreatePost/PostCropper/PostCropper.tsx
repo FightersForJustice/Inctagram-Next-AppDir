@@ -1,5 +1,3 @@
-'use client';
-
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useState } from 'react';
