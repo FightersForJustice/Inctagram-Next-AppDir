@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
-import { dataURLtoFile } from '@/utils';
+import { dataURLToBlob, dataURLtoFile } from '@/utils';
 import { deleteAvatarAction, uploadAvatarAction } from '@/app/lib/actions';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
@@ -22,8 +22,8 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
 
-  const [userAvatar, setUserAvatar] = useState<string>('');
-  const [croppedAvatar, setCroppedAvatar] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [croppedAvatar, setCroppedAvatar] = useState<any>('');
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
@@ -69,7 +69,9 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setIsLoading(true);
     if (file) {
       const formData = new FormData();
-      formData.append('file', dataURLtoFile(croppedAvatar), file.name);
+      console.log(croppedAvatar.image)
+      console.log(typeof croppedAvatar.image)
+      formData.append('file', dataURLtoFile(croppedAvatar.image), file.name);
       uploadAvatarAction(formData)
         .then((res) => {
           !res.success &&

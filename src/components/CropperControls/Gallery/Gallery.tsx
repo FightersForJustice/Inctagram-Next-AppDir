@@ -3,7 +3,7 @@ import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import s from '../../CreatePost.module.scss';
+import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;

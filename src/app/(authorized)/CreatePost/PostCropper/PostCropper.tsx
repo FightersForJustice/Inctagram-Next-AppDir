@@ -3,17 +3,30 @@ import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useState } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
-import { getCroppedImg } from '@/app/(authorized)/CreatePost/PostCropper/cropperUtils';
 import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
-import { changedImageById, postImageById, postImages } from '@/redux/reducers/post/postSelectors';
+import {
+  changedImageById,
+  postImageById,
+  postImages,
+} from '@/redux/reducers/post/postSelectors';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { getCroppedImg } from '@/utils/cropperUtils';
 
-export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
-  const currentImage = useAppSelector((state) =>
-    postImageById(state, currentImageId),
-  );
+export const PostCropper = ({
+  currentImageId,
+  aspectRatio = 1,
+  zoom = 1,
+  shape = 'rect',
+  onValueChange,
+  setCroppedAvatar,
+  image,
+  skip,
+}: Props) => {
+  const currentImage = image
+    ? image
+    : useAppSelector((state) => postImageById(state, currentImageId));
   const currentChangedImage = useAppSelector((state) =>
-    changedImageById(state, currentImageId),
+    changedImageById(state, currentImageId)
   );
   const dispatch = useAppDispatch();
 
@@ -21,25 +34,30 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
   const [rotation, setRotation] = useState(0);
   const images = useAppSelector(postImages);
 
-
   const onCropEnd = async (croppedArea: Area, croppedAreaPixels: Area) => {
     try {
       if (currentImage) {
         const image = await getCroppedImg(
           currentImage.originalImage,
           croppedAreaPixels,
-          rotation,
+          rotation
         );
 
         if (image) {
-          const croppedImage: Omit<ChangedImage, 'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'> =
-            {
-              image,
-              croppedArea: croppedAreaPixels,
-              id: currentImage.id,
-              aspectRatio: aspectRatio,
-              zoom: 1,
-            };
+          const croppedImage: Omit<
+          ChangedImage,
+          'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'
+        > = {
+          image,
+          croppedArea: croppedAreaPixels,
+          id: currentImage.id,
+          aspectRatio: aspectRatio,
+          zoom: 1,
+        };
+        if (skip && setCroppedAvatar) {
+          console.log('2',typeof image)
+          return setCroppedAvatar(croppedImage)
+        }
           dispatch(postActions.setCropImage(croppedImage));
         }
       }
@@ -48,9 +66,9 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
     }
   };
 
-  const setZoom = (zoom: number) => {
-    dispatch(postActions.setZoom({ id: currentImageId, zoom }));
-  };
+  // const setZoom = (zoom: number) => {
+  //   dispatch(postActions.setZoom({ id: currentImageId, zoom }));
+  // };
 
   return (
     <Cropper
@@ -62,18 +80,26 @@ export const PostCropper = ({ currentImageId, aspectRatio, zoom }: Props) => {
       initialCroppedAreaPixels={currentChangedImage?.croppedArea}
       aspect={aspectRatio}
       onCropChange={setCrop}
-      onZoomChange={setZoom}
+      onZoomChange={() => onValueChange(zoom)}
       onRotationChange={setRotation}
       minZoom={1}
       maxZoom={10}
       onCropComplete={onCropEnd}
       showGrid={false}
+      cropShape={shape}
     />
   );
 };
 
 type Props = {
   currentImageId: string;
-  aspectRatio: AspectRatioType;
-  zoom: number;
+  image?: { originalImage: string; id: string };
+  onValueChange: (id: number) => void;
+  setCroppedAvatar?: (value: Omit<
+    ChangedImage,
+    'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'>) => void;
+  aspectRatio?: AspectRatioType;
+  zoom?: number;
+  skip?: boolean;
+  shape?: 'rect' | 'round';
 };

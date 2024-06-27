@@ -292,6 +292,7 @@ export async function updateTokensAndContinue(
 //PROFILE
 
 export async function uploadAvatarAction(avatar: FormData) {
+  console.log('1is error from upload', avatar)
   return fetch(
     routes.UPLOAD_PROFILE_AVATAR,
     uploadAvatarOptions(accessToken(), avatar)

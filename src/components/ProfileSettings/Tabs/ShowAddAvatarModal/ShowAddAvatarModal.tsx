@@ -5,23 +5,28 @@ import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { Modal } from '@/components/Modals/Modal';
 import { Alert } from '@/components/Alert';
+import { Range } from '@/components/CropperControls/Range';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 
+import { PostCropper } from '@/app/(authorized)/CreatePost/PostCropper';
 import s from '../Tabs.module.scss';
+import { ChangedImage } from '@/redux/reducers/post/postReducer';
 
 type Props = {
   onCloseAvatarModal: () => void;
   userAvatar: string;
   setUserAvatar: (value: string) => void;
-  setCroppedAvatar: (value: string) => void;
-  onSaveUserAvatar: () => void;
+  setCroppedAvatar: (value: Omit<
+    ChangedImage,
+    'base64Image' | 'filter' | 'cropAspectRatio' | 'originalImage'>) => void;
+  onSaveUserAvatar: (value: string) => void;
   onSetUserAvatar: (e: ChangeEvent<HTMLInputElement>) => void;
   fileError: string;
 };
 
-const DynamicCropper = dynamic(() => import('../Cropper/Cropper'), {
-  ssr: false,
-});
+// const DynamicCropper = dynamic(() => import('../Cropper/Cropper'), {
+//   ssr: false,
+// });
 
 export const ShowAddAvatarModal = ({
   setCroppedAvatar,
@@ -42,12 +47,32 @@ export const ShowAddAvatarModal = ({
     }
   };
   const [showModal, setShowModal] = useState(false);
+  const [zoom, setZoom] = useState(1);
+
+  const onZoomImage = (value: number) => {
+    setZoom(value);
+  };
 
   const onCloseHandler = () => {
     onCloseAvatarModal();
     setUserAvatar('');
   };
 
+
+  // const dispatch = useAppDispatch();
+
+  // const currentImageId = useAppSelector((state) => state.post.currentImageId);
+  // const currentImage = useAppSelector((state) =>
+  //   state.post.changedImages.filter((el) => el.id === currentImageId)[0]
+  // );
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false);
+  console.log(userAvatar)
+
+  const changeAvatarHandler = () => {
+    console.log('handler',userAvatar)
+    onSaveUserAvatar(userAvatar)
+  }
   return (
     <Modal
       title={translate('title')}
@@ -58,10 +83,18 @@ export const ShowAddAvatarModal = ({
       <div className={s.modal}>
         {userAvatar ? (
           <div className={s.modal__loadImg}>
-            <DynamicCropper
-              userAvatar={userAvatar}
+            <PostCropper
+              zoom={zoom}
+              currentImageId={'fefee'}
+              onValueChange={onZoomImage}
+              image={{ originalImage: userAvatar, id: '5' }}
+              shape="round"
               setCroppedAvatar={setCroppedAvatar}
+              skip
             />
+            <div className={s.itemsContainer}>
+              <Range onValueChange={onZoomImage} value={zoom} />
+            </div>
           </div>
         ) : (
           <div>
@@ -77,7 +110,7 @@ export const ShowAddAvatarModal = ({
         )}
         {userAvatar ? (
           <div className={s.modal__saveBtn}>
-            <PrimaryBtn onClick={onSaveUserAvatar}>
+            <PrimaryBtn onClick={changeAvatarHandler}>
               {translate('saveBtn')}
             </PrimaryBtn>
           </div>
