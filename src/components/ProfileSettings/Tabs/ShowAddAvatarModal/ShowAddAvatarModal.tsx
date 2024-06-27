@@ -1,6 +1,7 @@
+'use client'
+
 import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
 import { Modal } from '@/components/Modals/Modal';
@@ -9,8 +10,8 @@ import { Range } from '@/components/CropperControls/Range';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 
 import { PostCropper } from '@/app/(authorized)/CreatePost/PostCropper';
-import s from '../Tabs.module.scss';
 import { ChangedImage } from '@/redux/reducers/post/postReducer';
+import s from '../Tabs.module.scss';
 
 type Props = {
   onCloseAvatarModal: () => void;
@@ -23,10 +24,6 @@ type Props = {
   onSetUserAvatar: (e: ChangeEvent<HTMLInputElement>) => void;
   fileError: string;
 };
-
-// const DynamicCropper = dynamic(() => import('../Cropper/Cropper'), {
-//   ssr: false,
-// });
 
 export const ShowAddAvatarModal = ({
   setCroppedAvatar,
