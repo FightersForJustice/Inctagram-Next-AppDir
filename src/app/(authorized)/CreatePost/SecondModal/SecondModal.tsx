@@ -29,7 +29,7 @@ export const SecondModal = ({
 
   const images = useAppSelector(changedImages);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const currentImage = images.find((el) => el.id === currentImageId);
+  const currentImage = images.filter((el) => el.id === currentImageId)[0];
   const currentImageIndex = images.indexOf(currentImage);
 
   const [areYouSureModal, setAreYouSureModal] = useState(false);
