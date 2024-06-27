@@ -1,4 +1,5 @@
 'use client';
+
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useState } from 'react';
@@ -28,11 +29,11 @@ export const PostCropper = ({
   const currentChangedImage = useAppSelector((state) =>
     changedImageById(state, currentImageId)
   );
+  const images = useAppSelector(postImages);
   const dispatch = useAppDispatch();
 
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
-  const images = useAppSelector(postImages);
 
   const onCropEnd = async (croppedArea: Area, croppedAreaPixels: Area) => {
     try {
