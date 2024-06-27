@@ -55,7 +55,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
-        if (file.size <= maxSize) {
+      if (file.size <= maxSize) {
         setFile(file);
         setUserAvatar(URL.createObjectURL(file));
       } else {
@@ -70,11 +70,17 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setIsLoading(true);
     if (file) {
       const formData = new FormData();
-      console.log(croppedAvatar.image)
-      console.log(typeof croppedAvatar.image)
-      const avatarData = await convertBlobUrlToBase64(croppedAvatar.image).then((res)=>res)
-      console.log(avatarData)
-      formData.append('file', dataURLtoFile(avatarData), file.name);
+      console.log(croppedAvatar.image);
+      console.log(typeof croppedAvatar.image);
+      const avatarData = await convertBlobUrlToBase64(croppedAvatar.image).then(
+        (res) => res
+      );
+      console.log(avatarData);
+      formData.append(
+        'file',
+        dataURLtoFile('data:image/png;base64,' + avatarData),
+        file.name
+      );
       uploadAvatarAction(formData)
         .then((res) => {
           !res.success &&
