@@ -55,8 +55,6 @@ export const ThirdModal = ({
     return null;
   }
 
-  console.log(images);
-
   return (
     <>
       <FiltersModal
