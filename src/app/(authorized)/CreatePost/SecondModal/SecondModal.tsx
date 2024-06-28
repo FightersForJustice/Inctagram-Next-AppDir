@@ -64,10 +64,6 @@ export const SecondModal = ({
   const viewPrevBtn = currentImageIndex > 0;
   const viewNextBtn = currentImageIndex < images.length - 1;
 
-  if (!currentImageId) {
-    return null;
-  }
-
   useEffect(() => {
     if (isDelete) {
       changeCurrentImage(images.filter((el) => el.id !== deleteImageId)[0].id);
@@ -75,6 +71,11 @@ export const SecondModal = ({
       setDelete(false);
     }
   }, [deleteImageId]);
+
+  if (!currentImageId) {
+    return null;
+  }
+
   return (
     <div className={s.cropping__wrapper}>
       <CroppingModal setStep={setStep} onClose={() => setAreYouSureModal(true)}>
