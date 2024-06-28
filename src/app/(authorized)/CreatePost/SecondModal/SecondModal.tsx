@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { CroppingModal } from '@/components/Modals/CroppingModal';
@@ -7,12 +7,23 @@ import { PostCropper } from '../../../../components/PostCropper/PostCropper';
 
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
+import { ChangedImage, postActions } from '@/redux/reducers/post/postReducer';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { AspectRatio } from '@/components/CropperControls/AspectRatio';
 import { Range } from '@/components/CropperControls/Range';
 import { Gallery } from '@/components/CropperControls/Gallery';
 import s from '../CreatePost.module.scss';
+
+const initialProp = {
+  base64Image: 'string',
+  aspectRatio: 1,
+  croppedArea: undefined,
+  zoom: 1,
+  filter: 'string',
+  id: 'string',
+  image: 'string',
+  originalImage: 'string',
+}
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -26,13 +37,17 @@ export const SecondModal = ({
   onSaveDraft,
 }: Props) => {
   const dispatch = useAppDispatch();
+  const [image, setImage] = useState<ChangedImage>(initialProp);
 
   const images = useAppSelector(changedImages);
   const currentImageId = useAppSelector((state) => state.post.currentImageId);
-  const currentImage = images.filter((el) => el.id === currentImageId)[0];
-  const currentImageIndex = images.indexOf(currentImage);
+  const currentImageIndex = images.indexOf(image);
 
   const [areYouSureModal, setAreYouSureModal] = useState(false);
+
+  useEffect(() => {
+    setImage(images.filter((el) => el.id === currentImageId)[0]);
+  }, [currentImageId]);
 
   const changeCurrentImage = (imageId: string) => {
     dispatch(postActions.changeCurrentImage({ id: imageId }));
@@ -89,15 +104,15 @@ export const SecondModal = ({
           </>
         )}
         <PostCropper
-          zoom={currentImage.zoom}
+          zoom={image ? image.zoom : initialProp.zoom}
           onValueChange={onZoomImage}
-          aspectRatio={currentImage.aspectRatio ?? AspectRatioType.one}
+          aspectRatio={image ? image.aspectRatio : AspectRatioType.one}
           currentImageId={currentImageId}
         />
         <div className={s.itemsContainer}>
           <div className={s.leftItems}>
             <AspectRatio imageId={currentImageId} />
-            <Range onValueChange={onZoomImage} value={currentImage.zoom} />
+            <Range onValueChange={onZoomImage} value={image ? image.zoom : initialProp.zoom} />
           </div>
           <Gallery changeCurrentImage={changeCurrentImage} setStep={setStep} />
         </div>

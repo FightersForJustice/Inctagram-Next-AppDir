@@ -32,13 +32,11 @@ export const ImagesCollection = ({
   const moreThen10Img = images.length >= 10;
 
   const onDeleteImageFromCollection = (id: string) => {
-    if (images.length === 1) {
-      toast.error("Your can't delete one image");
-      return;
-    } else {
+    if (images.length !== 1) {
       dispatch(postActions.deleteImage({ id }));
+      return changeCurrentImage(images[0].id);
     }
-    dispatch(postActions.changeCurrentImage({ id: images[0].id }));
+    return toast.error("Your can't delete one image");
   };
   const onChangeCurrentImage = (imageId: string) => {
     closeGallery();
