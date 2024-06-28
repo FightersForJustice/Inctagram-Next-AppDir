@@ -3,16 +3,16 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import { CroppingModal } from '@/components/Modals/CroppingModal';
 import { changedImages } from 'src/redux/reducers/post/postSelectors';
-import { PostCropper } from '../PostCropper/PostCropper';
-import { AspectRatio } from './AspectRatio';
-import { Gallery } from './Gallery';
-import { Range } from './Range/Range';
+import { PostCropper } from '../../../../components/PostCropper/PostCropper';
 
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import s from '../CreatePost.module.scss';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { AspectRatio } from '@/components/CropperControls/AspectRatio';
+import { Range } from '@/components/CropperControls/Range';
+import { Gallery } from '@/components/CropperControls/Gallery';
+import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -90,6 +90,7 @@ export const SecondModal = ({
         )}
         <PostCropper
           zoom={currentImage.zoom}
+          onValueChange={onZoomImage}
           aspectRatio={currentImage.aspectRatio ?? AspectRatioType.one}
           currentImageId={currentImageId}
         />

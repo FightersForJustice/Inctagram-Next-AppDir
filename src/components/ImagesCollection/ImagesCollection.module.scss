@@ -9,7 +9,7 @@
     max-width: 355px;
     bottom: 50px;
     right: -18px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
   }
 
   &__plusBtn {
@@ -26,7 +26,8 @@
   }
 
   &__item {
-    min-width: 70px;
+    min-width: 50px;
+    max-width: 50px;
     position: relative;
     cursor: pointer;
     flex-grow: 1;
