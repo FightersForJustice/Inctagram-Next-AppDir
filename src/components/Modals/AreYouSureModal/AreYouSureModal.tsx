@@ -49,7 +49,7 @@ export const AreYouSureModal = ({
           <TransparentBtn
             onClick={() => {
               dispatch(postActions.clearPostState());
-              localStorage.removeItem('postDraft')
+              indexedDB.deleteDatabase('post-store')
               onYes?.();
               toggleModal(false);
               toggleAreYouSureModal(false);

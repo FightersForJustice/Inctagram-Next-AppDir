@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { Modal } from '@/components/Modals/Modal';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
@@ -13,34 +13,59 @@ import { useAppSelector } from 'src/redux/hooks/useSelect';
 
 import s from './CreatePost.module.scss';
 import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
+import { openDB } from 'idb';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
 };
+
+type PostDraftDB = {
+  images: ChangedImage[];
+  description: string;
+};
+
 export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const changedImages = useAppSelector((state) => state.post.changedImages);
   const { t } = useTranslation();
-  const postDraftString = localStorage.getItem('postDraft');
 
   const [areYouSureModal, setAreYouSureModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<undefined | string>(undefined);
+  const [postDraftDB, setPostDraftDB] = useState<PostDraftDB | null>(null);
 
   const translate = (key: string): string =>
     t(`CreatePost.AddPhotoModal.${key}`);
 
   const MAX_FILE_SIZE_MB = 20;
 
-  const onOpenDraft = () => {
-    if (postDraftString === null) {
+  const getPostDraft = async () => {
+    const db = await openDB('post-store', 1, {
+      upgrade(db) {
+        db.createObjectStore('postDraft', { keyPath: 'id' });
+      },
+    });
+    return await db.get('postDraft', 'draft');
+  };
+
+  useEffect(() => {
+    const fetchPostDraft = async () => {
+      const draft = await getPostDraft();
+      setPostDraftDB(draft || null);
+    };
+
+    fetchPostDraft();
+  }, []);
+
+  const onOpenDraft = async () => {
+
+    if (!postDraftDB) {
       return;
     }
 
-    const postDraft = JSON.parse(postDraftString);
 
-    postDraft.images.forEach((image: ChangedImage) => {
+    postDraftDB.images.forEach((image: ChangedImage) => {
       const base64Image = image.base64Image.split(',')[1];
       const binaryString = atob(base64Image);
       const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
@@ -51,8 +76,8 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
       image.originalImage = url;
     });
 
-    dispatch(postActions.addImage(postDraft.images));
-    dispatch(postActions.setDescription({ description: postDraft.description }));
+    dispatch(postActions.addImage(postDraftDB.images));
+    dispatch(postActions.setDescription({ description: postDraftDB.description }));
 
     setStep(2);
   };
@@ -171,7 +196,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
               <TransparentBtn
                 isFullWidth
                 onClick={onOpenDraft}
-                isDisabled={postDraftString === null}
+                isDisabled={postDraftDB === null}
               >
                 {translate('openDraftBtn')}
               </TransparentBtn>
