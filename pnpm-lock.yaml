@@ -56,6 +56,9 @@ dependencies:
   i18next:
     specifier: ^23.7.16
     version: 23.7.16
+  idb:
+    specifier: ^8.0.0
+    version: 8.0.0
   js-cookie:
     specifier: ^3.0.5
     version: 3.0.5
@@ -3597,6 +3600,10 @@ packages:
     resolution: {integrity: sha512-SrqFkMn9W6Wb43ZJ9qrO6U2U4S80RsFMA7VYFSqp7oc7RllQOYDCdRfsse6A7Cq/V8MnpxKvJCYgM8++27n4Fw==}
     dependencies:
       '@babel/runtime': 7.23.2
+    dev: false
+
+  /idb@8.0.0:
+    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
     dev: false
 
   /ignore@5.3.0:
