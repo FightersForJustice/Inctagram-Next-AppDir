@@ -25,6 +25,9 @@
 
 .popOver {
   z-index: 10;
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 @include s.devices(tablet-xl) {
