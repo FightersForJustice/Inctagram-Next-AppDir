@@ -45,7 +45,7 @@ export const AreYouSureModal = ({
         onClose={() => toggleAreYouSureModal(false)}
       >
         <p className={s.modal__text}>{translate('areYouSureText')}</p>
-        <div className={s.modal__btns}>
+        <div className={type === 'cancelCreating' ? s.modal__btns__cancel__creating : s.modal__btns}>
           <TransparentBtn
             onClick={() => {
               dispatch(postActions.clearPostState());
