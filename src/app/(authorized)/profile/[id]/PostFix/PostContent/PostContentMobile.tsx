@@ -13,7 +13,7 @@ import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostComment } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostComment';
 import { PostLikes } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostLikes';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
-import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
+import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
 
@@ -40,7 +40,8 @@ export const PostContentMobile = ({
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const language = useGetLanguageFromPath();
+  const language = useGetLanguage()
+
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const time = getTimeAgoText(createdPostTime, language, translate);
