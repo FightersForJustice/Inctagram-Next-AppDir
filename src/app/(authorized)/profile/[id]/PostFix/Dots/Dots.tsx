@@ -1,13 +1,13 @@
 import * as Popover from '@radix-ui/react-popover';
 
 import { PostPopup } from '../PostPopup';
+import Image from 'next/image';
 
 type Props = {
   setVisiblePopup: (value: boolean) => void;
   visiblePopup: boolean;
   setEditPost: (value: boolean) => void;
   setShowAreYouSureModal: (value: boolean) => void;
-  setShowDots: (value: boolean) => void;
 };
 
 export const Dots = ({
@@ -15,32 +15,23 @@ export const Dots = ({
   setVisiblePopup,
   setEditPost,
   setShowAreYouSureModal,
-  setShowDots,
 }: Props) => {
   return (
     <Popover.Root onOpenChange={() => setVisiblePopup(!visiblePopup)}>
       <Popover.Trigger>
-        <svg
-          style={{ cursor: 'pointer' }}
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
-            fill={`${visiblePopup ? '#397DF6' : 'white'}`}
+        <div style={{ width: '24px', height: '24px' }}>
+          <Image
+            style={{
+              cursor: 'pointer',
+              filter:
+                'brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(133deg) brightness(100%) contrast(104%)',
+            }}
+            width={24}
+            height={24}
+            src="/img/more-horizontal-outline.svg"
+            alt=""
           />
-          <path
-            d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z"
-            fill={`${visiblePopup ? '#397DF6' : 'white'}`}
-          />
-          <path
-            d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14Z"
-            fill={`${visiblePopup ? '#397DF6' : 'white'}`}
-          />
-        </svg>
+        </div>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
@@ -52,7 +43,6 @@ export const Dots = ({
             setEditPost={setEditPost}
             setVisiblePopup={setVisiblePopup}
             toggleShowAreYouSureModal={() => setShowAreYouSureModal(true)}
-            setShowDots={setShowDots}
           />
         </Popover.Content>
       </Popover.Portal>

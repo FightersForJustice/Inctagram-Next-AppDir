@@ -1,23 +1,21 @@
 import { useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 
-import { InputRange } from '@/components/InputRange';
-
-import s from '../../CreatePost.module.scss';
+import { InputRange } from '@/components/InputRange/InputRange';
+import s from '../CreatePost.module.scss';
 
 type Props = {
-  onZoomImage: (value: string) => void;
-  zoomImage: string;
+  onValueChange: (value: number) => void;
+  value: number;
 };
 
-export const Range = ({ onZoomImage, zoomImage }: Props) => {
+export const Range = ({ onValueChange, value }: Props) => {
   const [openZoom, setOpenZoom] = useState(false);
-
   return (
     <Popover.Root onOpenChange={() => setOpenZoom(!openZoom)}>
       <Popover.Trigger>
         <svg
-          className={s.cropping__icon2}
+          className={s.cropping__icons}
           width="36"
           height="36"
           viewBox="0 0 36 36"
@@ -48,8 +46,11 @@ export const Range = ({ onZoomImage, zoomImage }: Props) => {
         </svg>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="PopoverContent z-30" sideOffset={5}>
-          <InputRange onZoomImage={onZoomImage} zoomImage={zoomImage} />
+        <Popover.Content
+          className="PopoverContent z-30 absolute right-10 bottom-0"
+          sideOffset={5}
+        >
+          <InputRange onValueChange={onValueChange} value={value} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

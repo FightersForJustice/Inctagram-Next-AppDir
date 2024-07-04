@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20;
+  z-index: 21;
 }
 
 .modal__content {
@@ -52,7 +52,7 @@
 .modal__footer {
   display: flex;
   justify-content: flex-end;
-  padding: 0px 24px;
+  padding: 0 24px;
 }
 
 .modal__close {

@@ -1,26 +1,29 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { forgotPasswordAction } from '@/app/lib/actions';
-import { Modal } from '@/components/Modals/Modal';
-import { EmailForm } from './EmailForm';
-import { ForgotPasswordSchema } from '@/features/schemas';
 import { AuthSubmit } from '@/components/Input';
+import { Modal } from '@/components/Modals/Modal';
+import { ForgotPasswordSchema } from '@/features/schemas';
 import { useTranslation } from 'react-i18next';
+import { EmailForm } from './EmailForm';
 
-import s from './ForgotPasswordForm.module.scss';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { Loader } from '@/components/Loader';
 import f from './EmailSentModal.module.scss';
+import s from './ForgotPasswordForm.module.scss';
 
 export const ForgotPasswordForm = () => {
   const { t, i18n } = useTranslation();
   const translate = (key: string): string => t(`ForgotPasswordPage.${key}`);
   const translateErrors = (key: string): string => t(`Errors.${key}`);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -41,10 +44,12 @@ export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const onSubmit = async (data: { email: string }) => {
+    setLoading(true);
     const result = await forgotPasswordAction({
       email: data.email,
       recaptcha,
     });
+    setLoading(false);
 
     if (result?.success) {
       setUserEmail(data.email);
@@ -91,7 +96,7 @@ export const ForgotPasswordForm = () => {
           />
         </div>
 
-        <Link href={'/sign-in'} className={s.forgotRedirect}>
+        <Link href={AUTH_ROUTES.SIGN_IN} className={s.forgotRedirect}>
           {translate('linkName')}
         </Link>
 
@@ -112,6 +117,7 @@ export const ForgotPasswordForm = () => {
           </p>
         </Modal>
       )}
+      {loading && <Loader />}
     </>
   );
 };

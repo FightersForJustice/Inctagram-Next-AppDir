@@ -1,24 +1,26 @@
 'use client';
 
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import ServiceAuth from '../../ServiceAuth/ServiceAuth';
-import { SignUpFormSchema } from '@/features/schemas';
 import { AuthSubmit, FormItem } from '@/components/Input';
+import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import { SignUpFormSchema } from '@/features/schemas';
 import {
   getSignUpFormItemsData,
   resetObjSignUpForm,
 } from '@/utils/data/sign-up-form-items-data';
-import { AgreeCheckbox, EmailSentModal } from '@/components/auth';
+import ServiceAuth from '../../ServiceAuth/ServiceAuth';
 
 import { signUpAction } from '@/app/lib/actions';
 import { SignInData } from '@/features/schemas/SignInSchema';
 
+import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { Loader } from '@/components/Loader';
 import s from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
@@ -32,6 +34,7 @@ export const SignUpForm = () => {
     setError,
     getValues,
     formState: { errors, isValid },
+    watch,
   } = useForm({
     resolver: yupResolver(SignUpFormSchema()),
     mode: 'onTouched',
@@ -42,9 +45,11 @@ export const SignUpForm = () => {
   const [showConfirmPass, setShowConfirmPass] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const processForm = async (data: SignInData) => {
     try {
+      setLoading(true);
       const res = await signUpAction(data);
       if (!res?.success && res?.data) {
         if (res?.data === 'userName.nameExist') {
@@ -60,6 +65,8 @@ export const SignUpForm = () => {
     } catch (error) {
       console.log(error);
       toast.error({ error }.toString());
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,6 +79,17 @@ export const SignUpForm = () => {
     setShowConfirmPass,
   });
 
+  const [passwordMismatch, setPasswordMismatch] = useState('');
+  const watchedData = watch();
+
+  useEffect(() => {
+    if (getValues('password')) {
+      watch().password != watch().passwordConfirm
+        ? setPasswordMismatch(translateErrors('passwordConfirm.oneOf'))
+        : setPasswordMismatch('');
+    }
+  }, [watchedData]);
+
   return (
     <div className={s.container}>
       <ServiceAuth page={'SignUpPage'} />
@@ -79,6 +97,7 @@ export const SignUpForm = () => {
         <div className={s.formContainer}>
           {formItemsProps.map((formItem) => (
             <FormItem
+              passwordMismatch={passwordMismatch}
               translate={translate}
               register={register}
               {...formItem}
@@ -99,11 +118,11 @@ export const SignUpForm = () => {
         <AuthSubmit
           id={'sign-up-submit'}
           value={String(translate('btnName'))}
-          disabled={!isValid}
+          disabled={isValid && passwordMismatch === '' ? false : true}
         />
         <p className={s.questionContainer}>{translate('question')}</p>
         <Link
-          href={'/sign-in'}
+          href={AUTH_ROUTES.SIGN_IN}
           className={s.redirectSignIn}
           id={'sign-up-link-to-sign-in'}
         >
@@ -117,6 +136,7 @@ export const SignUpForm = () => {
           setShowModal={setShowModal}
         />
       )}
+      {loading && <Loader />}
     </div>
   );
 };

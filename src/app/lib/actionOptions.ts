@@ -1,12 +1,15 @@
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { SignInData } from '@/features/schemas/SignInSchema';
+import { createPostOptionsType } from './optionsTypes';
 
 //AUTH OPTIONS
 
 export const loginOptions = (
-  data: SignInData & {
+  data: SignInData,
+  userAgent: string & {
     baseUrl?: string | undefined;
-  }
+  },
+  ipAddress: string
 ) => {
   console.log('data', data);
 
@@ -14,6 +17,8 @@ export const loginOptions = (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'user-agent': userAgent,
+      'X-Forwarded-For': ipAddress,
     },
     body: JSON.stringify(data),
     next: { revalidate: 0 },
@@ -60,12 +65,14 @@ export const newPasswordOptions = (password: string, code: string) => {
 };
 
 export const requestUpdateTokensOptions = (
-  refreshToken: string | undefined
+  refreshToken: string | undefined,
+  userAgent: string
 ) => {
   return {
     method: 'POST',
     headers: {
       Cookie: `refreshToken=${refreshToken}`,
+      'user-agent': userAgent,
     },
     next: { revalidate: 0 },
   };
@@ -156,5 +163,56 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
       Authorization: `Bearer ${accessToken}`,
     },
     next: { revalidate: 0 },
+  };
+};
+
+//POST OPTIONS
+
+export const createPostOptions = (
+  accessToken: string | null,
+  body: createPostOptionsType
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+
+export const uploadPostOptions = (
+  accessToken: string | null,
+  formData: FormData
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: formData,
+  };
+};
+
+export const deleteUploadedPostOptions = (accessToken: string | null) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+export const deleteOptions = (
+  accessToken: string | null,
+  userAgent: string
+) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'user-agent': userAgent,
+    },
   };
 };

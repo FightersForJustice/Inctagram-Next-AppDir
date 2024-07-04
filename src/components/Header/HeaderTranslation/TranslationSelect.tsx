@@ -29,7 +29,7 @@ export const TranslationSelect = () => {
   const [isEn, setEn] = useState(() => {
     return Cookies.get('userLanguage') === 'en' || false;
   });
-  const getWidth = () => setWidth(window.screen.width);
+  const getWidth = () => setWidth(window.innerWidth);
 
   useEffect(() => {
     function setScrollY() {
@@ -40,11 +40,13 @@ export const TranslationSelect = () => {
       setOpenChangeSize(false);
     }
   }, [currentWidth]);
-  const isOpen = currentWidth < isMobileSize ? true : false;
-  let isMobileLanguage = isEn && currentWidth < isMobileSize && f.active;
+  const isOpen = currentWidth <= isMobileSize;
+
+  let isMobileLanguage = isEn && currentWidth <= isMobileSize && f.active;
 
   const onSelectChange = (value: string) => {
     if (currentWidth > isMobileSize) {
+      value === 'ru' ? setEn(false) : setEn(true);
       setLanguage(value);
       i18n.changeLanguage(value);
       Cookies.set('userLanguage', String(value));
@@ -53,23 +55,23 @@ export const TranslationSelect = () => {
   };
 
   const mobileHandler = (value: boolean) => {
-    if (currentWidth < isMobileSize && !isEn && value) {
+    if (currentWidth <= isMobileSize && !isEn && value) {
       setEn(true);
       setLanguage('en');
       i18n.changeLanguage('en');
-      Cookies.set('userLanguage', String(value));
+      Cookies.set('userLanguage', 'en');
       return;
     }
-    if (currentWidth < isMobileSize && isEn && !value) {
+    if (currentWidth <= isMobileSize && isEn && !value) {
       setEn(false);
       i18n.changeLanguage('ru');
       setLanguage('ru');
-      Cookies.set('userLanguage', String(value));
+      Cookies.set('userLanguage', 'ru');
     }
   };
 
   let finalImage =
-    currentWidth < isMobileSize
+    currentWidth <= isMobileSize
       ? fullLanguages['en']['img']
       : fullLanguages[language]['img'];
 

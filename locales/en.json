@@ -193,7 +193,13 @@
       "title": "This device",
       "status": "Online",
       "active": "Active sessions",
-      "text": "You have not yet logged in from other devices"
+      "text": "You have not yet logged in from other devices",
+      "allSession": "Terminate all other session",
+      "currentDevice": "Current device",
+      "AllSessionsClosed" : "All sessions are closed",
+      "sessionClosed" : "The session is closed",
+      "lastVisit" : "Last visit",
+      "browserName" : "Browser Name"
     },
     "AccountManagementTab": {
       "titleTab": "Account Management"
@@ -202,8 +208,8 @@
       "titleTab": "My Payments"
     },
     "AddPhotoModal": {
-      "title": "Add a profile photo",
-      "selectBtn": "Select from a computer",
+      "title": "Add photo",
+      "selectBtn": "Select from computer",
       "saveBtn": "Save",
       "openDraftBtn": "Open draft",
       "nextBtn": "Next",
@@ -211,10 +217,60 @@
       "close": "Close",
       "yes": "Yes",
       "no": "No",
-      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "areYouSureText": "Are you sure you want to delete this post?",
       "filters": "Filters",
       "sizeError": "Photo size must be less than 10 MB!",
-      "formatError": "The format of the uploaded photo must be PNG and JPEG"
+      "formatError": "The format of the uploaded photo must be PNG and JPEG",
+      "tooltipText": "Functionality is not available yet",
+      "publication" : "Publication",
+      "publish" : "Publish",
+      "addPublicationDescriptions" : "Add publication descriptions",
+      "description" : "Description",
+      "publicationsCreated" : "Publications created"
+    }
+  },
+  "CreatePost": {
+    "AddPhotoModal": {
+      "title": "Add photo",
+      "selectBtn": "Select from computer",
+      "saveBtn": "Save",
+      "openDraftBtn": "Open draft",
+      "nextBtn": "Next",
+      "cropping": "Cropping",
+      "close": "Close",
+      "yes": "Discard",
+      "no": "Save draft",
+      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "filters": "Filters",
+      "sizeError": "Photo size must be less than 20 MB!",
+      "formatError": "The format of the uploaded photo must be PNG and JPEG",
+
+      "tooltipText": "Functionality is not available yet",
+      "errorValidFormat": "The format of the uploaded photo must be PNG and JPEG",
+      "errorValidSize": "Photo size must be less than",
+      "error": "Error!"
+    },
+    "EditPost": {
+      "areYouSureText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+      "title": "Close Post",
+      "editModalText": "Do you really want to close the edition of the publication? If you close changes won't be saved",
+      "submit": "Yes",
+      "cancel": "No",
+      "Сancel": "Сancel",
+      "editPost" : "Edit Post",
+      "deletePost" : "Delete Post",
+      "addComment" : "Add a Comment",
+      "publish" : "Publish",
+      "addPublicationDescriptions": "Add publication descriptions",
+      "saveChanges" : "Save Changes",
+      "save" : "Save"
+    },
+    "DeletePostModal": {
+      "title": "Close Post",
+      "areYouSureText": "Are you sure you want to delete this post?",
+      "yes": "Yes",
+      "no": "No",
+      "close":"Close"
     }
   },
   "AgreementsPage": {

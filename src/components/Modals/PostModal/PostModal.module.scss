@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .post__modal {
   position: fixed;
   top: 0;
@@ -20,14 +22,7 @@
 }
 
 .post__modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid var(--dark-100);
-}
-
-.post__modal__header,
-post__modal__footer {
 }
 
 .post__modal__body {

@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import Image from 'next/image';
+import { createPortal } from 'react-dom';
 
 import s from './Modal.module.scss';
 
@@ -17,11 +18,11 @@ export const Modal = ({
   className,
   isOkBtn,
 }: PropsWithChildren<Props>) => {
-  return (
-    <div className={s.modal} onClick={onClose}>
+  return createPortal(
+    <div className={s.modal} onMouseDown={onClose}>
       <div
         className={s.modal__content + ' ' + className}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className={s.modal__header}>
           <div className={s.modal__title}>{title}</div>
@@ -44,6 +45,7 @@ export const Modal = ({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.getElementById('portal') as HTMLElement
   );
 };

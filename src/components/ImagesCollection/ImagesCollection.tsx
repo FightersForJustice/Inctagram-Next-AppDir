@@ -1,55 +1,59 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import s from './ImagesCollection.module.scss';
-import Image from 'next/image';
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import Image from 'next/image';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { postImages } from '@/redux/reducers/post/postSelectors';
+import clsx from 'clsx';
+import s from './ImagesCollection.module.scss';
+
 type Props = {
-  loadedImages: ImageStateType[];
-  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
-  setPostImage: (value: string) => void;
+  setStep: Dispatch<SetStateAction<number>>;
+  closeGallery: () => void;
+  changeCurrentImage: (imageId: string) => void;
+  deleteImage: (imageId: string) => void;
 };
 
-export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
+export const ImagesCollection = ({
+  setStep,
+  closeGallery,
+  changeCurrentImage,
+  deleteImage,
+}: Props) => {
   const dispatch = useAppDispatch();
+  const images = useAppSelector(postImages);
 
   useEffect(() => {
-    if (!loadedImages.length) {
-      setPostImage('');
+    if (!images.length) {
+      setStep(1);
     }
-  }, [loadedImages.length]);
-  const moreThen10Img = loadedImages.length >= 10;
+  }, [images.length]);
+
+  const moreThen10Img = images.length >= 10;
+
   const onDeleteImageFromCollection = (id: string) => {
-    if (loadedImages.length === 1) {
-      toast.error("Your can't delete one image");
+    if (images.length !== 1) {
+      deleteImage(id)
       return;
-    } else {
-      dispatch(postActions.removeGalleryImage({ id }));
     }
+    return toast.error("Your can't delete one image");
+  };
+  const onChangeCurrentImage = (imageId: string) => {
+    closeGallery();
+
+    changeCurrentImage(imageId);
   };
   return (
     <div className={s.collection__container}>
-      <Image
-        src={
-          moreThen10Img
-            ? '/img/create-post/plus-disable.svg'
-            : '/img/create-post/plus.svg'
-        }
-        alt={'plus'}
-        height={36}
-        width={36}
-        className={s.collection__plusBtn}
-        onClick={() => !moreThen10Img && setPostImage('')}
-      />
       <div className={s.collection__items}>
-        {loadedImages.map((item, index) => {
+        {images.map((item, index) => {
           return (
             <div
               key={index}
               className={s.collection__item}
-              onClick={() => setPostImage(item.image)}
+              onClick={() => onChangeCurrentImage(item.id)} //we can change current item here
             >
               <Image
                 src={item.image}
@@ -69,6 +73,18 @@ export const ImagesCollection = ({ loadedImages, setPostImage }: Props) => {
             </div>
           );
         })}
+        <Image
+          src={
+            moreThen10Img
+              ? '/img/create-post/plus-disable.svg'
+              : '/img/create-post/plus.svg'
+          }
+          alt={'plus'}
+          height={36}
+          width={36}
+          className={clsx(s.collection__plusBtn)}
+          onClick={() => !moreThen10Img && setStep(1)}
+        />
       </div>
     </div>
   );

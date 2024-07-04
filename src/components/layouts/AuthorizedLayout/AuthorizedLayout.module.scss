@@ -23,7 +23,6 @@
 .content {
   width: calc(100% - 220px);
   margin-left: auto;
-  overflow-y: scroll;
   height: 100%;
 }
 
@@ -40,7 +39,6 @@
   .content {
     width: 100%;
     margin-left: 0;
-    overflow-y: scroll;
     height: calc(100% - 60px);
   }
 }

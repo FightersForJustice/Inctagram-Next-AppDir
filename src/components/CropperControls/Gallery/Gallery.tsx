@@ -1,23 +1,26 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import * as Popover from '@radix-ui/react-popover';
-import s from '../../CreatePost.module.scss';
 import { ImagesCollection } from '@/components/ImagesCollection';
-import { ImageStateType } from '../../CreatePost';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery } from '@/redux/reducers/post/postSelectors';
+import * as Popover from '@radix-ui/react-popover';
+import clsx from 'clsx';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import s from '../CreatePost.module.scss';
 
 type Props = {
-  setLoadedImages: Dispatch<SetStateAction<ImageStateType[]>>;
-  setPostImage: (value: string) => void;
+  setStep: Dispatch<SetStateAction<number>>;
+  changeCurrentImage: (imageId: string) => void;
+  deleteImage: (imageId: string) => void;
 };
-export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
+export const Gallery = ({ setStep, changeCurrentImage, deleteImage }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
-  const currentImages = useAppSelector(imagesGallery);
 
+  const closeGallery = () => {
+    setOpenCollectionImages(false);
+  };
+  const openGallery = () => {
+    setOpenCollectionImages(!openCollectionImages);
+  };
   return (
-    <Popover.Root
-      onOpenChange={() => setOpenCollectionImages(!openCollectionImages)}
-    >
+    <Popover.Root onOpenChange={openGallery} open={openCollectionImages}>
       <Popover.Trigger>
         <svg
           width="36"
@@ -25,7 +28,7 @@ export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
           viewBox="0 0 36 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={s.cropping__icon3}
+          className={clsx(s.cropping__icon3, s.cropping_icons)}
         >
           <rect opacity="0.8" width="36" height="36" rx="2" fill="#171717" />
           <g clipPath="url(#clip0_10893_17125)">
@@ -51,11 +54,12 @@ export const Gallery = ({ setLoadedImages, setPostImage }: Props) => {
         </svg>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="PopoverContent z-30" sideOffset={5}>
+        <Popover.Content className="z-30">
           <ImagesCollection
-            loadedImages={currentImages}
-            setLoadedImages={setLoadedImages}
-            setPostImage={setPostImage}
+            closeGallery={closeGallery}
+            changeCurrentImage={changeCurrentImage}
+            deleteImage={deleteImage}
+            setStep={setStep}
           />
         </Popover.Content>
       </Popover.Portal>

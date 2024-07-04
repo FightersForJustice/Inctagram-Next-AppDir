@@ -5,7 +5,9 @@ import { citySelectRoutes, routes } from '@/api/routes';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
+  createPostOptions,
   deleteAvatarOptions,
+  deleteUploadedPostOptions,
   loginOptions,
   newPasswordOptions,
   recoveryPasswordOptions,
@@ -15,19 +17,30 @@ import {
   requestUpdateTokensOptions,
   updateProfileOptions,
   uploadAvatarOptions,
+  uploadPostOptions,
 } from './actionOptions';
 import { getRefreshToken } from '@/utils/getRefreshToken';
 import { cookieDays, setCookieExpires } from '@/utils/cookiesActions';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
+import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
+import { createPostOptionsType } from './optionsTypes';
+import { accessToken } from '@/utils/serverActions';
 
 // AUTH ACTIONS
 
-export async function signInAction(data: SignInData) {
+export async function signInAction(
+  data: SignInData,
+  userAgent: string,
+  ipAddress: string
+) {
   if (data) {
     try {
-      const res = await fetch(routes.LOGIN, loginOptions(data));
+      const res = await fetch(
+        routes.LOGIN,
+        loginOptions(data, userAgent, ipAddress)
+      );
       const responseBody = await res.json();
 
       if (!res.ok) {
@@ -47,7 +60,7 @@ export async function signInAction(data: SignInData) {
       cookies().set({
         name: 'accessToken',
         value: accessToken,
-        httpOnly: true,
+        httpOnly: false,
         path: '/',
         secure: true,
       });
@@ -66,7 +79,7 @@ export async function signUpAction(data: SignInData) {
       email: data.email.toLowerCase(),
       baseUrl: process.env.NEXT_PUBLIC_APP_URL,
     };
-    const res = await fetch(routes.SIGN_UP, loginOptions(newData));
+    const res = await fetch(routes.SIGN_UP, loginOptions(newData, '', ''));
     if (res.ok) {
       return { success: true, data: 'signUpSuccess' };
     }
@@ -75,7 +88,7 @@ export async function signUpAction(data: SignInData) {
     const field = responseBody.messages[0]?.field;
 
     if (field === 'email') {
-      // Мы не бросаем ошибку из-за безопасности (XSS)
+      // Мы не выводим ошибку из-за безопасности (XSS)
       return { success: true, data: 'signUpSuccess' };
     }
 
@@ -178,10 +191,12 @@ export async function logOutAction() {
       }
       cookies().delete('refreshToken');
       cookies().delete('accessToken');
-      revalidatePath('/sign-in');
+      revalidatePath(AUTH_ROUTES.SIGN_IN);
 
       return { success: true, data: 'logoutSuccess' };
     } catch (error) {
+      cookies().delete('refreshToken');
+      cookies().delete('accessToken');
       console.error('Logout Error', error);
       return { success: false, error: error };
     }
@@ -236,11 +251,14 @@ export async function deleteAllSessionsAction() {
 
 // middleware actions
 
-export async function updateTokensAndContinue(refreshToken: string) {
+export async function updateTokensAndContinue(
+  refreshToken: string,
+  userAgent: string
+) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
-      requestUpdateTokensOptions(refreshToken)
+      requestUpdateTokensOptions(refreshToken, userAgent)
     );
     if (!updateTokenResponse.ok) {
       console.log('UpdateToken failed', updateTokenResponse);
@@ -257,7 +275,7 @@ export async function updateTokensAndContinue(refreshToken: string) {
     const action = NextResponse.next({
       headers: {
         'Set-Cookie': [
-          `accessToken=${newAccessToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
+          `accessToken=${newAccessToken}; Path=/; Secure; SameSite=None; Expires=${setCookieExpires()}`,
           `refreshToken=${newRefreshToken}; Path=/; Secure; HttpOnly; SameSite=None; Expires=${setCookieExpires()}`,
         ],
       } as any,
@@ -267,31 +285,22 @@ export async function updateTokensAndContinue(refreshToken: string) {
   } catch (error) {
     console.error('updateTokensAndContinue ERROR', error);
 
-    const action = NextResponse.next({
-      headers: {
-        'Set-Cookie': [
-          'accessToken=; Path=/; Secure; SameSite=None; Max-Age=0',
-          'refreshToken=; Path=/; Secure; SameSite=None; Max-Age=0',
-        ],
-      } as any,
-    });
-
-    return { success: false, action };
+    return { success: false };
   }
 }
 
 //PROFILE
 
 export async function uploadAvatarAction(avatar: FormData) {
-  const accessToken = headers().get('accessToken');
-
+  console.log('1is error from upload', avatar)
   return fetch(
     routes.UPLOAD_PROFILE_AVATAR,
-    uploadAvatarOptions(accessToken, avatar)
+    uploadAvatarOptions(accessToken(), avatar)
   )
     .then((res) => {
       if (res.ok) {
         revalidatePath('/profile/settings-profile/general-information');
+        revalidateTag('myProfile');
 
         return { success: true, modalText: 'avatarSuccessfullyUploaded' };
       }
@@ -307,12 +316,11 @@ export async function uploadAvatarAction(avatar: FormData) {
 }
 
 export async function deleteAvatarAction() {
-  const accessToken = headers().get('accessToken');
-
-  return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken))
+  return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken()))
     .then((res) => {
       if (res.ok) {
         revalidatePath('/profile/settings-profile/general-information');
+        revalidateTag('myProfile');
 
         return { success: true, modalText: 'avatarSuccessfullyDeleted' };
       }
@@ -343,14 +351,13 @@ export async function fetchCountriesList() {
 }
 
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
-  const accessToken = headers().get('accessToken');
-
   return fetch(
     routes.USERS_PROFILE,
-    updateProfileOptions(accessToken, data)
+    updateProfileOptions(accessToken(), data)
   ).then(async (res) => {
     if (res.ok) {
       revalidatePath('/profile/settings-profile/general-information');
+      revalidateTag('myProfile');
       return { success: true, modalText: 'updateProfileSuccess' };
     }
 
@@ -374,19 +381,62 @@ export async function updateProfileInfoAction(data: ProfileFormSubmit) {
     return { success: false, modalText: toastMessage };
   });
 }
-// CreatePost
-export async function UploadPostImage(formData: FormData, accessToken: string) {
-  return fetch(routes.UPLOAD_POST_IMAGE, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: formData,
-  }).then((res) => {
-    if (res.ok) {
-      return { success: true, data: res };
-    } else {
-      return { success: false, status: res.status, data: res };
+
+// POST
+
+export async function uploadPostImage(formData: FormData) {
+  try {
+    const res = await fetch(
+      routes.UPLOAD_POST_IMAGE,
+      uploadPostOptions(accessToken(), formData)
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
     }
-  });
+
+    return { success: true, data: responseBody.images };
+  } catch (error) {
+    console.error('uploadPostImage error', error);
+
+    return { success: false, data: 'uploadPostImageError' };
+  }
 }
+
+export async function deleteUploadedPostImage(uploadId: number) {
+  const response = await fetch(
+    `${routes.UPLOAD_POST_IMAGE}/${uploadId}`,
+    deleteUploadedPostOptions(accessToken())
+  );
+  if (!response.ok) {
+    throw new Error(`Error deleting image ${uploadId}: ${response.statusText}`);
+  }
+
+  return response.statusText;
+}
+
+export async function createPost(body: createPostOptionsType) {
+  try {
+    const res = await fetch(
+      routes.CREATE_POST,
+      createPostOptions(accessToken(), body)
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createPost error', error);
+
+    return { success: false, data: 'createPostError' };
+  }
+}
+
+export const getIpAddress = async () => {
+  const headersList = headers();
+  const ip = headersList.get('x-forwarded-for');
+  return ip ?? '';
+};

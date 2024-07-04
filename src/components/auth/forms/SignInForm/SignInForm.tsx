@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/navigation';
-import { yupResolver } from '@hookform/resolvers/yup';
 
-import { SignInSchema } from '@/features/schemas';
+import { getIpAddress, signInAction } from '@/app/lib/actions';
 import { AuthSubmit, FormItem } from '@/components/Input';
+import { SignInSchema } from '@/features/schemas';
 import { SignInData } from '@/features/schemas/SignInSchema';
-import { signInAction } from '@/app/lib/actions';
 
+import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { Loader } from '@/components/Loader';
 import s from './SignInForm.module.scss';
 
 export const SignInForm = () => {
@@ -19,6 +21,7 @@ export const SignInForm = () => {
   const translate = (key: string): string => t(`SignInPage.${key}`);
   const translateErrors = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -36,14 +39,20 @@ export const SignInForm = () => {
   const [showPass, setShowPass] = useState(true);
 
   const processForm: SubmitHandler<SignInData> = async (data) => {
+    setLoading(true);
+    const userAgent = window.navigator.userAgent;
+    console.log(userAgent);
     data.email = data.email.toLowerCase();
-    const signInResult = await signInAction(data);
+    const ipAddress = await getIpAddress();
+    const signInResult = await signInAction(data, userAgent, ipAddress);
 
+    setLoading(false);
     if (signInResult?.success) {
       router.push('/api');
     } else {
       const statusCode = signInResult?.error.statusCode;
       const statusMessage = `login.error${statusCode}`;
+      setLoading(false);
       setError('password', {
         type: 'manual',
         message: statusMessage,
@@ -81,7 +90,7 @@ export const SignInForm = () => {
       />
       <div className={s.forgot}>
         <Link
-          href={'/forgot-password'}
+          href={AUTH_ROUTES.FORGOT_PASSWORD}
           className={errors.password ? s.password : ''}
           id={'sign-in-link-forgot-password'}
         >
@@ -96,12 +105,13 @@ export const SignInForm = () => {
       />
       <p className={s.alreadyHaveText}>{translate('question')}</p>
       <Link
-        href={'/sign-up'}
+        href={AUTH_ROUTES.SIGN_UP}
         className={s.signUpBtn}
         id={'sign-in-link-sign-up'}
       >
         {translate('btnBottomName')}
       </Link>
+      {loading && <Loader />}
     </form>
   );
 };

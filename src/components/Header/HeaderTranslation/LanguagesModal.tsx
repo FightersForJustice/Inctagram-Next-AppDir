@@ -19,7 +19,6 @@ export const LanguagesModal = function ({
 }) {
   const langHandler = (lang: string, e: React.MouseEvent) => {
     if (currentWidth > isMobileSize || e.currentTarget.id === 'isMobile') {
-      console.log(e.currentTarget.id, lang);
       closeModal();
       if (lang === 'ru') {
         return onSelectChange('en');
@@ -27,7 +26,7 @@ export const LanguagesModal = function ({
       onSelectChange('ru');
     }
   };
-  let isMobileLanguage = currentWidth < isMobileSize && !isEn && f.active;
+  let isMobileLanguage = currentWidth <= isMobileSize && !isEn && f.active;
   const languageForRender = (lang: string) => {
     return (
       <div

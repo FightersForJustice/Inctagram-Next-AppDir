@@ -1,6 +1,3 @@
-import { PostAmount } from '../PostAmount';
-import { PostForm } from '../PostForm';
-
 import s from './PostLikes.module.scss';
 
 export const PostLikes = () => {
@@ -50,8 +47,6 @@ export const PostLikes = () => {
             />
           </svg>
         </div>
-        <PostAmount />
-        <PostForm />
       </div>
     </div>
   );

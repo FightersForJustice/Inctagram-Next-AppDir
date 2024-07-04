@@ -1,37 +1,64 @@
-import { MutableRefObject, PropsWithChildren } from 'react';
+import Image from 'next/image';
+import {
+  Dispatch,
+  MutableRefObject,
+  PropsWithChildren,
+  SetStateAction,
+} from 'react';
 import { toast } from 'react-toastify';
 
-import { useUploadPostImageMutation } from '@/api';
-import { Loader } from '../../Loader/Loader';
+import { uploadPostImage } from '@/app/lib/actions';
+import { useAppSelector } from '@/redux/hooks/useSelect';
+import { ChangedImage } from '@/redux/reducers/post/postReducer';
 import { applyImageFilter } from '@/utils';
 import { dataURLToBlob } from '@/utils/dataUrlToBlob';
-import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { postActions } from '@/redux/reducers/post/postReducer';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
-import { ImageStateType } from '@/app/(authorized)/CreatePost/CreatePost';
 
-import './FiltersModal.css';
-import Image from 'next/image';
-import { UploadPostImage } from '@/app/lib/actions';
+import './FiltersModal.scss';
+import { useTranslation } from 'react-i18next';
+
+type ImageData = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  uploadId: string;
+};
+
+type Props = {
+  setStep?: Dispatch<SetStateAction<number>>;
+  title: string;
+  onClose?: () => void;
+  buttonName: string;
+  showSecondModal?: () => void;
+  showFourthModal?: () => void;
+  onPublishPost?: () => void;
+  onDeletePostImage?: () => void;
+  changedPostImage?: MutableRefObject<any>;
+  zoomValue?: string;
+};
 
 export const FiltersModal = ({
   onClose,
   title,
-  width,
   children,
   buttonName,
-  showSecondModal,
-  showFourthModal,
+  setStep,
   onPublishPost,
   onDeletePostImage,
   zoomValue,
 }: PropsWithChildren<Props>) => {
-  const [uploadPostImage, { isLoading }] = useUploadPostImageMutation();
-  const dispatch = useAppDispatch();
-  const images: ImageStateType[] = useAppSelector(postImages);
+  const { t } = useTranslation();
+
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AddPhotoModal.${key}`);
+
+  const images: ChangedImage[] = useAppSelector(
+    (state) => state.post.changedImages
+  );
   const onSendPostImage = () => {
     if (images) {
+      const formData = new FormData();
+
       images.map(({ image, id, filter }) => {
         const imageRef = document.createElement('img');
         imageRef.src = image;
@@ -45,41 +72,46 @@ export const FiltersModal = ({
           `4:4`,
           zoomValue!
         );
-        const formData = new FormData();
+
         formData.append('file', dataURLToBlob(photoEditingBeforeSending), id);
-        UploadPostImage(formData, '')
-          .then((res: any) => {
-            console.log(res);
-
-            // dispatch(postActions.addImageId(res.images[0]));
-            showFourthModal?.();
-            toast.success('Post imageRef uploaded');
-          })
-          .catch((err: any) => {
-            console.log(err.data);
-
-            toast.error('Error');
-          });
       });
+
+      uploadPostImage(formData)
+        .then(async (res: { success: boolean; data: ImageData[] }) => {
+          if (res.success) {
+            sessionStorage.setItem(
+              'userPostImage',
+              JSON.stringify(
+                res.data
+                  .filter((photo) => photo.height !== 360)
+                  .map((item) => item.uploadId)
+              )
+            );
+            setStep?.(4);
+          }
+        })
+        .catch((err: any) => {
+          console.log(err.data);
+          toast.error(err.data); //translate after
+        });
     }
   };
-  const returnToSecondModal = (images: ImageStateType[]) => {
-    images.forEach((image, index) => {
-      const idToRemove = image.id;
-      dispatch(postActions.removeGalleryImage({ id: idToRemove }));
-      if (index === images.length - 1) {
-        showSecondModal?.();
-      }
-    });
+  // const returnToSecondModal = (images: ImageStateType[]) => {
+  //   images.forEach((image, index) => {
+  //     const idToRemove = image.id;
+  //     dispatch(postActions.removeGalleryImage({ id: idToRemove }));
+  //     if (index === images.length - 1) {
+  //       setStep?.(2);
+  //     }
+  //   });
+  // };
+  const returnToSecondModal = () => {
+    setStep?.(2);
   };
   return (
     <>
       <div className={'modal'} onClick={onClose}>
-        <div
-          className={'modal__content1'}
-          style={{ width }}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className={'modal__content1'} onClick={(e) => e.stopPropagation()}>
           <div className={'modal__header'}>
             <Image
               src={'/img/create-post/arrow-back.svg'}
@@ -88,16 +120,18 @@ export const FiltersModal = ({
               height={24}
               className={'modal__arrow'}
               onClick={() =>
-                buttonName === 'Publish'
+                buttonName === translate('publish')
                   ? onDeletePostImage?.()
-                  : returnToSecondModal(images)
+                  : returnToSecondModal()
               }
             />
             <div className={'modal__title'}>{title}</div>
             <button
               className={'modal__next'}
               onClick={() =>
-                buttonName === 'Next' ? onSendPostImage() : onPublishPost?.()
+                buttonName === translate('nextBtn')
+                  ? onSendPostImage()
+                  : onPublishPost?.()
               }
             >
               {buttonName}
@@ -106,20 +140,6 @@ export const FiltersModal = ({
           <div className={'modal__body1'}>{children}</div>
         </div>
       </div>
-      {isLoading && <Loader />}
     </>
   );
-};
-
-type Props = {
-  title: string;
-  onClose?: () => void;
-  width?: string;
-  buttonName: string;
-  showSecondModal?: () => void;
-  showFourthModal?: () => void;
-  onPublishPost?: () => void;
-  onDeletePostImage?: () => void;
-  changedPostImage?: MutableRefObject<any>;
-  zoomValue?: string;
 };

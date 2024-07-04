@@ -1,0 +1,260 @@
+@use '@/app/mixins.scss' as s;
+
+.createPost {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  &ButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__image {
+    padding-top: 42px;
+    margin-bottom: 60px;
+  }
+
+  &__select {
+    position: relative;
+  }
+
+  &__file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+    cursor: pointer;
+  }
+
+  &__overlay {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: block;
+  }
+
+  &__open {
+    width: 100%;
+  }
+  .error {
+    border: 1px solid #cc1439;
+    border-radius: 2px;
+    background-color: #660a1d;
+    padding: 5px 15px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: -20px;
+    .title {
+      font-weight: 700;
+    }
+  }
+}
+
+.itemsContainer {
+  z-index: 100;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftItems {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cropping {
+  overflow: hidden;
+
+  &__wrapper {
+    overflow: hidden;
+  }
+
+  &__icons {
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  &__icon3 {
+    justify-self: end;
+  }
+
+  &__image {
+    margin-bottom: -25px;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    max-height: 660px;
+    padding: 20px;
+
+    &__items {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 345px;
+      justify-content: center;
+      gap: 10px;
+      max-height: 490px;
+      margin: auto;
+
+    }
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s linear;
+      margin-bottom: 0;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      min-width: 335px;
+    }
+
+    &__image {
+      max-height: 600px;
+      object-fit: contain;
+    }
+
+    &__smallImage {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+  }
+
+  &__publication {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-height: 600px;
+
+    &__container {
+      flex-grow: 1;
+      padding: 0 20px;
+    }
+
+    &__header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 25px;
+      margin-bottom: 25px;
+    }
+
+    &__image {
+      border-radius: 50%;
+      height: 36px;
+      width: 36px;
+    }
+
+    &__text {
+      color: var(--light-900, #8d9094);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &__textarea {
+      border-radius: 2px;
+      border: 1px solid var(--dark-100, #4c4c4c);
+      background: var(--dark-500, #171717);
+      width: 100%;
+      margin-bottom: 10px;
+      min-width: 330px;
+      height: 120px;
+      flex-shrink: 0;
+      outline: none;
+      padding: 10px;
+      resize: none;
+    }
+
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    &__box {
+      min-width: 335px;
+      flex-grow: 0;
+      margin: 0 auto;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.firstModal {
+  width: 100%;
+  max-width: 491px;
+
+  .button {
+    margin-bottom: 24px;
+  }
+}
+
+@include s.devices(tablet) {
+  .cropping {
+    &__filters {
+      flex-direction: column;
+      max-height: 504px;
+
+      &__items {
+        max-width: 100%;
+        overflow-y: visible;
+        gap: 10px;
+      }
+    }
+
+    &__publication {
+      max-height: 504px;
+      flex-direction: column;
+
+      &__box {
+        width: 100%;
+      }
+    }
+
+    &__image {
+      padding-top: 0px;
+    }
+
+    &__items {
+      max-width: 100%;
+    }
+  }
+}

@@ -39,3 +39,13 @@
 .containerError {
   padding-bottom: 3px;
 }
+.errorPassword {
+  display: flex;
+  flex-direction: column;
+  top: 100%;
+  color: var(--danger-500);
+  text-align: left;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+}

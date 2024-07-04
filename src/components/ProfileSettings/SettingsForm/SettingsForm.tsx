@@ -1,32 +1,33 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { DatePick } from '@/components/DatePicker';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { convertToReactDatePickerObject } from '@/utils';
-import { SettingsFormSchema } from '@/features/schemas';
-import { SettingsFormItem } from './SettingsFormItem';
-import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
+import { updateProfileInfoAction } from '@/app/lib/actions';
 import {
   ResponseCountries,
   UserProfileResponse,
 } from '@/app/lib/dataResponseTypes';
+import { DatePick } from '@/components/DatePicker';
+import { CitySelectors } from '@/components/ProfileSettings/SettingsForm/CitySelector/CitySelector';
 import { optionsType } from '@/components/Selector/Selector';
-import { updateProfileInfoAction } from '@/app/lib/actions';
-import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
-import { useState } from 'react';
 import { ProfileSettingsFormSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
+import { SettingsFormSchema } from '@/features/schemas';
+import { convertToReactDatePickerObject } from '@/utils';
 import {
   isLessThen13YearsOld,
   isMoreThen100YearsOld,
 } from '@/utils/checkYears';
+import { filterValuesProfileForm } from '@/utils/filterValuesProfileForm';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
+import { SettingsFormItem } from './SettingsFormItem';
 
-import s from './SettingsForm.module.scss';
 import { convertToISOString } from '@/utils/convertTimeDatePicker';
+import useFormPersist from '@/utils/useFormPersist';
+import s from './SettingsForm.module.scss';
 
 export type ProfileFormValues = {
   userName: string;
@@ -47,6 +48,8 @@ export type ProfileFormSubmit = {
   aboutMe: string;
 };
 
+const FORM_KEY = 'local-settings-profile';
+
 export const SettingsForm = ({
   userInfo,
   countriesList,
@@ -64,7 +67,6 @@ export const SettingsForm = ({
     t(`SettingsProfilePage.SettingsFormSchema.${key}`);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const datePickerObj = convertToReactDatePickerObject(dateOfBirth);
   let isObsoleteDateOfBirth =
     isMoreThen100YearsOld(datePickerObj) || isLessThen13YearsOld(datePickerObj);
@@ -72,7 +74,6 @@ export const SettingsForm = ({
   const cityArr = city?.split(',') || '';
   const usersCountry = cityArr[0] || '';
   const usersCity = cityArr[1] || '';
-
   const {
     register,
     handleSubmit,
@@ -80,7 +81,9 @@ export const SettingsForm = ({
     control,
     setError,
     trigger,
+    watch,
     setValue,
+    getValues,
   } = useForm<ProfileFormValues>({
     //@ts-ignore
     resolver: yupResolver(SettingsFormSchema()),
@@ -91,6 +94,12 @@ export const SettingsForm = ({
       country: { value: usersCountry, label: usersCountry },
     },
   });
+
+  const formStorage = useFormPersist(FORM_KEY, { setValue, trigger });
+
+  const saveToSessionStorage = (key: string, data: any) => {
+    sessionStorage.setItem(key, JSON.stringify(data));
+  };
 
   const onSubmit = handleSubmit((data) => {
     setIsLoading(true);
@@ -120,6 +129,9 @@ export const SettingsForm = ({
             ? toast.success(translate(res.modalText))
             : toast.error(translate(res.modalText));
         }, 2000);
+      })
+      .then(() => {
+        formStorage.clear();
       })
       .catch((errors) => console.log(errors))
       .finally(() =>
@@ -184,10 +196,14 @@ export const SettingsForm = ({
                 <span className={s.form__required}>*</span>
               </label>
               <DatePick
+                onClickPrivacyPolicy={() =>
+                  saveToSessionStorage(FORM_KEY, Object.assign({}, watch()))
+                }
                 translateErrors={translateErrors}
                 isObsoleteDateOfBirth={isObsoleteDateOfBirth}
                 trigger={trigger}
                 control={control}
+                getValues={getValues}
               />
             </div>
 

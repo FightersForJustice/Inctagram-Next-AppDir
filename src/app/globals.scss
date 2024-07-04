@@ -5,6 +5,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --dark-100: #4c4c4c;
+    --dark-300: #333;
+    --dark-500: #171717;
+    --dark-700: #0d0d0d;
+    --light-100: #ffffff;
+    --light-300: #f7fbff;
+    --light-900: #8d9094;
+    --primary-100: #73a5ff;
+    --primary-300: #4c8dff;
+    --primary-500: #397df6;
+    --primary-700: #2f68cc;
+    --primary-900: #2f68cc;
+    --danger-500: #cc1439;
+    --danger-900: #660a1d;
+    --success-500: #14cc70;
+    --success-900: #0a6638;
+    --info-0: #3677f7;
+    --disabled: rgba(227, 227, 227, 0.1);
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -38,91 +61,4 @@ body {
   min-height: 100vh;
   max-width: 1280px;
   margin: 0 auto;
-}
-
-@layer base {
-  :root {
-    --dark-100: #4c4c4c;
-    --dark-300: #333;
-    --dark-500: #171717;
-    --dark-700: #0d0d0d;
-    --light-100: #ffffff;
-    --light-300: #f7fbff;
-    --light-900: #8d9094;
-    --primary-100: #73a5ff;
-    --primary-300: #4c8dff;
-    --primary-500: #397df6;
-    --primary-700: #2f68cc;
-    --primary-900: #2f68cc;
-    --danger-500: #cc1439;
-    --danger-900: #660a1d;
-    --success-500: #14cc70;
-    --success-900: #0a6638;
-    --info-0: #3677f7;
-    --disabled: rgba(227, 227, 227, 0.1);
-  }
-}
-
-* {
-  &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-
-    @include s.devices(mobile) {
-      width: 8px;
-      height: 8px;
-    }
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--disabled);
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px 0 0 10px;
-  }
-
-  &::-webkit-scrollbar-thumb:horizontal {
-    border-radius: 10px 10px 0 0;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  :focus-visible {
-    outline: none;
-  }
-}
-
-//firefox
-* {
-  scrollbar-color: var(--disabled) transparent;
-  scrollbar-width: thin;
-
-  &::-moz-scrollbar {
-    width: 10px;
-    height: 10px;
-
-    @include s.devices(mobile) {
-      width: 8px;
-      height: 8px;
-    }
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: rgba(0, 0, 0, 0);
-  }
-
-  &::-moz-scrollbar-thumb {
-    background: var(--disabled);
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px 0 0 10px;
-  }
-
-  &::-moz-scrollbar-thumb:horizontal {
-    border-radius: 10px 10px 0 0;
-  }
-
-  &::-moz-scrollbar-track {
-    background: transparent;
-  }
 }

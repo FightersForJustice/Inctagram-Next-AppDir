@@ -1,14 +1,17 @@
+'use client'
+
 import { useState } from 'react';
 
 import { GetResponse } from '@/api/profile.api';
 import { FirstModal } from './FirstModal';
+import { FourthModal } from './FourthModal';
 import { SecondModal } from './SecondModal';
 import { ThirdModal } from './ThirdModal';
-import { FourthModal } from './FourthModal';
 import { postActions } from '@/redux/reducers/post/postReducer';
+import { store } from '@/redux';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
-import { useAppSelector } from '@/redux/hooks/useSelect';
-import { imagesGallery, postImages } from '@/redux/reducers/post/postSelectors';
+import { openDB } from 'idb';
+import { RootState } from '@/redux/store';
 
 type Props = {
   showCreatePostModal: boolean;
@@ -21,80 +24,73 @@ export const CreatePost = ({
   setShowCreatePostModal,
   userData,
 }: Props) => {
-  const [file, setFile] = useState<File[]>();
-  const [third, setThird] = useState(false);
-  const [fourth, setFourth] = useState(false);
-  const [postImage, setPostImage] = useState('');
-  const [croppedPostImage, setCroppedPostImage] = useState('');
-  const [loadedImages, setLoadedImages] = useState<ImageStateType[]>([]);
-  const [zoomValue, setZoomValue] = useState('10');
-  const aspectRatio = useAppSelector((state) => state.post.cropAspectRatio);
-
   const dispatch = useAppDispatch();
-  const postImagesArr = useAppSelector(postImages);
-  const imagesGalleryArr = useAppSelector(imagesGallery);
-  const currentImage =
-    postImagesArr[postImagesArr.length > -1 ? postImagesArr.length - 1 : 0];
+  const [step, setStep] = useState<number>(1);
 
-  const showSecondModal = () => {
-    setThird(false);
-    setFourth(false);
+  const closeCreatePostModal = (show: boolean) => {
+    setShowCreatePostModal(show);
+
+    sessionStorage.removeItem('userPostImage');
   };
 
-  const showThirdModal = () => {
-    dispatch(postActions.removeAllImages());
-    imagesGalleryArr.map((i: any) => {
-      dispatch(postActions.addImage(i));
+  const initDB = () => {
+    return openDB('post-store', 1, {
+      upgrade(db) {
+        db.createObjectStore('postDraft', { keyPath: 'id' });
+      },
     });
-    setThird(true);
-    setFourth(false);
   };
 
-  const showFourthModal = () => {
-    setThird(false);
-    setFourth(true);
+  const savePostDraft = async (postState: RootState) => {
+    const db = await initDB();
+
+    const postDraft = {
+      id: 'draft',
+      images: postState.post.changedImages,
+      description: postState.post.description,
+    };
+
+    await db.put('postDraft', postDraft);
   };
+
+  const saveDraft = async () => {
+    const postState = store.getState()
+
+    await savePostDraft(postState);
+
+    dispatch(postActions.clearPostState());
+    closeCreatePostModal(false)
+  }
 
   return (
     <>
-      {showCreatePostModal && !postImage && (
+      {showCreatePostModal && step === 1 && (
         <FirstModal
-          currentFile={file}
-          setFile={setFile}
-          setPostImage={setPostImage}
-          setShowCreatePostModal={setShowCreatePostModal}
-          setLoadedImages={setLoadedImages}
-          loadedImages={loadedImages}
+          setStep={setStep}
+          setShowCreatePostModal={closeCreatePostModal}
         />
       )}
 
-      {postImage && (
+      {step === 2 && (
         <SecondModal
-          postImage={currentImage}
-          setPostImage={setPostImage}
-          showThirdModal={showThirdModal}
-          aspectRatio={aspectRatio}
-          setZoomValue={setZoomValue}
-          zoomValue={zoomValue}
-          setShowCreatePostModal={setShowCreatePostModal}
-          setLoadedImages={setLoadedImages}
-          setCroppedPostImage={setCroppedPostImage}
-          croppedPostImage={croppedPostImage}
+          setStep={setStep}
+          setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
-      {third && (
+      {step === 3 && (
         <ThirdModal
-          showSecondModal={showSecondModal}
-          showFourthModal={showFourthModal}
-          zoomValue={zoomValue}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setStep={setStep}
+          setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
-      {fourth && (
+      {step === 4 && (
         <FourthModal
-          showThirdModal={showThirdModal}
-          setShowCreatePostModal={setShowCreatePostModal}
+          setStep={setStep}
+          setShowCreatePostModal={closeCreatePostModal}
           userData={userData}
+          onSaveDraft={saveDraft}
         />
       )}
     </>
@@ -107,9 +103,3 @@ export enum AspectRatioType {
   three = 4 / 5,
   four = 16 / 9,
 }
-
-export type ImageStateType = {
-  id: string;
-  image: string;
-  filter: string;
-};

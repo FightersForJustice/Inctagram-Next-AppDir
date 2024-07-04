@@ -4,7 +4,9 @@
   grid-area: profile;
   width: 100%;
 }
-
+.devices {
+  padding-bottom: 30px;
+}
 .TabsList {
   flex-shrink: 0;
   display: flex;
@@ -128,6 +130,9 @@
 /*-----modal-------*/
 
 .modal {
+  width: 100%;
+  overflow: hidden;
+
   &__container {
     width: 495px;
     max-height: 80vh;
@@ -138,13 +143,62 @@
   }
 
   &__loadImg {
-    overflow: scroll;
+    position: relative;
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    height: 504px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .itemsContainer {
+      // z-index: 110;
+      position: absolute;
+      bottom: 0px;
+      left: 20px;
+      right: 0;
+      padding: 10px;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+    }
+
+    &__icons {
+      cursor: pointer;
+      z-index: 11;
+    }
+
+    .leftItems {
+      display: flex;
+      align-items: center;
+      height: 10px;
+      padding: 10px;
+      gap: 24px;
+    }
+
+    position: relative;
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    height: 504px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // overflow: hidden;
+
     max-height: 50vh;
     margin-bottom: 20px;
   }
 
   &__loadImg svg {
-    display: none;
+    // display: none;
   }
 
   &__saveBtn {

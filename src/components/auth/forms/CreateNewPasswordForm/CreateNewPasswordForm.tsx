@@ -13,6 +13,7 @@ import { AuthSubmit } from '@/components/Input';
 import {
   checkRecoveryCodeAction,
   deleteAllSessionsAction,
+  getIpAddress,
   newPasswordAction,
   signInAction,
 } from '@/app/lib/actions';
@@ -46,7 +47,7 @@ export const CreateNewPasswordForm = ({
 
   const onSubmit = async (data: { password: string }) => {
     let email: string = '';
-
+    const ipAddress = await getIpAddress();
     checkRecoveryCodeAction(newPasswordCode)
       .then((res) => {
         email = res.data.email;
@@ -55,7 +56,8 @@ export const CreateNewPasswordForm = ({
       .then(() => {
         toast.success(translate('newPasswordSuccess'));
         const password = data.password;
-        return signInAction({ email, password });
+
+        return signInAction({ email, password }, '', ipAddress);
       })
       .then(() => deleteAllSessionsAction())
       .then(() => router.push('/'))

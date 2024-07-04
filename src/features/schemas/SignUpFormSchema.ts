@@ -69,11 +69,7 @@ export const SignUpFormSchema = () => {
         .min(6, 'password.min')
         .max(20, 'password.max')
         .matches(passwordCompletly, 'password.complexity'),
-      passwordConfirm: yup
-        .string()
-        .oneOf([yup.ref('password')], 'passwordConfirm.oneOf')
-        .min(6, 'passwordConfirm.min')
-        .required('passwordConfirm.required'),
+      passwordConfirm: yup.string(),
       agreements: yup
         .boolean()
         .oneOf([true], 'agreements.required')

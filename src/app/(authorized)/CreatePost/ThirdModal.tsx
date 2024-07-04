@@ -1,68 +1,76 @@
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { Carousel } from '@/components/Carousel/Carousel';
 import { useAppSelector } from '@/redux/hooks/useSelect';
-import { postImages } from '@/redux/reducers/post/postSelectors';
 import { filters } from '@/features/data';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { postActions } from '@/redux/reducers/post/postReducer';
 import { useTranslation } from 'react-i18next';
+import { changedImages } from 'src/redux/reducers/post/postSelectors';
 
 import s from './CreatePost.module.scss';
+import { Carousel } from '@/components/Carousel/Carousel';
 
 type Props = {
-  showSecondModal: () => void;
-  showFourthModal: () => void;
-  zoomValue: string;
+  setStep: Dispatch<SetStateAction<number>>;
+  zoomValue?: string;
   setShowCreatePostModal: (value: boolean) => void;
+  onSaveDraft: () => void;
 };
 
 export const ThirdModal = ({
-  showSecondModal,
-  showFourthModal,
+  setStep,
   zoomValue,
   setShowCreatePostModal,
+  onSaveDraft,
 }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const translate = (key: string): string =>
     t(`SettingsProfilePage.AddPhotoModal.${key}`);
-
   const [areYouSureModal, setAreYouSureModal] = useState(false);
-  const imagesArr = useAppSelector(postImages);
+  const currentImageId = useAppSelector((state) => state.post.currentImageId);
+  const images = useAppSelector(changedImages);
   const changedPostImage = useRef<any>();
-  const dispatch = useAppDispatch();
-  const [activeImage, setActiveImage] = useState<string>(imagesArr[0].image);
-
-  const onSetActiveHandle = (image: string) => {
-    setActiveImage(image);
+  const setActiveImage = (id: string) => {
+    dispatch(postActions.changeCurrentImage({ id }));
   };
+
+  const onSelectFilter = (filter: string) => {
+    const image = images.find((el) => el.id === currentImageId);
+    if (image && currentImageId)
+      dispatch(
+        postActions.setImageFilter({
+          filter: filter,
+          id: currentImageId,
+          image: image.image,
+        })
+      );
+  };
+
+  if (!images.length) {
+    return null;
+  }
 
   return (
     <>
       <FiltersModal
         title={translate('filters')}
-        width={'972px'}
         buttonName={translate('nextBtn')}
-        showSecondModal={showSecondModal}
-        showFourthModal={showFourthModal}
+        setStep={setStep}
         onClose={() => setAreYouSureModal(true)}
         zoomValue={zoomValue}
         changedPostImage={changedPostImage}
       >
         <div className={s.cropping__filters}>
           <div className={s.cropping__filters__wrapper}>
-            <Carousel loadedImages={imagesArr} setActive={onSetActiveHandle} />
+            <Carousel loadedImages={images} setActive={setActiveImage} />
           </div>
           <div className={s.cropping__filters__items}>
             {filters.map(({ name, filter }) => {
-              const onSelectFilter = (filter: string) => {
-                dispatch(
-                  postActions.setImageFilter({ image: activeImage, filter })
-                );
-              };
               return (
                 <div
                   key={name}
@@ -70,11 +78,14 @@ export const ThirdModal = ({
                   onClick={() => onSelectFilter(filter)}
                 >
                   <Image
-                    src={activeImage}
+                    src={
+                      images.find((image) => image.id === currentImageId)
+                        ?.image as string
+                    }
                     alt={'image-filter'}
                     width={108}
                     height={108}
-                    style={{ filter, marginRight: '10px' }}
+                    style={{ filter }}
                     className={s.cropping__filters__smallImage}
                     ref={changedPostImage}
                   />
@@ -89,6 +100,8 @@ export const ThirdModal = ({
         <AreYouSureModal
           toggleAreYouSureModal={setAreYouSureModal}
           toggleModal={setShowCreatePostModal}
+          type={'cancelCreating'}
+          onNo={onSaveDraft}
         />
       )}
     </>
