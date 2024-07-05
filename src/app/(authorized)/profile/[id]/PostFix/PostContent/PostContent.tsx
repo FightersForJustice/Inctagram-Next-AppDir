@@ -14,7 +14,7 @@ import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHea
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostForm } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostForm';
 import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
-import { useGetLanguageFromPath } from '@/redux/hooks/useGetLanguageFromPath';
+import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
 
@@ -43,7 +43,8 @@ export const PostContent = ({
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const language = useGetLanguageFromPath();
+  const language = useGetLanguage()
+
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const time = getTimeAgoText(createdPostTime, language, translate);
@@ -102,7 +103,7 @@ export const PostContent = ({
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
               toggleModal={setVisiblePopup}
-              onDelete={onDeletePost}
+              onYes={onDeletePost}
               type={'deletePostPost'}
             />
           )}

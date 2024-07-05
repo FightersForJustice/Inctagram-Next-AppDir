@@ -13,7 +13,8 @@ type SureType = 'cancelCreating' | 'deletePost' | 'deletePostPost';
 type Props = {
   toggleAreYouSureModal: (value: boolean) => void;
   toggleModal: (value: boolean) => void;
-  onDelete?: () => void;
+  onYes?: () => void;
+  onNo?: () => void;
   isDeleting?: boolean;
   type?: SureType;
 };
@@ -21,7 +22,8 @@ type Props = {
 export const AreYouSureModal = ({
   toggleModal,
   toggleAreYouSureModal,
-  onDelete,
+  onYes,
+  onNo,
   isDeleting,
   type,
 }: Props) => {
@@ -43,25 +45,24 @@ export const AreYouSureModal = ({
         onClose={() => toggleAreYouSureModal(false)}
       >
         <p className={s.modal__text}>{translate('areYouSureText')}</p>
-        <div className={s.modal__btns}>
+        <div className={type === 'cancelCreating' ? s.modal__btns__cancel__creating : s.modal__btns}>
           <TransparentBtn
             onClick={() => {
               dispatch(postActions.clearPostState());
-              onDelete?.();
-              if (onDelete) {
-                setTimeout(() => {
-                  toggleModal(false);
-                  toggleAreYouSureModal(false);
-                }, 1000);
-              } else {
-                toggleModal(false);
-                toggleAreYouSureModal(false);
-              }
+              indexedDB.deleteDatabase('post-store')
+              onYes?.();
+              toggleModal(false);
+              toggleAreYouSureModal(false);
             }}
           >
             {translate('yes')}
           </TransparentBtn>
-          <PrimaryBtn onClick={() => toggleAreYouSureModal(false)}>
+          <PrimaryBtn
+            onClick={() => {
+              onNo?.()
+              toggleAreYouSureModal(false)
+            }}
+          >
             {translate('no')}
           </PrimaryBtn>
         </div>

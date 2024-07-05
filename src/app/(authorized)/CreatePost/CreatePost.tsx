@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 
 import { GetResponse } from '@/api/profile.api';
@@ -5,6 +7,11 @@ import { FirstModal } from './FirstModal';
 import { FourthModal } from './FourthModal';
 import { SecondModal } from './SecondModal';
 import { ThirdModal } from './ThirdModal';
+import { postActions } from '@/redux/reducers/post/postReducer';
+import { store } from '@/redux';
+import { useAppDispatch } from '@/redux/hooks/useDispatch';
+import { openDB } from 'idb';
+import { RootState } from '@/redux/store';
 
 type Props = {
   showCreatePostModal: boolean;
@@ -17,6 +24,7 @@ export const CreatePost = ({
   setShowCreatePostModal,
   userData,
 }: Props) => {
+  const dispatch = useAppDispatch();
   const [step, setStep] = useState<number>(1);
 
   const closeCreatePostModal = (show: boolean) => {
@@ -24,6 +32,35 @@ export const CreatePost = ({
 
     sessionStorage.removeItem('userPostImage');
   };
+
+  const initDB = () => {
+    return openDB('post-store', 1, {
+      upgrade(db) {
+        db.createObjectStore('postDraft', { keyPath: 'id' });
+      },
+    });
+  };
+
+  const savePostDraft = async (postState: RootState) => {
+    const db = await initDB();
+
+    const postDraft = {
+      id: 'draft',
+      images: postState.post.changedImages,
+      description: postState.post.description,
+    };
+
+    await db.put('postDraft', postDraft);
+  };
+
+  const saveDraft = async () => {
+    const postState = store.getState()
+
+    await savePostDraft(postState);
+
+    dispatch(postActions.clearPostState());
+    closeCreatePostModal(false)
+  }
 
   return (
     <>
@@ -38,12 +75,14 @@ export const CreatePost = ({
         <SecondModal
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
       {step === 3 && (
         <ThirdModal
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
+          onSaveDraft={saveDraft}
         />
       )}
       {step === 4 && (
@@ -51,6 +90,7 @@ export const CreatePost = ({
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
           userData={userData}
+          onSaveDraft={saveDraft}
         />
       )}
     </>

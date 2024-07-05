@@ -13,5 +13,14 @@
   align-items: center;
   overflow-y: hidden;
   height: 100%;
-  margin-top: 24px; //TODO: Вряд ли тут
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-moz-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }

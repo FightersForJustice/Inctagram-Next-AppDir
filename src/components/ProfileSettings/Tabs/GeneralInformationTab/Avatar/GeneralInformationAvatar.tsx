@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { ShowAddAvatarModal } from '../../ShowAddAvatarModal';
-import { dataURLtoFile } from '@/utils';
+import { dataURLToBlob, dataURLtoFile } from '@/utils';
 import { deleteAvatarAction, uploadAvatarAction } from '@/app/lib/actions';
 import { DeleteAvatarModal } from '@/components/Modals/DeleteAvatarModal';
 import { AvatarSkeleton } from '@/components/Skeletons/ProfileSettingsSkeletons';
 
 import s from './GeneralInformationAvatar.module.scss';
+import { convertBlobUrlToBase64 } from '@/utils/dataUrlBlobToBase64';
 
 type TProps = {
   currentAvatar: string | null;
@@ -22,8 +23,8 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddAvatarModal, setShowAddAvatarModal] = useState(false);
 
-  const [userAvatar, setUserAvatar] = useState<string>('');
-  const [croppedAvatar, setCroppedAvatar] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [croppedAvatar, setCroppedAvatar] = useState<any>('');
   const [file, setFile] = useState<File>();
   const [fileError, setFileError] = useState('');
 
@@ -54,7 +55,7 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     const file = e.target.files[0];
     const maxSize = 10 * 1024 * 1024;
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
-        if (file.size <= maxSize) {
+      if (file.size <= maxSize) {
         setFile(file);
         setUserAvatar(URL.createObjectURL(file));
       } else {
@@ -69,7 +70,17 @@ export const GeneralInformationAvatar = ({ currentAvatar }: TProps) => {
     setIsLoading(true);
     if (file) {
       const formData = new FormData();
-      formData.append('file', dataURLtoFile(croppedAvatar), file.name);
+      console.log(croppedAvatar.image);
+      console.log(typeof croppedAvatar.image);
+      const avatarData = await convertBlobUrlToBase64(croppedAvatar.image).then(
+        (res) => res
+      );
+      console.log(avatarData);
+      formData.append(
+        'file',
+        dataURLtoFile('data:image/png;base64,' + avatarData),
+        file.name
+      );
       uploadAvatarAction(formData)
         .then((res) => {
           !res.success &&

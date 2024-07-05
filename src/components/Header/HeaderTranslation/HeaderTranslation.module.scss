@@ -25,6 +25,10 @@
 
 .popOver {
   z-index: 10;
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 @include s.devices(tablet-xl) {
@@ -65,14 +69,12 @@
   .popOver {
     left: 80px;
     top: -35px;
-    z-index: 100;
   }
 
   .languagesContainer {
     position: relative;
     left: 80px;
     top: -35px;
-    z-index: 100;
     border: none;
 
     span {
@@ -96,7 +98,6 @@
     position: relative;
     left: 50px;
     top: -35px;
-    z-index: 100;
     border: none;
     img {
       margin: 0;

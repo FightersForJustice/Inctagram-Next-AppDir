@@ -53,9 +53,3 @@
   font-weight: 700;
   line-height: 36px;
 }
-
-@include s.devices(mobile) {
-  .post__modal {
-    background-color: transparent;
-  }
-}

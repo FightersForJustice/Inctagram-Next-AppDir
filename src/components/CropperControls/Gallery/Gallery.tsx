@@ -3,12 +3,14 @@ import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import s from '../../CreatePost.module.scss';
+import s from '../CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
+  changeCurrentImage: (imageId: string) => void;
+  deleteImage: (imageId: string) => void;
 };
-export const Gallery = ({ setStep }: Props) => {
+export const Gallery = ({ setStep, changeCurrentImage, deleteImage }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
 
   const closeGallery = () => {
@@ -53,7 +55,12 @@ export const Gallery = ({ setStep }: Props) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="z-30">
-          <ImagesCollection closeGallery={closeGallery} setStep={setStep} />
+          <ImagesCollection
+            closeGallery={closeGallery}
+            changeCurrentImage={changeCurrentImage}
+            deleteImage={deleteImage}
+            setStep={setStep}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

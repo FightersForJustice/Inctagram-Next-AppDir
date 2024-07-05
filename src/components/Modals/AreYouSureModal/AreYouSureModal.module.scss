@@ -12,6 +12,13 @@
     justify-content: flex-end;
     gap: 20px;
   }
+
+  &__btns__cancel__creating{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
 }
 
 .container {

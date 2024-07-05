@@ -14,7 +14,7 @@
   &Info{
     flex: 1;
     max-height: 481px;
-    overflow: scroll;
+    // overflow: scroll;
   }
 
   &__header {
@@ -39,7 +39,7 @@
   }
 
   &__desc {
-    overflow-y: scroll;
+    // overflow-y: scroll;
     display: flex;
     gap: 12px;
     border-top: 1px solid var(--dark-100);
