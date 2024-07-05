@@ -66,7 +66,7 @@ export function Post({ post, userData, myProfile }: Props) {
     }
     setLoading(false);
   }
-
+  console.log('s');
   const currentPosts = post.images.filter(
     (postImage) => postImage.width !== 640
   );
