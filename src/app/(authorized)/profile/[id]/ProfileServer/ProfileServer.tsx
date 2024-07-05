@@ -15,7 +15,7 @@ const ProfileServer = async ({ id, myProfile }: Props) => {
   const userdata: UserProfile = await getProfile(id);
   //await new Promise((resolve) => setTimeout(resolve, 3000));
   const postsData: ApiResponsePosts = await getPosts(id, 0);
-
+  console.log('sd');
   return (
     <>
       <ProfileInfo
