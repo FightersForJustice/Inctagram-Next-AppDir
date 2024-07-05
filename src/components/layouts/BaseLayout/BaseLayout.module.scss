@@ -1,13 +1,17 @@
 .contentContainer {
   display: flex;
   height: calc(100vh - 60px);
-
   overflow: hidden;
   flex-direction: row;
 }
 
 .content {
   width: 100%;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: hidden;
   height: 100%;
+  margin-top: 24px; //TODO: Вряд ли тут
 }

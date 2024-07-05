@@ -1,4 +1,6 @@
+'use client'
 import Image from 'next/image';
+
 import s from './Posts.module.scss';
 import { Post, UserProfile } from '../types';
 import { useEffect, useState } from 'react';

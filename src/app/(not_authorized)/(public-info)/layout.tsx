@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 
-import '../globals.scss';
+import '@/app/globals.scss';
 
 type Props = {
   children: ReactNode;

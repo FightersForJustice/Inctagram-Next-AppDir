@@ -11,6 +11,8 @@ export const AUTH_ROUTES = Object.freeze({
   // PRIVACY_POLICY_PROFILE: '/agreements/privacy-policy-profile',
   TERMS_OF_SERVICE: '/agreements/terms-of-service',
   PROFILE_NULL: '/profile/null',
+  PUBLIC_PROFILE: '/public-profile',
+  PUBLIC_POST_PAGE: '/public-post-page',
 });
 
 export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);

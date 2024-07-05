@@ -1,0 +1,23 @@
+.counterContainer {
+  border: 1px solid var(--dark-300);
+  border-radius: 2px;
+  padding: 12px 24px;
+  width: 972px;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--dark-500);
+}
+
+.registerUsers {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 133%;
+  color: var(--light-100);
+}
+
+.buttonsContainer {
+  display: flex;
+}

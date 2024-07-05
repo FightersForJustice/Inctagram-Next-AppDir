@@ -357,7 +357,9 @@
   "Header": {
     "notifications": {
       "notZeroNotifications": "Уведомления",
-      "zeroNotifications": "У Вас пока нет уведомлений"
+      "zeroNotifications": "У Вас пока нет уведомлений",
+      "logIn": "Войти",
+      "signUp": "Регистрация"
     },
     "mobileMenu": {
       "profileSettings": "Настройки профиля",

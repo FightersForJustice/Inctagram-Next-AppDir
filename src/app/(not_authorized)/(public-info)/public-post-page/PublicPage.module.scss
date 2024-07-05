@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.publicImage {
+  display: flex;
+  margin-top: 36px;
+  gap: 12px;
+}
+
+.postContainer {
+  width: 234px;
+  height: 391px;
+}
+
+.textContainer {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 171%;
+  color: var(--light-100);
+}
+
+.userNameContainer {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--light-100);
+}
