@@ -7,18 +7,18 @@ import { PostItem } from '@/api/public-post.api';
 import { ApiResponsePosts } from '@/app/(authorized)/profile/[id]/types';
 
 
-type Props = {
-  id: number;
-};
+// type Props = {
+//   id: number;
+// };
 
-const PublicPage = async ({ id }: Props) => {
-  const publicProfilerData: PublicProfileType = await getPublicProfile(id);
-  const publicPostData: PostItem = await getPublicPosts(id, 0);
+const PublicProfile = async () => {
+  // const publicProfilerData: PublicProfileType = await getPublicProfile(id);
+  // const publicPostData: PostItem = await getPublicPosts(id, 0);
   return (
     <>
-      <PublicUserProfile publicUserData={publicProfilerData} publicPostData={publicPostData}/>
+      {/* <PublicUserProfile publicUserData={publicProfilerData} publicPostData={publicPostData}/> */}
     </>
   );
 };
 
-export default PublicPage;
+export default PublicProfile;

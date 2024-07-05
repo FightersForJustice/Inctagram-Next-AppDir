@@ -7,7 +7,7 @@ import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import s from './PublicPage.module.scss'
 import Counter from '@/components/Counter/counter';
 
-const PublicPage = async () => {
+const PublicPostPage = async () => {
 
   const publicPostPageData = await getPublicPostsPage();
 
@@ -43,4 +43,4 @@ const PublicPage = async () => {
   );
 };
 
-export default PublicPage;
+export default PublicPostPage;

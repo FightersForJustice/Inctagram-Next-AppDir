@@ -8,7 +8,7 @@ import { HeaderClient } from './HeaderCleint';
 import HeaderButton from '@/components/Header/HeaderButton/HeaderButton';
 
 
-export const Header = ({ isAuth, isPublicInfo }: { isAuth: boolean, isPublicInfo: boolean }) => {
+export const Header = ({ isAuth, isPublicInfo = false }: { isAuth: boolean, isPublicInfo?: boolean }) => {
   const headersList = headers()
   const idHeaders = headersList.get('id') as string
   const myId = parseInt(idHeaders, 10)
