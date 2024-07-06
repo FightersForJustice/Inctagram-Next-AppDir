@@ -17,24 +17,25 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
   const userdata: UserProfile = await getProfile(id);
   const publicUserdata: UserProfile = await getPublicProfile(id);
   //await new Promise((resolve) => setTimeout(resolve, 3000));
-  // const postsData: ApiResponsePosts = await getPosts(id, 0);
+  const postsData: ApiResponsePosts = await getPosts(id, 0);
   console.log('sd');
-  const postsData = 10
+  console.log(isPublic);
+  // const postsData = 10
   return (
     <>
       <ProfileInfo
-        userData={isPublic ? userdata : publicUserdata}
+        userData={!isPublic ? userdata : publicUserdata}
         postsData={postsData}
         myProfile={myProfile}
       />
-      {/* <div className={s.posts}>
+      <div className={s.posts}>
         <Posts
           id={id}
           postsData={postsData}
-          userData={isPublic ? userdata : publicUserdata}
+          userData={!isPublic ? userdata : publicUserdata}
           myProfile={myProfile}
         />
-      </div> */}
+      </div>
     </>
   );
 };

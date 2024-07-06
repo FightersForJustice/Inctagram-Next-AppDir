@@ -48,9 +48,11 @@ export const getPublicProfile = async (id: number) => {
 
 export const getPosts = async (id: number, minId: number | null) => {
   const apiUrl =
-    baseUrl + `public-posts/user/${id}/${minId}?pageSize=8&sortDirection=desc`;
+    baseUrl + `public-posts/user/${id}/${minId}?pageSize=4&sortDirection=desc`;
   try {
-    const response = await fetch(apiUrl, { next: { revalidate: 0 } });
+    const response = await fetch(apiUrl, { next: { revalidate: 10 } });
+//  const a = response.json()
+//     console.log(a)
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;
