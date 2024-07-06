@@ -25,7 +25,7 @@ export interface postImage {
   uploadId: string;
 }
 
-export interface Post {
+export interface PostType {
   id: number;
   userName: string;
   ownerId: number;
@@ -44,5 +44,5 @@ export interface Post {
 export interface ApiResponsePosts {
   totalCount: number;
   pageSize: number;
-  items: Post[];
+  items: PostType[];
 }

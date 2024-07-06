@@ -25,6 +25,26 @@ export const getProfile = async (id: number) => {
     return null;
   }
 };
+export const getPublicProfile = async (id: number) => {
+
+  const apiUrl = baseUrl + `public-user/profile/${id}`;
+  try {
+    const response = await fetch(apiUrl, {
+      // headers: {
+      //   Authorization: `Bearer ${accessToken}`,
+      // },
+    });
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
 
 export const getPosts = async (id: number, minId: number | null) => {
   const apiUrl =

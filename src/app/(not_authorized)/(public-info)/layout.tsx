@@ -8,5 +8,5 @@ type Props = {
 };
 
 export default async function LocaleLayout({ children }: Props) {
-  return <BaseLayout>{children}</BaseLayout>;
+  return <BaseLayout isPublicInfo>{children}</BaseLayout>;
 }

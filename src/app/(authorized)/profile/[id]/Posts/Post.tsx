@@ -2,7 +2,6 @@
 import Image from 'next/image';
 
 import s from './Posts.module.scss';
-import { Post, UserProfile } from '../types';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -12,9 +11,10 @@ import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { PostContentMobile } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostContentMobile';
+import { UserProfile, PostType } from '../types';
 
 type Props = {
-  post: Post;
+  post: PostType;
   userData: UserProfile;
   myProfile: boolean;
 };

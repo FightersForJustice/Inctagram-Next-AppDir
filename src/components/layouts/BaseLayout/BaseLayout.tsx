@@ -11,7 +11,7 @@ type Props = {
 export const BaseLayout = ({ children, isPublicInfo }: Props) => {
   return (
     <div>
-      <Header isAuth={false} isPublicInfo />
+      <Header isAuth={false} isPublicInfo={isPublicInfo} />
       <main className={styles.contentContainer}>
         <div className={styles.content}>{children}</div>
       </main>

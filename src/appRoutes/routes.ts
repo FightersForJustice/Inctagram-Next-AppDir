@@ -13,6 +13,7 @@ export const AUTH_ROUTES = Object.freeze({
   PROFILE_NULL: '/profile/null',
   PUBLIC_PROFILE: '/public-profile',
   PUBLIC_POST_PAGE: '/public-post-page',
+  PUBLIC_PROFILE_PAGE: '/public-post-page',
 });
 
 export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);
