@@ -1,16 +1,22 @@
-'use client'
+'use client';
 import Image from 'next/image';
 
 import s from './Posts.module.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { getPostsDelete, updatePost } from '@/app/(authorized)/profile/[id]/actions';
-import { EditPost, EditPostMobile } from '@/app/(authorized)/profile/[id]/PostFix/EditPost';
-import { PostContent } from '@/app/(authorized)/profile/[id]/PostFix/PostContent';
+import {
+  getPostsDelete,
+  updatePost,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import {
+  EditPost,
+  EditPostMobile,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/EditPost';
+import { PostContent } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
-import { PostContentMobile } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostContentMobile';
+import { PostContentMobile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostContentMobile';
 import { UserProfile, PostType } from '../types';
 
 type Props = {
@@ -26,13 +32,13 @@ export function Post({ post, userData, myProfile }: Props) {
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
   const [loading, setLoading] = useState(false);
-
+  console.log(userData.id);
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
 
-    handleResize()
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -67,17 +73,21 @@ export function Post({ post, userData, myProfile }: Props) {
       toast.error('Failed to update post');
     }
     setLoading(false);
-  }
+  };
 
   const currentPosts = post.images.filter(
     (postImage) => postImage.width !== 640
   );
 
   const openModalWithPost = (id: number) => {
-    router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
+    if (myProfile) {
+      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
+    }
   };
   const closeModal = () => {
-    router.push(`/profile/${userData.id}`, { scroll: false });
+    if (myProfile) {
+       router.push(`/profile/${userData.id}`, { scroll: false });
+    }
   };
 
   const closeModalAction = () => {
@@ -91,7 +101,7 @@ export function Post({ post, userData, myProfile }: Props) {
         <>
           <div className={'relative'}>
             {editPost ? (
-              width <= 521 ?
+              width <= 521 ? (
                 <EditPostMobile
                   images={post.images}
                   postId={post.id}
@@ -100,38 +110,40 @@ export function Post({ post, userData, myProfile }: Props) {
                   description={post.description}
                   loading={loading}
                   onUpdatePost={onUpdatePost}
-                /> :
-              <EditPost
+                />
+              ) : (
+                <EditPost
+                  images={post.images}
+                  postId={post.id}
+                  setEditPost={setEditPost}
+                  user={userData}
+                  description={post.description}
+                  loading={loading}
+                  onUpdatePost={onUpdatePost}
+                />
+              )
+            ) : width <= 521 ? (
+              <PostContentMobile
+                closeModalAction={closeModalAction}
                 images={post.images}
-                postId={post.id}
-                setEditPost={setEditPost}
+                myProfile={myProfile}
                 user={userData}
                 description={post.description}
-                loading={loading}
-                onUpdatePost={onUpdatePost}
+                setEditPost={setEditPost}
+                onDeletePost={onDeletePost}
+                createdPostTime={post.createdAt}
               />
             ) : (
-                width <= 521 ?
-                <PostContentMobile
-                  closeModalAction={closeModalAction}
-                  images={post.images}
-                  myProfile={myProfile}
-                  user={userData}
-                  description={post.description}
-                  setEditPost={setEditPost}
-                  onDeletePost={onDeletePost}
-                  createdPostTime={post.createdAt}
-                /> :
-                <PostContent
-                  closeModalAction={closeModalAction}
-                  images={post.images}
-                  myProfile={myProfile}
-                  user={userData}
-                  description={post.description}
-                  setEditPost={setEditPost}
-                  onDeletePost={onDeletePost}
-                  createdPostTime={post.createdAt}
-                />
+              <PostContent
+                closeModalAction={closeModalAction}
+                images={post.images}
+                myProfile={myProfile}
+                user={userData}
+                description={post.description}
+                setEditPost={setEditPost}
+                onDeletePost={onDeletePost}
+                createdPostTime={post.createdAt}
+              />
             )}
           </div>
         </>

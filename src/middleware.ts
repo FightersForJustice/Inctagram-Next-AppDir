@@ -44,8 +44,8 @@ export async function middleware(request: NextRequest) {
   if (!refreshToken) {
     console.log('Middleware (User in NOT auth)', isAuthPath);
     return isAuthPath
-      ? NextResponse.next()
-      : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
+       ? NextResponse.next()
+       : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
   }
 
   //checking auth refactor

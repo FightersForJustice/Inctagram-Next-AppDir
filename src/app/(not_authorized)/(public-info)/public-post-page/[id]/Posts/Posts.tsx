@@ -28,26 +28,26 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
   const items = useSelector(selectProfilePostItems);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+  const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
   useEffect( () => {
       dispatch(ProfilePostActions.addItemsRequest(postsData.items));
       setLoading(false);
   }, []);
 
-  let minId = findMinId(items);
+  // let minId = findMinId(items);
 
-  const loadMoreBeers = async (newMinId: number | null) => {
-    const newPosts: ApiResponsePosts = (await getPosts(id, newMinId)) ?? [];
-    dispatch(ProfilePostActions.addItems(newPosts.items));
-  };
+  // const loadMoreBeers = async (newMinId: number | null) => {
+  //   const newPosts: ApiResponsePosts = (await getPosts(id, newMinId)) ?? [];
+  //   dispatch(ProfilePostActions.addItems(newPosts.items));
+  // };
 
-  const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
-  useEffect(() => {
-    if (inView && minId !== 0) {
-      loadMoreBeers(minId);
-    }
-  }, [inView]);
+  // useEffect(() => {
+  //   if (inView && minId !== 0) {
+  //     loadMoreBeers(minId);
+  //   }
+  // }, [inView]);
 
   const postsImages = () => {
     return items.map((i) => {

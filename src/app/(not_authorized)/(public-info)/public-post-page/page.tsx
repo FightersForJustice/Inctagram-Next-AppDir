@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { getPublicPostsPage } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
-import { Post } from '@/app/(authorized)/profile/[id]/Posts/Post';
-import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
+import { Post } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/Post';
 import s from './PublicPage.module.scss';
 import Counter from '@/components/Counter/counter';
 import Link from 'next/link';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { UserProfile } from './[id]/types';
 
 const PublicPostPage = async () => {
   const publicPostPageData = await getPublicPostsPage();

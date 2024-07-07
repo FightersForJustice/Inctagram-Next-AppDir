@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
+import { PostComment } from './PostComment';
+import { PostLikes } from './PostLikes';
 
 import s from './PostContent.module.scss';
 import { useState } from 'react';
@@ -8,35 +10,36 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
-import PostHeader from '@/app/(authorized)/profile/[id]/Posts/PostHeader/PostHeader';
-import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
-import { PostComment } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostComment';
-import { PostLikes } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostLikes';
-import { PostAmount } from '@/app/(authorized)/profile/[id]/PostFix/PostContent/PostAmount';
+import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
+import { PostForm } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostForm';
+import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostAmount';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
+import { UserProfile } from '../../types';
 
 type Props = {
   user: UserProfile;
   description: string;
-  myProfile: boolean
-  images: ImageType[]
-  closeModalAction:()=>void
+  myProfile: boolean;
+  images: ImageType[];
+  closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
   createdPostTime: string;
 };
 
-export const PostContentMobile = ({
-                              description,
-                              user,
-                              closeModalAction,
-                              myProfile, images,
-                              setEditPost,
-                              onDeletePost,
-                              createdPostTime
-                            }: Props) => {
+export const PostContent = ({
+  description,
+  user,
+  closeModalAction,
+  myProfile,
+  images,
+  setEditPost,
+  onDeletePost,
+  createdPostTime,
+
+}: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
@@ -54,8 +57,6 @@ export const PostContentMobile = ({
       >
 
       <div className={s.post}>
-        <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-                    setShowAreYouSureModal={setShowAreYouSureModal}/>
         <Carousel>
           {images.map((i, index) => {
             if (i.width !== 640) {
@@ -74,9 +75,9 @@ export const PostContentMobile = ({
             return;
           })}
         </Carousel>
-        <PostLikes />
-        <PostAmount />
         <div className={s.postInfo}>
+          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
+                      setShowAreYouSureModal={setShowAreYouSureModal}/>
           <div className={s.post__desc}>
             <Image
               src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
@@ -95,11 +96,15 @@ export const PostContentMobile = ({
           </div>
           <PostComment />
           <PostComment />
+          <PostLikes />
+          <PostAmount />
+          {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
               toggleModal={setVisiblePopup}
               onYes={onDeletePost}
+              type={'deletePostPost'}
             />
           )}
         </div>

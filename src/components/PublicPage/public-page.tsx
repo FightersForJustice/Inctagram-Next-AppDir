@@ -1,8 +1,8 @@
 import React from 'react';
-import { Posts } from '@/app/(authorized)/profile/[id]/Posts/Posts';
+import { Posts } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/Posts';
 import Counter from '@/components/Counter/counter';
 import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
-import { getPosts, getProfile } from '@/app/(authorized)/profile/[id]/actions';
+import { getPosts, getProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 type Props = {
