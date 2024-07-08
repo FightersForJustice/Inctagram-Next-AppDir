@@ -25,6 +25,53 @@
     --success-900: #0a6638;
     --info-0: #3677f7;
     --disabled: rgba(227, 227, 227, 0.1);
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--disabled);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 10px 0 0 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb:horizontal {
+      border-radius: 10px 10px 0 0;
+    }
+  }
+}
+
+* {
+  scrollbar-color: var(--disabled) transparent;
+  scrollbar-width: thin;
+
+  &::-moz-scrollbar {
+    width: 10px;
+    height: 10px;
+
+    @include s.devices(mobile) {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  &::-moz-scrollbar-thumb {
+    background: var(--disabled);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px 0 0 10px;
+  }
+
+  &::-moz-scrollbar-thumb:horizontal {
+    border-radius: 10px 10px 0 0;
+  }
+
+  &::-moz-scrollbar-track {
+    background: transparent;
   }
 }
 

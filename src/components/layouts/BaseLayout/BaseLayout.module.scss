@@ -1,8 +1,13 @@
 .contentContainer {
   display: flex;
   height: calc(100vh - 60px);
-  overflow: hidden;
+  // overflow-y: scroll;
   flex-direction: row;
+  scrollbar-width: none;
+
+  // scrollbar-color: var(--disabled) transparent;
+  scrollbar-width: none;
+ 
 }
 
 .content {
@@ -11,16 +16,26 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  overflow-y: hidden;
+  // overflow-y: scroll;
   height: 100%;
 
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
+  // scrollbar-color: var(--disabled) transparent;
+  // scrollbar-width: none;
 
-  &::-moz-scrollbar {
-    width: 0;
-    height: 0;
-  }
+  // &::-moz-scrollbar {
+  //   width: 0px;
+  //   height: 0px;
+
+  // }
+  // scrollbar-width: none;
+
+  // &::-webkit-scrollbar {
+  //   width: 0;
+  //   height: 0;
+  // }
+
+  // &::-moz-scrollbar {
+  //   width: 0;
+  //   height: 0;
+  // }
 }
