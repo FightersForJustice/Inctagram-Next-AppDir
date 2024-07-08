@@ -19,7 +19,6 @@ type Props = {
   isDisabledBTN: boolean
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
-  setIsDisabledDraft: (value: boolean) => void;
 };
 
 type PostDraftDB = {
@@ -27,7 +26,7 @@ type PostDraftDB = {
   description: string;
 };
 
-export const FirstModal = ({ isDisabledBTN, setStep, setShowCreatePostModal, setIsDisabledDraft }: Props) => {
+export const FirstModal = ({ isDisabledBTN, setStep, setShowCreatePostModal }: Props) => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const changedImages = useAppSelector((state) => state.post.changedImages);

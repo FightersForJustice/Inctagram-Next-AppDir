@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react';
 
 import { GetResponse } from '@/api/profile.api';
@@ -68,7 +66,6 @@ export const CreatePost = ({
       {showCreatePostModal && step === 1 && (
         <FirstModal
           isDisabledBTN={isDisabledBTN}
-          setIsDisabledDraft={setIsDisabledDraft}
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
         />
