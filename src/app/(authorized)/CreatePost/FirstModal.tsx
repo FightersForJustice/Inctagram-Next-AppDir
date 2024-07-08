@@ -16,8 +16,10 @@ import { AspectRatioType } from '@/app/(authorized)/CreatePost/CreatePost';
 import { openDB } from 'idb';
 
 type Props = {
+  isDisabledBTN: boolean
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
+  setIsDisabledDraft: (value: boolean) => void;
 };
 
 type PostDraftDB = {
@@ -25,7 +27,7 @@ type PostDraftDB = {
   description: string;
 };
 
-export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
+export const FirstModal = ({ isDisabledBTN, setStep, setShowCreatePostModal, setIsDisabledDraft }: Props) => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const changedImages = useAppSelector((state) => state.post.changedImages);
@@ -63,7 +65,6 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
     if (!postDraftDB) {
       return;
     }
-
 
     postDraftDB.images.forEach((image: ChangedImage) => {
       const base64Image = image.base64Image.split(',')[1];
@@ -119,8 +120,8 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
 
     const imagesWithBase64 = await Promise.all(
       files.map(async (file) => {
-        const base64 = await convertToBase64(file);
         const url = URL.createObjectURL(file);
+        const base64 = await convertToBase64(file);
         return {
           id: crypto.randomUUID(),
           originalImage: url,
@@ -145,9 +146,9 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
 
   const onCloseModal = () => {
     changedImages.length
-      ? setAreYouSureModal(true)
+      ? setStep(2)
       : setShowCreatePostModal(false);
-  };
+  }
 
   return (
     <>
@@ -196,7 +197,7 @@ export const FirstModal = ({ setStep, setShowCreatePostModal }: Props) => {
               <TransparentBtn
                 isFullWidth
                 onClick={onOpenDraft}
-                isDisabled={postDraftDB === null}
+                isDisabled={postDraftDB === null || isDisabledBTN}
               >
                 {translate('openDraftBtn')}
               </TransparentBtn>

@@ -26,6 +26,7 @@ export const CreatePost = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const [step, setStep] = useState<number>(1);
+  const [isDisabledBTN, setIsDisabledDraft] = useState<boolean>(false)
 
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
@@ -66,6 +67,8 @@ export const CreatePost = ({
     <>
       {showCreatePostModal && step === 1 && (
         <FirstModal
+          isDisabledBTN={isDisabledBTN}
+          setIsDisabledDraft={setIsDisabledDraft}
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
         />
@@ -76,6 +79,7 @@ export const CreatePost = ({
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
           onSaveDraft={saveDraft}
+          setIsDisabledDraft={setIsDisabledDraft}
         />
       )}
       {step === 3 && (
