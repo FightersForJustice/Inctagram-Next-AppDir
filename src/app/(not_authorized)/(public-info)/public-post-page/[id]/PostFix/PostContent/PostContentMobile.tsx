@@ -9,13 +9,13 @@ import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
-import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
 import { PostComment } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostComment';
 import { PostLikes } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostLikes';
 import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostAmount';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
+import { UserProfile } from '../../types';
 
 type Props = {
   user: UserProfile;

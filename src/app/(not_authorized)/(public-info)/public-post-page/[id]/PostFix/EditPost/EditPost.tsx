@@ -1,9 +1,7 @@
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 import close from 'public/img/close.svg';
 
 import { PrimaryBtn } from 'src/components/Buttons/PrimaryBtn';
-import { useUpdatePostMutation } from '@/api';
 import { Loader } from '@/components/Loader';
 
 import s from './EditPost.module.scss';
@@ -15,7 +13,7 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
-import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
+import { UserProfile } from '../../types';
 
 type Props = {
   setEditPost: (value: boolean) => void;

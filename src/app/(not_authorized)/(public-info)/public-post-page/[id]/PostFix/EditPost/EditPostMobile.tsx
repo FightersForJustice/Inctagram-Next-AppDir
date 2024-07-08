@@ -1,18 +1,17 @@
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { Loader } from '@/components/Loader';
 
-import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { EditPostModal } from '@/components/Modals/EditPostModal';
-import Image from 'next/image';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
-import { UserProfile } from '@/app/(authorized)/profile/[id]/types';
+import { UserProfile } from '../../types';
+import s from './EditPost.module.scss';
 
 type Props = {
   setEditPost: (value: boolean) => void;

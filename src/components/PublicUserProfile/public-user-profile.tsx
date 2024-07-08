@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import s from '@/app/(authorized)/profile/[id]/ProfileInfo/ProfileInfo.module.scss';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { PublicProfileType } from '@/api/public-profile.api';
 import { PostItem } from '@/api/public-post.api';
+import s from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/ProfileInfo/ProfileInfo.module.scss';
 
 type Props = {
   publicUserData: PublicProfileType;

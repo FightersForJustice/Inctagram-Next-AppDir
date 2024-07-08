@@ -4,7 +4,6 @@ import PublicUserProfile from '@/components/PublicUserProfile/public-user-profil
 import { PublicProfileType } from '@/api/public-profile.api';
 import { getPublicPosts, getPublicProfile } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { PostItem } from '@/api/public-post.api';
-import { ApiResponsePosts } from '@/app/(authorized)/profile/[id]/types';
 
 
 // type Props = {
