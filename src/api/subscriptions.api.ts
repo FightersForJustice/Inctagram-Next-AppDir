@@ -13,7 +13,7 @@ export const subscriptionsApi = api.injectEndpoints({
     getCurrentSubscription: builder.query<GetCurrentSubscription, void>({
       query: () => {
         return {
-          url: 'subscriptions/current-subscriptions',
+          url: 'subscriptions/current-payment-subscriptions',
           method: 'GET',
         };
       },
@@ -21,7 +21,7 @@ export const subscriptionsApi = api.injectEndpoints({
     getCostOfSubscription: builder.query<GetCostOfSubscription, void>({
       query: () => {
         return {
-          url: 'subscriptions/cost-of-subscriptions',
+          url: 'subscriptions/cost-of-payment-subscriptions',
           method: 'GET',
         };
       },

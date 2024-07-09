@@ -1,109 +1,132 @@
-// import React, { useState } from 'react';
-// import { PayPalButtons } from '@paypal/react-paypal-js';
-// import {
-//   CreateOrderActions,
-//   CreateOrderData,
-//   OnApproveActions,
-//   OnApproveData,
-//   OnClickActions,
-// } from '@paypal/paypal-js';
+import React, { useState } from 'react';
+import {
+  PayPalButtons,
+  PayPalScriptProvider,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
+import {
+  CreateOrderActions,
+  CreateOrderData,
+  OnApproveActions,
+  OnApproveData,
+  OnClickActions,
+} from '@paypal/paypal-js';
 
-// type Props = {
-//   price: string;
-// };
+type Props = {
+  price: string;
+};
 
-// export const PayPal: React.FC<Props> = ({ price }) => {
-//   const [paidFor, setPaidFor] = useState(false);
-//   const [error, setError] = useState('');
+const initialOptions = {
+  clientId: "test",
+  currency: "USD",
+  intent: "capture",
+};
 
-//   const handleApprove = (orderId: string) => {
-//     // Call backend function to fulfill order
+export const PayPal: React.FC<Props> = ({ price }) => {
+  const [paidFor, setPaidFor] = useState(false);
+  const [error, setError] = useState('');
 
-//     // if response is success
-//     setPaidFor(true);
-//     // Refresh user's account or subscription status
+  const handleApprove = (orderId: string) => {
+    // Call backend function to fulfill order
 
-//     // if response is error
-//     // alert("Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance.");
-//   };
+    // if response is success
+    setPaidFor(true);
+    // Refresh user's account or subscription status
 
-//   const onCreateOrder = (
-//     data: CreateOrderData,
-//     actions: CreateOrderActions
-//   ) => {
-//     const description =
-//       price === '10'
-//         ? '$10 per 1 Day Subscription'
-//         : price === '50'
-//         ? '$50 per 7 Day Subscription'
-//         : '$100 per month Subscription';
+    // if response is error
+    // alert("Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance.");
+  };
 
-//     return actions.order.create({
-//       purchase_units: [
-//         {
-//           description: description,
-//           amount: {
-//             value: price,
-//           },
-//         },
-//       ],
-//     });
-//   };
+  const onCreateOrder = (
+    data: CreateOrderData,
+    actions: CreateOrderActions
+  ) => {
+    const description =
+      price === '10'
+        ? '$10 per 1 Day Subscription'
+        : price === '50'
+        ? '$50 per 7 Day Subscription'
+        : '$100 per month Subscription';
 
-//   const onApproveOrder = async (
-//     data: OnApproveData,
-//     actions: OnApproveActions
-//   ) => {
-//     const order = await actions?.order?.capture();
-//     console.log('order', order);
+    return actions.order.create({
+      purchase_units: [
+        {
+          description: description,
+          amount: {
+            value: price,
+          },
+        },
+      ],
+    });
+  };
 
-//     handleApprove(data.orderID);
-//   };
+  const onApproveOrder = async (
+    data: OnApproveData,
+    actions: OnApproveActions
+  ) => {
+    const order = await actions?.order?.capture();
+    console.log('order', order);
 
-//   const onErrorOrder = (err: any) => {
-//     setError(err);
-//     console.error('PayPal Checkout onError', err);
-//   };
+    handleApprove(data.orderID);
+  };
 
-//   const onClickOrder = (
-//     data: Record<string, unknown>,
-//     actions: OnClickActions
-//   ) => {
-//     // Validate on button click, client or server side
-//     const hasAlreadyBoughtCourse = false;
+  const onErrorOrder = (err: any) => {
+    setError(err);
+    console.error('PayPal Checkout onError', err);
+  };
 
-//     if (hasAlreadyBoughtCourse) {
-//       setError(
-//         'You already bought this course. Go to your account to view your list of courses.'
-//       );
+  const onClickOrder = (
+    data: Record<string, unknown>,
+    actions: OnClickActions
+  ) => {
+    // Validate on button click, client or server side
+    const hasAlreadyBoughtCourse = false;
 
-//       return actions.reject();
-//     } else {
-//       return actions.resolve();
-//     }
-//   };
+    if (hasAlreadyBoughtCourse) {
+      setError(
+        'You already bought this course. Go to your account to view your list of courses.'
+      );
 
-//   const onCancelOrder = () => {};
+      return actions.reject();
+    } else {
+      return actions.resolve();
+    }
+  };
 
-//   if (paidFor) {
-//     // Display success message, modal or redirect user to success page
-//     console.log('Thank you for your purchase!');
-//   }
+  const onCancelOrder = () => {};
 
-//   if (error) {
-//     // Display error message, modal or redirect user to error page
-//     alert(error);
-//   }
+  if (paidFor) {
+    // Display success message, modal or redirect user to success page
+    console.log('Thank you for your purchase!');
+  }
 
-//   return (
-//     <PayPalButtons
-//       style={{ color: 'gold', layout: 'horizontal', shape: 'rect', height: 55 }}
-//       className={'flex'}
-//       createOrder={onCreateOrder}
-//       onApprove={onApproveOrder}
-//       onError={onErrorOrder}
-//       onClick={onClickOrder}
-//       onCancel={onCancelOrder}
-//     />
-//   );
-// };
+  if (error) {
+    // Display error message, modal or redirect user to error page
+    alert(error);
+  }
+
+  const ButtonWithProps = () => {
+    return (
+      <PayPalButtons
+        style={{
+          color: 'gold',
+          layout: 'horizontal',
+          shape: 'rect',
+          height: 55,
+        }}
+        className={'flex'}
+        createOrder={onCreateOrder}
+        onApprove={onApproveOrder}
+        onError={onErrorOrder}
+        onClick={onClickOrder}
+        onCancel={onCancelOrder}
+      />
+    );
+  };
+
+  return (
+    <PayPalScriptProvider options={initialOptions}>
+      <ButtonWithProps />
+    </PayPalScriptProvider>
+  );
+};
