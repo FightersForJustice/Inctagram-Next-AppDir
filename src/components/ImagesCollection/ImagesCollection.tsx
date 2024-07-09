@@ -14,6 +14,7 @@ type Props = {
   closeGallery: () => void;
   changeCurrentImage: (imageId: string) => void;
   deleteImage: (imageId: string) => void;
+  setIsDisabledDraft: (value: boolean) => void;
 };
 
 export const ImagesCollection = ({
@@ -21,6 +22,7 @@ export const ImagesCollection = ({
   closeGallery,
   changeCurrentImage,
   deleteImage,
+  setIsDisabledDraft
 }: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(postImages);
@@ -83,7 +85,10 @@ export const ImagesCollection = ({
           height={36}
           width={36}
           className={clsx(s.collection__plusBtn)}
-          onClick={() => !moreThen10Img && setStep(1)}
+          onClick={() => {
+            !moreThen10Img && setStep(1)
+            setIsDisabledDraft(true)}
+        }
         />
       </div>
     </div>
