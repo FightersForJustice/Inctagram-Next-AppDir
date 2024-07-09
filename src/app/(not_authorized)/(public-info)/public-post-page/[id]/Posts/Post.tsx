@@ -86,7 +86,7 @@ export function Post({ post, userData, myProfile }: Props) {
   };
   const closeModal = () => {
     if (myProfile) {
-       router.push(`/profile/${userData.id}`, { scroll: false });
+      router.push(`/profile/${userData.id}`, { scroll: false });
     }
   };
 
@@ -95,58 +95,58 @@ export function Post({ post, userData, myProfile }: Props) {
     closeModal();
   };
 
+  const isMyPost =
+    width <= 521 ? (
+      <EditPostMobile
+        images={post.images}
+        postId={post.id}
+        setEditPost={setEditPost}
+        user={userData}
+        description={post.description}
+        loading={loading}
+        onUpdatePost={onUpdatePost}
+      />
+    ) : (
+      <EditPost
+        images={post.images}
+        postId={post.id}
+        setEditPost={setEditPost}
+        user={userData}
+        description={post.description}
+        loading={loading}
+        onUpdatePost={onUpdatePost}
+      />
+    );
+
+  const isPublicPost =
+    width <= 521 ? (
+      <PostContentMobile
+        closeModalAction={closeModalAction}
+        images={post.images}
+        myProfile={myProfile}
+        user={userData}
+        description={post.description}
+        setEditPost={setEditPost}
+        onDeletePost={onDeletePost}
+        createdPostTime={post.createdAt}
+      />
+    ) : (
+      <PostContent
+        closeModalAction={closeModalAction}
+        images={post.images}
+        myProfile={myProfile}
+        user={userData}
+        description={post.description}
+        setEditPost={setEditPost}
+        onDeletePost={onDeletePost}
+        createdPostTime={post.createdAt}
+      />
+    );
+
   return (
     <>
       {openPostModal && (
-        <>
-          <div className={'relative'}>
-            {editPost ? (
-              width <= 521 ? (
-                <EditPostMobile
-                  images={post.images}
-                  postId={post.id}
-                  setEditPost={setEditPost}
-                  user={userData}
-                  description={post.description}
-                  loading={loading}
-                  onUpdatePost={onUpdatePost}
-                />
-              ) : (
-                <EditPost
-                  images={post.images}
-                  postId={post.id}
-                  setEditPost={setEditPost}
-                  user={userData}
-                  description={post.description}
-                  loading={loading}
-                  onUpdatePost={onUpdatePost}
-                />
-              )
-            ) : width <= 521 ? (
-              <PostContentMobile
-                closeModalAction={closeModalAction}
-                images={post.images}
-                myProfile={myProfile}
-                user={userData}
-                description={post.description}
-                setEditPost={setEditPost}
-                onDeletePost={onDeletePost}
-                createdPostTime={post.createdAt}
-              />
-            ) : (
-              <PostContent
-                closeModalAction={closeModalAction}
-                images={post.images}
-                myProfile={myProfile}
-                user={userData}
-                description={post.description}
-                setEditPost={setEditPost}
-                onDeletePost={onDeletePost}
-                createdPostTime={post.createdAt}
-              />
-            )}
-          </div>
-        </>
+        <div className={'relative'}>{editPost ? isMyPost : isPublicPost}</div>
       )}
       <Image
         src={

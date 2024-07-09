@@ -74,7 +74,7 @@ export const PostContentMobile = ({
             return;
           })}
         </Carousel>
-        <PostLikes />
+        {myProfile && <PostLikes />}
         <PostAmount />
         <div className={s.postInfo}>
           <div className={s.post__desc}>
@@ -93,8 +93,8 @@ export const PostContentMobile = ({
               <p className={s.post__desc__time}>{time}</p>
             </div>
           </div>
-          <PostComment />
-          <PostComment />
+          <PostComment myProfile={myProfile} />
+          <PostComment myProfile={myProfile} />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
