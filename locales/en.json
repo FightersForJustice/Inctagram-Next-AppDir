@@ -202,7 +202,16 @@
       "browserName" : "Browser Name"
     },
     "AccountManagementTab": {
-      "titleTab": "Account Management"
+      "titleTab": "Account Management",
+      "AccountType": "Account type",
+      "SubscriptionCost": "Your subscription costs",
+      "CurrentSubscription": "Current Subscription",
+      "CurrentSubscriptionStart": "Expire at",
+      "CurrentSubscriptionEnd": "Next payment",
+      "AutoRenewal": "Auto-Renewal",
+      "Personal": "Personal",
+      "Business": "Business",
+      "Prefix": "per"
     },
     "MyPaymentsTab": {
       "titleTab": "My Payments"

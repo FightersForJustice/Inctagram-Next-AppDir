@@ -1,4 +1,6 @@
 import { api } from '@/api/api';
+import { accessToken } from '@/accessToken';
+import { headers } from 'next/headers';
 
 export const subscriptionsApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,9 +14,13 @@ export const subscriptionsApi = api.injectEndpoints({
     }),
     getCurrentSubscription: builder.query<GetCurrentSubscription, void>({
       query: () => {
+        const token = 1
         return {
           url: 'subscriptions/current-payment-subscriptions',
           method: 'GET',
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
     }),
@@ -52,7 +58,7 @@ export const {
   useGetCurrentSubscriptionQuery,
 } = subscriptionsApi;
 
-type CreateSubscription = {
+export type CreateSubscription = {
   typeSubscription: string;
   paymentType: string;
   amount: number;

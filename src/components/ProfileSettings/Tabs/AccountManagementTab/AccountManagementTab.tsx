@@ -7,71 +7,93 @@ import { SubscriptionRadio } from './SubscriptionRadio';
 import { Subscription } from './Subscription';
 import { Stripe } from '@/components/Stripe';
 import { PayPal } from '@/components/PayPal';
+
 import {
-  GetCurrentSubscription,
-  useGetCurrentSubscriptionQuery,
-} from '@/api/subscriptions.api';
-
+  SubscriptionsCostType,
+  SubscriptionsType,
+} from '@/app/(authorized)/profile/settings-profile/types';
 import s from './AccountManagementTab.module.scss';
+import { useTranslation } from 'react-i18next';
 
-export const AccountManagementTab = () => {
-  const [userSubInfo, setUserSubInfo] = useState<GetCurrentSubscription>({
-    data: [
-      {
-        dateOfPayment: '',
-        endDateOfSubscription: '',
-        autoRenewal: false,
-        subscriptionId: '',
-        userId: 0,
-      },
-    ],
-    hasAutoRenewal: false,
-  });
+export const AccountManagementTab = ({
+  token,
+  data,
+  cost,
+}: {
+  token: string;
+  data: SubscriptionsType;
+  cost: SubscriptionsCostType;
+}) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.AccountManagementTab.${key}`);
+  const [userSubInfo, setUserSubInfo] = useState<SubscriptionsType>(
+    {} as SubscriptionsType
+  );
   const [accountTypeValue, setAccountTypeValue] = useState('personal');
   const [subTypeValue, setSubTypeValue] = useState('MONTHLY');
-  const [baseUrl, setBaseUrl] = useState<any>('');
-
-  const { data: currentSubData } = useGetCurrentSubscriptionQuery();
+  const [baseUrl, setBaseUrl] = useState<string>('');
 
   useEffect(() => {
-    if (currentSubData?.data[0]?.subscriptionId.length! > 0) {
+    setBaseUrl(window.location.href);
+    setUserSubInfo(data);
+    if (data?.data?.length) {
       setAccountTypeValue('business');
     }
+  }, [data]);
 
-    setBaseUrl(window.location);
-    setUserSubInfo(currentSubData!);
-  }, [currentSubData]);
+  const currentPrice = cost.data.filter((el) =>
+    el.typeDescription === subTypeValue ? el : ''
+  )[0].amount;
 
   return (
     <div className={s.tab}>
-      {userSubInfo?.data.length > 0 && (
+      {userSubInfo?.data?.length && (
         <Subscription
           expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
           dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
           autoRenewal={userSubInfo?.hasAutoRenewal}
+          name={translate('CurrentSubscription')}
+          expiredStart={translate('CurrentSubscriptionStart')}
+          expiredEnd={translate('CurrentSubscriptionEnd')}
+          renewalTitle={translate('AutoRenewal')}
         />
       )}
 
-      <p className={s.tab__name}>Account type:</p>
+      <p className={s.tab__name}>{translate('AccountType')}:</p>
       <div className={s.tab__wrapper}>
         <AccountTypeRadio
           radioValue={accountTypeValue}
           setRadioValue={setAccountTypeValue}
+          radioName={translate('Personal')}
+          radioName2={translate('Business')}
         />
       </div>
       {accountTypeValue === 'business' && (
         <>
-          <p className={s.tab__name}>Your subscription costs:</p>
+          <p className={s.tab__name}>{translate('SubscriptionCost')}:</p>
           <div className={s.tab__wrapper}>
             <SubscriptionRadio
               subTypeValue={subTypeValue}
               setSubTypeValue={setSubTypeValue}
+              cost={cost}
+              prefix={translate('Prefix')}
             />
           </div>
           <div className={s.tab__container}>
-            <PayPal price={subTypeValue} />
+            <PayPal
+              price={currentPrice}
+              subTypeValue={subTypeValue}
+              baseUrl={baseUrl}
+              token={token}
+            />
             <p>or</p>
-            <Stripe subTypeValue={subTypeValue} baseUrl={baseUrl} />
+            <Stripe
+              price={currentPrice}
+              subTypeValue={subTypeValue}
+              baseUrl={baseUrl}
+              token={token}
+            />
           </div>
         </>
       )}

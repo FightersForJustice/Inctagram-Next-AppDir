@@ -10,6 +10,7 @@ import {
   deleteUploadedPostOptions,
   loginOptions,
   newPasswordOptions,
+  onCreateStripeOptions,
   recoveryPasswordOptions,
   requestDeleteAllSessionsOptions,
   requestGoogleLoginOptions,
@@ -27,6 +28,7 @@ import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/Set
 import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
 import { createPostOptionsType } from './optionsTypes';
 import { accessToken } from '@/utils/serverActions';
+import { redirect } from 'next/dist/server/api-utils';
 
 // AUTH ACTIONS
 
@@ -292,7 +294,7 @@ export async function updateTokensAndContinue(
 //PROFILE
 
 export async function uploadAvatarAction(avatar: FormData) {
-  console.log('1is error from upload', avatar)
+  console.log('1is error from upload', avatar);
   return fetch(
     routes.UPLOAD_PROFILE_AVATAR,
     uploadAvatarOptions(accessToken(), avatar)
@@ -315,6 +317,42 @@ export async function uploadAvatarAction(avatar: FormData) {
     });
 }
 
+export async function onCreateStripeSubscription(
+  typeSubscription: string,
+  baseUrl: string
+) {
+  console.log(1, typeSubscription, baseUrl);
+  return fetch(
+    routes.CREATE_SUBSCRIPTION,
+    onCreateStripeOptions(accessToken(), {
+      paymentType: 'STRIPE',
+      amount: 1,
+      typeSubscription: 'MONTHLY',
+      baseUrl,
+    })
+  )
+    .then((res) => {
+      console.log(res);
+      if (res.ok) {
+        console.log(7,res.url);
+        NextResponse.redirect(new URL(res.url))
+        // revalidatePath(
+        //   '/profile/settings-profile/account-management'
+        // );
+        // revalidateTag('myProfile');
+        return 
+        return { success: true, modalText: res.url, url: res.url };
+      }
+
+      return Promise.reject(
+        new Error(`Error accountPaymentStripe, status ${res.status}`)
+      );
+    })
+    .catch((error) => {
+      console.error(error);
+      return { success: false, modalText: 'accountPaymentStripe' };
+    });
+}
 export async function deleteAvatarAction() {
   return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken()))
     .then((res) => {

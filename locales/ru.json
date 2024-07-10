@@ -205,7 +205,19 @@
       "browserName" : "Имя браузера"
     },
     "AccountManagementTab": {
-      "titleTab": "Управление"
+      "titleTab": "Управление",
+      "AccountType": "Тип аккаунта",
+      "SubscriptionCost": "Стоимость вашей подписки",
+      "CurrentSubscription": "Текущая подписка",
+      "CurrentSubscriptionStart": "Оформлена",
+      "CurrentSubscriptionEnd": "Истекает",
+      "AutoRenewal": "Автопродление",
+      "Personal": "Персональный",
+      "Business": "Бизнес",
+      "Prefix": "за"
+    },
+    "MyPaymentsTab": {
+      "titleTab": "Мои платежи"
     },
     "MyPaymentsTab": {
       "titleTab": "Мои платежи"

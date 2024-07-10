@@ -4,8 +4,9 @@ import { accessToken } from '@/accessToken';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  // baseUrl: 'https://inctagram.work/api/v1/',
   prepareHeaders: (headers) => {
-    const token = accessToken;
+    const token = sessionStorage.getItem("accessToken");
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }

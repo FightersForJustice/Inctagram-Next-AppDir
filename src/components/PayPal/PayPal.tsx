@@ -1,132 +1,71 @@
-import React, { useState } from 'react';
-import {
-  PayPalButtons,
-  PayPalScriptProvider,
-  usePayPalScriptReducer,
-} from '@paypal/react-paypal-js';
-import {
-  CreateOrderActions,
-  CreateOrderData,
-  OnApproveActions,
-  OnApproveData,
-  OnClickActions,
-} from '@paypal/paypal-js';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/api/routes';
+import { onCreateStripeOptions } from '@/app/lib/actionOptions';
+import Image from 'next/image';
+import s from './PayPal.module.scss'
 
-type Props = {
-  price: string;
+type PropsPaypal = {
+  price: number;
+  subTypeValue: string;
+  baseUrl: any;
+  token: string;
 };
 
-const initialOptions = {
-  clientId: "test",
-  currency: "USD",
-  intent: "capture",
-};
+export const PayPal = ({
+  price,
+  baseUrl,
+  token,
+  subTypeValue,
+}: PropsPaypal) => {
+  const ButtonWithProps = ({ price, subTypeValue, token, baseUrl }: PropsPaypal) => {
+    const router = useRouter();
+    const onCreateStripeSubscriptionHandler = async () => {
+      const res = await fetch(
+        routes.CREATE_SUBSCRIPTION,
+        onCreateStripeOptions(token, {
+          paymentType: 'PAYPAL',
+          amount: price,
+          typeSubscription: subTypeValue,
+          baseUrl,
+        })
+      )
+        .then((res) =>
+          res.json().then((res) => {
+            router.push(res.url);
 
-export const PayPal: React.FC<Props> = ({ price }) => {
-  const [paidFor, setPaidFor] = useState(false);
-  const [error, setError] = useState('');
+            return Promise.reject(
+              new Error(`Error accountPaymentStripe, status ${res.status}`)
+            );
+          })
+        )
+        .catch((error) => {
+          console.error(error);
+          return { success: false, modalText: 'accountPaymentStripe' };
+        });
+    };
 
-  const handleApprove = (orderId: string) => {
-    // Call backend function to fulfill order
-
-    // if response is success
-    setPaidFor(true);
-    // Refresh user's account or subscription status
-
-    // if response is error
-    // alert("Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance.");
-  };
-
-  const onCreateOrder = (
-    data: CreateOrderData,
-    actions: CreateOrderActions
-  ) => {
-    const description =
-      price === '10'
-        ? '$10 per 1 Day Subscription'
-        : price === '50'
-        ? '$50 per 7 Day Subscription'
-        : '$100 per month Subscription';
-
-    return actions.order.create({
-      purchase_units: [
-        {
-          description: description,
-          amount: {
-            value: price,
-          },
-        },
-      ],
-    });
-  };
-
-  const onApproveOrder = async (
-    data: OnApproveData,
-    actions: OnApproveActions
-  ) => {
-    const order = await actions?.order?.capture();
-    console.log('order', order);
-
-    handleApprove(data.orderID);
-  };
-
-  const onErrorOrder = (err: any) => {
-    setError(err);
-    console.error('PayPal Checkout onError', err);
-  };
-
-  const onClickOrder = (
-    data: Record<string, unknown>,
-    actions: OnClickActions
-  ) => {
-    // Validate on button click, client or server side
-    const hasAlreadyBoughtCourse = false;
-
-    if (hasAlreadyBoughtCourse) {
-      setError(
-        'You already bought this course. Go to your account to view your list of courses.'
-      );
-
-      return actions.reject();
-    } else {
-      return actions.resolve();
-    }
-  };
-
-  const onCancelOrder = () => {};
-
-  if (paidFor) {
-    // Display success message, modal or redirect user to success page
-    console.log('Thank you for your purchase!');
-  }
-
-  if (error) {
-    // Display error message, modal or redirect user to error page
-    alert(error);
-  }
-
-  const ButtonWithProps = () => {
     return (
-      <PayPalButtons
-        style={{
-          color: 'gold',
-          layout: 'horizontal',
-          shape: 'rect',
-          height: 55,
-        }}
-        className={'flex'}
-        createOrder={onCreateOrder}
-        onApprove={onApproveOrder}
-        onError={onErrorOrder}
-        onClick={onClickOrder}
-        onCancel={onCancelOrder}
-      />
+      <div
+        className={`${s.wrapper}`}
+        onClick={onCreateStripeSubscriptionHandler}
+      >
+        <Image
+          className={s.img}
+          src={'/img/paypal.png'}
+          alt={'stripe'}
+          width={70}
+          height={30}
+        />
+      </div>
     );
   };
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
-      <ButtonWithProps />
-    </PayPalScriptProvider>
+    <ButtonWithProps
+      subTypeValue={subTypeValue}
+      token={token}
+      baseUrl={baseUrl}
+      price={price}
+    />
   );
 };
