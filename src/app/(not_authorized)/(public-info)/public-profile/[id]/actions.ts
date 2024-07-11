@@ -19,6 +19,8 @@ export const getPublicPosts = async (userId: number, endCursorPostId: number | n
   }
 };
 
+
+
 export const getPublicProfile = async (profileId: number) => {
 
   const apiUrl = baseUrl + `public-user/profile/${profileId}`;
@@ -52,3 +54,23 @@ export const getPublicPostsPage = async () => {
     return null;
   }
 };
+
+export const getCountRegisterUsers = async () => {
+  const apiUrl = baseUrl + `public-user`;
+  try {
+    const response = await fetch(apiUrl, { next: { revalidate: 5 } });
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+}
+
+export type CountRegisterUser = {
+  totalCount: number;
+}
