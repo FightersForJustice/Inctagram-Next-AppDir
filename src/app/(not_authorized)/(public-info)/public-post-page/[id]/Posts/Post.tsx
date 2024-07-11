@@ -32,7 +32,6 @@ export function Post({ post, userData, myProfile }: Props) {
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
   const [loading, setLoading] = useState(false);
-  console.log(userData.id);
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
