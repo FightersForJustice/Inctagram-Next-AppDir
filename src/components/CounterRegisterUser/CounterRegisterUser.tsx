@@ -1,13 +1,15 @@
 'use client';
 import React from 'react';
 import s from '@/components/CounterRegisterUser/CounterRegisterUser.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   count: number
 }
 
 const CounterRegisterUser = ({ count }: Props) => {
-
+  const { t } = useTranslation()
+  const translate = (key: string): string => t(`CounterRegisterUser.${key}`)
   if (!count || count < 1) {
     return null
   }
@@ -17,7 +19,7 @@ const CounterRegisterUser = ({ count }: Props) => {
   return (
     <div className={s.counterContainer}>
       <div className={s.registerUsers}>
-        Registered users:
+        {translate('RegisterUsers')}:
       </div>
       <div className={s.displayContainer}>
         {arrayNumbers.map((item, index) => (
