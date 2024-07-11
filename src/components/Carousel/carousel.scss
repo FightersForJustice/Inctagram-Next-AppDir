@@ -1,7 +1,15 @@
+@use '@/app/mixins.scss' as s;
+
 .carousel__wrapper {
   width: 50%;
   flex: 1;
   display: flex;
   align-items: center;
 
+}
+
+@include s.devices(mobile) {
+  .carousel__wrapper {
+    width: 100%;
+  }
 }
