@@ -168,8 +168,6 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
   };
 };
 export const onCreateStripeOptions = (accessToken: string | null, data: CreateSubscription) => {
-  console.log('token1',accessToken)
-
   return {
     method: 'POST',
     headers: {
@@ -182,8 +180,6 @@ export const onCreateStripeOptions = (accessToken: string | null, data: CreateSu
   };
 };
 export const getSubsriptionOptions = (accessToken: string | undefined) => {
-  console.log('token1',accessToken)
-
   return {
     method: 'GET',
     headers: {

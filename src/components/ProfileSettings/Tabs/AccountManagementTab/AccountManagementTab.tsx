@@ -85,7 +85,6 @@ export const AccountManagementTab = ({
   };
 
   const actionHandler = showModal && paymentStatus ? closeModal : fallback;
-
   return (
     <div className={s.tab}>
       {userSubInfo?.data?.length && (
