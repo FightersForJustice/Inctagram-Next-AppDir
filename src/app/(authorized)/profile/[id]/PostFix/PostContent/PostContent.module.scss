@@ -60,7 +60,10 @@
       font-weight: 300;
       font-size: 13px;
       line-height: 19px;
-      word-break: break-all;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+      hyphens: auto;
     }
 
     &__time {
