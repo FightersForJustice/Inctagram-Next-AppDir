@@ -76,26 +76,32 @@ export const PostContent = ({
           })}
         </Carousel>
         <div className={s.postInfo}>
-          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-                      setShowAreYouSureModal={setShowAreYouSureModal}/>
-          <div className={s.post__desc}>
-            <Image
-              src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-              alt={'ava'}
-              width={36}
-              height={36}
-              className={s.post__avatar}
-            />
-            <div>
-              <p className={s.post__desc__text}>
-                <span className={s.post__desc__name}>{user?.userName} </span>
-                {description}
-              </p>
-              <p className={s.post__desc__time}>{time}</p>
+          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup}
+                      setEditPost={setEditPost}
+                      setShowAreYouSureModal={setShowAreYouSureModal} />
+          <div className={s.post__content}>
+            <div className={s.post__desc}>
+              <Image
+                src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                alt={'ava'}
+                width={36}
+                height={36}
+                className={s.post__avatar}
+              />
+              <div>
+                <p className={s.post__desc__text}>
+                  <span className={s.post__desc__name}>{user?.userName} </span>
+                  {description}
+                </p>
+                <p className={s.post__desc__time}>{time}</p>
+              </div>
             </div>
+
+            <PostComment />
+            <PostComment />
+            <PostComment />
+            <PostComment />
           </div>
-          <PostComment />
-          <PostComment />
           <PostLikes />
           <PostAmount />
           <PostForm />

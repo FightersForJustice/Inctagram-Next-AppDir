@@ -14,7 +14,6 @@
   &Info{
     flex: 1;
     max-height: 481px;
-    // overflow: scroll;
   }
 
   &__header {
@@ -37,9 +36,12 @@
       font-weight: 600;
     }
   }
+&__content {
+  overflow-y: auto;
+  max-height: 245px;
+}
 
   &__desc {
-    // overflow-y: scroll;
     display: flex;
     gap: 12px;
     border-top: 1px solid var(--dark-100);
