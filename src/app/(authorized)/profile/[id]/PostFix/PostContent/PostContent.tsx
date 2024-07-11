@@ -96,7 +96,6 @@ export const PostContent = ({
                 <p className={s.post__desc__time}>{time}</p>
               </div>
             </div>
-
             <PostComment />
             <PostComment />
             <PostComment />

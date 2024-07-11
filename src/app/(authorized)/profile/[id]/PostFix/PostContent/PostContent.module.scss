@@ -39,6 +39,10 @@
 &__content {
   overflow-y: auto;
   max-height: 245px;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
   &__desc {
@@ -182,6 +186,14 @@
   .post {
     flex-direction: column;
     height: calc(100vh - 120px);
+
+    &Info {
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
 
     img {
       margin: 0 auto;

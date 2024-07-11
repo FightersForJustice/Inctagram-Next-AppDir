@@ -95,6 +95,12 @@ export const PostContentMobile = ({
           </div>
           <PostComment />
           <PostComment />
+          <PostComment />
+          <PostComment />
+          <PostComment />
+          <PostComment />
+          <PostComment />
+          <PostComment />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
