@@ -24,6 +24,7 @@ export const PublicPost = ({ post, mockedProfile }: Props) => {
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
+  const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`)
   const time = getTimeAgoText(post.createdAt, language, translate);
 
   return (
@@ -45,7 +46,7 @@ export const PublicPost = ({ post, mockedProfile }: Props) => {
         <p className={s.time}>{time}</p>
       </div>
       <div className={s.description}>
-        <ReadMoreButton text={post.description} maxLength={80}/>
+        <ReadMoreButton text={post.description} maxLength={80} moreText={translateReadMoreButton('showMore')} lessText={translateReadMoreButton('hide')}/>
       </div>
     </>
   );

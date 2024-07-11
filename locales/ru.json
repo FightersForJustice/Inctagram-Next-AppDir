@@ -370,5 +370,9 @@
   },
   "CounterRegisterUser": {
     "RegisterUsers": "Регистрация пользователей"
+  },
+  "ReadMore": {
+    "showMore": "Показать больше",
+    "hide": "Скрыть"
   }
 }

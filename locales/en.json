@@ -364,5 +364,9 @@
   },
   "CounterRegisterUser": {
     "RegisterUsers": "Register Users"
+  },
+  "ReadMore": {
+    "showMore": "Show more",
+    "hide": "Hide"
   }
 }
