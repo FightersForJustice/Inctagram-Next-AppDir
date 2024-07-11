@@ -9,8 +9,9 @@ type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   changeCurrentImage: (imageId: string) => void;
   deleteImage: (imageId: string) => void;
+  setIsDisabledDraft: (value: boolean) => void;
 };
-export const Gallery = ({ setStep, changeCurrentImage, deleteImage }: Props) => {
+export const Gallery = ({ setStep, changeCurrentImage, deleteImage, setIsDisabledDraft }: Props) => {
   const [openCollectionImages, setOpenCollectionImages] = useState(false);
 
   const closeGallery = () => {
@@ -60,6 +61,7 @@ export const Gallery = ({ setStep, changeCurrentImage, deleteImage }: Props) => 
             changeCurrentImage={changeCurrentImage}
             deleteImage={deleteImage}
             setStep={setStep}
+            setIsDisabledDraft={setIsDisabledDraft}
           />
         </Popover.Content>
       </Popover.Portal>

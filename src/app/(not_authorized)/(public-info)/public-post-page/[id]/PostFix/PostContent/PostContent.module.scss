@@ -41,9 +41,16 @@
       }
     }
   }
+&__content {
+  overflow-y: auto;
+  max-height: 245px;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
 
   &__desc {
-    // overflow-y: scroll;
     display: flex;
     gap: 12px;
     border-top: 1px solid var(--dark-100);
@@ -63,6 +70,10 @@
       font-weight: 300;
       font-size: 13px;
       line-height: 19px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+      hyphens: auto;
     }
 
     &__time {
@@ -189,6 +200,14 @@
   .post {
     flex-direction: column;
     height: calc(100vh - 120px);
+
+    &Info {
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
 
     img {
       margin: 0 auto;
