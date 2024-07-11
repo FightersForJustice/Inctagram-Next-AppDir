@@ -367,5 +367,8 @@
       "favourites": "Избранное",
       "logOut": "Выйти"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Регистрация пользователей"
   }
 }

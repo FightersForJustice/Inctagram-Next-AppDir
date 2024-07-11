@@ -361,5 +361,8 @@
       "favourites": "Favourites",
       "logOut": "Log Out"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Register Users"
   }
 }
