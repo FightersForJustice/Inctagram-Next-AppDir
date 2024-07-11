@@ -211,7 +211,13 @@
       "AutoRenewal": "Auto-Renewal",
       "Personal": "Personal",
       "Business": "Business",
-      "Prefix": "per"
+      "Prefix": "per",
+      "Success": "Success",
+      "Error": "Error",
+      "Back": "Back to payment",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Payment was successful!",
+      "CurrentSubscriptionError": "Transaction failed. Please, write to support"
     },
     "MyPaymentsTab": {
       "titleTab": "My Payments",

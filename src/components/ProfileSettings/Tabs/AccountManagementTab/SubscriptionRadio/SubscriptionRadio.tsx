@@ -18,7 +18,6 @@ export const SubscriptionRadio = ({
   prefix,
 }: Props) => {
   const { data } = cost;
-  console.log(subTypeValue)
   return (
     <RadioGroup.Root
       className="RadioGroupRoot"

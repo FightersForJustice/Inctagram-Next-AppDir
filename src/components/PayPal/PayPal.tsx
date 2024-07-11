@@ -1,8 +1,11 @@
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { routes } from '@/api/routes';
 import { onCreateStripeOptions } from '@/app/lib/actionOptions';
 import Image from 'next/image';
-import s from './PayPal.module.scss'
+import s from './PayPal.module.scss';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type PropsPaypal = {
   price: number;
@@ -17,8 +20,14 @@ export const PayPal = ({
   token,
   subTypeValue,
 }: PropsPaypal) => {
-  const ButtonWithProps = ({ price, subTypeValue, token, baseUrl }: PropsPaypal) => {
-    const router = useRouter();
+  const router = useRouter();
+  const ButtonWithProps = ({
+    price,
+    subTypeValue,
+    token,
+    baseUrl,
+  }: PropsPaypal) => {
+   
     const onCreateStripeSubscriptionHandler = async () => {
       const res = await fetch(
         routes.CREATE_SUBSCRIPTION,

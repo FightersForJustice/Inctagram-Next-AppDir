@@ -1,12 +1,7 @@
 import Image from 'next/image';
 
 import s from './Stripe.module.scss';
-import { useCreateSubscriptionMutation } from '@/api';
-import { Loader } from '../Loader/Loader';
-import { toast } from 'react-toastify';
-import { onCreateStripeSubscription } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
-import { Router } from 'next/router';
 import { routes } from '@/api/routes';
 import { onCreateStripeOptions } from '@/app/lib/actionOptions';
 

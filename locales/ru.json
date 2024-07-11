@@ -214,7 +214,13 @@
       "AutoRenewal": "Автопродление",
       "Personal": "Персональный",
       "Business": "Бизнес",
-      "Prefix": "за"
+      "Prefix": "за",
+      "Success": "Успешно",
+      "Error": "Ошибка",
+      "Back": "Назад к оплате",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Оплата прошла успешно!",
+      "CurrentSubscriptionError": "Оплата отклонена. Пожалуйста, обратитесь в поддержку"
     },
     "MyPaymentsTab": {
       "titleTab": "Мои платежи",
