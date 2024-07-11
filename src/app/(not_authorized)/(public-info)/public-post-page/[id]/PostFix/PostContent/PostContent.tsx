@@ -94,9 +94,10 @@ export const PostContent = ({
               <p className={s.post__desc__time}>{time}</p>
             </div>
           </div>
-          <PostComment />
-          <PostComment />
-          <PostLikes />
+          <PostComment myProfile={myProfile} />
+          <PostComment myProfile={myProfile} />
+          <PostComment myProfile={myProfile} />
+          {myProfile && <PostLikes  />}
           <PostAmount />
           {myProfile && <PostForm />}
           {showAreYouSureModal && (

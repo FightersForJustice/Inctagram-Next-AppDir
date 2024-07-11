@@ -36,7 +36,9 @@ const PostHeader = ({
       {myProfile ?
         <Dots setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
               setShowAreYouSureModal={setShowAreYouSureModal} /> :
-        <DotsFriends setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} />}
+        // <DotsFriends setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} />
+        null
+        }
     </div>
   );
 };

@@ -14,7 +14,7 @@
   &Info{
     flex: 1;
     max-height: 481px;
-    // overflow: scroll;
+    overflow-y: auto;
   }
 
   &__header {
@@ -35,6 +35,10 @@
       display: flex;
       align-items: center;
       font-weight: 600;
+
+      img {
+        border-radius: 50%;
+      }
     }
   }
 
@@ -48,6 +52,11 @@
 
     &__name {
       font-weight: bold;
+    }
+
+    &__container {
+      display: flex;
+      flex-direction: column;
     }
 
     &__text {
@@ -134,7 +143,7 @@
       font-weight: 400;
       padding-left: 24px;
       padding-bottom: 7px;
-      border-bottom: 1px solid var(--dark-100);
+      // border-bottom: 1px solid var(--dark-100);
     }
   }
 
