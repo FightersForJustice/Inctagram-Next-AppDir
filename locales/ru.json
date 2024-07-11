@@ -217,10 +217,12 @@
       "Prefix": "за"
     },
     "MyPaymentsTab": {
-      "titleTab": "Мои платежи"
-    },
-    "MyPaymentsTab": {
-      "titleTab": "Мои платежи"
+      "titleTab": "Мои платежи",
+      "DateOfPayment": "Дата платежа",
+      "EndOfPayment": "Дата окончания подписки",
+      "Price": "Цена",
+      "Period": "Тип подписки",
+      "Type": "Средство платежа"
     },
     "AddPhotoModal": {
       "title": "Добавить фото",

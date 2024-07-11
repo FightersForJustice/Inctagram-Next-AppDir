@@ -6,9 +6,13 @@ export const subscriptionsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPayments: builder.query<GetPaymentsResponse[], void>({
       query: () => {
+        const token = sessionStorage.getItem('accessToken');
         return {
           url: 'subscriptions/my-payments',
           method: 'GET',
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
     }),

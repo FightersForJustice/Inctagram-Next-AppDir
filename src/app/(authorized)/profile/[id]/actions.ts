@@ -5,6 +5,28 @@ import { cookies } from 'next/headers';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+export const getPayments = async () => {
+  const accessToken = cookies().get('accessToken');
+
+  const apiUrl = baseUrl + `subscriptions/my-payments`;
+  try {
+    console.log(apiUrl, 11)
+    const response = await fetch(
+      apiUrl,
+      getSubsriptionOptions(accessToken?.value))
+    if (!response.ok) {
+      console.log(response)
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
 export const getSubscriptions = async () => {
   const accessToken = cookies().get('accessToken');
 
