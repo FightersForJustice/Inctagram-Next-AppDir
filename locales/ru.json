@@ -205,10 +205,30 @@
       "browserName" : "Имя браузера"
     },
     "AccountManagementTab": {
-      "titleTab": "Управление"
+      "titleTab": "Управление",
+      "AccountType": "Тип аккаунта",
+      "SubscriptionCost": "Стоимость вашей подписки",
+      "CurrentSubscription": "Текущая подписка",
+      "CurrentSubscriptionStart": "Оформлена",
+      "CurrentSubscriptionEnd": "Истекает",
+      "AutoRenewal": "Автопродление",
+      "Personal": "Персональный",
+      "Business": "Бизнес",
+      "Prefix": "за",
+      "Success": "Успешно",
+      "Error": "Ошибка",
+      "Back": "Назад к оплате",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Оплата прошла успешно!",
+      "CurrentSubscriptionError": "Оплата отклонена. Пожалуйста, обратитесь в поддержку"
     },
     "MyPaymentsTab": {
-      "titleTab": "Мои платежи"
+      "titleTab": "Мои платежи",
+      "DateOfPayment": "Дата платежа",
+      "EndOfPayment": "Дата окончания подписки",
+      "Price": "Цена",
+      "Period": "Тип подписки",
+      "Type": "Средство платежа"
     },
     "AddPhotoModal": {
       "title": "Добавить фото",

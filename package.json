@@ -35,7 +35,6 @@
     "next": "^13.4.9",
     "postcss": "8.4.25",
     "react": "18.2.0",
-    "react-avatar-edit": "^1.2.0",
     "react-dom": "18.2.0",
     "react-easy-crop": "^5.0.5",
     "react-google-recaptcha": "^3.1.0",

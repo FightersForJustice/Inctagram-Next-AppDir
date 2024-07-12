@@ -34,7 +34,11 @@ export const Pagination = ({
         {pageNumbers.map((number) => {
           return (
             <li
-              className={'mx-1.5'}
+              className={`mx-1.5 transition-all cursor-pointer px-2 ${
+                number === currentPage
+                  ? 'bg-slate-100 text-black rounded-sm'
+                  : ''
+              }`}
               key={number}
               onClick={() => paginate(number)}
             >

@@ -1,8 +1,74 @@
 'use server';
+import { getSubsriptionOptions } from '@/app/lib/actionOptions';
 import { accessToken } from '@/utils/serverActions';
 import { cookies } from 'next/headers';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+export const getPayments = async () => {
+  const accessToken = cookies().get('accessToken');
+
+  const apiUrl = baseUrl + `subscriptions/my-payments`;
+  try {
+    console.log(apiUrl, 11)
+    const response = await fetch(
+      apiUrl,
+      getSubsriptionOptions(accessToken?.value))
+    if (!response.ok) {
+      console.log(response)
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
+export const getSubscriptions = async () => {
+  const accessToken = cookies().get('accessToken');
+
+  const apiUrl = baseUrl + `subscriptions/current-payment-subscriptions`;
+  try {
+    console.log(apiUrl, 11)
+    const response = await fetch(
+      apiUrl,
+      getSubsriptionOptions(accessToken?.value))
+    if (!response.ok) {
+      console.log(response)
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+export const getSubscriptionsCosts = async () => {
+  const accessToken = cookies().get('accessToken');
+
+  const apiUrl = baseUrl + `subscriptions/cost-of-payment-subscriptions`;
+  try {
+    console.log(apiUrl, 11)
+    const response = await fetch(
+      apiUrl,
+      getSubsriptionOptions(accessToken?.value))
+    if (!response.ok) {
+      console.log(response)
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
 
 export const getProfile = async (id: number) => {
   const accessToken = cookies().get('accessToken');

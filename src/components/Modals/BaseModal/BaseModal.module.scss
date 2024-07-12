@@ -1,0 +1,102 @@
+@use '@/app/mixins.scss' as s;
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 21;
+ 
+}
+
+.modal__content {
+  // max-width: 378px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // width: 100%;
+  min-width: 360px;
+  flex-direction: column;
+
+  background-color: var(--dark-300);
+  border-radius: 0.125rem;
+  border: 1px solid var(--dark-100);
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  border-bottom: 1px solid var(--dark-100);
+  padding: 12px 24px;
+}
+
+.modal__body {
+  padding: 24px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.baseMmodal__footer {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 0 24px;
+}
+
+.modal__close {
+  cursor: pointer;
+}
+
+.baseMmodal__btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 36px;
+  background-color: var(--primary-500);
+  padding: 6px 36px;
+  border-radius: 2px;
+}
+
+.modal__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+@include s.devices(mobile) {
+  .modal__content {
+    // max-width: 330px;
+  }
+  .modal__header {
+    padding: 12px;
+  }
+  .modal__btn {
+    width: 100%;
+    padding: 12px 0px;
+    margin-bottom: 36px;
+  }
+  .modal__body {
+    padding: 30px 12px 18px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal__footer {
+    padding: 0px 12px;
+  }
+}

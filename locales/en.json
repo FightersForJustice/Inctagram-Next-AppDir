@@ -202,10 +202,30 @@
       "browserName" : "Browser Name"
     },
     "AccountManagementTab": {
-      "titleTab": "Account Management"
+      "titleTab": "Account Management",
+      "AccountType": "Account type",
+      "SubscriptionCost": "Your subscription costs",
+      "CurrentSubscription": "Current Subscription",
+      "CurrentSubscriptionStart": "Expire at",
+      "CurrentSubscriptionEnd": "Next payment",
+      "AutoRenewal": "Auto-Renewal",
+      "Personal": "Personal",
+      "Business": "Business",
+      "Prefix": "per",
+      "Success": "Success",
+      "Error": "Error",
+      "Back": "Back to payment",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Payment was successful!",
+      "CurrentSubscriptionError": "Transaction failed. Please, write to support"
     },
     "MyPaymentsTab": {
-      "titleTab": "My Payments"
+      "titleTab": "My Payments",
+      "DateOfPayment": "Date of Payment",
+      "EndOfPayment": "End date of subscription",
+      "Price": "Price",
+      "Period": "Subscription Type",
+      "Type": "Payment Type"
     },
     "AddPhotoModal": {
       "title": "Add photo",

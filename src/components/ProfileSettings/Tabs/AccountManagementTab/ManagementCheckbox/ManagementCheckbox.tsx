@@ -5,17 +5,18 @@ import './ManagementCheckbox.css';
 
 type Props = {
   autoRenewal: boolean;
+  title: string;
 };
 
-export const ManagementCheckbox: React.FC<Props> = ({ autoRenewal }) => (
+export const ManagementCheckbox: React.FC<Props> = ({ autoRenewal, title }) => (
   <div style={{ display: 'flex', alignItems: 'center', paddingTop: '20px' }}>
-    <Checkbox.Root className="CheckboxRoot" defaultChecked id="c1">
+    <Checkbox.Root className="CheckboxRoot" defaultChecked={autoRenewal} id="c1">
       <Checkbox.Indicator className="CheckboxIndicator">
         <CheckIcon height={22} width={22} />
       </Checkbox.Indicator>
     </Checkbox.Root>
     <label className="Label" htmlFor="c1">
-      Auto-Renewal
+      {title}
     </label>
   </div>
 );
