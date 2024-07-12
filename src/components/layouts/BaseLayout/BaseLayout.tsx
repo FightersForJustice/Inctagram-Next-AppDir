@@ -5,12 +5,13 @@ import styles from './BaseLayout.module.scss';
 type Props = {
   title?: string;
   children: ReactNode;
+  isPublicInfo?: boolean;
 };
 
-export const BaseLayout = ({ children }: Props) => {
+export const BaseLayout = ({ children, isPublicInfo }: Props) => {
   return (
     <div>
-      <Header isAuth={false} />
+      <Header isAuth={false} isPublicInfo={isPublicInfo} />
       <main className={styles.contentContainer}>
         <div className={styles.content}>{children}</div>
       </main>

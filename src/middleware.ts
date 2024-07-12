@@ -20,7 +20,7 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
   const headersList = request.headers;
   const cookiesList = request.cookies;
 
@@ -35,15 +35,17 @@ export async function middleware(request: NextRequest) {
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
 
-  const isAuthPath = AUTH_ROUTES_ARRAY.some((path) => pathname === path);
+  const isValidAuthPath = (pathname: string) => {
+    return AUTH_ROUTES_ARRAY.some((route) => pathname.includes(route));
+  };
 
-  //definitely not auth user
+  const isAuthPath = pathname && isValidAuthPath(pathname);
+
   if (!refreshToken) {
-    console.log('Middleware (User in NOT auth)');
-
+    console.log('Middleware (User in NOT auth)', isAuthPath);
     return isAuthPath
-      ? NextResponse.next()
-      : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
+       ? NextResponse.next()
+       : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
   }
 
   //checking auth refactor
