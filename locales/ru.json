@@ -357,7 +357,9 @@
   "Header": {
     "notifications": {
       "notZeroNotifications": "Уведомления",
-      "zeroNotifications": "У Вас пока нет уведомлений"
+      "zeroNotifications": "У Вас пока нет уведомлений",
+      "logIn": "Войти",
+      "signUp": "Регистрация"
     },
     "mobileMenu": {
       "profileSettings": "Настройки профиля",
@@ -365,5 +367,12 @@
       "favourites": "Избранное",
       "logOut": "Выйти"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Регистрация пользователей"
+  },
+  "ReadMore": {
+    "showMore": "Показать больше",
+    "hide": "Скрыть"
   }
 }

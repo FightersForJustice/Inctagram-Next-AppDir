@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import ProfileServer from './ProfileServer/ProfileServer';
+import ProfileServer from '../../../(not_authorized)/(public-info)/public-post-page/[id]/ProfileServer/ProfileServer';
 import { redirect } from 'next/navigation';
 import { ROUTES } from '@/appRoutes/routes';
 

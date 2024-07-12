@@ -351,7 +351,9 @@
   "Header": {
     "notifications": {
       "notZeroNotifications": "Notifications",
-      "zeroNotifications": "You don't have notifications yet"
+      "zeroNotifications": "You don't have notifications yet",
+      "logIn": "Log in",
+      "signUp": "Sign up"
     },
     "mobileMenu": {
       "profileSettings": "Profile Settings",
@@ -359,5 +361,12 @@
       "favourites": "Favourites",
       "logOut": "Log Out"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Register Users"
+  },
+  "ReadMore": {
+    "showMore": "Show more",
+    "hide": "Hide"
   }
 }

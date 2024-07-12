@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 20px 20px;
+  max-width: 1200px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.postContainer {
+  width: 234px;
+}
+
+.userNameContainer {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--light-100);
+}
