@@ -1,27 +1,29 @@
 'use client';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
 import { getIpAddress, signInAction } from '@/app/lib/actions';
 import { AuthSubmit, FormItem } from '@/components/Input';
 import { SignInSchema } from '@/features/schemas';
 import { SignInData } from '@/features/schemas/SignInSchema';
-
 import { AUTH_ROUTES } from '@/appRoutes/routes';
 import { Loader } from '@/components/Loader';
+import { useMutation } from '@apollo/client';
+import { Login } from '@/api/gqlApi/login';
 import s from './SignInForm.module.scss';
+import Cookies from 'js-cookie';
 
 export const SignInForm = () => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`SignInPage.${key}`);
   const translateErrors = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loadingSignIn, setLoading] = useState(false);
+  const [mutateFunction, { data, loading, error }] = useMutation(Login);
 
   const {
     register,
@@ -38,13 +40,43 @@ export const SignInForm = () => {
   });
   const [showPass, setShowPass] = useState(true);
 
-  const processForm: SubmitHandler<SignInData> = async (data) => {
+  const processForm: SubmitHandler<SignInData> = async (formData) => {
     setLoading(true);
     const userAgent = window.navigator.userAgent;
-    console.log(userAgent);
-    data.email = data.email.toLowerCase();
+    formData.email = formData.email.toLowerCase();
     const ipAddress = await getIpAddress();
-    const signInResult = await signInAction(data, userAgent, ipAddress);
+    if (
+      formData.email === 'admin@gmail.com' &&
+      formData.password === '11admin'
+    ) {
+      // const signInResult = await signInAction(data, userAgent, ipAddress);
+
+      //admin login
+      const res = mutateFunction({
+        variables: { email: formData.email, password: 'admin' },
+      });
+      const data1 = await res;
+      if (data1.data.loginAdmin) {
+        const name = btoa('admin');
+        const lastname = btoa('admin@gmail.com');
+        return Cookies.set('corn', `${name + '-/-' + lastname}`);
+      }
+      // if (signInResult?.success) {
+      //   router.push('/api');
+      // }
+      // console.log(signInResult)
+      else {
+        const statusCode = data1?.errors;
+        const statusMessage = `login.error${statusCode}`;
+        setLoading(false);
+        setError('password', {
+          type: 'manual',
+          message: statusMessage,
+        });
+      }
+    }
+
+    const signInResult = await signInAction(formData, userAgent, ipAddress);
 
     setLoading(false);
     if (signInResult?.success) {
@@ -111,7 +143,7 @@ export const SignInForm = () => {
       >
         {translate('btnBottomName')}
       </Link>
-      {loading && <Loader />}
+      {loadingSignIn && <Loader />}
     </form>
   );
 };

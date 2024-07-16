@@ -1,6 +1,8 @@
 'use client';
 
 import { SignInForm } from '@/components/auth';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { io } from "socket.io-client";
 import ServiceAuth from '@/components/auth/ServiceAuth/ServiceAuth';
 
 import s from './SignIn.module.scss';

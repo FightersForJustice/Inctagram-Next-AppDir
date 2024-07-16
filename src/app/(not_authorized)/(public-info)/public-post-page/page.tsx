@@ -11,8 +11,12 @@ import s from './PublicPage.module.scss';
 import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
+import { headers } from 'next/headers';
 
 const PublicPostPage = async () => {
+  const headersList = headers()
+  const corn = headersList.get('corn');
+  console.log(77, corn)
   const publicPostPageData = await getPublicPostsPage();
   const publicCountRegisterUsers: CountRegisterUser =
     await getCountRegisterUsers();

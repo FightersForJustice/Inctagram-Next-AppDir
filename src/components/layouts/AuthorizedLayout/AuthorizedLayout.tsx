@@ -5,17 +5,17 @@ import { ServerSideBar } from '@/components/Navigation/serverSideBar';
 import styles from './AuthorizedLayout.module.scss';
 
 type Props = {
-  title?: string;
   children: ReactNode;
+  admin?: boolean;
 };
 
-export const AuthorizedLayout = ({ children }: Props) => {
+export const AuthorizedLayout = ({ children, admin = false }: Props) => {
   return (
     <div className={styles.layoutContainer}>
       <Header isAuth />
       <main className={styles.contentContainer}>
         <div className={styles.nav}>
-          <ServerSideBar paidAccount={false} />
+          <ServerSideBar paidAccount={false} admin={admin} />
         </div>
         <div className={styles.content}>{children}</div>
       </main>

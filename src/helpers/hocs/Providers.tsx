@@ -8,6 +8,14 @@ import { Provider } from 'react-redux';
 import { store } from '@/redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ReactNode, useEffect } from 'react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://inctagram.work/api/v1/graphql',
+  cache: new InMemoryCache(),
+});
+
+// graphql
 
 function Providers({ children, lang }: { children: ReactNode; lang: string }) {
   i18n.use(initReactI18next).init({
@@ -52,13 +60,15 @@ function Providers({ children, lang }: { children: ReactNode; lang: string }) {
   //     return null;
   // }
   return (
-    <GoogleOAuthProvider
-      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
-    >
-      <I18nextProvider i18n={i18n}>
-        <Provider store={store}>{children}</Provider>
-      </I18nextProvider>
-    </GoogleOAuthProvider>
+    <ApolloProvider client={client}>
+      <GoogleOAuthProvider
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
+      >
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>{children}</Provider>
+        </I18nextProvider>
+      </GoogleOAuthProvider>
+    </ApolloProvider>
   );
 }
 

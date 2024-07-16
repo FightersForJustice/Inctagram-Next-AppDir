@@ -122,6 +122,9 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
+    "userslist": "Users list",
+    "paymentslist": "Payments list",
+    "postslist": "Posts list",
     "logout": "Log Out",
     "LogoutModal": {
       "title": "Log Out",
