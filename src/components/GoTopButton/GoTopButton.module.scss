@@ -1,0 +1,15 @@
+@use '@/app/mixins.scss' as s;
+
+.button {
+     background-color: rgba(0, 0, 0, 0.3);
+     padding: 8px;
+     position: fixed;
+     right: 30px;
+     bottom: 30px;
+}
+
+@include s.devices(tablet-xl) {
+     .button {
+          bottom: 70px;
+     }
+}
