@@ -1,15 +1,25 @@
 @use '@/app/mixins.scss' as s;
 
 .button {
-     background-color: rgba(0, 0, 0, 0.3);
      padding: 8px;
      position: fixed;
-     right: 30px;
-     bottom: 30px;
+     right: 10px;
+     bottom: 10px;
+
+     &:hover {
+          .arrow {
+               transition: 1s;
+               transform: scale(1.1);
+          }
+     }
 }
 
 @include s.devices(tablet-xl) {
      .button {
           bottom: 70px;
+
+          .arrow {
+               width: 30px;
+          }
      }
 }

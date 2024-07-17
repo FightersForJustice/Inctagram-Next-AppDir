@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
 import s from './GoTopButton.module.scss'
+
+import Image from 'next/image';
+
 export const GoTopButton = () => {
   const [showBtn, setShowBtn] = useState(false)
 
@@ -26,21 +29,19 @@ export const GoTopButton = () => {
     <>
       {showBtn && (
         <button className={s.button}
-          onClick={() => {
-            animateScroll.scrollToTop()
-          }}
+                onClick={() => {
+                  animateScroll.scrollToTop()
+                }}
         >
-          GOTOP
+          <Image
+            className={s.arrow}
+            alt="arrow-top-image"
+            src="/img/arrow-top.svg"
+            width={40}
+            height={40}
+          />
         </button>
       )}
     </>
   )
 }
-
-// const StyledGoTopBtn = styled.button`
-//   background-color: rgba(0, 0, 0, 0.3);
-//   padding: 8px;
-//   position: fixed;
-//   right: 30px;
-//   bottom: 30px;
-// `
