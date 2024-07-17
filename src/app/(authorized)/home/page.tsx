@@ -9,6 +9,7 @@ import { useScrollFetching } from '@/features/customHooks';
 
 import s from './Home.module.scss';
 import { StatusCode } from '@/api/auth.api';
+import { GoTopButton } from '@/components/GoTopButton/GoTopButton';
 
 const Home = () => {
   const [posts, setPosts] = useState<PostsItem[]>([]);
@@ -83,6 +84,7 @@ const Home = () => {
         <div className={s.wrapper} id={'wrapper'}>
           <div className={s.home}>{allPosts}</div>
         </div>
+        <GoTopButton />
       </div>
       {isLoading && <Loader />}
       {fetching && <Loader />}
