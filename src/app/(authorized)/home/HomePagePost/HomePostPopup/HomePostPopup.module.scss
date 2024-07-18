@@ -6,15 +6,15 @@
   &__container {
     position: absolute;
     background-color: var(--dark-500);
-    width: 144px;
-    height: 121px;
+    min-width: 144px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-    padding-left: 12px;
+    padding: 13px 12px;
     top: -2px;
     right: -13px;
+
   }
 
   &__item {
@@ -24,6 +24,13 @@
     gap: 12px;
     cursor: pointer;
     transition: all 0.2s linear;
+
+    p {
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 1.5rem;
+      white-space: nowrap;
+    }
 
     &:hover {
       color: var(--primary-500);

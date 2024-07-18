@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 
-import s from './HomePostPopup.module.scss';
+import s from '../HomePostPopup/HomePostPopup.module.scss';
 import * as Popover from '@radix-ui/react-popover';
+import { useTranslation } from 'react-i18next';
 
-export const HomePostPopup = () => {
+type PropsType = {
+  isMyPost: boolean | null
+}
+
+export const HomePostPopup = ({isMyPost}: PropsType) => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`HomePostPopup.${key}`);
 
   return (
     <div className={s.popup}>
@@ -43,30 +51,47 @@ export const HomePostPopup = () => {
         <Popover.Portal>
           <Popover.Content className="PopoverContent z-10" sideOffset={5}>
             <div className={s.popup__container}>
-              <div className={s.popup__item}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <g clipPath="url(#clip0_311_6079)">
+              {isMyPost ?
+                <div className={s.popup__item}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
                     <path
-                      d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.33 6L12 10.75L5.67 6H18.33ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.25L11.4 12.8C11.5731 12.9298 11.7836 13 12 13C12.2164 13 12.4269 12.9298 12.6 12.8L20 7.25V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
+                      d="M21 6.00001H16V4.33001C15.9765 3.68982 15.7002 3.08506 15.2316 2.6483C14.7629 2.21153 14.1402 1.9784 13.5 2.00001H10.5C9.85975 1.9784 9.23706 2.21153 8.76843 2.6483C8.2998 3.08506 8.02346 3.68982 8 4.33001V6.00001H3C2.73478 6.00001 2.48043 6.10536 2.29289 6.2929C2.10536 6.48043 2 6.73479 2 7.00001C2 7.26522 2.10536 7.51958 2.29289 7.70711C2.48043 7.89465 2.73478 8.00001 3 8.00001H4V19C4 19.7957 4.31607 20.5587 4.87868 21.1213C5.44129 21.6839 6.20435 22 7 22H17C17.7956 22 18.5587 21.6839 19.1213 21.1213C19.6839 20.5587 20 19.7957 20 19V8.00001H21C21.2652 8.00001 21.5196 7.89465 21.7071 7.70711C21.8946 7.51958 22 7.26522 22 7.00001C22 6.73479 21.8946 6.48043 21.7071 6.2929C21.5196 6.10536 21.2652 6.00001 21 6.00001ZM10 4.33001C10 4.17001 10.21 4.00001 10.5 4.00001H13.5C13.79 4.00001 14 4.17001 14 4.33001V6.00001H10V4.33001ZM18 19C18 19.2652 17.8946 19.5196 17.7071 19.7071C17.5196 19.8946 17.2652 20 17 20H7C6.73478 20 6.48043 19.8946 6.29289 19.7071C6.10536 19.5196 6 19.2652 6 19V8.00001H18V19Z"
                       fill="white"
                     />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_311_6079">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <p>Report</p>
-              </div>
+                  </svg>
+                  <p>{translate('delete')}</p>
+                </div>
+                :
+                <div className={s.popup__item}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clipPath="url(#clip0_311_6079)">
+                      <path
+                        d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.33 6L12 10.75L5.67 6H18.33ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.25L11.4 12.8C11.5731 12.9298 11.7836 13 12 13C12.2164 13 12.4269 12.9298 12.6 12.8L20 7.25V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_311_6079">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  <p>{translate('report')}</p>
+                </div>}
 
-              <div className={s.popup__item}>
+              {!isMyPost && <div className={s.popup__item}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -94,8 +119,8 @@ export const HomePostPopup = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                <p>Follow</p>
-              </div>
+                <p>{translate('follow')}</p>
+              </div>}
 
               <div className={s.popup__item}>
                 <svg
@@ -121,7 +146,7 @@ export const HomePostPopup = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                <p>Copy Link</p>
+                <p>{translate('copy')}</p>
               </div>
             </div>
           </Popover.Content>

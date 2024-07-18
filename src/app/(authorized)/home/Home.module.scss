@@ -1,24 +1,18 @@
 @use '@/app/mixins.scss' as s;
 
 .container {
+  display: flex;
+  justify-content: center;
   max-width: 1280px;
   margin: 0 auto;
-  overflow-y: scroll;
-}
-
-.wrapper {
-  display: grid;
-  grid-template-rows: 285px;
-  grid-template-columns: 2fr 10fr;
-  grid-template-areas:
-    'menu profile'
-    'menu profile';
+  overflow-y: auto;
 }
 
 .home {
-  grid-area: profile;
+  display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  gap: 36px;
+  max-width: 491px;
 }
 
 @include s.devices(laptop) {
