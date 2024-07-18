@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { animateScroll } from 'react-scroll';
 import s from './GoTopButton.module.scss'
 
 import Image from 'next/image';
@@ -17,6 +16,13 @@ export const GoTopButton = () => {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
 
@@ -29,9 +35,7 @@ export const GoTopButton = () => {
     <>
       {showBtn && (
         <button className={s.button}
-                onClick={() => {
-                  animateScroll.scrollToTop()
-                }}
+                onClick={scrollToTop}
         >
           <Image
             className={s.arrow}
