@@ -6,7 +6,6 @@ import {
 import { GeneralInformationTab } from '@/components/ProfileSettings/Tabs/GeneralInformationTab/GeneralInformationTab';
 import { fetchCountriesList } from '@/app/lib/actions';
 import { useQuery } from '@apollo/client';
-import { GetUsers } from '@/api/gqlApi/login';
 import { UsersListClient } from '@/components/admin/usersList/usersList';
 
 export default async function UsersList() {

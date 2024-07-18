@@ -16,8 +16,12 @@ import s from './HeaderMenuMobile.module.scss';
 
 export const HeaderMenuMobile = ({
   userEmail = 'mocked',
+  isAdmin = false,
+  isHeader = true,
 }: {
   userEmail: string | null;
+  isAdmin?: boolean;
+  isHeader?: boolean;
 }) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
@@ -67,7 +71,10 @@ export const HeaderMenuMobile = ({
   };
 
   return (
-    <button className={s.container} id="mobileMenu">
+    <button
+      className={s.container}
+      id="mobileMenu"
+    >
       <MenuImage modal={modal} setModal={modalHandler} />
       {modal && (
         <ul className={s.settingsList}>

@@ -21,6 +21,7 @@ export const Pagination = ({
   for (let i = 1; i <= Math.ceil(totalPayments / paymentsPerPage); i++) {
     pageNumbers.push(i);
   }
+ 
   return (
     <div className={'flex items-center mt-4'}>
       <div
@@ -40,7 +41,7 @@ export const Pagination = ({
                   : ''
               }`}
               key={number}
-              onClick={() => paginate(number)}
+              onClick={() => {paginate(number)}}
             >
               <Link href={'#'}>{number}</Link>
             </li>

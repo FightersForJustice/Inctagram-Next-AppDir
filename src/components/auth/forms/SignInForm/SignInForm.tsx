@@ -12,10 +12,9 @@ import { SignInSchema } from '@/features/schemas';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
 import { Loader } from '@/components/Loader';
-import { useMutation } from '@apollo/client';
-import { Login } from '@/api/gqlApi/login';
 import s from './SignInForm.module.scss';
 import Cookies from 'js-cookie';
+import {useLoginAdminMutation} from '@/queries/login/login.generated';
 
 export const SignInForm = () => {
   const { t } = useTranslation();
@@ -23,7 +22,7 @@ export const SignInForm = () => {
   const translateErrors = (key: string): string => t(`Errors.${key}`);
   const router = useRouter();
   const [loadingSignIn, setLoading] = useState(false);
-  const [mutateFunction, { data, loading, error }] = useMutation(Login);
+  const [mutateFunction, {data, loading, error}] = useLoginAdminMutation();
 
   const {
     register,
@@ -56,10 +55,11 @@ export const SignInForm = () => {
         variables: { email: formData.email, password: 'admin' },
       });
       const data1 = await res;
-      if (data1.data.loginAdmin) {
+      if (data1.data?.loginAdmin.logged) {
         const name = btoa('admin');
         const lastname = btoa('admin@gmail.com');
-        return Cookies.set('corn', `${name + '-/-' + lastname}`);
+        Cookies.set('corn', `${name + '-/-' + lastname}`)
+        return router.push('admin/userslist');
       }
       // if (signInResult?.success) {
       //   router.push('/api');

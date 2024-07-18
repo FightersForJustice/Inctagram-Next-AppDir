@@ -20,9 +20,20 @@ export const AUTH_ROUTES = Object.freeze({
   ADMIN_POSTS_LIST: '/admin/postslist',
 });
 
-export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);
-
 export const ROUTES = Object.freeze({
   HOME_PAGE: '/',
   PROFILE: '/profile',
 });
+
+export const ADMIN_ROUTES = Object.freeze({
+  ADMIN_USERS_LIST: '/admin/userslist',
+  ADMIN_STATISTICS: '/admin/statistics',
+  ADMIN_PAYMENTS_LIST: '/admin/paymentslist',
+  ADMIN_POSTS_LIST: '/admin/postslist',
+});
+
+export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);
+export const ADMIN_ROUTES_ARRAY = Object.values(ADMIN_ROUTES);
+
+
+

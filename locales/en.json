@@ -391,5 +391,11 @@
   "ReadMore": {
     "showMore": "Show more",
     "hide": "Hide"
+  },
+  "Admin": {
+    "id": "User ID",
+    "username": "Username",
+    "profile-link": "Profile link",
+    "createdBy": "Date added"
   }
 }

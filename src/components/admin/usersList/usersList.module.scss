@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    .filter {
+        width: 200px;
+    }
+}

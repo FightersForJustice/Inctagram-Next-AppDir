@@ -9,6 +9,7 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|md)\"",
     "test": "jest",
+    "generate": "graphql-codegen",
     "cypress:open": "cypress open"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "eslint-config-next": "13.4.9",
     "fs": "^0.0.1-security",
     "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
     "gsap": "^3.12.5",
     "html2canvas": "^1.4.1",
     "i18next": "^23.7.16",
@@ -64,6 +66,9 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/client-preset": "^4.3.2",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "@graphql-codegen/typescript-urql": "^4.0.0",
     "@parcel/watcher": "^2.4.1",
     "@types/js-cookie": "^3.0.3",
     "@types/negotiator": "^0.6.1",
