@@ -18,14 +18,18 @@ export function Table<T extends PaymentType & UsersListType>(
     data: Array<T>;
     headTitles: Array<string>;
     Row: RowType;
+    setVisiblePopup: (value: boolean) => void;
+    visiblePopup: boolean;
+    setVisiblePopupId: (value: string) => void;
+    setEditUser: (value: string) => void;
+    visiblePopupId: string;
+    setShowAreYouSureModal: (value: boolean) => void;
   }>
 ) {
   const url = useGetParams();
   const [sortedBy, setSort] = React.useState({ sortBy: '', direction: 'asc' });
   const [currentId, setCurrentId] = React.useState();
   const setSorting = (e: string) => {
-    // const currentSort = decksMockHeader[e()[0].id as keyof TableHeadType];
-    // console.log(2, currentSort)
     if (sortedBy.sortBy === e) {
       if (sortedBy.direction === 'asc') {
         return setSort({ sortBy: e, direction: 'desc' });
@@ -52,11 +56,13 @@ export function Table<T extends PaymentType & UsersListType>(
     <div className={s.table}>
       <div className={s.tableHeader}>
         {props.headTitles.map((el, i) => {
-          const clickedValue = headerList[props.Row][i]
+          const clickedValue = headerList[props.Row][i];
           return (
             <div
               key={i}
-              onClick={() => setSorting(clickedValue)}
+              onClick={() => {
+                setSorting(clickedValue);
+              }}
               style={{ cursor: 'pointer' }}
             >
               {el}
@@ -65,31 +71,35 @@ export function Table<T extends PaymentType & UsersListType>(
         })}
       </div>
       <div className={s.tableBody}>
-        {props.data.length ? (
-          // mapping rows
-          props.data.map((payment, index) => {
-            const RowTypes: any = {
-              Payment: <PaymentRow el={payment} />,
-              UsersList: (
-                <UsersListRow
-                  el={{
-                    ...payment,
-                    currentActionId: currentId,
-                    moreAction: setCurrentId,
-                  }}
-                />
-              ),
-            };
-            return (
-              <div key={index} className={s.tableBodyItem}>
-                {RowTypes[props.Row]}
-              </div>
-            );
-          })
-        ) : (
-          // <Loader />
-         null
-        )}
+        {props.data.length
+          ? // mapping rows
+            props.data.map((payment, index) => {
+              const RowTypes: any = {
+                Payment: <PaymentRow el={payment} />,
+                UsersList: (
+                  <UsersListRow
+                    visiblePopup={props.visiblePopup}
+                    setVisiblePopup={props.setVisiblePopup}
+                    visiblePopupId={props.visiblePopupId}
+                    setVisiblePopupId={props.setVisiblePopupId}
+                    setEditUser={props.setEditUser}
+                    el={{
+                      ...payment,
+                      currentActionId: currentId,
+                      moreAction: setCurrentId,
+                    }}
+                    setShowAreYouSureModal={props.setShowAreYouSureModal}
+                  />
+                ),
+              };
+              return (
+                <div key={index} className={s.tableBodyItem}>
+                  {RowTypes[props.Row]}
+                </div>
+              );
+            })
+          : // <Loader />
+            null}
       </div>
     </div>
   );

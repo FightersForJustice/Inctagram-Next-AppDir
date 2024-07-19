@@ -3,7 +3,7 @@ import { PaymentType, UsersListType } from './rowTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import s from './MyPayments.module.scss';
-import { HeaderMenuMobile } from '../Header/HeaderMenuMobile/HeaderMenuMobile';
+import { Dots } from '../admin/usersList/Dots';
 
 export const PaymentRow = ({ el }: { el: PaymentType }) => {
   return (
@@ -16,7 +16,23 @@ export const PaymentRow = ({ el }: { el: PaymentType }) => {
     </>
   );
 };
-export const UsersListRow = ({ el }: { el: UsersListType }) => {
+export const UsersListRow = ({
+  el,
+  setEditUser,
+  setVisiblePopup,
+  setVisiblePopupId,
+  visiblePopup,
+  visiblePopupId,
+  setShowAreYouSureModal,
+}: {
+  el: UsersListType;
+  setVisiblePopup: (value: boolean) => void;
+  visiblePopup: boolean;
+  setVisiblePopupId: (value: string) => void;
+  visiblePopupId: string;
+  setShowAreYouSureModal: (value: boolean) => void;
+  setEditUser: (value: string) => void;
+}) => {
   return (
     <>
       <div className={s.userList}>
@@ -28,7 +44,11 @@ export const UsersListRow = ({ el }: { el: UsersListType }) => {
               width={25}
               height={25}
               className={s.icon}
-              // onClick={() => setShow(!show)}
+              onClick={() => {
+                setVisiblePopupId(el.id.toString())
+                setShowAreYouSureModal(true);
+                setEditUser('unban')
+              }}
             />
           ) : null}
         </span>
@@ -45,6 +65,15 @@ export const UsersListRow = ({ el }: { el: UsersListType }) => {
       </div>
       <div>{dateToFormat(el.createdAt)}</div>
       <div className={s.more_btn}>
+        <Dots
+          setEditUser={setEditUser}
+          id={el.id.toString()}
+          setVisiblePopup={setVisiblePopup}
+          setVisiblePopupId={setVisiblePopupId}
+          visiblePopupId={visiblePopupId}
+          visiblePopup={visiblePopup}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+        />
         {/* <Image
           src={
             el.id !== el.currentActionId
@@ -57,8 +86,6 @@ export const UsersListRow = ({ el }: { el: UsersListType }) => {
           className={s.icon}
           onClick={() => el.moreAction(el.id)}
         /> */}
-        { el.id !== el.currentActionId && (
-            <HeaderMenuMobile userEmail={''} isAdmin isHeader={false} />)}
       </div>
     </>
   );

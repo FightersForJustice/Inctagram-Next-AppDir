@@ -16,12 +16,8 @@ import s from './HeaderMenuMobile.module.scss';
 
 export const HeaderMenuMobile = ({
   userEmail = 'mocked',
-  isAdmin = false,
-  isHeader = true,
 }: {
   userEmail: string | null;
-  isAdmin?: boolean;
-  isHeader?: boolean;
 }) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);

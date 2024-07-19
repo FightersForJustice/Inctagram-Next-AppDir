@@ -63,6 +63,9 @@
     display: flex;
     width: 40px;
   }
+  img {
+    cursor: pointer;
+  }
 }
 
 .link:hover {
@@ -80,7 +83,7 @@
 .more_btn {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 
   img {
     margin-right: 20px;

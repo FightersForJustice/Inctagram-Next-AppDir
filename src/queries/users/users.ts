@@ -63,26 +63,23 @@ export const GetCurrentUser = gql`
   }
 `;
 
-// export const BanCurrentUserDocument = gql`
-//   # Increments a back-end counter and gets its resulting value
-//   mutation BanCurrentUser($banReason: String!, $userId: Int!) {
-//     banUser(banReason: $banReason, userId: $userId) {
-//     }
-//   }
-// `;
+export const BanCurrentUser = gql`
+  # Increments a back-end counter and gets its resulting value
+  mutation BanCurrentUser($banReason: String!, $userId: Int!) {
+    banUser(banReason: $banReason, userId: $userId)
+  }
+`;
 
-// export const UnBanCurrentUserDocument = gql`
-//   # Increments a back-end counter and gets its resulting value
-//   mutation UnBanCurrentUser($userId: Int!) {
-//     unbanUser(userId: $userId) {
-//     }
-//   }
-// `;
+export const UnBanCurrentUserDocument = gql`
+  # Increments a back-end counter and gets its resulting value
+  mutation UnBanCurrentUser($userId: Int!) {
+    unbanUser(userId: $userId)
+  }
+`;
 
-// export const RemoveCurrentUserDocument = gql`
-//   # Increments a back-end counter and gets its resulting value
-//   mutation RemoveCurrentUser($userId: Int!) {
-//     removeUser(userId: $userId) {
-//     }
-//   }
-// `;
+export const RemoveCurrentUserDocument = gql`
+  # Increments a back-end counter and gets its resulting value
+  mutation RemoveCurrentUser($userId: Int!) {
+    removeUser(userId: $userId)
+  }
+`;

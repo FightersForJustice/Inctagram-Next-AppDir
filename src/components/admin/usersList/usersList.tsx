@@ -3,7 +3,7 @@
 import React from 'react';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { headerList } from '@/components/Table/headTypes';
-import { PaymentType, UsersListType } from '@/components/Table/rowTypes';
+import { PaymentType } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
@@ -11,14 +11,20 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from './searchInput/searchInput';
-import s from './usersList.module.scss';
 import { useGetAllUsersQuery } from '@/queries/users/users.generated';
 import { SortDirection, UserBlockStatus } from '@/types';
+import { BanUserModal } from './modals/banUser/banUserModal';
+import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
+import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
+import s from './usersList.module.scss';
 
 export const UsersListClient = () => {
+  const [visiblePopup, setVisiblePopup] = useState(false);
+  const [visiblePopupId, setVisiblePopupId] = useState('');
+  const [editUser, setEditUser] = useState('');
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const urlParams = useSearchParams()!;
   const params = new URLSearchParams(urlParams.toString());
-  const [currentName, setName] = React.useState('');
   const [currentUrlName, setCurrentUrlName] = React.useState(
     (urlParams.get('searchTerm') as string) !== null
       ? (urlParams.get('searchTerm') as string)
@@ -28,7 +34,6 @@ export const UsersListClient = () => {
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.currentTarget.value);
     setCurrentUrlName(event.currentTarget.value);
-    setName(searchInputHandler);
   };
   const url = useGetParams();
   const nextRouter = useRouter();
@@ -65,6 +70,7 @@ export const UsersListClient = () => {
   const tableVariant = 'UsersList';
   const [currentPage, setCurrentPage] = useState(1);
   const [paymentsPerPage, setPaymentsPerPage] = useState(5);
+  // for pagination
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -102,26 +108,22 @@ export const UsersListClient = () => {
     setCurrentUrlName('');
   };
 
-  // React.useEffect(() => {
-  //   if (error?.message) {
-  //     //@ts-ignore
-  //     toastWrapper(error?.response.data.errorMessages[0].message, true);
-  //   }
-  // }, [error]);
-
   React.useEffect(() => {
     params.set('searchTerm', searchInputHandler);
     if (!searchInputHandler.trim()) {
       params.delete('searchTerm');
     }
     setCurrentUrlName(searchInputHandler);
-    setName(searchInputHandler);
     nextRouter.push(`/admin/userslist?${params.toString()}`);
   }, [searchInputHandler]);
 
   React.useEffect(() => {
     refetch();
   }, [url, refetch]);
+
+  const getCurrentUserName = data?.getUsers.users?.find(
+    (el) => el.id === Number(visiblePopupId)
+  )?.userName;
   return (
     <div>
       <div className={s.container}>
@@ -132,6 +134,12 @@ export const UsersListClient = () => {
         data={usersData}
         headTitles={resultHeaderTitle}
         Row={tableVariant}
+        visiblePopup={visiblePopup}
+        setVisiblePopup={setVisiblePopup}
+        visiblePopupId={visiblePopupId}
+        setVisiblePopupId={setVisiblePopupId}
+        setEditUser={setEditUser}
+        setShowAreYouSureModal={setShowAreYouSureModal}
       />
       <Pagination
         currentPage={currentPage}
@@ -141,6 +149,32 @@ export const UsersListClient = () => {
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
       />
+      {showAreYouSureModal && editUser === 'ban' && (
+        <BanUserModal
+          getUsers={refetch}
+          visiblePopupId={visiblePopupId}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopup={setVisiblePopup}
+          name={getCurrentUserName}
+        />
+      )}
+      {showAreYouSureModal && editUser === 'unban' && (
+        <UnBanUserModal
+          getUsers={refetch}
+          visiblePopupId={visiblePopupId}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopup={setVisiblePopup}
+          name={getCurrentUserName}
+        />
+      )}
+      {showAreYouSureModal && editUser === 'delete' && (
+        <DeleteUserModal
+          visiblePopupId={visiblePopupId}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopup={setVisiblePopup}
+          name={getCurrentUserName}
+        />
+      )}
     </div>
   );
 };
