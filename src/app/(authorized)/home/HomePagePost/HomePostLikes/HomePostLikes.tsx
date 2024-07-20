@@ -2,8 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 
 import s from '@/app/(authorized)/home/HomePagePost/HomePagePost.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const HomePostLikes = () => {
+
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
+
   return (
     <>
       <div className={s.post__likes}>
@@ -34,14 +39,14 @@ export const HomePostLikes = () => {
           0 <span className={s.post__likes__text}>Likes</span>
         </p>
       </div>
-      <p className={s.post__comments}>View All Comments (114)</p>
+      <p className={s.post__comments}>{translate('viewComments')} (114)</p>
       <div className={s.post__bottom}>
         <input
           type="text"
           className={s.post__input}
-          placeholder={'Add a comment'}
+          placeholder={translate('addComment') + '...'}
         />
-        <button className={s.post__btn}>Publish</button>
+        <button className={s.post__btn}>{translate('publish')}</button>
       </div>
     </>
   );

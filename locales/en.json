@@ -283,7 +283,8 @@
       "publish" : "Publish",
       "addPublicationDescriptions": "Add publication descriptions",
       "saveChanges" : "Save Changes",
-      "save" : "Save"
+      "save" : "Save",
+      "viewComments": "View All Comments"
     },
     "DeletePostModal": {
       "title": "Close Post",
@@ -388,5 +389,12 @@
   "ReadMore": {
     "showMore": "Show more",
     "hide": "Hide"
+  },
+  "HomePostPopup": {
+    "report": "Report",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "copy": "Copy Link",
+    "delete": "Delete post"
   }
 }
