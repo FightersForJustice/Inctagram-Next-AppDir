@@ -3,7 +3,7 @@
 import React from 'react';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { headerList } from '@/components/Table/headTypes';
-import { PaymentType } from '@/components/Table/rowTypes';
+import { PaymentType, UsersPaymentType } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
@@ -17,8 +17,8 @@ import { BanUserModal } from './modals/banUser/banUserModal';
 import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
 import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
 import { BaseSelector, optionsType } from '@/components/Selector/Selector';
+import { filterValues, selectorOptions, urlOptions } from './constants';
 import s from './usersList.module.scss';
-import { selectorOptions } from './selectFilter/selectFilter';
 
 export const UsersListClient = () => {
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -100,7 +100,8 @@ export const UsersListClient = () => {
           currentActionId: 0,
         };
         const resultData = {} as PaymentType;
-        return Object.assign(correctData, resultData);
+        const result1Data = {} as UsersPaymentType;
+        return Object.assign(correctData, resultData, result1Data);
       })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
@@ -113,10 +114,11 @@ export const UsersListClient = () => {
     };
   });
 
-  const clearFiltersHandler = () => {
-    nextRouter.replace('/admin/usersList');
-    setCurrentUrlName('');
-  };
+  // reserve
+  // const clearFiltersHandler = () => {
+  //   nextRouter.replace('/admin/usersList');
+  //   setCurrentUrlName('');
+  // };
 
   React.useEffect(() => {
     params.set('searchTerm', searchInputHandler);
@@ -134,21 +136,14 @@ export const UsersListClient = () => {
   const getCurrentUserName = data?.getUsers.users?.find(
     (el) => el.id === Number(visiblePopupId)
   )?.userName;
+ 
   const selectHandler = (e: optionsType) => {
-    const urlOptions: any = {
-      choose: 'ALL',
-      blocked: 'BLOCKED',
-      unBlocked: 'UNBLOCKED',
-    };
+    
     const key = 'statusFilter';
     params.set(key, urlOptions[e.value]);
     return nextRouter.push(`userslist?${params.toString()}`);
   };
-  const filterValues: any = {
-    ALL: { value: 'choose', label: 'selectFilter.choose' },
-    BLOCKED: { value: 'blocked', label: 'selectFilter.blocked' },
-    UNBLOCKED: { value: 'unBlocked', label: 'selectFilter.unBlocked' },
-  };
+
   const filterValue = params.get('statusFilter');
 
   //react select issue

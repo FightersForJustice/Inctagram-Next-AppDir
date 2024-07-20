@@ -1,10 +1,21 @@
-import { getPayments } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { gql } from '@apollo/client';
 
 export const GetPayments = gql`
   # Increments a back-end counter and gets its resulting valuequery GetPaymentsList {
-  query getPaymentsList {
-    getPayments {
+  query getPaymentsList(
+    $pageSize: Int
+    $pageNumber: Int
+    $sortBy: String
+    $sortDirection: SortDirection
+    $searchTerm: String
+  ) {
+    getPayments(
+      pageSize: $pageSize
+      pageNumber: $pageNumber
+      sortBy: $sortBy
+      sortDirection: $sortDirection
+      searchTerm: $searchTerm
+    ) {
       pagesCount
       page
       pageSize
@@ -14,6 +25,10 @@ export const GetPayments = gql`
         paymentMethod
         type
         userName
+        createdAt
+        endDate
+        amount
+        currency
         avatars {
           url
           width

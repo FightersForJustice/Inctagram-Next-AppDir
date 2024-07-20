@@ -7,11 +7,13 @@ type HeaderListType = {
   UserPayments: Array<string>;
   UserFollowers: Array<string>;
   UserFolloweing: Array<string>;
+  PaymentsList: Array<string>;
   Posts: Array<string>;
 };
 
 export const headerList: HeaderListType = {
   Payment: ['DateOfPayment', 'EndOfPayment', 'Price', 'Period', 'Type'],
+  PaymentsList: ['userName', 'createdAt', 'amount', 'period', 'type'],
   UsersList: ['id', 'username', 'profile-link', 'createdBy'],
   UploadFiles: ['UserId', 'UserName', 'ProfileLink', 'DateAdded'],
   UserPayments: [

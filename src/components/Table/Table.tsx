@@ -1,19 +1,19 @@
 import React from 'react';
 import { Loader } from '../Loader';
-import { PaymentRow, UsersListRow } from './RowComponents';
-import { PaymentType, RowType, UsersListType } from './rowTypes';
+import { PaymentListRow, PaymentRow, UsersListRow } from './RowComponents';
+import { PaymentType, RowType, UsersListType, UsersPaymentType } from './rowTypes';
 import { useGetParams } from '@/utils/useGetParams';
 import { useSetParams } from '@/utils/useSetParams';
 import { headerList } from './headTypes';
 import s from './MyPayments.module.scss';
 
-const getBaseUrl = {
-  Payment: '/admin/paymentslist',
+const getBaseUrl: any = {
+  PaymentsList: '/admin/paymentslist',
   UsersList: '/admin/userslist',
   Posts: '/admin/postslist',
 };
 
-export function Table<T extends PaymentType & UsersListType>(
+export function Table<T extends PaymentType & UsersListType & UsersPaymentType>(
   props: React.PropsWithChildren<{
     data: Array<T>;
     headTitles: Array<string>;
@@ -21,9 +21,9 @@ export function Table<T extends PaymentType & UsersListType>(
     setVisiblePopup: (value: boolean) => void;
     visiblePopup: boolean;
     setVisiblePopupId: (value: string) => void;
-    setEditUser: (value: string) => void;
+    setEditUser?: (value: string) => void;
     visiblePopupId: string;
-    setShowAreYouSureModal: (value: boolean) => void;
+    setShowAreYouSureModal?: (value: boolean) => void;
   }>
 ) {
   const url = useGetParams();
@@ -76,6 +76,7 @@ export function Table<T extends PaymentType & UsersListType>(
             props.data.map((payment, index) => {
               const RowTypes: any = {
                 Payment: <PaymentRow el={payment} />,
+                PaymentsList: <PaymentListRow el={payment} />,
                 UsersList: (
                   <UsersListRow
                     visiblePopup={props.visiblePopup}

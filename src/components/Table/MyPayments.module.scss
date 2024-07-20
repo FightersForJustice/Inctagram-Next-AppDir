@@ -34,6 +34,7 @@
     display: flex;
     flex-direction: column;
     font-size: 14px;
+
     .tableBodyItem {
       display: flex;
       border-bottom: #171717 1px solid;
@@ -52,7 +53,28 @@
         padding-right: 72px;
         max-width: 145px;
       }
+      .post {
+        &__comment {
+          &__avatar {
+            width: 36px;
+            min-width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-top: 5px;
+            margin-left: 20px;
+          }
+          &__date {
+            margin-left: 20px;
+            max-width: 135px;
+          }
+          &__amount {
+            margin-left: 60px;
+            // max-width: 135px;
+          }
+        }
+      }
     }
+   
   }
 }
 

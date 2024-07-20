@@ -432,6 +432,13 @@
         "yes": "Yes",
         "no": "No"
       }
+    },
+    "paypentlist": {
+      "createdAt": "Date added",
+      "userName": "Username",
+      "amount": "Amount, $",
+      "period": "Subscription",
+      "type": "Payment Method"
     }
   }
 }

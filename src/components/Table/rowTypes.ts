@@ -1,4 +1,6 @@
-export type RowType = 'Payment' | 'UsersList' | 'Posts';
+import { Avatar, CurrencyType, PaymentMethod, SubscriptionType } from '@/types';
+
+export type RowType = 'Payment' | 'UsersList' | 'Posts' | 'PaymentsList';
 
 export type PaymentType = {
   dateOfPayment: string;
@@ -19,6 +21,17 @@ export type UsersListType = {
     userName: string | null | undefined;
   };
   moreAction: (value: number) => void;
+};
+export type UsersPaymentType = {
+  id: number;
+  paymentMethod: PaymentMethod;
+  amount: number | undefined | null;
+  currency: CurrencyType;
+  createdAt: string;
+  endDate: string;
+  type: SubscriptionType;
+  userName: string;
+  avatars: Array<Avatar>;
 };
 
 type UserBanType = {

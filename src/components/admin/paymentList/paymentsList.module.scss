@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  .filter {
+    width: 100%;
+  }
+}

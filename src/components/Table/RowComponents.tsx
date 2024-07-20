@@ -1,8 +1,8 @@
 import { dateToFormat } from '@/utils/dateToFormat';
-import { PaymentType, UsersListType } from './rowTypes';
+import { PaymentType, UsersListType, UsersPaymentType } from './rowTypes';
+import { Dots } from '../admin/usersList/Dots';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Dots } from '../admin/usersList/Dots';
 import s from './MyPayments.module.scss';
 
 export const PaymentRow = ({ el }: { el: PaymentType }) => {
@@ -13,6 +13,28 @@ export const PaymentRow = ({ el }: { el: PaymentType }) => {
       <div>${el.price}</div>
       <div>{el.subscriptionType}</div>
       <div>{el.paymentType}</div>
+    </>
+  );
+};
+export const PaymentListRow = ({ el }: { el: UsersPaymentType }) => {
+  return (
+    <>
+      <Image
+        src={
+          el.avatars.length
+            ? (el.avatars[0].url as string)
+            : '/img/create-post/no-image.png'
+        }
+        alt={'ava'}
+        width={36}
+        height={36}
+        className={s.post__comment__avatar}
+      />
+      <div className={s.post__comment__date}>{el.userName}</div>
+      <div>{dateToFormat(el.createdAt)}</div>
+      <div className={s.post__comment__amount}>{el.amount} $</div>
+      <div>{1}</div>
+      <div>{el.paymentMethod}</div>
     </>
   );
 };
@@ -30,8 +52,8 @@ export const UsersListRow = ({
   visiblePopup: boolean;
   setVisiblePopupId: (value: string) => void;
   visiblePopupId: string;
-  setShowAreYouSureModal: (value: boolean) => void;
-  setEditUser: (value: string) => void;
+  setShowAreYouSureModal?: (value: boolean) => void;
+  setEditUser?: (value: string) => void;
 }) => {
   return (
     <>
@@ -45,9 +67,9 @@ export const UsersListRow = ({
               height={25}
               className={s.icon}
               onClick={() => {
-                setVisiblePopupId(el.id.toString())
-                setShowAreYouSureModal(true);
-                setEditUser('unban')
+                setVisiblePopupId(el.id.toString());
+                setShowAreYouSureModal && setShowAreYouSureModal(true);
+                setEditUser && setEditUser('unban');
               }}
             />
           ) : null}
@@ -66,13 +88,15 @@ export const UsersListRow = ({
       <div>{dateToFormat(el.createdAt)}</div>
       <div className={s.more_btn}>
         <Dots
-          setEditUser={setEditUser}
+          setEditUser={setEditUser ? setEditUser : () => {}}
           id={el.id.toString()}
           setVisiblePopup={setVisiblePopup}
           setVisiblePopupId={setVisiblePopupId}
           visiblePopupId={visiblePopupId}
           visiblePopup={visiblePopup}
-          setShowAreYouSureModal={setShowAreYouSureModal}
+          setShowAreYouSureModal={
+            setShowAreYouSureModal ? setShowAreYouSureModal : () => {}
+          }
         />
       </div>
     </>
