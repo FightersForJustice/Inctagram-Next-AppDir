@@ -18,7 +18,6 @@ export const BanUserModal = (prop: Props) => {
   const [userId, setUserId] = useState('');
   const [reason, setReason] = useState('');
   const [mutateFunction] = useBanCurrentUserMutation();
-  console.log(visiblePopupId)
   const banUserHandler = async () => {
     if (reason.trim()) {
       console.log(userId);

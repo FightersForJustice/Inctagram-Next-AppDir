@@ -2,8 +2,8 @@ import { dateToFormat } from '@/utils/dateToFormat';
 import { PaymentType, UsersListType } from './rowTypes';
 import Image from 'next/image';
 import Link from 'next/link';
-import s from './MyPayments.module.scss';
 import { Dots } from '../admin/usersList/Dots';
+import s from './MyPayments.module.scss';
 
 export const PaymentRow = ({ el }: { el: PaymentType }) => {
   return (
@@ -74,18 +74,6 @@ export const UsersListRow = ({
           visiblePopup={visiblePopup}
           setShowAreYouSureModal={setShowAreYouSureModal}
         />
-        {/* <Image
-          src={
-            el.id !== el.currentActionId
-              ? '/img/more-horizontalBlack.svg'
-              : '/img/more-horizotnal.svg'
-          }
-          alt={''}
-          width={25}
-          height={25}
-          className={s.icon}
-          onClick={() => el.moreAction(el.id)}
-        /> */}
       </div>
     </>
   );

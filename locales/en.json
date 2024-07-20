@@ -402,6 +402,11 @@
       "ban": "Ban in the system",
       "moreInfo": "More Information"
     },
+    "selectFilter": {
+      "blocked": "Blocked",
+      "choose": "Not selected",
+      "unBlocked": "Not Blocked"
+    },
     "userlistModals": {
       "unBanUser": {
         "close": "Unban user",

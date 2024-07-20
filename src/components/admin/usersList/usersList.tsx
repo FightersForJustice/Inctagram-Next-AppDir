@@ -16,7 +16,9 @@ import { SortDirection, UserBlockStatus } from '@/types';
 import { BanUserModal } from './modals/banUser/banUserModal';
 import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
 import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
+import { BaseSelector, optionsType } from '@/components/Selector/Selector';
 import s from './usersList.module.scss';
+import { selectorOptions } from './selectFilter/selectFilter';
 
 export const UsersListClient = () => {
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -32,7 +34,6 @@ export const UsersListClient = () => {
   );
   let searchInputHandler = useDebounce(currentUrlName, 400);
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.currentTarget.value);
     setCurrentUrlName(event.currentTarget.value);
   };
   const url = useGetParams();
@@ -53,6 +54,7 @@ export const UsersListClient = () => {
   const getSortDirection = currentParams?.filter(
     (el) => el[0] === 'sortDirection'
   )[0];
+  const getFilter = currentParams?.filter((el) => el[0] === 'statusFilter')[0];
   const { data, loading, error, refetch } = useGetAllUsersQuery({
     variables: currentParams?.length
       ? {
@@ -63,7 +65,9 @@ export const UsersListClient = () => {
             ? (getSortDirection[1] as SortDirection)
             : ('desc' as SortDirection),
           searchTerm: getSearchValue ? getSearchValue[1] : '',
-          statusFilter: 'ALL' as UserBlockStatus,
+          statusFilter: getFilter
+            ? (getFilter[1] as UserBlockStatus)
+            : ('ALL' as UserBlockStatus),
         }
       : {},
   });
@@ -102,6 +106,12 @@ export const UsersListClient = () => {
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
     return translate(el);
   });
+  const resultFilterOptions = selectorOptions.map((el) => {
+    return {
+      value: el.value,
+      label: translate(el.label),
+    };
+  });
 
   const clearFiltersHandler = () => {
     nextRouter.replace('/admin/usersList');
@@ -124,11 +134,44 @@ export const UsersListClient = () => {
   const getCurrentUserName = data?.getUsers.users?.find(
     (el) => el.id === Number(visiblePopupId)
   )?.userName;
+  const selectHandler = (e: optionsType) => {
+    const urlOptions: any = {
+      choose: 'ALL',
+      blocked: 'BLOCKED',
+      unBlocked: 'UNBLOCKED',
+    };
+    const key = 'statusFilter';
+    params.set(key, urlOptions[e.value]);
+    return nextRouter.push(`userslist?${params.toString()}`);
+  };
+  const filterValues: any = {
+    ALL: { value: 'choose', label: 'selectFilter.choose' },
+    BLOCKED: { value: 'blocked', label: 'selectFilter.blocked' },
+    UNBLOCKED: { value: 'unBlocked', label: 'selectFilter.unBlocked' },
+  };
+  const filterValue = params.get('statusFilter');
+
+  //react select issue
+  //https://github.com/ndom91/react-timezone-select/issues/108
   return (
     <div>
       <div className={s.container}>
         <SearchInput onChange={setNameHandler} />
-        <div className={s.filter}>filter will be here</div>
+        <BaseSelector
+          defaultValue={
+            filterValue
+              ? {
+                  label: translate(filterValues[filterValue].label),
+                  value: filterValues[filterValue].value,
+                }
+              : resultFilterOptions[0]
+          }
+          id={'1filterUserSelect'}
+          name={'filterUserSelect'}
+          selectorsLabelName={''}
+          options={resultFilterOptions}
+          onChange={selectHandler}
+        />
       </div>
       <Table
         data={usersData}
