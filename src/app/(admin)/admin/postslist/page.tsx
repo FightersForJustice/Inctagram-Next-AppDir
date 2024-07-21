@@ -1,18 +1,5 @@
-import { fetchGetMyProfile } from '@/app/lib/data';
-import {
-  ResponseCountries,
-  UserProfileResponse,
-} from '@/app/lib/dataResponseTypes';
-import { GeneralInformationTab } from '@/components/ProfileSettings/Tabs/GeneralInformationTab/GeneralInformationTab';
-import { fetchCountriesList } from '@/app/lib/actions';
+import { PostsListClient } from '@/components/admin/postsList/postsList';
 
 export default async function PostsList() {
-//   const [userInfo, countriesList]: [
-//     userInfo: UserProfileResponse,
-//     countriesList: ResponseCountries,
-//   ] = await Promise.all([fetchGetMyProfile(), fetchCountriesList()]);
-
-  return (
-  <>1dsdd</>
-  );
+  return <PostsListClient />;
 }

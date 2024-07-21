@@ -2,8 +2,20 @@ import { gql } from '@apollo/client';
 
 export const GetCurrentPosts = gql`
   # Increments a back-end counter and gets its resulting valuequery GetPaymentsList {
-  query GetCurrentPosts {
-    getPosts {
+  query GetCurrentPosts(
+    $pageSize: Int
+    $endCursorPostId: Int
+    $sortBy: String
+    $sortDirection: SortDirection
+    $searchTerm: String
+  ) {
+    getPosts(
+      pageSize: $pageSize
+      endCursorPostId: $endCursorPostId
+      sortBy: $sortBy
+      sortDirection: $sortDirection
+      searchTerm: $searchTerm
+    ) {
       pagesCount
       pageSize
       totalCount

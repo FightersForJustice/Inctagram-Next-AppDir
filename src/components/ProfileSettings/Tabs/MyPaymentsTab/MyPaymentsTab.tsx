@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { fakeDataForTesting } from './myPaymentsDATA';
 import { Table } from '@/components/Table/Table';
 import { headerList } from '@/components/Table/headTypes';
-import { UsersListType } from '@/components/Table/rowTypes';
+import { UsersListType, UsersPaymentType } from '@/components/Table/rowTypes';
 
 export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
   const { t } = useTranslation();
@@ -21,7 +21,8 @@ export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
   const currentData = data.length
     ? data.slice(firstPaymentIndex, lastPaymentIndex).map((el)=>{
       const resultData = {} as UsersListType;
-      return Object.assign(el, resultData);
+      const resultData1 = {} as UsersPaymentType;
+      return Object.assign(el, resultData, resultData1);
     })
     : [];
   const paginate = (pageNumber: number) => {

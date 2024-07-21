@@ -3,7 +3,13 @@ import * as Types from '../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetCurrentPostsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetCurrentPostsQueryVariables = Types.Exact<{
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  endCursorPostId?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  sortDirection?: Types.InputMaybe<Types.SortDirection>;
+  searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>;
+}>;
 
 
 export type GetCurrentPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'PostsPaginationModel', pagesCount: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'Post', id: number, ownerId: number, description: string, createdAt: any, updatedAt: any, images?: Array<{ __typename?: 'ImagePost', id?: number | null, createdAt?: any | null, url?: string | null, width?: number | null, height?: number | null, fileSize?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', id: number, userName: string, avatars?: Array<{ __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null, fileSize?: number | null }> | null } }> } };
@@ -18,8 +24,14 @@ export type GetCurrentUserPostsQuery = { __typename?: 'Query', getPostsByUser: {
 
 
 export const GetCurrentPostsDocument = gql`
-    query GetCurrentPosts {
-  getPosts {
+    query GetCurrentPosts($pageSize: Int, $endCursorPostId: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {
+  getPosts(
+    pageSize: $pageSize
+    endCursorPostId: $endCursorPostId
+    sortBy: $sortBy
+    sortDirection: $sortDirection
+    searchTerm: $searchTerm
+  ) {
     pagesCount
     pageSize
     totalCount
@@ -64,6 +76,11 @@ export const GetCurrentPostsDocument = gql`
  * @example
  * const { data, loading, error } = useGetCurrentPostsQuery({
  *   variables: {
+ *      pageSize: // value for 'pageSize'
+ *      endCursorPostId: // value for 'endCursorPostId'
+ *      sortBy: // value for 'sortBy'
+ *      sortDirection: // value for 'sortDirection'
+ *      searchTerm: // value for 'searchTerm'
  *   },
  * });
  */

@@ -9,7 +9,6 @@ type PropType = {
 export const SearchInput = (prop: PropType) => {
   return (
     <div className={s.search}>
-      <h2 className={s.search__title}>Search</h2>
       <input
         className={s.search__input}
         type="text"
