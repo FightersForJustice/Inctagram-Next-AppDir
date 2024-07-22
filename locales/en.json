@@ -453,7 +453,10 @@
       "startDate": "Date of Payment",
       "endDate": "End date of subscription",
       "type": "Subscription Type",
-      "paymentType": "Payment Type"
+      "paymentType": "Payment Type",
+      "userId": "User ID",
+      "userIdFollowers": "Profile link",
+      "createdAtFollowers": "Subscription Date"
     }
   }
 }

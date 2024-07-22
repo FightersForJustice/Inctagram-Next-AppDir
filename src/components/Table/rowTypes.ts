@@ -11,6 +11,8 @@ export type RowType =
   | 'UsersList'
   | 'Posts'
   | 'PaymentsList'
+  | 'UserFollowers'
+  | 'UserFollowing'
   | 'UserPayments';
 
 export type PaymentType = {
@@ -43,6 +45,7 @@ export type UsersListType = {
   };
   moreAction: (value: number) => void;
 };
+
 export type UsersPaymentType = {
   id: number;
   paymentMethod: PaymentMethod;

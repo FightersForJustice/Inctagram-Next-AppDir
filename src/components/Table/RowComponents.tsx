@@ -1,9 +1,15 @@
 import { dateToFormat } from '@/utils/dateToFormat';
-import { PaymentType, ResultUserPaymentsType, UsersListType, UsersPaymentType } from './rowTypes';
+import {
+  PaymentType,
+  ResultUserPaymentsType,
+  UsersListType,
+  UsersPaymentType,
+} from './rowTypes';
 import { Dots } from '../admin/usersList/Dots';
 import Image from 'next/image';
 import Link from 'next/link';
 import s from './MyPayments.module.scss';
+import { Follow } from '@/types';
 
 export const PaymentRow = ({ el }: { el: PaymentType }) => {
   return (
@@ -13,6 +19,23 @@ export const PaymentRow = ({ el }: { el: PaymentType }) => {
       <div>${el.price}</div>
       <div>{el.subscriptionType}</div>
       <div>{el.paymentType}</div>
+    </>
+  );
+};
+export const FollowersListByUserRow = ({ el }: { el: Follow }) => {
+  return (
+    <>
+      <div>{el.userId}</div>
+      <div>{el.userName}</div>
+      <div className={s.link}>
+        <Link
+          href={'/admin/profile/photos/' + el.userId}
+          style={{ textDecoration: 'underline' }}
+        >
+          {el.userName}
+        </Link>
+      </div>
+      <div>{dateToFormat(el.createdAt)}</div>
     </>
   );
 };
@@ -38,11 +61,17 @@ export const PaymentListRow = ({ el }: { el: UsersPaymentType }) => {
     </>
   );
 };
-export const PaymentListByUserRow = ({ el }: { el: ResultUserPaymentsType }) => {
+export const PaymentListByUserRow = ({
+  el,
+}: {
+  el: ResultUserPaymentsType;
+}) => {
   return (
     <>
       <div>{dateToFormat(el.startDate)}</div>
-      <div className={s.post__comment__start_date}>{dateToFormat(el.endDate)}</div>
+      <div className={s.post__comment__start_date}>
+        {dateToFormat(el.endDate)}
+      </div>
       <div className={s.post__comment__amount_user}>{el.price} $</div>
       <div>{1}</div>
       <div>{el.paymentType}</div>

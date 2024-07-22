@@ -460,7 +460,10 @@
       "type": "Тип подписки",
       "paymentType": "Тип оплаты",
       "endDate": "Конец подписки",
-      "startDate": "Начало подписки"
+      "startDate": "Начало подписки",
+      "userId": "ID Пользователя",
+      "userIdFollowers": "Профиль",
+      "createdAtFollowers": "Подписан"
     }
   }
 }

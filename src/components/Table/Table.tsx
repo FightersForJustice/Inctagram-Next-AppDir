@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Loader } from '../Loader';
-import { PaymentListByUserRow, PaymentListRow, PaymentRow, UsersListRow } from './RowComponents';
+import { FollowersListByUserRow, PaymentListByUserRow, PaymentListRow, PaymentRow, UsersListRow } from './RowComponents';
 import {
   PaymentType,
   ResultUserPaymentsType,
@@ -14,12 +14,13 @@ import { headerList } from './headTypes';
 import Image from 'next/image';
 import s from './MyPayments.module.scss';
 import clsx from 'clsx';
-import { SortDirection } from '@/types';
+import { Follow, SortDirection } from '@/types';
 
 export function Table<
   T extends PaymentType &
     UsersListType &
     UsersPaymentType &
+    Follow &
     ResultUserPaymentsType,
 >(
   props: React.PropsWithChildren<{
@@ -41,6 +42,8 @@ export function Table<
     Posts: '/admin/postslist',
     Payment: '/profile/settings-profile/my-payments',
     UserPayments: '/admin/profile/payments/' + props.id,
+    UserFollowers: '/admin/profile/followers/' + props.id,
+    UserFollowing: '/admin/profile/following/' + props.id,
   };
   const url = useGetParams();
   let currentParams = url
@@ -99,12 +102,12 @@ export function Table<
               sortedBy.sortBy === headerList[props.Row][i] &&
               sortedBy.direction === 'asc',
           });
-          const containerStyle = clsx(s.icon, {
-            [s.icon__hide]: sortedBy.sortBy !== headerList[props.Row][i],
-            [s.icon__rotate]:
-              sortedBy.sortBy === headerList[props.Row][i] &&
-              sortedBy.direction === 'asc',
-          });
+          // const containerStyle = clsx(s.icon, {
+          //   [s.icon__hide]: sortedBy.sortBy !== headerList[props.Row][i],
+          //   [s.icon__rotate]:
+          //     sortedBy.sortBy === headerList[props.Row][i] &&
+          //     sortedBy.direction === 'asc',
+          // });
           return (
             <div
               key={i}
@@ -133,6 +136,8 @@ export function Table<
                 Payment: <PaymentRow el={payment} />,
                 PaymentsList: <PaymentListRow el={payment} />,
                 UserPayments: <PaymentListByUserRow el={payment} />,
+                UserFollowers: <FollowersListByUserRow el={payment} />,
+                UserFollowing: <FollowersListByUserRow el={payment} />,
                 UsersList: (
                   <UsersListRow
                     visiblePopup={

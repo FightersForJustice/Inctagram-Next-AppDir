@@ -10,7 +10,7 @@ type HeaderListType = {
   UploadFiles: Array<string>;
   UserPayments: Array<string>;
   UserFollowers: Array<string>;
-  UserFolloweing: Array<string>;
+  UserFollowing: Array<string>;
   PaymentsList: Array<string>;
   Posts: Array<string>;
 };
@@ -27,7 +27,7 @@ export const headerList: HeaderListType = {
     'type',
     'paymentType',
   ],
-  UserFollowers: ['UserId', 'UserName', 'ProfileLink', 'SubscriptionDate'],
-  UserFolloweing: ['UserId', 'UserName', 'ProfileLink', 'SubscriptionDate'],
+  UserFollowers: ['userId', 'userName', 'userIdFollowers', 'createdAtFollowers'],
+  UserFollowing: ['userId', 'userName', 'userIdFollowers', 'createdAtFollowers'],
   Posts: ['UserId', 'UserName', 'ProfileLink', 'SubscriptionDate'],
 };
