@@ -10,15 +10,15 @@ import { useGetParams } from '@/utils/useGetParams';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchInput } from './searchInput/searchInput';
 import { useGetAllUsersQuery } from '@/queries/users/users.generated';
 import { SortDirection, UserBlockStatus } from '@/types';
 import { BanUserModal } from './modals/banUser/banUserModal';
 import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
 import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
 import { BaseSelector, optionsType } from '@/components/Selector/Selector';
-import { filterValues, selectorOptions, urlOptions } from './constants';
+import { filterValues, selectorOptions, urlOptions } from '../shared/constants';
 import s from './usersList.module.scss';
+import { SearchInput } from '../shared/searchInput/searchInput';
 
 export const UsersListClient = () => {
   const [visiblePopup, setVisiblePopup] = useState(false);

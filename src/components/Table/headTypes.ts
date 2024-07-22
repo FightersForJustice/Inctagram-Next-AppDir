@@ -1,4 +1,8 @@
-export type HeadType = 'Payment' | 'UsersList' | 'UploadFiles' | 'UserPayments';
+export type HeadType =
+  | 'Payment'
+  | 'UsersList'
+  | 'UploadFiles'
+  | 'UserPayments';
 
 type HeaderListType = {
   Payment: Array<string>;
@@ -13,15 +17,15 @@ type HeaderListType = {
 
 export const headerList: HeaderListType = {
   Payment: ['DateOfPayment', 'EndOfPayment', 'Price', 'Period', 'Type'],
-  PaymentsList: ['userName', 'createdAt', 'amount', 'period', 'type'],
+  PaymentsList: ['userName', 'createdAt', 'price', 'period', 'type'],
   UsersList: ['id', 'username', 'profile-link', 'createdBy'],
   UploadFiles: ['UserId', 'UserName', 'ProfileLink', 'DateAdded'],
   UserPayments: [
-    'DateOfPayment',
-    'EndSubscription',
-    'Amount',
-    'SybscriptionType',
-    'PaymentType',
+    'startDate',
+    'endDate',
+    'price',
+    'type',
+    'paymentType',
   ],
   UserFollowers: ['UserId', 'UserName', 'ProfileLink', 'SubscriptionDate'],
   UserFolloweing: ['UserId', 'UserName', 'ProfileLink', 'SubscriptionDate'],

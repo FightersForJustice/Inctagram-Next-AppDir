@@ -448,9 +448,12 @@
     "paypentlist": {
       "createdAt": "Date added",
       "userName": "Username",
-      "amount": "Amount, $",
+      "price": "Amount, $",
       "period": "Subscription",
-      "type": "Payment Method"
+      "startDate": "Date of Payment",
+      "endDate": "End date of subscription",
+      "type": "Subscription Type",
+      "paymentType": "Payment Type"
     }
   }
 }

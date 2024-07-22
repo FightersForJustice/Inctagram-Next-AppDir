@@ -1,14 +1,35 @@
-import { Avatar, CurrencyType, PaymentMethod, SubscriptionType } from '@/types';
+import {
+  Avatar,
+  CurrencyType,
+  PaymentMethod,
+  StatusSubscriptionType,
+  SubscriptionType,
+} from '@/types';
 
-export type RowType = 'Payment' | 'UsersList' | 'Posts' | 'PaymentsList';
+export type RowType =
+  | 'Payment'
+  | 'UsersList'
+  | 'Posts'
+  | 'PaymentsList'
+  | 'UserPayments';
 
 export type PaymentType = {
   dateOfPayment: string;
   endDateOfSubscription: string;
   price: number;
   subscriptionType: string;
-  paymentType: string;
+  paymentType: PaymentMethod;
 };
+
+type ProfileUserPaymentType = {
+  status: StatusSubscriptionType;
+  businessAccountId: number;
+  startDate: string;
+  endDate: string;
+  type: SubscriptionType;
+};
+
+export type ResultUserPaymentsType = ProfileUserPaymentType & PaymentType;
 
 export type UsersListType = {
   createdAt: string;
@@ -26,6 +47,7 @@ export type UsersPaymentType = {
   id: number;
   paymentMethod: PaymentMethod;
   amount: number | undefined | null;
+  price?: number | undefined | null;
   currency: CurrencyType;
   createdAt: string;
   endDate: string;

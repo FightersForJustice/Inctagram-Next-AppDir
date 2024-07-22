@@ -1,5 +1,5 @@
 import { dateToFormat } from '@/utils/dateToFormat';
-import { PaymentType, UsersListType, UsersPaymentType } from './rowTypes';
+import { PaymentType, ResultUserPaymentsType, UsersListType, UsersPaymentType } from './rowTypes';
 import { Dots } from '../admin/usersList/Dots';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ export const PaymentListRow = ({ el }: { el: UsersPaymentType }) => {
     <>
       <Image
         src={
-          el.avatars.length
+          el.avatars?.length
             ? (el.avatars[0].url as string)
             : '/img/create-post/no-image.png'
         }
@@ -32,9 +32,20 @@ export const PaymentListRow = ({ el }: { el: UsersPaymentType }) => {
       />
       <div className={s.post__comment__date}>{el.userName}</div>
       <div>{dateToFormat(el.createdAt)}</div>
-      <div className={s.post__comment__amount}>{el.amount} $</div>
+      <div className={s.post__comment__amount}>{el.price} $</div>
       <div>{1}</div>
       <div>{el.paymentMethod}</div>
+    </>
+  );
+};
+export const PaymentListByUserRow = ({ el }: { el: ResultUserPaymentsType }) => {
+  return (
+    <>
+      <div>{dateToFormat(el.startDate)}</div>
+      <div className={s.post__comment__start_date}>{dateToFormat(el.endDate)}</div>
+      <div className={s.post__comment__amount_user}>{el.price} $</div>
+      <div>{1}</div>
+      <div>{el.paymentType}</div>
     </>
   );
 };

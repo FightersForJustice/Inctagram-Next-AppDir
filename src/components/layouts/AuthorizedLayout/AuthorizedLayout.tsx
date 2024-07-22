@@ -12,7 +12,7 @@ type Props = {
 export const AuthorizedLayout = ({ children, admin = false }: Props) => {
   return (
     <div className={styles.layoutContainer}>
-      <Header isAuth />
+      <Header isAuth isAdmin={admin} />
       <main className={styles.contentContainer}>
         <div className={styles.nav}>
           <ServerSideBar paidAccount={false} admin={admin} />

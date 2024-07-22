@@ -10,32 +10,26 @@ import {
   UsersPaymentType,
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
-import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Avatar, CurrencyType, SortDirection } from '@/types';
-import { useGetPaymentsListQuery } from '@/queries/payments/payments.generated';
-import s from './paymentsList.module.scss';
-import { SearchInput } from '../shared/searchInput/searchInput';
+import {
+  PaymentMethod,
+  SortDirection,
+  StatusSubscriptionType,
+  SubscriptionType,
+} from '@/types';
+import {
+  useGetPaymentsByUserQueryQuery,
+} from '@/queries/payments/payments.generated';
 
-export const PaymentsListClient = () => {
-  const urlParams = useSearchParams()!;
-  const params = new URLSearchParams(urlParams.toString());
-  const [currentUrlName, setCurrentUrlName] = React.useState(
-    (urlParams.get('searchTerm') as string) !== null
-      ? (urlParams.get('searchTerm') as string)
-      : ''
-  );
-  let searchInputHandler = useDebounce(currentUrlName, 400);
-  const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentUrlName(event.currentTarget.value);
-  };
+export const PaymentsClient = ({ id }: { id: string }) => {
   const url = useGetParams();
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
+  // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
   let currentParams = url
     ?.slice(1)
     .split('&')
@@ -51,20 +45,20 @@ export const PaymentsListClient = () => {
   const getSortDirection = currentParams?.filter(
     (el) => el[0] === 'sortDirection'
   )[0];
-  const { data, loading, error, refetch } = useGetPaymentsListQuery({
+  const { data, loading, error, refetch } = useGetPaymentsByUserQueryQuery({
     variables: currentParams?.length
       ? {
+          userId: Number(id),
           pageSize: 10,
           pageNumber: 1,
           sortBy: getSortValues ? getSortValues[1] : '',
           sortDirection: getSortDirection
             ? (getSortDirection[1] as SortDirection)
             : ('desc' as SortDirection),
-          searchTerm: getSearchValue ? getSearchValue[1] : '',
         }
-      : {},
+      : { userId: Number(id) },
   });
-  const tableVariant = 'PaymentsList';
+  const tableVariant = 'UserPayments';
   const [currentPage, setCurrentPage] = useState(1);
   const [paymentsPerPage, setPaymentsPerPage] = useState(5);
   // for pagination
@@ -72,45 +66,29 @@ export const PaymentsListClient = () => {
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
   const usersPaymentsData = data
-    ? data.getPayments.items.map((el) => {
+    ? data.getPaymentsByUser.items.map((el) => {
         const correctData = {
-          id: el.id,
-          paymentMethod: el.paymentMethod,
-          createdAt: el.createdAt,
-          currency: el.currency ? el.currency : ('USD' as CurrencyType),
+          dateOfPayment: el.dateOfPayment,
+          endDateOfSubscription: '',
+          price: el.price,
+          subscriptionType: '',
+          paymentType: el.paymentType as PaymentMethod,
+
+          status: 'ACTIVE' as StatusSubscriptionType,
+          businessAccountId: 1,
+          startDate: el.startDate,
           endDate: el.endDate,
-          amount: el.amount,
-          type: el.type,
-          userName: el.userName,
-          avatars: el.avatars?.length ? el.avatars : ([] as Array<Avatar>),
-          price: el.amount
+          type: el.type as SubscriptionType,
         };
-        const resultData = {} as PaymentType;
-        const result1Data = {} as UsersListType;
-        const result2Data = {} as ResultUserPaymentsType;
-        return Object.assign(correctData, resultData, result1Data, result2Data);
+        const resultData = {} as UsersListType;
+        const resultData1 = {} as UsersPaymentType;
+        return Object.assign(resultData, resultData1, correctData);
       })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
     return translate(el);
   });
-
-  // reserve
-  // const clearFiltersHandler = () => {
-  //   nextRouter.replace('/admin/usersList');
-  //   setCurrentUrlName('');
-  // };
-
-  React.useEffect(() => {
-    params.set('searchTerm', searchInputHandler);
-    if (!searchInputHandler.trim()) {
-      params.delete('searchTerm');
-    }
-    setCurrentUrlName(searchInputHandler);
-    nextRouter.push(`/admin/paymentslist?${params.toString()}`);
-  }, [searchInputHandler]);
 
   React.useEffect(() => {
     refetch();
@@ -120,19 +98,17 @@ export const PaymentsListClient = () => {
   //https://github.com/ndom91/react-timezone-select/issues/108
   return (
     <div>
-      <div className={s.container}>
-        <SearchInput onChange={setNameHandler} />
-      </div>
       <Table
         data={usersPaymentsData}
         headTitles={resultHeaderTitle}
         Row={tableVariant}
+        id={id}
       />
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         paginate={paginate}
-        totalPayments={data ? data.getPayments.totalCount : [].length}
+        totalPayments={data ? data.getPaymentsByUser.totalCount : 0}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
       />

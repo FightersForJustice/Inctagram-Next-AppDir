@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Loader } from '../Loader';
-import { PaymentListRow, PaymentRow, UsersListRow } from './RowComponents';
+import { PaymentListByUserRow, PaymentListRow, PaymentRow, UsersListRow } from './RowComponents';
 import {
   PaymentType,
+  ResultUserPaymentsType,
   RowType,
   UsersListType,
   UsersPaymentType,
@@ -15,14 +16,12 @@ import s from './MyPayments.module.scss';
 import clsx from 'clsx';
 import { SortDirection } from '@/types';
 
-const getBaseUrl: any = {
-  PaymentsList: '/admin/paymentslist',
-  UsersList: '/admin/userslist',
-  Posts: '/admin/postslist',
-  Payment: '/profile/settings-profile/my-payments',
-};
-
-export function Table<T extends PaymentType & UsersListType & UsersPaymentType>(
+export function Table<
+  T extends PaymentType &
+    UsersListType &
+    UsersPaymentType &
+    ResultUserPaymentsType,
+>(
   props: React.PropsWithChildren<{
     data: Array<T>;
     headTitles: Array<string>;
@@ -32,9 +31,17 @@ export function Table<T extends PaymentType & UsersListType & UsersPaymentType>(
     setVisiblePopupId?: (value: string) => void;
     setEditUser?: (value: string) => void;
     visiblePopupId?: string;
+    id?: string;
     setShowAreYouSureModal?: (value: boolean) => void;
   }>
 ) {
+  const getBaseUrl: any = {
+    PaymentsList: '/admin/paymentslist',
+    UsersList: '/admin/userslist',
+    Posts: '/admin/postslist',
+    Payment: '/profile/settings-profile/my-payments',
+    UserPayments: '/admin/profile/payments/' + props.id,
+  };
   const url = useGetParams();
   let currentParams = url
     ?.slice(1)
@@ -125,6 +132,7 @@ export function Table<T extends PaymentType & UsersListType & UsersPaymentType>(
               const RowTypes: any = {
                 Payment: <PaymentRow el={payment} />,
                 PaymentsList: <PaymentListRow el={payment} />,
+                UserPayments: <PaymentListByUserRow el={payment} />,
                 UsersList: (
                   <UsersListRow
                     visiblePopup={

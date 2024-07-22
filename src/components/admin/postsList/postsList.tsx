@@ -15,7 +15,7 @@ import { useGetParams } from '@/utils/useGetParams';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchInput } from './searchInput/searchInput';
+import { SearchInput } from '../shared/searchInput/searchInput';
 import { Avatar, CurrencyType, SortDirection } from '@/types';
 import s from './postsList.module.scss';
 import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
