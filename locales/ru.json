@@ -139,6 +139,18 @@
     "logoutError": "Выход не выполнен"
   },
   "SettingsProfilePage": {
+    "AdminGeneralInformationTab": {
+      "titleTab": "Загруженные фото"
+    },
+    "AdminDevicesTab": {
+      "titleTab": "Оплаты"
+    },
+    "AdminAccountManagementTab": {
+      "titleTab": "Подписки"
+    },
+    "AdminMyPaymentsTab": {
+      "titleTab": "Подписчики"
+    },
     "GeneralInformationTab": {
       "titleTab": "Общая информация",
       "username": "Логин",

@@ -79,7 +79,7 @@ export const UsersListRow = ({
       <div>{el.userName}</div>
       <div className={s.link}>
         <Link
-          href={'/admin/profile/' + el.id}
+          href={'/admin/profile/photos/' + el.id}
           style={{ textDecoration: 'underline' }}
         >
           {el.profile.userName}

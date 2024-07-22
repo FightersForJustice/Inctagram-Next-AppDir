@@ -136,6 +136,18 @@
     "logoutError": "Log Out Failed"
   },
   "SettingsProfilePage": {
+    "AdminGeneralInformationTab": {
+      "titleTab": "Uploaded photos"
+    },
+    "AdminDevicesTab": {
+      "titleTab": "Payments"
+    },
+    "AdminAccountManagementTab": {
+      "titleTab": "Followers"
+    },
+    "AdminMyPaymentsTab": {
+      "titleTab": "Following"
+    },
     "GeneralInformationTab": {
       "titleTab": "General Information",
       "username": "Username",
