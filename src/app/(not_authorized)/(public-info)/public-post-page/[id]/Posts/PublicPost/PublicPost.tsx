@@ -28,8 +28,13 @@ export const PublicPost = ({ post, userProfile }: Props) => {
   return (
     <>
       <div className={s.postWrapper}>
-        <Post post={post} userData={userProfile} myProfile={false} />
-        <Link href={AUTH_ROUTES.PUBLIC_PROFILE_PAGE + `${'/' + post.ownerId}`}>
+        <Post
+          post={post}
+          userData={userProfile}
+          myProfile={false}
+          type={'publicPage'}
+        />
+        <Link href={AUTH_ROUTES.PUBLIC_PROFILE + `${'/' + post.ownerId}`}>
           <div className={s.userContainer}>
             <Image
               src={post.avatarOwner ?? '/img/create-post/no-image.png'}
