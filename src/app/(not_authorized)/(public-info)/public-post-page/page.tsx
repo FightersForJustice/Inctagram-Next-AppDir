@@ -12,18 +12,29 @@ import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
 
-const PublicPostPage = async () => {
+type Props = {
+  searchParams?: { [key: string]: string | undefined };
+};
+
+const PublicPostPage = async ({ searchParams }: Props) => {
   const publicPostPageData = await getPublicPostsPage();
   const publicCountRegisterUsers: CountRegisterUser =
     await getCountRegisterUsers();
 
+  const postIdFromUrl = searchParams?.post;
+
   const postsImages = () => {
     return publicPostPageData.items.slice(0, 4).map(async (i: PostType) => {
       const userProfile = await getPublicProfile(i.ownerId);
+      const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
 
       return (
         <div key={i.id} className={s.postContainer}>
-          <PublicPost post={i} userProfile={userProfile} />
+          <PublicPost
+            post={i}
+            userProfile={userProfile}
+            isOpenByLink={isOpenByLink}
+          />
         </div>
       );
     });

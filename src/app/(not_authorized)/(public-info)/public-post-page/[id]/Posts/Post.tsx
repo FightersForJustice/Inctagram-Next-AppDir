@@ -1,10 +1,4 @@
 'use client';
-import Image from 'next/image';
-
-import s from './Posts.module.scss';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import {
   getPostsDelete,
   updatePost,
@@ -14,24 +8,34 @@ import {
   EditPostMobile,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/EditPost';
 import { PostContent } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent';
-import { useDispatch } from 'react-redux';
-import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { PostContentMobile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostContentMobile';
-import { UserProfile, PostType } from '../types';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { AUTH_ROUTES } from 'src/appRoutes/routes';
+import { PostType, UserProfile } from '../types';
+
+import s from './Posts.module.scss';
 
 type Props = {
   post: PostType;
   userData: UserProfile;
   myProfile: boolean;
+  type?: 'publicPage' | 'publicProfile';
+  isOpenByLink?: boolean;
 };
 
-export function Post({ post, userData, myProfile }: Props) {
+export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -81,11 +85,26 @@ export function Post({ post, userData, myProfile }: Props) {
   const openModalWithPost = (id: number) => {
     if (myProfile) {
       router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
+    } else if (type === 'publicPage') {
+      router.push(`${AUTH_ROUTES.PUBLIC_POST_PAGE}?post=${id}`, {
+        scroll: false,
+      });
+    } else {
+      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}?post=${id}`, {
+        scroll: false,
+      });
     }
   };
+
   const closeModal = () => {
     if (myProfile) {
       router.push(`/profile/${userData.id}`, { scroll: false });
+    } else if (type === 'publicPage') {
+      router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
+    } else {
+      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}`, {
+        scroll: false,
+      });
     }
   };
 
@@ -93,6 +112,10 @@ export function Post({ post, userData, myProfile }: Props) {
     setOpenPostModal(false);
     closeModal();
   };
+
+  useEffect(() => {
+    isOpenByLink && !openPostModal && onOpenPost();
+  }, []);
 
   const isMyPost =
     width <= 521 ? (
