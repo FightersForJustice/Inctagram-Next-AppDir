@@ -3,7 +3,12 @@
 import React from 'react';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { headerList } from '@/components/Table/headTypes';
-import { PaymentType, ResultUserPaymentsType, UsersListType, UsersPaymentType } from '@/components/Table/rowTypes';
+import {
+  PaymentType,
+  ResultUserPaymentsType,
+  UsersListType,
+  UsersPaymentType,
+} from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
@@ -103,7 +108,13 @@ export const UsersListClient = () => {
         const result1Data = {} as UsersPaymentType;
         const result2Data = {} as Follow;
         const result4Data = {} as ResultUserPaymentsType;
-        return Object.assign(result4Data, result2Data, correctData, resultData, result1Data);
+        return Object.assign(
+          result4Data,
+          result2Data,
+          correctData,
+          resultData,
+          result1Data
+        );
       })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
@@ -138,9 +149,8 @@ export const UsersListClient = () => {
   const getCurrentUserName = data?.getUsers.users?.find(
     (el) => el.id === Number(visiblePopupId)
   )?.userName;
- 
+
   const selectHandler = (e: optionsType) => {
-    
     const key = 'statusFilter';
     params.set(key, urlOptions[e.value]);
     return nextRouter.push(`userslist?${params.toString()}`);
@@ -203,6 +213,7 @@ export const UsersListClient = () => {
           getUsers={refetch}
           visiblePopupId={visiblePopupId}
           setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopupId={() => setVisiblePopupId('')}
           setVisiblePopup={setVisiblePopup}
           name={getCurrentUserName}
         />

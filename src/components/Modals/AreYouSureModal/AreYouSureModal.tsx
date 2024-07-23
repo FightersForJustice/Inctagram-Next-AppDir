@@ -24,6 +24,7 @@ type Props = {
   toggleModal: (value: boolean) => void;
   onYes?: () => void;
   onNo?: () => void;
+  setVisiblePopupId?: () => void;
   isDeleting?: boolean;
   name?: string;
   type?: SureType;
@@ -33,12 +34,14 @@ export const AreYouSureModal = ({
   toggleModal,
   toggleAreYouSureModal,
   reasonHandler,
+  setVisiblePopupId,
   onYes,
   onNo,
   name,
   isDeleting,
   type,
 }: Props) => {
+  setVisiblePopupId && setVisiblePopupId();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [userName, setUserName] = useState('');
