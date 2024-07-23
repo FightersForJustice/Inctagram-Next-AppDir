@@ -3,7 +3,7 @@
 import React from 'react';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { headerList } from '@/components/Table/headTypes';
-import { PaymentType, UsersPaymentType } from '@/components/Table/rowTypes';
+import { PaymentType, ResultUserPaymentsType, UsersListType, UsersPaymentType } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetAllUsersQuery } from '@/queries/users/users.generated';
-import { SortDirection, UserBlockStatus } from '@/types';
+import { Follow, SortDirection, UserBlockStatus } from '@/types';
 import { BanUserModal } from './modals/banUser/banUserModal';
 import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
 import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
@@ -101,7 +101,9 @@ export const UsersListClient = () => {
         };
         const resultData = {} as PaymentType;
         const result1Data = {} as UsersPaymentType;
-        return Object.assign(correctData, resultData, result1Data);
+        const result2Data = {} as Follow;
+        const result4Data = {} as ResultUserPaymentsType;
+        return Object.assign(result4Data, result2Data, correctData, resultData, result1Data);
       })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {

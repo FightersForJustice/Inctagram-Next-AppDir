@@ -49,7 +49,7 @@ export const GetCurrentPosts = gql`
 `;
 export const GetCurrentUserPosts = gql`
   # Increments a back-end counter and gets its resulting valuequery GetPaymentsList {
-  query GetCurrentUserPosts($userId: Int!, $endCursorId: Int!) {
+  query GetCurrentUserPosts($userId: Int!, $endCursorId: Int) {
     getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
       pagesCount
       pageSize

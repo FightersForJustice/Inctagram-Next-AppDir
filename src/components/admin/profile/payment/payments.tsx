@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Follow,
   PaymentMethod,
   SortDirection,
   StatusSubscriptionType,
@@ -83,7 +84,8 @@ export const PaymentsClient = ({ id }: { id: string }) => {
         };
         const resultData = {} as UsersListType;
         const resultData1 = {} as UsersPaymentType;
-        return Object.assign(resultData, resultData1, correctData);
+        const resultData2 = {} as Follow;
+        return Object.assign(resultData2, resultData, resultData1, correctData);
       })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {

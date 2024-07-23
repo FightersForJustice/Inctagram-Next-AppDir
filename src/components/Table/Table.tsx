@@ -102,6 +102,7 @@ export function Table<
               sortedBy.sortBy === headerList[props.Row][i] &&
               sortedBy.direction === 'asc',
           });
+          //for styling tables
           // const containerStyle = clsx(s.icon, {
           //   [s.icon__hide]: sortedBy.sortBy !== headerList[props.Row][i],
           //   [s.icon__rotate]:

@@ -16,7 +16,7 @@ export type GetCurrentPostsQuery = { __typename?: 'Query', getPosts: { __typenam
 
 export type GetCurrentUserPostsQueryVariables = Types.Exact<{
   userId: Types.Scalars['Int']['input'];
-  endCursorId: Types.Scalars['Int']['input'];
+  endCursorId?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -101,7 +101,7 @@ export type GetCurrentPostsLazyQueryHookResult = ReturnType<typeof useGetCurrent
 export type GetCurrentPostsSuspenseQueryHookResult = ReturnType<typeof useGetCurrentPostsSuspenseQuery>;
 export type GetCurrentPostsQueryResult = Apollo.QueryResult<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>;
 export const GetCurrentUserPostsDocument = gql`
-    query GetCurrentUserPosts($userId: Int!, $endCursorId: Int!) {
+    query GetCurrentUserPosts($userId: Int!, $endCursorId: Int) {
   getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
     pagesCount
     pageSize

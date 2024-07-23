@@ -1,5 +1,9 @@
-import { PostsListClient } from '@/components/admin/postsList/postsList';
+import { PhotosClient } from '@/components/admin/profile/photos/photos';
 
-export default async function PostsList({ params }: { params: { id: string } }) {
-  return <>1</>;
+export default async function PostsList({
+  params,
+}: {
+  params: { id: string };
+}) {
+  return <PhotosClient id={params.id} />;
 }

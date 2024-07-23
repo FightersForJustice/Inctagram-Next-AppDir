@@ -1,4 +1,3 @@
-import { PostsListClient } from '@/components/admin/postsList/postsList';
 import { FollowingClient } from '@/components/admin/profile/following/following';
 
 export default async function PostsList({

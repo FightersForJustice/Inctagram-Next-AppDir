@@ -88,7 +88,7 @@ export const PostPopup = ({
           <p className={s.popup__item__name}>{translate('ban')}</p>
         </div>
         <div className={s.popup__item}>
-          <Link href={'/admin/profile/' + id} style={{ display: 'flex' }}>
+          <Link href={'/admin/profile/photos/' + id} style={{ display: 'flex' }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
