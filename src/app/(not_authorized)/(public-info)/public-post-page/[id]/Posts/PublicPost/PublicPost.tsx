@@ -16,9 +16,10 @@ import { ReadMoreButton } from '@/components/ReadMoreButton/ReadMoreButton';
 type Props = {
   post: PostType;
   userProfile: UserProfile;
+  isOpenByLink: boolean;
 };
 
-export const PublicPost = ({ post, userProfile }: Props) => {
+export const PublicPost = ({ post, userProfile, isOpenByLink }: Props) => {
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
@@ -33,6 +34,7 @@ export const PublicPost = ({ post, userProfile }: Props) => {
           userData={userProfile}
           myProfile={false}
           type={'publicPage'}
+          isOpenByLink={isOpenByLink}
         />
         <Link href={AUTH_ROUTES.PUBLIC_PROFILE + `${'/' + post.ownerId}`}>
           <div className={s.userContainer}>
