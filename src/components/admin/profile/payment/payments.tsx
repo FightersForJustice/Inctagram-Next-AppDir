@@ -11,7 +11,7 @@ import {
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useGetParams } from '@/utils/useGetParams';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -27,8 +27,23 @@ import {
 
 export const PaymentsClient = ({ id }: { id: string }) => {
   const url = useGetParams();
+  const urlParams = useSearchParams()!;
+  const params = new URLSearchParams(urlParams.toString());
   const nextRouter = useRouter();
   const { t } = useTranslation();
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(urlParams.get('pageNumber')) !== null &&
+    Number(urlParams.get('pageNumber')) !== 0
+      ? Number(urlParams.get('pageNumber'))
+      : 1
+  );
+  const [paymentsPerPage, setPaymentsPerPage] = useState(
+    Number(urlParams.get('pageSize')) !== null &&
+      Number(urlParams.get('pageSize')) !== 0
+      ? Number(urlParams.get('pageSize'))
+      : 10
+  );
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
   // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
   let currentParams = url
@@ -39,10 +54,6 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     });
 
   const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
-  const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
-  const getSearchValue = currentParams?.filter(
-    (el) => el[0] === 'searchTerm'
-  )[0];
   const getSortDirection = currentParams?.filter(
     (el) => el[0] === 'sortDirection'
   )[0];
@@ -50,8 +61,8 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     variables: currentParams?.length
       ? {
           userId: Number(id),
-          pageSize: 10,
-          pageNumber: 1,
+          pageSize: paymentsPerPage,
+          pageNumber: currentPage,
           sortBy: getSortValues ? getSortValues[1] : '',
           sortDirection: getSortDirection
             ? (getSortDirection[1] as SortDirection)
@@ -60,12 +71,12 @@ export const PaymentsClient = ({ id }: { id: string }) => {
       : { userId: Number(id) },
   });
   const tableVariant = 'UserPayments';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
   // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
+    console.log(pageNumber)
     setCurrentPage(pageNumber);
+    return nextRouter.push(`paymentslist?${params.toString()}`);
   };
   const usersPaymentsData = data
     ? data.getPaymentsByUser.items.map((el) => {

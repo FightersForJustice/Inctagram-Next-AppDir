@@ -21,7 +21,22 @@ import s from './paymentsList.module.scss';
 import { SearchInput } from '../shared/searchInput/searchInput';
 
 export const PaymentsListClient = () => {
+  const url = useGetParams();
+  const nextRouter = useRouter();
+  const { t } = useTranslation();
   const urlParams = useSearchParams()!;
+  const [currentPage, setCurrentPage] = useState(
+    Number(urlParams.get('pageNumber')) !== null &&
+    Number(urlParams.get('pageNumber')) !== 0
+      ? Number(urlParams.get('pageNumber'))
+      : 1
+  );
+  const [paymentsPerPage, setPaymentsPerPage] = useState(
+    Number(urlParams.get('pageSize')) !== null &&
+      Number(urlParams.get('pageSize')) !== 0
+      ? Number(urlParams.get('pageSize'))
+      : 10
+  );
   const params = new URLSearchParams(urlParams.toString());
   const [currentUrlName, setCurrentUrlName] = React.useState(
     (urlParams.get('searchTerm') as string) !== null
@@ -32,9 +47,6 @@ export const PaymentsListClient = () => {
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentUrlName(event.currentTarget.value);
   };
-  const url = useGetParams();
-  const nextRouter = useRouter();
-  const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
   let currentParams = url
     ?.slice(1)
@@ -44,7 +56,6 @@ export const PaymentsListClient = () => {
     });
 
   const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
-  const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
   const getSearchValue = currentParams?.filter(
     (el) => el[0] === 'searchTerm'
   )[0];
@@ -54,8 +65,8 @@ export const PaymentsListClient = () => {
   const { data, loading, error, refetch } = useGetPaymentsListQuery({
     variables: currentParams?.length
       ? {
-          pageSize: 10,
-          pageNumber: 1,
+          pageSize: paymentsPerPage,
+          pageNumber: currentPage,
           sortBy: getSortValues ? getSortValues[1] : '',
           sortDirection: getSortDirection
             ? (getSortDirection[1] as SortDirection)
@@ -65,12 +76,16 @@ export const PaymentsListClient = () => {
       : {},
   });
   const tableVariant = 'PaymentsList';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
-  // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
+    return nextRouter.push(`paymentslist?${params.toString()}`);
+  };
+
+  const paginatePageSize = (pageNumber: number) => {
+    params.set('pageSize', pageNumber.toString());
+    setPaymentsPerPage(pageNumber);
+    return nextRouter.push(`paymentslist?${params.toString()}`);
   };
 
   const usersPaymentsData = data
@@ -141,7 +156,7 @@ export const PaymentsListClient = () => {
         paginate={paginate}
         totalPayments={data ? data.getPayments.totalCount : [].length}
         paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
+        setPaymentsPerPage={paginatePageSize}
       />
     </div>
   );

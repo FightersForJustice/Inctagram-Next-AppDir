@@ -20,7 +20,15 @@ type UserType = {
 };
 export const UserNavigation = (prop: UserType) => {
   const {
-    prop: { showCreatePostModal, createHandler, paidAccount, pathname, id, el, t },
+    prop: {
+      showCreatePostModal,
+      createHandler,
+      paidAccount,
+      pathname,
+      id,
+      el,
+      t,
+    },
   } = prop;
   const translate = t;
   const style = clsx(
@@ -36,7 +44,18 @@ export const UserNavigation = (prop: UserType) => {
       [s.statistics]: el.href === 'statistics',
     }
   );
-  return (
+  const userPath = [
+    'create',
+    'profile',
+    'my-profile',
+    'home',
+    'search',
+    'messenger',
+  ];
+  const isPayedAccount =
+    (el.href === 'statistics' && paidAccount) ||
+    (el.href === 'favourites' && paidAccount);
+  return isPayedAccount || userPath.includes(el.href) ? (
     <li>
       {el.href === 'create' && (
         <button className={style} onClick={createHandler}>
@@ -53,7 +72,7 @@ export const UserNavigation = (prop: UserType) => {
         </Link>
       )}
       {el.href !== 'create' &&
-        el.href !== 'statistics' &&
+        // el.href !== 'statistics' &&
         el.href !== 'profile' && (
           <Link href={'/' + el.href} className={style}>
             <BarComponent>{el.img}</BarComponent>
@@ -69,5 +88,5 @@ export const UserNavigation = (prop: UserType) => {
         </Link>
       )}
     </li>
-  );
+  ) : null;
 };

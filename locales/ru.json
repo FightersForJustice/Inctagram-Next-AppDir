@@ -125,9 +125,9 @@
     "search": "Поиск",
     "favourites": "Избранное",
     "statistics": "Статистика",
-    "userslist": "Список пользователей",
-    "paymentslist": "Список оплат",
-    "postslist": "Список постов",
+    "userslist": "Пользователи",
+    "paymentslist": "Оплаты",
+    "postslist": "Посты",
     "logout": "Выйти",
     "LogoutModal": {
       "title": "Выход",

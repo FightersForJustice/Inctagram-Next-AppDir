@@ -22,15 +22,30 @@ import { DeleteUserModal } from './modals/deleteUserModal/deleteUserModal';
 import { UnBanUserModal } from './modals/unBanUser/unBanUserModal';
 import { BaseSelector, optionsType } from '@/components/Selector/Selector';
 import { filterValues, selectorOptions, urlOptions } from '../shared/constants';
-import s from './usersList.module.scss';
 import { SearchInput } from '../shared/searchInput/searchInput';
+import s from './usersList.module.scss';
 
 export const UsersListClient = () => {
+  const url = useGetParams();
+  const urlParams = useSearchParams()!;
+  const [currentPage, setCurrentPage] = useState(
+    Number(urlParams.get('pageNumber')) !== null &&
+    Number(urlParams.get('pageNumber')) !== 0
+      ? Number(urlParams.get('pageNumber'))
+      : 1
+  );
+  const [paymentsPerPage, setPaymentsPerPage] = useState(
+    Number(urlParams.get('pageSize')) !== null &&
+      Number(urlParams.get('pageSize')) !== 0
+      ? Number(urlParams.get('pageSize'))
+      : 10
+  );
+
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [visiblePopupId, setVisiblePopupId] = useState('');
   const [editUser, setEditUser] = useState('');
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
-  const urlParams = useSearchParams()!;
+
   const params = new URLSearchParams(urlParams.toString());
   const [currentUrlName, setCurrentUrlName] = React.useState(
     (urlParams.get('searchTerm') as string) !== null
@@ -41,7 +56,7 @@ export const UsersListClient = () => {
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentUrlName(event.currentTarget.value);
   };
-  const url = useGetParams();
+
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.${key}`);
@@ -63,8 +78,8 @@ export const UsersListClient = () => {
   const { data, loading, error, refetch } = useGetAllUsersQuery({
     variables: currentParams?.length
       ? {
-          pageSize: 10,
-          pageNumber: 1,
+          pageSize: paymentsPerPage,
+          pageNumber: currentPage,
           sortBy: getSortValues ? getSortValues[1] : '',
           sortDirection: getSortDirection
             ? (getSortDirection[1] as SortDirection)
@@ -77,12 +92,16 @@ export const UsersListClient = () => {
       : {},
   });
   const tableVariant = 'UsersList';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
-  // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
+
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
+    return nextRouter.push(`userslist?${params.toString()}`);
+  };
+  const paginatePageSize = (pageNumber: number) => {
+    params.set('pageSize', pageNumber.toString());
+    setPaymentsPerPage(pageNumber);
+    return nextRouter.push(`userslist?${params.toString()}`);
   };
 
   const usersData = data
@@ -144,6 +163,7 @@ export const UsersListClient = () => {
 
   React.useEffect(() => {
     refetch();
+    console.log('refetch');
   }, [url, refetch]);
 
   const getCurrentUserName = data?.getUsers.users?.find(
@@ -197,7 +217,7 @@ export const UsersListClient = () => {
         paginate={paginate}
         totalPayments={data ? data.getUsers.pagination.totalCount : [].length}
         paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
+        setPaymentsPerPage={paginatePageSize}
       />
       {showAreYouSureModal && editUser === 'ban' && (
         <BanUserModal
