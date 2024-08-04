@@ -1,7 +1,9 @@
 import { HomePagePost } from './HomePagePost';
 
 import s from './Home.module.scss';
+
 import { headers } from 'next/headers';
+
 
 const Home = () => {
   const headersList = headers();
@@ -14,6 +16,7 @@ const Home = () => {
           <div className={s.home}>
             <HomePagePost id={id}/>
           </div>
+
       </div>
     </>
   );

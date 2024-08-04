@@ -6,9 +6,7 @@
 
 .nav {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 
   height: 100%;
   width: 100%;
@@ -138,6 +136,7 @@
     height: 60px;
     flex-wrap: nowrap;
     background-color: var(--dark-700);
+    border-right: none;
 
     &__list {
       justify-content: space-evenly;
