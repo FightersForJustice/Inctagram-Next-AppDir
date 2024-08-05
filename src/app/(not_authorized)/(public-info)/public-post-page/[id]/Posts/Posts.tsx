@@ -1,4 +1,5 @@
 'use client';
+import { useSearchParams } from 'next/navigation';
 import s from './Posts.module.scss';
 import { UserProfile } from '../types';
 import { Post } from './Post';
@@ -30,9 +31,12 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
   const [loading, setLoading] = useState(true);
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
-  useEffect( () => {
-      dispatch(ProfilePostActions.addItemsRequest(postsData.items));
-      setLoading(false);
+  const searchParams = useSearchParams();
+  const postIdFromUrl = searchParams.get('post');
+
+  useEffect(() => {
+    dispatch(ProfilePostActions.addItemsRequest(postsData.items));
+    setLoading(false);
   }, []);
 
   let minId = findMinId(items);
@@ -42,7 +46,6 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
     dispatch(ProfilePostActions.addItems(newPosts.items));
   };
 
-
   useEffect(() => {
     if (inView && minId !== 0) {
       loadMoreBeers(minId);
@@ -51,16 +54,22 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
 
   const postsImages = () => {
     return items.map((i) => {
+      const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
       return (
         <div key={i.id} className={s.imageContainer}>
-          <Post post={i} userData={userData} myProfile={myProfile} />
+          <Post
+            post={i}
+            userData={userData}
+            myProfile={myProfile}
+            isOpenByLink={isOpenByLink}
+          />
         </div>
       );
     });
   };
 
-  if(loading){
-    return <Loader/>
+  if (loading) {
+    return <Loader />;
   }
 
   return (

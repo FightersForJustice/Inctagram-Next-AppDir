@@ -18,8 +18,6 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
   const publicUserdata: UserProfile = await getPublicProfile(id);
   //await new Promise((resolve) => setTimeout(resolve, 3000));
   const postsData: ApiResponsePosts = await getPosts(id, 0);
-  console.log('sd');
-  console.log(isPublic);
   // const postsData = 10
   return (
     <>
