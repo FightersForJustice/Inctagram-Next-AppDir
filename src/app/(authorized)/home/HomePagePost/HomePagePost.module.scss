@@ -1,7 +1,8 @@
+@use '@/app/mixins.scss' as s;
+
 .post {
   display: flex;
   flex-direction: column;
-  max-width: 491px;
   border-bottom: 1px solid var(--dark-100);
   padding-top: 24px;
 
@@ -20,6 +21,12 @@
     gap: 12px;
   }
 
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   &__title {
     font-size: 16px;
     font-weight: 600;
@@ -32,6 +39,8 @@
   }
 
   &__img {
+    width: 100%;
+    height: auto;
     margin-bottom: 12px;
   }
 
@@ -40,8 +49,7 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0px;
-    padding-top: 12px;
+    padding: 12px 0 17px 0;
 
     &__wrapper {
       display: flex;
@@ -58,9 +66,14 @@
     display: flex;
     gap: 12px;
 
+    &__link {
+      min-width: 36px;
+    }
+
     &__ava {
       width: 36px;
       height: 36px;
+      border-radius: 50%;
     }
   }
 
@@ -122,12 +135,14 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
+    padding-bottom: 12px;
   }
 
   &__bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 16px;
   }
 
   &__input {
@@ -138,11 +153,10 @@
     font-style: normal;
     font-weight: 400;
     width: 80%;
-    padding: 5px;
     border: 1px solid transparent;
     border-radius: 3px;
     transition: all 0.2s ease;
-    padding-bottom: 10px;
+    padding: 5px 5px;
 
     &:focus {
       border: 1px solid var(--primary-500);
@@ -159,5 +173,18 @@
   &__btn {
     color: var(--primary-500);
     font-weight: bold;
+  }
+}
+
+@include s.devices(tablet) {
+  .post {
+    max-width: 390px
+  }
+}
+
+
+@include s.devices(mobile) {
+  .post {
+    max-width: 290px
   }
 }

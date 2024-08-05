@@ -8,6 +8,7 @@ import { cookies } from 'next/headers';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
 import { Metadata } from 'next';
+import s from './layout.module.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -59,24 +60,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang={lang}>
-      <body>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        <Providers lang={lang}>
-          <div className={clsx(inter.className)}>{children}</div>
-        </Providers>
-        <div id="portal" />
-      </body>
+    <body>
+    <div className={s.layoutWrapper}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <Providers lang={lang}>
+        <div className={clsx(inter.className)}>{children}</div>
+      </Providers>
+      <div id="portal" />
+    </div>
+    </body>
     </html>
   );
 }

@@ -95,7 +95,6 @@ export const EditPostMobile = ({
               if (i.width !== 640) {
                 return (
                   <SwiperSlide key={index} className={'w-full'}>
-                    {/* <img src={i.url} alt={'err'} /> */}
                     <Image width={491} height={491} alt="err" src={i.url} />
                   </SwiperSlide>
                 );

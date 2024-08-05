@@ -11,9 +11,10 @@ import { ImageType } from '@/api/posts.api';
 
 type Props = {
   images: ImageType[];
+  openPost: () => void
 };
 
-export const PostImageCarousel = ({ images }: Props) => {
+export const PostImageCarousel = ({ images, openPost }: Props) => {
   if (images.length === 0) {
     return (
       <Image
@@ -28,12 +29,13 @@ export const PostImageCarousel = ({ images }: Props) => {
   const sliderImages = images.map((image, index) => {
     if (image.height > 360) {
       return (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={index} >
           <Image
             src={`${image.url ? image.url : '/img/create-post/no-image.png'}`}
             alt={'post'}
             width={491}
             height={491}
+            onClick={openPost}
           />
         </SwiperSlide>
       );
@@ -45,11 +47,9 @@ export const PostImageCarousel = ({ images }: Props) => {
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={0}
       slidesPerView={1}
-      // width={491}
-      // height={491}
       navigation
       pagination={{ clickable: true }}
-      style={{ maxWidth: '100%' }}
+      style={{ width: '100%' }}
     >
       {sliderImages}
     </Swiper>

@@ -3,6 +3,7 @@ import { Header } from '@/components/Header';
 import { ServerSideBar } from '@/components/Navigation/serverSideBar';
 
 import styles from './AuthorizedLayout.module.scss';
+import { GoTopButton } from '@/components/GoTopButton/GoTopButton';
 
 type Props = {
   title?: string;
@@ -18,6 +19,7 @@ export const AuthorizedLayout = ({ children }: Props) => {
           <ServerSideBar paidAccount={false} />
         </div>
         <div className={styles.content}>{children}</div>
+        <GoTopButton />
       </main>
     </div>
   );

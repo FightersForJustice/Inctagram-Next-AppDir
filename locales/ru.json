@@ -284,7 +284,8 @@
       "publish" : "Опубликовать",
       "addPublicationDescriptions": "Добавить описание публикации",
       "saveChanges" : "Сохранить",
-      "save" : "Сохранить"
+      "save" : "Сохранить",
+      "viewComments": "Просмотреть все комментарии"
     },
     "DeletePostModal": {
       "title": "Удаление поста",
@@ -394,5 +395,16 @@
   "ReadMore": {
     "showMore": "Показать больше",
     "hide": "Скрыть"
+  },
+  "HomePostPopup": {
+    "report": "Пожаловаться",
+    "follow": "Подписаться",
+    "unfollow": "Отписаться",
+    "copy": "Копировать ссылку",
+    "delete": "Удалить пост"
+  },
+  "PaginationSelect": {
+    "show": "Показать",
+    "onThePage": "на странице"
   }
 }

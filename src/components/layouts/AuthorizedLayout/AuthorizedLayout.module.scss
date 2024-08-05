@@ -7,14 +7,11 @@
 
 .contentContainer {
   display: flex;
-  height: calc(100vh - 60px);
-
-  overflow: hidden;
   flex-direction: row;
 }
 
 .nav {
-  position: relative;
+  position: fixed;
   height: calc(100vh - 60px);
   width: 220px;
   z-index: 10;
@@ -24,8 +21,7 @@
   width: calc(100% - 220px);
   margin-left: auto;
   // height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 @include s.devices(tablet-xl) {
@@ -41,6 +37,7 @@
   .content {
     width: 100%;
     margin-left: 0;
+    margin-bottom: 120px;
     height: calc(100% - 60px);
   }
 }
