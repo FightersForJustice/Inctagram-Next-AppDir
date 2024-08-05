@@ -3,7 +3,6 @@ import React from 'react';
 import s from './pagination.module.scss';
 import { usePagination } from '@/components/newPagination/hook/usePagination';
 import { SelectPagination } from '@/components/newPagination/selectPagination/selectPagination';
-import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 
 type Props = {

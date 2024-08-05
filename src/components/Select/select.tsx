@@ -4,7 +4,6 @@ import { clsx } from 'clsx';
 import s from './select.module.scss';
 import Image from 'next/image';
 import img from './../../../public/img/arrow.svg';
-import { Loader } from '@/components/Loader';
 
 export type SelectProps = {
   disabled?: boolean
