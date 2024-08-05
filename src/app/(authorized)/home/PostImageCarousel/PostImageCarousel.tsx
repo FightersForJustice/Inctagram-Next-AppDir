@@ -11,9 +11,10 @@ import { ImageType } from '@/api/posts.api';
 
 type Props = {
   images: ImageType[];
+  openPost: () => void
 };
 
-export const PostImageCarousel = ({ images }: Props) => {
+export const PostImageCarousel = ({ images, openPost }: Props) => {
   if (images.length === 0) {
     return (
       <Image
@@ -34,6 +35,7 @@ export const PostImageCarousel = ({ images }: Props) => {
             alt={'post'}
             width={491}
             height={491}
+            onClick={openPost}
           />
         </SwiperSlide>
       );

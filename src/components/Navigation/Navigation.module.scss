@@ -62,6 +62,15 @@
     fill: var(--primary-500);
   }
 
+
+  &__item__not__active {
+    color: var(--light-100);
+  }
+
+  &__item__not__active > svg {
+    fill: var(--light-100);
+  }
+
   &__icon__active {
     fill: var(--primary-500);
   }

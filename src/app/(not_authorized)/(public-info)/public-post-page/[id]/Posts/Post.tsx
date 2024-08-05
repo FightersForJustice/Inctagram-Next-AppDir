@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import s from './Posts.module.scss';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import {
   getPostsDelete,
@@ -25,13 +25,23 @@ type Props = {
   myProfile: boolean;
 };
 
-export function Post({ post, userData, myProfile }: Props) {
+export function Post({ post, userData, myProfile}: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
+
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const postId = searchParams.get('post')
+    if(postId  &&+postId === post.id){
+      setOpenPostModal(true);
+    }
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
