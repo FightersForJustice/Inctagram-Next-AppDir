@@ -11,7 +11,7 @@ import { PostContent } from '@/app/(not_authorized)/(public-info)/public-post-pa
 import { PostContentMobile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostContentMobile';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -30,7 +30,9 @@ type Props = {
 
 export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
+
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);

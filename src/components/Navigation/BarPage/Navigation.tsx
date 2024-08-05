@@ -7,6 +7,7 @@ import { navigationBar } from './Bardata';
 import BarComponent from './BarComponent';
 
 import s from '../Navigation.module.scss';
+import { useEffect, useState } from 'react';
 
 type NavigationType = {
   id: number;
@@ -27,6 +28,14 @@ export const Navigation = ({
 }: NavigationType) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
+  const [isMyProfilePage, setIsMyProfilePage] = useState<boolean>(true)
+
+  useEffect(() => {
+      const idMatch = pathname.match(/\/(\d+)(\/|$)/);
+      const currentUserId = idMatch ? +idMatch[1] : null;
+      setIsMyProfilePage(currentUserId === id);
+  }, [pathname]);
+
   const mapNav = navigationBar.map((el) => {
     const style = clsx(
       s.nav__item,
@@ -38,7 +47,11 @@ export const Navigation = ({
       },
       {
         [s.statistics]: el.href === 'statistics',
-      }
+      },
+      {
+        [s.nav__item__not__active]: !isMyProfilePage && el.href === 'profile',
+      },
+
     );
     const createHandler = () => {
       if (el.href === 'create') {

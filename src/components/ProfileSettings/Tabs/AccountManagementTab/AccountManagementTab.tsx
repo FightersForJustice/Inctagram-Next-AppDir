@@ -87,7 +87,7 @@ export const AccountManagementTab = ({
   const actionHandler = showModal && paymentStatus ? closeModal : fallback;
   return (
     <div className={s.tab}>
-      {userSubInfo?.data?.length && (
+      {!!userSubInfo?.data?.length && (
         <Subscription
           expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
           dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}

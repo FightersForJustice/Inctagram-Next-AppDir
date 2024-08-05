@@ -15,19 +15,23 @@ import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer'
 import { getPublicPostsPage } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { useEffect, useState } from 'react';
 import { Loader } from '@/components/Loader';
+import { ROUTES } from '@/appRoutes/routes';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   id: string | null
 }
 
 export const HomePagePost = ({ id }: PropsType) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(true);
   const [postsData, setPostsData] = useState<ApiResponsePosts | null>(null);
 
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
-
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,7 +41,7 @@ export const HomePagePost = ({ id }: PropsType) => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching posts:', error);
-        setLoading(false); // Ensure loading state is set to false on error
+        setLoading(false);
       }
     };
 
@@ -48,9 +52,11 @@ export const HomePagePost = ({ id }: PropsType) => {
     return <Loader />;
   }
 
-
-
   return postsData?.items.map((i) => {
+
+    const openPost = () => {
+        router.push(`/profile/${i.ownerId}?post=${i.id}`)
+    }
 
     let isMyPost = null;
 
@@ -62,6 +68,7 @@ export const HomePagePost = ({ id }: PropsType) => {
       <div key={i.id} className={s.post}>
         <div className={s.post__top}>
           <div className={s.post__wrapper}>
+            <Link href={ROUTES.PROFILE + `${'/' + i.ownerId}`} className={s.post__link}>
             <Image
               className={s.post__desc__ava}
               src={i.avatarOwner ?? '/img/create-post/no-image.png'}
@@ -70,6 +77,7 @@ export const HomePagePost = ({ id }: PropsType) => {
               height={36}
             />
             <p className={s.post__title}>{i?.userName}</p>
+            </Link>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="4"
@@ -83,12 +91,13 @@ export const HomePagePost = ({ id }: PropsType) => {
           </div>
             <HomePostPopup isMyPost={isMyPost}/>
         </div>
-        <PostImageCarousel images={i.images} />
+        <PostImageCarousel images={i.images} openPost={openPost}/>
         <HomePostIcons />
         <HomePostDescription
           userName={i?.userName}
           description={i.description}
           avatar={i?.avatarOwner}
+          ownerId={i.ownerId}
         />
         <HomePostLikes />
       </div>
