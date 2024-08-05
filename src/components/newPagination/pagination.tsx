@@ -29,7 +29,7 @@ export const Pagination = ((props: Props) => {
     totalCount,
   });
 
-  if (!paginationRange || currentPage === 0 || paginationRange.length < 2) {
+  if (!paginationRange || currentPage === 0 || paginationRange.length < 1) {
     return null;
   }
 
