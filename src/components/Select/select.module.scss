@@ -1,0 +1,135 @@
+.container {
+  cursor: pointer;
+}
+
+.content {
+  width: var(--radix-select-trigger-width);
+}
+
+.arrow {
+  transform-origin: center;
+  rotate: 180deg;
+
+  display: flex;
+  align-items: center;
+
+  margin-left: 2px;
+
+  fill: var(--light-100);
+
+  transition: 0.3s;
+}
+
+.trigger {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 210px;
+  height: 36px;
+  padding: 6px 12px;
+
+  text-align: justify;
+
+  background-color: var(--dark-500);
+  border: 1px solid var(--dark-300);
+  border-radius: 2px;
+
+  &:disabled {
+    cursor: initial;
+    border-color: var(--dark-300);
+
+    span {
+      opacity: 0.5;
+    }
+
+    .arrow {
+      opacity: 0.5;
+    }
+  }
+
+  &:hover:not([data-disabled]) {
+    background-color: var(--dark-300);
+    border: 1px solid var(--dark-100);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &[data-state='open'] {
+    .arrow {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &.pagination {
+    width: 50px;
+    height: 24px;
+    padding: 3px 6px 3px 7px;
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+}
+
+.viewport {
+  cursor: pointer;
+
+  background-color: var(--dark-500);
+  border: 1px solid var(--dark-300);
+  transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+
+  &.pagination {
+    width: 50px;
+    height: 24px;
+    padding: 0 6px 0 7px;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+
+  padding: 6px 12px;
+
+  outline: none;
+
+  transition:
+          background-color 0.5s ease,
+          color 0.5s ease;
+
+  &:hover:not([data-state='checked']) {
+    background-color: var(--dark-300);
+
+    span {
+      color: var(--light-100);
+    }
+  }
+
+  &[data-state='checked'],
+  &[data-highlighted] {
+    background-color: var(--light-100);
+
+    span {
+      color: var(--dark-700);
+    }
+  }
+
+
+
+  &.pagination {
+    width: 60px;
+    height: 24px;
+    padding: 0 6px 0 7px;
+  }
+}
