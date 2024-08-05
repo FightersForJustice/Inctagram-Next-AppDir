@@ -8,10 +8,12 @@ import { HeaderClient } from './HeaderCleint';
 import HeaderButton from '@/components/Header/HeaderButton/HeaderButton';
 
 
-export const Header = ({ isAuth, isPublicInfo = false }: { isAuth: boolean, isPublicInfo?: boolean }) => {
+export const Header = async ({ isAuth, isPublicInfo = false }: { isAuth: boolean, isPublicInfo?: boolean }) => {
+
   const headersList = headers()
   const idHeaders = headersList.get('id') as string
   const myId = parseInt(idHeaders, 10)
+  const accessToken = headersList.get('accessToken') as string
 
   return (
     <header className={s.wrapper}>
@@ -21,7 +23,7 @@ export const Header = ({ isAuth, isPublicInfo = false }: { isAuth: boolean, isPu
         </Link>
 
         <div className={s.notificationContainer}>
-          {isAuth && <HeaderNotification />}
+          {isAuth && <HeaderNotification accessToken={accessToken} />}
           <HeaderClient />
           {isAuth && (
             <HeaderMenuMobile userEmail={headers().get('userEmail')} />
