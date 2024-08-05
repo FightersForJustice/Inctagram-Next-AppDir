@@ -16,12 +16,12 @@ type Props = {
 };
 
 export const HeaderNotification = ({ accessToken }: Props) => {
-  const [amount, setAmount] = useState(0)
-  const [showPopup, setShowPopup] = useState(false)
+  const [amount, setAmount] = useState<number>(0)
+  const [showPopup, setShowPopup] = useState<boolean>(false)
   const [initNotifications, setInitNotifications] = useState<NotificationItem[]>([])
   const [newNotification, setNewNotification] = useState<NotificationItem[]>([])
 
-  useConnectSocket({ accessToken, setNewNotification })
+  useConnectSocket({ accessToken, setNewNotification, setAmount })
 
   useEffect(() => {
     console.log(newNotification, 'headerNotification');
@@ -39,14 +39,14 @@ export const HeaderNotification = ({ accessToken }: Props) => {
     }
   };
 
-  useEffect(() => {
-    fetchNotifications(0)
-  }, [])
+  // useEffect(() => {
+  //   fetchNotifications(0)
+  // }, [])
 
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
     if (open) {
-      await fetchNotifications(0);
+      // await fetchNotifications(0);
       setAmount(0);
     }
   };
