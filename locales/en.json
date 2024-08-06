@@ -373,6 +373,7 @@
     "notifications": {
       "notZeroNotifications": "Notifications",
       "zeroNotifications": "You don't have notifications yet",
+      "newNotifications": "New notification!",
       "logIn": "Log in",
       "signUp": "Sign up"
     },

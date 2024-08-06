@@ -9,39 +9,53 @@ import bell from '/public/img/MaskOutline.svg';
 
 import s from './HeaderNotification.module.scss';
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
-import { getNotification, NotificationItem } from '@/webSocket/webSocketActions/webSocketActions';
+import {
+  getNotification,
+  NotificationItem,
+} from '@/webSocket/webSocketActions/webSocketActions';
 
 type Props = {
-  accessToken: string
+  accessToken: string;
 };
 
 export const HeaderNotification = ({ accessToken }: Props) => {
-  const [amount, setAmount] = useState<number>(0)
-  const [showPopup, setShowPopup] = useState<boolean>(false)
-  const [initNotifications, setInitNotifications] = useState<NotificationItem[]>([])
-  const [newNotification, setNewNotification] = useState<NotificationItem[]>([])
+  const [amount, setAmount] = useState<number>(0);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [initNotifications, setInitNotifications] = useState<
+    NotificationItem[]
+  >([]);
+  const [newNotification, setNewNotification] = useState<NotificationItem[]>(
+    []
+  );
 
-  useConnectSocket({ accessToken, setNewNotification, setAmount })
+  useConnectSocket({ accessToken, setNewNotification, setAmount });
 
   useEffect(() => {
-    console.log(newNotification, 'headerNotification');
+    console.log('newNotification: ', newNotification);
+    setInitNotifications((prevState) => [...newNotification, ...prevState]);
   }, [newNotification]);
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const translate = (key: string): string => t(`Header.${key}`)
+  useEffect(() => {
+    console.log('initNotifications: ', initNotifications);
+  }, [initNotifications]);
+
+  const translate = (key: string): string => t(`Header.${key}`);
 
   const fetchNotifications = async (cursor: number) => {
-    const data = await getNotification(accessToken, cursor)
+    const data = await getNotification(accessToken, cursor);
     if (data) {
       setInitNotifications(data.items);
-      setAmount(data.items.filter((item: NotificationItem) => !item.isRead).length)
+      setAmount(
+        data.items.filter((item: NotificationItem) => !item.isRead).length
+      );
     }
   };
 
-  // useEffect(() => {
-  //   fetchNotifications(0)
-  // }, [])
+  useEffect(() => {
+    fetchNotifications(0).then();
+  }, []);
 
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
@@ -70,19 +84,17 @@ export const HeaderNotification = ({ accessToken }: Props) => {
               </h3>
               <div>
                 {initNotifications.length > 0 ? (
-                  initNotifications.map(notification => (
+                  initNotifications.map((notification) => (
                     <div key={notification.id} className={s.popup__item}>
                       <p className={s.popup__item__title}>
                         {translate('notifications.newNotifications')}
-                        <span className={s.popup__item__new}> {translate('notifications.new')}
+                        <span className={s.popup__item__new}>
+                          {' '}
+                          {translate('notifications.new')}
                         </span>
                       </p>
-                      <p className={s.popup__desc}>
-                        {notification.message}
-                      </p>
-                      <p className={s.popup__time}>
-                        {notification.notifyAt}
-                      </p>
+                      <p className={s.popup__desc}>{notification.message}</p>
+                      <p className={s.popup__time}>{notification.notifyAt}</p>
                     </div>
                   ))
                 ) : (
