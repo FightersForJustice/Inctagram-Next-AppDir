@@ -126,7 +126,6 @@ export const AccountManagementTab = ({
               baseUrl={baseUrl}
               token={token}
             />
-            <p>or</p>
             <Stripe
               price={currentPrice}
               subTypeValue={subTypeValue}

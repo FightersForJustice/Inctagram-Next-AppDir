@@ -217,7 +217,12 @@
       "Back": "Back to payment",
       "OK": "OK",
       "CurrentSubscriptionSuccess": "Payment was successful!",
-      "CurrentSubscriptionError": "Transaction failed. Please, write to support"
+      "CurrentSubscriptionError": "Transaction failed. Please, write to support",
+      "SubscribePeriod": {
+        "Day": "Day",
+        "Week": "Week",
+        "Month": "Month"
+      }
     },
     "MyPaymentsTab": {
       "titleTab": "My Payments",

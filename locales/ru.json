@@ -220,7 +220,12 @@
       "Back": "Назад к оплате",
       "OK": "OK",
       "CurrentSubscriptionSuccess": "Оплата прошла успешно!",
-      "CurrentSubscriptionError": "Оплата отклонена. Пожалуйста, обратитесь в поддержку"
+      "CurrentSubscriptionError": "Оплата отклонена. Пожалуйста, обратитесь в поддержку",
+      "SubscribePeriod": {
+        "Day": "День",
+        "Week": "Неделю",
+        "Month": "Месяц"
+      }
     },
     "MyPaymentsTab": {
       "titleTab": "Мои платежи",
