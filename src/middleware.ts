@@ -41,11 +41,27 @@ export async function middleware(request: NextRequest) {
 
   const isAuthPath = pathname && isValidAuthPath(pathname);
 
+  const openProfileByUrl =
+    pathname.match('/profile') && !searchParams.has('post');
+  const openPostByUrl = pathname.match('/profile') && searchParams.has('post');
+
   if (!refreshToken) {
     console.log('Middleware (User in NOT auth)', isAuthPath);
-    return isAuthPath
-       ? NextResponse.next()
-       : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
+
+    if (openProfileByUrl) {
+      const newURL = pathname.replace('/profile', '/public-profile');
+      return NextResponse.redirect(new URL(newURL, request.url));
+    } else if (openPostByUrl) {
+      const postId = searchParams.get('post');
+
+      const newURL =
+        pathname.replace('/profile', '/public-profile') + `?post=${postId}`;
+      return NextResponse.redirect(new URL(newURL, request.url));
+    } else {
+      return isAuthPath
+        ? NextResponse.next()
+        : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
+    }
   }
 
   //checking auth refactor
