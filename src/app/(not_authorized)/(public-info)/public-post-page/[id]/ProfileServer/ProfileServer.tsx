@@ -32,6 +32,7 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
           postsData={postsData}
           userData={!isPublic ? userdata : publicUserdata}
           myProfile={myProfile}
+          isPublic={isPublic}
         />
       </div>
     </>

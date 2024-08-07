@@ -21,9 +21,10 @@ type Props = {
   userData: UserProfile;
   myProfile: boolean;
   id: number;
+  isPublic?: boolean;
 };
 
-export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
+export const Posts = ({ id, postsData, userData, myProfile, isPublic }: Props) => {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
@@ -62,6 +63,7 @@ export const Posts = ({ id, postsData, userData, myProfile }: Props) => {
             userData={userData}
             myProfile={myProfile}
             isOpenByLink={isOpenByLink}
+            type={isPublic ? 'publicProfile' : undefined}
           />
         </div>
       );
