@@ -1,0 +1,44 @@
+.tableWrapper {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  background-color: var(--dark-500);
+  border: 1px solid var(--dark-300);
+}
+
+.tableContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 19px 12px 17px 12px;
+}
+
+.tableHeader, .tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  color: white;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.tableHeader {
+  padding-right: 5px;
+}
+
+.tableBody {
+  font-weight: bold;
+}
+
+.tableBodyItem {
+  display: flex;
+  justify-content: end;
+}

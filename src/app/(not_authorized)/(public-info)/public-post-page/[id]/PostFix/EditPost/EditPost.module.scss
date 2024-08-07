@@ -76,6 +76,8 @@
   .post {
     flex-direction: column;
     height: calc(100vh - 120px);
+    justify-content: flex-start;
+    overflow-y: auto;
 
     img {
       margin: 0 auto;

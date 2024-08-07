@@ -1,0 +1,86 @@
+@use '@/app/mixins.scss' as s;
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  min-width: min-content;
+}
+
+.select {
+  display: flex;
+  flex-direction: row;
+  gap: 0 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.paginationContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0 12px;
+  align-items: flex-end;
+  justify-content: start;
+  flex-wrap: wrap;
+
+  margin-top: 24px;
+}
+
+.button {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+
+  min-width: 24px;
+  height: 24px;
+
+  border-radius: 2px;
+  outline: 2px solid transparent;
+
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--dark-300);
+  }
+
+  &:focus-visible {
+    outline: 0.125rem solid var(--info-0);
+  }
+
+  &:disabled {
+    color: var(--dark-300);
+
+    &:hover {
+      cursor: initial;
+      background-color: var(--dark-700);
+    }
+  }
+
+  &:active:enabled,
+  &.active:enabled {
+    color: var(--dark-700);
+    background-color: var(--light-100);
+    transition: background-color 0.3s ease;
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  color: var(--light-100);
+}
+
+@include s.devices(tablet) {
+  .wrapper {
+    justify-content: center;
+  }
+}

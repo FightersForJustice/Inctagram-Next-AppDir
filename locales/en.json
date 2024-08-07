@@ -396,5 +396,9 @@
     "unfollow": "Unfollow",
     "copy": "Copy Link",
     "delete": "Delete post"
+  },
+  "PaginationSelect": {
+    "show": "Show",
+    "onThePage": "on the page"
   }
 }

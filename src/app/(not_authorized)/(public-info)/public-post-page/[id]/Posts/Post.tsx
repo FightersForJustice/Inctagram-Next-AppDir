@@ -30,6 +30,7 @@ type Props = {
 
 export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
 
   const [openPostModal, setOpenPostModal] = useState(false);
