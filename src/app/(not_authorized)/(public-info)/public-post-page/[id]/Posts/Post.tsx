@@ -11,7 +11,7 @@ import { PostContent } from '@/app/(not_authorized)/(public-info)/public-post-pa
 import { PostContentMobile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostContentMobile';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,6 +31,7 @@ type Props = {
 export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const [openPostModal, setOpenPostModal] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [width, setWidth] = useState(1920);
@@ -83,28 +84,28 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   );
 
   const openModalWithPost = (id: number) => {
-    if (myProfile) {
-      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
-    } else if (type === 'publicPage') {
+    if (type === 'publicPage') {
       router.push(`${AUTH_ROUTES.PUBLIC_POST_PAGE}?post=${id}`, {
         scroll: false,
       });
-    } else {
+    } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}?post=${id}`, {
         scroll: false,
       });
+    } else {
+      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
     }
   };
 
   const closeModal = () => {
-    if (myProfile) {
-      router.push(`/profile/${userData.id}`, { scroll: false });
-    } else if (type === 'publicPage') {
+    if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
-    } else {
+    } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}`, {
         scroll: false,
       });
+    } else {
+      router.push(`/profile/${userData.id}`, { scroll: false });
     }
   };
 
