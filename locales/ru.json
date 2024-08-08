@@ -299,7 +299,8 @@
       "publish": "Опубликовать",
       "addPublicationDescriptions": "Добавить описание публикации",
       "saveChanges": "Сохранить",
-      "save": "Сохранить"
+      "save": "Сохранить",
+      "viewComments": "Просмотреть все комментарии"
     },
     "DeletePostModal": {
       "title": "Удаление поста",
@@ -393,6 +394,7 @@
     "notifications": {
       "notZeroNotifications": "Уведомления",
       "zeroNotifications": "У Вас пока нет уведомлений",
+      "newNotifications": "Новое уведомление!",
       "logIn": "Войти",
       "signUp": "Регистрация"
     },
@@ -465,5 +467,16 @@
       "userIdFollowers": "Профиль",
       "createdAtFollowers": "Подписан"
     }
+  },
+  "HomePostPopup": {
+    "report": "Пожаловаться",
+    "follow": "Подписаться",
+    "unfollow": "Отписаться",
+    "copy": "Копировать ссылку",
+    "delete": "Удалить пост"
+  },
+  "PaginationSelect": {
+    "show": "Показать",
+    "onThePage": "на странице"
   }
 }

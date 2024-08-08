@@ -11,23 +11,31 @@ import s from './PublicPage.module.scss';
 import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
-import { headers } from 'next/headers';
 
-const PublicPostPage = async () => {
-  const headersList = headers()
-  const corn = headersList.get('corn');
-  console.log(77, corn)
+
+type Props = {
+  searchParams?: { [key: string]: string | undefined };
+};
+
+const PublicPostPage = async ({ searchParams }: Props) => {
   const publicPostPageData = await getPublicPostsPage();
   const publicCountRegisterUsers: CountRegisterUser =
     await getCountRegisterUsers();
 
+  const postIdFromUrl = searchParams?.post;
+
   const postsImages = () => {
     return publicPostPageData.items.slice(0, 4).map(async (i: PostType) => {
       const userProfile = await getPublicProfile(i.ownerId);
+      const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
 
       return (
         <div key={i.id} className={s.postContainer}>
-          <PublicPost post={i} userProfile={userProfile} />
+          <PublicPost
+            post={i}
+            userProfile={userProfile}
+            isOpenByLink={isOpenByLink}
+          />
         </div>
       );
     });

@@ -20,6 +20,8 @@ export const Header = ({
   const idHeaders = headersList.get('id') as string;
   const myId = parseInt(idHeaders, 10);
   const usersLink = isAuth ? `/profile/${myId}` : 'sign-in';
+  const accessToken = headersList.get('accessToken') as string;
+
   return (
     <header className={s.wrapper}>
       <div className={s.container}>
@@ -31,7 +33,7 @@ export const Header = ({
         </Link>
 
         <div className={s.notificationContainer}>
-          {isAuth && <HeaderNotification />}
+          {isAuth && <HeaderNotification accessToken={accessToken} />}
           <HeaderClient />
           {isAuth && (
             <HeaderMenuMobile userEmail={headers().get('userEmail')} />

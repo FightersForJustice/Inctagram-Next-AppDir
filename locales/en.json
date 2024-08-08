@@ -297,8 +297,9 @@
       "addComment": "Add a Comment",
       "publish": "Publish",
       "addPublicationDescriptions": "Add publication descriptions",
-      "saveChanges": "Save Changes",
-      "save": "Save"
+      "saveChanges" : "Save Changes",
+      "save" : "Save",
+      "viewComments": "View All Comments"
     },
     "DeletePostModal": {
       "title": "Close Post",
@@ -387,6 +388,7 @@
     "notifications": {
       "notZeroNotifications": "Notifications",
       "zeroNotifications": "You don't have notifications yet",
+      "newNotifications": "New notification!",
       "logIn": "Log in",
       "signUp": "Sign up"
     },
@@ -458,5 +460,16 @@
       "userIdFollowers": "Profile link",
       "createdAtFollowers": "Subscription Date"
     }
+  },
+  "HomePostPopup": {
+    "report": "Report",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "copy": "Copy Link",
+    "delete": "Delete post"
+  },
+  "PaginationSelect": {
+    "show": "Show",
+    "onThePage": "on the page"
   }
 }

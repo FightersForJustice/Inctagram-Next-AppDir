@@ -3,7 +3,6 @@
 .post {
   flex: 1;
   display: flex;
-  justify-content: center;
   height: 481px;
 
   &__container {
@@ -200,13 +199,11 @@
   .post {
     flex-direction: column;
     height: calc(100vh - 120px);
+    overflow-y: auto;
 
     &Info {
-      overflow-y: auto;
-
-      &::-webkit-scrollbar {
-        width: 0;
-      }
+      max-height: none;
+      overflow-y: visible;
     }
 
     img {

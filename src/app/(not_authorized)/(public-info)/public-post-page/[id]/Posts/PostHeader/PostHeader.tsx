@@ -2,7 +2,6 @@ import React from 'react';
 import s from '../../PostFix/PostContent/PostContent.module.scss';
 import Image from 'next/image';
 import { Dots } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/Dots';
-import { DotsFriends } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/DotsFriends';
 import { UserProfile } from '../../types';
 
 type Props = {
