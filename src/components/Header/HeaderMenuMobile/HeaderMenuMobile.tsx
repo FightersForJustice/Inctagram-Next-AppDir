@@ -67,7 +67,10 @@ export const HeaderMenuMobile = ({
   };
 
   return (
-    <button className={s.container} id="mobileMenu">
+    <button
+      className={s.container}
+      id="mobileMenu"
+    >
       <MenuImage modal={modal} setModal={modalHandler} />
       {modal && (
         <ul className={s.settingsList}>

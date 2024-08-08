@@ -1,0 +1,36 @@
+@use '@/app/mixins.scss' as s;
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 24%;
+  min-width: 108px;
+}
+
+.imagePost {
+  display: flex;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s linear;
+
+  &:hover {
+    transform: scale(1.01);
+    border: 2px solid var(--primary-500);
+  }
+}
+
+.container {
+  margin: 0 auto;
+
+  &__text {
+    font-weight: 600;
+    font-size: 24px;
+  }
+}
+
+@include s.devices(tablet) {
+  .imageContainer {
+    max-width: 32%;
+  }
+}

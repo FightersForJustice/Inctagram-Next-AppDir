@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/lib/actionOptions';
 import { updateTokensAndContinue } from './app/lib/actions';
-import { AUTH_ROUTES, AUTH_ROUTES_ARRAY, ROUTES } from './appRoutes/routes';
+import { ADMIN_ROUTES_ARRAY, AUTH_ROUTES, AUTH_ROUTES_ARRAY, ROUTES } from './appRoutes/routes';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -34,23 +34,40 @@ export async function middleware(request: NextRequest) {
   const isMobile = /mobile/i.test(userAgent);
   const accessToken = cookiesList.get('accessToken')?.value;
   const refreshToken = cookiesList.get('refreshToken')?.value;
+  const corn = cookiesList.get('corn')?.value;
 
   const isValidAuthPath = (pathname: string) => {
     return AUTH_ROUTES_ARRAY.some((route) => pathname.includes(route));
   };
 
-  const isAuthPath = pathname && isValidAuthPath(pathname);
+  const isNotAdminPath = (pathname: string) => {
+    return ADMIN_ROUTES_ARRAY.some((route) => pathname.includes(route));
+  };
+  const isAdminPath = isNotAdminPath(pathname)
 
+  const isAuthPath = pathname && isValidAuthPath(pathname);
+  if (!corn && isAdminPath) {
+    return NextResponse.redirect(
+      new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
+    );
+  }
+  if (corn && isAdminPath) {
+    return NextResponse.next()
+  }
   if (!refreshToken) {
-    console.log('Middleware (User in NOT auth)', isAuthPath);
-    return isAuthPath
-       ? NextResponse.next()
-       : NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url));
+    console.log('3Middleware (User in NOT auth)', isAuthPath);
+    
+
+    return isAuthPath && !isAdminPath
+      ? NextResponse.next()
+      : NextResponse.redirect(
+          new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
+        );
   }
 
   //checking auth refactor
   try {
-    const meResponse = await fetch(routes.ME, requestMeOptions(accessToken));
+    let meResponse = await fetch(routes.ME, requestMeOptions(accessToken));
 
     switch (meResponse.status) {
       case 200:
@@ -69,7 +86,7 @@ export async function middleware(request: NextRequest) {
             )
           : response;
       case 401:
-        console.log('Middleware (Bad AccessToken)');
+        console.log('2Middleware (Bad AccessToken)');
         const updateTokenResult = await updateTokensAndContinue(
           refreshToken,
           userAgent
@@ -79,10 +96,15 @@ export async function middleware(request: NextRequest) {
         } else {
           NextResponse.redirect(new URL('/error', request.url));
         }
+      case 400:
+        console.log('7Middleware (Not Authorized)', isAuthPath);
+          return NextResponse.redirect(new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url));
       default:
-        console.log('Middleware (Not Authorized)');
+        console.log('1Middleware (Not Authorized)', isAuthPath);
         return !isAuthPath
-          ? NextResponse.redirect(new URL(AUTH_ROUTES.SIGN_IN, request.url))
+          ? NextResponse.redirect(
+              new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
+            )
           : NextResponse.next();
     }
   } catch (error) {
