@@ -12,6 +12,7 @@ import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
 
+
 type Props = {
   searchParams?: { [key: string]: string | undefined };
 };

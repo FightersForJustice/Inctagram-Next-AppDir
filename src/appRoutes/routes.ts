@@ -14,11 +14,29 @@ export const AUTH_ROUTES = Object.freeze({
   PUBLIC_PROFILE: '/public-profile',
   PUBLIC_POST_PAGE: '/public-post-page',
   PUBLIC_PROFILE_PAGE: '/public-post-page',
+  ADMIN_USERS_LIST: '/admin/userslist',
+  ADMIN_STATISTICS: '/admin/statistics',
+  ADMIN_PAYMENTS_LIST: '/admin/paymentslist',
+  ADMIN_POSTS_LIST: '/admin/postslist',
+  ADMIN_USER_PROFILE: '/admin/profile',
 });
-
-export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);
 
 export const ROUTES = Object.freeze({
   HOME_PAGE: '/',
   PROFILE: '/profile',
 });
+
+export const ADMIN_ROUTES = Object.freeze({
+  ADMIN_USERS_LIST: '/admin/userslist',
+  ADMIN_STATISTICS: '/admin/statistics',
+  ADMIN_PAYMENTS_LIST: '/admin/paymentslist',
+  ADMIN_POSTS_LIST: '/admin/postslist',
+  ADMIN_USER_PROFILE: '/admin/profile',
+  ADMIN_USER_PHOTOS: '/admin/photos',
+  ADMIN_USER_PAYMENTS: '/admin/payments',
+  ADMIN_USER_FOLLOWERS: '/admin/followers',
+  ADMIN_USER_FOLLOWING: '/admin/following',
+});
+
+export const AUTH_ROUTES_ARRAY = Object.values(AUTH_ROUTES);
+export const ADMIN_ROUTES_ARRAY = Object.values(ADMIN_ROUTES);

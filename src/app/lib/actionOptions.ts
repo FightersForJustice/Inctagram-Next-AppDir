@@ -126,6 +126,20 @@ export const requestDeleteAllSessionsOptions = (
     next: { revalidate: 0 },
   };
 };
+//NOTIFICATIONS OPTIONS
+
+export const notificationOptions = (
+  accessToken: string | null,
+
+) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 0 },
+  };
+};
 
 //PROFILE OPTIONS
 
@@ -142,6 +156,7 @@ export const uploadAvatarOptions = (
     body: avatar,
   };
 };
+
 
 export const updateProfileOptions = (
   accessToken: string | null,

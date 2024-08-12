@@ -1,0 +1,15 @@
+.publicPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36px;
+  gap: 18px;
+}
+
+.postListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+

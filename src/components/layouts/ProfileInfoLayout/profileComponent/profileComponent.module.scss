@@ -1,0 +1,61 @@
+.linkRedirect {
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  // background-color: #1c1c1e;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profileHeader img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+.profileHeader .name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.profileHeader .username {
+  font-size: 1em;
+  color: #aaa;
+}
+
+.profileDetails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+}
+
+.profileDetails .detail {
+  text-align: center;
+}
+
+.profileDetails .detail .label {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.profileDetails .detail .value {
+  font-size: 1.2em;
+  font-weight: medium;
+}

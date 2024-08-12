@@ -16,6 +16,7 @@ import s from './Navigation.module.scss';
 type Props = {
   id: number;
   paidAccount: boolean;
+  admin?: boolean;
   userData?: GetResponse;
   userEmail: string | null;
 };
@@ -23,6 +24,7 @@ type Props = {
 export const SideBar = ({
   userEmail = 'mocked',
   paidAccount,
+  admin,
   userData,
   id,
 }: Props) => {
@@ -40,6 +42,7 @@ export const SideBar = ({
       <Navigation
         id={id}
         paidAccount={paidAccount}
+        admin={admin}
         pathname={pathname}
         setShowCreatePostModal={setShowCreatePostModal}
         showCreatePostModal={showCreatePostModal}

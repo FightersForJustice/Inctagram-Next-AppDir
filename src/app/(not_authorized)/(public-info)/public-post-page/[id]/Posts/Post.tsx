@@ -85,28 +85,28 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   );
 
   const openModalWithPost = (id: number) => {
-    if (myProfile) {
-      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
-    } else if (type === 'publicPage') {
+    if (type === 'publicPage') {
       router.push(`${AUTH_ROUTES.PUBLIC_POST_PAGE}?post=${id}`, {
         scroll: false,
       });
-    } else {
+    } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}?post=${id}`, {
         scroll: false,
       });
+    } else {
+      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
     }
   };
 
   const closeModal = () => {
-    if (myProfile) {
-      router.push(`/profile/${userData.id}`, { scroll: false });
-    } else if (type === 'publicPage') {
+    if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
-    } else {
+    } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}`, {
         scroll: false,
       });
+    } else {
+      router.push(`/profile/${userData.id}`, { scroll: false });
     }
   };
 

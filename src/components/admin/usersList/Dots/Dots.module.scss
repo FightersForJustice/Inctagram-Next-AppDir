@@ -1,0 +1,8 @@
+.container:hover {
+  color: var(--primary-500);
+}
+
+.container:hover path {
+  transition: all 0.2s linear;
+  fill: var(--primary-500);
+}
