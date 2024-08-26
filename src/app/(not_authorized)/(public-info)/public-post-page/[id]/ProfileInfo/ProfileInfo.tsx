@@ -4,6 +4,9 @@ import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
 import { ApiResponsePosts, UserProfile } from '../types';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { AUTH_ROUTES } from '@/appRoutes/routes';
 
 type Props = {
   userData: UserProfile;
@@ -13,6 +16,21 @@ type Props = {
 export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handler = (event: PopStateEvent) => {
+      event.preventDefault();
+      router.push(AUTH_ROUTES.PUBLIC_POST_PAGE);
+    };
+
+    window.addEventListener('popstate', handler);
+
+    return () => {
+      window.removeEventListener('popstate', handler);
+    };
+  }, [router]);
+
   return (
     <>
       <div className={s.profile}>
