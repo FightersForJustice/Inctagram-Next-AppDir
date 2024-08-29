@@ -6,6 +6,10 @@
   margin: 12px 24px;
   font-weight: 700;
 
+  h1{
+    text-align: center;
+  }
+
   & .editCancel {
     cursor: pointer;
     transition: all 0.2s linear;
