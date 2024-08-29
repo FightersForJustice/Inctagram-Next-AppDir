@@ -10,8 +10,9 @@ import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
-import { UserProfile } from '../../types';
+
 import s from './EditPost.module.scss';
+import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
   setEditPost: (value: boolean) => void;

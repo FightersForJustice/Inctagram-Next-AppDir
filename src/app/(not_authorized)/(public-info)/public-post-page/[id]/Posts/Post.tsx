@@ -16,9 +16,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AUTH_ROUTES } from 'src/appRoutes/routes';
-import { PostType, UserProfile } from '../types';
+
 
 import s from './Posts.module.scss';
+import { PostType, UserProfile } from '../types';
 
 type Props = {
   post: PostType;

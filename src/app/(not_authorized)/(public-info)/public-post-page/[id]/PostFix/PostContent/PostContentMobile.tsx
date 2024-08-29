@@ -15,7 +15,8 @@ import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { UserProfile } from '../../types';
+import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+
 
 type Props = {
   user: UserProfile;
