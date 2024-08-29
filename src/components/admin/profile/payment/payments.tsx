@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
 import {
   PaymentType,
@@ -31,6 +31,12 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const params = new URLSearchParams(urlParams.toString());
   const nextRouter = useRouter();
   const { t } = useTranslation();
+
+  const optionsSelectPayments = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
 
   const [currentPage, setCurrentPage] = useState(
     Number(urlParams.get('pageNumber')) !== null &&
@@ -76,7 +82,7 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     params.set('pageNumber', pageNumber.toString());
     console.log(pageNumber)
     setCurrentPage(pageNumber);
-    return nextRouter.push(`paymentslist?${params.toString()}`);
+    return nextRouter.push(`?${params.toString()}`);
   };
   const usersPaymentsData = data
     ? data.getPaymentsByUser.items.map((el) => {
@@ -117,13 +123,21 @@ export const PaymentsClient = ({ id }: { id: string }) => {
         Row={tableVariant}
         id={id}
       />
+      {/*<Pagination*/}
+      {/*  currentPage={currentPage}*/}
+      {/*  setCurrentPage={setCurrentPage}*/}
+      {/*  paginate={paginate}*/}
+      {/*  totalPayments={data ? data.getPaymentsByUser.totalCount : 0}*/}
+      {/*  paymentsPerPage={paymentsPerPage}*/}
+      {/*  setPaymentsPerPage={setPaymentsPerPage}*/}
+      {/*/>*/}
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getPaymentsByUser.totalCount : 0}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
+        totalCount={data ? data.getPaymentsByUser.totalCount : 0}
+        options={optionsSelectPayments}
       />
     </div>
   );
