@@ -29,6 +29,12 @@ export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
     translate('Type')
   ]
 
+  const options = [
+    { label: '3', value: '3' },
+    { label: '5', value: '5' },
+    { label: '7', value: '7' },
+  ];
+
   if (currentData.length === 0) {
     setCurrentPage(1);
   }
@@ -58,6 +64,7 @@ export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
         totalCount={data.length}
+        options={options}
       />
     </>
   );

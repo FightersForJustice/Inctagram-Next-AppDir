@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+
 import { headerList } from '@/components/Table/headTypes';
 import {
   PaymentType,
@@ -24,6 +24,9 @@ import { BaseSelector, optionsType } from '@/components/Selector/Selector';
 import { filterValues, selectorOptions, urlOptions } from '../shared/constants';
 import { SearchInput } from '../shared/searchInput/searchInput';
 import s from './usersList.module.scss';
+import { Pagination } from '@/components/newPagination';
+import { Loader } from '@/components/Loader';
+
 
 export const UsersListClient = () => {
   const url = useGetParams();
@@ -45,6 +48,12 @@ export const UsersListClient = () => {
   const [visiblePopupId, setVisiblePopupId] = useState('');
   const [editUser, setEditUser] = useState('');
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+
+  const optionsSelect = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
 
   const params = new URLSearchParams(urlParams.toString());
   const [currentUrlName, setCurrentUrlName] = React.useState(
@@ -178,6 +187,7 @@ export const UsersListClient = () => {
 
   const filterValue = params.get('statusFilter');
 
+
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
   return (
@@ -213,11 +223,11 @@ export const UsersListClient = () => {
       />
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getUsers.pagination.totalCount : [].length}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={paginatePageSize}
+        totalCount={data ? data.getUsers.pagination.totalCount : [].length}
+        options={optionsSelect}
       />
       {showAreYouSureModal && editUser === 'ban' && (
         <BanUserModal
@@ -246,6 +256,7 @@ export const UsersListClient = () => {
           name={getCurrentUserName}
         />
       )}
+      {loading && <Loader />}
     </div>
   );
 };
