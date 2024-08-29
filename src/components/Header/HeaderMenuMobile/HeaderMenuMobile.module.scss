@@ -37,6 +37,10 @@
   justify-content: center;
   text-align: left;
   gap: 12px;
+  span:hover {
+    color: var(--primary-500);
+    fill: var(--primary-500);
+  }
 }
 
 .nonActive {

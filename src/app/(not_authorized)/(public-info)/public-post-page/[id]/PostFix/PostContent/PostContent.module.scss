@@ -1,0 +1,220 @@
+@use '@/app/mixins.scss' as s;
+
+.post {
+  flex: 1;
+  display: flex;
+  height: 481px;
+
+  &__container {
+    background-color: var(--dark-300);
+    width: 480px;
+  }
+
+  &Info{
+    flex: 1;
+    max-height: 481px;
+    overflow-y: auto;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 24px 10px 24px;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    &__user{
+      gap: 12px;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+&__content {
+  overflow-y: auto;
+  max-height: 245px;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+  &__desc {
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid var(--dark-100);
+    padding: 19px 24px 0 24px;
+    margin-bottom: 12px;
+
+    &__name {
+      font-weight: bold;
+    }
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__text {
+      font-weight: 300;
+      font-size: 13px;
+      line-height: 19px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+      hyphens: auto;
+    }
+
+    &__time {
+      color: var(--light-900);
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 16px;
+      letter-spacing: 0;
+    }
+
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  &__amount {
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 0 0 0;
+    }
+
+    &__images {
+      display: flex;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 5px;
+    }
+
+    &__image1,
+    &__image2,
+    &__image3 {
+      border-radius: 50%;
+      height: 24px;
+      width: 24px;
+    }
+
+    &__image1 {
+      position: absolute;
+      top: -10px;
+      right: -7px;
+    }
+
+    &__image2 {
+      position: absolute;
+      top: -10px;
+      right: -19px;
+      z-index: 1;
+    }
+
+    &__image3 {
+      position: absolute;
+      top: -10px;
+      right: -32px;
+      z-index: 2;
+    }
+
+    &__number {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      margin-left: 30px;
+    }
+
+    &__likes {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    &__date {
+      color: var(--light-900);
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      padding-left: 24px;
+      padding-bottom: 7px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px;
+    border-top: 1px solid var(--dark-100);
+
+    &__input {
+      width: 100%;
+      background: transparent;
+      outline: none;
+      color: var(--light-900);
+      font-size: 14px;
+      padding: 2px 5px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: all 0.2s linear;
+      margin-right: 18px;
+
+      &::placeholder {
+        color: var(--light-900);
+        font-size: 14px;
+      }
+
+      &:focus {
+        border: 1px solid var(--primary-500);
+      }
+    }
+
+    &__btn {
+      color: var(--primary-500);
+      transition: all 0.2s linear;
+
+      &:hover {
+        color: var(--primary-100);
+      }
+    }
+  }
+}
+
+@include s.devices(mobile) {
+  .post {
+    flex-direction: column;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+
+    &Info {
+      max-height: none;
+      overflow-y: visible;
+    }
+
+    img {
+      margin: 0 auto;
+    }
+
+    &__desc {
+      img {
+        margin: 0;
+      }
+    }
+  }
+}

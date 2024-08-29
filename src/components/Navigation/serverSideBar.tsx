@@ -4,9 +4,10 @@ import { fetchGetMyProfile } from '@/app/lib/data';
 
 type Props = {
   paidAccount: boolean;
+  admin?: boolean;
 };
 
-export const ServerSideBar = async({ paidAccount }: Props) => {
+export const ServerSideBar = async({ paidAccount, admin }: Props) => {
   const headersList = headers();
   const idHeaders = headersList.get('id') as string;
   const id = parseInt(idHeaders, 10);
@@ -18,6 +19,7 @@ export const ServerSideBar = async({ paidAccount }: Props) => {
       userEmail={headers().get('userEmail')}
       paidAccount={paidAccount}
       id={id}
+      admin={admin}
       userData={userData}
     />
   );

@@ -22,6 +22,7 @@ export const routes = Object.freeze({
   //CreatePost
   UPLOAD_POST_IMAGE: `${baseUrl}posts/image`,
   CREATE_POST: `${baseUrl}posts`,
+  CREATE_SUBSCRIPTION: `${baseUrl}subscriptions`,
 });
 
 export const citySelectRoutes = Object.freeze({

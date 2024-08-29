@@ -27,3 +27,25 @@ export const ProfileTabsList = [
     icon: BackpackIcon,
   },
 ];
+export const AdminProfileTabsList = [
+  {
+    link: '/admin/profile/photos/',
+    name: 'AdminGeneralInformationTab.titleTab',
+    icon: InfoCircledIcon,
+  },
+  {
+    link: '/admin/profile/payments/',
+    name: 'AdminDevicesTab.titleTab',
+    icon: DesktopIcon,
+  },
+  {
+    link: '/admin/profile/followers/',
+    name: 'AdminAccountManagementTab.titleTab',
+    icon: GearIcon,
+  },
+  {
+    link: '/admin/profile/following/',
+    name: 'AdminMyPaymentsTab.titleTab',
+    icon: BackpackIcon,
+  },
+];

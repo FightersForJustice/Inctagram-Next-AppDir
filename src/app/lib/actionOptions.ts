@@ -1,6 +1,8 @@
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { createPostOptionsType } from './optionsTypes';
+import { CreateSubscription } from '@/api/subscriptions.api';
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 //AUTH OPTIONS
 
@@ -124,6 +126,20 @@ export const requestDeleteAllSessionsOptions = (
     next: { revalidate: 0 },
   };
 };
+//NOTIFICATIONS OPTIONS
+
+export const notificationOptions = (
+  accessToken: string | null,
+
+) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 0 },
+  };
+};
 
 //PROFILE OPTIONS
 
@@ -140,6 +156,7 @@ export const uploadAvatarOptions = (
     body: avatar,
   };
 };
+
 
 export const updateProfileOptions = (
   accessToken: string | null,
@@ -163,6 +180,29 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
       Authorization: `Bearer ${accessToken}`,
     },
     next: { revalidate: 0 },
+  };
+};
+export const onCreateStripeOptions = (accessToken: string | null, data: CreateSubscription) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+       accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    // next: { revalidate: 10 },
+  };
+};
+export const getSubsriptionOptions = (accessToken: string | undefined) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+       accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    // next: { revalidate: 10 },
   };
 };
 

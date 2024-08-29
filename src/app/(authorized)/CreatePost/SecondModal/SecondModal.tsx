@@ -18,12 +18,14 @@ type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
   onSaveDraft: () => void;
+  setIsDisabledDraft: (value: boolean) => void;
 };
 
 export const SecondModal = ({
   setStep,
   setShowCreatePostModal,
   onSaveDraft,
+  setIsDisabledDraft
 }: Props) => {
   const dispatch = useAppDispatch();
   const [deleteImageId, setDeleteImageId] = useState('');
@@ -119,6 +121,7 @@ export const SecondModal = ({
             changeCurrentImage={changeCurrentImage}
             deleteImage={deleteImage}
             setStep={setStep}
+            setIsDisabledDraft={setIsDisabledDraft}
           />
         </div>
       </CroppingModal>

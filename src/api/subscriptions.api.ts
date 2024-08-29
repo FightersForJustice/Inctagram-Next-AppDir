@@ -1,27 +1,37 @@
 import { api } from '@/api/api';
+import { accessToken } from '@/accessToken';
+import { headers } from 'next/headers';
 
 export const subscriptionsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPayments: builder.query<GetPaymentsResponse[], void>({
       query: () => {
+        const token = sessionStorage.getItem('accessToken');
         return {
           url: 'subscriptions/my-payments',
           method: 'GET',
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
     }),
     getCurrentSubscription: builder.query<GetCurrentSubscription, void>({
       query: () => {
+        const token = 1
         return {
-          url: 'subscriptions/current-subscriptions',
+          url: 'subscriptions/current-payment-subscriptions',
           method: 'GET',
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
     }),
     getCostOfSubscription: builder.query<GetCostOfSubscription, void>({
       query: () => {
         return {
-          url: 'subscriptions/cost-of-subscriptions',
+          url: 'subscriptions/cost-of-payment-subscriptions',
           method: 'GET',
         };
       },
@@ -52,7 +62,7 @@ export const {
   useGetCurrentSubscriptionQuery,
 } = subscriptionsApi;
 
-type CreateSubscription = {
+export type CreateSubscription = {
   typeSubscription: string;
   paymentType: string;
   amount: number;

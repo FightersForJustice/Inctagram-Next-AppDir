@@ -1,78 +1,71 @@
 'use client';
 
-import { useGetPaymentsQuery } from '@/api';
-import { useState } from 'react';
-import { fakeDataForTesting } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/myPaymentsDATA';
-import { Loader } from '@/components/Loader';
-import { Pagination } from '@/components/Pagination/Pagination';
-import { dateToFormat } from '@/utils/dateToFormat';
+import { useEffect, useState } from 'react';
+import { Pagination } from '@/components/newPagination/pagination';
 
-import s from './MyPayments.module.scss';
+import { PaymentsType } from '@/app/(authorized)/profile/settings-profile/types';
+import { useTranslation } from 'react-i18next';
+import { PaymentsTable } from '@/components/ProfileSettings/Tabs/MyPaymentsTab/PaymentsTable/PaymentsTable';
+import {
+  PaymentsTableMobile
+} from '@/components/ProfileSettings/Tabs/MyPaymentsTab/PaymentsTableMobile/PaymentsTableMobile';
 
-export const MyPaymentsTab = () => {
-  const { data } = useGetPaymentsQuery();
-  const [currentPage, setCurrentPage] = useState(1);
+export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string =>
+    t(`SettingsProfilePage.MyPaymentsTab.${key}`);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [paymentsPerPage, setPaymentsPerPage] = useState(5);
-
+  const [width, setWidth] = useState(1920);
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const firstPaymentIndex = lastPaymentIndex - paymentsPerPage;
-  const currentPayments = data?.length
-    ? data?.slice(firstPaymentIndex, lastPaymentIndex)
-    : fakeDataForTesting.slice(firstPaymentIndex, lastPaymentIndex);
+  const currentData = data.slice(firstPaymentIndex, lastPaymentIndex);
 
-  const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  const tableHeaderData = [
+    translate('DateOfPayment'),
+    translate('EndOfPayment'),
+    translate('Price'),
+    translate('Period'),
+    translate('Type')
+  ]
+
+  const options = [
+    { label: '3', value: '3' },
+    { label: '5', value: '5' },
+    { label: '7', value: '7' },
+  ];
+
+  if (currentData.length === 0) {
+    setCurrentPage(1);
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <>
-      <div className={s.table}>
-        <div className={s.tableHeader}>
-          <div>Date Of Payment</div>
-          <div>End Date Of Subscription</div>
-          <div>Price</div>
-          <div>Subscription Type</div>
-          <div>Payment Type</div>
-        </div>
-        <div className={s.tableBody}>
-          {currentPayments ? (
-            currentPayments.map((payment, index) => {
-              return (
-                <div key={index} className={s.tableBodyItem}>
-                  <div>{dateToFormat(payment.dateOfPayment)}</div>
-                  <div>{dateToFormat(payment.endDateOfSubscription)}</div>
-                  <div>{payment.price}</div>
-                  <div>{payment.subscriptionType}</div>
-                  <div>{payment.paymentType}</div>
-                </div>
-              );
-            })
-          ) : (
-            <Loader />
-          )}
-        </div>
-      </div>
+      {width <= 521 ?
+        <PaymentsTableMobile currentData={currentData} tableHeaderData={tableHeaderData}/>
+        :
+        <PaymentsTable currentData={currentData} tableHeaderData={tableHeaderData}/>}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data?.length : fakeDataForTesting.length}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
+        totalCount={data.length}
+        options={options}
       />
     </>
   );
 };
-
-interface myPaymentResponse extends myPayment {
-  userId: number;
-  subscriptionId: string;
-}
-
-export interface myPayment {
-  dateOfPayment: string;
-  endDateOfSubscription: string;
-  price: number;
-  subscriptionType: 'MONTHLY' | 'WEEKLY';
-  paymentType: 'STRIPE' | 'PAYPAL';
-}

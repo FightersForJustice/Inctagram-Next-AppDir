@@ -17,7 +17,7 @@ export const Pagination = ({
   setPaymentsPerPage: (value: number) => void;
 }) => {
   const pageNumbers = [];
-
+  // console.log(totalPayments, paymentsPerPage)
   for (let i = 1; i <= Math.ceil(totalPayments / paymentsPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -32,15 +32,46 @@ export const Pagination = ({
       </div>
       <ul className={'flex items-center'}>
         {pageNumbers.map((number) => {
-          return (
-            <li
-              className={'mx-1.5'}
-              key={number}
-              onClick={() => paginate(number)}
-            >
-              <Link href={'#'}>{number}</Link>
-            </li>
-          );
+          if (number <= 5 && currentPage <= 5) {
+            return (
+              <li
+                className={`mx-1.5 transition-all cursor-pointer px-2 ${
+                  number === currentPage
+                    ? 'bg-slate-100 text-black rounded-sm'
+                    : ''
+                }`}
+                key={number}
+                onClick={() => {
+                  paginate(number);
+                }}
+              >
+                <Link href={'#'}>{number}</Link>
+              </li>
+            );
+          }
+          if (
+            currentPage !== 1 &&
+            currentPage + 1 <= number + 2 &&
+            number - 3 <= currentPage - 2 &&
+            currentPage !== 5 &&
+            totalPayments - 4 !== currentPage
+          ) {
+            return (
+              <li
+                className={`mx-1.5 transition-all cursor-pointer px-2 ${
+                  number === currentPage
+                    ? 'bg-slate-100 text-black rounded-sm'
+                    : ''
+                }`}
+                key={number}
+                onClick={() => {
+                  paginate(number);
+                }}
+              >
+                <Link href={'#'}>{number}</Link>
+              </li>
+            );
+          }
         })}
       </ul>
 
@@ -60,7 +91,7 @@ export const Pagination = ({
         <div className={'ml-2'}>
           Show
           <select
-            defaultValue={5}
+            defaultValue={paymentsPerPage}
             className={'bg-black border-b-white mx-2'}
             name="paymentsOnOePage"
             id="paymentsOnOePage"
@@ -72,6 +103,7 @@ export const Pagination = ({
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="7">7</option>
+            <option value="10">10</option>
           </select>
           on Page
         </div>

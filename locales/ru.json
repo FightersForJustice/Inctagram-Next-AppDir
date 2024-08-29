@@ -125,6 +125,9 @@
     "search": "Поиск",
     "favourites": "Избранное",
     "statistics": "Статистика",
+    "userslist": "Пользователи",
+    "paymentslist": "Оплаты",
+    "postslist": "Посты",
     "logout": "Выйти",
     "LogoutModal": {
       "title": "Выход",
@@ -136,12 +139,24 @@
     "logoutError": "Выход не выполнен"
   },
   "SettingsProfilePage": {
+    "AdminGeneralInformationTab": {
+      "titleTab": "Загруженные фото"
+    },
+    "AdminDevicesTab": {
+      "titleTab": "Оплаты"
+    },
+    "AdminAccountManagementTab": {
+      "titleTab": "Подписки"
+    },
+    "AdminMyPaymentsTab": {
+      "titleTab": "Подписчики"
+    },
     "GeneralInformationTab": {
       "titleTab": "Общая информация",
       "username": "Логин",
       "firstname": "Имя",
       "lastname": "Фамилия",
-      "birthday": "День рождения",
+      "birthday": "Дата рождения",
       "country": "Выберите Вашу страну",
       "city": "Выберите Ваш город",
       "aboutMe": "Обо мне",
@@ -197,18 +212,43 @@
       "status": "Онлайн",
       "active": "Активные сессии",
       "text": "Вы еще не вошли в систему с других устройств",
-      "allSession":"Завершите все сеансы",
-      "currentDevice" : "Текущее устройство",
-      "AllSessionsClosed" : "Все сессии закрыты",
-      "sessionClosed" : "Сессия закрыта",
-      "lastVisit" : "Последний визит",
-      "browserName" : "Имя браузера"
+      "allSession": "Завершите все сеансы",
+      "currentDevice": "Текущее устройство",
+      "AllSessionsClosed": "Все сессии закрыты",
+      "sessionClosed": "Сессия закрыта",
+      "lastVisit": "Последний визит",
+      "browserName": "Имя браузера"
     },
     "AccountManagementTab": {
-      "titleTab": "Управление"
+      "titleTab": "Управление",
+      "AccountType": "Тип аккаунта",
+      "SubscriptionCost": "Стоимость вашей подписки",
+      "CurrentSubscription": "Текущая подписка",
+      "CurrentSubscriptionStart": "Оформлена",
+      "CurrentSubscriptionEnd": "Истекает",
+      "AutoRenewal": "Автопродление",
+      "Personal": "Персональный",
+      "Business": "Бизнес",
+      "Prefix": "за",
+      "Success": "Успешно",
+      "Error": "Ошибка",
+      "Back": "Назад к оплате",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Оплата прошла успешно!",
+      "CurrentSubscriptionError": "Оплата отклонена. Пожалуйста, обратитесь в поддержку",
+      "SubscribePeriod": {
+        "Day": "День",
+        "Week": "Неделю",
+        "Month": "Месяц"
+      }
     },
     "MyPaymentsTab": {
-      "titleTab": "Мои платежи"
+      "titleTab": "Мои платежи",
+      "DateOfPayment": "Дата платежа",
+      "EndOfPayment": "Дата окончания подписки",
+      "Price": "Цена",
+      "Period": "Тип подписки",
+      "Type": "Средство платежа"
     },
     "AddPhotoModal": {
       "title": "Добавить фото",
@@ -225,11 +265,11 @@
       "sizeError": "Размер фото должен быть меньше 10 МБ!",
       "formatError": "Формат загружаемого фото должен быть PNG и JPEG",
       "tooltipText": "Этот функционал пока недоступен",
-      "publication" : "Публикация",
-      "publish" : "Опубликовать",
-      "addPublicationDescriptions" : "Добавление описаний публикаций",
-      "description" : "Описание",
-      "publicationsCreated" : "Публикация создана"
+      "publication": "Публикация",
+      "publish": "Опубликовать",
+      "addPublicationDescriptions": "Добавление описаний публикаций",
+      "description": "Описание",
+      "publicationsCreated": "Публикация создана"
     }
   },
   "CreatePost": {
@@ -258,20 +298,21 @@
       "submit": "Да",
       "cancel": "Нет",
       "Сancel": "Закрыть",
-      "editPost" : "Редактировать публикацию",
-      "deletePost" : "Удалить публикацию",
-      "addComment" : "Добавить комментарий",
-      "publish" : "Опубликовать",
+      "editPost": "Редактировать публикацию",
+      "deletePost": "Удалить публикацию",
+      "addComment": "Добавить комментарий",
+      "publish": "Опубликовать",
       "addPublicationDescriptions": "Добавить описание публикации",
-      "saveChanges" : "Сохранить",
-      "save" : "Сохранить"
+      "saveChanges": "Сохранить",
+      "save": "Сохранить",
+      "viewComments": "Просмотреть все комментарии"
     },
     "DeletePostModal": {
       "title": "Удаление поста",
       "areYouSureText": "Вы действительно хотите удалить публикацию?",
       "yes": "Да",
       "no": "Нет",
-      "close":"Закрыть"
+      "close": "Закрыть"
     }
   },
   "AgreementsPage": {
@@ -357,7 +398,10 @@
   "Header": {
     "notifications": {
       "notZeroNotifications": "Уведомления",
-      "zeroNotifications": "У Вас пока нет уведомлений"
+      "zeroNotifications": "У Вас пока нет уведомлений",
+      "newNotifications": "Новое уведомление!",
+      "logIn": "Войти",
+      "signUp": "Регистрация"
     },
     "mobileMenu": {
       "profileSettings": "Настройки профиля",
@@ -365,5 +409,79 @@
       "favourites": "Избранное",
       "logOut": "Выйти"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Регистрация пользователей"
+  },
+  "ReadMore": {
+    "showMore": "Показать больше",
+    "hide": "Скрыть"
+  },
+  "Admin": {
+    "id": "ID Пользователя",
+    "username": "Имя Пользователя",
+    "profile-link": "Профиль",
+    "createdBy": "Дата создания",
+    "Userlist": {
+      "deleteUser": "Удалить пользователя",
+      "ban": "Бан в системе",
+      "moreInfo": "Больше информации"
+    },
+    "selectFilter": {
+      "blocked": "Заблокированные",
+      "choose": "Не выбрано",
+      "unBlocked": "Не заблокированые"
+    },
+    "userlistModals": {
+      "unBanUser": {
+        "close": "Разбанить пользователя",
+        "areYouSureText": "Вы действительно хотите разбанить пользователя,",
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "banUser": {
+        "close": "Забанить пользователя",
+        "areYouSureText": "Вы действительно хотите забанить пользователя,",
+        "select": {
+          "anotherReason": "Другая причина",
+          "choose": "Причина бана",
+          "behavioue": "Плохое поведение",
+          "placement": "Реклама"
+        },
+
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "deleteUser": {
+        "close": "Удалить пользователя",
+        "areYouSureText": "Вы действительно хотите удалить пользователя",
+        "yes": "Да",
+        "no": "Нет"
+      }
+    },
+    "paypentlist": {
+      "createdAt": "Дата покупки",
+      "userName": "Имя пользователя",
+      "price": "Стоимость,$",
+      "period": "Тип подписки",
+      "type": "Тип подписки",
+      "paymentType": "Тип оплаты",
+      "endDate": "Конец подписки",
+      "startDate": "Начало подписки",
+      "userId": "ID Пользователя",
+      "userIdFollowers": "Профиль",
+      "createdAtFollowers": "Подписан"
+    }
+  },
+  "HomePostPopup": {
+    "report": "Пожаловаться",
+    "follow": "Подписаться",
+    "unfollow": "Отписаться",
+    "copy": "Копировать ссылку",
+    "delete": "Удалить пост"
+  },
+  "PaginationSelect": {
+    "show": "Показать",
+    "onThePage": "на странице"
   }
 }

@@ -1,1 +1,1 @@
-// export { PayPal } from './PayPal';
+export { PayPal } from './PayPal';

@@ -122,6 +122,9 @@
     "search": "Search",
     "favourites": "Favourites",
     "statistics": "Statistics",
+    "userslist": "Users list",
+    "paymentslist": "Payments list",
+    "postslist": "Posts list",
     "logout": "Log Out",
     "LogoutModal": {
       "title": "Log Out",
@@ -133,6 +136,18 @@
     "logoutError": "Log Out Failed"
   },
   "SettingsProfilePage": {
+    "AdminGeneralInformationTab": {
+      "titleTab": "Uploaded photos"
+    },
+    "AdminDevicesTab": {
+      "titleTab": "Payments"
+    },
+    "AdminAccountManagementTab": {
+      "titleTab": "Followers"
+    },
+    "AdminMyPaymentsTab": {
+      "titleTab": "Following"
+    },
     "GeneralInformationTab": {
       "titleTab": "General Information",
       "username": "Username",
@@ -196,16 +211,41 @@
       "text": "You have not yet logged in from other devices",
       "allSession": "Terminate all other session",
       "currentDevice": "Current device",
-      "AllSessionsClosed" : "All sessions are closed",
-      "sessionClosed" : "The session is closed",
-      "lastVisit" : "Last visit",
-      "browserName" : "Browser Name"
+      "AllSessionsClosed": "All sessions are closed",
+      "sessionClosed": "The session is closed",
+      "lastVisit": "Last visit",
+      "browserName": "Browser Name"
     },
     "AccountManagementTab": {
-      "titleTab": "Account Management"
+      "titleTab": "Account Management",
+      "AccountType": "Account type",
+      "SubscriptionCost": "Your subscription costs",
+      "CurrentSubscription": "Current Subscription",
+      "CurrentSubscriptionStart": "Expire at",
+      "CurrentSubscriptionEnd": "Next payment",
+      "AutoRenewal": "Auto-Renewal",
+      "Personal": "Personal",
+      "Business": "Business",
+      "Prefix": "per",
+      "Success": "Success",
+      "Error": "Error",
+      "Back": "Back to payment",
+      "OK": "OK",
+      "CurrentSubscriptionSuccess": "Payment was successful!",
+      "CurrentSubscriptionError": "Transaction failed. Please, write to support",
+      "SubscribePeriod": {
+        "Day": "Day",
+        "Week": "Week",
+        "Month": "Month"
+      }
     },
     "MyPaymentsTab": {
-      "titleTab": "My Payments"
+      "titleTab": "My Payments",
+      "DateOfPayment": "Date of Payment",
+      "EndOfPayment": "End date of subscription",
+      "Price": "Price",
+      "Period": "Subscription Type",
+      "Type": "Payment Type"
     },
     "AddPhotoModal": {
       "title": "Add photo",
@@ -222,11 +262,11 @@
       "sizeError": "Photo size must be less than 10 MB!",
       "formatError": "The format of the uploaded photo must be PNG and JPEG",
       "tooltipText": "Functionality is not available yet",
-      "publication" : "Publication",
-      "publish" : "Publish",
-      "addPublicationDescriptions" : "Add publication descriptions",
-      "description" : "Description",
-      "publicationsCreated" : "Publications created"
+      "publication": "Publication",
+      "publish": "Publish",
+      "addPublicationDescriptions": "Add publication descriptions",
+      "description": "Description",
+      "publicationsCreated": "Publications created"
     }
   },
   "CreatePost": {
@@ -257,20 +297,21 @@
       "submit": "Yes",
       "cancel": "No",
       "Сancel": "Сancel",
-      "editPost" : "Edit Post",
-      "deletePost" : "Delete Post",
-      "addComment" : "Add a Comment",
-      "publish" : "Publish",
+      "editPost": "Edit Post",
+      "deletePost": "Delete Post",
+      "addComment": "Add a Comment",
+      "publish": "Publish",
       "addPublicationDescriptions": "Add publication descriptions",
       "saveChanges" : "Save Changes",
-      "save" : "Save"
+      "save" : "Save",
+      "viewComments": "View All Comments"
     },
     "DeletePostModal": {
       "title": "Close Post",
       "areYouSureText": "Are you sure you want to delete this post?",
       "yes": "Yes",
       "no": "No",
-      "close":"Close"
+      "close": "Close"
     }
   },
   "AgreementsPage": {
@@ -351,7 +392,10 @@
   "Header": {
     "notifications": {
       "notZeroNotifications": "Notifications",
-      "zeroNotifications": "You don't have notifications yet"
+      "zeroNotifications": "You don't have notifications yet",
+      "newNotifications": "New notification!",
+      "logIn": "Log in",
+      "signUp": "Sign up"
     },
     "mobileMenu": {
       "profileSettings": "Profile Settings",
@@ -359,5 +403,78 @@
       "favourites": "Favourites",
       "logOut": "Log Out"
     }
+  },
+  "CounterRegisterUser": {
+    "RegisterUsers": "Register Users"
+  },
+  "ReadMore": {
+    "showMore": "Show more",
+    "hide": "Hide"
+  },
+  "Admin": {
+    "id": "User ID",
+    "username": "Username",
+    "profile-link": "Profile link",
+    "createdBy": "Date added",
+    "Userlist": {
+      "deleteUser": "Delete User",
+      "ban": "Ban in the system",
+      "moreInfo": "More Information"
+    },
+    "selectFilter": {
+      "blocked": "Blocked",
+      "choose": "Not selected",
+      "unBlocked": "Not Blocked"
+    },
+    "userlistModals": {
+      "unBanUser": {
+        "close": "Unban user",
+        "areYouSureText": "Are you sure to unban this user,",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "banUser": {
+        "close": "Ban user",
+        "areYouSureText": "Are you sure to ban this user,",
+        "select": {
+          "anotherReason": "Another reason",
+          "choose": "Reason for ban",
+          "behavioue": "Bad behavior",
+          "placement": "Advertising placement"
+        },
+        "yes": "Yes",
+        "no": "No"
+      },
+      "deleteUser": {
+        "close": "Delete user",
+        "areYouSureText": "Are you sure to delete user",
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "paypentlist": {
+      "createdAt": "Date added",
+      "userName": "Username",
+      "price": "Amount, $",
+      "period": "Subscription",
+      "startDate": "Date of Payment",
+      "endDate": "End date of subscription",
+      "type": "Subscription Type",
+      "paymentType": "Payment Type",
+      "userId": "User ID",
+      "userIdFollowers": "Profile link",
+      "createdAtFollowers": "Subscription Date"
+    }
+  },
+  "HomePostPopup": {
+    "report": "Report",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "copy": "Copy Link",
+    "delete": "Delete post"
+  },
+  "PaginationSelect": {
+    "show": "Show",
+    "onThePage": "on the page"
   }
 }

@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import './AccountTypeRadio.css';
 
 type Props = {
   radioValue: string;
+  radioName: string;
+  radioName2: string;
   setRadioValue: (value: string) => void;
 };
 
 export const AccountTypeRadio: React.FC<Props> = ({
   radioValue,
+  radioName,
+  radioName2,
   setRadioValue,
 }) => (
   <>
@@ -17,13 +21,14 @@ export const AccountTypeRadio: React.FC<Props> = ({
       defaultValue={radioValue}
       aria-label="View density"
       onValueChange={(value) => setRadioValue(value)}
+      value={radioValue}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <RadioGroup.Item className="RadioGroupItem" value="personal" id="r1">
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r1">
-          Personal
+          {radioName}
         </label>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -31,7 +36,7 @@ export const AccountTypeRadio: React.FC<Props> = ({
           <RadioGroup.Indicator className="RadioGroupIndicator" />
         </RadioGroup.Item>
         <label className="Label" htmlFor="r2">
-          Business
+        {radioName2}
         </label>
       </div>
     </RadioGroup.Root>

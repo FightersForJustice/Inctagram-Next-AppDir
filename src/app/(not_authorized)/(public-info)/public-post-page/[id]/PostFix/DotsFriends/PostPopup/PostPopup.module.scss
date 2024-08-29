@@ -1,0 +1,33 @@
+.popup {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  gap: 12px;
+  top: 0px;
+  right: -11px;
+  width: max-content;
+  padding: 12px;
+  background: var(--dark-500);
+
+  &__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s linear;
+
+    &:hover {
+      color: var(--primary-500);
+    }
+
+    &:hover path {
+      transition: all 0.2s linear;
+      fill: var(--primary-500);
+    }
+
+    &__name {
+      font-size: 14px;
+    }
+  }
+}
