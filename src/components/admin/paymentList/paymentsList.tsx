@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
 import {
   PaymentType,
@@ -25,6 +25,13 @@ export const PaymentsListClient = () => {
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const urlParams = useSearchParams()!;
+
+  const optionsSelectPayments = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
+
   const [currentPage, setCurrentPage] = useState(
     Number(urlParams.get('pageNumber')) !== null &&
     Number(urlParams.get('pageNumber')) !== 0
@@ -152,11 +159,11 @@ export const PaymentsListClient = () => {
       />
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getPayments.totalCount : [].length}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={paginatePageSize}
+        totalCount={data ? data.getPayments.totalCount : [].length}
+        options={optionsSelectPayments}
       />
     </div>
   );

@@ -39,7 +39,6 @@ export const EditPost = ({
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const accessToken = Cookies.get('accessToken');
 
-  // const [updatePost, { isLoading }] = useUpdatePostMutation();
   const [showCloseEditModal, setShowCloseEditModal] = useState(false);
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,57 +70,55 @@ export const EditPost = ({
   };
 
   return (
-    <>
-      <PostModal width={'972px'} onClose={closeModalAction}>
-        <div className={s.editTitle}>
-          <h1>{translate('editPost')}</h1>
-          {showCloseEditModal && (
-            <EditPostModal
-              title={translate('title')}
-              onSubmit={onExitFromEdit}
-              onClose={onCancelCloseEdit}
-            >
-              {translate('editModalText')}
-            </EditPostModal>
-          )}
-          <Image
-            onClick={closeModalAction}
-            src={close}
-            alt={'close'}
-            className={s.editCancel}
-          />
-        </div>
-        <div className={s.post}>
-          <Carousel>
-            {images.map((i, index) => {
-              if (i.width !== 640) {
-                return (
-                  <SwiperSlide key={index} className={'w-full'}>
-                    {/* <img src={i.url} alt={'err'} /> */}
-                    <Image width={491} height={491} alt="err" src={i.url} />
-                  </SwiperSlide>
-                );
-              }
-              return;
-            })}
-          </Carousel>
-          <div className={s.post__wrapper}>
-            <div className={s.post__header}>
-              <div className={s.post__header__user}>
-                <Image
-                  src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-                  alt={'ava'}
-                  width={36}
-                  height={36}
-                  className={s.header__img}
-                />
-                <span>{user?.userName}</span>
-              </div>
+    <PostModal width={'972px'} onClose={closeModalAction}>
+      <div className={s.editTitle}>
+        <h1>{translate('editPost')}</h1>
+        {showCloseEditModal && (
+          <EditPostModal
+            title={translate('title')}
+            onSubmit={onExitFromEdit}
+            onClose={onCancelCloseEdit}
+          >
+            {translate('editModalText')}
+          </EditPostModal>
+        )}
+        <Image
+          onClick={closeModalAction}
+          src={close}
+          alt={'close'}
+          className={s.editCancel}
+        />
+      </div>
+      <div className={s.post}>
+        <Carousel>
+          {images.map((i, index) => {
+            if (i.width !== 640) {
+              return (
+                <SwiperSlide key={i.uploadId} className={'w-full'}>
+                  {/* <img src={i.url} alt={'err'} /> */}
+                  <Image width={491} height={491} alt="err" src={i.url} />
+                </SwiperSlide>
+              );
+            }
+          })}
+        </Carousel>
+        <div className={s.post__wrapper}>
+          <div className={s.post__header}>
+            <div className={s.post__header__user}>
+              <Image
+                src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                alt={'ava'}
+                width={36}
+                height={36}
+                className={s.header__img}
+              />
+              <span>{user?.userName}</span>
             </div>
-            <p className={s.post__title}>
-              {translate('addPublicationDescriptions')}
-            </p>
-            <div className={s.post__area}>
+          </div>
+          <p className={s.post__title}>
+            {translate('addPublicationDescriptions')}
+          </p>
+          <div className={s.post__area}>
             <textarea
               className={s.post__textarea}
               cols={30}
@@ -130,24 +127,23 @@ export const EditPost = ({
               value={textareaValue}
               onChange={onTextareaHandler}
             />
-            </div>
-            <p
-              className={s.post__area__characters}
-              style={{
-                color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
-              }}
-            >
-              {textareaValue.length} / 500
-            </p>
-            <div className={s.post__btn}>
-              <PrimaryBtn onClick={onSave}>
-                {translate('saveChanges')}
-              </PrimaryBtn>
-            </div>
           </div>
-          {loading && <Loader />}
+          <p
+            className={s.post__area__characters}
+            style={{
+              color: `${textareaValue.length > 499 ? 'red' : '#8D9094'}`,
+            }}
+          >
+            {textareaValue.length} / 500
+          </p>
+          <div className={s.post__btn}>
+            <PrimaryBtn onClick={onSave}>
+              {translate('saveChanges')}
+            </PrimaryBtn>
+          </div>
         </div>
-      </PostModal>
-    </>
+        {loading && <Loader />}
+      </div>
+    </PostModal>
   );
 };

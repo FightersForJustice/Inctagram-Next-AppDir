@@ -25,11 +25,14 @@ export const Select = ((props: SelectProps) => {
     selectedValue,
     options,
   } = props;
+
+  console.log(selectedValue)
+
   return (
     <div className={s.container}>
       {label && label}
       <RadixSelect.Root
-        defaultValue={'5'}
+        defaultValue={'10'}
         onValueChange={selectedValue => onValueChange(selectedValue)}
         value={selectedValue}
       >

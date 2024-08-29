@@ -13,13 +13,14 @@ type Props = {
   setPaymentsPerPage: (newPageSize: number) => void
   siblingCount?: number
   totalCount: number
+  options: Array<{ label: string, value: string }>
 }
 
 export const Pagination = ((props: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`PaginationSelect.${key}`);
 
-  const { currentPage, setCurrentPage, paymentsPerPage, setPaymentsPerPage, siblingCount, totalCount } = props;
+  const { currentPage, setCurrentPage, paymentsPerPage, setPaymentsPerPage, siblingCount, totalCount, options } = props;
 
   const paginationRange = usePagination({
     currentPage,
@@ -78,7 +79,7 @@ export const Pagination = ((props: Props) => {
       </div>
       <div className={s.select}>
         {translate('show')}
-        <SelectPagination pageSize={paymentsPerPage} pageSizeChange={setPaymentsPerPage} />
+        <SelectPagination pageSize={paymentsPerPage} pageSizeChange={setPaymentsPerPage} options={options}/>
         {translate('onThePage')}
       </div>
     </div>
