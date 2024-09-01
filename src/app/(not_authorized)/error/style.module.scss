@@ -1,0 +1,15 @@
+.content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    color: red;
+  }
+  .button {
+    border: 1px solid #fff;
+    padding: 10px 15px;
+    margin-top: 15px;
+  }
+}

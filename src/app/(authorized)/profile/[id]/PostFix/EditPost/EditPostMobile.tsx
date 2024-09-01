@@ -1,17 +1,17 @@
 import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { Loader } from '@/components/Loader';
 
+import s from './EditPost.module.scss';
 import Cookies from 'js-cookie';
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { EditPostModal } from '@/components/Modals/EditPostModal';
+import Image from 'next/image';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
-
-import s from './EditPost.module.scss';
 import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
@@ -96,6 +96,7 @@ export const EditPostMobile = ({
               if (i.width !== 640) {
                 return (
                   <SwiperSlide key={index} className={'w-full'}>
+                    {/* <img src={i.url} alt={'err'} /> */}
                     <Image width={491} height={491} alt="err" src={i.url} />
                   </SwiperSlide>
                 );
