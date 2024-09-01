@@ -74,7 +74,6 @@ export const PaymentsClient = ({ id }: { id: string }) => {
       : { userId: Number(id) },
   });
 
-  console.log(data?.getPaymentsByUser.items)
   const tableVariant = 'UserPayments';
   // for pagination
   const paginate = (pageNumber: number) => {
@@ -118,8 +117,6 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     refetch();
   }, [url, refetch]);
 
-  console.log(currentPage)
-  console.log(paymentsPerPage)
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
   return (
