@@ -1,11 +1,12 @@
 import { getPosts, getProfile } from '../actions';
-import { UserProfile } from '../types';
+
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
 import { Posts } from '../Posts/Posts';
 import s from './ProfileServer.module.scss';
 
 import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { getPublicProfile } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
+import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
   id: number;

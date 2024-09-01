@@ -1,5 +1,6 @@
 'use client';
 
+
 import React, { useState } from 'react';
 import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
@@ -28,6 +29,7 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const params = new URLSearchParams(urlParams.toString());
   const nextRouter = useRouter();
   const { t } = useTranslation();
+
 
   const optionsSelect = [
     { label: '10', value: '10' },
@@ -82,12 +84,12 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     console.log(pageNumber)
     setCurrentPage(pageNumber);
     return nextRouter.push(`?${params.toString()}`);
-  };
 
   const paginatePageSize = (pageNumber: number) => {
     params.set('pageSize', pageNumber.toString());
     setPaymentsPerPage(pageNumber);
     return nextRouter.push(`?${params.toString()}`);
+
   };
   const usersPaymentsData = data
     ? data.getPaymentsByUser.items.map((el) => {
@@ -130,6 +132,14 @@ export const PaymentsClient = ({ id }: { id: string }) => {
         Row={tableVariant}
         id={id}
       />
+      {/*<Pagination*/}
+      {/*  currentPage={currentPage}*/}
+      {/*  setCurrentPage={setCurrentPage}*/}
+      {/*  paginate={paginate}*/}
+      {/*  totalPayments={data ? data.getPaymentsByUser.totalCount : 0}*/}
+      {/*  paymentsPerPage={paymentsPerPage}*/}
+      {/*  setPaymentsPerPage={setPaymentsPerPage}*/}
+      {/*/>*/}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={paginate}
