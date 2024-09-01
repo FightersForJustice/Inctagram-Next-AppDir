@@ -26,8 +26,6 @@ export const Select = ((props: SelectProps) => {
     options,
   } = props;
 
-  console.log(selectedValue)
-
   return (
     <div className={s.container}>
       {label && label}

@@ -12,8 +12,6 @@ export const SelectPagination = ({ pageSize, pageSizeChange, options }: Props) =
     pageSizeChange(+value);
   };
 
-
-
   return (
     <Select
       onValueChange={onValueChange}

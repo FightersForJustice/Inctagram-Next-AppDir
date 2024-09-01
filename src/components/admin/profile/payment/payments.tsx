@@ -1,18 +1,15 @@
 'use client';
 
-import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+import React, { useState } from 'react';
+import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
 import {
-  PaymentType,
-  ResultUserPaymentsType,
   UsersListType,
   UsersPaymentType,
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useGetParams } from '@/utils/useGetParams';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Follow,
@@ -32,6 +29,12 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const nextRouter = useRouter();
   const { t } = useTranslation();
 
+  const optionsSelect = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
+
   const [currentPage, setCurrentPage] = useState(
     Number(urlParams.get('pageNumber')) !== null &&
     Number(urlParams.get('pageNumber')) !== 0
@@ -40,7 +43,7 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   );
   const [paymentsPerPage, setPaymentsPerPage] = useState(
     Number(urlParams.get('pageSize')) !== null &&
-      Number(urlParams.get('pageSize')) !== 0
+    Number(urlParams.get('pageSize')) !== 0
       ? Number(urlParams.get('pageSize'))
       : 10
   );
@@ -60,44 +63,52 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const { data, loading, error, refetch } = useGetPaymentsByUserQueryQuery({
     variables: currentParams?.length
       ? {
-          userId: Number(id),
-          pageSize: paymentsPerPage,
-          pageNumber: currentPage,
-          sortBy: getSortValues ? getSortValues[1] : '',
-          sortDirection: getSortDirection
-            ? (getSortDirection[1] as SortDirection)
-            : ('desc' as SortDirection),
-        }
+        userId: Number(id),
+        pageSize: paymentsPerPage,
+        pageNumber: currentPage,
+        sortBy: getSortValues ? getSortValues[1] : '',
+        sortDirection: getSortDirection
+          ? (getSortDirection[1] as SortDirection)
+          : ('desc' as SortDirection),
+      }
       : { userId: Number(id) },
   });
+
+  console.log(data?.getPaymentsByUser.items)
   const tableVariant = 'UserPayments';
   // for pagination
   const paginate = (pageNumber: number) => {
     params.set('pageNumber', pageNumber.toString());
     console.log(pageNumber)
     setCurrentPage(pageNumber);
-    return nextRouter.push(`paymentslist?${params.toString()}`);
+    return nextRouter.push(`?${params.toString()}`);
+  };
+
+  const paginatePageSize = (pageNumber: number) => {
+    params.set('pageSize', pageNumber.toString());
+    setPaymentsPerPage(pageNumber);
+    return nextRouter.push(`?${params.toString()}`);
   };
   const usersPaymentsData = data
     ? data.getPaymentsByUser.items.map((el) => {
-        const correctData = {
-          dateOfPayment: el.dateOfPayment,
-          endDateOfSubscription: '',
-          price: el.price,
-          subscriptionType: '',
-          paymentType: el.paymentType as PaymentMethod,
+      const correctData = {
+        dateOfPayment: el.dateOfPayment,
+        endDateOfSubscription: '',
+        price: el.price,
+        subscriptionType: '',
+        paymentType: el.paymentType as PaymentMethod,
 
-          status: 'ACTIVE' as StatusSubscriptionType,
-          businessAccountId: 1,
-          startDate: el.startDate,
-          endDate: el.endDate,
-          type: el.type as SubscriptionType,
-        };
-        const resultData = {} as UsersListType;
-        const resultData1 = {} as UsersPaymentType;
-        const resultData2 = {} as Follow;
-        return Object.assign(resultData2, resultData, resultData1, correctData);
-      })
+        status: 'ACTIVE' as StatusSubscriptionType,
+        businessAccountId: 1,
+        startDate: el.startDate,
+        endDate: el.endDate,
+        type: el.type as SubscriptionType,
+      };
+      const resultData = {} as UsersListType;
+      const resultData1 = {} as UsersPaymentType;
+      const resultData2 = {} as Follow;
+      return Object.assign(resultData2, resultData, resultData1, correctData);
+    })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
     return translate(el);
@@ -107,6 +118,8 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     refetch();
   }, [url, refetch]);
 
+  console.log(currentPage)
+  console.log(paymentsPerPage)
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
   return (
@@ -119,11 +132,11 @@ export const PaymentsClient = ({ id }: { id: string }) => {
       />
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getPaymentsByUser.totalCount : 0}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
+        setPaymentsPerPage={paginatePageSize}
+        totalCount={data ? data.getPaymentsByUser.totalCount : 0}
+        options={optionsSelect}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
 import {
   ResultUserPaymentsType,
@@ -29,6 +29,12 @@ export const FollowingClient = ({ id }: { id: string }) => {
       return el.split('=');
     });
 
+  const optionsSelect = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
+
   const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
   const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
   const getSearchValue = currentParams?.filter(
@@ -52,12 +58,13 @@ export const FollowingClient = ({ id }: { id: string }) => {
   });
   const tableVariant = 'UserFollowing';
   const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
+  const [paymentsPerPage, setPaymentsPerPage] = useState(10);
   // for pagination
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
   const usersPaymentsData = data
     ? data.getFollowing.items.map((el) => {
         const correctData = {
@@ -92,11 +99,11 @@ export const FollowingClient = ({ id }: { id: string }) => {
       />
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getFollowing.totalCount : 0}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
+        totalCount={data ? data.getFollowing.totalCount : 0}
+        options={optionsSelect}
       />
     </div>
   );
