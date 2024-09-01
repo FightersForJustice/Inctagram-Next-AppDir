@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
+import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
 import {
   ResultUserPaymentsType,
@@ -28,6 +28,12 @@ export const FollowersClient = ({ id }: { id: string }) => {
     .map((el) => {
       return el.split('=');
     });
+
+  const optionsSelect = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
 
   const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
   const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
@@ -92,11 +98,11 @@ export const FollowersClient = ({ id }: { id: string }) => {
       />
       <Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getFollowers.totalCount : 0}
+        setCurrentPage={paginate}
         paymentsPerPage={paymentsPerPage}
         setPaymentsPerPage={setPaymentsPerPage}
+        totalCount={data ? data.getFollowers.totalCount : 0}
+        options={optionsSelect}
       />
     </div>
   );
