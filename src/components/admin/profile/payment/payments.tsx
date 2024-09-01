@@ -30,7 +30,6 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const nextRouter = useRouter();
   const { t } = useTranslation();
 
-
   const optionsSelect = [
     { label: '10', value: '10' },
     { label: '50', value: '50' },
@@ -50,7 +49,7 @@ export const PaymentsClient = ({ id }: { id: string }) => {
       : 10
   );
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
-  // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
+
   let currentParams = url
     ?.slice(1)
     .split('&')
@@ -80,9 +79,9 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   // for pagination
   const paginate = (pageNumber: number) => {
     params.set('pageNumber', pageNumber.toString());
-    console.log(pageNumber)
     setCurrentPage(pageNumber);
     return nextRouter.push(`?${params.toString()}`);
+  }
 
   const paginatePageSize = (pageNumber: number) => {
     params.set('pageSize', pageNumber.toString());
@@ -129,14 +128,6 @@ export const PaymentsClient = ({ id }: { id: string }) => {
         Row={tableVariant}
         id={id}
       />
-      {/*<Pagination*/}
-      {/*  currentPage={currentPage}*/}
-      {/*  setCurrentPage={setCurrentPage}*/}
-      {/*  paginate={paginate}*/}
-      {/*  totalPayments={data ? data.getPaymentsByUser.totalCount : 0}*/}
-      {/*  paymentsPerPage={paymentsPerPage}*/}
-      {/*  setPaymentsPerPage={setPaymentsPerPage}*/}
-      {/*/>*/}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={paginate}
