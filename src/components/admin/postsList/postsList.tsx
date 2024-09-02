@@ -1,28 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
-import { headerList } from '@/components/Table/headTypes';
-import Image from 'next/image';
-import {
-  PaymentType,
-  UsersListType,
-  UsersPaymentType,
-} from '@/components/Table/rowTypes';
-import { Table } from '@/components/Table/Table';
+import { Pagination } from '@/components/newPagination';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useGetParams } from '@/utils/useGetParams';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchInput } from '../shared/searchInput/searchInput';
-import { Avatar, CurrencyType, SortDirection } from '@/types';
+import { SortDirection } from '@/types';
 import s from './postsList.module.scss';
 import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
-import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
-import Link from 'next/link';
-import { ReadMoreButton } from '@/components/ReadMoreButton/ReadMoreButton';
-import { getTimeAgoText } from '@/utils';
 import { PostClient } from '@/components/admin/postsList/postClient/postClient';
 
 export const PostsListClient = () => {
@@ -35,6 +23,13 @@ export const PostsListClient = () => {
       ? (urlParams.get('searchTerm') as string)
       : ''
   );
+
+  const optionsSelect = [
+    { label: '10', value: '10' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' },
+  ];
+
   let searchInputHandler = useDebounce(currentUrlName, 400);
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentUrlName(event.currentTarget.value);
@@ -60,6 +55,12 @@ export const PostsListClient = () => {
     (el) => el[0] === 'searchTerm'
   )[0];
 
+  const paginatePageSize = (pageNumber: number) => {
+    params.set('pageSize', pageNumber.toString());
+    setPaymentsPerPage(pageNumber);
+    return nextRouter.push(`?${params.toString()}`);
+  };
+
   const { data, loading, error, refetch } = useGetCurrentPostsQuery({
     variables: {
       pageSize: getPageSize ? Number(getPageSize[1]) : 10,
@@ -70,18 +71,14 @@ export const PostsListClient = () => {
         },
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
+  const [paymentsPerPage, setPaymentsPerPage] = useState(10);
   // for pagination
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
+    return nextRouter.push(`?${params.toString()}`);
   };
-
-  // reserve
-  // const clearFiltersHandler = () => {
-  //   nextRouter.replace('/admin/usersList');
-  //   setCurrentUrlName('');
-  // };
 
   React.useEffect(() => {
     params.set('searchTerm', searchInputHandler);
@@ -108,14 +105,14 @@ export const PostsListClient = () => {
       <div className={s.postWrapper}>
         {data && <PostClient data={data} />}
       </div>
-    {/*  <Pagination*/}
-    {/*    currentPage={currentPage}*/}
-    {/*    setCurrentPage={setCurrentPage}*/}
-    {/*    paginate={paginate}*/}
-    {/*    totalPayments={data ? data.getPosts.totalCount : 0}*/}
-    {/*    paymentsPerPage={paymentsPerPage}*/}
-    {/*    setPaymentsPerPage={setPaymentsPerPage}*/}
-    {/*  />*/}
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={paginate}
+        paymentsPerPage={paymentsPerPage}
+        setPaymentsPerPage={paginatePageSize}
+        totalCount={data ? data.getPosts.totalCount : 0}
+        options={optionsSelect}
+      />
     </div>
   );
 };
