@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .container {
   display: flex;
   width: 100%;
@@ -5,7 +7,89 @@
   justify-content: space-between;
   gap: 20px;
   padding-top: 60px;
+
   .filter {
     width: 100%;
+  }
+}
+
+.postWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.postContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 237px;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.blockButton {
+  cursor: pointer;
+}
+
+.userName {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.time {
+  color: var(--light-900);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0;
+}
+
+.description {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-top: 3px;
+  color: var(--light-100);
+  word-break: break-all;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.carousel {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+@include s.devices(laptop) {
+  .postWrapper {
+    justify-content: center;
   }
 }

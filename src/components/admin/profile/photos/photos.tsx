@@ -23,9 +23,9 @@ export const PhotosClient = ({ id }: { id: string }) => {
         }
       : { userId: Number(id) },
   });
-  console.log(data);
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
+
   return (
     <div className={s.posts}>
       {data?.getPostsByUser?.items?.map((el) => {

@@ -22,6 +22,8 @@ import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
 import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
 import Link from 'next/link';
 import { ReadMoreButton } from '@/components/ReadMoreButton/ReadMoreButton';
+import { getTimeAgoText } from '@/utils';
+import { PostClient } from '@/components/admin/postsList/postClient/postClient';
 
 export const PostsListClient = () => {
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -57,19 +59,15 @@ export const PostsListClient = () => {
   const getSearchValue = currentParams?.filter(
     (el) => el[0] === 'searchTerm'
   )[0];
-  
+
   const { data, loading, error, refetch } = useGetCurrentPostsQuery({
-    variables: currentParams?.length
-      ? {
-          pageSize: getPageSize ? Number(getPageSize[1]) : 10,
-          // endCursorPostId: 1,
-          sortBy: getSortValues ? getSortValues[1] : '',
-          sortDirection: getSortDirection
-            ? (getSortDirection[1] as SortDirection)
-            : ('desc' as SortDirection),
-          searchTerm: getSearchValue ? getSearchValue[1] : '',
-        }
-      : {},
+    variables: {
+      pageSize: getPageSize ? Number(getPageSize[1]) : 10,
+      endCursorPostId: 0,
+      sortBy: 'createdAt',
+      sortDirection: 'desc' as SortDirection,
+      searchTerm: getSearchValue ? getSearchValue[1] : '',
+        },
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [paymentsPerPage, setPaymentsPerPage] = useState(5);
@@ -98,57 +96,7 @@ export const PostsListClient = () => {
     refetch();
   }, [url, refetch]);
 
-  const postsImages = () => {
-    return data?.getPosts.items.slice(0, 4).map((el, i) => {
-      // const userProfile = await getPublicProfile(i.ownerId);
-
-      return (
-        <>
-          {/* <div className={s.postWrapper}>
-            <div key={i} className={s.postContainer}>
-              <Image
-                src={
-                  el.images?.length
-                    ? el.images[0].url
-                    : '/img/profile/posts/post1.png'
-                }
-                alt={'post'}
-                width={234}
-                height={228}
-                className={s.imagePost}
-                // onClick={onOpenPost}
-              />
-            </div>
-            <Link href={'/admin/postslist/profile' + `${'/' + el.ownerId}`}>
-              <div className={s.userContainer}>
-                <Image
-                  src={
-                    el.postOwner.avatars.length
-                      ? el.postOwner.avatars[0].url
-                      : '/img/create-post/no-image.png'
-                  }
-                  alt={'ava'}
-                  width={36}
-                  height={36}
-                  className={k.post__avatar}
-                />
-                <h3 className={s.userName}>{post.userName} </h3>
-              </div>
-            </Link>
-            <p className={s.time}>{time}</p>
-          </div>
-          <div className={s.description}>
-            <ReadMoreButton
-              text={el.description}
-              maxLength={80}
-              moreText={translateReadMoreButton('showMore')}
-              lessText={translateReadMoreButton('hide')}
-            />
-          </div> */}
-        </>
-      );
-    });
-  };
+  console.log(data?.getPosts.items)
 
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
@@ -157,19 +105,17 @@ export const PostsListClient = () => {
       <div className={s.container}>
         <SearchInput onChange={setNameHandler} />
       </div>
-      <div className={s.containerPosts}>
-        {
-          // postsImages()
-        }
+      <div className={s.postWrapper}>
+        {data && <PostClient data={data} />}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getPosts.totalCount : 0}
-        paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
-      />
+    {/*  <Pagination*/}
+    {/*    currentPage={currentPage}*/}
+    {/*    setCurrentPage={setCurrentPage}*/}
+    {/*    paginate={paginate}*/}
+    {/*    totalPayments={data ? data.getPosts.totalCount : 0}*/}
+    {/*    paymentsPerPage={paymentsPerPage}*/}
+    {/*    setPaymentsPerPage={setPaymentsPerPage}*/}
+    {/*  />*/}
     </div>
   );
 };

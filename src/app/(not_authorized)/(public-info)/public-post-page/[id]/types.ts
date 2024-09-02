@@ -26,14 +26,14 @@ export interface postImage {
 }
 
 export interface PostType {
-  id: number;
+  id: number;//
   userName: string;
-  ownerId: number;
-  description: string;
+  ownerId: number;//
+  description: string;//
   location: string;
   images: postImage[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string;//
+  updatedAt: string;//
   avatarOwner: string;
   owner: {
     firstName: string;
