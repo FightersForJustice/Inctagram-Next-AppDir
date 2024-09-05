@@ -1,118 +1,137 @@
 'use client';
 
-import React from 'react';
-import { Pagination } from '@/components/newPagination';
-import { useDebounce } from '@/utils/useDebaunce';
-import { useGetParams } from '@/utils/useGetParams';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SearchInput } from '../shared/searchInput/searchInput';
-import { SortDirection } from '@/types';
-import s from './postsList.module.scss';
+import React, { useEffect, useState } from 'react';
 import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
 import { PostClient } from '@/components/admin/postsList/postClient/postClient';
+import { Loader } from '@/components/Loader';
+import s from './postsList.module.scss';
+import { SortDirection } from '@/types';
+import { SearchInput } from '@/components/admin/shared/searchInput/searchInput';
+
+export type ItemsType = {
+  __typename?: 'Post',
+  id: number,
+  ownerId: number,
+  description: string,
+  createdAt: any,
+  updatedAt: any,
+  images?: Array<{
+    __typename?: 'ImagePost',
+    id?: number | null,
+    createdAt?: any | null,
+    url?: string | null,
+    width?: number | null,
+    height?: number | null,
+    fileSize?: number | null
+  }> | null,
+  postOwner: {
+    __typename?: 'PostOwnerModel',
+    id: number,
+    userName: string,
+    avatars?: Array<{
+      __typename?: 'Avatar',
+      url?: string | null,
+      width?: number | null,
+      height?: number | null,
+      fileSize?: number | null
+    }> | null
+  }
+};
 
 export const PostsListClient = () => {
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [visiblePopupId, setVisiblePopupId] = useState('');
-  const urlParams = useSearchParams()!;
-  const params = new URLSearchParams(urlParams.toString());
-  const [currentUrlName, setCurrentUrlName] = React.useState(
-    (urlParams.get('searchTerm') as string) !== null
-      ? (urlParams.get('searchTerm') as string)
-      : ''
-  );
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+  const [posts, setPosts] = useState<ItemsType[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const optionsSelect = [
-    { label: '10', value: '10' },
-    { label: '50', value: '50' },
-    { label: '100', value: '100' },
-  ];
-
-  let searchInputHandler = useDebounce(currentUrlName, 400);
   const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentUrlName(event.currentTarget.value);
-  };
-  const url = useGetParams();
-  const nextRouter = useRouter();
-  const { t } = useTranslation();
-  const translate = (key: string): string => t(`Admin.postslist.${key}`);
-  // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
-  let currentParams = url
-    ?.slice(1)
-    .split('&')
-    .map((el) => {
-      return el.split('=');
-    });
-
-  const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
-  const getSortDirection = currentParams?.filter(
-    (el) => el[0] === 'sortDirection'
-  )[0];
-  const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
-  const getSearchValue = currentParams?.filter(
-    (el) => el[0] === 'searchTerm'
-  )[0];
-
-  const paginatePageSize = (pageNumber: number) => {
-    params.set('pageSize', pageNumber.toString());
-    setPaymentsPerPage(pageNumber);
-    return nextRouter.push(`?${params.toString()}`);
+    setSearchTerm(event.currentTarget.value);
   };
 
-  const { data, loading, error, refetch } = useGetCurrentPostsQuery({
+  const { data, fetchMore, refetch } = useGetCurrentPostsQuery({
     variables: {
-      pageSize: getPageSize ? Number(getPageSize[1]) : 10,
+      pageSize: 20,
       endCursorPostId: 0,
       sortBy: 'createdAt',
       sortDirection: 'desc' as SortDirection,
-      searchTerm: getSearchValue ? getSearchValue[1] : '',
-        },
+      searchTerm,
+    },
+    fetchPolicy: 'network-only',
   });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(10);
-  // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
-  const paginate = (pageNumber: number) => {
-    params.set('pageNumber', pageNumber.toString());
-    setCurrentPage(pageNumber);
-    return nextRouter.push(`?${params.toString()}`);
+
+  useEffect(() => {
+    if (data?.getPosts?.items) {
+      setPosts(prevPosts => (searchTerm ? prevPosts : data.getPosts.items));
+      setAllPostsLoaded(data.getPosts.items.length < 20);
+    }
+  }, [data]);
+
+  useEffect(() => {
+
+    if (searchTerm) {
+      setPosts([]);
+      refetch().then((fetchResult) => {
+        const newPosts = fetchResult.data.getPosts.items;
+        setPosts(newPosts);
+        setAllPostsLoaded(newPosts.length < 10);
+      });
+    } else {
+      refetch();
+    }
+  }, [searchTerm, refetch]);
+
+  const loadMorePosts = () => {
+    if (loadingMore || allPostsLoaded) return;
+
+    setLoadingMore(true);
+
+    const lastPostId = posts.length ? posts[posts.length - 1].id : 0;
+
+    fetchMore({
+      variables: {
+        endCursorPostId: lastPostId,
+        searchTerm,
+      },
+    }).then((fetchMoreResult) => {
+      const newPosts = fetchMoreResult.data.getPosts.items;
+
+      if (newPosts.length > 0) {
+        setPosts((prevPosts) => {
+          const existingPostIds = new Set(prevPosts.map(post => post.id));
+          const filteredNewPosts = newPosts.filter(post => !existingPostIds.has(post.id));
+          return [...prevPosts, ...filteredNewPosts];
+        });
+      } else {
+        setAllPostsLoaded(true);
+      }
+    }).finally(() => {
+      setLoadingMore(false);
+    });
   };
 
-  React.useEffect(() => {
-    params.set('searchTerm', searchInputHandler);
-    if (!searchInputHandler.trim()) {
-      params.delete('searchTerm');
-    }
-    setCurrentUrlName(searchInputHandler);
-    nextRouter.push(`/admin/postslist?${params.toString()}`);
-  }, [searchInputHandler]);
+  useEffect(() => {
+    const handleScroll = () => {
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300) {
+        loadMorePosts();
+      }
+    };
 
-  React.useEffect(() => {
-    refetch();
-  }, [url, refetch]);
+    window.addEventListener('scroll', handleScroll);
 
-  console.log(data?.getPosts.items)
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [loadingMore, allPostsLoaded, posts]);
 
-  //react select issue
-  //https://github.com/ndom91/react-timezone-select/issues/108
   return (
     <div>
       <div className={s.container}>
         <SearchInput onChange={setNameHandler} />
       </div>
       <div className={s.postWrapper}>
-        {data && <PostClient data={data} />}
+        <PostClient posts={posts} />
+        {allPostsLoaded && <div>No more posts to load</div>}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={paginate}
-        paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={paginatePageSize}
-        totalCount={data ? data.getPosts.totalCount : 0}
-        options={optionsSelect}
-      />
     </div>
   );
 };

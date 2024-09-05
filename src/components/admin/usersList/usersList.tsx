@@ -155,12 +155,6 @@ export const UsersListClient = () => {
     };
   });
 
-  // reserve
-  // const clearFiltersHandler = () => {
-  //   nextRouter.replace('/admin/usersList');
-  //   setCurrentUrlName('');
-  // };
-
   React.useEffect(() => {
     params.set('searchTerm', searchInputHandler);
     if (!searchInputHandler.trim()) {
@@ -187,9 +181,6 @@ export const UsersListClient = () => {
 
   const filterValue = params.get('statusFilter');
 
-
-  //react select issue
-  //https://github.com/ndom91/react-timezone-select/issues/108
   return (
     <div>
       <div className={s.container}>

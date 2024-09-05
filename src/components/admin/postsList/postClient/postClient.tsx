@@ -9,19 +9,20 @@ import s from './../postsList.module.scss';
 import React from 'react';
 import { SwiperSlide } from 'swiper/react';
 import { Carousel } from '@/components/Carousel/Carousel';
+import { ItemsType } from '@/components/admin/postsList/postsList';
 
-type Props = {
-  data: GetCurrentPostsQuery;
+type PropsType = {
+  posts: ItemsType[];
 };
 
-export const PostClient = (data: Props) => {
+export const PostClient = (posts: PropsType) => {
 
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`);
 
-    return data.data.getPosts.items.map((el) => {
+    return posts.posts.map((el) => {
 
       const time = getTimeAgoText(el.createdAt, language, translate);
 
