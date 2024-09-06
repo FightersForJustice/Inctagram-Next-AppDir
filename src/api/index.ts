@@ -39,3 +39,5 @@ export {
   useGetCurrentSubscriptionQuery,
   useGetPaymentsQuery,
 } from './subscriptions.api';
+
+export { useGetUsersQuery } from './users.api';
