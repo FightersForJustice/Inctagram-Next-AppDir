@@ -16,14 +16,17 @@ import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { PostType, UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
 
 
 type Props = {
   user: UserProfile;
   description: string;
   myProfile: boolean;
+  id: number;
   images: ImageType[];
+  postData: PostType;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
@@ -33,6 +36,8 @@ type Props = {
 export const PostContent = ({
   description,
   user,
+  postData,
+  id,
   closeModalAction,
   myProfile,
   images,
@@ -89,7 +94,7 @@ export const PostContent = ({
                 height={36}
                 className={s.post__avatar}
               />
-              <div>
+              <div className='flex flex-col gap-1'>
                 <p className={s.post__desc__text}>
                   <span className={s.post__desc__name}>{user?.userName} </span>
                   {description}
@@ -98,12 +103,7 @@ export const PostContent = ({
               </div>
             </div>
           </div>
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          {myProfile && <PostLikes  />}
-          <PostAmount />
-          {myProfile && <PostForm />}
+          <PostCommentHOC myProfile={myProfile} postId={id} myId={user.id} postData={postData}/>
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}

@@ -1,6 +1,6 @@
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { SignInData } from '@/features/schemas/SignInSchema';
-import { createPostOptionsType } from './optionsTypes';
+import { createCommentLikeOptionsType, createCommentOptionsType, createPostOptionsType } from './optionsTypes';
 import { CreateSubscription } from '@/api/subscriptions.api';
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
@@ -214,6 +214,34 @@ export const createPostOptions = (
 ) => {
   return {
     method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+export const createCommentOptions = (
+  accessToken: string | null,
+  body: createCommentOptionsType
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+export const createCommentLikeOptions = (
+  accessToken: string | null,
+  body: createCommentLikeOptionsType
+) => {
+  return {
+    method: 'PUT',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       accept: 'application/json',

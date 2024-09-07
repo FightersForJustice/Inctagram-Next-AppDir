@@ -28,6 +28,8 @@ export interface postImage {
 export interface PostType {
   id: number;
   userName: string;
+  likesCount: number,
+  isLiked: boolean
   ownerId: number;
   description: string;
   location: string;

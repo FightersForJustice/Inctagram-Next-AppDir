@@ -160,7 +160,9 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
         closeModalAction={closeModalAction}
         images={post.images}
         myProfile={myProfile}
+        id={post.id}
         user={userData}
+        postData={post}
         description={post.description}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}

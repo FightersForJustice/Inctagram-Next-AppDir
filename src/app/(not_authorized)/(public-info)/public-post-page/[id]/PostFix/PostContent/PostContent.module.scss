@@ -54,7 +54,7 @@
     gap: 12px;
     border-top: 1px solid var(--dark-100);
     padding: 19px 24px 0 24px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 
     &__name {
       font-weight: bold;
@@ -95,7 +95,7 @@
     &__wrapper {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 12px;
       padding: 12px 0 0 0;
     }
 
@@ -159,6 +159,7 @@
 
   &__form {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 18px;
     border-top: 1px solid var(--dark-100);

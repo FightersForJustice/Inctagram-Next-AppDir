@@ -5,6 +5,8 @@ import { citySelectRoutes, routes } from '@/api/routes';
 import { SignInData } from '@/features/schemas/SignInSchema';
 import {
   checkRecoveryCodeOptions,
+  createCommentLikeOptions,
+  createCommentOptions,
   createPostOptions,
   deleteAvatarOptions,
   deleteUploadedPostOptions,
@@ -26,7 +28,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/SettingsForm';
 import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
-import { createPostOptionsType } from './optionsTypes';
+import { createCommentLikeOptionsType, createCommentOptionsType, createPostOptionsType } from './optionsTypes';
 import { accessToken } from '@/utils/serverActions';
 import { redirect } from 'next/dist/server/api-utils';
 
@@ -470,6 +472,45 @@ export async function createPost(body: createPostOptionsType) {
     console.error('createPost error', error);
 
     return { success: false, data: 'createPostError' };
+  }
+}
+export async function createComment(body: createCommentOptionsType) {
+  try {
+    const res = await fetch(
+      routes.CREATE_COMMENT + body.id + '/comments',
+      createCommentOptions(accessToken(), body)
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createComment error', error);
+
+    return { success: false, data: 'createComment' };
+  }
+}
+export async function createLikeComment(body: createCommentLikeOptionsType) {
+  try {
+    const res = await fetch(
+      routes.CREATE_COMMENT + body.postId + '/comments/' + body.commentId + '/like-status',
+      createCommentLikeOptions(accessToken(), body)
+    );
+    const responseBody = await res.json();
+    console.log(res)
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createComment error', error);
+
+    return { success: false, data: 'createComment' };
   }
 }
 

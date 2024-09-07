@@ -37,6 +37,22 @@ export const getPublicProfile = async (profileId: number) => {
     return null;
   }
 };
+export const getPostComments = async (postId: number) => {
+
+  const apiUrl = baseUrl + `public-posts/${postId}/comments`;
+  try {
+    const response = await fetch(apiUrl)
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
 
 export const getPublicPostsPage = async () => {
   const apiUrl =

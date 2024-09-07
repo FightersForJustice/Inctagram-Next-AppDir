@@ -20,8 +20,9 @@
 
     &__wrapper {
       display: flex;
+      width: 100%;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     &__name {
@@ -48,6 +49,7 @@
 
     &__answer {
       cursor: pointer;
+      font-weight: 600;
     }
   }
 }
