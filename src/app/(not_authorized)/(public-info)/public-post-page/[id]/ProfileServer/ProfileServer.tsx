@@ -26,6 +26,7 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
         userData={!isPublic ? userdata : publicUserdata}
         postsData={postsData}
         myProfile={myProfile}
+        isPublic={isPublic}
       />
       <div className={s.posts}>
         <Posts

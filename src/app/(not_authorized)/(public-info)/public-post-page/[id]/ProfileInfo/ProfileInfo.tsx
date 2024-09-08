@@ -12,8 +12,14 @@ type Props = {
   userData: UserProfile;
   myProfile: boolean;
   postsData: ApiResponsePosts;
+  isPublic: boolean;
 };
-export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
+export const ProfileInfo = ({
+  userData,
+  myProfile,
+  postsData,
+  isPublic,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const router = useRouter();
@@ -24,12 +30,15 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE);
     };
 
-    window.addEventListener('popstate', handler);
+    if (isPublic) {
+      window.addEventListener('popstate', handler);
 
-    return () => {
-      window.removeEventListener('popstate', handler);
-    };
-  }, [router]);
+      return () => {
+        console.log('I was worked');
+        window.removeEventListener('popstate', handler);
+      };
+    }
+  }, []);
 
   return (
     <>
