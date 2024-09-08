@@ -4,18 +4,23 @@ import Image from 'next/image';
 import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
 import { useGetUsersQuery, UserType } from '@/api/users.api';
+import { useDebounce } from '@uidotdev/usehooks';
 
 export const SearchContent = () => {
   const [users, setUsers] = useState<UserType[]>([]);
   const [search, setSearch] = useState('');
 
+  const debouncedSearch = useDebounce(search, 1000);
+
   const { data, isSuccess, isError } = useGetUsersQuery({
-    search: 'steels', // remove hardcode
+    search: debouncedSearch,
   });
 
   useEffect(() => {
-    isSuccess && setUsers(data.items);
-  }, [data, isSuccess, isError]);
+    if (data) {
+      isSuccess && setUsers(data.items);
+    }
+  }, [data, isSuccess]);
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;

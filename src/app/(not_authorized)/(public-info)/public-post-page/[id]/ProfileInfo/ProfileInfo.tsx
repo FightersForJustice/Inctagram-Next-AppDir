@@ -77,12 +77,12 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
                   </Link>
                 ) : (
                   <>
-                    {/* <Link href="#" className={s.btnPrimary}>
+                    <Link href="#" className={s.btnPrimary}>
                       {translate('SubscribersModal.subBtn')}
                     </Link>
                     <Link href="#" className={s.message}>
                       {translate('btnSendMessage')}
-                    </Link> */}
+                    </Link>
                   </>
                 )}
               </div>
