@@ -7,12 +7,12 @@ export const usersApi = api.injectEndpoints({
       GetUsers,
       {
         search: string;
-        pageSize: number;
-        pageNumber: number;
-        cursor: number;
+        pageSize?: number;
+        pageNumber?: number;
+        cursor?: number;
       }
     >({
-      query: ({ search, pageSize, pageNumber, cursor }) => {
+      query: ({ search, pageSize = 12, pageNumber = 1, cursor = 0 }) => {
         return {
           url: `users?search=${search}&pageSize=${pageSize}&pageNumber=${pageNumber}&cursor=${cursor}`,
           method: 'GET',
