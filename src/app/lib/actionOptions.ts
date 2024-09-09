@@ -128,10 +128,7 @@ export const requestDeleteAllSessionsOptions = (
 };
 //NOTIFICATIONS OPTIONS
 
-export const notificationOptions = (
-  accessToken: string | null,
-
-) => {
+export const notificationOptions = (accessToken: string | null) => {
   return {
     method: 'GET',
     headers: {
@@ -157,7 +154,6 @@ export const uploadAvatarOptions = (
   };
 };
 
-
 export const updateProfileOptions = (
   accessToken: string | null,
   data: ProfileFormSubmit
@@ -182,12 +178,15 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
     next: { revalidate: 0 },
   };
 };
-export const onCreateStripeOptions = (accessToken: string | null, data: CreateSubscription) => {
+export const onCreateStripeOptions = (
+  accessToken: string | null,
+  data: CreateSubscription
+) => {
   return {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-       accept: 'application/json',
+      accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -199,7 +198,7 @@ export const getSubsriptionOptions = (accessToken: string | undefined) => {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-       accept: 'application/json',
+      accept: 'application/json',
       'Content-Type': 'application/json',
     },
     // next: { revalidate: 10 },
@@ -253,6 +252,17 @@ export const deleteOptions = (
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'user-agent': userAgent,
+    },
+  };
+};
+
+// USERS OPTIONS
+
+export const getUsersOptions = (accessToken: string | undefined) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 };

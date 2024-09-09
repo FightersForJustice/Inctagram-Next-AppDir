@@ -1,33 +1,35 @@
+'use client';
+
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
-import { useGetUsersQuery, UserType } from '@/api/users.api';
-import { useDebounce } from '@uidotdev/usehooks';
+import { useDebounce } from '@/utils/useDebaunce';
+import { useRouter } from 'next/navigation';
 
-export const SearchContent = () => {
-  const [users, setUsers] = useState<UserType[]>([]);
+type Props = {
+  users: any;
+};
+
+export const SearchContent: React.FC<Props> = ({ users }) => {
   const [search, setSearch] = useState('');
+  const router = useRouter();
 
   const debouncedSearch = useDebounce(search, 1000);
 
-  const { data, isSuccess, isError } = useGetUsersQuery({
-    search: debouncedSearch,
-  });
-
   useEffect(() => {
-    if (data) {
-      isSuccess && setUsers(data.items);
+    if (debouncedSearch) {
+      router.push('?search=' + debouncedSearch);
     }
-  }, [data, isSuccess]);
+  }, [debouncedSearch]);
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setSearch(value);
   };
 
-  const usersList = users.map((user: UserType) => (
+  const usersList = users.map((user: any) => (
     <FoundUser key={user.id} user={user} />
   ));
 
