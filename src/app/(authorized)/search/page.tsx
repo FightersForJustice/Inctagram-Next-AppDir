@@ -1,17 +1,21 @@
-'use client';
-
 import { SearchContent } from './SearchContent';
-import { usePathname } from 'next/navigation';
 
 import s from './Search.module.scss';
+import { getUsersAction } from '@/app/(authorized)/search/SearchContent/actions';
 
-const Page = () => {
-  const pathname = usePathname();
+interface Params {
+  searchParams: {
+    search: string;
+  };
+}
+
+const Page = async ({ searchParams }: Params) => {
+  const users = await getUsersAction(searchParams.search);
 
   return (
     <div className={s.container}>
       <div className={s.wrapper} id={'wrapper'}>
-        <SearchContent />
+        <SearchContent users={users.items} />
       </div>
     </div>
   );
