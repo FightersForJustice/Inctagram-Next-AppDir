@@ -7,9 +7,10 @@ import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useRouter } from 'next/navigation';
+import { UserDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
-  users: any;
+  users: UserDataType[];
 };
 
 export const SearchContent: React.FC<Props> = ({ users }) => {
@@ -29,7 +30,7 @@ export const SearchContent: React.FC<Props> = ({ users }) => {
     setSearch(value);
   };
 
-  const usersList = users.map((user: any) => (
+  const usersList = users.map((user) => (
     <FoundUser key={user.id} user={user} />
   ));
 
