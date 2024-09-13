@@ -258,9 +258,31 @@ export const deleteOptions = (
 
 // USERS OPTIONS
 
-export const getUsersOptions = (accessToken: string | undefined) => {
+export const getUsersOptions = (accessToken: string | null) => {
   return {
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+
+export const createFollowingOption = (
+  accessToken: string | null,
+  userId: number
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ selectedUserId: userId }),
+  };
+};
+
+export const deleteFollowerOption = (accessToken: string | null) => {
+  return {
+    method: 'DELETE',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

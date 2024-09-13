@@ -46,3 +46,12 @@ export interface ApiResponsePosts {
   pageSize: number;
   items: PostType[];
 }
+
+export type UserDataType = {
+  id: number;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  avatars: Array<Avatar & { createdAt: string }>;
+  createdAt: string;
+};
