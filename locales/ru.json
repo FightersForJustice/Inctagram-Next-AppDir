@@ -88,6 +88,7 @@
       "title": "Подписчиков",
       "search": "Поиск",
       "subBtn": "Подписаться",
+      "unsubBtn": "Отписаться",
       "deleteBtn": "Удалить"
     },
     "SubscriptionsModal": {

@@ -88,6 +88,7 @@
       "title": "Followers",
       "search": "Search",
       "subBtn": "Follow",
+      "unsubBtn": "Unfollow",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
