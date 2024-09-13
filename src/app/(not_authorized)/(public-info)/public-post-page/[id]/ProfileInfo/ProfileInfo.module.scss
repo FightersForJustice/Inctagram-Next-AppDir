@@ -96,6 +96,13 @@
               margin: 0;
             }
           }
+          .btnSecondary {
+            color: var(--primary-500);
+            background: transparent;
+            padding: 6px 24px;
+            margin-right: 20px;
+            border: var(--primary-500) solid 1px;
+          }
           .message {
             background: var(--dark-300);
             padding: 6px 24px;
