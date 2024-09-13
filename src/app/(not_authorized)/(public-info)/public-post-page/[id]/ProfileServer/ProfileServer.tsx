@@ -6,7 +6,11 @@ import s from './ProfileServer.module.scss';
 
 import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { getPublicProfile } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import {
+  UserFollowingDataType,
+  UserProfile,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { getUserInfo } from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   id: number;
@@ -17,9 +21,11 @@ type Props = {
 const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
   const userdata: UserProfile = await getProfile(id);
   const publicUserdata: UserProfile = await getPublicProfile(id);
-  //await new Promise((resolve) => setTimeout(resolve, 3000));
+  const followingData: UserFollowingDataType = await getUserInfo(
+    userdata.userName
+  );
   const postsData: ApiResponsePosts = await getPosts(id, 0);
-  // const postsData = 10
+
   return (
     <>
       <ProfileInfo
@@ -27,6 +33,7 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
         postsData={postsData}
         myProfile={myProfile}
         isPublic={isPublic}
+        followingData={followingData}
       />
       <div className={s.posts}>
         <Posts

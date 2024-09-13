@@ -55,3 +55,21 @@ export type UserDataType = {
   avatars: Array<Avatar & { createdAt: string }>;
   createdAt: string;
 };
+
+export type UserFollowingDataType = {
+  id: number;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  country: string;
+  region: string;
+  dateOfBirth: string;
+  aboutMe: string;
+  avatars: Array<Avatar & { createdAt: string }>;
+  isFollowing: boolean;
+  isFollowedBy: boolean;
+  followingCount: number;
+  followersCount: number;
+  publicationsCount: number;
+};
