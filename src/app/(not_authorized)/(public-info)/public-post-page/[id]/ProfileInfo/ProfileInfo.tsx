@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
-import { ApiResponsePosts, UserProfile } from '../types';
+import { ApiResponsePosts, UserFollowingDataType, UserProfile } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -13,16 +13,20 @@ type Props = {
   myProfile: boolean;
   postsData: ApiResponsePosts;
   isPublic: boolean;
+  followingData: UserFollowingDataType;
 };
 export const ProfileInfo = ({
   userData,
   myProfile,
   postsData,
   isPublic,
+  followingData,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const router = useRouter();
+
+  const { isFollowing, followingCount, followersCount } = followingData;
 
   useEffect(() => {
     const handler = (event: PopStateEvent) => {
@@ -32,13 +36,20 @@ export const ProfileInfo = ({
 
     if (isPublic) {
       window.addEventListener('popstate', handler);
-
       return () => {
-        console.log('I was worked');
         window.removeEventListener('popstate', handler);
       };
     }
   }, []);
+
+  const followUnfollowHandler = async () => {
+    const id = userData.id;
+    console.log(id);
+  };
+
+  const subBtnName = isFollowing
+    ? 'SubscribersModal.unsubBtn'
+    : 'SubscribersModal.subBtn';
 
   return (
     <>
@@ -63,11 +74,11 @@ export const ProfileInfo = ({
                 <div className={s.name}>{userData?.userName}</div>
                 <div className={s.statistics}>
                   <div>
-                    <p>0</p>
+                    <p>{followingCount}</p>
                     <p>{translate('subscriptions')}</p>
                   </div>
                   <div>
-                    <p>0</p>
+                    <p>{followersCount}</p>
                     <p>{translate('subscribers')}</p>
                   </div>
                   <div>
@@ -86,8 +97,12 @@ export const ProfileInfo = ({
                   </Link>
                 ) : (
                   <>
-                    <Link href="#" className={s.btnPrimary}>
-                      {translate('SubscribersModal.subBtn')}
+                    <Link
+                      href="#"
+                      onClick={followUnfollowHandler}
+                      className={isFollowing ? s.btnSecondary : s.btnPrimary}
+                    >
+                      {translate(subBtnName)}
                     </Link>
                     <Link href="#" className={s.message}>
                       {translate('btnSendMessage')}
