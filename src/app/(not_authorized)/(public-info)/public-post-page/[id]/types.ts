@@ -47,7 +47,17 @@ export interface ApiResponsePosts {
   items: PostType[];
 }
 
-export type UserDataType = {
+export type UsersDataType = {
+  totalCount: number;
+  pagesCount: number;
+  page: number;
+  pageSize: number;
+  prevCursor: number;
+  nextCursor: number;
+  items: UserType[];
+};
+
+export type UserType = {
   id: number;
   userName: string;
   firstName: string;

@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 import s from './FoundUser.module.scss';
 import { useRouter } from 'next/navigation';
-import { UserDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
-  user: UserDataType;
+  user: UserType;
 };
 
 export const FoundUser: React.FC<Props> = ({ user }) => {

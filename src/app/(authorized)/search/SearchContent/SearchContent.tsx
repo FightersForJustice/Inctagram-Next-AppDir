@@ -7,10 +7,10 @@ import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
 import { useDebounce } from '@/utils/useDebaunce';
 import { useRouter } from 'next/navigation';
-import { UserDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
-  users: UserDataType[];
+  users: UserType[];
 };
 
 export const SearchContent: React.FC<Props> = ({ users }) => {
