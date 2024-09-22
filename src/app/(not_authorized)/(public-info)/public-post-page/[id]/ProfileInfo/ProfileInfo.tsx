@@ -4,16 +4,21 @@ import s from './ProfileInfo.module.scss';
 import Link from 'next/link';
 import { ApiResponsePosts, UserFollowingDataType, UserProfile } from '../types';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import {
+  followToUser,
+  unfollowByUser,
+} from '@/app/(authorized)/search/SearchContent/data';
 
 type Props = {
   userData: UserProfile;
   myProfile: boolean;
   postsData: ApiResponsePosts;
   isPublic: boolean;
-  followingData: UserFollowingDataType;
+  followingData: UserFollowingDataType | null;
+  token: string | null;
 };
 export const ProfileInfo = ({
   userData,
@@ -21,12 +26,18 @@ export const ProfileInfo = ({
   postsData,
   isPublic,
   followingData,
+  token,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const router = useRouter();
 
-  const { isFollowing, followingCount, followersCount } = followingData;
+  const [isUserFollowing, setIsUserFollowing] = useState(
+    followingData?.isFollowing
+  );
+  const [followersCount, setFollowersCount] = useState(
+    followingData?.followersCount || 0
+  );
 
   useEffect(() => {
     const handler = (event: PopStateEvent) => {
@@ -43,11 +54,25 @@ export const ProfileInfo = ({
   }, []);
 
   const followUnfollowHandler = async () => {
-    const id = userData.id;
-    console.log(id);
+    if (!isPublic) {
+      let resIsOk;
+      if (isUserFollowing) {
+        resIsOk = await unfollowByUser(userData.id, token);
+        if (resIsOk) {
+          setIsUserFollowing(false);
+          setFollowersCount((prev) => prev - 1);
+        }
+      } else {
+        resIsOk = await followToUser(userData.id, token);
+        if (resIsOk) {
+          setIsUserFollowing(true);
+          setFollowersCount((prev) => prev + 1);
+        }
+      }
+    }
   };
 
-  const subBtnName = isFollowing
+  const subBtnName = isUserFollowing
     ? 'SubscribersModal.unsubBtn'
     : 'SubscribersModal.subBtn';
 
@@ -74,11 +99,11 @@ export const ProfileInfo = ({
                 <div className={s.name}>{userData?.userName}</div>
                 <div className={s.statistics}>
                   <div>
-                    <p>{followingCount}</p>
+                    <p>{!isPublic && followingData?.followingCount}</p>
                     <p>{translate('subscriptions')}</p>
                   </div>
                   <div>
-                    <p>{followersCount}</p>
+                    <p>{!isPublic && followersCount}</p>
                     <p>{translate('subscribers')}</p>
                   </div>
                   <div>
@@ -95,12 +120,14 @@ export const ProfileInfo = ({
                   >
                     {translate('btnName')}
                   </Link>
-                ) : (
+                ) : !isPublic ? (
                   <>
                     <Link
                       href="#"
                       onClick={followUnfollowHandler}
-                      className={isFollowing ? s.btnSecondary : s.btnPrimary}
+                      className={
+                        isUserFollowing ? s.btnSecondary : s.btnPrimary
+                      }
                     >
                       {translate(subBtnName)}
                     </Link>
@@ -108,7 +135,7 @@ export const ProfileInfo = ({
                       {translate('btnSendMessage')}
                     </Link>
                   </>
-                )}
+                ) : null}
               </div>
             </div>
             <div className={myProfile ? s.descriptions : s.descriptionsPublic}>

@@ -2,7 +2,6 @@ import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/Set
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { createPostOptionsType } from './optionsTypes';
 import { CreateSubscription } from '@/api/subscriptions.api';
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 //AUTH OPTIONS
 
@@ -258,7 +257,7 @@ export const deleteOptions = (
 
 // USERS OPTIONS
 
-export const getUsersOptions = (accessToken: string | null) => {
+export const getUsersOptions = (accessToken: string | undefined) => {
   return {
     method: 'GET',
     headers: {
@@ -275,6 +274,7 @@ export const createFollowingOption = (
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ selectedUserId: userId }),
   };
