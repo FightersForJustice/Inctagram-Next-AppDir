@@ -2,6 +2,7 @@ import { SearchContent } from './SearchContent';
 
 import s from './Search.module.scss';
 import { getUsers } from '@/app/(authorized)/search/SearchContent/actions';
+import { UsersDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 interface Params {
   searchParams: {
@@ -14,7 +15,12 @@ interface Params {
 
 const Page = async ({ searchParams }: Params) => {
   const { search, pageSize, pageNumber, cursor } = searchParams;
-  const { items } = await getUsers(search, pageSize, pageNumber, cursor);
+  const { items }: UsersDataType = await getUsers(
+    search,
+    pageSize,
+    pageNumber,
+    cursor
+  );
 
   return (
     <div className={s.container}>
