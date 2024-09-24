@@ -16,6 +16,7 @@ import { findMinId } from '@/utils/findMinId';
 import { useInView } from 'react-intersection-observer';
 import { Loader } from '@/components/Loader';
 import Image from 'next/image';
+import { ImagesAmount } from '@/components/ImagesAmount';
 
 type Props = {
   postsData: ApiResponsePosts;
@@ -63,7 +64,6 @@ export const Posts = ({
   const postsImages = () => {
     return items.map((i) => {
       const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
-      const imgAmount = i.images.length > 1 ? i.images.length : '';
       return (
         <div key={i.id} className={s.imageContainer}>
           <Post
@@ -73,17 +73,9 @@ export const Posts = ({
             isOpenByLink={isOpenByLink}
             type={isPublic ? 'publicProfile' : undefined}
           />
-          <div className={s.imgAmount}>
-            {i.images.length > 1 && (
-              <Image
-                src={'/img/create-post/icons/icon3.svg'}
-                alt={''}
-                width={'20'}
-                height={'20'}
-              />
-            )}
-            <span>{imgAmount}</span>
-          </div>
+          {i.images.length > 1 && (
+            <ImagesAmount imagesLength={i.images.length} />
+          )}
         </div>
       );
     });

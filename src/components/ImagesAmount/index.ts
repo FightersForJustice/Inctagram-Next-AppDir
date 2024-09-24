@@ -1,0 +1,1 @@
+export { ImagesAmount } from './ImagesAmount';
