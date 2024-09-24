@@ -6,6 +6,24 @@
   justify-content: flex-start;
   max-width: 23%;
   min-width: 108px;
+  position: relative;
+
+  .imgAmount {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    position: absolute;
+    background-color: #1c1715;
+    border-radius: 2px;
+    top: 85%;
+    left: 5%;
+    padding-right: 4px;
+
+    span {
+      font-size: 13px;
+      color: #ffffff;
+    }
+  }
 }
 
 .imagePost {
