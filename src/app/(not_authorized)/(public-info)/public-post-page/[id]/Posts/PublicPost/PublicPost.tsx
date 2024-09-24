@@ -12,6 +12,7 @@ import { AUTH_ROUTES } from '@/appRoutes/routes';
 import { Post } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/Post';
 import React from 'react';
 import { ReadMoreButton } from '@/components/ReadMoreButton/ReadMoreButton';
+import { ImagesAmount } from '@/components/ImagesAmount';
 
 type Props = {
   post: PostType;
@@ -26,16 +27,24 @@ export const PublicPost = ({ post, userProfile, isOpenByLink }: Props) => {
   const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`);
   const time = getTimeAgoText(post.createdAt, language, translate);
 
+  console.log(post.images);
+
   return (
     <>
       <div className={s.postWrapper}>
-        <Post
-          post={post}
-          userData={userProfile}
-          myProfile={false}
-          type={'publicPage'}
-          isOpenByLink={isOpenByLink}
-        />
+        <div className={s.imageContainer}>
+          <Post
+            post={post}
+            userData={userProfile}
+            myProfile={false}
+            type={'publicPage'}
+            isOpenByLink={isOpenByLink}
+          />
+          {post.images.length > 1 && (
+            <ImagesAmount imagesLength={post.images.length} />
+          )}
+        </div>
+
         <Link href={AUTH_ROUTES.PUBLIC_PROFILE + `${'/' + post.ownerId}`}>
           <div className={s.userContainer}>
             <Image

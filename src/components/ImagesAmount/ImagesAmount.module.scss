@@ -1,0 +1,16 @@
+.imgAmount {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  position: absolute;
+  background-color: #1c1715;
+  border-radius: 2px;
+  top: 85%;
+  left: 5%;
+  padding-right: 4px;
+
+  span {
+    font-size: 13px;
+    color: #ffffff;
+  }
+}
