@@ -23,7 +23,10 @@ const slice = createSlice({
     removeItemById: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
-    updateItemById: (state, action: PayloadAction<{postId: number, textareaValue: string}>) => {
+    updateItemById: (
+      state,
+      action: PayloadAction<{ postId: number; textareaValue: string }>
+    ) => {
       state.items = state.items.map((item) =>
         item.id === action.payload.postId
           ? { ...item, description: action.payload.textareaValue }
@@ -47,7 +50,7 @@ export type Items = {
   userName: string;
   description: string;
   location: string;
-  images: Image[];
+  images: ImageType[];
   createdAt: string;
   updatedAt: string;
   ownerId: number;
@@ -55,7 +58,7 @@ export type Items = {
   owner: Owner;
 };
 
-export type Image = {
+export type ImageType = {
   url: string;
   width: number;
   height: number;

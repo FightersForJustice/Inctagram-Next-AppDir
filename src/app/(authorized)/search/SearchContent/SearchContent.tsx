@@ -1,36 +1,77 @@
 'use client';
-
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
 import { useDebounce } from '@/utils/useDebaunce';
-import { useRouter } from 'next/navigation';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { getUsers } from '@/app/(authorized)/search/SearchContent/data';
 
 type Props = {
-  users: UserType[];
+  accessToken: string | null;
 };
 
-export const SearchContent: React.FC<Props> = ({ users }) => {
+export const SearchContent: React.FC<Props> = ({ accessToken }) => {
   const [search, setSearch] = useState('');
-  const router = useRouter();
+  const [searchedUsers, setSearchedUsers] = useState<UserType[]>([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoad, setIsLoad] = useState(false);
 
   const debouncedSearch = useDebounce(search, 1000);
 
   useEffect(() => {
-    if (debouncedSearch) {
-      router.push('?search=' + debouncedSearch);
-    }
+    setSearchedUsers([]);
+    setPageNumber(1);
+    getMoreSearchedUsers();
   }, [debouncedSearch]);
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (
+  //       window.innerHeight + window.scrollY >=
+  //       document.documentElement.scrollHeight - 300
+  //     ) {
+  //       if (!isLoad) {
+  //         getMoreSearchedUsers();
+  //       }
+  //     }
+  //   };
+  //
+  //   window.addEventListener('scroll', handleScroll);
+  //
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, [searchedUsers]);
+
+  const getMoreSearchedUsers = async () => {
+    if (!accessToken || !debouncedSearch || isLoad) return;
+    setIsLoad(true);
+
+    try {
+      const data = await getUsers(accessToken, {
+        search: debouncedSearch,
+        pageNumber: pageNumber,
+      });
+      if (data) {
+        const newUsers = data.items;
+        setSearchedUsers((prev) => [...prev, ...newUsers]);
+        if (newUsers.length > 0) {
+          setPageNumber(data.page + 1);
+        }
+      }
+    } finally {
+      setIsLoad(false);
+    }
+  };
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setSearch(value);
   };
 
-  const usersList = users.map((user) => (
+  const usersList = searchedUsers.map((user: UserType) => (
     <FoundUser key={user.id} user={user} />
   ));
 
@@ -55,7 +96,7 @@ export const SearchContent: React.FC<Props> = ({ users }) => {
       </div>
       <div className={s.search__container}>
         <p className={s.search__container__title}>Recent requests</p>
-        {users.length > 0 ? (
+        {searchedUsers.length > 0 ? (
           <div>{usersList}</div>
         ) : (
           <div className={s.search__empty}>
