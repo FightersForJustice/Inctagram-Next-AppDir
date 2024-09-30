@@ -257,7 +257,7 @@ export const deleteOptions = (
 
 // USERS OPTIONS
 
-export const getUsersOptions = (accessToken: string | undefined) => {
+export const getUsersOptions = (accessToken: string | null) => {
   return {
     method: 'GET',
     headers: {
