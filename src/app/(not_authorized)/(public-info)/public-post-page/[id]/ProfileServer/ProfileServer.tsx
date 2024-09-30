@@ -22,7 +22,7 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
   const headersList = headers();
   const token = headersList.get('accessToken');
   const userdata: UserProfile = await getProfile(id);
-  const followingData: UserFollowingDataType = await getUserInfo(
+  const followingData: UserFollowingDataType | null = await getUserInfo(
     userdata.userName
   );
   const postsData: ApiResponsePosts = await getPosts(id, 0);

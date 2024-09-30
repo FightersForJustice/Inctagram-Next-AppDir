@@ -83,3 +83,23 @@ export type UserFollowingDataType = {
   followersCount: number;
   publicationsCount: number;
 };
+
+export type GetFollowersDataType = {
+  totalCount: number;
+  pagesCount: number;
+  page: number;
+  pageSize: number;
+  prevCursor: number;
+  nextCursor: number;
+  items: FollowerType[];
+};
+
+export type FollowerType = {
+  id: number;
+  userId: number;
+  userName: string;
+  avatars: Array<Avatar & { createdAt: string }>;
+  createdAt: string;
+  isFollowing: boolean;
+  isFollowedBy: boolean;
+};
