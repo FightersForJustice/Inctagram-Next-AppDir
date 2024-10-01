@@ -11,6 +11,7 @@ type Props = {
   expiredStart: string
   expiredEnd: string
   renewalTitle: string
+  autoRenewalHandler: (checked: boolean) => void
 };
 
 export const Subscription = ({
@@ -21,6 +22,7 @@ export const Subscription = ({
   expiredEnd,
   expiredStart,
   renewalTitle,
+  autoRenewalHandler,
 }: Props) => {
   const formattedDateOfPayment = formatSubscriptionDate(dateOfPayment!);
   const formattedExpireAtPayment = formatSubscriptionDate(expireAt!);
@@ -45,7 +47,7 @@ export const Subscription = ({
         </div>
       </div>
 
-      <ManagementCheckbox autoRenewal={autoRenewal} title={renewalTitle} />
+      <ManagementCheckbox autoRenewalHandler={autoRenewalHandler} autoRenewal={autoRenewal} title={renewalTitle} />
     </>
   );
 };

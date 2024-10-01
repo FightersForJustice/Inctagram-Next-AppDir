@@ -51,12 +51,10 @@ export const PostContent = ({
   const time = getTimeAgoText(createdPostTime, language, translate);
 
   return (
-    <>
       <PostModal
         width={'972px'}
         onClose={closeModalAction}
       >
-
       <div className={s.post}>
         <Carousel>
           {images.map((i, index) => {
@@ -115,6 +113,5 @@ export const PostContent = ({
         </div>
       </div>
       </PostModal>
-    </>
   );
 };

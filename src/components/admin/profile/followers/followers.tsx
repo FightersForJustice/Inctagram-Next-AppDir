@@ -58,7 +58,7 @@ export const FollowersClient = ({ id }: { id: string }) => {
   });
   const tableVariant = 'UserFollowers';
   const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
+  const [paymentsPerPage, setPaymentsPerPage] = useState(10);
   // for pagination
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {

@@ -20,6 +20,7 @@ interface IProps {
   slidesStyles?: SlidesStyles;
   ref?: any;
   setActive?: (id: string) => void;
+  className?: string;
 }
 
 export const Carousel: FC<IProps> = ({
@@ -27,11 +28,12 @@ export const Carousel: FC<IProps> = ({
   loadedImages,
   slidesStyles,
   setActive,
+  className,
   ref,
 }) => {
   return (
     <Swiper
-      className="carousel__wrapper"
+      className= {className ? className : "carousel__wrapper"}
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={0}
       slidesPerView={1}

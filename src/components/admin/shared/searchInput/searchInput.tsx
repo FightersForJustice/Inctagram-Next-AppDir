@@ -4,6 +4,7 @@ import s from './SearchContent.module.scss';
 
 type PropType = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
 export const SearchInput = (prop: PropType) => {
@@ -14,6 +15,7 @@ export const SearchInput = (prop: PropType) => {
         type="text"
         onChange={prop.onChange}
         placeholder={'Search'}
+        value={prop.value}
       />
       <Image
         className={s.search__input__search}

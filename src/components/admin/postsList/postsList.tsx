@@ -1,175 +1,157 @@
 'use client';
 
-import React from 'react';
-import { Pagination } from '@/components/Pagination/Pagination';
-import { headerList } from '@/components/Table/headTypes';
-import Image from 'next/image';
-import {
-  PaymentType,
-  UsersListType,
-  UsersPaymentType,
-} from '@/components/Table/rowTypes';
-import { Table } from '@/components/Table/Table';
-import { useDebounce } from '@/utils/useDebaunce';
-import { useGetParams } from '@/utils/useGetParams';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SearchInput } from '../shared/searchInput/searchInput';
-import { Avatar, CurrencyType, SortDirection } from '@/types';
-import s from './postsList.module.scss';
+import React, { useEffect, useState } from 'react';
 import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
-import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
-import Link from 'next/link';
-import { ReadMoreButton } from '@/components/ReadMoreButton/ReadMoreButton';
+import { PostClient } from '@/components/admin/postsList/postClient/postClient';
+import { Loader } from '@/components/Loader';
+import { SortDirection } from '@/types';
+import { SearchInput } from '@/components/admin/shared/searchInput/searchInput';
+import { useDebounce } from '@/utils/useDebaunce';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+import s from './postsList.module.scss';
+
+export type ItemsType = {
+  __typename?: 'Post',
+  id: number,
+  ownerId: number,
+  description: string,
+  createdAt: any,
+  updatedAt: any,
+  images?: Array<{
+    __typename?: 'ImagePost',
+    id?: number | null,
+    createdAt?: any | null,
+    url?: string | null,
+    width?: number | null,
+    height?: number | null,
+    fileSize?: number | null
+  }> | null,
+  postOwner: {
+    __typename?: 'PostOwnerModel',
+    id: number,
+    userName: string,
+    avatars?: Array<{
+      __typename?: 'Avatar',
+      url?: string | null,
+      width?: number | null,
+      height?: number | null,
+      fileSize?: number | null
+    }> | null
+  }
+};
 
 export const PostsListClient = () => {
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [visiblePopupId, setVisiblePopupId] = useState('');
-  const urlParams = useSearchParams()!;
-  const params = new URLSearchParams(urlParams.toString());
-  const [currentUrlName, setCurrentUrlName] = React.useState(
-    (urlParams.get('searchTerm') as string) !== null
-      ? (urlParams.get('searchTerm') as string)
-      : ''
-  );
-  let searchInputHandler = useDebounce(currentUrlName, 400);
-  const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentUrlName(event.currentTarget.value);
-  };
-  const url = useGetParams();
-  const nextRouter = useRouter();
-  const { t } = useTranslation();
-  const translate = (key: string): string => t(`Admin.postslist.${key}`);
-  // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
-  let currentParams = url
-    ?.slice(1)
-    .split('&')
-    .map((el) => {
-      return el.split('=');
-    });
+  const [posts, setPosts] = useState<ItemsType[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+  const urlParams = useSearchParams();
+  const router = useRouter();
 
-  const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
-  const getSortDirection = currentParams?.filter(
-    (el) => el[0] === 'sortDirection'
-  )[0];
-  const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
-  const getSearchValue = currentParams?.filter(
-    (el) => el[0] === 'searchTerm'
-  )[0];
-  
-  const { data, loading, error, refetch } = useGetCurrentPostsQuery({
-    variables: currentParams?.length
-      ? {
-          pageSize: getPageSize ? Number(getPageSize[1]) : 10,
-          // endCursorPostId: 1,
-          sortBy: getSortValues ? getSortValues[1] : '',
-          sortDirection: getSortDirection
-            ? (getSortDirection[1] as SortDirection)
-            : ('desc' as SortDirection),
-          searchTerm: getSearchValue ? getSearchValue[1] : '',
-        }
-      : {},
+  useEffect(() => {
+    const searchFromUrl = urlParams.get('searchTerm') || '';
+    if (!searchTerm && searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+  }, [urlParams]);
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 400);
+
+  const { data, loading, fetchMore, refetch } = useGetCurrentPostsQuery({
+    variables: {
+      pageSize: 10,
+      endCursorPostId: 0,
+      sortBy: 'createdAt',
+      sortDirection: 'desc' as SortDirection,
+      searchTerm: debouncedSearchTerm,
+    },
+    fetchPolicy: 'network-only',
   });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(5);
-  // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
-  const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
 
-  // reserve
-  // const clearFiltersHandler = () => {
-  //   nextRouter.replace('/admin/usersList');
-  //   setCurrentUrlName('');
-  // };
+  useEffect(() => {
+    const params = new URLSearchParams(urlParams.toString());
 
-  React.useEffect(() => {
-    params.set('searchTerm', searchInputHandler);
-    if (!searchInputHandler.trim()) {
+    if (debouncedSearchTerm) {
+      params.set('searchTerm', debouncedSearchTerm);
+    } else {
       params.delete('searchTerm');
     }
-    setCurrentUrlName(searchInputHandler);
-    nextRouter.push(`/admin/postslist?${params.toString()}`);
-  }, [searchInputHandler]);
 
-  React.useEffect(() => {
+    router.replace(`/admin/postslist?${params.toString()}`);
     refetch();
-  }, [url, refetch]);
+  }, [debouncedSearchTerm]);
 
-  const postsImages = () => {
-    return data?.getPosts.items.slice(0, 4).map((el, i) => {
-      // const userProfile = await getPublicProfile(i.ownerId);
+  useEffect(() => {
+    if (data?.getPosts?.items) {
+      setPosts(prevPosts => (searchTerm ? prevPosts : data.getPosts.items));
+      setAllPostsLoaded(data.getPosts.items.length < 10);
+    }
+  }, [data]);
 
-      return (
-        <>
-          {/* <div className={s.postWrapper}>
-            <div key={i} className={s.postContainer}>
-              <Image
-                src={
-                  el.images?.length
-                    ? el.images[0].url
-                    : '/img/profile/posts/post1.png'
-                }
-                alt={'post'}
-                width={234}
-                height={228}
-                className={s.imagePost}
-                // onClick={onOpenPost}
-              />
-            </div>
-            <Link href={'/admin/postslist/profile' + `${'/' + el.ownerId}`}>
-              <div className={s.userContainer}>
-                <Image
-                  src={
-                    el.postOwner.avatars.length
-                      ? el.postOwner.avatars[0].url
-                      : '/img/create-post/no-image.png'
-                  }
-                  alt={'ava'}
-                  width={36}
-                  height={36}
-                  className={k.post__avatar}
-                />
-                <h3 className={s.userName}>{post.userName} </h3>
-              </div>
-            </Link>
-            <p className={s.time}>{time}</p>
-          </div>
-          <div className={s.description}>
-            <ReadMoreButton
-              text={el.description}
-              maxLength={80}
-              moreText={translateReadMoreButton('showMore')}
-              lessText={translateReadMoreButton('hide')}
-            />
-          </div> */}
-        </>
-      );
+  useEffect(() => {
+    if (data?.getPosts?.items) {
+      setPosts(data.getPosts.items);
+      setAllPostsLoaded(data.getPosts.items.length < 10);
+    }
+  }, [data]);
+
+  const loadMorePosts = () => {
+    if (loadingMore || allPostsLoaded) return;
+
+    setLoadingMore(true);
+
+    const lastPostId = posts.length ? posts[posts.length - 1].id : 0;
+
+    fetchMore({
+      variables: {
+        endCursorPostId: lastPostId,
+        searchTerm: debouncedSearchTerm,
+      },
+    }).then((fetchMoreResult) => {
+      const newPosts = fetchMoreResult.data.getPosts.items;
+
+      if (newPosts.length > 0) {
+        setPosts((prevPosts) => {
+          const existingPostIds = new Set(prevPosts.map(post => post.id));
+          const filteredNewPosts = newPosts.filter(post => !existingPostIds.has(post.id));
+          return [...prevPosts, ...filteredNewPosts];
+        });
+      } else {
+        setAllPostsLoaded(true);
+      }
+    }).finally(() => {
+      setLoadingMore(false);
     });
   };
 
-  //react select issue
-  //https://github.com/ndom91/react-timezone-select/issues/108
+  useEffect(() => {
+    const handleScroll = () => {
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300) {
+        loadMorePosts();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [loadingMore, allPostsLoaded, posts]);
+
   return (
     <div>
       <div className={s.container}>
-        <SearchInput onChange={setNameHandler} />
+        <SearchInput value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
-      <div className={s.containerPosts}>
-        {
-          // postsImages()
-        }
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        paginate={paginate}
-        totalPayments={data ? data.getPosts.totalCount : 0}
-        paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
-      />
+      {loading ?
+        <Loader />
+        :
+        <div className={s.postWrapper}>
+          <PostClient posts={posts} />
+        </div>
+      }
+      {allPostsLoaded && <div className={s.noMorePosts}>No more posts to load</div>}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import f from './Posts.module.scss';
 
 export const PhotosClient = ({ id }: { id: string }) => {
   const url = useGetParams();
-  // const translate = (key: string): string => t(`Admin.PaymentsList.${key}`);
+
   let currentParams = url
     ?.slice(1)
     .split('&')
@@ -19,28 +19,28 @@ export const PhotosClient = ({ id }: { id: string }) => {
   const { data, loading, error, refetch } = useGetCurrentUserPostsQuery({
     variables: currentParams?.length
       ? {
-          userId: Number(id),
-        }
-      : { userId: Number(id) },
+        userId: Number(id),
+      }
+      : { userId: Number(id),},
   });
-  console.log(data);
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
+
   return (
-    <div className={s.posts}>
-      {data?.getPostsByUser?.items?.map((el) => {
-        return (
-          <div key={el.id} className={f.imageContainer}>
-            <Image
-              src={el?.url ? el.url : '/img/profile/posts/post1.png'}
-              alt={'post'}
-              width={234}
-              height={228}
-              className={s.imagePost}
-            />
-          </div>
-        );
-      })}
-    </div>
+      <div className={s.posts}>
+        {data?.getPostsByUser?.items?.map((el) => {
+          return (
+            <div key={el.id} className={f.imageContainer}>
+              <Image
+                src={el?.url ? el.url : '/img/profile/posts/post1.png'}
+                alt={'post'}
+                width={234}
+                height={228}
+                className={s.imagePost}
+              />
+            </div>
+          );
+        })}
+      </div>
   );
 };

@@ -48,6 +48,37 @@ export const getSubscriptions = async () => {
     return null;
   }
 };
+
+
+export const cancelAutoRenewal = async () => {
+  const accessToken = cookies().get('accessToken');
+
+  console.log(accessToken)
+
+  const apiUrl = baseUrl + `subscriptions/canceled-auto-renewal`;
+
+  console.log(apiUrl)
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken?.value}`,
+      },
+    });
+    if (!response.ok) {
+      console.error('response:', response);
+      console.error('Error!!!!:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
+
 export const getSubscriptionsCosts = async () => {
   const accessToken = cookies().get('accessToken');
 

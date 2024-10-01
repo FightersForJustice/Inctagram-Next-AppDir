@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BaseModal } from '@/components/Modals/BaseModal';
 import { stringToBoolean } from '@/utils/stringToBoolean';
+import { cancelAutoRenewal } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 
 const paymentStatusDescription = {
   success: {
@@ -51,7 +52,8 @@ export const AccountManagementTab = ({
   const navigation = usePathname();
   const fallback = () => router.back();
   const [showModal, setShowModal] = useState(false);
-  const [paymentStatus, setStatus] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(false);
+  const [autoRenewal, setAutoRenewal] = useState(data.hasAutoRenewal);
   const [accountTypeValue, setAccountTypeValue] = useState('personal');
   const [subTypeValue, setSubTypeValue] = useState('DAY');
   const [baseUrl, setBaseUrl] = useState<string>('');
@@ -69,7 +71,7 @@ export const AccountManagementTab = ({
       setShowModal(true);
       const status = searchParams.get('success');
       if (stringToBoolean(status || '')) {
-        setStatus(true);
+        setPaymentStatus(true);
         return;
       }
     }
@@ -84,6 +86,12 @@ export const AccountManagementTab = ({
     setShowModal(false);
   };
 
+  const autoRenewalHandler = async (checked: boolean) => {
+    setAutoRenewal(checked);
+    const response = await cancelAutoRenewal();
+    console.log(response)
+  };
+
   const actionHandler = showModal && paymentStatus ? closeModal : fallback;
   return (
     <div className={s.tab}>
@@ -91,7 +99,8 @@ export const AccountManagementTab = ({
         <Subscription
           expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
           dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
-          autoRenewal={userSubInfo?.hasAutoRenewal}
+          autoRenewal={data.hasAutoRenewal}
+          autoRenewalHandler={autoRenewalHandler}
           name={translate('CurrentSubscription')}
           expiredStart={translate('CurrentSubscriptionStart')}
           expiredEnd={translate('CurrentSubscriptionEnd')}
