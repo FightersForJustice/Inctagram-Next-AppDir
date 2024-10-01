@@ -4,9 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useGetCurrentPostsQuery } from '@/queries/posts/posts.generated';
 import { PostClient } from '@/components/admin/postsList/postClient/postClient';
 import { Loader } from '@/components/Loader';
-import s from './postsList.module.scss';
 import { SortDirection } from '@/types';
 import { SearchInput } from '@/components/admin/shared/searchInput/searchInput';
+import { useDebounce } from '@/utils/useDebaunce';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+import s from './postsList.module.scss';
 
 export type ItemsType = {
   __typename?: 'Post',
@@ -39,46 +42,59 @@ export type ItemsType = {
 };
 
 export const PostsListClient = () => {
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
   const [posts, setPosts] = useState<ItemsType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+  const urlParams = useSearchParams();
+  const router = useRouter();
 
-  const setNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.currentTarget.value);
-  };
+  useEffect(() => {
+    const searchFromUrl = urlParams.get('searchTerm') || '';
+    if (!searchTerm && searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+  }, [urlParams]);
 
-  const { data, fetchMore, refetch } = useGetCurrentPostsQuery({
+  const debouncedSearchTerm = useDebounce(searchTerm, 400);
+
+  const { data, loading, fetchMore, refetch } = useGetCurrentPostsQuery({
     variables: {
-      pageSize: 20,
+      pageSize: 10,
       endCursorPostId: 0,
       sortBy: 'createdAt',
       sortDirection: 'desc' as SortDirection,
-      searchTerm,
+      searchTerm: debouncedSearchTerm,
     },
     fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
+    const params = new URLSearchParams(urlParams.toString());
+
+    if (debouncedSearchTerm) {
+      params.set('searchTerm', debouncedSearchTerm);
+    } else {
+      params.delete('searchTerm');
+    }
+
+    router.replace(`/admin/postslist?${params.toString()}`);
+    refetch();
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
     if (data?.getPosts?.items) {
       setPosts(prevPosts => (searchTerm ? prevPosts : data.getPosts.items));
-      setAllPostsLoaded(data.getPosts.items.length < 20);
+      setAllPostsLoaded(data.getPosts.items.length < 10);
     }
   }, [data]);
 
   useEffect(() => {
-
-    if (searchTerm) {
-      setPosts([]);
-      refetch().then((fetchResult) => {
-        const newPosts = fetchResult.data.getPosts.items;
-        setPosts(newPosts);
-        setAllPostsLoaded(newPosts.length < 10);
-      });
-    } else {
-      refetch();
+    if (data?.getPosts?.items) {
+      setPosts(data.getPosts.items);
+      setAllPostsLoaded(data.getPosts.items.length < 10);
     }
-  }, [searchTerm, refetch]);
+  }, [data]);
 
   const loadMorePosts = () => {
     if (loadingMore || allPostsLoaded) return;
@@ -90,7 +106,7 @@ export const PostsListClient = () => {
     fetchMore({
       variables: {
         endCursorPostId: lastPostId,
-        searchTerm,
+        searchTerm: debouncedSearchTerm,
       },
     }).then((fetchMoreResult) => {
       const newPosts = fetchMoreResult.data.getPosts.items;
@@ -126,12 +142,16 @@ export const PostsListClient = () => {
   return (
     <div>
       <div className={s.container}>
-        <SearchInput onChange={setNameHandler} />
+        <SearchInput value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
-      <div className={s.postWrapper}>
-        <PostClient posts={posts} />
-        {allPostsLoaded && <div>No more posts to load</div>}
-      </div>
+      {loading ?
+        <Loader />
+        :
+        <div className={s.postWrapper}>
+          <PostClient posts={posts} />
+        </div>
+      }
+      {allPostsLoaded && <div className={s.noMorePosts}>No more posts to load</div>}
     </div>
   );
 };

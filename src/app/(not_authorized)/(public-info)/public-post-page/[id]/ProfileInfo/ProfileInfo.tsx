@@ -32,7 +32,6 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
   }, [router]);
 
   return (
-    <>
       <div className={s.profile}>
         <div className={s.left}>
           <Image
@@ -93,6 +92,5 @@ export const ProfileInfo = ({ userData, myProfile, postsData }: Props) => {
           </div>
         </div>
       </div>
-    </>
   );
 };
