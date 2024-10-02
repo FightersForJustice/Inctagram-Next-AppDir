@@ -12,8 +12,18 @@
 .CheckboxRoot:hover {
   background-color: var(--primary-100);
 }
+
 .CheckboxRoot:focus {
   box-shadow: 0 0 0 2px black;
+}
+
+.CheckboxRoot:focus {
+  box-shadow: 0 0 0 2px black;
+}
+
+.CheckboxRoot[data-disabled] {
+  cursor: initial;
+  background-color: #808080;
 }
 
 .CheckboxIndicator {
@@ -25,4 +35,8 @@
   padding-left: 15px;
   font-size: 15px;
   line-height: 1;
+}
+
+.LabelDisabled {
+  color: #808080;
 }
