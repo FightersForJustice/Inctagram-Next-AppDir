@@ -9,6 +9,7 @@ import { Stripe } from '@/components/Stripe';
 import { PayPal } from '@/components/PayPal';
 
 import {
+  PaymentsType,
   SubscriptionsCostType,
   SubscriptionsType,
 } from '@/app/(authorized)/profile/settings-profile/types';
@@ -36,10 +37,12 @@ export const AccountManagementTab = ({
   token,
   data,
   cost,
+  paymentsData,
 }: {
   token: string;
   data: SubscriptionsType;
   cost: SubscriptionsCostType;
+  paymentsData: Array<PaymentsType>;
 }) => {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
@@ -53,10 +56,11 @@ export const AccountManagementTab = ({
   const fallback = () => router.back();
   const [showModal, setShowModal] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(false);
-  const [autoRenewal, setAutoRenewal] = useState(data.hasAutoRenewal);
+  const [autoRenewal, setAutoRenewal] = useState(data?.hasAutoRenewal);
   const [accountTypeValue, setAccountTypeValue] = useState('personal');
   const [subTypeValue, setSubTypeValue] = useState('DAY');
   const [baseUrl, setBaseUrl] = useState<string>('');
+
 
   useEffect(() => {
     setBaseUrl(window.location.href);
@@ -87,7 +91,7 @@ export const AccountManagementTab = ({
   };
 
   const autoRenewalHandler = async (checked: boolean) => {
-    setAutoRenewal(checked);
+    setAutoRenewal(checked)
     const response = await cancelAutoRenewal();
     console.log(response)
   };
@@ -97,9 +101,9 @@ export const AccountManagementTab = ({
     <div className={s.tab}>
       {!!userSubInfo?.data?.length && (
         <Subscription
-          expireAt={userSubInfo?.data[0]?.endDateOfSubscription}
-          dateOfPayment={userSubInfo?.data[0]?.dateOfPayment}
-          autoRenewal={data.hasAutoRenewal}
+          expireAt={paymentsData[0]?.endDateOfSubscription}
+          dateOfPayment={paymentsData[0]?.endDateOfSubscription}
+          autoRenewal={autoRenewal}
           autoRenewalHandler={autoRenewalHandler}
           name={translate('CurrentSubscription')}
           expiredStart={translate('CurrentSubscriptionStart')}

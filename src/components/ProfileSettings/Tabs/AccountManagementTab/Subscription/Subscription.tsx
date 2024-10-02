@@ -38,12 +38,13 @@ export const Subscription = ({
               {formattedDateOfPayment}
             </p>
           </div>
-          <div className={s.subscription__container}>
+          {autoRenewal &&
+            <div className={s.subscription__container}>
             <p className={s.subscription__container__text}>{expiredEnd}</p>
             <p className={s.subscription__container__data}>
               {formattedExpireAtPayment}
             </p>
-          </div>
+          </div>}
         </div>
       </div>
 
