@@ -419,7 +419,7 @@
   },
   "Admin": {
     "id": "ID Пользователя",
-    "username": "Имя Пользователя",
+    "username": "Имя пользователя",
     "profile-link": "Профиль",
     "createdBy": "Дата создания",
     "Userlist": {
