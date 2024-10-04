@@ -55,7 +55,7 @@ export const ProfileInfo = ({
 
   const followUnfollowHandler = async () => {
     if (!isPublic) {
-      let resIsOk;
+      let resIsOk: boolean | null;
       if (isUserFollowing) {
         resIsOk = await unfollowByUser(userData.id, token);
         if (resIsOk) {

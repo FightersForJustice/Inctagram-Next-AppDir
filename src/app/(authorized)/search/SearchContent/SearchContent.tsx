@@ -16,6 +16,7 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
   const [search, setSearch] = useState('');
   const [searchedUsers, setSearchedUsers] = useState<UserType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [pagesCount, setPagesCount] = useState(0);
   const [isLoad, setIsLoad] = useState(false);
 
   const debouncedSearch = useDebounce(search, 1000);
@@ -23,30 +24,35 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
   useEffect(() => {
     setSearchedUsers([]);
     setPageNumber(1);
+    setPagesCount(1000);
     getMoreSearchedUsers();
   }, [debouncedSearch]);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (
-  //       window.innerHeight + window.scrollY >=
-  //       document.documentElement.scrollHeight - 300
-  //     ) {
-  //       if (!isLoad) {
-  //         getMoreSearchedUsers();
-  //       }
-  //     }
-  //   };
-  //
-  //   window.addEventListener('scroll', handleScroll);
-  //
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, [searchedUsers]);
+  useEffect(() => {
+    let scrollTimeout: string | number | NodeJS.Timeout | undefined;
+    const handleScroll = () => {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        const windowHeight = window.innerHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.offsetHeight;
+
+        if (windowHeight + scrollTop >= documentHeight - 300 && !isLoad) {
+          getMoreSearchedUsers();
+        }
+      }, 200);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isLoad]);
 
   const getMoreSearchedUsers = async () => {
-    if (!accessToken || !debouncedSearch || isLoad) return;
+    if (!accessToken || !debouncedSearch || pageNumber > pagesCount) return;
     setIsLoad(true);
 
     try {
@@ -57,8 +63,9 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
       if (data) {
         const newUsers = data.items;
         setSearchedUsers((prev) => [...prev, ...newUsers]);
+        setPagesCount(data.pagesCount);
         if (newUsers.length > 0) {
-          setPageNumber(data.page + 1);
+          setPageNumber((prev) => prev + 1);
         }
       }
     } finally {
