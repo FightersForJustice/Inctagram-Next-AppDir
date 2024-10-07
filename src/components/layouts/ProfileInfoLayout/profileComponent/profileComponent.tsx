@@ -2,12 +2,16 @@ import styles from './profileComponent.module.scss';
 import Image from 'next/image';
 import { User } from '@/types';
 import { dateToFormat } from '@/utils/dateToFormat';
+import { useTranslation } from 'react-i18next';
 
 type UserType = {
   user: User;
 };
 
 export const ProfileContainer = ({ user }: UserType) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Admin.ProfileComponent.${key}`);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileHeader}>
@@ -28,11 +32,11 @@ export const ProfileContainer = ({ user }: UserType) => {
       </div>
       <div className={styles.profileDetails}>
         <div className={styles.detail}>
-          <div className={styles.label}>UserID</div>
+          <div className={styles.label}>{translate('id')}</div>
           <div className={styles.value}>{user.id}</div>
         </div>
         <div className={styles.detail}>
-          <div className={styles.label}>Profile Creation Date</div>
+          <div className={styles.label}>{translate('createdProfile')}</div>
           <div className={styles.value}>{dateToFormat(user.createdAt)}</div>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import s from './buttonBack.module.scss';
+import { useTranslation } from 'react-i18next';
 
+import s from './buttonBack.module.scss';
 export const GoBack = () => {
-  const router = useRouter();
-  const handler = () => router.back();
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Admin.ProfileComponent.${key}`);
+
   return (
     <Link href={'/admin/userslist'} className={s.linkRedirect}>
       <div>
@@ -28,8 +29,7 @@ export const GoBack = () => {
           </defs>
         </svg>
       </div>
-      {/* <div className={s.btnText}> {btnName} </div> */}
-      <div> Back to users list </div>
+      <div>{translate('backToUserList')}</div>
     </Link>
   );
 };
