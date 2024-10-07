@@ -428,6 +428,11 @@
       "ban": "Бан в системе",
       "moreInfo": "Больше информации"
     },
+    "ProfileComponent": {
+      "backToUserList": "Вернутся к списку пользователей",
+      "id": "ID Пользователя",
+      "createdProfile": "Дата создания профиля"
+    },
     "selectFilter": {
       "blocked": "Заблокированные",
       "choose": "Не выбрано",

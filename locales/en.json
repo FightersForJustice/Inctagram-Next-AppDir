@@ -422,6 +422,11 @@
       "ban": "Ban in the system",
       "moreInfo": "More Information"
     },
+    "ProfileComponent": {
+      "backToUserList": "Back to users list",
+      "id": "User ID",
+      "createdProfile": "Profile Creation Date"
+    },
     "selectFilter": {
       "blocked": "Blocked",
       "choose": "Not selected",
