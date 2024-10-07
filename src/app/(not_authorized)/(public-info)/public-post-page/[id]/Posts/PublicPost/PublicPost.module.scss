@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  .imageContainer {
+    position: relative;
+  }
 }
 
 .userContainer {
@@ -32,4 +36,5 @@
   line-height: 24px;
   color: var(--light-100);
   margin-top: 3px;
+  overflow-wrap: break-word;
 }

@@ -2,7 +2,6 @@ import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/Set
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { createPostOptionsType } from './optionsTypes';
 import { CreateSubscription } from '@/api/subscriptions.api';
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 //AUTH OPTIONS
 
@@ -128,10 +127,7 @@ export const requestDeleteAllSessionsOptions = (
 };
 //NOTIFICATIONS OPTIONS
 
-export const notificationOptions = (
-  accessToken: string | null,
-
-) => {
+export const notificationOptions = (accessToken: string | null) => {
   return {
     method: 'GET',
     headers: {
@@ -157,7 +153,6 @@ export const uploadAvatarOptions = (
   };
 };
 
-
 export const updateProfileOptions = (
   accessToken: string | null,
   data: ProfileFormSubmit
@@ -182,12 +177,15 @@ export const deleteAvatarOptions = (accessToken: string | null) => {
     next: { revalidate: 0 },
   };
 };
-export const onCreateStripeOptions = (accessToken: string | null, data: CreateSubscription) => {
+export const onCreateStripeOptions = (
+  accessToken: string | null,
+  data: CreateSubscription
+) => {
   return {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-       accept: 'application/json',
+      accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -199,7 +197,7 @@ export const getSubsriptionOptions = (accessToken: string | undefined) => {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-       accept: 'application/json',
+      accept: 'application/json',
       'Content-Type': 'application/json',
     },
     // next: { revalidate: 10 },
@@ -253,6 +251,40 @@ export const deleteOptions = (
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'user-agent': userAgent,
+    },
+  };
+};
+
+// USERS OPTIONS
+
+export const getUsersOptions = (accessToken: string | null) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+
+export const createFollowingOption = (
+  accessToken: string | null,
+  userId: number
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ selectedUserId: userId }),
+  };
+};
+
+export const deleteFollowerOption = (accessToken: string | null) => {
+  return {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 };

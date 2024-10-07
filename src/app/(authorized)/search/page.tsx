@@ -1,17 +1,16 @@
-'use client';
-
 import { SearchContent } from './SearchContent';
-import { usePathname } from 'next/navigation';
 
 import s from './Search.module.scss';
+import { headers } from 'next/headers';
 
-const Page = () => {
-  const pathname = usePathname();
+const Page = async () => {
+  const headersList = headers();
+  const token = headersList.get('accessToken');
 
   return (
     <div className={s.container}>
       <div className={s.wrapper} id={'wrapper'}>
-        <SearchContent />
+        <SearchContent accessToken={token} />
       </div>
     </div>
   );

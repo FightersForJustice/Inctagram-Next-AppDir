@@ -15,6 +15,8 @@ import { selectProfilePostItems } from '@/redux/reducers/MyProfile/ProfilePostSe
 import { findMinId } from '@/utils/findMinId';
 import { useInView } from 'react-intersection-observer';
 import { Loader } from '@/components/Loader';
+import Image from 'next/image';
+import { ImagesAmount } from '@/components/ImagesAmount';
 
 type Props = {
   postsData: ApiResponsePosts;
@@ -24,7 +26,13 @@ type Props = {
   isPublic?: boolean;
 };
 
-export const Posts = ({ id, postsData, userData, myProfile, isPublic }: Props) => {
+export const Posts = ({
+  id,
+  postsData,
+  userData,
+  myProfile,
+  isPublic,
+}: Props) => {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
@@ -65,6 +73,9 @@ export const Posts = ({ id, postsData, userData, myProfile, isPublic }: Props) =
             isOpenByLink={isOpenByLink}
             type={isPublic ? 'publicProfile' : undefined}
           />
+          {i.images.length > 1 && (
+            <ImagesAmount imagesLength={i.images.length} />
+          )}
         </div>
       );
     });
