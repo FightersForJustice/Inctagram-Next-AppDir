@@ -1,17 +1,17 @@
 import { StylesConfig } from 'react-select';
 
-export const SelectorStyles: StylesConfig = {
-  control: (styles, { isDisabled }) => ({
+export const SelectorStyles = (isChanged: boolean | undefined): StylesConfig => ({
+  control: (styles, { isDisabled, menuIsOpen  }) => ({
     ...styles,
     opacity: isDisabled ? '0.3' : '1',
-    backgroundColor: 'transparent',
+    backgroundColor: menuIsOpen ? '#0d0d0d' : 'transparent',
     borderRadius: '2px',
     color: 'white',
-    borderColor: ' #4c4c4c',
+    borderColor: '#4c4c4c',
     ':hover': {
       ...styles[':hover'],
       cursor: 'pointer',
-      borderColor: ' #4c4c4c',
+      borderColor: '#4c4c4c',
     },
   }),
   option: (styles, { isFocused }) => ({
@@ -42,10 +42,10 @@ export const SelectorStyles: StylesConfig = {
   }),
   singleValue: (styles) => ({
     ...styles,
-    color: 'white',
+    color: !isChanged ? '#8D9094' : 'white',
   }),
   input: (styles) => ({
     ...styles,
-    color: 'white',
+    color:'white',
   }),
-};
+});

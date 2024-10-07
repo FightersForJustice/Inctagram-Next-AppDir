@@ -1,10 +1,10 @@
 'use client';
 
 import Select from 'react-select';
-import { FocusEventHandler } from 'react';
-
+import { FocusEventHandler, useState } from 'react';
 import { SelectorStyles } from './SelectorStyles';
 import s from './Selector.module.scss';
+
 
 export type optionsType = {
   value: string;
@@ -25,6 +25,7 @@ export const BaseSelector = ({
   onFocus,
   onChange,
   isClearable,
+  type,
 }: {
   value?: any;
   id: string;
@@ -39,9 +40,19 @@ export const BaseSelector = ({
   placeholder?: string;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onChange?: (newValue: any, actionMeta: any) => void;
+  type?: string;
 }) => {
+
+  const [isChanged, setIsChanged] = useState(false);
+  const handleChange = (newValue: any, actionMeta: any) => {
+    setIsChanged(true);
+    if (onChange) {
+      onChange(newValue, actionMeta);
+    }
+  };
+
   return (
-    <div className={s.selectorContainer}>
+    <div className={type === 'banUser' ? s.selectorBanUser : s.selectorContainer}>
       <label htmlFor={id} className={s.selectorLabel}>
         {selectorsLabelName}
       </label>
@@ -58,9 +69,9 @@ export const BaseSelector = ({
         isLoading={isLoading}
         isSearchable={isSearchable}
         options={options ?? undefined}
-        styles={SelectorStyles}
+        styles={SelectorStyles(isChanged)}
         onFocus={onFocus}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   );
