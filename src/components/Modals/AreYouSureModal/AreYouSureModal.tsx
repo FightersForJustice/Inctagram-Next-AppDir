@@ -98,11 +98,12 @@ export const AreYouSureModal = ({
             selectorsLabelName={''}
             options={selectorOptions.slice(1)}
             onChange={selectHandler}
+            type={type}
           />
         )}
         <div
           className={
-            type === 'cancelCreating'
+            type === 'cancelCreating' || type === 'banUser' || type === 'deleteUser'
               ? s.modal__btns__cancel__creating
               : s.modal__btns
           }

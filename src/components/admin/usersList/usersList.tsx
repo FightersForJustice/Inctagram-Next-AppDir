@@ -6,7 +6,6 @@ import { headerList } from '@/components/Table/headTypes';
 import {
   PaymentType,
   ResultUserPaymentsType,
-  UsersListType,
   UsersPaymentType,
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
@@ -84,7 +83,7 @@ export const UsersListClient = () => {
     (el) => el[0] === 'sortDirection'
   )[0];
   const getFilter = currentParams?.filter((el) => el[0] === 'statusFilter')[0];
-  const { data, loading, error, refetch } = useGetAllUsersQuery({
+  const { data, loading, refetch } = useGetAllUsersQuery({
     variables: currentParams?.length
       ? {
           pageSize: paymentsPerPage,
