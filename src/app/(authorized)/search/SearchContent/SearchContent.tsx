@@ -7,24 +7,41 @@ import { FoundUser } from '../FoundUser';
 import { useDebounce } from '@/utils/useDebaunce';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getUsers } from '@/app/(authorized)/search/SearchContent/data';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type Props = {
   accessToken: string | null;
 };
 
 export const SearchContent: React.FC<Props> = ({ accessToken }) => {
-  const [search, setSearch] = useState('');
-  const [searchedUsers, setSearchedUsers] = useState<UserType[]>([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pagesCount, setPagesCount] = useState(0);
+  const searchFromUrl = useSearchParams().get('search');
+  const router = useRouter();
+
+  const defaultValues = {
+    search: '',
+    searchedUsers: [],
+    pageNumber: 1,
+    pagesCount: 1000,
+  };
+
+  const [search, setSearch] = useState(defaultValues.search);
+  const [searchedUsers, setSearchedUsers] = useState<UserType[]>(
+    defaultValues.searchedUsers
+  );
+  const [pageNumber, setPageNumber] = useState(defaultValues.pageNumber);
+  const [pagesCount, setPagesCount] = useState(defaultValues.pagesCount);
   const [isLoad, setIsLoad] = useState(false);
 
   const debouncedSearch = useDebounce(search, 1000);
 
   useEffect(() => {
-    setSearchedUsers([]);
-    setPageNumber(1);
-    setPagesCount(1000);
+    searchFromUrl && setSearch(searchFromUrl);
+  }, []);
+
+  useEffect(() => {
+    setSearchedUsers(defaultValues.searchedUsers);
+    setPageNumber(defaultValues.pageNumber);
+    setPagesCount(defaultValues.pagesCount);
     getMoreSearchedUsers();
   }, [debouncedSearch]);
 
@@ -60,13 +77,12 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
         search: debouncedSearch,
         pageNumber: pageNumber,
       });
+      router.push(`?search=${debouncedSearch}`, { scroll: false });
       if (data) {
         const newUsers = data.items;
         setSearchedUsers((prev) => [...prev, ...newUsers]);
         setPagesCount(data.pagesCount);
-        if (newUsers.length > 0) {
-          setPageNumber((prev) => prev + 1);
-        }
+        setPageNumber((prev) => prev + 1);
       }
     } finally {
       setIsLoad(false);
