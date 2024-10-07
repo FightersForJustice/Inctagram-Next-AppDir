@@ -28,20 +28,19 @@ import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/Set
 import { AUTH_ROUTES, ROUTES } from '@/appRoutes/routes';
 import { createPostOptionsType } from './optionsTypes';
 import { accessToken } from '@/utils/serverActions';
-import { redirect } from 'next/dist/server/api-utils';
 
 // AUTH ACTIONS
 
 export async function signInAction(
   data: SignInData,
   userAgent: string,
-  ipAddress: string
+  ipAddress: string,
 ) {
   if (data) {
     try {
       const res = await fetch(
         routes.LOGIN,
-        loginOptions(data, userAgent, ipAddress)
+        loginOptions(data, userAgent, ipAddress),
       );
       const responseBody = await res.json();
 
@@ -110,7 +109,7 @@ export async function forgotPasswordAction(data: {
     try {
       const res = await fetch(
         routes.PASSWORD_RECOVERY,
-        recoveryPasswordOptions(data)
+        recoveryPasswordOptions(data),
       );
 
       if (res.ok) {
@@ -129,7 +128,7 @@ export async function checkRecoveryCodeAction(code: string | undefined) {
     try {
       const res = await fetch(
         routes.CHECK_RECOVERY_CODE,
-        checkRecoveryCodeOptions(code)
+        checkRecoveryCodeOptions(code),
       );
       const responseBody = await res.json();
 
@@ -137,7 +136,7 @@ export async function checkRecoveryCodeAction(code: string | undefined) {
         return { success: true, data: responseBody };
       } else {
         console.error(
-          'The recovery code is incorrect, expired or already been applied'
+          'The recovery code is incorrect, expired or already been applied',
         );
         return { success: false };
       }
@@ -154,13 +153,13 @@ export async function checkRecoveryCodeAction(code: string | undefined) {
 
 export async function newPasswordAction(
   password: string,
-  newPasswordCode: string | undefined
+  newPasswordCode: string | undefined,
 ) {
   if (newPasswordCode) {
     try {
       const res = await fetch(
         routes.NEW_PASSWORD,
-        newPasswordOptions(password, newPasswordCode)
+        newPasswordOptions(password, newPasswordCode),
       );
 
       if (res.ok) {
@@ -182,12 +181,14 @@ export async function newPasswordAction(
 
 export async function logOutAction() {
   const refreshToken = cookies().get('refreshToken')?.value;
+  const corn = cookies().get('corn')?.value;
   if (refreshToken) {
     try {
       const res = await fetch(
         routes.LOGOUT,
-        requestLogoutOptions(refreshToken)
+        requestLogoutOptions(refreshToken),
       );
+
       if (!res.ok) {
         throw new Error('logoutFailed');
       }
@@ -202,7 +203,12 @@ export async function logOutAction() {
       console.error('Logout Error', error);
       return { success: false, error: error };
     }
-  } else return { success: false, error: 'logoutFailed(noRefreshToken)' };
+  } else if (corn) {
+    cookies().delete('corn');
+    return { success: true, data: 'logoutSuccess' };
+  } else {
+    return { success: false, error: 'logoutFailed(noRefreshToken)' };
+  }
 }
 
 export async function loginGoogleAction(code: string) {
@@ -238,7 +244,7 @@ export async function deleteAllSessionsAction() {
     if (accessToken && refreshToken) {
       const res = await fetch(
         routes.TERMINATE_ALL_SESSIONS,
-        requestDeleteAllSessionsOptions(accessToken, refreshToken)
+        requestDeleteAllSessionsOptions(accessToken, refreshToken),
       );
 
       if (!res.ok) {
@@ -255,12 +261,12 @@ export async function deleteAllSessionsAction() {
 
 export async function updateTokensAndContinue(
   refreshToken: string,
-  userAgent: string
+  userAgent: string,
 ) {
   try {
     const updateTokenResponse = await fetch(
       routes.UPDATE_TOKENS,
-      requestUpdateTokensOptions(refreshToken, userAgent)
+      requestUpdateTokensOptions(refreshToken, userAgent),
     );
     if (!updateTokenResponse.ok) {
       console.log('UpdateToken failed', updateTokenResponse);
@@ -271,7 +277,7 @@ export async function updateTokensAndContinue(
     const res = await updateTokenResponse.json();
     const newAccessToken = res.accessToken;
     const newRefreshToken = getRefreshToken(
-      updateTokenResponse.headers.get('set-cookie')
+      updateTokenResponse.headers.get('set-cookie'),
     );
 
     const action = NextResponse.next({
@@ -297,7 +303,7 @@ export async function uploadAvatarAction(avatar: FormData) {
   console.log('1is error from upload', avatar);
   return fetch(
     routes.UPLOAD_PROFILE_AVATAR,
-    uploadAvatarOptions(accessToken(), avatar)
+    uploadAvatarOptions(accessToken(), avatar),
   )
     .then((res) => {
       if (res.ok) {
@@ -308,7 +314,7 @@ export async function uploadAvatarAction(avatar: FormData) {
       }
 
       return Promise.reject(
-        new Error(`Error uploadAvatarAction, status ${res.status}`)
+        new Error(`Error uploadAvatarAction, status ${res.status}`),
       );
     })
     .catch((error) => {
@@ -319,7 +325,7 @@ export async function uploadAvatarAction(avatar: FormData) {
 
 export async function onCreateStripeSubscription(
   typeSubscription: string,
-  baseUrl: string
+  baseUrl: string,
 ) {
   console.log(1, typeSubscription, baseUrl);
   return fetch(
@@ -329,23 +335,23 @@ export async function onCreateStripeSubscription(
       amount: 1,
       typeSubscription: 'MONTHLY',
       baseUrl,
-    })
+    }),
   )
     .then((res) => {
       console.log(res);
       if (res.ok) {
-        console.log(7,res.url);
-        NextResponse.redirect(new URL(res.url))
+        console.log(7, res.url);
+        NextResponse.redirect(new URL(res.url));
         // revalidatePath(
         //   '/profile/settings-profile/account-management'
         // );
         // revalidateTag('myProfile');
-        return 
+        return;
         return { success: true, modalText: res.url, url: res.url };
       }
 
       return Promise.reject(
-        new Error(`Error accountPaymentStripe, status ${res.status}`)
+        new Error(`Error accountPaymentStripe, status ${res.status}`),
       );
     })
     .catch((error) => {
@@ -353,6 +359,7 @@ export async function onCreateStripeSubscription(
       return { success: false, modalText: 'accountPaymentStripe' };
     });
 }
+
 export async function deleteAvatarAction() {
   return fetch(routes.UPLOAD_PROFILE_AVATAR, deleteAvatarOptions(accessToken()))
     .then((res) => {
@@ -364,7 +371,7 @@ export async function deleteAvatarAction() {
       }
 
       return Promise.reject(
-        new Error(`Error deleteAvatarAction, status ${res.status}`)
+        new Error(`Error deleteAvatarAction, status ${res.status}`),
       );
     })
     .catch((error) => {
@@ -379,8 +386,8 @@ export async function fetchCountriesList() {
       res.ok
         ? res.json()
         : Promise.reject(
-            new Error(`Error deleteAvatarAction, status ${res.status}`)
-          )
+          new Error(`Error deleteAvatarAction, status ${res.status}`),
+        ),
     )
     .catch((error) => {
       console.error(error);
@@ -391,7 +398,7 @@ export async function fetchCountriesList() {
 export async function updateProfileInfoAction(data: ProfileFormSubmit) {
   return fetch(
     routes.USERS_PROFILE,
-    updateProfileOptions(accessToken(), data)
+    updateProfileOptions(accessToken(), data),
   ).then(async (res) => {
     if (res.ok) {
       revalidatePath('/profile/settings-profile/general-information');
@@ -426,7 +433,7 @@ export async function uploadPostImage(formData: FormData) {
   try {
     const res = await fetch(
       routes.UPLOAD_POST_IMAGE,
-      uploadPostOptions(accessToken(), formData)
+      uploadPostOptions(accessToken(), formData),
     );
     const responseBody = await res.json();
     if (!res.ok) {
@@ -444,7 +451,7 @@ export async function uploadPostImage(formData: FormData) {
 export async function deleteUploadedPostImage(uploadId: number) {
   const response = await fetch(
     `${routes.UPLOAD_POST_IMAGE}/${uploadId}`,
-    deleteUploadedPostOptions(accessToken())
+    deleteUploadedPostOptions(accessToken()),
   );
   if (!response.ok) {
     throw new Error(`Error deleting image ${uploadId}: ${response.statusText}`);
@@ -457,7 +464,7 @@ export async function createPost(body: createPostOptionsType) {
   try {
     const res = await fetch(
       routes.CREATE_POST,
-      createPostOptions(accessToken(), body)
+      createPostOptions(accessToken(), body),
     );
     const responseBody = await res.json();
     if (!res.ok) {
