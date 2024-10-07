@@ -20,7 +20,7 @@ export const ServerSideBar = async({ paidAccount, admin }: Props) => {
       paidAccount={paidAccount}
       id={id}
       admin={admin}
-      userData={userData}
+      userData={!admin && userData}
     />
   );
 };

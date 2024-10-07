@@ -56,7 +56,7 @@ export const SideBar = ({
         >
           <div>
             {translate('LogoutModal.question')}{' '}
-            <strong>{`"${userEmail}"`}</strong>?
+            <strong>{`"${userEmail || 'admin@gmail.com'}"`}</strong>?
           </div>
           <div className={s.nav__btn__modal}>
             <TransparentBtn
