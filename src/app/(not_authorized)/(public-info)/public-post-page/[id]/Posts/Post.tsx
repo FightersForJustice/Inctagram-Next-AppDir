@@ -146,26 +146,21 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Props)
   const isPublicPost =
     width <= 521 ? (
       <PostContentMobile
+        post={post}
         closeModalAction={closeModalAction}
-        images={post.images}
         myProfile={myProfile}
         user={userData}
-        description={post.description}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
-        createdPostTime={post.createdAt}
       />
     ) : (
       <PostContent
-        postId={post.id}
+        post={post}
         closeModalAction={closeModalAction}
-        images={post.images}
         myProfile={myProfile}
         user={userData}
-        description={post.description}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
-        createdPostTime={post.createdAt}
       />
     );
 
