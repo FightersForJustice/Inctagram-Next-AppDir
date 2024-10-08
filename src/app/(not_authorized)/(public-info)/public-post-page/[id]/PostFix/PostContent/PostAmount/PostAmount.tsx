@@ -2,7 +2,12 @@ import Image from 'next/image';
 
 import s from '../PostContent.module.scss';
 
-export const PostAmount = () => {
+type Props = {
+  likes: number;
+};
+
+export const PostAmount = ({likes}: Props) => {
+
   return (
     <div className={s.post__amount}>
       <div className={s.post__amount__wrapper}>
@@ -30,8 +35,8 @@ export const PostAmount = () => {
           />
         </div>
         <p className={s.post__amount__likes}>
-          <span className={s.post__amount__number}>2 243 </span>
-          Like
+          <span className={s.post__amount__number}>{likes}</span>
+          Likes
         </p>
       </div>
       <p className={s.post__amount__date}>July 3, 2021</p>

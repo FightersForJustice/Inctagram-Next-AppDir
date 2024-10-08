@@ -103,3 +103,14 @@ export type FollowerType = {
   isFollowing: boolean;
   isFollowedBy: boolean;
 };
+
+export type PostLikesDataType = {
+  isLiked: boolean;
+  items: FollowerType[]
+  nextCursor: null | number;
+  page: number;
+  pageSize: number,
+  pagesCount: number;
+  prevCursor: number;
+  totalCount: number,
+};

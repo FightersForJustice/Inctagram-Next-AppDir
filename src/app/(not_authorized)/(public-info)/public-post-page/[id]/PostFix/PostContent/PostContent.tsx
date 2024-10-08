@@ -5,7 +5,7 @@ import { PostComment } from './PostComment';
 import { PostLikes } from './PostLikes';
 
 import s from './PostContent.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
@@ -16,7 +16,8 @@ import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { PostLikesDataType, UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 
 
 type Props = {
@@ -28,9 +29,11 @@ type Props = {
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
   createdPostTime: string;
+  postId: number,
 };
 
 export const PostContent = ({
+  postId,
   description,
   user,
   closeModalAction,
@@ -43,12 +46,31 @@ export const PostContent = ({
 }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
 
   const language = useGetLanguage()
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const time = getTimeAgoText(createdPostTime, language, translate);
+
+
+  const fetchLikes = async () => {
+    const data: PostLikesDataType = await getLikesPostId(postId);
+    setLikesData(data);
+  };
+
+  useEffect(() => {
+    fetchLikes();
+  }, []);
+
+  const toggleLike = async () => {
+    if (likesData) {
+      const response = await updateLikesPostId(postId, likesData.isLiked);
+      fetchLikes();
+    }
+  }
+
 
   return (
       <PostModal
@@ -61,7 +83,6 @@ export const PostContent = ({
             if (i.width !== 640) {
               return (
                 <SwiperSlide key={index}>
-                  {/* <img src={i.url} alt={'err'} /> */}
                   <Image
                     width={491}
                     height={491}
@@ -99,8 +120,9 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
-          {myProfile && <PostLikes  />}
-          <PostAmount />
+          {/*{myProfile && <PostLikes  />}*/}
+          <PostLikes  toggleLike={toggleLike} isLiked={likesData?.isLiked || false}/>
+          <PostAmount  likes={likesData?.totalCount || 0}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal

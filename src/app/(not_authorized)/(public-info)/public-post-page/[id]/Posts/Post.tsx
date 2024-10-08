@@ -29,7 +29,7 @@ type Props = {
   isOpenByLink?: boolean;
 };
 
-export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
+export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
@@ -120,6 +120,7 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
     isOpenByLink && !openPostModal && onOpenPost();
   }, []);
 
+
   const isMyPost =
     width <= 521 ? (
       <EditPostMobile
@@ -157,6 +158,7 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
       />
     ) : (
       <PostContent
+        postId={post.id}
         closeModalAction={closeModalAction}
         images={post.images}
         myProfile={myProfile}
