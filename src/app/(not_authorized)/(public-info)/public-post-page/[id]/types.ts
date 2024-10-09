@@ -39,6 +39,8 @@ export interface PostType {
     firstName: string;
     lastName: string;
   };
+  isLiked: boolean;
+  likesCount: number;
 }
 
 export interface ApiResponsePosts {

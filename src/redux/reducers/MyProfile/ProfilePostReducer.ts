@@ -33,6 +33,16 @@ const slice = createSlice({
           : item
       );
     },
+    updateLikesById: (
+      state,
+      action: PayloadAction<{ postId: number; isLiked: boolean, likesCount: number }>
+    ) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.postId
+          ? { ...item, isLiked: action.payload.isLiked, likesCount: action.payload.likesCount }
+          : item
+      );
+    },
   },
 });
 export const ProfilePostReducer = slice.reducer;
@@ -56,6 +66,8 @@ export type Items = {
   ownerId: number;
   avatarOwner: string;
   owner: Owner;
+  likesCount: number;
+  isLiked: boolean;
 };
 
 export type ImageType = {

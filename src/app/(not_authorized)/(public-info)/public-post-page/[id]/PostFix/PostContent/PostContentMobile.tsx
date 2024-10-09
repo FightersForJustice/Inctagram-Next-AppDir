@@ -5,7 +5,6 @@ import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 import s from './PostContent.module.scss';
 import { useEffect, useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
@@ -21,6 +20,8 @@ import {
   UserProfile,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { useDispatch } from 'react-redux';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 
 type Props = {
@@ -40,9 +41,12 @@ export const PostContentMobile = ({
                                     setEditPost,
                                     onDeletePost,
                             }: Props) => {
+  const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
+  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked);
+  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount);
 
   const language = useGetLanguage()
 
@@ -50,9 +54,15 @@ export const PostContentMobile = ({
   const translate = (key: string): string => t(`Time.${key}`);
   const time = getTimeAgoText(post.createdAt, language, translate);
 
-
   const fetchLikes = async () => {
     const data: PostLikesDataType = await getLikesPostId(post.id);
+    setLocalIsLiked(null)
+    setLocalLikesCount(null)
+    dispatch(ProfilePostActions.updateLikesById({
+      postId: post.id,
+      isLiked: data.isLiked,
+      likesCount: data.totalCount
+    }));
     setLikesData(data);
   };
 
@@ -62,12 +72,12 @@ export const PostContentMobile = ({
 
   const toggleLike = async () => {
     if (likesData) {
+      setLocalIsLiked(!likesData.isLiked)
+      setLocalLikesCount(likesData.isLiked ? likesData.totalCount - 1 : likesData.totalCount + 1)
       const response = await updateLikesPostId(post.id, likesData.isLiked);
       fetchLikes();
     }
   }
-
-
   return (
     <>
       <PostModal
@@ -97,8 +107,8 @@ export const PostContentMobile = ({
           })}
         </Carousel>
         {/*{myProfile && <PostLikes />}*/}
-        <PostLikes  toggleLike={toggleLike} isLiked={likesData?.isLiked || false}/>
-        <PostAmount  likes={likesData?.totalCount || 0}/>
+        <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
+        <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)}/>
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image

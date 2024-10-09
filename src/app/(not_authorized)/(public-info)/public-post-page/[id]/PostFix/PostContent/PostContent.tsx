@@ -18,6 +18,8 @@ import {
   UserProfile,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
+import { useDispatch } from 'react-redux';
 
 import s from './PostContent.module.scss';
 
@@ -38,9 +40,12 @@ export const PostContent = ({
   setEditPost,
   onDeletePost,
 }: Props) => {
+  const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
   const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
+  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked);
+  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount);
 
   const language = useGetLanguage()
 
@@ -48,9 +53,15 @@ export const PostContent = ({
   const translate = (key: string): string => t(`Time.${key}`);
   const time = getTimeAgoText(post.createdAt, language, translate);
 
-
   const fetchLikes = async () => {
     const data: PostLikesDataType = await getLikesPostId(post.id);
+    setLocalIsLiked(null)
+    setLocalLikesCount(null)
+    dispatch(ProfilePostActions.updateLikesById({
+      postId: post.id,
+      isLiked: data.isLiked,
+      likesCount: data.totalCount
+    }));
     setLikesData(data);
   };
 
@@ -60,11 +71,12 @@ export const PostContent = ({
 
   const toggleLike = async () => {
     if (likesData) {
+      setLocalIsLiked(!likesData.isLiked)
+      setLocalLikesCount(likesData.isLiked ? likesData.totalCount - 1 : likesData.totalCount + 1)
       const response = await updateLikesPostId(post.id, likesData.isLiked);
       fetchLikes();
     }
   }
-
 
   return (
       <PostModal
@@ -115,8 +127,8 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           {/*{myProfile && <PostLikes  />}*/}
-          <PostLikes  toggleLike={toggleLike} isLiked={likesData?.isLiked || false}/>
-          <PostAmount  likes={likesData?.totalCount || 0}/>
+          <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
+          <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal
