@@ -29,9 +29,8 @@ type Props = {
   isOpenByLink?: boolean;
 };
 
-export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
+export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const dispatch = useDispatch();
 
   const [openPostModal, setOpenPostModal] = useState(false);
@@ -120,6 +119,7 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
     isOpenByLink && !openPostModal && onOpenPost();
   }, []);
 
+
   const isMyPost =
     width <= 521 ? (
       <EditPostMobile
@@ -146,25 +146,21 @@ export function Post({ post, userData, myProfile, type, isOpenByLink }: Props) {
   const isPublicPost =
     width <= 521 ? (
       <PostContentMobile
+        post={post}
         closeModalAction={closeModalAction}
-        images={post.images}
         myProfile={myProfile}
         user={userData}
-        description={post.description}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
-        createdPostTime={post.createdAt}
       />
     ) : (
       <PostContent
+        post={post}
         closeModalAction={closeModalAction}
-        images={post.images}
         myProfile={myProfile}
         user={userData}
-        description={post.description}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
-        createdPostTime={post.createdAt}
       />
     );
 

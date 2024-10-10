@@ -10,12 +10,12 @@ export const getPayments = async () => {
 
   const apiUrl = baseUrl + `subscriptions/my-payments`;
   try {
-    console.log(apiUrl, 11)
+    console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value))
+      getSubsriptionOptions(accessToken?.value));
     if (!response.ok) {
-      console.log(response)
+      console.log(response);
       console.error('Error:', response.statusText);
       return null;
     }
@@ -32,12 +32,12 @@ export const getSubscriptions = async () => {
 
   const apiUrl = baseUrl + `subscriptions/current-payment-subscriptions`;
   try {
-    console.log(apiUrl, 11)
+    console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value))
+      getSubsriptionOptions(accessToken?.value));
     if (!response.ok) {
-      console.log(response)
+      console.log(response);
       console.error('Error:', response.statusText);
       return null;
     }
@@ -53,11 +53,11 @@ export const getSubscriptions = async () => {
 export const cancelAutoRenewal = async () => {
   const accessToken = cookies().get('accessToken');
 
-  console.log(accessToken)
+  console.log(accessToken);
 
   const apiUrl = baseUrl + `subscriptions/canceled-auto-renewal`;
 
-  console.log(apiUrl)
+  console.log(apiUrl);
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -84,12 +84,12 @@ export const getSubscriptionsCosts = async () => {
 
   const apiUrl = baseUrl + `subscriptions/cost-of-payment-subscriptions`;
   try {
-    console.log(apiUrl, 11)
+    console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value))
+      getSubsriptionOptions(accessToken?.value));
     if (!response.ok) {
-      console.log(response)
+      console.log(response);
       console.error('Error:', response.statusText);
       return null;
     }
@@ -183,5 +183,42 @@ export const updatePost = async (postId: number, postData: string) => {
     },
     body: JSON.stringify({ description: postData }),
   });
+  return response.status;
+};
+
+export const getLikesPostId = async (postId: number) => {
+  const apiUrl = baseUrl + `posts/${postId}/likes`;
+  const accessToken = cookies().get('accessToken');
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken?.value}`,
+      },
+    });
+    if (!response.ok) {
+      console.error('Errorrrrr:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
+export const updateLikesPostId = async (postId: number, likeStatus: boolean) => {
+  const apiUrl = baseUrl + `posts/${postId}/like-status`;
+  const accessToken = cookies().get('accessToken');
+  const response = await fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken?.value}`,
+    },
+    body: JSON.stringify({ likeStatus: likeStatus ? 'DISLIKE' : 'LIKE' }),
+  });
+  console.log(response.status)
   return response.status;
 };

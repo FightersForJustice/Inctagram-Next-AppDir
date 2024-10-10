@@ -94,51 +94,38 @@
   &__amount {
     &__wrapper {
       display: flex;
-      align-items: center;
       gap: 18px;
-      padding: 12px 0 0 0;
+      padding: 12px 0 0 24px;
     }
 
     &__images {
+      max-width: 74px;
       display: flex;
       position: relative;
-      padding-left: 40px;
       margin-bottom: 5px;
     }
 
-    &__image1,
-    &__image2,
-    &__image3 {
+    &__image {
       border-radius: 50%;
       height: 24px;
       width: 24px;
     }
 
-    &__image1 {
-      position: absolute;
-      top: -10px;
-      right: -7px;
+    &__image:nth-child(2) {
+      transform: translate(-30%, 0);
     }
 
-    &__image2 {
-      position: absolute;
-      top: -10px;
-      right: -19px;
-      z-index: 1;
+    &__image:nth-child(3) {
+      transform: translate(-60%, 0);
     }
 
-    &__image3 {
-      position: absolute;
-      top: -10px;
-      right: -32px;
-      z-index: 2;
-    }
 
     &__number {
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
-      margin-left: 30px;
+      //margin-left: 30px;
+      padding-right: 5px;
     }
 
     &__likes {

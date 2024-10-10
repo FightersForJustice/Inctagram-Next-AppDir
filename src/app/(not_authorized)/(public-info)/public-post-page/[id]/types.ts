@@ -39,6 +39,8 @@ export interface PostType {
     firstName: string;
     lastName: string;
   };
+  isLiked: boolean;
+  likesCount: number;
 }
 
 export interface ApiResponsePosts {
@@ -102,4 +104,15 @@ export type FollowerType = {
   createdAt: string;
   isFollowing: boolean;
   isFollowedBy: boolean;
+};
+
+export type PostLikesDataType = {
+  isLiked: boolean;
+  items: FollowerType[]
+  nextCursor: null | number;
+  page: number;
+  pageSize: number,
+  pagesCount: number;
+  prevCursor: number;
+  totalCount: number,
 };

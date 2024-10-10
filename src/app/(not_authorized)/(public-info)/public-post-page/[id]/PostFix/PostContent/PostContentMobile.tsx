@@ -3,9 +3,8 @@ import Image from 'next/image';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
 
 import s from './PostContent.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
@@ -15,37 +14,72 @@ import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import {
+  PostLikesDataType,
+  PostType,
+  UserProfile,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { useDispatch } from 'react-redux';
+import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 
 
 type Props = {
+  post: PostType;
   user: UserProfile;
-  description: string;
-  myProfile: boolean
-  images: ImageType[]
-  closeModalAction:()=>void
+  myProfile: boolean;
+  closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
-  createdPostTime: string;
 };
 
 export const PostContentMobile = ({
-                              description,
-                              user,
-                              closeModalAction,
-                              myProfile, images,
-                              setEditPost,
-                              onDeletePost,
-                              createdPostTime
+                                    post,
+                                    user,
+                                    closeModalAction,
+                                    myProfile,
+                                    setEditPost,
+                                    onDeletePost,
                             }: Props) => {
+  const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
+  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked);
+  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount);
 
   const language = useGetLanguage()
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
-  const time = getTimeAgoText(createdPostTime, language, translate);
+  const time = getTimeAgoText(post.createdAt, language, translate);
+
+  const fetchLikes = async () => {
+    const data: PostLikesDataType = await getLikesPostId(post.id);
+    setLocalIsLiked(null)
+    setLocalLikesCount(null)
+    dispatch(ProfilePostActions.updateLikesById({
+      postId: post.id,
+      isLiked: data.isLiked,
+      likesCount: data.totalCount
+    }));
+    setLikesData(data);
+  };
+
+  useEffect(() => {
+    fetchLikes();
+  }, []);
+
+  const toggleLike = async () => {
+    if (likesData) {
+      setLocalIsLiked(!likesData.isLiked)
+      setLocalLikesCount(likesData.isLiked ? likesData.totalCount - 1 : likesData.totalCount + 1)
+      const response = await updateLikesPostId(post.id, likesData.isLiked);
+      fetchLikes();
+    }
+  }
+
+  const avatarLikes = likesData?.items.slice(0, 3)
 
   return (
     <>
@@ -58,7 +92,7 @@ export const PostContentMobile = ({
         <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
                     setShowAreYouSureModal={setShowAreYouSureModal}/>
         <Carousel>
-          {images.map((i, index) => {
+          {post.images.map((i, index) => {
             if (i.width !== 640) {
               return (
                 <SwiperSlide key={index}>
@@ -75,8 +109,9 @@ export const PostContentMobile = ({
             return;
           })}
         </Carousel>
-        {myProfile && <PostLikes />}
-        <PostAmount />
+        {/*{myProfile && <PostLikes />}*/}
+        <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
+        <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)} avatarLikes={avatarLikes}/>
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image
@@ -89,7 +124,7 @@ export const PostContentMobile = ({
             <div>
               <p className={s.post__desc__text}>
                 <span className={s.post__desc__name}>{user?.userName} </span>
-                {description}
+                {post.description}
               </p>
               <p className={s.post__desc__time}>{time}</p>
             </div>
