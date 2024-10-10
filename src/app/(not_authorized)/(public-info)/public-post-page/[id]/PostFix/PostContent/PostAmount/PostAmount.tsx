@@ -1,8 +1,8 @@
 import Image from 'next/image';
+import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 import s from '../PostContent.module.scss';
-import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import { Loader } from '@/components/Loader';
+
 
 type Props = {
   likes: number;
@@ -14,9 +14,9 @@ export const PostAmount = ({ likes, avatarLikes }: Props) => {
   return (
     <div className={s.post__amount}>
       <div className={s.post__amount__wrapper}>
-        {avatarLikes.length > 0 &&
+        {avatarLikes && avatarLikes.length > 0 &&
           <div className={s.post__amount__images}>
-            {avatarLikes?.map((item, index) => (
+            {avatarLikes.map((item, index) => (
               <Image
                 key={index}
                 className={s.post__amount__image}
