@@ -1,39 +1,33 @@
 import Image from 'next/image';
 
 import s from '../PostContent.module.scss';
+import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   likes: number;
+  avatarLikes?: FollowerType[]
 };
 
-export const PostAmount = ({likes}: Props) => {
+export const PostAmount = ({ likes, avatarLikes }: Props) => {
 
   return (
     <div className={s.post__amount}>
       <div className={s.post__amount__wrapper}>
-        <div className={s.post__amount__images}>
-          <Image
-            className={s.post__amount__image1}
-            src={'/img/profile/posts/post1.png'}
-            alt={'post1'}
-            width={24}
-            height={24}
-          />
-          <Image
-            className={s.post__amount__image2}
-            src={'/img/profile/posts/post2.png'}
-            alt={'post1'}
-            width={24}
-            height={24}
-          />
-          <Image
-            className={s.post__amount__image3}
-            src={'/img/profile/posts/post3.png'}
-            alt={'post1'}
-            width={24}
-            height={24}
-          />
-        </div>
+        {avatarLikes.length > 0 &&
+          <div className={s.post__amount__images}>
+            {avatarLikes?.map((item, index) => (
+              <Image
+                key={index}
+                className={s.post__amount__image}
+                src={item.avatars[1].url}
+                alt={'post1'}
+                width={24}
+                height={24}
+              />
+            ))}
+          </div>
+        }
         <p className={s.post__amount__likes}>
           <span className={s.post__amount__number}>{likes}</span>
           Likes

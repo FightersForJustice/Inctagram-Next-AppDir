@@ -22,6 +22,7 @@ import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReduce
 import { useDispatch } from 'react-redux';
 
 import s from './PostContent.module.scss';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   post: PostType;
@@ -78,6 +79,14 @@ export const PostContent = ({
     }
   }
 
+  const avatarLikes = likesData?.items.slice(0, 3)
+
+  if (!likesData) {
+    return (
+      <Loader/>
+    )
+  }
+
   return (
       <PostModal
         width={'972px'}
@@ -128,7 +137,7 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           {/*{myProfile && <PostLikes  />}*/}
           <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
-          <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)}/>
+          <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)} avatarLikes={avatarLikes}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal

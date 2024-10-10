@@ -78,6 +78,9 @@ export const PostContentMobile = ({
       fetchLikes();
     }
   }
+
+  const avatarLikes = likesData?.items.slice(0, 3)
+
   return (
     <>
       <PostModal
@@ -108,7 +111,7 @@ export const PostContentMobile = ({
         </Carousel>
         {/*{myProfile && <PostLikes />}*/}
         <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
-        <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)}/>
+        <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)} avatarLikes={avatarLikes}/>
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image
