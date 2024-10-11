@@ -11,16 +11,18 @@ type Props = {
 
 export const PostAmount = ({ likes, avatarLikes }: Props) => {
 
+  console.log(avatarLikes)
+
   return (
     <div className={s.post__amount}>
       <div className={s.post__amount__wrapper}>
         {avatarLikes && avatarLikes.length > 0 &&
           <div className={s.post__amount__images}>
-            {avatarLikes.map((item, index) => (
+            {avatarLikes.map((item) => (
               <Image
-                key={index}
+                key={item.id}
                 className={s.post__amount__image}
-                src={item.avatars[1].url}
+                src={item.avatars.length !== 0 ? item.avatars[1].url : '/img/create-post/no-image.png'}
                 alt={'post1'}
                 width={24}
                 height={24}
@@ -30,7 +32,7 @@ export const PostAmount = ({ likes, avatarLikes }: Props) => {
         }
         <p className={s.post__amount__likes}>
           <span className={s.post__amount__number}>{likes}</span>
-          Likes
+          {likes !== 1 ? 'Likes' : 'Like' }
         </p>
       </div>
       <p className={s.post__amount__date}>July 3, 2021</p>
