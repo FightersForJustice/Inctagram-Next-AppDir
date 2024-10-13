@@ -162,6 +162,28 @@ export const getPosts = async (id: number, minId: number | null) => {
   }
 };
 
+export const getFollowersPosts = async () => {
+  const apiUrl =
+    baseUrl + `home/publications-followers`;
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken()}`,
+      },
+    });
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
 export const getPostsDelete = async (postId: number) => {
   const apiUrl = baseUrl + `posts/${postId}`;
   const response = await fetch(apiUrl, {

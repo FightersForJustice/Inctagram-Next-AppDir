@@ -1,10 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
+import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 import s from '@/app/(authorized)/home/HomePagePost/HomePagePost.module.scss';
-import { useTranslation } from 'react-i18next';
 
-export const HomePostLikes = () => {
+
+type Props = {
+  likes: number;
+  avatarLikes?: FollowerType[]
+};
+
+export const HomePostLikes = ({ likes }: Props) => {
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
@@ -36,7 +43,9 @@ export const HomePostLikes = () => {
           />
         </div>
         <p className={s.post__likes__amount}>
-          0 <span className={s.post__likes__text}>Likes</span>
+          {likes} <span className={s.post__likes__text}>
+          {likes !== 1 ? 'Likes' : 'Like' }
+        </span>
         </p>
       </div>
       <p className={s.post__comments}>{translate('viewComments')} (114)</p>

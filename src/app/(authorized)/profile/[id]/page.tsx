@@ -13,9 +13,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   const id = parseInt(params.id, 10);
 
   return (
-    <>
       <ProfileServer id={id} myProfile={myId === id} />
-    </>
   );
 };
 

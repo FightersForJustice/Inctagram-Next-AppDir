@@ -489,5 +489,8 @@
   "PaginationSelect": {
     "show": "Показать",
     "onThePage": "на странице"
+  },
+  "Likes": {
+    "likes": "Понравилось"
   }
 }
