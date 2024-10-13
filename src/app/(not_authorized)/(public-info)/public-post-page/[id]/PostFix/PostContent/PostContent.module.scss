@@ -96,13 +96,13 @@
       display: flex;
       gap: 18px;
       padding: 12px 0 0 24px;
+      margin-bottom: 5px;
     }
 
     &__images {
       max-width: 74px;
       display: flex;
       position: relative;
-      margin-bottom: 5px;
     }
 
     &__image {
@@ -124,7 +124,6 @@
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
-      //margin-left: 30px;
       padding-right: 5px;
     }
 

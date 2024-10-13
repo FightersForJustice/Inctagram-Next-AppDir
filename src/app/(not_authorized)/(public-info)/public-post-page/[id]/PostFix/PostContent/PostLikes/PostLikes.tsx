@@ -34,7 +34,6 @@ export const PostLikes = ({ toggleLike, isLiked }: Props) => {
                     fill="white" />
                 </svg>
               }
-
             </button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

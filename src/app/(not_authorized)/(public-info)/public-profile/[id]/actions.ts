@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -18,8 +17,6 @@ export const getPublicPosts = async (userId: number, endCursorPostId: number | n
     return null;
   }
 };
-
-
 
 export const getPublicProfile = async (profileId: number) => {
 
@@ -54,6 +51,8 @@ export const getPublicPostsPage = async () => {
     return null;
   }
 };
+
+
 
 export const getCountRegisterUsers = async () => {
   const apiUrl = baseUrl + `public-user`;

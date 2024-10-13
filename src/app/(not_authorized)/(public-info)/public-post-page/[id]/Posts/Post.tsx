@@ -11,15 +11,14 @@ import { PostContent } from '@/app/(not_authorized)/(public-info)/public-post-pa
 import { PostContentMobile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostContentMobile';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AUTH_ROUTES } from 'src/appRoutes/routes';
-
+import { PostType, UserProfile } from '../types';
 
 import s from './Posts.module.scss';
-import { PostType, UserProfile } from '../types';
 
 type Props = {
   post: PostType;
@@ -29,7 +28,7 @@ type Props = {
   isOpenByLink?: boolean;
 };
 
-export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Props) {
+export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readonly<Props>) {
   const router = useRouter();
   const dispatch = useDispatch();
 

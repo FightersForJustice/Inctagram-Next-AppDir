@@ -11,7 +11,7 @@ import { PostForm } from '@/app/(not_authorized)/(public-info)/public-post-page/
 import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostAmount';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
-import { getTimeAgoText } from '@/utils';
+import { formatServerDateWithoutTime, getTimeAgoText } from '@/utils';
 import {
   PostLikesDataType,
   PostType,
@@ -41,34 +41,35 @@ export const PostContent = ({
   setEditPost,
   onDeletePost,
 }: Props) => {
-  const dispatch = useDispatch();
-  const [visiblePopup, setVisiblePopup] = useState(false);
-  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
-  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
-  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked);
-  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount);
+  const dispatch = useDispatch()
+  const [visiblePopup, setVisiblePopup] = useState(false)
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false)
+  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null)
+  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked)
+  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount)
 
   const language = useGetLanguage()
 
-  const { t } = useTranslation();
-  const translate = (key: string): string => t(`Time.${key}`);
-  const time = getTimeAgoText(post.createdAt, language, translate);
+  const { t } = useTranslation()
+  const translate = (key: string): string => t(`Time.${key}`)
+  const time = getTimeAgoText(post.createdAt, language, translate)
+  const date = formatServerDateWithoutTime(post.createdAt, language)
 
   const fetchLikes = async () => {
-    const data: PostLikesDataType = await getLikesPostId(post.id);
+    const data: PostLikesDataType = await getLikesPostId(post.id)
     setLocalIsLiked(null)
     setLocalLikesCount(null)
     dispatch(ProfilePostActions.updateLikesById({
       postId: post.id,
       isLiked: data.isLiked,
       likesCount: data.totalCount
-    }));
-    setLikesData(data);
+    }))
+    setLikesData(data)
   };
 
   useEffect(() => {
-    fetchLikes();
-  }, []);
+    fetchLikes()
+  }, [])
 
   const toggleLike = async () => {
     if (likesData) {
@@ -80,6 +81,7 @@ export const PostContent = ({
   }
 
   const avatarLikes = likesData?.items.slice(0, 3)
+
 
   if (!likesData) {
     return (
@@ -94,10 +96,10 @@ export const PostContent = ({
       >
       <div className={s.post}>
         <Carousel>
-          {post.images.map((i, index) => {
+          {post.images.map((i) => {
             if (i.width !== 640) {
               return (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={i.uploadId}>
                   <Image
                     width={491}
                     height={491}
@@ -107,7 +109,6 @@ export const PostContent = ({
                 </SwiperSlide>
               );
             }
-            return;
           })}
         </Carousel>
         <div className={s.postInfo}>
@@ -135,9 +136,8 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
-          {/*{myProfile && <PostLikes  />}*/}
-          <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked !== null ? localIsLiked : (likesData?.isLiked || false)}/>
-          <PostAmount  likes={localLikesCount !== null ? localLikesCount : (likesData?.totalCount || 0)} avatarLikes={avatarLikes}/>
+          <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />
+          <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal

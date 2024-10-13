@@ -11,14 +11,11 @@ const Home = () => {
 
 
   return (
-    <>
       <div className={s.container}>
           <div className={s.home}>
             <HomePagePost id={id}/>
           </div>
-
       </div>
-    </>
   );
 };
 
