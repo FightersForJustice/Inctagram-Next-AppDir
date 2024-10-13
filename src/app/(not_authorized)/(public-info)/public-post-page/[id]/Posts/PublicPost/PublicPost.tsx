@@ -27,8 +27,6 @@ export const PublicPost = ({ post, userProfile, isOpenByLink }: Props) => {
   const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`);
   const time = getTimeAgoText(post.createdAt, language, translate);
 
-  console.log(post.images);
-
   return (
     <>
       <div className={s.postWrapper}>

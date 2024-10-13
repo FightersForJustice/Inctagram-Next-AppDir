@@ -1,16 +1,14 @@
 'use strict';
 
-import React from 'react';
 import {
   getCountRegisterUsers,
   getPublicPostsPage,
-  getPublicProfile,
 } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { PostType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import s from './PublicPage.module.scss';
-import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
+import { PublicPosts } from '@/app/(not_authorized)/(public-info)/public-post-page/PublicPosts/PublicPosts';
 
 
 type Props = {
@@ -24,29 +22,17 @@ const PublicPostPage = async ({ searchParams }: Props) => {
 
   const postIdFromUrl = searchParams?.post;
 
-  const postsImages = () => {
-    return publicPostPageData.items.slice(0, 4).map(async (i: PostType) => {
-      const userProfile = await getPublicProfile(i.ownerId);
-      const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
-
-      return (
-        <div key={i.id} className={s.postContainer}>
-          <PublicPost
-            post={i}
-            userProfile={userProfile}
-            isOpenByLink={isOpenByLink}
-          />
-        </div>
-      );
-    });
-  };
-
   return (
     <div className={s.wrapper}>
       <CounterRegisterUser count={publicCountRegisterUsers.totalCount} />
-      <div className={s.container}>{postsImages()}</div>
+      <div className={s.container}>
+        {publicPostPageData.items.map((post: PostType) => (
+          <PublicPosts key={post.id} post={post} postIdFromUrl={postIdFromUrl} />
+        ))}
+      </div>
     </div>
   );
 };
 
 export default PublicPostPage;
+

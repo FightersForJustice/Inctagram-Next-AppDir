@@ -26,6 +26,7 @@ import { Loader } from '@/components/Loader';
 
 
 type Props = {
+  type?: 'publicPage' | 'publicProfile';
   post: PostType;
   user: UserProfile;
   myProfile: boolean;
@@ -41,6 +42,7 @@ export const PostContentMobile = ({
                                     myProfile,
                                     setEditPost,
                                     onDeletePost,
+                                    type,
                             }: Props) => {
   const dispatch = useDispatch()
   const [visiblePopup, setVisiblePopup] = useState(false)
@@ -68,6 +70,7 @@ export const PostContentMobile = ({
   };
 
   useEffect(() => {
+    if (type === 'publicPage') return
     fetchLikes()
   }, [])
 
@@ -82,7 +85,7 @@ export const PostContentMobile = ({
 
   const avatarLikes = likesData?.items.slice(0, 3)
 
-  if (!likesData) {
+  if (!likesData && !type) {
     return (
       <Loader/>
     )
@@ -93,7 +96,6 @@ export const PostContentMobile = ({
         width={'972px'}
         onClose={closeModalAction}
       >
-
       <div className={s.post}>
         <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
                     setShowAreYouSureModal={setShowAreYouSureModal}/>
@@ -113,7 +115,7 @@ export const PostContentMobile = ({
             }
           })}
         </Carousel>
-        <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />
+        {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
         <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
         <div className={s.postInfo}>
           <div className={s.post__desc}>

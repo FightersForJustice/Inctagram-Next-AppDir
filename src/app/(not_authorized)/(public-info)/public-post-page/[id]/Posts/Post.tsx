@@ -154,6 +154,7 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
       />
     ) : (
       <PostContent
+        type={type}
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}

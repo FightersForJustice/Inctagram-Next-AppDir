@@ -25,6 +25,7 @@ import s from './PostContent.module.scss';
 import { Loader } from '@/components/Loader';
 
 type Props = {
+  type?: 'publicPage' | 'publicProfile';
   post: PostType;
   user: UserProfile;
   myProfile: boolean;
@@ -34,6 +35,7 @@ type Props = {
 };
 
 export const PostContent = ({
+  type,
   post,
   user,
   closeModalAction,
@@ -68,6 +70,7 @@ export const PostContent = ({
   };
 
   useEffect(() => {
+    if (type === 'publicPage') return
     fetchLikes()
   }, [])
 
@@ -82,8 +85,9 @@ export const PostContent = ({
 
   const avatarLikes = likesData?.items.slice(0, 3)
 
+  console.log(likesData?.isLiked)
 
-  if (!likesData) {
+  if (!likesData && !type) {
     return (
       <Loader/>
     )
@@ -136,7 +140,7 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
-          <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />
+          {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
           <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
