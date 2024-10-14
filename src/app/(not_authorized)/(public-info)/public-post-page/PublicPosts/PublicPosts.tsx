@@ -1,77 +1,75 @@
 'use client';
 
-import { PostType, UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import React, { useEffect, useState } from 'react';
-import { getPublicProfile } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
+import { PostType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import React, { useEffect, useRef, useState } from 'react';
+import { getPublicPostsPage} from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
-import { Loader } from '@/components/Loader';
 
 import s from '@/app/(not_authorized)/(public-info)/public-post-page/PublicPage.module.scss';
 
 type PostsImagesProps = {
-  post: PostType;
+  initialPosts: PostType[];
   postIdFromUrl?: string;
-};
+}
 
-export const PublicPosts = ({post, postIdFromUrl}: PostsImagesProps) => {
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+export const PublicPosts = ({initialPosts, postIdFromUrl}: PostsImagesProps) => {
+  const [posts, setPosts] = useState<PostType[]>(initialPosts)
+  const [endCursorPostId, setEndCursorPostId] = useState(initialPosts[initialPosts.length - 1]?.id || null)
+  const [hasMore, setHasMore] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const profile = await getPublicProfile(post.ownerId);
-      setUserProfile(profile);
-    };
+  const loadMorePosts = async () => {
+    if (loading || !endCursorPostId || !hasMore) return
 
-    fetchProfile();
-    setLoading(false)
-  }, [post.ownerId]);
-
-  const isOpenByLink = postIdFromUrl ? post.id === +postIdFromUrl : false;
-
-
-
-
-
-
-
-
+    setLoading(true)
+    try {
+      const publicPostPageData = await getPublicPostsPage(endCursorPostId)
+      if (publicPostPageData.items.length === 0) {
+        setHasMore(false)
+      } else {
+        setPosts((prevPosts) => [...prevPosts, ...publicPostPageData.items])
+        setEndCursorPostId(publicPostPageData.items[publicPostPageData.items.length - 1].id)
+      }
+    } catch (error) {
+      console.error("Error loading posts:", error)
+    } finally {
+      setLoading(false)
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300 ) {
-        // loadMorePosts();
-        console.log('more posts')
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
       }
-    };
 
-    window.addEventListener('scroll', handleScroll);
+      scrollTimeoutRef.current = setTimeout(() => {
+        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300) {
+          loadMorePosts()
+        }
+      }, 200)
+    }
+
+    window.addEventListener('scroll', handleScroll)
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [post]);
+      window.removeEventListener('scroll', handleScroll)
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
+  }, [loading, endCursorPostId, hasMore])
 
-
-
-
-
-
-
-
-
-
-
-
-  if (loading) return <Loader />
+  console.log(posts)
 
   return (
-    <div key={post.id} className={s.postContainer}>
-      {userProfile && <PublicPost
-        post={post}
-        userProfile={userProfile}
-        isOpenByLink={isOpenByLink}
-      />}
+    <div className={s.container}>
+      {posts.map((post) => (
+        <div key={post.id} className={s.postContainer}>
+          <PublicPost post={post} isOpenByLink={postIdFromUrl ? post.id === +postIdFromUrl : false}/>
+        </div>
+      ))}
     </div>
-  );
-};
+  )
+}
