@@ -2,11 +2,11 @@ import React from 'react';
 import s from '../../PostFix/PostContent/PostContent.module.scss';
 import Image from 'next/image';
 import { Dots } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/Dots';
-import { UserProfile } from '../../types';
+import { PostType, UserProfile } from '../../types';
 
 type Props = {
-  user: UserProfile,
-  myProfile: boolean,
+  post: PostType;
+  myProfile: boolean;
   setVisiblePopup: (value: boolean) => void;
   visiblePopup: boolean;
   setEditPost: (value: boolean) => void;
@@ -15,7 +15,7 @@ type Props = {
 
 
 const PostHeader = ({
-                      user, myProfile, visiblePopup,
+                      post, myProfile, visiblePopup,
                       setVisiblePopup,
                       setEditPost,
                       setShowAreYouSureModal,
@@ -24,13 +24,13 @@ const PostHeader = ({
     <div className={s.post__header}>
       <div className={s.post__header__user}>
         <Image
-          src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+          src={post.avatarOwner ?? '/img/create-post/no-image.png'}
           alt={'ava'}
           width={36}
           height={36}
           className={s.header__img}
         />
-        <span>{user?.userName}</span>
+        <span>{post.userName}</span>
       </div>
       {myProfile ?
         <Dots setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}

@@ -7,19 +7,16 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { EditPostModal } from '@/components/Modals/EditPostModal';
 import { Carousel } from '@/components/Carousel/Carousel';
-import { ImageType } from '@/api/posts.api';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
+import { PostType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 import s from './EditPost.module.scss';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
   setEditPost: (value: boolean) => void;
   description: string;
-  postId: number | undefined;
-  user: UserProfile;
-  images: ImageType[];
+  post: PostType;
   loading: boolean
   onUpdatePost: (postId: number, textareaValue: string) => void
 };
@@ -27,9 +24,7 @@ type Props = {
 export const EditPostMobile = ({
                                  setEditPost,
                                  description,
-                                 user,
-                                 images,
-                                 postId,
+                                 post,
                                  loading,
                                  onUpdatePost
                                }: Props) => {
@@ -46,8 +41,8 @@ export const EditPostMobile = ({
   };
 
   const onSave = () => {
-    if (accessToken && postId) {
-      onUpdatePost(postId, textareaValue)
+    if (accessToken && post.id) {
+      onUpdatePost(post.id, textareaValue)
     }
   };
 
@@ -69,7 +64,6 @@ export const EditPostMobile = ({
   };
 
   return (
-    <>
       <PostModal width={'972px'} onClose={closeModalAction}>
         <div className={s.post}>
           <div className={s.editTitle}>
@@ -92,7 +86,7 @@ export const EditPostMobile = ({
             </button>
           </div>
           <Carousel>
-            {images.map((i, index) => {
+            {post.images.map((i, index) => {
               if (i.width !== 640) {
                 return (
                   <SwiperSlide key={index} className={'w-full'}>
@@ -107,13 +101,13 @@ export const EditPostMobile = ({
             <div className={s.post__header}>
               <div className={s.post__header__user}>
                 <Image
-                  src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                  src={post.avatarOwner ?? '/img/create-post/no-image.png'}
                   alt={'ava'}
                   width={36}
                   height={36}
                   className={s.header__img}
                 />
-                <span>{user?.userName}</span>
+                <span>{post.userName}</span>
               </div>
             </div>
             <p className={s.post__title}>
@@ -143,6 +137,5 @@ export const EditPostMobile = ({
           {loading && <Loader />}
         </div>
       </PostModal>
-    </>
   );
 };

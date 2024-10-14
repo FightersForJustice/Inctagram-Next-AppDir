@@ -28,7 +28,6 @@ import { Loader } from '@/components/Loader';
 type Props = {
   type?: 'publicPage' | 'publicProfile';
   post: PostType;
-  user: UserProfile;
   myProfile: boolean;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
@@ -37,7 +36,6 @@ type Props = {
 
 export const PostContentMobile = ({
                                     post,
-                                    user,
                                     closeModalAction,
                                     myProfile,
                                     setEditPost,
@@ -97,7 +95,7 @@ export const PostContentMobile = ({
         onClose={closeModalAction}
       >
       <div className={s.post}>
-        <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
+        <PostHeader post={post} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
                     setShowAreYouSureModal={setShowAreYouSureModal}/>
         <Carousel>
           {post.images.map((i) => {
@@ -120,7 +118,7 @@ export const PostContentMobile = ({
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image
-              src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+              src={post.avatarOwner ?? '/img/create-post/no-image.png'}
               alt={'ava'}
               width={36}
               height={36}
@@ -128,7 +126,7 @@ export const PostContentMobile = ({
             />
             <div>
               <p className={s.post__desc__text}>
-                <span className={s.post__desc__name}>{user?.userName} </span>
+                <span className={s.post__desc__name}>{post.userName} </span>
                 {post.description}
               </p>
               <p className={s.post__desc__time}>{time}</p>

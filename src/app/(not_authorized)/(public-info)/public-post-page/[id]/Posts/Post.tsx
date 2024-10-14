@@ -16,19 +16,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AUTH_ROUTES } from 'src/appRoutes/routes';
-import { PostType, UserProfile } from '../types';
+import { PostType} from '../types';
 
 import s from './Posts.module.scss';
 
 type Props = {
   post: PostType;
-  userData: UserProfile;
   myProfile: boolean;
   type?: 'publicPage' | 'publicProfile';
   isOpenByLink?: boolean;
 };
 
-export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readonly<Props>) {
+export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>) {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -89,11 +88,11 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
         scroll: false,
       });
     } else if (type === 'publicProfile'){
-      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}?post=${id}`, {
+      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}?post=${id}`, {
         scroll: false,
       });
     } else {
-      router.push(`/profile/${userData.id}?post=${id}`, { scroll: false });
+      router.push(`/profile/${post.ownerId}?post=${id}`, { scroll: false });
     }
   };
 
@@ -101,11 +100,11 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
     if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
     } else if (type === 'publicProfile'){
-      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${userData.id}`, {
+      router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}`, {
         scroll: false,
       });
     } else {
-      router.push(`/profile/${userData.id}`, { scroll: false });
+      router.push(`/profile/${post.ownerId}`, { scroll: false });
     }
   };
 
@@ -122,20 +121,16 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
   const isMyPost =
     width <= 521 ? (
       <EditPostMobile
-        images={post.images}
-        postId={post.id}
+        post={post}
         setEditPost={setEditPost}
-        user={userData}
         description={post.description}
         loading={loading}
         onUpdatePost={onUpdatePost}
       />
     ) : (
       <EditPost
-        images={post.images}
-        postId={post.id}
+        post={post}
         setEditPost={setEditPost}
-        user={userData}
         description={post.description}
         loading={loading}
         onUpdatePost={onUpdatePost}
@@ -148,7 +143,6 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}
-        user={userData}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
       />
@@ -158,7 +152,6 @@ export function  Post ({ post, userData, myProfile, type, isOpenByLink }: Readon
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}
-        user={userData}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
       />
