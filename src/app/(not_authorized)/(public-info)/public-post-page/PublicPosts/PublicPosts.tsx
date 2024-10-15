@@ -61,8 +61,6 @@ export const PublicPosts = ({ initialPosts, postIdFromUrl }: PostsImagesProps) =
     };
   }, [loading, endCursorPostId, hasMore]);
 
-  console.log(posts);
-
   return (
     <div className={s.container}>
       {posts.map((post) => (
