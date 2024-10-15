@@ -6,7 +6,7 @@ import k from '../../PostFix/PostContent/PostContent.module.scss';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { PostType, UserProfile } from '../../types';
+import { PostType } from '../../types';
 import Link from 'next/link';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
 import { Post } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/Post';
@@ -16,18 +16,15 @@ import { ImagesAmount } from '@/components/ImagesAmount';
 
 type Props = {
   post: PostType;
-  userProfile: UserProfile;
   isOpenByLink: boolean;
 };
 
-export const PublicPost = ({ post, userProfile, isOpenByLink }: Props) => {
+export const PublicPost = ({ post, isOpenByLink }: Props) => {
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`);
   const time = getTimeAgoText(post.createdAt, language, translate);
-
-  console.log(post.images);
 
   return (
     <>
@@ -35,7 +32,6 @@ export const PublicPost = ({ post, userProfile, isOpenByLink }: Props) => {
         <div className={s.imageContainer}>
           <Post
             post={post}
-            userData={userProfile}
             myProfile={false}
             type={'publicPage'}
             isOpenByLink={isOpenByLink}

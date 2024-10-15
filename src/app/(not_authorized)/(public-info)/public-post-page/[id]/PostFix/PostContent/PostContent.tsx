@@ -25,8 +25,8 @@ import s from './PostContent.module.scss';
 import { Loader } from '@/components/Loader';
 
 type Props = {
+  type?: 'publicPage' | 'publicProfile';
   post: PostType;
-  user: UserProfile;
   myProfile: boolean;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
@@ -34,8 +34,8 @@ type Props = {
 };
 
 export const PostContent = ({
+  type,
   post,
-  user,
   closeModalAction,
   myProfile,
   setEditPost,
@@ -68,6 +68,7 @@ export const PostContent = ({
   };
 
   useEffect(() => {
+    if (type === 'publicPage') return
     fetchLikes()
   }, [])
 
@@ -82,8 +83,7 @@ export const PostContent = ({
 
   const avatarLikes = likesData?.items.slice(0, 3)
 
-
-  if (!likesData) {
+  if (!likesData && !type) {
     return (
       <Loader/>
     )
@@ -112,13 +112,13 @@ export const PostContent = ({
           })}
         </Carousel>
         <div className={s.postInfo}>
-          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup}
+          <PostHeader post={post} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup}
                       setEditPost={setEditPost}
                       setShowAreYouSureModal={setShowAreYouSureModal} />
           <div className={s.post__content}>
             <div className={s.post__desc}>
               <Image
-                src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                src={post.avatarOwner ?? '/img/create-post/no-image.png'}
                 alt={'ava'}
                 width={36}
                 height={36}
@@ -126,7 +126,7 @@ export const PostContent = ({
               />
               <div>
                 <p className={s.post__desc__text}>
-                  <span className={s.post__desc__name}>{user?.userName} </span>
+                  <span className={s.post__desc__name}>{post.userName} </span>
                   {post.description}
                 </p>
                 <p className={s.post__desc__time}>{time}</p>
@@ -136,7 +136,7 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
-          <PostLikes  toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />
+          {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
           <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
           {myProfile && <PostForm />}
           {showAreYouSureModal && (

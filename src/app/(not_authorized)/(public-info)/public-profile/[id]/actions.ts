@@ -35,9 +35,9 @@ export const getPublicProfile = async (profileId: number) => {
   }
 };
 
-export const getPublicPostsPage = async () => {
+export const getPublicPostsPage = async (endCursorPostId: number) => {
   const apiUrl =
-    baseUrl + `public-posts/all/,?sortDirection=desc`;
+    baseUrl + `public-posts/all/${endCursorPostId}?pageSize=20&sortDirection=desc`;
   try {
     const response = await fetch(apiUrl, { next: { revalidate: 0 } });
     if (!response.ok) {

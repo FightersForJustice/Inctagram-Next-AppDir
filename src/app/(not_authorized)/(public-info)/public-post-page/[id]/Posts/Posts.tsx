@@ -1,7 +1,5 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import s from './Posts.module.scss';
-import { UserProfile } from '../types';
 import { Post } from './Post';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
@@ -15,12 +13,12 @@ import { selectProfilePostItems } from '@/redux/reducers/MyProfile/ProfilePostSe
 import { findMinId } from '@/utils/findMinId';
 import { useInView } from 'react-intersection-observer';
 import { Loader } from '@/components/Loader';
-import Image from 'next/image';
 import { ImagesAmount } from '@/components/ImagesAmount';
+
+import s from './Posts.module.scss';
 
 type Props = {
   postsData: ApiResponsePosts;
-  userData: UserProfile;
   myProfile: boolean;
   id: number;
   isPublic?: boolean;
@@ -29,7 +27,6 @@ type Props = {
 export const Posts = ({
   id,
   postsData,
-  userData,
   myProfile,
   isPublic,
 }: Props) => {
@@ -68,7 +65,6 @@ export const Posts = ({
         <div key={i.id} className={s.imageContainer}>
           <Post
             post={i}
-            userData={userData}
             myProfile={myProfile}
             isOpenByLink={isOpenByLink}
             type={isPublic ? 'publicProfile' : undefined}
