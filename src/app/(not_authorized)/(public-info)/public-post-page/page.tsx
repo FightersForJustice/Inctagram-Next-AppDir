@@ -19,14 +19,14 @@ const PublicPostPage = async ({ searchParams }: Props) => {
   const publicCountRegisterUsers: CountRegisterUser =
     await getCountRegisterUsers();
 
-  const initialPosts = publicPostPageData.items;
+  const initialPosts = publicPostPageData?.items;
 
   const postIdFromUrl = searchParams?.post;
 
   return (
     <div className={s.wrapper}>
       <CounterRegisterUser count={publicCountRegisterUsers.totalCount} />
-      <PublicPosts initialPosts={initialPosts} postIdFromUrl={postIdFromUrl} />
+      {initialPosts && <PublicPosts initialPosts={initialPosts} postIdFromUrl={postIdFromUrl} />}
     </div>
   );
 };
