@@ -17,7 +17,6 @@ import { formatServerDateWithoutTime, getTimeAgoText } from '@/utils';
 import {
   PostLikesDataType,
   PostType,
-  UserProfile,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { useDispatch } from 'react-redux';
@@ -68,7 +67,7 @@ export const PostContentMobile = ({
   };
 
   useEffect(() => {
-    if (type === 'publicPage') return
+    if (type) return
     fetchLikes()
   }, [])
 
