@@ -41,7 +41,6 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
         <Posts
           id={id}
           postsData={postsData}
-          userData={userdata}
           myProfile={myProfile}
           isPublic={isPublic}
         />
