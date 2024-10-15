@@ -106,7 +106,7 @@ export const EditPost = ({
                 alt={'ava'}
                 width={36}
                 height={36}
-                className={s.header__img}
+                className={s.post__header__img}
               />
               <span>{post.userName}</span>
             </div>
