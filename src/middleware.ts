@@ -111,7 +111,7 @@ export async function middleware(request: NextRequest) {
         }
       case 400:
         console.log('7Middleware (Not Authorized)', isAuthPath);
-          return NextResponse.redirect(new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url));
+          NextResponse.redirect(new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url));
       default:
         console.log('1Middleware (Not Authorized)', isAuthPath);
         return !isAuthPath
