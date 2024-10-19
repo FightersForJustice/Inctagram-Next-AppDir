@@ -6,6 +6,7 @@ export type createPostOptionsType = {
 export type createCommentOptionsType = {
   content: string;
   id?: number;
+  commentId?: number;
 };
 
 export type createCommentLikeOptionsType = {

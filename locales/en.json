@@ -367,6 +367,7 @@
     }
   },
   "Time": {
+    "publicationsCreated": "Comment submited",
     "now": "just now",
     "minutes": {
       "one": "minute ago",

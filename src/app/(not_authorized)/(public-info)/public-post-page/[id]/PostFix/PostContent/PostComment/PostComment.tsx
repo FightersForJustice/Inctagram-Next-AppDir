@@ -2,19 +2,23 @@ import Image from 'next/image';
 
 import s from './PostComment.module.scss';
 import { PostCommentType } from '../PostCommentHOC/PostCommentHOC';
-import { Dots } from '../../Dots';
 
 type PostCommentPropsType = {
   myProfile: boolean;
   onLikeHandler: () => void;
+  onAnswerHandler: () => void;
   data: PostCommentType;
+  answers: PostCommentType[] | undefined;
 };
 
 export const PostComment = ({
   myProfile,
   data,
+  answers,
   onLikeHandler,
+  onAnswerHandler,
 }: PostCommentPropsType) => {
+  console.log(answers)
   return (
     <div className={s.post__comment}>
       <div className={s.post__comment__wrapper}>
@@ -39,7 +43,7 @@ export const PostComment = ({
             {!!data.likeCount && (
               <p className="font-bold">Like: {data.likeCount}</p>
             )}
-            {myProfile && <p className={s.post__comment__answer}>Answer</p>}
+            {myProfile && <p className={s.post__comment__answer} onClick={onAnswerHandler}>Answer</p>}
           </div>
         </div>
       </div>

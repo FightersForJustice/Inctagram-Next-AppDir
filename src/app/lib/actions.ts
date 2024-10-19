@@ -513,6 +513,26 @@ export async function createLikeComment(body: createCommentLikeOptionsType) {
     return { success: false, data: 'createComment' };
   }
 }
+export async function createAnswerComment(body: createCommentOptionsType) {
+  try {
+    const res = await fetch(
+      routes.CREATE_COMMENT + body.id + '/comments/' + body.commentId + '/answers',
+      createCommentOptions(accessToken(), body)
+    );
+    const responseBody = await res.json();
+    console.log(res)
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createAnswerComment error', error);
+
+    return { success: false, data: 'createAnswerComment' };
+  }
+}
 
 export const getIpAddress = async () => {
   const headersList = headers();

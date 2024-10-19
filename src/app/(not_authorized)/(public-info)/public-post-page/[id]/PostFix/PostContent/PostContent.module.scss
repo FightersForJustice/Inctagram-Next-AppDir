@@ -194,6 +194,11 @@
         color: var(--primary-100);
       }
     }
+    &__disabled {
+      color: gray;
+      cursor: not-allowed;
+    }
+    
   }
 }
 

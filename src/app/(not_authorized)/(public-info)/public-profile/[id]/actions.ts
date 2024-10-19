@@ -54,6 +54,23 @@ export const getPostComments = async (postId: number) => {
   }
 };
 
+export const getPostAnswerComments = async (postId: number, commentId: number) => {
+
+  const apiUrl = baseUrl + `posts/${postId}/comments/${commentId}/answers`;
+  try {
+    const response = await fetch(apiUrl)
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
 export const getPublicPostsPage = async () => {
   const apiUrl =
     baseUrl + `public-posts/all/,?sortDirection=desc`;
