@@ -162,9 +162,9 @@ export const getPosts = async (id: number, minId: number | null) => {
   }
 };
 
-export const getFollowersPosts = async () => {
+export const getFollowersPosts = async (endCursorPostId: number) => {
   const apiUrl =
-    baseUrl + `home/publications-followers`;
+    baseUrl + `home/publications-followers?pageSize=12&endCursorPostId=${endCursorPostId}`;
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
