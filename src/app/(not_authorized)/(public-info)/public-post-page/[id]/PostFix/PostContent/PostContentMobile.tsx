@@ -80,7 +80,7 @@ export const PostContentMobile = ({
     }
   }
 
-  const avatarLikes = likesData?.items.slice(0, 3)
+  const avatarLikes = likesData?.items.slice(-3).reverse()
 
   if (!likesData && !type) {
     return (

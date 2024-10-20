@@ -59,7 +59,7 @@ export const HomePost = ({ post, id }: PropsType) => {
       // fetchLikes();
   }
 
-  const avatarLikes: FollowerType[]  = [] //post?.items.slice(0, 3)
+  const avatarLikes: FollowerType[]  = [] //  const avatarLikes = likesData?.items.slice(-3).reverse()
 
 
   return (
