@@ -41,15 +41,8 @@ export const HomePost = ({ post, id }: PropsType) => {
     isMyPost = +id === post.ownerId;
   }
 
-
   const [localIsLiked, setLocalIsLiked] = useState<boolean>(post.isLiked);
   const [localLikesCount, setLocalLikesCount] = useState<number>(post.likesCount);
-
-
-  if (post.id ===2257){
-    console.log(localLikesCount, localIsLiked)
-  }
-
 
   const toggleLike = async () => {
     console.log('toggleLike')
@@ -59,7 +52,7 @@ export const HomePost = ({ post, id }: PropsType) => {
       // fetchLikes();
   }
 
-  const avatarLikes: FollowerType[]  = [] //post?.items.slice(0, 3)
+  const avatarLikes: FollowerType[]  = [] //  const avatarLikes = likesData?.items.slice(-3).reverse()
 
 
   return (
