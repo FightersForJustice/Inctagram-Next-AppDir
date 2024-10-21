@@ -101,7 +101,7 @@ export const UsersListRow = ({
         <span>
           {el.userBan ? (
             <Image
-              src={'/img/Block.svg'}
+              src={'/img/block.svg'}
               alt={''}
               width={25}
               height={25}
