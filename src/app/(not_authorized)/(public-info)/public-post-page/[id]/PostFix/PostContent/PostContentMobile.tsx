@@ -25,7 +25,7 @@ import { Loader } from '@/components/Loader';
 
 
 type Props = {
-  type?: 'publicPage' | 'publicProfile';
+  type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
   myProfile: boolean;
   closeModalAction: () => void;
@@ -113,7 +113,7 @@ export const PostContentMobile = ({
           })}
         </Carousel>
         {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
-        <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
+        {type !== 'admin' && <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>}
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image

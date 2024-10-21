@@ -89,13 +89,6 @@ export const PostsListClient = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (data?.getPosts?.items) {
-      setPosts(data.getPosts.items);
-      setAllPostsLoaded(data.getPosts.items.length < 10);
-    }
-  }, [data]);
-
   const loadMorePosts = () => {
     if (loadingMore || allPostsLoaded) return;
 

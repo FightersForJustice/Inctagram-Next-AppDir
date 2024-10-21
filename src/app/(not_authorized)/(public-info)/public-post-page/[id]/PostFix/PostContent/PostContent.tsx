@@ -24,7 +24,7 @@ import s from './PostContent.module.scss';
 import { Loader } from '@/components/Loader';
 
 type Props = {
-  type?: 'publicPage' | 'publicProfile';
+  type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
   myProfile: boolean;
   closeModalAction: () => void;
@@ -136,7 +136,7 @@ export const PostContent = ({
           <PostComment myProfile={myProfile} />
           <PostComment myProfile={myProfile} />
           {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
-          <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>
+          {type !== 'admin' && <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>}
           {myProfile && <PostForm />}
           {showAreYouSureModal && (
             <AreYouSureModal
