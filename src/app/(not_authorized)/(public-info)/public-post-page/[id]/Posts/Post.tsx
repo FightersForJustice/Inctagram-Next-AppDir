@@ -23,7 +23,7 @@ import s from './Posts.module.scss';
 type Props = {
   post: PostType;
   myProfile: boolean;
-  type?: 'publicPage' | 'publicProfile';
+  type?: 'publicPage' | 'publicProfile' | 'admin';
   isOpenByLink?: boolean;
 };
 
@@ -87,6 +87,10 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
       router.push(`${AUTH_ROUTES.PUBLIC_POST_PAGE}?post=${id}`, {
         scroll: false,
       });
+    } else if (type === 'admin'){
+      router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}?post=${id}`, {
+        scroll: false,
+      });
     } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}?post=${id}`, {
         scroll: false,
@@ -99,7 +103,9 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
   const closeModal = () => {
     if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
-    } else if (type === 'publicProfile'){
+    } else if (type === 'admin'){
+    router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}`, {scroll: false});
+  } else if (type === 'publicProfile'){
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}`, {
         scroll: false,
       });
@@ -140,6 +146,7 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
   const isPublicPost =
     width <= 521 ? (
       <PostContentMobile
+        type={type}
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}
