@@ -28,6 +28,10 @@
   max-width: 237px;
 }
 
+.imageContainer {
+  position: relative;
+}
+
 .userContainer {
   display: flex;
   flex-direction: row;
