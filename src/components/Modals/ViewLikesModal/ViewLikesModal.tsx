@@ -4,13 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from '../Modal/Modal';
 
 import s from './ViewLikesModal.module.scss';
+import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 type Props = {
+  users: FollowerType[];
   likesAmount: number;
   setIsViewUsersList: (value: boolean) => void;
 };
 
-export const ViewLikesModal = ({ setIsViewUsersList, likesAmount }: Props) => {
+export const ViewLikesModal = ({
+  setIsViewUsersList,
+  likesAmount,
+  users,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
 
@@ -36,18 +42,22 @@ export const ViewLikesModal = ({ setIsViewUsersList, likesAmount }: Props) => {
             height={20}
           />
         </div>
-        {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
+        {users.map((user) => {
+          const avatar = user.avatars[0]
+            ? user.avatars[0].url
+            : '/img/create-post/icons/icon3.svg';
+
           return (
-            <div key={index} className={s.modal__content}>
+            <div key={user.userId} className={s.modal__content}>
               <div className={s.modal__content__left}>
                 <Image
-                  src={'/img/modal/avatar.png'}
+                  src={avatar}
                   alt={'avatar'}
                   width={36}
                   height={36}
                   className={s.modal__content__avatar}
                 />
-                <p>URLProfiele</p>
+                <p>{user.userName}</p>
               </div>
               <div className={s.modal__content__right}>
                 <button className={s.modal__content__subscribe}>
