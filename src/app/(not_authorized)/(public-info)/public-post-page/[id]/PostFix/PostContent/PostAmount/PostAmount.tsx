@@ -49,6 +49,7 @@ export const PostAmount = ({ likes, avatarLikes, date }: Props) => {
       </div>
       {isViewUsersList && (
         <ViewLikesModal
+          users={avatarLikes}
           likesAmount={likes}
           setIsViewUsersList={setIsViewUsersList}
         />
