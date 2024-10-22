@@ -84,6 +84,11 @@
     "btnSendMessage": "Send Message",
     "aboutMe": "Fill in your info, while it's empty",
     "noPosts": "You don't have any posts yet \uD83D\uDE22",
+    "LikesModal": {
+      "title": "Likes",
+      "search": "Search",
+      "subBtn": "Follow"
+    },
     "SubscribersModal": {
       "title": "Followers",
       "search": "Search",

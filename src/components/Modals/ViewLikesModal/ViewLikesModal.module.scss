@@ -1,0 +1,105 @@
+@use '@/app/mixins.scss' as s;
+
+.modal {
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
+
+  &__input {
+    background: transparent;
+    border: 1px solid var(--dark-100, #4c4c4c);
+    padding: 6px 41px;
+    width: 100%;
+    outline: none;
+
+    &::placeholder {
+      color: var(--light-900, #8d9094);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    max-width: 644px;
+    width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &__left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+
+      max-width: 100%;
+    }
+
+    &__left p {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 70%;
+      margin-right: 10px;
+    }
+
+    &__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &__avatar {
+      border-radius: 50%;
+    }
+
+    &__subscribe {
+      background: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &__unsubscribe {
+      background: transparent;
+      border: 1px solid var(--primary-500);
+      color: var(--primary-500);
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+.modalClassName {
+  max-width: 650px;
+  margin: 0px 15px;
+  width: 100%;
+}
+
+@include s.devices(mobile) {
+  .modal {
+    &__content {
+      &__right {
+        gap: 0;
+      }
+    }
+  }
+
+  .modalClassName {
+    margin: 0;
+  }
+}

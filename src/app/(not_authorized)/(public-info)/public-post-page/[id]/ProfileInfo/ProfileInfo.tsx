@@ -73,75 +73,70 @@ export const ProfileInfo = ({
   };
 
   const subBtnName = isUserFollowing
-    ? 'SubscribersModal.unsubBtn'
-    : 'SubscribersModal.subBtn';
+    ? 'ViewLikesModal.unsubBtn'
+    : 'ViewLikesModal.subBtn';
 
   return (
-      <div className={s.profile}>
-        <div className={s.left}>
-          <Image
-            src={
-              userData?.avatars[0]
-                ? userData.avatars[0].url
-                : '/img/create-post/no-image.png'
-            }
-            alt="avatar"
-            width={204}
-            height={204}
-            className={s.avatar}
-          />
-        </div>
-        <div className={s.right}>
-          <div className={s.info}>
-            <div className={myProfile ? s.topMyProfile : s.top}>
-              <div className={s.blockUser}>
-                <div className={s.name}>{userData?.userName}</div>
-                <div className={s.statistics}>
-                  <div>
-                    <p>{!isPublic && followingData?.followingCount}</p>
-                    <p>{translate('subscriptions')}</p>
-                  </div>
-                  <div>
-                    <p>{!isPublic && followersCount}</p>
-                    <p>{translate('subscribers')}</p>
-                  </div>
-                  <div>
-                    <p>{postsData.totalCount}</p>
-                    <p>{translate('publications')}</p>
-                  </div>
+    <div className={s.profile}>
+      <div className={s.left}>
+        <Image
+          src={
+            userData?.avatars[0]
+              ? userData.avatars[0].url
+              : '/img/create-post/no-image.png'
+          }
+          alt="avatar"
+          width={204}
+          height={204}
+          className={s.avatar}
+        />
+      </div>
+      <div className={s.right}>
+        <div className={s.info}>
+          <div className={myProfile ? s.topMyProfile : s.top}>
+            <div className={s.blockUser}>
+              <div className={s.name}>{userData?.userName}</div>
+              <div className={s.statistics}>
+                <div>
+                  <p>{!isPublic && followingData?.followingCount}</p>
+                  <p>{translate('subscriptions')}</p>
+                </div>
+                <div>
+                  <p>{!isPublic && followersCount}</p>
+                  <p>{translate('subscribers')}</p>
+                </div>
+                <div>
+                  <p>{postsData.totalCount}</p>
+                  <p>{translate('publications')}</p>
                 </div>
               </div>
-              <div className={s.btn}>
-                {myProfile ? (
+            </div>
+            <div className={s.btn}>
+              {myProfile ? (
+                <Link href={'/profile/settings-profile'} className={s.settings}>
+                  {translate('btnName')}
+                </Link>
+              ) : !isPublic ? (
+                <>
                   <Link
-                    href={'/profile/settings-profile'}
-                    className={s.settings}
+                    href="#"
+                    onClick={followUnfollowHandler}
+                    className={isUserFollowing ? s.btnSecondary : s.btnPrimary}
                   >
-                    {translate('btnName')}
+                    {translate(subBtnName)}
                   </Link>
-                ) : !isPublic ? (
-                  <>
-                    <Link
-                      href="#"
-                      onClick={followUnfollowHandler}
-                      className={
-                        isUserFollowing ? s.btnSecondary : s.btnPrimary
-                      }
-                    >
-                      {translate(subBtnName)}
-                    </Link>
-                    <Link href="#" className={s.message}>
-                      {translate('btnSendMessage')}
-                    </Link>
-                  </>
-                ) : null}
-              </div>
+                  <Link href="#" className={s.message}>
+                    {translate('btnSendMessage')}
+                  </Link>
+                </>
+              ) : null}
             </div>
-            <div className={myProfile ? s.descriptions : s.descriptionsPublic}>
-              {userData?.aboutMe ?? translate('aboutMe')}
-            </div>
+          </div>
+          <div className={myProfile ? s.descriptions : s.descriptionsPublic}>
+            {userData?.aboutMe ?? translate('aboutMe')}
           </div>
         </div>
       </div>
+    </div>
   );
 };
