@@ -73,8 +73,8 @@ export const ProfileInfo = ({
   };
 
   const subBtnName = isUserFollowing
-    ? 'ViewLikesModal.unsubBtn'
-    : 'ViewLikesModal.subBtn';
+    ? 'SubscribersModal.unsubBtn'
+    : 'SubscribersModal.subBtn';
 
   return (
     <div className={s.profile}>
