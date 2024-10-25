@@ -87,7 +87,8 @@
     "Likes": {
       "title": "Лайки?",
       "search": "Поиск",
-      "subBtn": "Подписаться"
+      "subBtn": "Подписаться",
+      "unsubBtn": "Отписаться"
     },
     "SubscribersModal": {
       "title": "Подписчиков",

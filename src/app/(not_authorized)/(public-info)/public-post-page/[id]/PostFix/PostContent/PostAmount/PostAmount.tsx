@@ -10,9 +10,17 @@ type Props = {
   likes: number;
   avatarLikes?: FollowerType[];
   date?: string;
+  token: string | null;
+  myProfile: boolean;
 };
 
-export const PostAmount = ({ likes, avatarLikes, date }: Props) => {
+export const PostAmount = ({
+  likes,
+  avatarLikes,
+  date,
+  token,
+  myProfile,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Likes.${key}`);
   const [isViewUsersList, setIsViewUsersList] = useState(false);
@@ -52,6 +60,8 @@ export const PostAmount = ({ likes, avatarLikes, date }: Props) => {
           users={avatarLikes}
           likesAmount={likes}
           setIsViewUsersList={setIsViewUsersList}
+          token={token}
+          myProfile={myProfile}
         />
       )}
       <p className={s.post__amount__date}>{date}</p>

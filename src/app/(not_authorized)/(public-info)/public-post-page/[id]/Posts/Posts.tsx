@@ -22,14 +22,10 @@ type Props = {
   myProfile: boolean;
   id: number;
   isPublic?: boolean;
+  token: string | null;
 };
 
-export const Posts = ({
-  id,
-  postsData,
-  myProfile,
-  isPublic,
-}: Props) => {
+export const Posts = ({ id, postsData, myProfile, isPublic, token }: Props) => {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const items = useSelector(selectProfilePostItems);
@@ -68,6 +64,7 @@ export const Posts = ({
             myProfile={myProfile}
             isOpenByLink={isOpenByLink}
             type={isPublic ? 'publicProfile' : undefined}
+            token={token}
           />
           {i.images.length > 1 && (
             <ImagesAmount imagesLength={i.images.length} />

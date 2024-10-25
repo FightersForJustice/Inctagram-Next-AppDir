@@ -43,6 +43,7 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
           postsData={postsData}
           myProfile={myProfile}
           isPublic={isPublic}
+          token={token}
         />
       </div>
     </>

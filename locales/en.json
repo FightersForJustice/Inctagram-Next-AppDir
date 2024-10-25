@@ -87,7 +87,8 @@
     "LikesModal": {
       "title": "Likes",
       "search": "Search",
-      "subBtn": "Follow"
+      "subBtn": "Follow",
+      "unsubBtn": "Unfollow"
     },
     "SubscribersModal": {
       "title": "Followers",
