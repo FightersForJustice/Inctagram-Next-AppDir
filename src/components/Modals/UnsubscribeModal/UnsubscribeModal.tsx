@@ -6,19 +6,30 @@ import { Modal } from '../Modal/Modal';
 import s from './UnsubscribeModal.module.scss';
 
 type Props = {
+  userName: string;
+  unfollow: () => void;
   setShowUnsubscribeModal: (value: boolean) => void;
 };
 
-export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
+export const UnsubscribeModal = ({
+  setShowUnsubscribeModal,
+  userName,
+  unfollow,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
+
+  const unfollowHandler = () => {
+    unfollow();
+    setShowUnsubscribeModal(false);
+  };
+
   return (
     <Modal
-      title={t('UnsubscribeModal.title')}
+      title={translate('UnsubscribeModal.title')}
       isOkBtn={false}
       onClose={() => setShowUnsubscribeModal(false)}
     >
-      {/* <div className={s.deleteModal}> */}
       <div className={s.deleteModal__info}>
         <Image
           src={'/img/modal/avatar.png'}
@@ -28,18 +39,18 @@ export const UnsubscribeModal = ({ setShowUnsubscribeModal }: Props) => {
           className={s.deleteModal__avatar}
         />
         <p className={s.deleteModal__text}>
-          {t('UnsubscribeModal.question')} <span>“URLProfiele”</span>?
+          {translate('UnsubscribeModal.question')} <span>{userName}</span>?
         </p>
       </div>
       <div className={s.deleteModal__wrapper}>
-        <button className={s.deleteModal__btn__yes}>
-          {t('UnsubscribeModal.btnYes')}
+        <button className={s.deleteModal__btn__yes} onClick={unfollowHandler}>
+          {translate('UnsubscribeModal.btnYes')}
         </button>
         <button
           className={s.deleteModal__btn__no}
           onClick={() => setShowUnsubscribeModal(false)}
         >
-          {t('UnsubscribeModal.btnNo')}
+          {translate('UnsubscribeModal.btnNo')}
         </button>
       </div>
       {/* </div> */}

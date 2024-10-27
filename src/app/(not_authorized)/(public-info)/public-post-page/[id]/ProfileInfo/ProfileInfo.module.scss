@@ -33,6 +33,9 @@
       div p:first-child {
         font-weight: 700;
       }
+      .subscriptions, .subscribers {
+        cursor: pointer;
+      }
     }
   }
   .left {

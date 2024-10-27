@@ -11,6 +11,8 @@ import {
   followToUser,
   unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
+import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 
 type Props = {
   userData: UserProfile;
@@ -38,6 +40,8 @@ export const ProfileInfo = ({
   const [followersCount, setFollowersCount] = useState(
     followingData?.followersCount || 0
   );
+  const [viewSubscriptions, setViewSubscriptions] = useState(false);
+  const [viewSubscribers, setViewSubscribers] = useState(false);
 
   useEffect(() => {
     const handler = (event: PopStateEvent) => {
@@ -72,6 +76,14 @@ export const ProfileInfo = ({
     }
   };
 
+  const viewSubscriptionsHandler = () => {
+    setViewSubscriptions(true);
+  };
+
+  const viewSubscribersHandler = () => {
+    setViewSubscribers(true);
+  };
+
   const subBtnName = isUserFollowing
     ? 'SubscribersModal.unsubBtn'
     : 'SubscribersModal.subBtn';
@@ -97,11 +109,14 @@ export const ProfileInfo = ({
             <div className={s.blockUser}>
               <div className={s.name}>{userData?.userName}</div>
               <div className={s.statistics}>
-                <div>
+                <div
+                  onClick={viewSubscriptionsHandler}
+                  className={s.subscriptions}
+                >
                   <p>{!isPublic && followingData?.followingCount}</p>
                   <p>{translate('subscriptions')}</p>
                 </div>
-                <div>
+                <div onClick={viewSubscribersHandler} className={s.subscribers}>
                   <p>{!isPublic && followersCount}</p>
                   <p>{translate('subscribers')}</p>
                 </div>
@@ -137,6 +152,17 @@ export const ProfileInfo = ({
           </div>
         </div>
       </div>
+      {viewSubscriptions && (
+        <SubscriptionsModal
+          token={token}
+          userName={userData.userName}
+          followingCount={followingData?.followingCount}
+          setShowSubscriptionsModal={setViewSubscriptions}
+        />
+      )}
+      {viewSubscribers && (
+        <SubscribersModal setShowSubscribersModal={setViewSubscribers} />
+      )}
     </div>
   );
 };
