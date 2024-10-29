@@ -5,15 +5,27 @@ import { useTranslation } from 'react-i18next';
 import s from './DeleteModal.module.scss';
 
 type Props = {
+  removeFollower: () => void;
+  userName: string;
   setShowDeleteModal: (value: boolean) => void;
 };
 
-export const DeleteModal = ({ setShowDeleteModal }: Props) => {
+export const DeleteModal = ({
+  setShowDeleteModal,
+  userName,
+  removeFollower,
+}: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
+
+  const removeFollowerHandler = () => {
+    removeFollower();
+    setShowDeleteModal(false);
+  };
+
   return (
     <Modal
-      title={t('DeleteModal.title')}
+      title={translate('DeleteModal.title')}
       isOkBtn={false}
       onClose={() => setShowDeleteModal(false)}
       className={s.container}
@@ -27,18 +39,21 @@ export const DeleteModal = ({ setShowDeleteModal }: Props) => {
           className={s.deleteModal__avatar}
         />
         <p className={s.deleteModal__text}>
-          {t('DeleteModal.question')} <span>“URLProfiele”</span>?
+          {translate('DeleteModal.question')} <span>{userName}</span>?
         </p>
       </div>
       <div className={s.deleteModal__wrapper}>
-        <button className={s.deleteModal__btn__yes}>
-          {t('DeleteModal.btnYes')}
+        <button
+          onClick={removeFollowerHandler}
+          className={s.deleteModal__btn__yes}
+        >
+          {translate('DeleteModal.btnYes')}
         </button>
         <button
           className={s.deleteModal__btn__no}
           onClick={() => setShowDeleteModal(false)}
         >
-          {t('DeleteModal.btnNo')}
+          {translate('DeleteModal.btnNo')}
         </button>
       </div>
     </Modal>

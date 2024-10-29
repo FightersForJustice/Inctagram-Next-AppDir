@@ -7,10 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
-import {
-  followToUser,
-  unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/data';
+import { followToUser } from '@/app/(authorized)/search/SearchContent/data';
 import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
 import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 
@@ -61,7 +58,7 @@ export const ProfileInfo = ({
     if (!isPublic) {
       let resIsOk: boolean | null;
       if (isUserFollowing) {
-        resIsOk = await unfollowByUser(userData.id, token);
+        resIsOk = await followToUser(userData.id, token);
         if (resIsOk) {
           setIsUserFollowing(false);
           setFollowersCount((prev) => prev - 1);
@@ -161,7 +158,12 @@ export const ProfileInfo = ({
         />
       )}
       {viewSubscribers && (
-        <SubscribersModal setShowSubscribersModal={setViewSubscribers} />
+        <SubscribersModal
+          userName={userData.userName}
+          token={token}
+          followersCount={followersCount}
+          setShowSubscribersModal={setViewSubscribers}
+        />
       )}
     </div>
   );

@@ -7,11 +7,13 @@ import { UnsubscribeModal } from '../UnsubscribeModal/UnsubscribeModal';
 
 import s from './SubscriptionsModal.module.scss';
 import {
+  followToUser,
   getUserFollowing,
-  unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
 import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { useDebounce } from '@/utils/useDebaunce';
+import { useRouter } from 'next/navigation';
+import { UserForFollowingList } from '@/components/UserForList';
 
 type Props = {
   token: string | null;
@@ -26,14 +28,20 @@ export const SubscriptionsModal: React.FC<Props> = ({
   userName,
   followingCount,
 }) => {
+  const router = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const [showUnsubscribeModal, setShowUnsubscribeModal] = useState(false);
   const [users, setUsers] = useState<FollowerType[]>([]);
   const [search, setSearch] = useState('');
-  const [currentUser, setCurrentUser] = useState<{ name: string; id: number }>({
+  const [currentUser, setCurrentUser] = useState<{
+    name: string;
+    id: number;
+    isFollow: boolean;
+  }>({
     name: '',
     id: 0,
+    isFollow: false,
   });
 
   const debouncedSearch = useDebounce(search, 1000);
@@ -56,15 +64,31 @@ export const SubscriptionsModal: React.FC<Props> = ({
     setSearch(e.currentTarget.value);
   };
 
-  const openUnfollowModal = (name: string, id: number) => {
-    setCurrentUser({ name, id });
+  const openUnfollowModal = (name: string, id: number, isFollow: boolean) => {
+    setCurrentUser({ name, id, isFollow });
     setShowUnsubscribeModal(true);
   };
 
   const unfollowHandler = async () => {
-    await unfollowByUser(currentUser.id, token);
+    await followToUser(currentUser.id, token);
     await getUsers();
   };
+
+  const moveToProfile = (userId: number) => {
+    router.push(`${userId}`);
+  };
+
+  const usersList = users.map((user) => {
+    return (
+      <UserForFollowingList
+        key={user.userId}
+        user={user}
+        moveToProfile={moveToProfile}
+        translate={translate}
+        openUnfollowModal={openUnfollowModal}
+      />
+    );
+  });
 
   return (
     <>
@@ -91,39 +115,13 @@ export const SubscriptionsModal: React.FC<Props> = ({
             height={20}
           />
         </div>
-        {users.map((user) => {
-          const avatar = user.avatars[0]
-            ? user.avatars[0].url
-            : '/img/create-post/icons/icon3.svg';
-
-          return (
-            <div key={user.userId} className={s.modal__content}>
-              <div className={s.modal__content__left}>
-                <Image
-                  src={avatar}
-                  alt={'avatar'}
-                  width={36}
-                  height={36}
-                  className={s.modal__content__avatar}
-                />
-                <p>{user.userName}</p>
-              </div>
-              <div className={s.modal__content__right}>
-                <button
-                  className={s.modal__content__unsubscribe}
-                  onClick={() => openUnfollowModal(user.userName, user.userId)}
-                >
-                  {translate('SubscriptionsModal.unsubscribe')}
-                </button>
-              </div>
-            </div>
-          );
-        })}
+        {usersList}
       </Modal>
       {showUnsubscribeModal && (
         <UnsubscribeModal
+          type={currentUser.isFollow ? 'unsubscribe' : 'subscribe'}
           userName={currentUser.name}
-          unfollow={unfollowHandler}
+          followUnfollow={unfollowHandler}
           setShowUnsubscribeModal={setShowUnsubscribeModal}
         />
       )}

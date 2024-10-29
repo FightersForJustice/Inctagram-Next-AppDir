@@ -61,7 +61,6 @@ export const PostAmount = ({
           likesAmount={likes}
           setIsViewUsersList={setIsViewUsersList}
           token={token}
-          myProfile={myProfile}
         />
       )}
       <p className={s.post__amount__date}>{date}</p>
