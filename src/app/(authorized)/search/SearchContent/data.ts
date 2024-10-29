@@ -58,7 +58,7 @@ export const followToUser = async (
   }
 };
 
-export const unfollowByUser = async (
+export const removeFollowerFromFollowers = async (
   userId: number,
   accessToken: string | null
 ) => {
@@ -80,7 +80,7 @@ export const getUserFollowers = async (
   accessToken: string | null,
   params: {
     userName: string;
-    search?: string;
+    search: string;
     pageSize?: number;
     pageNumber?: number;
     cursor?: number;
