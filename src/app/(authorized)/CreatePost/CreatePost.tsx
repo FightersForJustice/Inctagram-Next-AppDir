@@ -15,16 +15,22 @@ type Props = {
   showCreatePostModal: boolean;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
+  pathname: string;
 };
 
 export const CreatePost = ({
-  showCreatePostModal,
-  setShowCreatePostModal,
-  userData,
-}: Props) => {
+                             showCreatePostModal,
+                             setShowCreatePostModal,
+                             userData,
+                             pathname
+                           }: Props) => {
   const dispatch = useAppDispatch();
   const [step, setStep] = useState<number>(1);
   const [isDisabledBTN, setIsDisabledDraft] = useState<boolean>(false)
+
+  const userId = pathname.split('/')[2];
+
+
 
   const closeCreatePostModal = (show: boolean) => {
     setShowCreatePostModal(show);
@@ -88,6 +94,7 @@ export const CreatePost = ({
       )}
       {step === 4 && (
         <FourthModal
+          userId={userId}
           setStep={setStep}
           setShowCreatePostModal={closeCreatePostModal}
           userData={userData}
