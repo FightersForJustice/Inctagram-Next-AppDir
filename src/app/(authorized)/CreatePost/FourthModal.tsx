@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-toastify';
-
 import { GetResponse } from '@/api/profile.api';
 import { createPost, deleteUploadedPostImage } from '@/app/lib/actions';
 import { Carousel } from '@/components/Carousel/Carousel';
@@ -10,24 +9,28 @@ import { FiltersModal } from '@/components/Modals/FiltersModal';
 import { useAppDispatch } from '@/redux/hooks/useDispatch';
 import { useAppSelector } from '@/redux/hooks/useSelect';
 import { postActions } from '@/redux/reducers/post/postReducer';
-import s from './CreatePost.module.scss';
+
 import { useTranslation } from 'react-i18next';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { store } from '@/redux';
+
+import s from './CreatePost.module.scss';
 
 type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   setShowCreatePostModal: (value: boolean) => void;
   userData: GetResponse;
   onSaveDraft: () => void;
+  userId?: string;
 };
 
 export const FourthModal: React.FC<Props> = ({
-  setStep,
-  setShowCreatePostModal,
-  userData,
-  onSaveDraft,
-}) => {
+                                               setStep,
+                                               setShowCreatePostModal,
+                                               userData,
+                                               onSaveDraft,
+                                               userId
+                                             }) => {
   const { t } = useTranslation();
 
   const translate = (key: string): string =>
@@ -67,7 +70,9 @@ export const FourthModal: React.FC<Props> = ({
         toast.error('Error');
       } else {
         toast.success(translate('publicationsCreated'));
-        dispatch(ProfilePostActions.addFirstItems([res.data]));
+        if (userId && userId == res.data.ownerId) {
+          dispatch(ProfilePostActions.addFirstItems([res.data]));
+        }
       }
       dispatch(postActions.clearPostState());
       setShowCreatePostModal(false);

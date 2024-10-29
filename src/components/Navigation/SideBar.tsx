@@ -22,12 +22,12 @@ type Props = {
 };
 
 export const SideBar = ({
-  userEmail = 'mocked',
-  paidAccount,
-  admin,
-  userData,
-  id,
-}: Props) => {
+                          userEmail = 'mocked',
+                          paidAccount,
+                          admin,
+                          userData,
+                          id,
+                        }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
 
@@ -72,6 +72,7 @@ export const SideBar = ({
       )}
       {showCreatePostModal && (
         <CreatePost
+          pathname={pathname}
           setShowCreatePostModal={setShowCreatePostModal}
           showCreatePostModal={showCreatePostModal}
           userData={userData!}
