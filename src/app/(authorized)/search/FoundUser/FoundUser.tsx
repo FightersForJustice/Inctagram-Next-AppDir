@@ -13,7 +13,9 @@ export const FoundUser: React.FC<Props> = ({ user }) => {
   const { userName, firstName, lastName, id, avatars } = user;
   const router = useRouter();
 
-  const avatarSrc = avatars[0] ? avatars[0].url : '/img/avatar.jpg';
+  const avatarSrc = avatars[0]
+    ? avatars[0].url
+    : '/img/create-post/icons/icon3.svg';
 
   const goToProfile = () => {
     router.push('/profile/' + id);
