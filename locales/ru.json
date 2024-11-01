@@ -96,6 +96,18 @@
       "search": "Поиск",
       "unsubscribe": "Отписаться"
     },
+    "LikesModal": {
+      "title": "Понравилось",
+      "search": "Поиск",
+      "unsubscribe": "Отписаться",
+      "subscribe": "Подписаться"
+    },
+    "SubscribeModal": {
+      "title": "Подписаться",
+      "question": "Вы действительно хотите подписаться на пользователя",
+      "btnYes": "Да",
+      "btnNo": "Нет"
+    },
     "UnsubscribeModal": {
       "title": "Отписаться",
       "question": "Вы действительно хотите отписаться от пользователя",

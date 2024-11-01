@@ -96,6 +96,18 @@
       "search": "Search",
       "unsubscribe": "Unfollow"
     },
+    "LikesModal": {
+      "title": "Likes",
+      "search": "Search",
+      "unsubscribe": "Unfollow",
+      "subscribe": "Follow"
+    },
+    "SubscribeModal": {
+      "title": "Follow",
+      "question": "Do you really want to follow to this user",
+      "btnYes": "Yes",
+      "btnNo": "No"
+    },
     "UnsubscribeModal": {
       "title": "Unfollow",
       "question": "Do you really want to unfollow from this user",
