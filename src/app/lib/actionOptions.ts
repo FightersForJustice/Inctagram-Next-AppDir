@@ -267,8 +267,8 @@ export const getUsersOptions = (accessToken: string | null) => {
 };
 
 export const createFollowingOption = (
-  accessToken: string | null,
-  userId: number
+  userId: number,
+  accessToken?: string | null
 ) => {
   return {
     method: 'POST',
@@ -280,7 +280,7 @@ export const createFollowingOption = (
   };
 };
 
-export const deleteFollowerOption = (accessToken: string | null) => {
+export const deleteFollowerOption = (accessToken?: string | null) => {
   return {
     method: 'DELETE',
     headers: {

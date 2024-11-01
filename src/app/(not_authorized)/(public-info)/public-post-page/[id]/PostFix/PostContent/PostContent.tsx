@@ -39,7 +39,7 @@ type Props = {
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
-  token: string | null;
+  token?: string | null;
 };
 
 export const PostContent = ({

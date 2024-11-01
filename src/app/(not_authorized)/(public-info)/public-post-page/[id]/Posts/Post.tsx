@@ -26,7 +26,7 @@ type Props = {
   myProfile: boolean;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   isOpenByLink?: boolean;
-  token: string | null;
+  token?: string | null;
 };
 
 export function Post({
@@ -154,6 +154,8 @@ export function Post({
   const isPublicPost =
     width <= 521 ? (
       <PostContentMobile
+        token={token}
+        myId={myId}
         type={type}
         post={post}
         closeModalAction={closeModalAction}
