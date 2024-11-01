@@ -13,7 +13,6 @@ import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { formatServerDateWithoutTime, getTimeAgoText } from '@/utils';
 import {
-  FollowerType,
   PostLikesDataType,
   PostType,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
