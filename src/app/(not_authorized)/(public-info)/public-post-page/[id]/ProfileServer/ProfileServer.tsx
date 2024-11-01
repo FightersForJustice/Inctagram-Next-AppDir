@@ -13,7 +13,7 @@ import { getUserInfo } from '@/app/(authorized)/search/SearchContent/actions';
 import { headers } from 'next/headers';
 
 type Props = {
-  myId: number;
+  myId?: number;
   id: number;
   myProfile: boolean;
   isPublic?: boolean;

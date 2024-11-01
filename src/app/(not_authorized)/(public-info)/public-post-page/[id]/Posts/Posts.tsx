@@ -20,7 +20,7 @@ import s from './Posts.module.scss';
 type Props = {
   postsData: ApiResponsePosts;
   myProfile: boolean;
-  myId: number;
+  myId?: number;
   id: number;
   isPublic?: boolean;
   token: string | null;

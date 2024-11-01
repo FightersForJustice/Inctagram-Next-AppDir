@@ -15,7 +15,7 @@ import { getLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post
 import { useDebounce } from '@/utils/useDebaunce';
 
 type Props = {
-  myId: number;
+  myId?: number;
   postId: number;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   likes: number;

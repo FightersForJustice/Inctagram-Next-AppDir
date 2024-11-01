@@ -21,7 +21,7 @@ import { PostType } from '../types';
 import s from './Posts.module.scss';
 
 type Props = {
-  myId: number;
+  myId?: number;
   post: PostType;
   myProfile: boolean;
   type?: 'publicPage' | 'publicProfile' | 'admin';

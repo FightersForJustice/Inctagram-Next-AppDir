@@ -33,7 +33,7 @@ import {
 } from '@/app/(authorized)/search/SearchContent/data';
 
 type Props = {
-  myId: number;
+  myId?: number;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
   myProfile: boolean;
