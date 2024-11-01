@@ -13,7 +13,8 @@ export const getPayments = async () => {
     console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value));
+      getSubsriptionOptions(accessToken?.value)
+    );
     if (!response.ok) {
       console.log(response);
       console.error('Error:', response.statusText);
@@ -35,7 +36,8 @@ export const getSubscriptions = async () => {
     console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value));
+      getSubsriptionOptions(accessToken?.value)
+    );
     if (!response.ok) {
       console.log(response);
       console.error('Error:', response.statusText);
@@ -48,7 +50,6 @@ export const getSubscriptions = async () => {
     return null;
   }
 };
-
 
 export const cancelAutoRenewal = async () => {
   const accessToken = cookies().get('accessToken');
@@ -78,7 +79,6 @@ export const cancelAutoRenewal = async () => {
   }
 };
 
-
 export const getSubscriptionsCosts = async () => {
   const accessToken = cookies().get('accessToken');
 
@@ -87,7 +87,8 @@ export const getSubscriptionsCosts = async () => {
     console.log(apiUrl, 11);
     const response = await fetch(
       apiUrl,
-      getSubsriptionOptions(accessToken?.value));
+      getSubsriptionOptions(accessToken?.value)
+    );
     if (!response.ok) {
       console.log(response);
       console.error('Error:', response.statusText);
@@ -123,7 +124,6 @@ export const getProfile = async (id: number) => {
   }
 };
 export const getPublicProfile = async (id: number) => {
-
   const apiUrl = baseUrl + `public-user/profile/${id}`;
   try {
     const response = await fetch(apiUrl, {
@@ -148,8 +148,8 @@ export const getPosts = async (id: number, minId: number | null) => {
     baseUrl + `public-posts/user/${id}/${minId}?pageSize=8&sortDirection=desc`;
   try {
     const response = await fetch(apiUrl, { next: { revalidate: 10 } });
-//  const a = response.json()
-//     console.log(a)
+    //  const a = response.json()
+    //     console.log(a)
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;
@@ -164,7 +164,8 @@ export const getPosts = async (id: number, minId: number | null) => {
 
 export const getFollowersPosts = async (endCursorPostId: number) => {
   const apiUrl =
-    baseUrl + `home/publications-followers?pageSize=12&endCursorPostId=${endCursorPostId}`;
+    baseUrl +
+    `home/publications-followers?pageSize=12&endCursorPostId=${endCursorPostId}`;
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -208,8 +209,8 @@ export const updatePost = async (postId: number, postData: string) => {
   return response.status;
 };
 
-export const getLikesPostId = async (postId: number) => {
-  const apiUrl = baseUrl + `posts/${postId}/likes`;
+export const getLikesPostId = async (postId: number, search: string = '') => {
+  const apiUrl = baseUrl + `posts/${postId}/likes?search=${search}`;
   const accessToken = cookies().get('accessToken');
   try {
     const response = await fetch(apiUrl, {
@@ -230,7 +231,10 @@ export const getLikesPostId = async (postId: number) => {
   }
 };
 
-export const updateLikesPostId = async (postId: number, likeStatus: boolean) => {
+export const updateLikesPostId = async (
+  postId: number,
+  likeStatus: boolean
+) => {
   const apiUrl = baseUrl + `posts/${postId}/like-status`;
   const accessToken = cookies().get('accessToken');
   const response = await fetch(apiUrl, {
@@ -241,6 +245,6 @@ export const updateLikesPostId = async (postId: number, likeStatus: boolean) => 
     },
     body: JSON.stringify({ likeStatus: likeStatus ? 'DISLIKE' : 'LIKE' }),
   });
-  console.log(response.status)
+  console.log(response.status);
   return response.status;
 };

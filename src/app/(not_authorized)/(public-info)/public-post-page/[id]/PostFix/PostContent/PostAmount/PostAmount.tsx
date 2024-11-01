@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
@@ -5,33 +6,46 @@ import s from '../PostContent.module.scss';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  likes: number
-  avatarLikes?: FollowerType[]
-  date?: string
+  likes: number;
+  avatarLikes?: FollowerType[];
+  date?: string;
+  openLikesModal: () => void;
 };
 
-export const PostAmount = ({ likes, avatarLikes, date }: Props) => {
+export const PostAmount = ({
+  likes,
+  avatarLikes,
+  date,
+  openLikesModal,
+}: Props) => {
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Likes.${key}`);
 
-  const { t } = useTranslation()
-  const translate = (key: string): string => t(`Likes.${key}`)
+  const openViewLikesModal = () => {
+    openLikesModal();
+  };
 
   return (
     <div className={s.post__amount}>
       <div className={s.post__amount__wrapper}>
-        {avatarLikes && avatarLikes.length > 0 &&
-          <div className={s.post__amount__images}>
+        {avatarLikes && avatarLikes.length > 0 && (
+          <div className={s.post__amount__images} onClick={openViewLikesModal}>
             {avatarLikes.map((item) => (
-                <Image
-                  key={item.id}
-                  className={s.post__amount__image}
-                  src={item.avatars.length !== 0 ? item.avatars[1].url : '/img/create-post/no-image.png'}
-                  alt={'post1'}
-                  width={24}
-                  height={24}
-                />
+              <Image
+                key={item.id}
+                className={s.post__amount__image}
+                src={
+                  item.avatars.length !== 0
+                    ? item.avatars[1].url
+                    : '/img/create-post/no-image.png'
+                }
+                alt={'post1'}
+                width={24}
+                height={24}
+              />
             ))}
           </div>
-        }
+        )}
         <p className={s.post__amount__likes}>
           <span className={s.post__amount__number}>{likes}</span>
           {translate('likes')}

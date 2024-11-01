@@ -13,12 +13,18 @@ import { getUserInfo } from '@/app/(authorized)/search/SearchContent/actions';
 import { headers } from 'next/headers';
 
 type Props = {
+  myId: number;
   id: number;
   myProfile: boolean;
   isPublic?: boolean;
 };
 
-const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
+const ProfileServer = async ({
+  id,
+  myProfile,
+  isPublic = false,
+  myId,
+}: Props) => {
   const headersList = headers();
   const token = headersList.get('accessToken');
   const userdata: UserProfile = await getProfile(id);
@@ -39,10 +45,12 @@ const ProfileServer = async ({ id, myProfile, isPublic = false }: Props) => {
       />
       <div className={s.posts}>
         <Posts
+          myId={myId}
           id={id}
           postsData={postsData}
           myProfile={myProfile}
           isPublic={isPublic}
+          token={token}
         />
       </div>
     </>

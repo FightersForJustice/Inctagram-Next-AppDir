@@ -20,15 +20,19 @@ import s from './Posts.module.scss';
 type Props = {
   postsData: ApiResponsePosts;
   myProfile: boolean;
+  myId: number;
   id: number;
   isPublic?: boolean;
+  token: string | null;
 };
 
 export const Posts = ({
+  myId,
   id,
   postsData,
   myProfile,
   isPublic,
+  token,
 }: Props) => {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
@@ -64,10 +68,12 @@ export const Posts = ({
       return (
         <div key={i.id} className={s.imageContainer}>
           <Post
+            myId={myId}
             post={i}
             myProfile={myProfile}
             isOpenByLink={isOpenByLink}
             type={isPublic ? 'publicProfile' : undefined}
+            token={token}
           />
           {i.images.length > 1 && (
             <ImagesAmount imagesLength={i.images.length} />

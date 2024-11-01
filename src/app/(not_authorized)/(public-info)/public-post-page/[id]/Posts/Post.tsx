@@ -16,18 +16,27 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AUTH_ROUTES } from 'src/appRoutes/routes';
-import { PostType} from '../types';
+import { PostType } from '../types';
 
 import s from './Posts.module.scss';
 
 type Props = {
+  myId: number;
   post: PostType;
   myProfile: boolean;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   isOpenByLink?: boolean;
+  token: string | null;
 };
 
-export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>) {
+export function Post({
+  myId,
+  post,
+  myProfile,
+  type,
+  isOpenByLink,
+  token,
+}: Readonly<Props>) {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -87,11 +96,11 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
       router.push(`${AUTH_ROUTES.PUBLIC_POST_PAGE}?post=${id}`, {
         scroll: false,
       });
-    } else if (type === 'admin'){
+    } else if (type === 'admin') {
       router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}?post=${id}`, {
         scroll: false,
       });
-    } else if (type === 'publicProfile'){
+    } else if (type === 'publicProfile') {
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}?post=${id}`, {
         scroll: false,
       });
@@ -103,9 +112,9 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
   const closeModal = () => {
     if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
-    } else if (type === 'admin'){
-    router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}`, {scroll: false});
-  } else if (type === 'publicProfile'){
+    } else if (type === 'admin') {
+      router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}`, { scroll: false });
+    } else if (type === 'publicProfile') {
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}`, {
         scroll: false,
       });
@@ -122,7 +131,6 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
   useEffect(() => {
     isOpenByLink && !openPostModal && onOpenPost();
   }, []);
-
 
   const isMyPost =
     width <= 521 ? (
@@ -155,12 +163,14 @@ export function  Post ({ post, myProfile, type, isOpenByLink }: Readonly<Props>)
       />
     ) : (
       <PostContent
+        myId={myId}
         type={type}
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
+        token={token}
       />
     );
 
