@@ -12,6 +12,7 @@ import {
   unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
 import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 
 type Props = {
   myId?: number;
@@ -162,6 +163,14 @@ export const ProfileInfo = ({
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscriptionsModal={setShowFollowingModal}
+            token={token}
+          />
+        )}
+        {showFollowersModal && (
+          <SubscribersModal
+            userName={userData.userName}
+            followUnfollow={followUnfollowForModal}
+            setShowSubscribersModal={setShowFollowersModal}
             token={token}
           />
         )}

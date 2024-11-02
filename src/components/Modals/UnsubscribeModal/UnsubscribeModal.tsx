@@ -5,11 +5,12 @@ import { Modal } from '../Modal/Modal';
 
 import s from './UnsubscribeModal.module.scss';
 import { SelectedUser } from '@/components/Modals/ViewLikesModal/ViewLikesModal';
+import React from 'react';
 
 type Props = {
   followUnfollow: (isFollowing: boolean) => void;
   user: SelectedUser;
-  setShowUnsubscribeModal: (value: boolean) => void;
+  setShowUnsubscribeModal: React.Dispatch<boolean>;
 };
 
 export const UnsubscribeModal = ({

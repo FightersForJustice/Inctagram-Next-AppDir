@@ -95,3 +95,23 @@ export const getUserFollowing = async (
     return null;
   }
 };
+
+export const getUserFollowers = async (
+  userName: string,
+  search: string = '',
+  accessToken: string | null
+) => {
+  const apiUrl = baseUrl + `users/${userName}/followers?search=${search}`;
+  try {
+    const response = await fetch(apiUrl, getUsersOptions(accessToken));
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data: GetFollowersDataType = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
