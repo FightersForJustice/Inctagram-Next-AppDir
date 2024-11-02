@@ -111,6 +111,7 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
           value={search}
           onChange={onChangeSearch}
           placeholder={translate('title')}
+          autoFocus
         />
         <Image
           className={s.search__input__search}
