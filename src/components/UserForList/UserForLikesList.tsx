@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import s from '@/components/Modals/SubscriptionsModal/SubscriptionsModal.module.scss';
 import Image from 'next/image';
 import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   isMyProfile: boolean;
   user: FollowerType;
-  setShowUnsubscribeModal: React.Dispatch<boolean>;
+  setShowUnsubscribeModal: () => void;
   translate: (key: string) => string;
 };
 
@@ -16,31 +17,31 @@ const UserForLikesList: React.FC<Props> = ({
   translate,
   setShowUnsubscribeModal,
 }) => {
-  const [isFollowing, setIsFollowing] = useState(user.isFollowing);
-
-  useEffect(() => {
-    setIsFollowing(user.isFollowing);
-  }, [user.isFollowing]);
+  const router = useRouter();
 
   const avatarSrc = user.avatars[0]
     ? user.avatars[0].url
     : '/img/create-post/icons/icon3.svg';
 
   const btnName = translate(
-    isFollowing ? 'LikesModal.unsubscribe' : 'LikesModal.subscribe'
+    user.isFollowing ? 'LikesModal.unsubscribe' : 'LikesModal.subscribe'
   );
 
-  const finalClassName = isFollowing
+  const finalClassName = user.isFollowing
     ? s.modal__content__unsubscribe
     : s.modal__content__subscribe;
 
   const openUnsubscribeModal = () => {
-    setShowUnsubscribeModal(true);
+    setShowUnsubscribeModal();
+  };
+
+  const goToProfile = () => {
+    router.push(`${user.userId}`);
   };
 
   return (
     <div key={user.userId} className={s.modal__content}>
-      <div className={s.modal__content__left}>
+      <div className={s.modal__content__left} onClick={goToProfile}>
         <Image
           src={avatarSrc}
           alt={'avatar'}
