@@ -92,9 +92,12 @@
 }
 
 .modalClassName {
+  display: flex;
+  justify-content: flex-start;
   max-width: 650px;
-  margin: 0px 15px;
+  margin: 0 15px;
   width: 100%;
+  min-height: 300px;
 }
 
 @include s.devices(mobile) {
