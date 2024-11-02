@@ -3,7 +3,10 @@ import {
   deleteFollowerOption,
   getUsersOptions,
 } from '@/app/lib/actionOptions';
-import { UsersDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import {
+  GetFollowersDataType,
+  UsersDataType,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -67,6 +70,26 @@ export const unfollowByUser = async (
       return null;
     }
     return response.ok;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+};
+
+export const getUserFollowing = async (
+  userName: string,
+  search: string = '',
+  accessToken: string | null
+) => {
+  const apiUrl = baseUrl + `users/${userName}/following?search=${search}`;
+  try {
+    const response = await fetch(apiUrl, getUsersOptions(accessToken));
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return null;
+    }
+    const data: GetFollowersDataType = await response.json();
+    return data;
   } catch (error) {
     console.error('Error fetching data:', error);
     return null;

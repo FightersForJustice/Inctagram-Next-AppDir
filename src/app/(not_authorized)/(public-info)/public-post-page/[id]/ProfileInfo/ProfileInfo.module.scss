@@ -30,6 +30,10 @@
         gap: calc(21px + (102 - 21) * ((100vw - 360px) / (740 - 360)));
         margin-top: calc(0px + (20 - 0) * ((100vw - 360px) / (740 - 360)));
       }
+      .following, .followers{
+        cursor: pointer;
+      }
+
       div p:first-child {
         font-weight: 700;
       }
