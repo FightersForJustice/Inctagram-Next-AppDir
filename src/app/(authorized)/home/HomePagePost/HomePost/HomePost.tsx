@@ -12,9 +12,9 @@ import { Items } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { ROUTES } from '@/appRoutes/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { useState } from 'react';
-import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { PostLikesDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 import s from './../HomePagePost.module.scss';
 
@@ -43,17 +43,19 @@ export const HomePost = ({ post, id }: PropsType) => {
 
   const [localIsLiked, setLocalIsLiked] = useState<boolean>(post.isLiked);
   const [localLikesCount, setLocalLikesCount] = useState<number>(post.likesCount);
+  const [avatarLikes, setAvatarLikes] = useState(post.avatarWhoLikes);
 
   const toggleLike = async () => {
-    console.log('toggleLike')
-      setLocalIsLiked(!localIsLiked)
-      setLocalLikesCount(localIsLiked ? localLikesCount - 1 : localLikesCount + 1)
-      const response = await updateLikesPostId(post.id, localIsLiked);
-      // fetchLikes();
-  }
+    console.log('toggleLike');
+    setLocalIsLiked(!localIsLiked);
+    setLocalLikesCount(localIsLiked ? localLikesCount - 1 : localLikesCount + 1);
+    const response = await updateLikesPostId(post.id, localIsLiked);
+    const data: PostLikesDataType = await getLikesPostId(post.id);
+    const avatarsData = data.items?.map(item => item.avatars[1].url);
+    setAvatarLikes(avatarsData);
+  };
 
-  const avatarLikes: FollowerType[]  = [] //  const avatarLikes = likesData?.items.slice(-3).reverse()
-
+  const avatars = avatarLikes.slice(-3).reverse();
 
   return (
     <div key={post.id} className={s.post}>
@@ -83,14 +85,14 @@ export const HomePost = ({ post, id }: PropsType) => {
         <HomePostPopup isMyPost={isMyPost} />
       </div>
       <PostImageCarousel images={post.images} openPost={openPost} />
-      <HomePostIcons toggleLike={toggleLike} isLiked={localIsLiked}/>
+      <HomePostIcons toggleLike={toggleLike} isLiked={localIsLiked} />
       <HomePostDescription
         userName={post.userName}
         description={post.description}
         avatar={post.avatarOwner}
         ownerId={post.ownerId}
       />
-      <HomePostLikes likes={localLikesCount} avatarLikes={avatarLikes}/>
+      <HomePostLikes likes={localLikesCount} avatarLikes={avatars} />
     </div>
   );
 };

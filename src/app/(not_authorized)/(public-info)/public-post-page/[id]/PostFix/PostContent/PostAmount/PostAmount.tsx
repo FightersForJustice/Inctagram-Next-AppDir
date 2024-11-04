@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { useTranslation } from 'react-i18next';
 
 import s from '../PostContent.module.scss';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
   likes: number
