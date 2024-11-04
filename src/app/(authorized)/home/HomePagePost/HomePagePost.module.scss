@@ -64,6 +64,7 @@
 
   &__desc {
     display: flex;
+    align-items: center;
     gap: 12px;
 
     &__link {
@@ -102,14 +103,44 @@
     }
 
     &__amount {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      &__wrapper {
+        display: flex;
+        gap: 18px;
+      }
 
-      gap: 5px;
-      font-size: 14px;
-      font-weight: 400;
-      padding: 0;
+      &__images {
+        max-width: 74px;
+        display: flex;
+        position: relative;
+      }
+
+      &__image {
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
+      }
+
+      &__image:nth-child(2) {
+        transform: translate(-30%, 0);
+      }
+
+      &__image:nth-child(3) {
+        transform: translate(-60%, 0);
+      }
+
+
+      &__number {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        padding-right: 5px;
+      }
+
+      &__likes {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+      }
     }
 
     &__text {
@@ -117,16 +148,7 @@
       font-weight: 700;
     }
 
-    &__ava1 {
-    }
 
-    &__ava2 {
-      margin-left: -10px;
-    }
-
-    &__ava3 {
-      margin-left: -10px;
-    }
   }
 
   &__comments {

@@ -9,7 +9,6 @@ const Home = () => {
   const headersList = headers();
   const id = headersList.get('id');
 
-
   return (
       <div className={s.container}>
           <div className={s.home}>

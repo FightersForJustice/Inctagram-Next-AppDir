@@ -68,6 +68,7 @@ export type Items = {
   owner: Owner;
   likesCount: number;
   isLiked: boolean;
+  avatarWhoLikes: string[];
 };
 
 export type ImageType = {

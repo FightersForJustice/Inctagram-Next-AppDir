@@ -21,7 +21,6 @@ export const HomePagePost = ({ id }: PropsType) => {
   const [hasMorePosts, setHasMorePosts] = useState(true);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -86,7 +85,6 @@ export const HomePagePost = ({ id }: PropsType) => {
       }
     };
   }, [loading, endCursorPostId, hasMorePosts]);
-
 
   return (
     <div>
