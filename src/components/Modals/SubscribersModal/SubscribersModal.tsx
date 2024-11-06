@@ -17,6 +17,7 @@ import { useDebounce } from '@/utils/useDebaunce';
 import { UnsubscribeModal } from '@/components/Modals/UnsubscribeModal';
 
 type Props = {
+  myId?: number;
   userName: string;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
@@ -24,6 +25,7 @@ type Props = {
 };
 
 export const SubscribersModal = ({
+  myId,
   userName,
   followUnfollow,
   setShowSubscribersModal,
@@ -109,9 +111,12 @@ export const SubscribersModal = ({
   const usersList =
     users &&
     users.map((user) => {
+      const isMyProfile = myId === user.userId;
+
       return (
         <UserForFollowersList
           key={user.userId}
+          isMyProfile={isMyProfile}
           user={user}
           translate={translate}
           setShowUnsubscribeModal={() =>

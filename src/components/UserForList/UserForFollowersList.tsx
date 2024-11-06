@@ -5,6 +5,7 @@ import { FollowerType } from '@/app/(not_authorized)/(public-info)/public-post-p
 import { useRouter } from 'next/navigation';
 
 type Props = {
+  isMyProfile: boolean;
   user: FollowerType;
   translate: (key: string) => string;
   setShowUnsubscribeModal: React.Dispatch<boolean>;
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const UserForFollowersList: React.FC<Props> = ({
+  isMyProfile,
   user,
   translate,
   setShowUnsubscribeModal,
@@ -53,17 +55,19 @@ export const UserForFollowersList: React.FC<Props> = ({
         />
         <p>{user.userName}</p>
       </div>
-      <div className={s.modal__content__right}>
-        <button onClick={openFollowUnfollowModal} className={finalClassName}>
-          {btnName}
-        </button>
-        <button
-          className={s.modal__content__delete}
-          onClick={onDeleteSubscriber}
-        >
-          {translate('SubscribersModal.deleteBtn')}
-        </button>
-      </div>
+      {!isMyProfile && (
+        <div className={s.modal__content__right}>
+          <button onClick={openFollowUnfollowModal} className={finalClassName}>
+            {btnName}
+          </button>
+          <button
+            className={s.modal__content__delete}
+            onClick={onDeleteSubscriber}
+          >
+            {translate('SubscribersModal.deleteBtn')}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

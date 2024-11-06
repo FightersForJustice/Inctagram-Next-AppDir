@@ -24,6 +24,7 @@ type Props = {
   token: string | null;
 };
 export const ProfileInfo = ({
+  myId,
   userData,
   myProfile,
   postsData,
@@ -168,6 +169,7 @@ export const ProfileInfo = ({
         )}
         {showFollowersModal && (
           <SubscribersModal
+            myId={myId}
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscribersModal={setShowFollowersModal}
