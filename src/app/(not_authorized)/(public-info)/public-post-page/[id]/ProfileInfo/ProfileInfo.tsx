@@ -161,6 +161,7 @@ export const ProfileInfo = ({
         </div>
         {showFollowingModal && (
           <SubscriptionsModal
+            myId={myId}
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscriptionsModal={setShowFollowingModal}

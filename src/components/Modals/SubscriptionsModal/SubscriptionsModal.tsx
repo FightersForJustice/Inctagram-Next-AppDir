@@ -16,6 +16,7 @@ import { useDebounce } from '@/utils/useDebaunce';
 import { getUserFollowing } from '@/app/(authorized)/search/SearchContent/data';
 
 type Props = {
+  myId?: number;
   userName: string;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   setShowSubscriptionsModal: (value: boolean) => void;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export const SubscriptionsModal: React.FC<Props> = ({
+  myId,
   userName,
   followUnfollow,
   setShowSubscriptionsModal,
@@ -83,9 +85,12 @@ export const SubscriptionsModal: React.FC<Props> = ({
   const usersList =
     users &&
     users.map((user) => {
+      const isMyProfile = myId === user.userId;
+
       return (
         <UserForFollowingList
           key={user.userId}
+          isMyProfile={isMyProfile}
           user={user}
           translate={translate}
           setShowUnsubscribeModal={() =>
