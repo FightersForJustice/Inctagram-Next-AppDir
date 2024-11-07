@@ -36,6 +36,7 @@ const ProfileServer = async ({
   return (
     <>
       <ProfileInfo
+        myId={myId}
         userData={userdata}
         postsData={postsData}
         myProfile={myProfile}

@@ -8,6 +8,7 @@ import { useDebounce } from '@/utils/useDebaunce';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getUsers } from '@/app/(authorized)/search/SearchContent/data';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   accessToken: string | null;
@@ -16,6 +17,8 @@ type Props = {
 export const SearchContent: React.FC<Props> = ({ accessToken }) => {
   const searchFromUrl = useSearchParams().get('search');
   const router = useRouter();
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`SearchPage.${key}`);
 
   const defaultValues = {
     search: '',
@@ -101,13 +104,14 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
   return (
     <div style={{ gridArea: 'profile' }}>
       <div className={s.search}>
-        <h2 className={s.search__title}>Search</h2>
+        <h2 className={s.search__title}>{translate('title')}</h2>
         <input
           className={s.search__input}
           type="text"
           value={search}
           onChange={onChangeSearch}
-          placeholder={'Search'}
+          placeholder={translate('title')}
+          autoFocus
         />
         <Image
           className={s.search__input__search}
@@ -118,15 +122,13 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
         />
       </div>
       <div className={s.search__container}>
-        <p className={s.search__container__title}>Recent requests</p>
+        <p className={s.search__container__title}>{translate('recent')}</p>
         {searchedUsers.length > 0 ? (
           <div>{usersList}</div>
         ) : (
           <div className={s.search__empty}>
-            <p className={s.search__empty__title}>
-              Oops! This place looks empty!
-            </p>
-            <p className={s.search__empty__text}>No recent requests</p>
+            <p className={s.search__empty__title}>{translate('empty')}</p>
+            <p className={s.search__empty__text}>{translate('noRecent')}</p>
           </div>
         )}
       </div>

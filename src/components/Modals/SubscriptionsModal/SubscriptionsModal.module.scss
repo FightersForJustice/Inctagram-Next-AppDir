@@ -43,6 +43,7 @@
       max-width: 100%;
       width: 200px;
       gap: 12px;
+      cursor: pointer;
     }
 
     &__left p {
@@ -90,7 +91,10 @@
 }
 
 .modalClassName {
+  display: flex;
+  justify-content: flex-start;
   max-width: 650px;
-  margin: 0px 15px;
+  margin: 0 15px;
   width: 100%;
+  min-height: 300px;
 }

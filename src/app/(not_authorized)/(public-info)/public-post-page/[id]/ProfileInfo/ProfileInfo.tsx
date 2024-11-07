@@ -11,8 +11,11 @@ import {
   followToUser,
   unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
+import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 
 type Props = {
+  myId?: number;
   userData: UserProfile;
   myProfile: boolean;
   postsData: ApiResponsePosts;
@@ -21,6 +24,7 @@ type Props = {
   token: string | null;
 };
 export const ProfileInfo = ({
+  myId,
   userData,
   myProfile,
   postsData,
@@ -32,6 +36,8 @@ export const ProfileInfo = ({
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
   const router = useRouter();
 
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [isUserFollowing, setIsUserFollowing] = useState(
     followingData?.isFollowing
   );
@@ -72,9 +78,26 @@ export const ProfileInfo = ({
     }
   };
 
+  const followUnfollowForModal = async (
+    userId: number,
+    isFollowing: boolean
+  ) => {
+    isFollowing
+      ? await unfollowByUser(userId, token)
+      : await followToUser(userId, token);
+  };
+
   const subBtnName = isUserFollowing
     ? 'SubscribersModal.unsubBtn'
     : 'SubscribersModal.subBtn';
+
+  const openFollowingModal = () => {
+    setShowFollowingModal(true);
+  };
+
+  const openFollowersModal = () => {
+    setShowFollowersModal(true);
+  };
 
   return (
     <div className={s.profile}>
@@ -97,11 +120,11 @@ export const ProfileInfo = ({
             <div className={s.blockUser}>
               <div className={s.name}>{userData?.userName}</div>
               <div className={s.statistics}>
-                <div>
+                <div className={s.following} onClick={openFollowingModal}>
                   <p>{!isPublic && followingData?.followingCount}</p>
                   <p>{translate('subscriptions')}</p>
                 </div>
-                <div>
+                <div className={s.followers} onClick={openFollowersModal}>
                   <p>{!isPublic && followersCount}</p>
                   <p>{translate('subscribers')}</p>
                 </div>
@@ -136,6 +159,24 @@ export const ProfileInfo = ({
             {userData?.aboutMe ?? translate('aboutMe')}
           </div>
         </div>
+        {showFollowingModal && (
+          <SubscriptionsModal
+            myId={myId}
+            userName={userData.userName}
+            followUnfollow={followUnfollowForModal}
+            setShowSubscriptionsModal={setShowFollowingModal}
+            token={token}
+          />
+        )}
+        {showFollowersModal && (
+          <SubscribersModal
+            myId={myId}
+            userName={userData.userName}
+            followUnfollow={followUnfollowForModal}
+            setShowSubscribersModal={setShowFollowersModal}
+            token={token}
+          />
+        )}
       </div>
     </div>
   );

@@ -7,15 +7,17 @@ import { useRouter } from 'next/navigation';
 type Props = {
   isMyProfile: boolean;
   user: FollowerType;
-  setShowUnsubscribeModal: () => void;
   translate: (key: string) => string;
+  setShowUnsubscribeModal: React.Dispatch<boolean>;
+  onDeleteSubscriber: () => void;
 };
 
-const UserForLikesList: React.FC<Props> = ({
+export const UserForFollowersList: React.FC<Props> = ({
   isMyProfile,
   user,
   translate,
   setShowUnsubscribeModal,
+  onDeleteSubscriber,
 }) => {
   const router = useRouter();
 
@@ -24,15 +26,17 @@ const UserForLikesList: React.FC<Props> = ({
     : '/img/create-post/icons/icon3.svg';
 
   const btnName = translate(
-    user.isFollowing ? 'LikesModal.unsubscribe' : 'LikesModal.subscribe'
+    user.isFollowing
+      ? 'SubscriptionsModal.unsubscribe'
+      : 'SubscriptionsModal.subscribe'
   );
 
   const finalClassName = user.isFollowing
     ? s.modal__content__unsubscribe
     : s.modal__content__subscribe;
 
-  const openUnsubscribeModal = () => {
-    setShowUnsubscribeModal();
+  const openFollowUnfollowModal = () => {
+    setShowUnsubscribeModal(true);
   };
 
   const goToProfile = () => {
@@ -40,8 +44,8 @@ const UserForLikesList: React.FC<Props> = ({
   };
 
   return (
-    <div key={user.userId} className={s.modal__content}>
-      <div className={s.modal__content__left} onClick={goToProfile}>
+    <div className={s.modal__content}>
+      <div onClick={goToProfile} className={s.modal__content__left}>
         <Image
           src={avatarSrc}
           alt={'avatar'}
@@ -53,13 +57,17 @@ const UserForLikesList: React.FC<Props> = ({
       </div>
       {!isMyProfile && (
         <div className={s.modal__content__right}>
-          <button className={finalClassName} onClick={openUnsubscribeModal}>
+          <button onClick={openFollowUnfollowModal} className={finalClassName}>
             {btnName}
+          </button>
+          <button
+            className={s.modal__content__delete}
+            onClick={onDeleteSubscriber}
+          >
+            {translate('SubscribersModal.deleteBtn')}
           </button>
         </div>
       )}
     </div>
   );
 };
-
-export default UserForLikesList;

@@ -94,7 +94,8 @@
     "SubscriptionsModal": {
       "title": "Following",
       "search": "Search",
-      "unsubscribe": "Unfollow"
+      "unsubscribe": "Unfollow",
+      "subscribe": "Follow"
     },
     "LikesModal": {
       "title": "Likes",
@@ -126,6 +127,12 @@
       "btnYes": "Yes",
       "btnNo": "No"
     }
+  },
+  "SearchPage": {
+    "title": "Search",
+    "recent": "Recent requests",
+    "noRecent": "No recent requests",
+    "empty": "Oops! This place looks empty!"
   },
   "Navigation": {
     "home": "Home",
