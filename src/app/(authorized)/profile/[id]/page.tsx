@@ -12,9 +12,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   const myId = parseInt(idHeaders, 10);
   const id = parseInt(params.id, 10);
 
-  return (
-      <ProfileServer id={id} myProfile={myId === id} />
-  );
+  return <ProfileServer id={id} myProfile={myId === id} myId={myId} />;
 };
 
 export default Page;

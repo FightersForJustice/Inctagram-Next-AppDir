@@ -36,13 +36,13 @@ export const getUsers = async (
 
 export const followToUser = async (
   userId: number,
-  accessToken: string | null
+  accessToken?: string | null
 ) => {
   const apiUrl = baseUrl + `users/following`;
   try {
     const response = await fetch(
       apiUrl,
-      createFollowingOption(accessToken, userId)
+      createFollowingOption(userId, accessToken)
     );
     if (!response.ok) {
       console.error('Error:', response.statusText);
@@ -57,7 +57,7 @@ export const followToUser = async (
 
 export const unfollowByUser = async (
   userId: number,
-  accessToken: string | null
+  accessToken?: string | null
 ) => {
   const apiUrl = baseUrl + `users/follower/${userId}`;
   try {

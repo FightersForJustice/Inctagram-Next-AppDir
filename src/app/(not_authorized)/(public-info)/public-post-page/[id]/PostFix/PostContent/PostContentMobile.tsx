@@ -18,102 +18,142 @@ import {
   PostLikesDataType,
   PostType,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import {
+  getLikesPostId,
+  updateLikesPostId,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { useDispatch } from 'react-redux';
 import { ProfilePostActions } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { Loader } from '@/components/Loader';
-
+import { ViewLikesModal } from '@/components/Modals/ViewLikesModal';
+import {
+  followToUser,
+  unfollowByUser,
+} from '@/app/(authorized)/search/SearchContent/data';
 
 type Props = {
+  myId?: number;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
   myProfile: boolean;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
+  token?: string | null;
 };
 
 export const PostContentMobile = ({
-                                    post,
-                                    closeModalAction,
-                                    myProfile,
-                                    setEditPost,
-                                    onDeletePost,
-                                    type,
-                            }: Props) => {
-  const dispatch = useDispatch()
-  const [visiblePopup, setVisiblePopup] = useState(false)
-  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false)
-  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null)
-  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(post.isLiked)
-  const [localLikesCount, setLocalLikesCount] = useState<number | null>(post.likesCount)
+  myId,
+  post,
+  closeModalAction,
+  myProfile,
+  setEditPost,
+  onDeletePost,
+  type,
+  token,
+}: Props) => {
+  const dispatch = useDispatch();
+  const [visiblePopup, setVisiblePopup] = useState(false);
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  const [showViewLikesModal, setShowViewLikesModal] = useState(false);
+  const [likesData, setLikesData] = useState<PostLikesDataType | null>(null);
+  const [localIsLiked, setLocalIsLiked] = useState<boolean | null>(
+    post.isLiked
+  );
+  const [localLikesCount, setLocalLikesCount] = useState<number | null>(
+    post.likesCount
+  );
 
-  const language = useGetLanguage()
+  const language = useGetLanguage();
 
-  const { t } = useTranslation()
-  const translate = (key: string): string => t(`Time.${key}`)
-  const time = getTimeAgoText(post.createdAt, language, translate)
-  const date = formatServerDateWithoutTime(post.createdAt, language)
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Time.${key}`);
+  const time = getTimeAgoText(post.createdAt, language, translate);
+  const date = formatServerDateWithoutTime(post.createdAt, language);
   const fetchLikes = async () => {
     const data: PostLikesDataType = await getLikesPostId(post.id);
-    setLocalIsLiked(null)
-    setLocalLikesCount(null)
-    dispatch(ProfilePostActions.updateLikesById({
-      postId: post.id,
-      isLiked: data.isLiked,
-      likesCount: data.totalCount
-    }));
-    setLikesData(data)
+    setLocalIsLiked(null);
+    setLocalLikesCount(null);
+    dispatch(
+      ProfilePostActions.updateLikesById({
+        postId: post.id,
+        isLiked: data.isLiked,
+        likesCount: data.totalCount,
+      })
+    );
+    setLikesData(data);
   };
 
   useEffect(() => {
-    if (type) return
-    fetchLikes()
-  }, [])
+    if (type) return;
+    fetchLikes();
+  }, []);
 
   const toggleLike = async () => {
     if (likesData) {
-      setLocalIsLiked(!likesData.isLiked)
-      setLocalLikesCount(likesData.isLiked ? likesData.totalCount - 1 : likesData.totalCount + 1)
+      setLocalIsLiked(!likesData.isLiked);
+      setLocalLikesCount(
+        likesData.isLiked ? likesData.totalCount - 1 : likesData.totalCount + 1
+      );
       const response = await updateLikesPostId(post.id, likesData.isLiked);
-      fetchLikes()
+      fetchLikes();
     }
-  }
+  };
 
-  const avatarLikes = likesData?.items.slice(-3).reverse()
+  const followUnfollow = async (userId: number, isFollowing: boolean) => {
+    isFollowing
+      ? await unfollowByUser(userId, token)
+      : await followToUser(userId, token);
+  };
+
+  const openLikesModal = async () => {
+    setShowViewLikesModal(true);
+  };
+
+  const likesCount = localLikesCount ?? (likesData?.totalCount || 0);
+
+  const avatarLikes = likesData?.items.slice(-3).reverse();
 
   if (!likesData && !type) {
-    return (
-      <Loader/>
-    )
+    return <Loader />;
   }
 
   return (
-      <PostModal
-        width={'972px'}
-        onClose={closeModalAction}
-      >
+    <PostModal width={'972px'} onClose={closeModalAction}>
       <div className={s.post}>
-        <PostHeader post={post} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup} setEditPost={setEditPost}
-                    setShowAreYouSureModal={setShowAreYouSureModal}/>
+        <PostHeader
+          post={post}
+          myProfile={myProfile}
+          setVisiblePopup={setVisiblePopup}
+          visiblePopup={visiblePopup}
+          setEditPost={setEditPost}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+        />
         <Carousel>
           {post.images.map((i) => {
             if (i.width !== 640) {
               return (
                 <SwiperSlide key={i.uploadId}>
-                  <Image
-                    width={491}
-                    height={491}
-                    alt="err"
-                    src={i.url}
-                  />
+                  <Image width={491} height={491} alt="err" src={i.url} />
                 </SwiperSlide>
               );
             }
           })}
         </Carousel>
-        {!type && <PostLikes toggleLike={toggleLike} isLiked={localIsLiked ?? (likesData?.isLiked || false)} />}
-        {type !== 'admin' && <PostAmount  likes={localLikesCount ?? (likesData?.totalCount || 0)} avatarLikes={avatarLikes} date={date}/>}
+        {!type && (
+          <PostLikes
+            toggleLike={toggleLike}
+            isLiked={localIsLiked ?? (likesData?.isLiked || false)}
+          />
+        )}
+        {type !== 'admin' && (
+          <PostAmount
+            openLikesModal={openLikesModal}
+            likes={likesCount}
+            avatarLikes={avatarLikes}
+            date={date}
+          />
+        )}
         <div className={s.postInfo}>
           <div className={s.post__desc}>
             <Image
@@ -141,8 +181,17 @@ export const PostContentMobile = ({
               type={'deletePostPost'}
             />
           )}
+          {showViewLikesModal && (
+            <ViewLikesModal
+              myId={myId}
+              postId={post.id}
+              followUnfollow={followUnfollow}
+              likes={likesCount}
+              setShowViewLikesModal={setShowViewLikesModal}
+            />
+          )}
         </div>
       </div>
-      </PostModal>
+    </PostModal>
   );
 };
