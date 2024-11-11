@@ -11,6 +11,7 @@ import {
   getNotifications,
   NotificationItem, updateStatusNotifications,
 } from '@/webSocket/webSocketActions/webSocketActions';
+import { Loader } from '@/components/Loader';
 
 type Props = {
   accessToken: string;
@@ -19,117 +20,118 @@ type Props = {
 export const HeaderNotification = ({ accessToken }: Props) => {
   const [amount, setAmount] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [initNotifications, setInitNotifications] = useState<NotificationItem[]>([]);
-  const [newNotification, setNewNotification] = useState<NotificationItem[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useConnectSocket({ accessToken, setNewNotification, setAmount })
+  const isConnected = useConnectSocket({ accessToken, setNotifications, setAmount });
 
-  useEffect(() => {
-    console.log('newNotification: ', newNotification)
-    setInitNotifications((prevState) => [...newNotification, ...prevState])
-  }, [newNotification])
-
-  const { t } = useTranslation()
-
-  useEffect(() => {
-    console.log('initNotifications: ', initNotifications)
-  }, [initNotifications])
+  const { t } = useTranslation();
 
   const translate = (key: string): string => t(`Header.${key}`);
 
   const fetchNotifications = async (cursor: number) => {
     const data = await getNotifications(accessToken, cursor);
     if (data) {
-      console.log("Fetched notifications:", data.items)
-      setInitNotifications(data.items)
-      setAmount(data.items.filter((item: NotificationItem) => !item.isRead).length)
+      console.log('Fetched notifications:', data.items);
+      setNotifications(data.items);
+      setAmount(data.items.filter((item: NotificationItem) => !item.isRead).length);
     }
+    setIsLoading(!isLoading);
   };
 
   useEffect(() => {
-    fetchNotifications(0)
-  }, [])
+    if (isConnected) {
+      fetchNotifications(0);
+    }
+  }, [isConnected]);
 
+  console.log('notifications: ', notifications);
   const onOpenPopup = async (open: boolean) => {
-    setShowPopup(open)
+    setShowPopup(open);
     if (open) {
-      setInitNotifications((prevState) =>
+      setNotifications((prevState) =>
         prevState.map((notification) => ({
           ...notification,
           isRead: true,
-        }))
+        })),
       );
-      setAmount(0)
-      const data = await updateStatusNotifications(accessToken, 4382)
+      setAmount(0);
+
+      if (amount > 0) {
+        const isNotReadIds = notifications.filter(notification => !notification.isRead)
+          .map(notification => notification.id);
+        console.log(isNotReadIds);
+        const data = await updateStatusNotifications(accessToken, isNotReadIds);
+      }
     }
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
     const getSecondsLabel = (n: number) => {
       if (n % 10 === 1 && n % 100 !== 11) {
-        return 'секунду'
+        return 'секунду';
       } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'секунды'
+        return 'секунды';
       } else {
-        return 'секунд'
+        return 'секунд';
       }
-    }
+    };
 
     const getMinutesLabel = (n: number) => {
       if (n % 10 === 1 && n % 100 !== 11) {
-        return 'минуту'
+        return 'минуту';
       } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'минуты'
+        return 'минуты';
       } else {
-        return 'минут'
+        return 'минут';
       }
-    }
+    };
 
     const getHoursLabel = (n: number) => {
       if (n % 10 === 1 && n % 100 !== 11) {
-        return 'час'
+        return 'час';
       } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'часа'
+        return 'часа';
       } else {
-        return 'часов'
+        return 'часов';
       }
-    }
+    };
 
     const getDaysLabel = (n: number) => {
       if (n % 10 === 1 && n % 100 !== 11) {
-        return 'день'
+        return 'день';
       } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'дня'
+        return 'дня';
       } else {
-        return 'дней'
+        return 'дней';
       }
-    }
+    };
 
     if (diffInSeconds < 60) {
-      return `${diffInSeconds} ${getSecondsLabel(diffInSeconds)} назад`
+      return `${diffInSeconds} ${getSecondsLabel(diffInSeconds)} назад`;
     } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60)
-      return `${minutes} ${getMinutesLabel(minutes)} назад`
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} ${getMinutesLabel(minutes)} назад`;
     } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600)
-      return `${hours} ${getHoursLabel(hours)} назад`
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} ${getHoursLabel(hours)} назад`;
     } else {
-      const days = Math.floor(diffInSeconds / 86400)
-      return `${days} ${getDaysLabel(days)} назад`
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days} ${getDaysLabel(days)} назад`;
     }
   };
   const formatMessage = (expiryDate: string) => {
-    const expiry = new Date(expiryDate)
-    const now = new Date()
-    const diffInMilliseconds = expiry.getTime() - now.getTime()
-    const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24))
+    const expiry = new Date(expiryDate);
+    const now = new Date();
+    const diffInMilliseconds = expiry.getTime() - now.getTime();
+    const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
 
     if (diffInDays <= 0) {
-      return t('Your subscription has expired')
+      return t('Your subscription has expired');
     } else if (diffInDays === 1) {
       return t('Your subscription will expire in 1 day');
     } else if (diffInDays === 7) {
@@ -138,6 +140,10 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       return t('Your subscription will expire in {{count}} days', { count: diffInDays });
     }
   };
+
+  // if(isLoading) {
+  //   return <Loader />
+  // }
 
   return (
     <div className={s.notification}>
@@ -157,8 +163,8 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                 {translate('notifications.notZeroNotifications')}
               </h3>
               <div>
-                {initNotifications.length > 0 ? (
-                  initNotifications.map((notification) => (
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
                     <div key={notification.id} className={s.popup__item}>
                       <p className={s.popup__item__title}>
                         {translate('notifications.newNotifications')}

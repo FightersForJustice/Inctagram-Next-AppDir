@@ -1,7 +1,7 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getNotifications = async (accessToken: string, cursor: number) => {
-  const apiUrl = `${baseUrl}notifications?cursor=${cursor}`;
+  const apiUrl = `${baseUrl}notifications?cursor=${cursor}?cursor=${cursor}`;
   try {
     const response = await fetch(apiUrl, {
       headers: {
@@ -21,25 +21,24 @@ export const getNotifications = async (accessToken: string, cursor: number) => {
 };
 
 
-export const updateStatusNotifications = async (accessToken: string, id: number) => {
+export const updateStatusNotifications = async (accessToken: string, body: number[]) => {
   const apiUrl = `${baseUrl}notifications/mark-as-read`;
-  console.error('!!!!!!!!!!');
   try {
     const response = await fetch(apiUrl, {
+      method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ ids: body }),
     });
-    if (response.ok) {
-      console.error('!!!!!!!!!!', response.statusText);
-    }
+
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;
     }
-    const data = await response.json();
-    return data;
+    console.log(response.status);
+    return response.status;
   } catch (error) {
     console.error('Error fetching data:', error);
     return null;
