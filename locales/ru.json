@@ -87,13 +87,14 @@
     "SubscribersModal": {
       "title": "Подписчиков",
       "search": "Поиск",
-      "subBtn": "Подписаться",
-      "unsubBtn": "Отписаться",
+      "subscribe": "Подписаться",
+      "unsubscribe": "Отписаться",
       "deleteBtn": "Удалить"
     },
     "SubscriptionsModal": {
       "title": "Подписок",
       "search": "Поиск",
+      "subscribe": "Подписаться",
       "unsubscribe": "Отписаться"
     },
     "LikesModal": {

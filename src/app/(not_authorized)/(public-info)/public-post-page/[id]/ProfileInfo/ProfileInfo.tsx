@@ -88,8 +88,8 @@ export const ProfileInfo = ({
   };
 
   const subBtnName = isUserFollowing
-    ? 'SubscribersModal.unsubBtn'
-    : 'SubscribersModal.subBtn';
+    ? 'SubscribersModal.unsubscribe'
+    : 'SubscribersModal.subscribe';
 
   const openFollowingModal = () => {
     setShowFollowingModal(true);

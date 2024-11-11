@@ -27,8 +27,8 @@ export const UserForFollowersList: React.FC<Props> = ({
 
   const btnName = translate(
     user.isFollowing
-      ? 'SubscriptionsModal.unsubscribe'
-      : 'SubscriptionsModal.subscribe'
+      ? 'SubscribersModal.unsubscribe'
+      : 'SubscribersModal.subscribe'
   );
 
   const finalClassName = user.isFollowing
