@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
 import { useTranslation } from 'react-i18next';
-import fillBell from '/public/img/MaskFill.svg';
-import bell from '/public/img/MaskOutline.svg';
+import fillBell from './../../../../public/img/MaskFill.svg';
+import bell from './../../../../public/img/MaskOutline.svg';
 import s from './HeaderNotification.module.scss';
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import {
-  getNotification,
-  NotificationItem,
+  getNotifications,
+  NotificationItem, updateStatusNotifications,
 } from '@/webSocket/webSocketActions/webSocketActions';
 
 type Props = {
@@ -38,7 +38,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   const translate = (key: string): string => t(`Header.${key}`);
 
   const fetchNotifications = async (cursor: number) => {
-    const data = await getNotification(accessToken, cursor);
+    const data = await getNotifications(accessToken, cursor);
     if (data) {
       console.log("Fetched notifications:", data.items)
       setInitNotifications(data.items)
@@ -46,9 +46,9 @@ export const HeaderNotification = ({ accessToken }: Props) => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchNotifications(0)
-  // }, [])
+  useEffect(() => {
+    fetchNotifications(0)
+  }, [])
 
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open)
@@ -60,6 +60,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
         }))
       );
       setAmount(0)
+      const data = await updateStatusNotifications(accessToken, 4382)
     }
   };
 
