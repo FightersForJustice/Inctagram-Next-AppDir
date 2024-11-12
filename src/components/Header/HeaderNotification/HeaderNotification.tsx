@@ -5,13 +5,14 @@ import * as Popover from '@radix-ui/react-popover';
 import { useTranslation } from 'react-i18next';
 import fillBell from './../../../../public/img/MaskFill.svg';
 import bell from './../../../../public/img/MaskOutline.svg';
-import s from './HeaderNotification.module.scss';
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import {
   getNotifications,
   NotificationItem, updateStatusNotifications,
 } from '@/webSocket/webSocketActions/webSocketActions';
 import { Loader } from '@/components/Loader';
+
+import s from './HeaderNotification.module.scss';
 
 type Props = {
   accessToken: string;
@@ -49,12 +50,12 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
     if (open) {
-      setNotifications((prevState) =>
-        prevState.map((notification) => ({
-          ...notification,
-          isRead: true,
-        })),
-      );
+      // setNotifications((prevState) =>
+      //   prevState.map((notification) => ({
+      //     ...notification,
+      //     isRead: true,
+      //   })),
+      // );
       setAmount(0);
 
       if (amount > 0) {
@@ -65,6 +66,10 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       }
     }
   };
+
+  const removeNotification = (id: number) => {
+    console.log(id)
+  }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -166,15 +171,21 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                 {notifications.length > 0 ? (
                   notifications.map((notification) => (
                     <div key={notification.id} className={s.popup__item}>
-                      <p className={s.popup__item__title}>
-                        {translate('notifications.newNotifications')}
-                        {!notification.isRead && (
-                          <span className={s.popup__item__new}>
-                            {' '}
-                            {translate('notifications.new')}
-                          </span>
-                        )}
-                      </p>
+                      <div className={s.popup__item__title}>
+                        <div className={s.popup__item__title}>
+                          <h3>{translate('notifications.newNotifications')}</h3>
+                          {notification.isRead && (
+                            <h3 className={s.popup__item__title__wrapper__new}>
+                              {translate('notifications.new')}
+                            </h3>
+                          )}
+                        </div>
+                        <button onClick={() => {removeNotification(notification.id)}}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
+                        </svg>
+                        </button>
+                      </div>
                       <p className={s.popup__desc}>{formatMessage(notification.message)}</p>
                       <p className={s.popup__time}>
                         {formatDate(notification.notifyAt)}

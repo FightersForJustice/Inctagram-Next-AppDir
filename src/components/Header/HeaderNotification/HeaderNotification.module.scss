@@ -39,9 +39,8 @@
   cursor: auto;
   z-index: 11;
   max-height: 450px;
-  overflow: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  text-align: center;
 
   &::-webkit-scrollbar {
     width: 6px; /* ширина всей полосы прокрутки */
@@ -73,15 +72,37 @@
     transition: all 0.2s linear;
 
     &__title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
       font-weight: bold;
       margin-bottom: 5px;
+
+      &__wrapper {
+        display: flex;
+        flex-direction: row;
+
+        &__new {
+          margin-left: 5px;
+          color: var(--primary-500);
+          font-weight: lighter;
+          font-size: 13px;
+        }
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--light-100);
+        transition: all 0.2s linear;
+
+        &:hover {
+          fill: var(--primary-500);
+        }
+      }
     }
 
-    &__new {
-      color: var(--primary-500);
-      font-weight: lighter;
-      font-size: 13px;
-    }
 
     &:hover {
       border-top: 1px solid var(--primary-500);

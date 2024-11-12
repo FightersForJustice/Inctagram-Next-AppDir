@@ -37,7 +37,7 @@ export const useConnectSocket = ({
           isRead: response.isRead,
           notifyAt: response.notifyAt,
         };
-        setNotifications([newNotify]);
+        setNotifications((prevNotifications) => [newNotify, ...prevNotifications]);
         setAmount((prevState) => ++prevState);
       }
     );
