@@ -68,7 +68,9 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   };
 
   const removeNotification = (id: number) => {
-    console.log(id)
+
+
+
   }
 
   const formatDate = (dateString: string) => {
