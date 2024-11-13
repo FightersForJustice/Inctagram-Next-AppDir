@@ -7,6 +7,7 @@ import fillBell from './../../../../public/img/MaskFill.svg';
 import bell from './../../../../public/img/MaskOutline.svg';
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import {
+  deleteNotification,
   getNotifications,
   NotificationItem, updateStatusNotifications,
 } from '@/webSocket/webSocketActions/webSocketActions';
@@ -47,6 +48,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   }, [isConnected]);
 
   console.log('notifications: ', notifications);
+
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
     if (open) {
@@ -56,7 +58,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       //     isRead: true,
       //   })),
       // );
-      setAmount(0);
+
 
       if (amount > 0) {
         const isNotReadIds = notifications.filter(notification => !notification.isRead)
@@ -64,13 +66,14 @@ export const HeaderNotification = ({ accessToken }: Props) => {
         console.log(isNotReadIds);
         const data = await updateStatusNotifications(accessToken, isNotReadIds);
       }
+
+      setAmount(0);
     }
   };
 
-  const removeNotification = (id: number) => {
-
-
-
+  const removeNotification = async (id: number) => {
+    const data = await deleteNotification(accessToken, id);
+    console.log(data);
   }
 
   const formatDate = (dateString: string) => {

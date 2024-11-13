@@ -32,7 +32,6 @@ export const updateStatusNotifications = async (accessToken: string, body: numbe
       },
       body: JSON.stringify({ ids: body }),
     });
-
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;
@@ -42,6 +41,27 @@ export const updateStatusNotifications = async (accessToken: string, body: numbe
   } catch (error) {
     console.error('Error fetching data:', error);
     return null;
+  }
+};
+
+export const deleteNotification = async (accessToken: string, id: number) => {
+  const apiUrl = `${baseUrl}notifications/${id}`;
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      console.error('Error:', response.statusText);
+      return response;
+    }
+    console.log(response.status);
+    return response.status;
+  } catch (error) {
+    console.error('Error remove:', error);
+    return error;
   }
 };
 
