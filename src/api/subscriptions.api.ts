@@ -1,6 +1,4 @@
 import { api } from '@/api/api';
-import { accessToken } from '@/accessToken';
-import { headers } from 'next/headers';
 
 export const subscriptionsApi = api.injectEndpoints({
   endpoints: (builder) => ({

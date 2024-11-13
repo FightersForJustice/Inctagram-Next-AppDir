@@ -10,10 +10,12 @@ import {
   deleteNotification,
   getNotifications,
   NotificationItem, updateStatusNotifications,
-} from '@/webSocket/webSocketActions/webSocketActions';
+} from '@/api/notification.api';
 import { Loader } from '@/components/Loader';
 
 import s from './HeaderNotification.module.scss';
+import { Dictionary } from '@reduxjs/toolkit';
+import { $Dictionary } from 'i18next/typescript/helpers';
 
 type Props = {
   accessToken: string;
@@ -23,13 +25,12 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   const [amount, setAmount] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isConnected = useConnectSocket({ accessToken, setNotifications, setAmount });
+  useConnectSocket({ accessToken, setNotifications, setAmount });
 
   const { t } = useTranslation();
 
-  const translate = (key: string): string => t(`Header.${key}`);
+  const translate = (key: string, params?: $Dictionary): string => t(`Header.${key}`, params);
 
   const fetchNotifications = async (cursor: number) => {
     const data = await getNotifications(accessToken, cursor);
@@ -38,27 +39,18 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       setNotifications(data.items);
       setAmount(data.items.filter((item: NotificationItem) => !item.isRead).length);
     }
-    setIsLoading(!isLoading);
   };
 
   useEffect(() => {
-    if (isConnected) {
       fetchNotifications(0);
-    }
-  }, [isConnected]);
+  }, []);
 
   console.log('notifications: ', notifications);
 
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
     if (open) {
-      // setNotifications((prevState) =>
-      //   prevState.map((notification) => ({
-      //     ...notification,
-      //     isRead: true,
-      //   })),
-      // );
-
+      setAmount(0);
 
       if (amount > 0) {
         const isNotReadIds = notifications.filter(notification => !notification.isRead)
@@ -66,14 +58,12 @@ export const HeaderNotification = ({ accessToken }: Props) => {
         console.log(isNotReadIds);
         const data = await updateStatusNotifications(accessToken, isNotReadIds);
       }
-
-      setAmount(0);
     }
   };
 
   const removeNotification = async (id: number) => {
+    setNotifications((prevState) => prevState.filter(notification => notification.id !== id));
     const data = await deleteNotification(accessToken, id);
-    console.log(data);
   }
 
   const formatDate = (dateString: string) => {
@@ -134,26 +124,20 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       return `${days} ${getDaysLabel(days)} назад`;
     }
   };
-  const formatMessage = (expiryDate: string) => {
-    const expiry = new Date(expiryDate);
-    const now = new Date();
-    const diffInMilliseconds = expiry.getTime() - now.getTime();
-    const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
-
-    if (diffInDays <= 0) {
-      return t('Your subscription has expired');
-    } else if (diffInDays === 1) {
-      return t('Your subscription will expire in 1 day');
-    } else if (diffInDays === 7) {
-      return t('Your subscription will expire in 7 day');
-    } else {
-      return t('Your subscription will expire in {{count}} days', { count: diffInDays });
+  const formatMessage = (message: string) => {
+    if (message === 'Your subscription-ws ends in 1 day') {
+      return translate('messages.subscriptionEndsIn1Day');
+    } else if (message === 'Your subscription ends in 7 days') {
+      return translate('messages.subscriptionEndsIn7Days');
+    } else if (message === 'The next subscription payment will be debited from your account after 1 day.') {
+      return translate('messages.nextSubscriptionPaymentDebited');
+    } else if (message.startsWith('Your subscription has been activated and is valid until')) {
+      const validUntil = new Date(message);
+      return translate('messages.subscriptionActivated', {
+        date: validUntil.toLocaleDateString()
+      });
     }
   };
-
-  // if(isLoading) {
-  //   return <Loader />
-  // }
 
   return (
     <div className={s.notification}>
@@ -179,7 +163,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                       <div className={s.popup__item__title}>
                         <div className={s.popup__item__title}>
                           <h3>{translate('notifications.newNotifications')}</h3>
-                          {notification.isRead && (
+                          {!notification.isRead && (
                             <h3 className={s.popup__item__title__wrapper__new}>
                               {translate('notifications.new')}
                             </h3>

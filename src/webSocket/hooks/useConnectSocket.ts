@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { NotificationItem } from '@/webSocket/webSocketActions/webSocketActions';
+import { NotificationItem } from '@/api/notification.api';
 import { SocketEvents } from './SocketEvents';
 
 type useConnectSocketProps = {
@@ -15,8 +15,6 @@ export const useConnectSocket = ({
   setAmount,
 }: useConnectSocketProps) => {
 
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-
   useEffect(() => {
     const socket = io('https://inctagram.work', {
       query: { accessToken },
@@ -24,7 +22,6 @@ export const useConnectSocket = ({
 
     socket.on('connect', () => {
       console.log('WebSocket connected');
-      setIsConnected(true);
     });
 
     socket.on(
@@ -36,9 +33,18 @@ export const useConnectSocket = ({
           message: response.message,
           isRead: response.isRead,
           notifyAt: response.notifyAt,
-        };
-        setNotifications((prevNotifications) => [newNotify, ...prevNotifications]);
-        setAmount((prevState) => ++prevState);
+        };setNotifications
+        ((prevNotifications) => {
+
+          const notified = prevNotifications.find(notification => notification.id === newNotify.id);
+
+          if(!notified) {
+            setAmount((prevState) => ++prevState);
+            return [newNotify, ...prevNotifications]
+          }
+
+          return prevNotifications
+        });
       }
     );
 
@@ -54,8 +60,6 @@ export const useConnectSocket = ({
       socket.disconnect();
     };
   }, [accessToken, setNotifications, setAmount]);
-
-  return isConnected
 };
 
 type notificationWSResponseType = {

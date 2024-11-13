@@ -399,6 +399,12 @@
       "logIn": "Log in",
       "signUp": "Sign up"
     },
+    "messages": {
+      "subscriptionEndsIn1Day": "Your subscription ends in 1 day",
+      "subscriptionEndsIn7Days": "Your subscription ends in 7 days",
+      "nextSubscriptionPaymentDebited": "The next subscription payment will be debited from your account after 1 day.",
+      "subscriptionActivated": "Your subscription has been activated and is valid until {{date}}"
+    },
     "mobileMenu": {
       "profileSettings": "Profile Settings",
       "statistics": "Statistics",

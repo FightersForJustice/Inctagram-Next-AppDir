@@ -1,7 +1,7 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const getNotifications = async (accessToken: string, cursor: number) => {
-  const apiUrl = `${baseUrl}notifications?cursor=${cursor}?cursor=${cursor}`;
+export const getNotifications = async (accessToken: string, cursor: number, pageSize: number = 30) => {
+  const apiUrl = `${baseUrl}notifications?cursor=${cursor}&pageSize=${pageSize}`;
   try {
     const response = await fetch(apiUrl, {
       headers: {

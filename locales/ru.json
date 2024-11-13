@@ -405,6 +405,12 @@
       "logIn": "Войти",
       "signUp": "Регистрация"
     },
+    "messages": {
+      "subscriptionEndsIn1Day": "Ваша подписка заканчивается через 1 день",
+      "subscriptionEndsIn7Days": "Ваша подписка заканчивается через 7 дней",
+      "nextSubscriptionPaymentDebited": "Следующее платеж у вас спишется через 1 день.",
+      "subscriptionActivated": "Ваша подписка активирована и действует до {{date}}"
+    },
     "mobileMenu": {
       "profileSettings": "Настройки профиля",
       "statistics": "Статистика",
