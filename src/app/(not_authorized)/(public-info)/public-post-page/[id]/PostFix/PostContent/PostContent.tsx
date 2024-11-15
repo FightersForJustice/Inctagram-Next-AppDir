@@ -29,7 +29,7 @@ import { ViewLikesModal } from '@/components/Modals/ViewLikesModal';
 import {
   followToUser,
   unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/data';
+} from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
@@ -50,7 +50,6 @@ export const PostContent = ({
   myProfile,
   setEditPost,
   onDeletePost,
-  token,
 }: Props) => {
   const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -102,9 +101,7 @@ export const PostContent = ({
   };
 
   const followUnfollow = async (userId: number, isFollowing: boolean) => {
-    isFollowing
-      ? await unfollowByUser(userId, token)
-      : await followToUser(userId, token);
+    isFollowing ? await unfollowByUser(userId) : await followToUser(userId);
   };
 
   const openLikesModal = async () => {
