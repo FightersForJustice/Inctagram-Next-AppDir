@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 import {
   followToUser,
   unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/data';
-import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
-import { SubscribersModal } from '@/components/Modals/SubscribersModal';
+} from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
@@ -30,7 +30,6 @@ export const ProfileInfo = ({
   postsData,
   isPublic,
   followingData,
-  token,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
@@ -63,13 +62,13 @@ export const ProfileInfo = ({
     if (!isPublic) {
       let resIsOk: boolean | null;
       if (isUserFollowing) {
-        resIsOk = await unfollowByUser(userData.id, token);
+        resIsOk = await unfollowByUser(userData.id);
         if (resIsOk) {
           setIsUserFollowing(false);
           setFollowersCount((prev) => prev - 1);
         }
       } else {
-        resIsOk = await followToUser(userData.id, token);
+        resIsOk = await followToUser(userData.id);
         if (resIsOk) {
           setIsUserFollowing(true);
           setFollowersCount((prev) => prev + 1);
@@ -82,9 +81,7 @@ export const ProfileInfo = ({
     userId: number,
     isFollowing: boolean
   ) => {
-    isFollowing
-      ? await unfollowByUser(userId, token)
-      : await followToUser(userId, token);
+    isFollowing ? await unfollowByUser(userId) : await followToUser(userId);
   };
 
   const subBtnName = isUserFollowing
@@ -165,7 +162,6 @@ export const ProfileInfo = ({
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscriptionsModal={setShowFollowingModal}
-            token={token}
           />
         )}
         {showFollowersModal && (
@@ -174,7 +170,6 @@ export const ProfileInfo = ({
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscribersModal={setShowFollowersModal}
-            token={token}
           />
         )}
       </div>
