@@ -1,4 +1,3 @@
-'use server';
 import { getPosts, getProfile } from '../actions';
 
 import { ProfileInfo } from '../ProfileInfo/ProfileInfo';
