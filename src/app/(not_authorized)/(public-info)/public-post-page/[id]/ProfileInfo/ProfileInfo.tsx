@@ -21,7 +21,6 @@ type Props = {
   postsData: ApiResponsePosts;
   isPublic: boolean;
   followingData: UserFollowingDataType | null;
-  token: string | null;
 };
 export const ProfileInfo = ({
   myId,
@@ -39,6 +38,9 @@ export const ProfileInfo = ({
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [isUserFollowing, setIsUserFollowing] = useState(
     followingData?.isFollowing
+  );
+  const [followingCount, setFollowingCount] = useState(
+    followingData?.followingCount || 0
   );
   const [followersCount, setFollowersCount] = useState(
     followingData?.followersCount || 0
@@ -81,7 +83,14 @@ export const ProfileInfo = ({
     userId: number,
     isFollowing: boolean
   ) => {
-    isFollowing ? await unfollowByUser(userId) : await followToUser(userId);
+    let resIsOk: boolean | null;
+    if (isFollowing) {
+      resIsOk = await unfollowByUser(userId);
+      resIsOk && myProfile && setFollowingCount((prev) => prev - 1);
+    } else {
+      resIsOk = await followToUser(userId);
+      resIsOk && myProfile && setFollowingCount((prev) => prev + 1);
+    }
   };
 
   const subBtnName = isUserFollowing
@@ -118,7 +127,7 @@ export const ProfileInfo = ({
               <div className={s.name}>{userData?.userName}</div>
               <div className={s.statistics}>
                 <div className={s.following} onClick={openFollowingModal}>
-                  <p>{!isPublic && followingData?.followingCount}</p>
+                  <p>{!isPublic && followingCount}</p>
                   <p>{translate('subscriptions')}</p>
                 </div>
                 <div className={s.followers} onClick={openFollowersModal}>
