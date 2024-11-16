@@ -10,7 +10,6 @@ import {
   UserProfile,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { getUserInfo } from '@/app/(authorized)/search/SearchContent/actions';
-import { headers } from 'next/headers';
 
 type Props = {
   myId?: number;
@@ -25,8 +24,6 @@ const ProfileServer = async ({
   isPublic = false,
   myId,
 }: Props) => {
-  const headersList = headers();
-  const token = headersList.get('accessToken');
   const userdata: UserProfile = await getProfile(id);
   const followingData: UserFollowingDataType | null = await getUserInfo(
     userdata.userName
@@ -42,7 +39,6 @@ const ProfileServer = async ({
         myProfile={myProfile}
         isPublic={isPublic}
         followingData={!isPublic ? followingData : null}
-        token={token}
       />
       <div className={s.posts}>
         <Posts
@@ -51,7 +47,6 @@ const ProfileServer = async ({
           postsData={postsData}
           myProfile={myProfile}
           isPublic={isPublic}
-          token={token}
         />
       </div>
     </>
