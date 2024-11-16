@@ -496,6 +496,7 @@
     "follow": "Follow",
     "unfollow": "Unfollow",
     "copy": "Copy Link",
+    "copied": "Copied",
     "delete": "Delete post"
   },
   "PaginationSelect": {

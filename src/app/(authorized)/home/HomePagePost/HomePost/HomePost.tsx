@@ -37,6 +37,7 @@ export const HomePost = ({ post }: PropsType) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const getFollowingData = async () => {
@@ -53,6 +54,19 @@ export const HomePost = ({ post }: PropsType) => {
     } else {
       const data = await followToUser(post.ownerId);
       data && setIsFollowing(true);
+    }
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+      console.log('Content copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
     }
   };
 
@@ -113,6 +127,8 @@ export const HomePost = ({ post }: PropsType) => {
         <HomePostPopup
           isFollowing={isFollowing}
           followUnfollow={followUnfollowHandler}
+          isCopied={isCopied}
+          copyContent={copyToClipboard}
         />
       </div>
       <PostImageCarousel images={post.images} openPost={openPost} />
