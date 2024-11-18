@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { NotificationItem } from '@/webSocket/webSocketActions/webSocketActions';
+import { NotificationItem } from '@/api/notification.api';
 import { SocketEvents } from './SocketEvents';
 
 type useConnectSocketProps = {
   accessToken: string;
-  setNewNotification: React.Dispatch<React.SetStateAction<NotificationItem[]>>;
+  setNotifications: React.Dispatch<React.SetStateAction<NotificationItem[]>>;
   setAmount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const useConnectSocket = ({
   accessToken,
-  setNewNotification,
+  setNotifications,
   setAmount,
 }: useConnectSocketProps) => {
+
   useEffect(() => {
     const socket = io('https://inctagram.work', {
       query: { accessToken },
@@ -32,9 +33,18 @@ export const useConnectSocket = ({
           message: response.message,
           isRead: response.isRead,
           notifyAt: response.notifyAt,
-        };
-        setNewNotification([newNotify]);
-        setAmount((prevState) => ++prevState);
+        };setNotifications
+        ((prevNotifications) => {
+
+          const notified = prevNotifications.find(notification => notification.id === newNotify.id);
+
+          if(!notified) {
+            setAmount((prevState) => ++prevState);
+            return [newNotify, ...prevNotifications]
+          }
+
+          return prevNotifications
+        });
       }
     );
 
@@ -49,7 +59,7 @@ export const useConnectSocket = ({
     return () => {
       socket.disconnect();
     };
-  }, [accessToken, setNewNotification, setAmount]);
+  }, [accessToken, setNotifications, setAmount]);
 };
 
 type notificationWSResponseType = {
