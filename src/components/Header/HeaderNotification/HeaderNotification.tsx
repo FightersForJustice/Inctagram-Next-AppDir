@@ -16,6 +16,8 @@ import { Loader } from '@/components/Loader';
 import s from './HeaderNotification.module.scss';
 import { Dictionary } from '@reduxjs/toolkit';
 import { $Dictionary } from 'i18next/typescript/helpers';
+import { getTimeAgoText } from '@/utils';
+import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 
 type Props = {
   accessToken: string;
@@ -29,9 +31,10 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   useConnectSocket({ accessToken, setNotifications, setAmount });
 
   const { t } = useTranslation();
+  const language = useGetLanguage()
 
-  const translate = (key: string, params?: $Dictionary): string => t(`Header.${key}`, params);
-
+  const translateNotification = (key: string, params?: $Dictionary): string => t(`Header.${key}`, params);
+  const translateTime = (key: string): string => t(`Time.${key}`)
   const fetchNotifications = async (cursor: number) => {
     const data = await getNotifications(accessToken, cursor);
     if (data) {
@@ -55,7 +58,6 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       if (amount > 0) {
         const isNotReadIds = notifications.filter(notification => !notification.isRead)
           .map(notification => notification.id);
-        console.log(isNotReadIds);
         const data = await updateStatusNotifications(accessToken, isNotReadIds);
       }
     }
@@ -66,74 +68,16 @@ export const HeaderNotification = ({ accessToken }: Props) => {
     const data = await deleteNotification(accessToken, id);
   }
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-    const getSecondsLabel = (n: number) => {
-      if (n % 10 === 1 && n % 100 !== 11) {
-        return 'секунду';
-      } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'секунды';
-      } else {
-        return 'секунд';
-      }
-    };
-
-    const getMinutesLabel = (n: number) => {
-      if (n % 10 === 1 && n % 100 !== 11) {
-        return 'минуту';
-      } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'минуты';
-      } else {
-        return 'минут';
-      }
-    };
-
-    const getHoursLabel = (n: number) => {
-      if (n % 10 === 1 && n % 100 !== 11) {
-        return 'час';
-      } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'часа';
-      } else {
-        return 'часов';
-      }
-    };
-
-    const getDaysLabel = (n: number) => {
-      if (n % 10 === 1 && n % 100 !== 11) {
-        return 'день';
-      } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
-        return 'дня';
-      } else {
-        return 'дней';
-      }
-    };
-
-    if (diffInSeconds < 60) {
-      return `${diffInSeconds} ${getSecondsLabel(diffInSeconds)} назад`;
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes} ${getMinutesLabel(minutes)} назад`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours} ${getHoursLabel(hours)} назад`;
-    } else {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days} ${getDaysLabel(days)} назад`;
-    }
-  };
   const formatMessage = (message: string) => {
     if (message === 'Your subscription-ws ends in 1 day') {
-      return translate('messages.subscriptionEndsIn1Day');
+      return translateNotification('messages.subscriptionEndsIn1Day');
     } else if (message === 'Your subscription ends in 7 days') {
-      return translate('messages.subscriptionEndsIn7Days');
+      return translateNotification('messages.subscriptionEndsIn7Days');
     } else if (message === 'The next subscription payment will be debited from your account after 1 day.') {
-      return translate('messages.nextSubscriptionPaymentDebited');
+      return translateNotification('messages.nextSubscriptionPaymentDebited');
     } else if (message.startsWith('Your subscription has been activated and is valid until')) {
       const validUntil = new Date(message);
-      return translate('messages.subscriptionActivated', {
+      return translateNotification('messages.subscriptionActivated', {
         date: validUntil.toLocaleDateString()
       });
     }
@@ -154,7 +98,7 @@ export const HeaderNotification = ({ accessToken }: Props) => {
           <Popover.Content className="PopoverContent" sideOffset={5}>
             <div className={s.popup}>
               <h3 className={s.popup__title}>
-                {translate('notifications.notZeroNotifications')}
+                {translateNotification('notifications.notZeroNotifications')}
               </h3>
               <div>
                 {notifications.length > 0 ? (
@@ -162,10 +106,10 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                     <div key={notification.id} className={s.popup__item}>
                       <div className={s.popup__item__title}>
                         <div className={s.popup__item__title}>
-                          <h3>{translate('notifications.newNotifications')}</h3>
+                          <h3>{translateNotification('notifications.newNotifications')}</h3>
                           {!notification.isRead && (
                             <h3 className={s.popup__item__title__wrapper__new}>
-                              {translate('notifications.new')}
+                              {translateNotification('notifications.new')}
                             </h3>
                           )}
                         </div>
@@ -177,14 +121,14 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                       </div>
                       <p className={s.popup__desc}>{formatMessage(notification.message)}</p>
                       <p className={s.popup__time}>
-                        {formatDate(notification.notifyAt)}
+                        {getTimeAgoText(notification.notifyAt, language, translateTime)}
                       </p>
                     </div>
                   ))
                 ) : (
                   <div className={s.popup__item}>
                     <p className={s.popup__desc}>
-                      {translate('notifications.zeroNotifications')}
+                      {translateNotification('notifications.zeroNotifications')}
                     </p>
                   </div>
                 )}
