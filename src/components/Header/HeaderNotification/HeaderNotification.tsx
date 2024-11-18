@@ -11,14 +11,12 @@ import {
   getNotifications,
   NotificationItem, updateStatusNotifications,
 } from '@/api/notification.api';
-import { Loader } from '@/components/Loader';
 
-import s from './HeaderNotification.module.scss';
-import { Dictionary } from '@reduxjs/toolkit';
 import { $Dictionary } from 'i18next/typescript/helpers';
 import { getTimeAgoText } from '@/utils';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 
+import s from './HeaderNotification.module.scss';
 type Props = {
   accessToken: string;
 };

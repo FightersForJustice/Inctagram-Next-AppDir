@@ -35,9 +35,11 @@ export const MyPaymentsTab = ({ data }: { data: Array<PaymentsType> }) => {
     { label: '7', value: '7' },
   ];
 
-  if (currentData.length === 0) {
-    setCurrentPage(1);
-  }
+  useEffect(() => {
+    if (data.length > 0 && currentData.length === 0) {
+      setCurrentPage(1);
+    }
+  }, [data, currentData.length]);
 
   useEffect(() => {
     const handleResize = () => {
