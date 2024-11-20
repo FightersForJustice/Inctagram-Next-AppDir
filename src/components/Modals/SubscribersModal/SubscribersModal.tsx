@@ -18,6 +18,7 @@ import { UnsubscribeModal } from '@/components/Modals/UnsubscribeModal';
 
 type Props = {
   myId?: number;
+  isMyProfile: boolean;
   userName: string;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
@@ -25,6 +26,7 @@ type Props = {
 
 export const SubscribersModal = ({
   myId,
+  isMyProfile,
   userName,
   followUnfollow,
   setShowSubscribersModal,
@@ -108,12 +110,13 @@ export const SubscribersModal = ({
   const usersList =
     users &&
     users.map((user) => {
-      const isMyProfile = myId === user.userId;
+      const isItMe = myId === user.userId;
 
       return (
         <UserForFollowersList
           key={user.userId}
-          isMyProfile={isMyProfile}
+          isMyProfile={isItMe}
+          showDeleteBtn={isMyProfile}
           user={user}
           translate={translate}
           setShowUnsubscribeModal={() =>
