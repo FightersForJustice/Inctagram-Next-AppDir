@@ -3,8 +3,6 @@ import ProfileServer from '../../../(not_authorized)/(public-info)/public-post-p
 import { redirect } from 'next/navigation';
 import { ROUTES } from '@/appRoutes/routes';
 
-export const dynamic = 'force-dynamic';
-
 const Page = async ({ params }: { params: { id: string } }) => {
   const headersList = headers();
   const idHeaders = headersList.get('id') as string;

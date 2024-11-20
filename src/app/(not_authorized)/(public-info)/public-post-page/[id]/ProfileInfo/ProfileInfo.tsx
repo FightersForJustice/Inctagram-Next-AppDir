@@ -58,6 +58,8 @@ export const ProfileInfo = ({
         window.removeEventListener('popstate', handler);
       };
     }
+
+    router.refresh();
   }, []);
 
   const followUnfollowHandler = async () => {
@@ -176,6 +178,7 @@ export const ProfileInfo = ({
         {showFollowersModal && (
           <SubscribersModal
             myId={myId}
+            isMyProfile={myProfile}
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscribersModal={setShowFollowersModal}
