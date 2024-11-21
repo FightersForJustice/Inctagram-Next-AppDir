@@ -1,30 +1,19 @@
-import { headers } from 'next/headers';
-import { Dialogs } from '@/app/(authorized)/messenger/dialogs/Dialogs';
-import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
+import {headers} from 'next/headers';
+import {Dialogs} from '@/app/(authorized)/messenger/dialogs/Dialogs';
 
+import s from './Messenger.module.scss'
 
 const Messenger = () => {
-  const headersList = headers();
-  const accessToken = headersList.get('accessToken') as string;
+    const headersList = headers();
+    const accessToken = headersList.get('accessToken') as string;
+    const id = headersList.get('id');
 
-  // const { emitMessage } = useConnectSocket({
-  //   accessToken,
-  //   onMessageSent: (message) => {
-  //     console.log('Message was sent:', message);
-  //   },
-  // });
-
-  const handleSendMessage = () => {
-    const message = 'Привет!';
-    const receiverId = 2; // ID получателя
-    // emitMessage(message, receiverId);
-  };
-
-  return (
-    <div>
-      <button onClick={handleSendMessage}>Отправить сообщение</button>
-    </div>
-  );
+    return (
+        <div className={s.wrapper}>
+            <h1>Messenger</h1>
+            <Dialogs accessToken={accessToken} id={id}/>
+        </div>
+    );
 };
 
 export default Messenger;

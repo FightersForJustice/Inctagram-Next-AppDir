@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  justify-content: flex-start;
+  height: 100vh;
+  margin: 35px 64px 43px 24px;
+
+  h1 {
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 36px;
+    text-align: left;
+  }
+}
