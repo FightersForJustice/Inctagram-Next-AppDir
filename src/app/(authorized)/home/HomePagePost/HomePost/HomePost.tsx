@@ -58,6 +58,7 @@ export const HomePost = ({ post }: PropsType) => {
   };
 
   const copyToClipboard = async (text: string) => {
+    if (isCopied) return;
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
