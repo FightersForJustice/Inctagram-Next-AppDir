@@ -22,6 +22,26 @@ export const getDialogs = async (accessToken: string) => {
     }
 };
 
+export const getDialog = async (accessToken: string, partnerId: number) => {
+    const apiUrl = `${baseUrl}messanger/${partnerId}`;
+    try {
+        const response = await fetch(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        });
+        if (!response.ok) {
+            console.error('Error:', response.statusText);
+            return null;
+        }
+        const data: Dialog = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+    }
+};
+
 export type ItemDialogs = {
     id: number,
     ownerId: number,
@@ -39,4 +59,21 @@ export type Dialogs = {
     totalCount: number,
     pageSize: number,
     items: ItemDialogs[]
+}
+
+export type Dialog = {
+    totalCount: number,
+    pageSize: number,
+    items: ItemDialog[]
+}
+
+export type ItemDialog = {
+    id: number,
+    ownerId: number,
+    receiverId: number,
+    messageText: string,
+    createdAt: string,
+    updatedAt: string,
+    messageType: string,
+    status: string,
 }

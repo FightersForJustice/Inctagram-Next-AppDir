@@ -1,0 +1,47 @@
+.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 0 24px;
+  margin: 24px 0;
+  border-radius: 10px;
+
+  &.owner {
+    justify-content: flex-end;
+  }
+
+  &:first-child {
+    margin-top: 71px;
+  }
+
+  .avatar {
+    border-radius: 50%;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 8px;
+    padding: 8px 12px;
+    max-width: 360px;
+    background-color: var(--primary-900);
+
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+      text-align: left;
+    }
+
+    span {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+      text-align: right;
+      color: var(--primary-100);
+    }
+  }
+}
