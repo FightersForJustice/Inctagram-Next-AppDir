@@ -8,7 +8,7 @@ type Props = {
   isFollowing: boolean;
   followUnfollow: () => void;
   isCopied: boolean;
-  copyContent: (text: string) => void;
+  copyContent: () => void;
 };
 
 export const HomePostPopup = ({
@@ -25,7 +25,7 @@ export const HomePostPopup = ({
   const followUnfollowHandler = () => followUnfollow();
 
   const copyHandler = () => {
-    copyContent("Something is copied, but I don't know what is something");
+    copyContent();
   };
 
   return (

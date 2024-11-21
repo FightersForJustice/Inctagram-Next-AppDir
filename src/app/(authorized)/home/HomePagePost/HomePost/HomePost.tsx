@@ -57,10 +57,15 @@ export const HomePost = ({ post }: PropsType) => {
     }
   };
 
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async () => {
     if (isCopied) return;
+
+    const currentURL = window.location.href;
+    const urlForClipboard =
+      currentURL.slice(0, -4) + `profile/${post.ownerId}?post=${post.id}`;
+
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(urlForClipboard);
       setIsCopied(true);
       setTimeout(() => {
         setIsCopied(false);
