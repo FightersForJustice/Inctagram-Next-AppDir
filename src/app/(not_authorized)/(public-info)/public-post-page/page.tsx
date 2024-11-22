@@ -11,6 +11,7 @@ import s from './PublicPage.module.scss';
 import { PublicPost } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PublicPost/PublicPost';
 import CounterRegisterUser from '@/components/CounterRegisterUser/CounterRegisterUser';
 import { CountRegisterUser } from '@/api/public-profile.api';
+import { headers } from 'next/headers';
 
 
 type Props = {
@@ -24,8 +25,13 @@ const PublicPostPage = async ({ searchParams }: Props) => {
 
   const postIdFromUrl = searchParams?.post;
 
+  const headersList = headers();
+  const idHeaders = headersList.get('id') as string;
+  const myId = parseInt(idHeaders, 10);
+  const accessToken = headersList.get('accessToken') as string;
+
   const postsImages = () => {
-    return publicPostPageData.items.slice(0, 4).map(async (i: PostType) => {
+    return publicPostPageData?.items.slice(0, 4).map(async (i: PostType) => {
       const userProfile = await getPublicProfile(i.ownerId);
       const isOpenByLink = postIdFromUrl ? i.id === +postIdFromUrl : false;
 
@@ -35,6 +41,7 @@ const PublicPostPage = async ({ searchParams }: Props) => {
             post={i}
             userProfile={userProfile}
             isOpenByLink={isOpenByLink}
+            accessToken={accessToken}
           />
         </div>
       );

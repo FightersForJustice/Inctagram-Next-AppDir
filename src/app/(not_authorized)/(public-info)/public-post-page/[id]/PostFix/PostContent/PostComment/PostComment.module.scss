@@ -1,6 +1,7 @@
 .post {
   &__comment {
     display: flex;
+    flex-direction: column;
     justify-content: start;
     gap: 12px;
     padding: 0 24px 0 24px;

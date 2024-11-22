@@ -16,9 +16,11 @@ import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-pag
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { getTimeAgoText } from '@/utils';
-import { PostType, UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import {
+  PostType,
+  UserProfile,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
-
 
 type Props = {
   user: UserProfile;
@@ -44,12 +46,11 @@ export const PostContent = ({
   setEditPost,
   onDeletePost,
   createdPostTime,
-
 }: Props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const language = useGetLanguage()
+  const language = useGetLanguage();
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
@@ -57,63 +58,66 @@ export const PostContent = ({
 
   return (
     <>
-      <PostModal
-        width={'972px'}
-        onClose={closeModalAction}
-      >
-
-      <div className={s.post}>
-        <Carousel>
-          {images.map((i, index) => {
-            if (i.width !== 640) {
-              return (
-                <SwiperSlide key={index}>
-                  {/* <img src={i.url} alt={'err'} /> */}
-                  <Image
-                    width={491}
-                    height={491}
-                    alt="err"
-                    src={i.url}
-                  />
-                </SwiperSlide>
-              );
-            }
-            return;
-          })}
-        </Carousel>
-        <div className={s.postInfo}>
-          <PostHeader user={user} myProfile={myProfile} setVisiblePopup={setVisiblePopup} visiblePopup={visiblePopup}
-                      setEditPost={setEditPost}
-                      setShowAreYouSureModal={setShowAreYouSureModal} />
-          <div className={s.post__content}>
-            <div className={s.post__desc}>
-              <Image
-                src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-                alt={'ava'}
-                width={36}
-                height={36}
-                className={s.post__avatar}
-              />
-              <div className='flex flex-col gap-1'>
-                <p className={s.post__desc__text}>
-                  <span className={s.post__desc__name}>{user?.userName} </span>
-                  {description}
-                </p>
-                <p className={s.post__desc__time}>{time}</p>
+      <PostModal width={'972px'} onClose={closeModalAction}>
+        <div className={s.post}>
+          <Carousel>
+            {images.map((i, index) => {
+              if (i.width !== 640) {
+                return (
+                  <SwiperSlide key={index}>
+                    {/* <img src={i.url} alt={'err'} /> */}
+                    <Image width={491} height={491} alt="err" src={i.url} />
+                  </SwiperSlide>
+                );
+              }
+              return;
+            })}
+          </Carousel>
+          <div className={s.postInfo}>
+            <PostHeader
+              user={user}
+              myProfile={myProfile}
+              setVisiblePopup={setVisiblePopup}
+              visiblePopup={visiblePopup}
+              setEditPost={setEditPost}
+              setShowAreYouSureModal={setShowAreYouSureModal}
+            />
+            <div className={s.post__content}>
+              <div className={s.post__desc}>
+                <Image
+                  src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                  alt={'ava'}
+                  width={36}
+                  height={36}
+                  className={s.post__avatar}
+                />
+                <div className="flex flex-col gap-1">
+                  <p className={s.post__desc__text}>
+                    <span className={s.post__desc__name}>
+                      {user?.userName}{' '}
+                    </span>
+                    {description}
+                  </p>
+                  <p className={s.post__desc__time}>{time}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <PostCommentHOC myProfile={myProfile} postId={id} myId={user.id} postData={postData}/>
-          {showAreYouSureModal && (
-            <AreYouSureModal
-              toggleAreYouSureModal={setShowAreYouSureModal}
-              toggleModal={setVisiblePopup}
-              onYes={onDeletePost}
-              type={'deletePostPost'}
+            <PostCommentHOC
+              myProfile={myProfile}
+              postId={id}
+              myId={user.id}
+              postData={postData}
             />
-          )}
+            {showAreYouSureModal && (
+              <AreYouSureModal
+                toggleAreYouSureModal={setShowAreYouSureModal}
+                toggleModal={setVisiblePopup}
+                onYes={onDeletePost}
+                type={'deletePostPost'}
+              />
+            )}
+          </div>
         </div>
-      </div>
       </PostModal>
     </>
   );

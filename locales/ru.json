@@ -305,7 +305,9 @@
       "addPublicationDescriptions": "Добавить описание публикации",
       "saveChanges": "Сохранить",
       "save": "Сохранить",
-      "viewComments": "Просмотреть все комментарии"
+      "viewComments": "Просмотреть все комментарии",
+      "answer":"Ответить",
+      "like":"Нравится"
     },
     "DeletePostModal": {
       "title": "Удаление поста",

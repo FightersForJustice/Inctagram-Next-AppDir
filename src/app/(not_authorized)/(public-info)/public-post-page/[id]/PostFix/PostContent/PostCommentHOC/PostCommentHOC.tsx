@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { PostComment } from '../PostComment';
-import { getPostAnswerComments, getPostComments } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
+import { getPostComments } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { PostLikes } from '../PostLikes';
-import { PostAmount } from '../PostAmount';
-import { PostForm } from '../PostForm';
 import { PostType } from '../../../types';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import {
   createAnswerComment,
   createComment,
+  createLikeAnswerComment,
   createLikeComment,
 } from '@/app/lib/actions';
+import s from '../PostContent.module.scss';
+import { PostAmount } from '../PostAmount';
 
 type ImagesType = {
   createdAt: string;
@@ -55,28 +56,38 @@ export const PostCommentHOC = ({
   myId,
   postData,
 }: CommentsHOCType) => {
+  const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
   const [postsData, setData] = useState<PostCommentsResponse>();
-  const [answerData, setAnswerData] = useState();
+  const [submit, setSubmit] = useState(false);
   const [answerTo, setAnsverTo] = useState(0);
+  const [commentAuthors, setAuthors] = useState(['']);
+  const ref = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
-  const onCommentSubmit = async (data: {
-    value: string;
-    isAnswer: boolean;
-  }) => {
-    if (answerTo) {
+  const translatePostForm = (key: string): string =>
+    t(`CreatePost.EditPost.${key}`);
+  const onCommentSubmit = async () => {
+    console.log(3)
+    const tempValue = value.split(',')[0];
+    const currentUser = tempValue.split('@')[1];
+    if (answerTo && commentAuthors.includes(currentUser)) {
+      console.log(4)
       await createAnswerComment({
-        content: data.value,
+        content: value,
         id: postData.id,
         commentId: answerTo,
       });
       fetchComments();
+      setSubmit(true);
+      setValue('');
       setAnsverTo(0);
       toast.success(translate('publicationsCreated'));
-      return
+      return;
     }
-    const res = await createComment({ content: data.value, id: postData.id });
+    console.log(5)
+    const res = await createComment({ content: value, id: postData.id });
+    setValue('');
     if (!res.success) {
       toast.error('Error');
     } else {
@@ -90,18 +101,39 @@ export const PostCommentHOC = ({
     try {
       const res = await getPostComments(postId);
       setData(res);
+      setAuthors(res.items.map((el: any) => el.from.username));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching posts:', error);
       setLoading(false);
     }
   };
-
   const likeComment = async (commentId: number, isLiked: boolean) => {
     try {
       const likedPayload = isLiked ? 'NONE' : 'LIKE';
       await createLikeComment({ postId, commentId, likeStatus: likedPayload });
       fetchComments();
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      setLoading(false);
+    }
+  };
+
+  const likeAnswerComment = async (
+    commentId: number,
+    answerId: number,
+    isLiked: boolean
+  ) => {
+    try {
+      const likedPayload = isLiked ? 'NONE' : 'LIKE';
+      await createLikeAnswerComment({
+        postId,
+        commentId,
+        answerId,
+        likeStatus: likedPayload,
+      });
+      fetchComments();
+      setSubmit(true);
     } catch (error) {
       console.error('Error fetching posts:', error);
       setLoading(false);
@@ -114,7 +146,45 @@ export const PostCommentHOC = ({
 
   const myComments = postsData?.items.filter((el) => el.from.id === myId);
   const restComments = postsData?.items.filter((el) => el.from.id !== myId);
-  console.log(answerTo)
+
+  const answerHandler = (id: number) => {
+    ref.current?.focus();
+    setAnsverTo(id);
+    const tempValue = value.split(',')[0];
+    const currentName = tempValue.split('@')[1];
+    if (value.length && value.split(',') && currentName) {
+      setValue(
+        `to @${postsData?.items.filter((el) => el.id === id)[0].from
+          .username},` + value.split(',')[1]
+      );
+      return;
+    }
+    setValue(
+      `to @${postsData?.items.filter((el) => el.id === id)[0].from.username},` +
+        value
+    );
+  };
+
+  // const { t } = useTranslation();
+  // const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
+
+  const sendComment = () => {
+    if (value.trim() && value.length < 300) {
+      console.log(23)
+      onCommentSubmit();
+      setValue('');
+    }
+  };
+
+  const onInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode === 13) {
+      sendComment();
+    }
+  };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value);
+  };
+
   return (
     <>
       {myComments?.map((el) => {
@@ -124,8 +194,12 @@ export const PostCommentHOC = ({
             myProfile={myProfile}
             data={el}
             onLikeHandler={() => likeComment(el.id, !!el.likeCount)}
-            onAnswerHandler={() => setAnsverTo(el.id)}
-            answers={answerData?.items.filter(el => el.commentId === el.id)}
+            onAnswerLikeHandler={(id, liked) =>
+              likeAnswerComment(el.id, id, liked)
+            }
+            onAnswerHandler={() => answerHandler(el.id)}
+            submit={submit}
+            setSubmit={() => setSubmit(false)}
           />
         );
       })}
@@ -136,23 +210,50 @@ export const PostCommentHOC = ({
             myProfile={myProfile}
             data={el}
             onLikeHandler={() => likeComment(el.id, !!el.likeCount)}
-            onAnswerHandler={() => setAnsverTo(el.id)}
-            answers={answerData?.items.filter(el => el.commentId === el.id)}
+            onAnswerLikeHandler={(id, liked) =>
+              likeAnswerComment(el.id, id, liked)
+            }
+            onAnswerHandler={() => answerHandler(el.id)}
+            submit={submit}
+            setSubmit={() => setSubmit(false)}
           />
         );
       })}
       {myProfile && <PostLikes />}
       <PostAmount postData={postData} postsLikes={postsData?.items} />
       {myProfile && (
-        <PostForm
-          onSubmit={onCommentSubmit}
-          answerTo={
-            answerTo
-              ? postsData?.items.filter((el) => el.id === answerTo)[0].from
-                  ?.username
-              : ''
-          }
-        />
+        <div className={s.post__form}>
+          <div className="flex">
+            <input
+              ref={ref}
+              className={s.post__form__input}
+              value={value}
+              type="text"
+              onKeyUp={onInputChange}
+              onChange={onChange}
+              placeholder={translatePostForm('addComment') + '...'}
+              style={{
+                border: value.length > 300 ? '1px solid var(--danger-500)' : '',
+              }}
+            />
+            <button
+              className={
+                !value.length ? s.post__form__disabled : s.post__form__btn
+              }
+              onClick={onCommentSubmit}
+            >
+              {translatePostForm('publish')}
+            </button>
+          </div>
+          {value.length > 300 && (
+            <span
+              className="text-sm pt-1 font-light text-red"
+              style={{ color: 'var(--danger-500)' }}
+            >
+              длина сообщения превышает 300 символов
+            </span>
+          )}
+        </div>
       )}
     </>
   );

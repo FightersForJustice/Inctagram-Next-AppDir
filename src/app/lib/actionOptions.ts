@@ -222,6 +222,19 @@ export const createPostOptions = (
     body: JSON.stringify(body),
   };
 };
+export const getAnswersOptions = (
+  accessToken: string | null,
+) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    // body: JSON.stringify(body),
+  };
+};
 export const createCommentOptions = (
   accessToken: string | null,
   body: createCommentOptionsType

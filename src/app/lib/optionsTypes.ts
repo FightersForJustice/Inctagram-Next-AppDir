@@ -11,6 +11,7 @@ export type createCommentOptionsType = {
 
 export type createCommentLikeOptionsType = {
   commentId: number;
+  answerId?: number;
   postId: number;
   likeStatus: string;
 };

@@ -1,5 +1,3 @@
-import { cookies } from 'next/headers';
-
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getPublicPosts = async (userId: number, endCursorPostId: number | null) => {
@@ -54,11 +52,13 @@ export const getPostComments = async (postId: number) => {
   }
 };
 
-export const getPostAnswerComments = async (postId: number, commentId: number) => {
-
+export const getPostAnswers = async (postId: number, commentId: number) => {
+  console.log(postId, commentId)
   const apiUrl = baseUrl + `posts/${postId}/comments/${commentId}/answers`;
+  console.log(apiUrl)
   try {
     const response = await fetch(apiUrl)
+    console.log(response)
     if (!response.ok) {
       console.error('Error:', response.statusText);
       return null;

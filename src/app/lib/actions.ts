@@ -10,6 +10,7 @@ import {
   createPostOptions,
   deleteAvatarOptions,
   deleteUploadedPostOptions,
+  getAnswersOptions,
   loginOptions,
   newPasswordOptions,
   onCreateStripeOptions,
@@ -474,6 +475,27 @@ export async function createPost(body: createPostOptionsType) {
     return { success: false, data: 'createPostError' };
   }
 }
+
+export async function getCommentAnswers(postId: number, commentId: number) {
+  try {
+    const url = process.env.NEXT_PUBLIC_BASE_URL + `posts/${postId}/comments/${commentId}/answers`
+    const res = await fetch(
+      url,
+      getAnswersOptions(accessToken())
+    );
+    const responseBody = await res.json();
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createPost error', error);
+
+    return { success: false, data: 'createPostError' };
+  }
+}
 export async function createComment(body: createCommentOptionsType) {
   try {
     const res = await fetch(
@@ -494,6 +516,9 @@ export async function createComment(body: createCommentOptionsType) {
   }
 }
 export async function createLikeComment(body: createCommentLikeOptionsType) {
+  console.log('createLike')
+  console.log(routes.CREATE_COMMENT + body.postId + '/comments/' + body.commentId + '/like-status')
+
   try {
     const res = await fetch(
       routes.CREATE_COMMENT + body.postId + '/comments/' + body.commentId + '/like-status',
@@ -507,6 +532,30 @@ export async function createLikeComment(body: createCommentLikeOptionsType) {
     revalidatePath(ROUTES.PROFILE);
 
     return { success: true, data: responseBody };
+  } catch (error) {
+    console.error('createComment error', error);
+
+    return { success: false, data: 'createComment' };
+  }
+}
+export async function createLikeAnswerComment(body: createCommentLikeOptionsType) {
+  console.log('createLike18')
+  try {
+    console.log(routes.CREATE_COMMENT + body.postId + '/comments/' + body.commentId + '/answers/' + body.answerId + '/like-status')
+    console.log(body.likeStatus)
+    const res = await fetch(
+      routes.CREATE_COMMENT + body.postId + '/comments/' + body.commentId + '/answers/' + body.answerId + '/like-status',
+      createCommentLikeOptions(accessToken(), body)
+    );
+    const responseBody = await res;
+    const resData = await responseBody.json()
+    console.log(resData)
+    if (!res.ok) {
+      Promise.reject(res.statusText);
+    }
+    revalidatePath(ROUTES.PROFILE);
+
+    return { success: true, data: resData };
   } catch (error) {
     console.error('createComment error', error);
 

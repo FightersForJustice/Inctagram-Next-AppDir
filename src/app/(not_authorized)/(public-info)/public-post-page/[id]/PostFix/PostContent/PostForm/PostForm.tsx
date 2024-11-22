@@ -1,15 +1,16 @@
 import { useTranslation } from 'react-i18next';
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
 import s from '../PostContent.module.scss';
 
 export const PostForm = ({
   onSubmit,
   answerTo,
+  ref,
 }: {
   onSubmit: (data: { value: string; isAnswer: boolean }) => void;
   answerTo: string | undefined;
+  ref: React.RefObject<HTMLInputElement>;
 }) => {
-  const ref = useRef();
   const [value, setValue] = useState('');
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
@@ -29,13 +30,16 @@ export const PostForm = ({
     setValue(e.currentTarget.value);
   };
 
-  useEffect(() => {
-    if (answerTo) {
-      ref.current.focus();
-      setValue(`to @${answerTo}, ` + value);
-    }
-  }, [answerTo]);
-  console.log(answerTo)
+  // useEffect(() => {
+  //   if (answerTo) {
+  //     console.log(answerTo)
+  //     ref.current.focus();
+  //     console.log('focus')
+  //     setValue(`to @${answerTo}, ` + value);
+  //   }
+  // }, [answerTo]);
+  // console.log(answerTo)
+
   return (
     <div className={s.post__form}>
       <div className="flex">
