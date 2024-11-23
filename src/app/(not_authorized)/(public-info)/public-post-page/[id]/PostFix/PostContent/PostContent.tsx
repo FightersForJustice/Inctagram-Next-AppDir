@@ -30,11 +30,15 @@ import {
   followToUser,
   unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
+import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
 
 type Props = {
   myId?: number;
+  id: number;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
+  postData: PostType;
   myProfile: boolean;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
@@ -46,6 +50,8 @@ export const PostContent = ({
   myId,
   type,
   post,
+  postData,
+  id,
   closeModalAction,
   myProfile,
   setEditPost,
@@ -160,10 +166,19 @@ export const PostContent = ({
               </div>
             </div>
           </div>
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          {!type && (
+          <PostCommentHOC
+            myProfile={myProfile}
+            postId={id}
+            myId={myId || 0}
+            postData={postData}
+            likes={likesCount}
+            avatarLikes={avatarLikes}
+            date={date}
+            openLikesModal={openLikesModal}
+            toggleLike={toggleLike}
+            isLiked={localIsLiked ?? (likesData?.isLiked || false)}
+          />
+          {/* {!type && (
             <PostLikes
               toggleLike={toggleLike}
               isLiked={localIsLiked ?? (likesData?.isLiked || false)}
@@ -176,8 +191,8 @@ export const PostContent = ({
               date={date}
               openLikesModal={openLikesModal}
             />
-          )}
-          {myProfile && <PostForm />}
+          )} */}
+          {/* {myProfile && <PostForm />} */}
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}

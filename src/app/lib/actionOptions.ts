@@ -2,6 +2,7 @@ import { ProfileFormSubmit } from '@/components/ProfileSettings/SettingsForm/Set
 import { SignInData } from '@/features/schemas/SignInSchema';
 import { createPostOptionsType } from './optionsTypes';
 import { CreateSubscription } from '@/api/subscriptions.api';
+import { createCommentLikeOptionsType, createCommentOptionsType } from './actions';
 
 //AUTH OPTIONS
 
@@ -286,5 +287,47 @@ export const deleteFollowerOption = (accessToken?: string | null) => {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+  };
+};
+
+export const getAnswersOptions = (
+  accessToken: string | null,
+) => {
+  return {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    // body: JSON.stringify(body),
+  };
+};
+export const createCommentOptions = (
+  accessToken: string | null,
+  body: createCommentOptionsType
+) => {
+  return {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  };
+};
+export const createCommentLikeOptions = (
+  accessToken: string | null,
+  body: createCommentLikeOptionsType
+) => {
+  return {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
   };
 };
