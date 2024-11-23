@@ -1,6 +1,7 @@
 .list {
   border-right: 1px solid var(--dark-300);
   background-color: var(--dark-500);
+  width: 269px;
 
   .dialog {
     display: flex;
@@ -100,6 +101,15 @@
       top: 34px;
       transform: translateY(-50%);
     }
+  }
+
+  .no_dialogs {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    padding: 12px;
+    color: var(--light-100);
   }
 }
 

@@ -54,7 +54,7 @@ export const DialogList = ({ dialogs, fetchDialog, id }: PropsType) => {
           </button>
         ))
         :
-        <p>No dialogs</p>
+        <p className={s.no_dialogs}>No active dialogs</p>
       }
     </div>
   );

@@ -56,7 +56,7 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage }: PropsTyp
               />
             ))
           :
-          <p>Choose who you would like to talk to</p>}
+          <p className={s.no_dialogs}>Choose who you would like to talk to</p>}
       </div>
       {dialog.length > 0 &&
         <div className={s.footer}>

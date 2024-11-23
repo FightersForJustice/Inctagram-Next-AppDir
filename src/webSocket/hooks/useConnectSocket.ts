@@ -85,18 +85,6 @@ export const useConnectSocket = ({
       }
     });
 
-
-    socketInstance.on(
-      SocketEvents.NOTIFICATIONS,
-      (response: any) => {
-      },
-    );
-
-
-
-
-
-
     socketInstance.on(SocketEvents.ERROR, (response) => {
       console.error('Socket error', response);
     });
