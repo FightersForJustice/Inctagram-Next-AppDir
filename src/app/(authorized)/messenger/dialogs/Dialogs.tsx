@@ -22,8 +22,6 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   const [dialog, setDialog] = useState<ItemDialog[]>([]);
   const [receiverData, setReceiverData] = useState<ItemDialogs | null>(null);
 
-  console.log(dialogs);
-
   const socket = useConnectSocket({ accessToken, setDialog, setDialogs });
 
   const sendMessage = (value: string) => {

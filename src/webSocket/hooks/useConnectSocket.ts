@@ -57,8 +57,15 @@ export const useConnectSocket = ({
       },
     );
 
-    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (dialog: ItemDialog) => {
+    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (dialog: ItemDialog, acknowledge: Function) => {
       console.log('Новое сообщение получено: ', dialog);
+
+      if (acknowledge) {
+        acknowledge({
+          message: dialog,
+          receiverId: dialog.receiverId,
+        });
+      }
 
       if (setDialog) {
         setDialog((prevMessages) => [dialog, ...prevMessages]);
@@ -70,7 +77,6 @@ export const useConnectSocket = ({
 
           const updatedDialogs = prevDialogs.map((d) => {
             if (d.receiverId === dialog.receiverId) {
-
               return {
                 ...d,
                 messageText: dialog.messageText,
