@@ -8,7 +8,7 @@
     align-items: center;
     gap: 12px;
     padding: 12px;
-    width: 267px;
+    width: 269px;
     height: 72px;
     border-bottom: 1px solid var(--dark-300);
 
@@ -43,9 +43,7 @@
           text-align: left;
           color: var(--light-900);
         }
-
       }
-
 
       .message {
         max-width: 164px;
@@ -67,17 +65,42 @@
   }
 
   .input_block {
+    position: relative;
     padding: 17px 12px 19px 12px;
     width: 269px;
     height: 72px;
-    border-bottom: 1px solid var(--dark-100);
+    border-bottom: 1px solid var(--dark-300);
 
-    input {
+    .input {
       width: 100%;
       height: 100%;
+      outline: none;
+      resize: none;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: left;
+      border: 1px solid var(--dark-100);
+      color: var(--light-100);
+      background-color: transparent;
+      padding: 6px 9px 6px 41px;
+      transition: all 0.2s linear;
+
+      &::placeholder {
+        color: var(--light-900);
+      }
+
+      &:hover {
+        border: 1px solid var(--light-900);
+      }
+    }
+
+    .search {
+      position: absolute;
+      right: 224px;
+      top: 34px;
+      transform: translateY(-50%);
     }
   }
-
 }
 
 

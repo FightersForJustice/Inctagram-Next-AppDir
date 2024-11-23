@@ -16,20 +16,23 @@ type PropsType = {
 
 export const Dialogs = ({ accessToken, id }: PropsType) => {
 
-  const [dialogs, setDialogs] = useState<ItemDialogs[] | null>(null);
-  const [dialog, setDialog] = useState<ItemDialog[] | null>(null);
+  const [dialogs, setDialogs] = useState<ItemDialogs[]>([]);
+  const [dialog, setDialog] = useState<ItemDialog[]>([]);
   const [receiverData, setReceiverData] = useState<ItemDialogs | null>(null);
 
-  const socket = useConnectSocket({ accessToken });
+  console.log(dialogs);
 
-  const sendMessage = () => {
+  const socket = useConnectSocket({ accessToken, setDialog, setDialogs });
+
+  const sendMessage = (value: string) => {
     if (!socket) {
       console.error('Socket не подключен.');
       return;
     }
 
-    if (id) {
-      socket.emit(SocketEvents.RECEIVE_MESSAGE, { message: 'От klonirovan89 ваываыв ыаываыа', receiverId: 1558 }, (response: any) => {
+    if (id && receiverData) {
+      const receiverId = +id === receiverData.receiverId ? receiverData.ownerId: receiverData.receiverId
+      socket.emit(SocketEvents.RECEIVE_MESSAGE, { message: value, receiverId}, (response: any) => {
         console.log('Сообщение отправлено:', response);
       });
     }
@@ -47,8 +50,8 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     if (data && data.items.length > 0) {
       setDialog(data.items);
 
-      if (dialogs) {
-        const foundDialog = dialogs?.find((d) => d.receiverId === partnerId || d.ownerId === partnerId);
+      if (dialogs.length > 0) {
+        const foundDialog = dialogs.find((d) => d.receiverId === partnerId || d.ownerId === partnerId);
         foundDialog && setReceiverData(foundDialog);
       }
     }
@@ -62,7 +65,7 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   return (
     <div className={s.dialogs}>
       <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} />
-      <DialogWindow dialog={dialog} receiverData={receiverData} id={id} />
+      <DialogWindow dialog={dialog} receiverData={receiverData} id={id} sendMessage={sendMessage} />
     </div>
   );
 };

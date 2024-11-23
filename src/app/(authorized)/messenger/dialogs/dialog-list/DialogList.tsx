@@ -7,7 +7,7 @@ import s from './DialogList.module.scss';
 import React from 'react';
 
 type PropsType = {
-  dialogs: ItemDialogs[] | null;
+  dialogs: ItemDialogs[];
   fetchDialog: (partnerId: number) => void;
   id: string | null;
 }
@@ -22,9 +22,17 @@ export const DialogList = ({ dialogs, fetchDialog, id }: PropsType) => {
           // onChange={onChangeSearch}
           placeholder={'Input search'}
           autoFocus
+          className={s.input}
+        />
+        <Image
+          className={s.search}
+          src={'/img/modal/search.svg'}
+          alt={'search'}
+          width={20}
+          height={20}
         />
       </div>
-      {dialogs ?
+      {dialogs.length > 0 ?
         dialogs.map((dialog) => (
           <button key={dialog.id} onClick={() => fetchDialog(id && +id === dialog.ownerId ? dialog.receiverId : dialog.ownerId)}>
             <div className={s.dialog}>
