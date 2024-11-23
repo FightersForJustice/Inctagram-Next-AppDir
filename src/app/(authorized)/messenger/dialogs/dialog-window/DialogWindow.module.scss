@@ -39,13 +39,30 @@
     gap: 24px;
     width: 100%;
     height: 100%;
-    padding: 18px 12px;
+    padding: 18px 24px;
     overflow-y: auto;
+
+    .no_dialogs {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: center;
+      color: var(--light-100);
+      margin: auto;
+      width: 293px;
+      height: 48px;
+      padding: 12px;
+      border-radius: 8px;
+      background-color: var(--dark-300);
+
+    }
+
+    & > *:first-child {
+      margin-top: auto;
+    }
   }
 
-  .messages > *:first-child {
-    margin-top: auto;
-  }
+
 
   .footer {
     display: flex;
@@ -67,9 +84,14 @@
       text-align: left;
       color: var(--light-100);
       background-color: transparent;
+      transition: all .2s ease;
 
       &::placeholder {
         color: var(--light-900);
+      }
+
+      &:focus {
+        border: 1px solid var(--primary-500);
       }
     }
 
@@ -84,7 +106,7 @@
       transition: all 0.2s linear;
 
       &:hover {
-        color: var(--primary-300);
+        color: var(--primary-100);
       }
     }
   }
