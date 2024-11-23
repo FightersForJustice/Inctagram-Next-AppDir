@@ -3,7 +3,6 @@ import Image from 'next/image';
 import s from './PostComment.module.scss';
 import { PostCommentType } from '../PostCommentHOC/PostCommentHOC';
 import { useTranslation } from 'react-i18next';
-import { getPostAnswers } from '@/app/(not_authorized)/(public-info)/public-profile/[id]/actions';
 import { useEffect, useState } from 'react';
 import { getCommentAnswers } from '@/app/lib/actions';
 import { AnswerItem } from '../AnswerItem/AnswerItem';
@@ -133,11 +132,7 @@ export const PostComment = ({
             key={el.id}
             myProfile={!el.isLiked}
             data={el}
-            onLikeHandler={() => {
-              console.log(el)
-              onAnswerLikeHandler(el.id, el.isLiked)
-              console.log(12)
-            }}
+            onLikeHandler={() => onAnswerLikeHandler(el.id, el.isLiked)}
           />
         ))}
       </div>

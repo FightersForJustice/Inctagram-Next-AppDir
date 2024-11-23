@@ -13,7 +13,6 @@ import {
 } from '@/app/lib/actions';
 import s from '../PostContent.module.scss';
 import { PostAmount } from '../PostAmount';
-import { CommentAmount } from '../CommentAmount';
 
 type ImagesType = {
   createdAt: string;

@@ -1,14 +1,10 @@
 import Image from 'next/image';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { PostComment } from './PostComment';
-import { PostLikes } from './PostLikes';
 import { useEffect, useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
-import { PostForm } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostForm';
-import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostAmount';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { formatServerDateWithoutTime, getTimeAgoText } from '@/utils';
@@ -30,7 +26,6 @@ import {
   followToUser,
   unfollowByUser,
 } from '@/app/(authorized)/search/SearchContent/data';
-import { UserProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
 
 type Props = {
@@ -178,21 +173,6 @@ export const PostContent = ({
             toggleLike={toggleLike}
             isLiked={localIsLiked ?? (likesData?.isLiked || false)}
           />
-          {/* {!type && (
-            <PostLikes
-              toggleLike={toggleLike}
-              isLiked={localIsLiked ?? (likesData?.isLiked || false)}
-            />
-          )}
-          {type !== 'admin' && (
-            <PostAmount
-              likes={likesCount}
-              avatarLikes={avatarLikes}
-              date={date}
-              openLikesModal={openLikesModal}
-            />
-          )} */}
-          {/* {myProfile && <PostForm />} */}
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
