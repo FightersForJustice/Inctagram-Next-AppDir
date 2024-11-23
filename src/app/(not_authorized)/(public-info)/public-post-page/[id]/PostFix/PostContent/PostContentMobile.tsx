@@ -171,8 +171,6 @@ export const PostContentMobile = ({
               <p className={s.post__desc__time}>{time}</p>
             </div>
           </div>
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}
