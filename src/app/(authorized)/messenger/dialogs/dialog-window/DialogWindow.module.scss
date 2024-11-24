@@ -49,7 +49,6 @@
       text-align: center;
       color: var(--light-100);
       margin: auto;
-      width: 293px;
       height: 48px;
       padding: 12px;
       border-radius: 8px;
@@ -85,6 +84,7 @@
       color: var(--light-100);
       background-color: transparent;
       transition: all .2s ease;
+      padding: 0 5px;
 
       &::placeholder {
         color: var(--light-900);

@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 import { Dialogs } from '@/app/(authorized)/messenger/dialogs/Dialogs';
 
-
 const Messenger = () => {
   const headersList = headers();
   const accessToken = headersList.get('accessToken') as string;
