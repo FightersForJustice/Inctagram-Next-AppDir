@@ -57,12 +57,39 @@ export const useConnectSocket = ({
       },
     );
 
-    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (dialog: ItemDialog, acknowledge: Function) => {
+    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (dialog: ItemDialog) => {
+      console.log('Новое отправленное сообщение получено: ', dialog);
+
+      if (setDialog) {
+        setDialog((prevMessages) => [dialog, ...prevMessages]);
+      }
+
+      if (setDialogs) {
+        setDialogs((prevDialogs) => {
+          if (!prevDialogs) return prevDialogs;
+
+          const updatedDialogs = prevDialogs.map((d) => {
+            if (d.receiverId === dialog.receiverId) {
+              return {
+                ...d,
+                messageText: dialog.messageText,
+                createdAt: dialog.createdAt,
+              };
+            }
+            return d;
+          });
+
+          return updatedDialogs;
+        });
+      }
+    });
+
+    socketInstance.on(SocketEvents.MESSAGE_SENT, (dialog: ItemDialog, acknowledge) => {
       console.log('Новое сообщение получено: ', dialog);
 
       if (acknowledge) {
         acknowledge({
-          message: dialog,
+          message: dialog.messageText,
           receiverId: dialog.receiverId,
         });
       }

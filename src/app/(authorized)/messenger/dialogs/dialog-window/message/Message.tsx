@@ -4,6 +4,9 @@ import clsx from 'clsx';
 
 import s from './Message.module.scss';
 import React from 'react';
+import { formatDialogsDate } from '@/utils/formatDialogsDate';
+import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
+import { useTranslation } from 'react-i18next';
 
 type PropsType = {
   message: ItemDialog;
@@ -12,6 +15,10 @@ type PropsType = {
 }
 
 export const Message = ({ message, receiverData, id }: PropsType) => {
+
+  const { t } = useTranslation();
+  const language = useGetLanguage();
+  const translateTime = (key: string): string => t(`Time.${key}`);
 
   return (
     <div className={clsx(s.message, id && +id === message.ownerId && s.owner)}>
@@ -29,7 +36,8 @@ export const Message = ({ message, receiverData, id }: PropsType) => {
       <div className={s.text}>
         <p className={s.text_message}>{message.messageText}</p>
         <div className={s.status}>
-          <span className={s.text_time}>12:53</span>
+          <span className={s.text_time}>{formatDialogsDate(
+            message.createdAt, language, translateTime)}</span>
           {id && +id === message.ownerId &&
             <svg width="12" height="14" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

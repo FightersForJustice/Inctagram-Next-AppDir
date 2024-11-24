@@ -6,9 +6,10 @@ import { SocketEvents } from '@/webSocket/hooks/SocketEvents';
 import { getDialog, getDialogs, ItemDialog, ItemDialogs } from '@/api/messenger.api';
 import { DialogList } from '@/app/(authorized)/messenger/dialogs/dialog-list/DialogList';
 import { DialogWindow } from '@/app/(authorized)/messenger/dialogs/dialog-window/DialogWindow';
+import { Loader } from '@/components/Loader';
+import { useTranslation } from 'react-i18next';
 
 import s from './Dialogs.module.scss';
-import { Loader } from '@/components/Loader';
 
 type PropsType = {
   accessToken: string;
@@ -17,11 +18,14 @@ type PropsType = {
 
 export const Dialogs = ({ accessToken, id }: PropsType) => {
 
+  const { t } = useTranslation();
+  const translate = (key: string): string => t(`Messenger.${key}`);
+
   const [loading, setLoading] = useState(false);
   const [dialogs, setDialogs] = useState<ItemDialogs[]>([]);
   const [dialog, setDialog] = useState<ItemDialog[]>([]);
   const [receiverData, setReceiverData] = useState<ItemDialogs | null>(null);
-
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const socket = useConnectSocket({ accessToken, setDialog, setDialogs });
 
   const sendMessage = (value: string) => {
@@ -57,6 +61,8 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
         foundDialog && setReceiverData(foundDialog);
       }
     }
+
+    setShowDialog(true);
   };
 
   useEffect(() => {
@@ -66,9 +72,13 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   if (loading) return <Loader />;
 
   return (
-    <div className={s.dialogs}>
-      <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} />
-      <DialogWindow dialog={dialog} receiverData={receiverData} id={id} sendMessage={sendMessage} />
+    <div className={s.wrapper}>
+      <h1 className={s.title}>{translate('messenger')}</h1>
+      <div className={s.dialogs}>
+        <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} />
+        <DialogWindow dialog={dialog} receiverData={receiverData} id={id} sendMessage={sendMessage}
+                      showDialog={showDialog} />
+      </div>
     </div>
   );
 };

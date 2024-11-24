@@ -134,6 +134,22 @@
     "noRecent": "No recent requests",
     "empty": "Oops! This place looks empty!"
   },
+  "Messenger": {
+    "messenger": "Messenger",
+    "search": {
+      "placeholder": "Input search",
+      "noUser": "No user found"
+    },
+    "dialogs": {
+      "noDialogs": "No active dialogs",
+      "you": "You: "
+    },
+    "dialog": {
+      "placeholder": "Type Message",
+      "send": "Send",
+      "chose": "Choose who you would like to talk to"
+    }
+  },
   "Navigation": {
     "home": "Home",
     "create": "Create",
