@@ -9,6 +9,11 @@
     min-height: 72px;
     border-bottom: 1px solid var(--dark-300);
     background-color: var(--dark-500);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
 
     .header_content {
       display: flex;
@@ -29,6 +34,24 @@
         text-align: left;
         color: var(--light-100);
         cursor: pointer;
+      }
+    }
+
+    .delete_button {
+      width: 130px;
+      height: 35px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      text-align: center;
+      color: var(--primary-500);
+      transition: all 0.2s linear;
+      background-color: var(--dark-300);
+      border-radius: 8px;
+
+      &:hover {
+        color: var(--primary-100);
+        background-color: var(--dark-100);
       }
     }
   }

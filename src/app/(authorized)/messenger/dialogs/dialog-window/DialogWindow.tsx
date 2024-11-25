@@ -14,14 +14,16 @@ type PropsType = {
   id: string | null;
   sendMessage: (value: string) => void;
   showDialog: boolean;
+  removeMessage: (id: number) => void;
 }
 
-export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog }: PropsType) => {
+export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog, removeMessage }: PropsType) => {
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Messenger.${key}`);
 
   const [textareaValue, setTextareaValue] = useState<string>('');
+  const [selectedMessages, setSelectedMessages] = useState<number[]>([]);
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.currentTarget.value);
@@ -32,6 +34,22 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
       sendMessage(textareaValue);
       setTextareaValue('');
     }
+  };
+
+  const onDeleteMessages = async () => {
+
+    for (const messageId of selectedMessages) {
+      await removeMessage(messageId);
+    }
+    setSelectedMessages([]);
+  };
+
+  const toggleMessageSelection = (messageId: number) => {
+    setSelectedMessages(prev =>
+      prev.includes(messageId)
+        ? prev.filter(id => id !== messageId)
+        : [...prev, messageId]
+    );
   };
 
   const receiverId = id && +id === receiverData?.receiverId ? receiverData.ownerId : receiverData?.receiverId;
@@ -49,7 +67,13 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
               className={s.avatar}
             />
             <div className={s.name}>{receiverData?.userName}</div>
-          </Link>}
+          </Link>
+        }
+        {selectedMessages.length > 0 && (
+          <button className={s.delete_button} onClick={onDeleteMessages}>
+            УДАЛИТЬ {selectedMessages.length}
+          </button>
+        )}
       </div>
       <div className={s.messages}>
         {showDialog ?
@@ -62,6 +86,8 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
                 key={message.id}
                 receiverData={receiverData}
                 id={id}
+                onSelectMessage={toggleMessageSelection}
+                isSelected={selectedMessages.includes(message.id)}
               />
             ))
           :

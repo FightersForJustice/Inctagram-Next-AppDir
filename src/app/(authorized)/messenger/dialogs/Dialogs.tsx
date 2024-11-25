@@ -3,7 +3,7 @@
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import { useEffect, useState } from 'react';
 import { SocketEvents } from '@/webSocket/hooks/SocketEvents';
-import { getDialog, getDialogs, ItemDialog, ItemDialogs } from '@/api/messenger.api';
+import { deleteMessage, getDialog, getDialogs, ItemDialog, ItemDialogs } from '@/api/messenger.api';
 import { DialogList } from '@/app/(authorized)/messenger/dialogs/dialog-list/DialogList';
 import { DialogWindow } from '@/app/(authorized)/messenger/dialogs/dialog-window/DialogWindow';
 import { Loader } from '@/components/Loader';
@@ -65,6 +65,17 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     setShowDialog(true);
   };
 
+  const removeMessage = async (messageId: number) => {
+    const data = await deleteMessage(accessToken, messageId);
+
+    if (data === '204') {
+      
+      // await fetchDialog(partnerId);
+    } else {
+      console.error('Ошибка при удалении сообщения:', data);
+    }
+  };
+
   useEffect(() => {
     fetchDialogs();
   }, []);
@@ -77,7 +88,7 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       <div className={s.dialogs}>
         <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} />
         <DialogWindow dialog={dialog} receiverData={receiverData} id={id} sendMessage={sendMessage}
-                      showDialog={showDialog} />
+                      showDialog={showDialog} removeMessage={removeMessage}/>
       </div>
     </div>
   );
