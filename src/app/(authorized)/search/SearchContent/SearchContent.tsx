@@ -105,6 +105,13 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
     <div style={{ gridArea: 'profile' }}>
       <div className={s.search}>
         <h2 className={s.search__title}>{translate('title')}</h2>
+        <Image
+          className={s.search__input__search}
+          src={'/img/modal/search.svg'}
+          alt={'search'}
+          width={20}
+          height={20}
+        />
         <input
           className={s.search__input}
           type="text"
@@ -112,13 +119,6 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
           onChange={onChangeSearch}
           placeholder={translate('title')}
           autoFocus
-        />
-        <Image
-          className={s.search__input__search}
-          src={'/img/modal/search.svg'}
-          alt={'search'}
-          width={20}
-          height={20}
         />
       </div>
       <div className={s.search__container}>

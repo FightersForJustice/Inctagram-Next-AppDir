@@ -1,0 +1,54 @@
+.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 12px;
+  border-radius: 10px;
+
+  &.owner {
+    justify-content: flex-end;
+  }
+
+  .avatar {
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 8px;
+    padding: 8px 12px;
+    max-width: 360px;
+    background-color: var(--primary-900);
+
+    .text_message {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+      text-align: left;
+    }
+
+    .status {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 2px;
+
+      .text_time {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+        text-align: right;
+        color: var(--primary-100);
+      }
+
+      svg {
+
+      }
+    }
+  }
+}
