@@ -87,8 +87,8 @@
     "SubscribersModal": {
       "title": "Followers",
       "search": "Search",
-      "subBtn": "Follow",
-      "unsubBtn": "Unfollow",
+      "subscribe": "Follow",
+      "unsubscribe": "Unfollow",
       "deleteBtn": "Delete"
     },
     "SubscriptionsModal": {
@@ -503,6 +503,7 @@
     "follow": "Follow",
     "unfollow": "Unfollow",
     "copy": "Copy Link",
+    "copied": "Copied",
     "delete": "Delete post"
   },
   "PaginationSelect": {

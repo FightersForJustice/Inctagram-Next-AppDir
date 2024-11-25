@@ -12,24 +12,24 @@ import {
   FollowerType,
   GetFollowersDataType,
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import { getUserFollowers } from '@/app/(authorized)/search/SearchContent/data';
+import { getUserFollowers } from '@/app/(authorized)/search/SearchContent/actions';
 import { useDebounce } from '@/utils/useDebaunce';
 import { UnsubscribeModal } from '@/components/Modals/UnsubscribeModal';
 
 type Props = {
   myId?: number;
+  isMyProfile: boolean;
   userName: string;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   setShowSubscribersModal: (value: boolean) => void;
-  token: string | null;
 };
 
 export const SubscribersModal = ({
   myId,
+  isMyProfile,
   userName,
   followUnfollow,
   setShowSubscribersModal,
-  token,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
@@ -49,8 +49,7 @@ export const SubscribersModal = ({
   const fetchUsers = async () => {
     const data: GetFollowersDataType | null = await getUserFollowers(
       userName,
-      debouncedSearch,
-      token
+      debouncedSearch
     );
     if (data) {
       setUsers(data.items);
@@ -111,12 +110,13 @@ export const SubscribersModal = ({
   const usersList =
     users &&
     users.map((user) => {
-      const isMyProfile = myId === user.userId;
+      const isItMe = myId === user.userId;
 
       return (
         <UserForFollowersList
           key={user.userId}
-          isMyProfile={isMyProfile}
+          isMyProfile={isItMe}
+          showDeleteBtn={isMyProfile}
           user={user}
           translate={translate}
           setShowUnsubscribeModal={() =>

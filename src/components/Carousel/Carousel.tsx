@@ -3,10 +3,11 @@ import { FC, ReactNode } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { A11y, Keyboard, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import './carousel.scss';
 import { ChangedImage } from '@/redux/reducers/post/postReducer';
+import SwiperCore from 'swiper';
 
 interface SlidesStyles {
   width: number;
@@ -23,6 +24,8 @@ interface IProps {
   className?: string;
 }
 
+SwiperCore.use([Keyboard]);
+
 export const Carousel: FC<IProps> = ({
   children,
   loadedImages,
@@ -33,10 +36,14 @@ export const Carousel: FC<IProps> = ({
 }) => {
   return (
     <Swiper
-      className= {className ? className : "carousel__wrapper"}
+      className={className ? className : 'carousel__wrapper'}
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={0}
       slidesPerView={1}
+      keyboard={{
+        enabled: true,
+        onlyInViewport: true,
+      }}
       autoHeight
       navigation
       pagination={{ clickable: true }}

@@ -3,18 +3,12 @@
 import { ApiResponsePosts } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { useEffect, useRef, useState } from 'react';
 import { Loader } from '@/components/Loader';
-import {
-  getFollowersPosts,
-} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { getFollowersPosts } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { HomePost } from '@/app/(authorized)/home/HomePagePost/HomePost/HomePost';
 
 import s from './HomePagePost.module.scss';
 
-type PropsType = {
-  id: string | null
-}
-
-export const HomePagePost = ({ id }: PropsType) => {
+export const HomePagePost = () => {
   const [loading, setLoading] = useState(true);
   const [postsData, setPostsData] = useState<ApiResponsePosts | null>(null);
   const [endCursorPostId, setEndCursorPostId] = useState(0);
@@ -49,7 +43,7 @@ export const HomePagePost = ({ id }: PropsType) => {
         return;
       }
 
-      setPostsData(prev => ({
+      setPostsData((prev) => ({
         ...res,
         items: prev ? [...prev.items, ...res.items] : res.items,
       }));
@@ -70,7 +64,10 @@ export const HomePagePost = ({ id }: PropsType) => {
       }
 
       scrollTimeoutRef.current = setTimeout(() => {
-        if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300) {
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 300
+        ) {
           loadMorePosts();
         }
       }, 200);
@@ -90,7 +87,7 @@ export const HomePagePost = ({ id }: PropsType) => {
     <div>
       {postsData?.items.map((i) => (
         <div key={i.id} className={s.post}>
-          <HomePost post={i} id={id} />
+          <HomePost post={i} />
         </div>
       ))}
       {loading && <Loader />}
