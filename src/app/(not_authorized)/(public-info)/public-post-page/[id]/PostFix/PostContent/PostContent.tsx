@@ -22,11 +22,8 @@ import { useDispatch } from 'react-redux';
 import s from './PostContent.module.scss';
 import { Loader } from '@/components/Loader';
 import { ViewLikesModal } from '@/components/Modals/ViewLikesModal';
-import {
-  followToUser,
-  unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/data';
 import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
+import { followToUser, unfollowByUser } from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
