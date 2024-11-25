@@ -13,14 +13,13 @@ import {
 } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { UserForFollowingList } from '@/components/UserForList/UserForFollowingList';
 import { useDebounce } from '@/utils/useDebaunce';
-import { getUserFollowing } from '@/app/(authorized)/search/SearchContent/data';
+import { getUserFollowing } from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
   userName: string;
   followUnfollow: (userId: number, isFollowing: boolean) => void;
   setShowSubscriptionsModal: (value: boolean) => void;
-  token: string | null;
 };
 
 export const SubscriptionsModal: React.FC<Props> = ({
@@ -28,7 +27,6 @@ export const SubscriptionsModal: React.FC<Props> = ({
   userName,
   followUnfollow,
   setShowSubscriptionsModal,
-  token,
 }) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
@@ -47,8 +45,7 @@ export const SubscriptionsModal: React.FC<Props> = ({
   const fetchUsers = async () => {
     const data: GetFollowersDataType | null = await getUserFollowing(
       userName,
-      debouncedSearch,
-      token
+      debouncedSearch
     );
     if (data) {
       setUsers(data.items);

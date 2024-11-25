@@ -12,46 +12,89 @@ import { Items } from '@/redux/reducers/MyProfile/ProfilePostReducer';
 import { ROUTES } from '@/appRoutes/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getLikesPostId, updateLikesPostId } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
-import { useState } from 'react';
+import {
+  getLikesPostId,
+  updateLikesPostId,
+} from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
+import { useEffect, useState } from 'react';
 import { PostLikesDataType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 
 import s from './../HomePagePost.module.scss';
+import {
+  followToUser,
+  getUserInfo,
+  unfollowByUser,
+} from '@/app/(authorized)/search/SearchContent/actions';
 
 type PropsType = {
-  post: Items
-  id: string | null
-}
+  post: Items;
+};
 
-export const HomePost = ({ post, id }: PropsType) => {
+export const HomePost = ({ post }: PropsType) => {
   const router = useRouter();
 
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
+  useEffect(() => {
+    const getFollowingData = async () => {
+      const data = await getUserInfo(post.userName);
+      if (data) setIsFollowing(data.isFollowing);
+    };
+    getFollowingData();
+  }, []);
+
+  const followUnfollowHandler = async () => {
+    if (isFollowing) {
+      const data = await unfollowByUser(post.ownerId);
+      data && setIsFollowing(false);
+    } else {
+      const data = await followToUser(post.ownerId);
+      data && setIsFollowing(true);
+    }
+  };
+
+  const copyToClipboard = async () => {
+    if (isCopied) return;
+
+    const currentURL = window.location.href;
+    const urlForClipboard =
+      currentURL.slice(0, -4) + `profile/${post.ownerId}?post=${post.id}`;
+
+    try {
+      await navigator.clipboard.writeText(urlForClipboard);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+      console.log('Content copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
 
   const openPost = () => {
     router.push(`/profile/${post.ownerId}?post=${post.id}`);
   };
 
-  let isMyPost = null;
-
-  if (id) {
-    isMyPost = +id === post.ownerId;
-  }
-
   const [localIsLiked, setLocalIsLiked] = useState<boolean>(post.isLiked);
-  const [localLikesCount, setLocalLikesCount] = useState<number>(post.likesCount);
+  const [localLikesCount, setLocalLikesCount] = useState<number>(
+    post.likesCount
+  );
   const [avatarLikes, setAvatarLikes] = useState(post.avatarWhoLikes);
 
   const toggleLike = async () => {
     console.log('toggleLike');
     setLocalIsLiked(!localIsLiked);
-    setLocalLikesCount(localIsLiked ? localLikesCount - 1 : localLikesCount + 1);
+    setLocalLikesCount(
+      localIsLiked ? localLikesCount - 1 : localLikesCount + 1
+    );
     const response = await updateLikesPostId(post.id, localIsLiked);
     const data: PostLikesDataType = await getLikesPostId(post.id);
-    const avatarsData = data.items?.map(item => item.avatars[1].url);
+    const avatarsData = data.items?.map((item) => item.avatars[1].url);
     setAvatarLikes(avatarsData);
   };
 
@@ -61,7 +104,10 @@ export const HomePost = ({ post, id }: PropsType) => {
     <div key={post.id} className={s.post}>
       <div className={s.post__top}>
         <div className={s.post__wrapper}>
-          <Link href={ROUTES.PROFILE + `${'/' + post.ownerId}`} className={s.post__link}>
+          <Link
+            href={ROUTES.PROFILE + `${'/' + post.ownerId}`}
+            className={s.post__link}
+          >
             <Image
               className={s.post__desc__ava}
               src={post.avatarOwner ?? '/img/create-post/no-image.png'}
@@ -80,9 +126,16 @@ export const HomePost = ({ post, id }: PropsType) => {
           >
             <circle cx="2" cy="2" r="2" fill="#D9D9D9" />
           </svg>
-          <p className={s.post__time}>{getTimeAgoText(post.createdAt, language, translate)}</p>
+          <p className={s.post__time}>
+            {getTimeAgoText(post.createdAt, language, translate)}
+          </p>
         </div>
-        <HomePostPopup isMyPost={isMyPost} />
+        <HomePostPopup
+          isFollowing={isFollowing}
+          followUnfollow={followUnfollowHandler}
+          isCopied={isCopied}
+          copyContent={copyToClipboard}
+        />
       </div>
       <PostImageCarousel images={post.images} openPost={openPost} />
       <HomePostIcons toggleLike={toggleLike} isLiked={localIsLiked} />

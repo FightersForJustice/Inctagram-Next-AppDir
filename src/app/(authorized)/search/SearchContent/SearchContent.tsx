@@ -6,9 +6,9 @@ import s from './SearchContent.module.scss';
 import { FoundUser } from '../FoundUser';
 import { useDebounce } from '@/utils/useDebaunce';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import { getUsers } from '@/app/(authorized)/search/SearchContent/data';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { getUsers } from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   accessToken: string | null;
@@ -76,7 +76,7 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
     setIsLoad(true);
 
     try {
-      const data = await getUsers(accessToken, {
+      const data = await getUsers({
         search: debouncedSearch,
         pageNumber: pageNumber,
       });
@@ -105,6 +105,13 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
     <div style={{ gridArea: 'profile' }}>
       <div className={s.search}>
         <h2 className={s.search__title}>{translate('title')}</h2>
+        <Image
+          className={s.search__input__search}
+          src={'/img/modal/search.svg'}
+          alt={'search'}
+          width={20}
+          height={20}
+        />
         <input
           className={s.search__input}
           type="text"
@@ -112,13 +119,6 @@ export const SearchContent: React.FC<Props> = ({ accessToken }) => {
           onChange={onChangeSearch}
           placeholder={translate('title')}
           autoFocus
-        />
-        <Image
-          className={s.search__input__search}
-          src={'/img/modal/search.svg'}
-          alt={'search'}
-          width={20}
-          height={20}
         />
       </div>
       <div className={s.search__container}>

@@ -38,7 +38,6 @@ type Props = {
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
   onDeletePost: () => void;
-  token?: string | null;
 };
 
 export const PostContent = ({
@@ -51,7 +50,6 @@ export const PostContent = ({
   myProfile,
   setEditPost,
   onDeletePost,
-  token,
 }: Props) => {
   const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -103,9 +101,7 @@ export const PostContent = ({
   };
 
   const followUnfollow = async (userId: number, isFollowing: boolean) => {
-    isFollowing
-      ? await unfollowByUser(userId, token)
-      : await followToUser(userId, token);
+    isFollowing ? await unfollowByUser(userId) : await followToUser(userId);
   };
 
   const openLikesModal = async () => {

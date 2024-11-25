@@ -26,7 +26,6 @@ type Props = {
   myProfile: boolean;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   isOpenByLink?: boolean;
-  token?: string | null;
 };
 
 export function Post({
@@ -35,7 +34,6 @@ export function Post({
   myProfile,
   type,
   isOpenByLink,
-  token,
 }: Readonly<Props>) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -154,7 +152,6 @@ export function Post({
   const isPublicPost =
     width <= 521 ? (
       <PostContentMobile
-        token={token}
         myId={myId}
         type={type}
         post={post}
@@ -174,7 +171,6 @@ export function Post({
         postData={post}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
-        token={token}
       />
     );
 

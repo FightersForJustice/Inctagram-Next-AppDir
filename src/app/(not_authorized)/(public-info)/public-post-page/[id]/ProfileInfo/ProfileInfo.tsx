@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_ROUTES } from '@/appRoutes/routes';
+import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
+import { SubscribersModal } from '@/components/Modals/SubscribersModal';
 import {
   followToUser,
   unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/data';
-import { SubscriptionsModal } from '@/components/Modals/SubscriptionsModal';
-import { SubscribersModal } from '@/components/Modals/SubscribersModal';
+} from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
@@ -21,7 +21,6 @@ type Props = {
   postsData: ApiResponsePosts;
   isPublic: boolean;
   followingData: UserFollowingDataType | null;
-  token: string | null;
 };
 export const ProfileInfo = ({
   myId,
@@ -30,7 +29,6 @@ export const ProfileInfo = ({
   postsData,
   isPublic,
   followingData,
-  token,
 }: Props) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`MyProfilePage.${key}`);
@@ -40,6 +38,9 @@ export const ProfileInfo = ({
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [isUserFollowing, setIsUserFollowing] = useState(
     followingData?.isFollowing
+  );
+  const [followingCount, setFollowingCount] = useState(
+    followingData?.followingCount || 0
   );
   const [followersCount, setFollowersCount] = useState(
     followingData?.followersCount || 0
@@ -57,19 +58,21 @@ export const ProfileInfo = ({
         window.removeEventListener('popstate', handler);
       };
     }
+
+    router.refresh();
   }, []);
 
   const followUnfollowHandler = async () => {
     if (!isPublic) {
       let resIsOk: boolean | null;
       if (isUserFollowing) {
-        resIsOk = await unfollowByUser(userData.id, token);
+        resIsOk = await unfollowByUser(userData.id);
         if (resIsOk) {
           setIsUserFollowing(false);
           setFollowersCount((prev) => prev - 1);
         }
       } else {
-        resIsOk = await followToUser(userData.id, token);
+        resIsOk = await followToUser(userData.id);
         if (resIsOk) {
           setIsUserFollowing(true);
           setFollowersCount((prev) => prev + 1);
@@ -82,9 +85,14 @@ export const ProfileInfo = ({
     userId: number,
     isFollowing: boolean
   ) => {
-    isFollowing
-      ? await unfollowByUser(userId, token)
-      : await followToUser(userId, token);
+    let resIsOk: boolean | null;
+    if (isFollowing) {
+      resIsOk = await unfollowByUser(userId);
+      resIsOk && myProfile && setFollowingCount((prev) => prev - 1);
+    } else {
+      resIsOk = await followToUser(userId);
+      resIsOk && myProfile && setFollowingCount((prev) => prev + 1);
+    }
   };
 
   const subBtnName = isUserFollowing
@@ -121,7 +129,7 @@ export const ProfileInfo = ({
               <div className={s.name}>{userData?.userName}</div>
               <div className={s.statistics}>
                 <div className={s.following} onClick={openFollowingModal}>
-                  <p>{!isPublic && followingData?.followingCount}</p>
+                  <p>{!isPublic && followingCount}</p>
                   <p>{translate('subscriptions')}</p>
                 </div>
                 <div className={s.followers} onClick={openFollowersModal}>
@@ -165,16 +173,15 @@ export const ProfileInfo = ({
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscriptionsModal={setShowFollowingModal}
-            token={token}
           />
         )}
         {showFollowersModal && (
           <SubscribersModal
             myId={myId}
+            isMyProfile={myProfile}
             userName={userData.userName}
             followUnfollow={followUnfollowForModal}
             setShowSubscribersModal={setShowFollowersModal}
-            token={token}
           />
         )}
       </div>
