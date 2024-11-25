@@ -1,7 +1,7 @@
 .post {
   &__comment {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     gap: 12px;
     padding: 0 24px 0 24px;
     margin-bottom: 12px;
@@ -20,8 +20,9 @@
 
     &__wrapper {
       display: flex;
+      width: 100%;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     &__name {
@@ -48,6 +49,7 @@
 
     &__answer {
       cursor: pointer;
+      font-weight: 600;
     }
   }
 }

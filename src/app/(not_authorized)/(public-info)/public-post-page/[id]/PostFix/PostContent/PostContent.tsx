@@ -1,14 +1,10 @@
 import Image from 'next/image';
 import { AreYouSureModal } from '@/components/Modals/AreYouSureModal';
-import { PostComment } from './PostComment';
-import { PostLikes } from './PostLikes';
 import { useEffect, useState } from 'react';
 import { Carousel } from '@/components/Carousel/Carousel';
 import { SwiperSlide } from 'swiper/react';
 import { PostModal } from '@/components/Modals/PostModal';
 import PostHeader from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/PostHeader/PostHeader';
-import { PostForm } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostForm';
-import { PostAmount } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/PostFix/PostContent/PostAmount';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import { formatServerDateWithoutTime, getTimeAgoText } from '@/utils';
@@ -26,15 +22,15 @@ import { useDispatch } from 'react-redux';
 import s from './PostContent.module.scss';
 import { Loader } from '@/components/Loader';
 import { ViewLikesModal } from '@/components/Modals/ViewLikesModal';
-import {
-  followToUser,
-  unfollowByUser,
-} from '@/app/(authorized)/search/SearchContent/actions';
+import { PostCommentHOC } from './PostCommentHOC/PostCommentHOC';
+import { followToUser, unfollowByUser } from '@/app/(authorized)/search/SearchContent/actions';
 
 type Props = {
   myId?: number;
+  id: number;
   type?: 'publicPage' | 'publicProfile' | 'admin';
   post: PostType;
+  postData: PostType;
   myProfile: boolean;
   closeModalAction: () => void;
   setEditPost: (value: boolean) => void;
@@ -45,6 +41,8 @@ export const PostContent = ({
   myId,
   type,
   post,
+  postData,
+  id,
   closeModalAction,
   myProfile,
   setEditPost,
@@ -156,24 +154,18 @@ export const PostContent = ({
               </div>
             </div>
           </div>
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          <PostComment myProfile={myProfile} />
-          {!type && (
-            <PostLikes
-              toggleLike={toggleLike}
-              isLiked={localIsLiked ?? (likesData?.isLiked || false)}
-            />
-          )}
-          {type !== 'admin' && (
-            <PostAmount
-              likes={likesCount}
-              avatarLikes={avatarLikes}
-              date={date}
-              openLikesModal={openLikesModal}
-            />
-          )}
-          {myProfile && <PostForm />}
+          <PostCommentHOC
+            myProfile={myProfile}
+            postId={id}
+            myId={myId || 0}
+            postData={postData}
+            likes={likesCount}
+            avatarLikes={avatarLikes}
+            date={date}
+            openLikesModal={openLikesModal}
+            toggleLike={toggleLike}
+            isLiked={localIsLiked ?? (likesData?.isLiked || false)}
+          />
           {showAreYouSureModal && (
             <AreYouSureModal
               toggleAreYouSureModal={setShowAreYouSureModal}

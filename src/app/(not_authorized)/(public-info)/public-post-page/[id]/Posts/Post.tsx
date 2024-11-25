@@ -167,6 +167,8 @@ export function Post({
         post={post}
         closeModalAction={closeModalAction}
         myProfile={myProfile}
+        id={post.id}
+        postData={post}
         setEditPost={setEditPost}
         onDeletePost={onDeletePost}
       />

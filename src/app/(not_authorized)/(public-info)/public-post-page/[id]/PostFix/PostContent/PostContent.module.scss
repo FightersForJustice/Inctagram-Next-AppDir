@@ -150,6 +150,12 @@
     padding: 18px;
     border-top: 1px solid var(--dark-100);
 
+    &__disabled {
+      color: gray;
+      cursor: not-allowed;
+    }
+
+
     &__input {
       width: 100%;
       background: transparent;
@@ -182,6 +188,7 @@
     }
   }
 }
+
 
 @include s.devices(mobile) {
   .post {

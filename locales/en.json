@@ -324,7 +324,9 @@
       "addPublicationDescriptions": "Add publication descriptions",
       "saveChanges" : "Save Changes",
       "save" : "Save",
-      "viewComments": "View All Comments"
+      "viewComments": "View All Comments",
+      "answer":"Answer",
+      "like":"Like"
     },
     "DeletePostModal": {
       "title": "Close Post",
@@ -387,6 +389,7 @@
     }
   },
   "Time": {
+    "publicationsCreated": "Comment submited",
     "now": "just now",
     "minutes": {
       "one": "minute ago",
