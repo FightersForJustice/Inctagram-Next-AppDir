@@ -55,4 +55,8 @@
   .selected {
     background-color: var(--dark-100);
   }
+
+  .not_alowed {
+    cursor: not-allowed;
+  }
 }

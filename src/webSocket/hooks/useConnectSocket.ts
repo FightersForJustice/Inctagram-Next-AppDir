@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { NotificationItem } from '@/api/notification.api';
 import { SocketEvents } from './SocketEvents';
-import { ItemDialog, ItemDialogs } from '@/api/messenger.api';
+import { MessageItem, ItemDialogs } from '@/api/messenger.api';
 
 type useConnectSocketProps = {
   accessToken: string;
   setNotifications?: React.Dispatch<React.SetStateAction<NotificationItem[]>>;
   setAmount?: React.Dispatch<React.SetStateAction<number>>;
-  setDialog?: React.Dispatch<React.SetStateAction<ItemDialog[]>>;
+  setDialog?: React.Dispatch<React.SetStateAction<MessageItem[]>>;
   setDialogs?: React.Dispatch<React.SetStateAction<ItemDialogs[]>>;
 };
 
@@ -21,6 +21,53 @@ export const useConnectSocket = ({
                                  }: useConnectSocketProps) => {
 
   const [socket, setSocket] = useState<Socket | null>(null);
+
+  const updateDialogs = (message: MessageItem, messageUpdated?: boolean) => {
+
+    const messageIds = [message.receiverId, message.ownerId].sort().join(';');
+
+    if (setDialog) {
+      setDialog((prevMessages) => {
+
+        if (!prevMessages.length) return prevMessages;
+
+        const dialogIds = [prevMessages[0].receiverId, prevMessages[0].ownerId].sort().join(';');
+
+        if (dialogIds !== messageIds) return prevMessages;
+
+        if (messageUpdated) {
+          return prevMessages.map((m) => {
+            if (m.id === message.id) {
+              return message;
+            }
+            return m;
+          })
+        } else {
+          return [message, ...prevMessages];
+        }
+      });
+    }
+
+    if (setDialogs && !messageUpdated) {
+      setDialogs((prevDialogs) => {
+        if (!prevDialogs) return prevDialogs;
+
+        return prevDialogs.map((d) => {
+
+          const dialogIds = [d.receiverId, d.ownerId].sort().join(';');
+
+          if (dialogIds === messageIds) {
+            return {
+              ...d,
+              messageText: message.messageText,
+              createdAt: message.createdAt,
+            };
+          }
+          return d;
+        });
+      });
+    }
+  }
 
   useEffect(() => {
     const socketInstance = io('https://inctagram.work', {
@@ -57,65 +104,38 @@ export const useConnectSocket = ({
       },
     );
 
-    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (dialog: ItemDialog) => {
-      console.log('Новое отправленное сообщение получено: ', dialog);
+    socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (message: MessageItem) => {
+      console.log('Новое сообщение отправлено: ', message);
 
-      if (setDialog) {
-        setDialog((prevMessages) => [dialog, ...prevMessages]);
-      }
 
-      if (setDialogs) {
-        setDialogs((prevDialogs) => {
-          if (!prevDialogs) return prevDialogs;
 
-          const updatedDialogs = prevDialogs.map((d) => {
-            if (d.receiverId === dialog.receiverId) {
-              return {
-                ...d,
-                messageText: dialog.messageText,
-                createdAt: dialog.createdAt,
-              };
-            }
-            return d;
-          });
 
-          return updatedDialogs;
-        });
-      }
+      const messageUpdated = message.createdAt !== message.updatedAt;
+
+      updateDialogs(message, messageUpdated);
     });
 
-    socketInstance.on(SocketEvents.MESSAGE_SENT, (dialog: ItemDialog, acknowledge) => {
-      console.log('Новое сообщение получено: ', dialog);
+    socketInstance.on(SocketEvents.MESSAGE_SENT, (message: MessageItem, acknowledge) => {
+      console.log('Новое сообщение получено: ', message);
 
       if (acknowledge) {
         acknowledge({
-          message: dialog.messageText,
-          receiverId: dialog.receiverId,
+          message: message.messageText,
+          receiverId: message.receiverId,
         });
       }
 
-      if (setDialog) {
-        setDialog((prevMessages) => [dialog, ...prevMessages]);
-      }
+      updateDialogs(message);
+    });
 
-      if (setDialogs) {
-        setDialogs((prevDialogs) => {
-          if (!prevDialogs) return prevDialogs;
+    socketInstance.on(SocketEvents.MESSAGE_DELETED , (messageId: number) => {
+      console.log('Сообщение удалено: ', messageId);
 
-          const updatedDialogs = prevDialogs.map((d) => {
-            if (d.receiverId === dialog.receiverId) {
-              return {
-                ...d,
-                messageText: dialog.messageText,
-                createdAt: dialog.createdAt,
-              };
-            }
-            return d;
-          });
+      setDialog && setDialog((prevMessages) => {
+        if (!prevMessages) return prevMessages;
 
-          return updatedDialogs;
-        });
-      }
+        return prevMessages.filter((m) => m.id !== messageId);
+      });
     });
 
     socketInstance.on(SocketEvents.ERROR, (response) => {

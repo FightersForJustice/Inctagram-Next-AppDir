@@ -147,7 +147,9 @@
     "dialog": {
       "placeholder": "Type Message",
       "send": "Send",
-      "chose": "Choose who you would like to talk to"
+      "edit": "Edit",
+      "delete": "Delete",
+      "choose": "Choose who you would like to talk to"
     }
   },
   "Navigation": {

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ItemDialog, ItemDialogs } from '@/api/messenger.api';
+import { MessageItem, ItemDialogs } from '@/api/messenger.api';
 import { useState } from 'react';
 import { formatDialogsDate } from '@/utils/formatDialogsDate';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
@@ -9,14 +9,15 @@ import clsx from 'clsx';
 import s from './Message.module.scss';
 
 type PropsType = {
-  message: ItemDialog;
+  message: MessageItem;
   receiverData: ItemDialogs | null;
   id: string | null;
-  onSelectMessage: (id: number) => void; // Пропс для выбора сообщения
-  isSelected: boolean; // Флаг для выделения
+  onSelectMessage: (id: number) => void;
+  isSelected: boolean;
+  messageToChange: MessageItem | null;
 }
 
-export const Message = ({ message, receiverData, id, onSelectMessage, isSelected }: PropsType) => {
+export const Message = ({ message, receiverData, id, onSelectMessage, isSelected, messageToChange }: PropsType) => {
 
   const { t } = useTranslation();
   const language = useGetLanguage();
@@ -36,7 +37,7 @@ export const Message = ({ message, receiverData, id, onSelectMessage, isSelected
         />
       )}
       <button onClick={() => onSelectMessage(message.id)}>
-        <div className={clsx(s.text, isSelected && s.selected)}>
+        <div className={clsx(s.text, isSelected && s.selected, messageToChange && s.not_alowed)}>
           <p className={s.text_message}>{message.messageText}</p>
           <div className={s.status}>
           <span className={s.text_time}>{formatDialogsDate(

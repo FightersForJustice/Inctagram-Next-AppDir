@@ -85,10 +85,10 @@ export type Dialogs = {
 export type Dialog = {
     totalCount: number,
     pageSize: number,
-    items: ItemDialog[]
+    items: MessageItem[]
 }
 
-export type ItemDialog = {
+export type MessageItem = {
     id: number,
     ownerId: number,
     receiverId: number,
