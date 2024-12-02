@@ -1,4 +1,5 @@
 import {Avatar} from "@/api/profile.api";
+import { accessToken } from '@/utils/serverActions';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -42,6 +43,26 @@ export const getDialog = async (accessToken: string, partnerId: number) => {
     }
 };
 
+export const deleteMessage = async (accessToken: string, id: number) => {
+    const apiUrl = `${baseUrl}messanger/${id}`;
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        });
+        if (!response.ok) {
+            console.error('Error:', response.statusText);
+            return response.statusText;
+        }
+        return response.status;
+    } catch (error) {
+        console.error('Error deleting:', error);
+        return error;
+    }
+};
+
 export type ItemDialogs = {
     id: number,
     ownerId: number,
@@ -64,10 +85,10 @@ export type Dialogs = {
 export type Dialog = {
     totalCount: number,
     pageSize: number,
-    items: ItemDialog[]
+    items: MessageItem[]
 }
 
-export type ItemDialog = {
+export type MessageItem = {
     id: number,
     ownerId: number,
     receiverId: number,
