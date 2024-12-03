@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { ItemDialogs } from '@/api/messenger.api';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@/utils/useDebaunce';
-import { getUsers } from '@/app/(authorized)/search/SearchContent/data';
+import { getUsers } from '@/app/(authorized)/search/SearchContent/actions';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { useTranslation } from 'react-i18next';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
@@ -40,7 +40,7 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken }: PropsType)
   const getMoreSearchedUsers = async () => {
     if (!accessToken) return;
 
-    const data = await getUsers(accessToken, {
+    const data = await getUsers({
       search: searchInputHandler,
       pageNumber: 1,
       pageSize: 5,
