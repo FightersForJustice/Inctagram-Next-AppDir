@@ -156,7 +156,8 @@ export const ProfileInfo = ({
                   >
                     {translate(subBtnName)}
                   </Link>
-                  <Link href="#" className={s.message}>
+                  <Link href={`/messenger?id=${userData.id}`}
+                        className={s.message}>
                     {translate('btnSendMessage')}
                   </Link>
                 </>

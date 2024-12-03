@@ -138,7 +138,7 @@ export const HomePost = ({ post }: PropsType) => {
         />
       </div>
       <PostImageCarousel images={post.images} openPost={openPost} />
-      <HomePostIcons toggleLike={toggleLike} isLiked={localIsLiked} />
+      <HomePostIcons toggleLike={toggleLike} isLiked={localIsLiked} ovnerId={post.ownerId}/>
       <HomePostDescription
         userName={post.userName}
         description={post.description}
