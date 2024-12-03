@@ -1,7 +1,7 @@
 'use client';
 
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import { SocketEvents } from '@/webSocket/hooks/SocketEvents';
 import { deleteMessage, getDialog, getDialogs, MessageItem, ItemDialogs } from '@/api/messenger.api';
 import { DialogList } from '@/app/(authorized)/messenger/dialogs/dialog-list/DialogList';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import s from './Dialogs.module.scss';
 import { getProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
+import {useSearchParams} from "next/navigation";
 
 type PropsType = {
   accessToken: string;
@@ -19,6 +20,8 @@ type PropsType = {
 }
 
 export const Dialogs = ({ accessToken, id }: PropsType) => {
+
+  const idFromUrl = useSearchParams().get('id');
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Messenger.${key}`);
@@ -66,6 +69,7 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   };
 
   const fetchDialog = async (partnerId: number) => {
+
     const data = await getDialog(accessToken, partnerId);
     if (data) {
       setDialog(data.items);
@@ -95,7 +99,15 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       avatars: userData.avatars,
     }
 
-    setDialogs((prevDialogs) => [newDialog, ...prevDialogs]);
+    setDialogs((prevDialogs) => {
+
+      const foundDialog = prevDialogs.find((d) => d.receiverId === partnerId);
+
+      if(!foundDialog){
+        return [newDialog, ...prevDialogs];
+      }
+      return prevDialogs
+    })
 
     return newDialog;
   }
@@ -120,7 +132,6 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
           if (d.id === dialogId) {
             d.messageText = messages[0].messageText;
           }
-
           return d;
         });
       });
@@ -131,6 +142,10 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
 
   useEffect(() => {
     fetchDialogs();
+  }, []);
+
+  useEffect(() => {
+    !loading && idFromUrl && fetchDialog(+idFromUrl);
   }, []);
 
   if (loading) return <Loader />;
