@@ -10,7 +10,7 @@ import {
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useGetParams } from '@/utils/useGetParams';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortDirection } from '@/types';
@@ -18,6 +18,8 @@ import { useGetFollowingListQuery } from '@/queries/followers/followers.generate
 
 export const FollowingClient = ({ id }: { id: string }) => {
   const url = useGetParams();
+  const urlParams = useSearchParams()!;
+  const params = new URLSearchParams(urlParams.toString());
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
@@ -62,7 +64,9 @@ export const FollowingClient = ({ id }: { id: string }) => {
   // for pagination
   const lastPaymentIndex = currentPage * paymentsPerPage;
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
+    return nextRouter.push(`?${params.toString()}`);
   };
 
   const usersPaymentsData = data
