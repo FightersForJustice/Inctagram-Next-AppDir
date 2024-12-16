@@ -10,7 +10,7 @@ import {
 } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useGetParams } from '@/utils/useGetParams';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SortDirection } from '@/types';
@@ -18,6 +18,7 @@ import { useGetFollowersListQuery } from '@/queries/followers/followers.generate
 
 export const FollowersClient = ({ id }: { id: string }) => {
   const url = useGetParams();
+  const urlParams = useSearchParams()!;
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
@@ -35,6 +36,19 @@ export const FollowersClient = ({ id }: { id: string }) => {
     { label: '100', value: '100' },
   ];
 
+  const [currentPage, setCurrentPage] = useState(
+    Number(urlParams.get('pageNumber')) !== null &&
+      Number(urlParams.get('pageNumber')) !== 0
+      ? Number(urlParams.get('pageNumber'))
+      : 1
+  );
+  const [followersPerPage, setFollowersPerPage] = useState(
+    Number(urlParams.get('pageSize')) !== null &&
+      Number(urlParams.get('pageSize')) !== 0
+      ? Number(urlParams.get('pageSize'))
+      : 10
+  );
+
   const getSortValues = currentParams?.filter((el) => el[0] === 'sortBy')[0];
   const getPageSize = currentParams?.filter((el) => el[0] === 'pageSize')[0];
   const getSearchValue = currentParams?.filter(
@@ -47,8 +61,8 @@ export const FollowersClient = ({ id }: { id: string }) => {
     variables: currentParams?.length
       ? {
           userId: Number(id),
-          pageSize: 10,
-          pageNumber: 1,
+          pageSize: followersPerPage,
+          pageNumber: currentPage,
           sortBy: getSortValues ? getSortValues[1] : '',
           sortDirection: getSortDirection
             ? (getSortDirection[1] as SortDirection)
@@ -57,14 +71,13 @@ export const FollowersClient = ({ id }: { id: string }) => {
       : { userId: Number(id) },
   });
   const tableVariant = 'UserFollowers';
-  const [currentPage, setCurrentPage] = useState(1);
-  const [paymentsPerPage, setPaymentsPerPage] = useState(10);
+
   // for pagination
-  const lastPaymentIndex = currentPage * paymentsPerPage;
+  const lastPaymentIndex = currentPage * followersPerPage;
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  const usersPaymentsData = data
+  const usersFollowersData = data
     ? data.getFollowers.items.map((el) => {
         const correctData = {
           id: el.id,
@@ -91,7 +104,7 @@ export const FollowersClient = ({ id }: { id: string }) => {
   return (
     <div>
       <Table
-        data={usersPaymentsData}
+        data={usersFollowersData}
         headTitles={resultHeaderTitle}
         Row={tableVariant}
         id={id}
@@ -99,8 +112,8 @@ export const FollowersClient = ({ id }: { id: string }) => {
       <Pagination
         currentPage={currentPage}
         setCurrentPage={paginate}
-        paymentsPerPage={paymentsPerPage}
-        setPaymentsPerPage={setPaymentsPerPage}
+        paymentsPerPage={followersPerPage}
+        setPaymentsPerPage={setFollowersPerPage}
         totalCount={data ? data.getFollowers.totalCount : 0}
         options={optionsSelect}
       />
