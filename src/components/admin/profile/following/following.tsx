@@ -103,8 +103,6 @@ export const FollowingClient = ({ id }: { id: string }) => {
     refetch();
   }, [url, refetch]);
 
-  console.log(params);
-
   //react select issue
   //https://github.com/ndom91/react-timezone-select/issues/108
   return (
