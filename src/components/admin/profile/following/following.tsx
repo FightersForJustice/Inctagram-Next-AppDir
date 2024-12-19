@@ -80,6 +80,12 @@ export const FollowingClient = ({ id }: { id: string }) => {
     setCurrentPage(pageNumber);
     return nextRouter.push(`?${params.toString()}`);
   };
+  const paginatePageSize = (pageSize: number) => {
+    paginate(1);
+    params.set('pageSize', pageSize.toString());
+    setFollowingsPerPage(pageSize);
+    return nextRouter.push(`?${params.toString()}`);
+  };
 
   const usersFollowingData = data
     ? data.getFollowing.items.map((el) => {
@@ -117,7 +123,7 @@ export const FollowingClient = ({ id }: { id: string }) => {
         currentPage={currentPage}
         setCurrentPage={paginate}
         paymentsPerPage={followingsPerPage}
-        setPaymentsPerPage={setFollowingsPerPage}
+        setPaymentsPerPage={paginatePageSize}
         totalCount={data ? data.getFollowing.totalCount : 0}
         options={optionsSelect}
       />
