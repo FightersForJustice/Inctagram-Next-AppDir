@@ -19,6 +19,7 @@ import { useGetFollowersListQuery } from '@/queries/followers/followers.generate
 export const FollowersClient = ({ id }: { id: string }) => {
   const url = useGetParams();
   const urlParams = useSearchParams()!;
+  const params = new URLSearchParams(urlParams.toString());
   const nextRouter = useRouter();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Admin.paypentlist.${key}`);
@@ -75,7 +76,15 @@ export const FollowersClient = ({ id }: { id: string }) => {
   // for pagination
   const lastPaymentIndex = currentPage * followersPerPage;
   const paginate = (pageNumber: number) => {
+    params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
+    return nextRouter.push(`?${params.toString()}`);
+  };
+  const paginatePageSize = (pageSize: number) => {
+    paginate(1);
+    params.set('pageSize', pageSize.toString());
+    setFollowersPerPage(pageSize);
+    return nextRouter.push(`?${params.toString()}`);
   };
   const usersFollowersData = data
     ? data.getFollowers.items.map((el) => {
@@ -113,7 +122,7 @@ export const FollowersClient = ({ id }: { id: string }) => {
         currentPage={currentPage}
         setCurrentPage={paginate}
         paymentsPerPage={followersPerPage}
-        setPaymentsPerPage={setFollowersPerPage}
+        setPaymentsPerPage={paginatePageSize}
         totalCount={data ? data.getFollowers.totalCount : 0}
         options={optionsSelect}
       />

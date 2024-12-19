@@ -1,13 +1,9 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import { Pagination } from '@/components/newPagination';
 import { headerList } from '@/components/Table/headTypes';
-import {
-  UsersListType,
-  UsersPaymentType,
-} from '@/components/Table/rowTypes';
+import { UsersListType, UsersPaymentType } from '@/components/Table/rowTypes';
 import { Table } from '@/components/Table/Table';
 import { useGetParams } from '@/utils/useGetParams';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -19,9 +15,7 @@ import {
   StatusSubscriptionType,
   SubscriptionType,
 } from '@/types';
-import {
-  useGetPaymentsByUserQueryQuery,
-} from '@/queries/payments/payments.generated';
+import { useGetPaymentsByUserQueryQuery } from '@/queries/payments/payments.generated';
 
 export const PaymentsClient = ({ id }: { id: string }) => {
   const url = useGetParams();
@@ -38,13 +32,13 @@ export const PaymentsClient = ({ id }: { id: string }) => {
 
   const [currentPage, setCurrentPage] = useState(
     Number(urlParams.get('pageNumber')) !== null &&
-    Number(urlParams.get('pageNumber')) !== 0
+      Number(urlParams.get('pageNumber')) !== 0
       ? Number(urlParams.get('pageNumber'))
       : 1
   );
   const [paymentsPerPage, setPaymentsPerPage] = useState(
     Number(urlParams.get('pageSize')) !== null &&
-    Number(urlParams.get('pageSize')) !== 0
+      Number(urlParams.get('pageSize')) !== 0
       ? Number(urlParams.get('pageSize'))
       : 10
   );
@@ -64,14 +58,14 @@ export const PaymentsClient = ({ id }: { id: string }) => {
   const { data, loading, error, refetch } = useGetPaymentsByUserQueryQuery({
     variables: currentParams?.length
       ? {
-        userId: Number(id),
-        pageSize: paymentsPerPage,
-        pageNumber: currentPage,
-        sortBy: getSortValues ? getSortValues[1] : '',
-        sortDirection: getSortDirection
-          ? (getSortDirection[1] as SortDirection)
-          : ('desc' as SortDirection),
-      }
+          userId: Number(id),
+          pageSize: paymentsPerPage,
+          pageNumber: currentPage,
+          sortBy: getSortValues ? getSortValues[1] : '',
+          sortDirection: getSortDirection
+            ? (getSortDirection[1] as SortDirection)
+            : ('desc' as SortDirection),
+        }
       : { userId: Number(id) },
   });
 
@@ -81,34 +75,34 @@ export const PaymentsClient = ({ id }: { id: string }) => {
     params.set('pageNumber', pageNumber.toString());
     setCurrentPage(pageNumber);
     return nextRouter.push(`?${params.toString()}`);
-  }
+  };
 
-  const paginatePageSize = (pageNumber: number) => {
-    params.set('pageSize', pageNumber.toString());
-    setPaymentsPerPage(pageNumber);
+  const paginatePageSize = (pageSize: number) => {
+    paginate(1);
+    params.set('pageSize', pageSize.toString());
+    setPaymentsPerPage(pageSize);
     return nextRouter.push(`?${params.toString()}`);
-
   };
   const usersPaymentsData = data
     ? data.getPaymentsByUser.items.map((el) => {
-      const correctData = {
-        dateOfPayment: el.dateOfPayment,
-        endDateOfSubscription: '',
-        price: el.price,
-        subscriptionType: '',
-        paymentType: el.paymentType as PaymentMethod,
+        const correctData = {
+          dateOfPayment: el.dateOfPayment,
+          endDateOfSubscription: '',
+          price: el.price,
+          subscriptionType: '',
+          paymentType: el.paymentType as PaymentMethod,
 
-        status: 'ACTIVE' as StatusSubscriptionType,
-        businessAccountId: 1,
-        startDate: el.startDate,
-        endDate: el.endDate,
-        type: el.type as SubscriptionType,
-      };
-      const resultData = {} as UsersListType;
-      const resultData1 = {} as UsersPaymentType;
-      const resultData2 = {} as Follow;
-      return Object.assign(resultData2, resultData, resultData1, correctData);
-    })
+          status: 'ACTIVE' as StatusSubscriptionType,
+          businessAccountId: 1,
+          startDate: el.startDate,
+          endDate: el.endDate,
+          type: el.type as SubscriptionType,
+        };
+        const resultData = {} as UsersListType;
+        const resultData1 = {} as UsersPaymentType;
+        const resultData2 = {} as Follow;
+        return Object.assign(resultData2, resultData, resultData1, correctData);
+      })
     : [];
   const resultHeaderTitle = headerList[tableVariant].map((el) => {
     return translate(el);
