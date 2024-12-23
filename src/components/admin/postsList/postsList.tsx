@@ -12,33 +12,36 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import s from './postsList.module.scss';
 
 export type ItemsType = {
-  __typename?: 'Post',
-  id: number,
-  ownerId: number,
-  description: string,
-  createdAt: any,
-  updatedAt: any,
+  __typename?: 'Post';
+  id: number;
+  ownerId: number;
+  description: string;
+  createdAt: any;
+  updatedAt: any;
+  userBan: {
+    reason: string;
+  } | null;
   images?: Array<{
-    __typename?: 'ImagePost',
-    id?: number | null,
-    createdAt?: any | null,
-    url?: string | null,
-    width?: number | null,
-    height?: number | null,
-    fileSize?: number | null
-  }> | null,
+    __typename?: 'ImagePost';
+    id?: number | null;
+    createdAt?: any | null;
+    url?: string | null;
+    width?: number | null;
+    height?: number | null;
+    fileSize?: number | null;
+  }> | null;
   postOwner: {
-    __typename?: 'PostOwnerModel',
-    id: number,
-    userName: string,
+    __typename?: 'PostOwnerModel';
+    id: number;
+    userName: string;
     avatars?: Array<{
-      __typename?: 'Avatar',
-      url?: string | null,
-      width?: number | null,
-      height?: number | null,
-      fileSize?: number | null
-    }> | null
-  }
+      __typename?: 'Avatar';
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      fileSize?: number | null;
+    }> | null;
+  };
 };
 
 export const PostsListClient = () => {
@@ -84,7 +87,7 @@ export const PostsListClient = () => {
 
   useEffect(() => {
     if (data?.getPosts?.items) {
-      setPosts(prevPosts => (searchTerm ? prevPosts : data.getPosts.items));
+      setPosts(data.getPosts.items);
       setAllPostsLoaded(data.getPosts.items.length < 10);
     }
   }, [data]);
@@ -101,26 +104,33 @@ export const PostsListClient = () => {
         endCursorPostId: lastPostId,
         searchTerm: debouncedSearchTerm,
       },
-    }).then((fetchMoreResult) => {
-      const newPosts = fetchMoreResult.data.getPosts.items;
+    })
+      .then((fetchMoreResult) => {
+        const newPosts = fetchMoreResult.data.getPosts.items;
 
-      if (newPosts.length > 0) {
-        setPosts((prevPosts) => {
-          const existingPostIds = new Set(prevPosts.map(post => post.id));
-          const filteredNewPosts = newPosts.filter(post => !existingPostIds.has(post.id));
-          return [...prevPosts, ...filteredNewPosts];
-        });
-      } else {
-        setAllPostsLoaded(true);
-      }
-    }).finally(() => {
-      setLoadingMore(false);
-    });
+        if (newPosts.length > 0) {
+          setPosts((prevPosts) => {
+            const existingPostIds = new Set(prevPosts.map((post) => post.id));
+            const filteredNewPosts = newPosts.filter(
+              (post) => !existingPostIds.has(post.id)
+            );
+            return [...prevPosts, ...filteredNewPosts];
+          });
+        } else {
+          setAllPostsLoaded(true);
+        }
+      })
+      .finally(() => {
+        setLoadingMore(false);
+      });
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 300) {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 300
+      ) {
         loadMorePosts();
       }
     };
@@ -135,16 +145,21 @@ export const PostsListClient = () => {
   return (
     <div>
       <div className={s.container}>
-        <SearchInput value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <SearchInput
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
-      {loading ?
+      {loading ? (
         <Loader />
-        :
+      ) : (
         <div className={s.postWrapper}>
           <PostClient posts={posts} />
         </div>
-      }
-      {allPostsLoaded && <div className={s.noMorePosts}>No more posts to load</div>}
+      )}
+      {allPostsLoaded && (
+        <div className={s.noMorePosts}>No more posts to load</div>
+      )}
     </div>
   );
 };
