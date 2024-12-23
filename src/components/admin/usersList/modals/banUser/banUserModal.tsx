@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 type Props = {
   setShowAreYouSureModal: (value: boolean) => void;
   setVisiblePopup: (value: boolean) => void;
-  getUsers: () => void;
+  getUsers?: () => void;
   onYes?: () => void;
   onNo?: () => void;
   name?: string;
@@ -23,19 +23,18 @@ export const BanUserModal = (prop: Props) => {
       console.log(userId);
       const res = await mutateFunction({
         variables: { userId: Number(userId), banReason: reason },
-      })
-      const result = res.data?.banUser
-      if (result) {
-        prop.getUsers()
+      });
+      const result = res.data?.banUser;
+      if (result && prop.getUsers) {
+        prop.getUsers();
       }
     }
   };
-  useEffect(()=>{
-    if(visiblePopupId) {
-      setUserId(visiblePopupId)
+  useEffect(() => {
+    if (visiblePopupId) {
+      setUserId(visiblePopupId);
     }
-  },[])
-
+  }, []);
   return (
     <AreYouSureModal
       toggleAreYouSureModal={setShowAreYouSureModal}

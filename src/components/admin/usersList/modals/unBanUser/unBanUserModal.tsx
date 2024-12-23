@@ -6,7 +6,7 @@ type Props = {
   setShowAreYouSureModal: (value: boolean) => void;
   setVisiblePopup: (value: boolean) => void;
   setVisiblePopupId: () => void;
-  getUsers: () => void;
+  getUsers?: () => void;
   onYes?: () => void;
   onNo?: () => void;
   name?: string;
@@ -29,7 +29,7 @@ export const UnBanUserModal = (prop: Props) => {
       variables: { userId: Number(userId) },
     });
     const result = res.data?.unbanUser;
-    if (result) {
+    if (result && prop.getUsers) {
       prop.getUsers();
     }
   };
