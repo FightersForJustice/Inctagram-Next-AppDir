@@ -10,6 +10,8 @@ import { useDebounce } from '@/utils/useDebaunce';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import s from './postsList.module.scss';
+import { BanUserModal } from '@/components/admin/usersList/modals/banUser/banUserModal';
+import { UnBanUserModal } from '@/components/admin/usersList/modals/unBanUser/unBanUserModal';
 
 export type ItemsType = {
   __typename?: 'Post';
@@ -51,6 +53,10 @@ export const PostsListClient = () => {
   const [allPostsLoaded, setAllPostsLoaded] = useState(false);
   const urlParams = useSearchParams();
   const router = useRouter();
+
+  const [editUser, setEditUser] = useState<'ban' | 'unban' | ''>('');
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
+  const [user, setUser] = useState<{ name: string; id: string } | null>(null);
 
   useEffect(() => {
     const searchFromUrl = urlParams.get('searchTerm') || '';
@@ -142,6 +148,8 @@ export const PostsListClient = () => {
     };
   }, [loadingMore, allPostsLoaded, posts]);
 
+  const fakeFunction = () => {};
+
   return (
     <div>
       <div className={s.container}>
@@ -154,11 +162,33 @@ export const PostsListClient = () => {
         <Loader />
       ) : (
         <div className={s.postWrapper}>
-          <PostClient posts={posts} />
+          <PostClient
+            posts={posts}
+            setUser={setUser}
+            setEditUser={setEditUser}
+            setShowAreYouSureModal={setShowAreYouSureModal}
+          />
         </div>
       )}
       {allPostsLoaded && (
         <div className={s.noMorePosts}>No more posts to load</div>
+      )}
+      {showAreYouSureModal && editUser === 'ban' && (
+        <BanUserModal
+          visiblePopupId={user?.id}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopup={fakeFunction}
+          name={user?.name}
+        />
+      )}
+      {showAreYouSureModal && editUser === 'unban' && (
+        <UnBanUserModal
+          visiblePopupId={user?.id}
+          setShowAreYouSureModal={setShowAreYouSureModal}
+          setVisiblePopupId={fakeFunction}
+          setVisiblePopup={fakeFunction}
+          name={user?.name}
+        />
       )}
     </div>
   );

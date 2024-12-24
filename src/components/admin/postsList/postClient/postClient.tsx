@@ -5,26 +5,31 @@ import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import s from './../postsList.module.scss';
-import React, { useState } from 'react';
+import React from 'react';
 import { ItemsType } from '@/components/admin/postsList/postsList';
 import { PostType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
 import { Post } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/Posts/Post';
 import { ImagesAmount } from '@/components/ImagesAmount';
-import { BanUserModal } from '@/components/admin/usersList/modals/banUser/banUserModal';
-import { UnBanUserModal } from '@/components/admin/usersList/modals/unBanUser/unBanUserModal';
 
 type PropsType = {
   posts: ItemsType[];
+  setUser: React.Dispatch<
+    React.SetStateAction<{ name: string; id: string } | null>
+  >;
+  setEditUser: React.Dispatch<React.SetStateAction<'' | 'ban' | 'unban'>>;
+  setShowAreYouSureModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const PostClient = (posts: PropsType) => {
+export const PostClient = ({
+  posts,
+  setUser,
+  setEditUser,
+  setShowAreYouSureModal,
+}: PropsType) => {
   const language = useGetLanguage();
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Time.${key}`);
   const translateReadMoreButton = (key: string): string => t(`ReadMore.${key}`);
-  const [editUser, setEditUser] = useState<'ban' | 'unban' | ''>('');
-  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
-  const [user, setUser] = useState<{ name: string; id: string } | null>(null);
 
   const mapPostData = (
     el: ItemsType
@@ -57,7 +62,7 @@ export const PostClient = (posts: PropsType) => {
     };
   };
 
-  return posts.posts.map((el) => {
+  return posts.map((el) => {
     const post = mapPostData(el);
     const time = getTimeAgoText(el.createdAt, language, translate);
 
@@ -118,23 +123,6 @@ export const PostClient = (posts: PropsType) => {
             lessText={translateReadMoreButton('hide')}
           />
         </div>
-        {showAreYouSureModal && editUser === 'ban' && (
-          <BanUserModal
-            visiblePopupId={user?.id}
-            setShowAreYouSureModal={setShowAreYouSureModal}
-            setVisiblePopup={() => {}}
-            name={user?.name}
-          />
-        )}
-        {showAreYouSureModal && editUser === 'unban' && (
-          <UnBanUserModal
-            visiblePopupId={user?.id}
-            setShowAreYouSureModal={setShowAreYouSureModal}
-            setVisiblePopupId={() => {}}
-            setVisiblePopup={() => {}}
-            name={user?.name}
-          />
-        )}
       </div>
     );
   });
