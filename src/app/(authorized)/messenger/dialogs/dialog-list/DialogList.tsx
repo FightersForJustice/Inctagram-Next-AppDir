@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ItemDialogs } from '@/api/messenger.api';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useDebounce } from '@/utils/useDebaunce';
 import { getUsers } from '@/app/(authorized)/search/SearchContent/actions';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
@@ -15,14 +15,17 @@ type PropsType = {
   fetchDialog: (partnerId: number) => void;
   id: string | null;
   accessToken: string;
+  fetchDialogs: () => void;
 }
 
-export const DialogList = ({ dialogs, fetchDialog, id, accessToken }: PropsType) => {
+export const DialogList = ({ dialogs, fetchDialog, id, accessToken, fetchDialogs }: PropsType) => {
 
   const { t } = useTranslation();
   const language = useGetLanguage()
   const translate = (key: string): string => t(`Messenger.${key}`);
   const translateTime = (key: string): string => t(`Time.${key}`)
+
+  const dialogsListRef = useRef<HTMLDivElement | null>(null);
 
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState<UserType[]>([]);
@@ -51,7 +54,6 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken }: PropsType)
     }
   };
 
-
   const selectUser = (userId: number) => {
 
     fetchDialog(id && +id === userId ? userId : userId);
@@ -63,9 +65,34 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken }: PropsType)
     searchInputHandler !== '' && getMoreSearchedUsers();
   }, [searchInputHandler]);
 
+  useEffect(() => {
+    let scrollTimeout: string | number | NodeJS.Timeout | undefined;
+    const handleScroll = () => {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        if (dialogsListRef.current) {
+          const scrollTop = dialogsListRef.current.scrollTop;
+          const scrollHeight = dialogsListRef.current.scrollHeight;
+          const clientHeight = dialogsListRef.current.clientHeight;
+
+          if (scrollTop + clientHeight >= scrollHeight - 300) {
+            fetchDialogs();
+          }
+        }
+      }, 200);
+    };
+
+    const scrollableElement = dialogsListRef.current;
+    scrollableElement?.addEventListener('scroll', handleScroll);
+
+    return () => {
+      scrollableElement?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <div className={s.list}>
+    <div className={s.list_wrapper}>
       <div className={s.input_block}>
         <input
           type="text"
@@ -104,34 +131,35 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken }: PropsType)
             }
           </div>}
       </div>
-      {dialogs.length > 0 ?
-        dialogs.map((dialog) => (
-          <button key={dialog.id}
-                  onClick={() => fetchDialog(id && +id === dialog.ownerId ? dialog.receiverId : dialog.ownerId)}>
-            <div className={s.dialog}>
-              <Image
-                src={dialog?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-                alt="avatar"
-                width={48}
-                height={48}
-                className={s.avatar}
-              />
-              <div className={s.info}>
-                <div className={s.user}>
-                  <div className={s.name}>{dialog.userName}</div>
-                  <span>{formatDialogsDate(
-                    dialog.createdAt, language, translateTime)}</span>
+      <div className={s.list} ref={dialogsListRef}>
+        {dialogs.length > 0 ?
+          dialogs.map((dialog) => (
+            <button key={dialog.id}
+                    onClick={() => fetchDialog(id && +id === dialog.ownerId ? dialog.receiverId : dialog.ownerId)}>
+              <div className={s.dialog}>
+                <Image
+                  src={dialog?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                  alt="avatar"
+                  width={48}
+                  height={48}
+                  className={s.avatar}
+                />
+                <div className={s.info}>
+                  <div className={s.user}>
+                    <div className={s.name}>{dialog.userName}</div>
+                    <span>{formatDialogsDate(
+                      dialog.createdAt, language, translateTime)}</span>
+                  </div>
+                  <p className={s.message}>
+                    {dialog.messageText}</p>
                 </div>
-                <p className={s.message}>
-                  {id && +id === dialog.ownerId && translate('dialogs.you')}
-                  {dialog.messageText}</p>
               </div>
-            </div>
-          </button>
-        ))
-        :
-        <p className={s.no_dialogs}>{translate('dialogs.noDialogs')}</p>
-      }
+            </button>
+          ))
+          :
+          <p className={s.no_dialogs}>{translate('dialogs.noDialogs')}</p>
+        }
+      </div>
     </div>
   );
 };

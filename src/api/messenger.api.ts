@@ -1,10 +1,9 @@
 import {Avatar} from "@/api/profile.api";
-import { accessToken } from '@/utils/serverActions';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const getDialogs = async (accessToken: string) => {
-    const apiUrl = `${baseUrl}messanger`;
+export const getDialogs = async (accessToken: string, cursor: number) => {
+    const apiUrl = `${baseUrl}messanger?cursor=${cursor}&pageSize=9`;
     try {
         const response = await fetch(apiUrl, {
             headers: {
@@ -23,8 +22,8 @@ export const getDialogs = async (accessToken: string) => {
     }
 };
 
-export const getDialog = async (accessToken: string, partnerId: number) => {
-    const apiUrl = `${baseUrl}messanger/${partnerId}`;
+export const getDialog = async (accessToken: string, partnerId: number, cursor: number) => {
+    const apiUrl = `${baseUrl}messanger/${partnerId}?cursor=${cursor}`;
     try {
         const response = await fetch(apiUrl, {
             headers: {
@@ -63,6 +62,27 @@ export const deleteMessage = async (accessToken: string, id: number) => {
     }
 };
 
+export const updateMessages = async (accessToken: string, ids: number[]) => {
+    const apiUrl = `${baseUrl}messanger`;
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ids}),
+        });
+        if (!response.ok) {
+            console.error('Error:', response.statusText);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+    }
+};
+
 export type ItemDialogs = {
     id: number,
     ownerId: number,
@@ -73,7 +93,8 @@ export type ItemDialogs = {
     messageType: string,
     status: string,
     userName: string,
-    avatars: Avatar[]
+    avatars: Avatar[],
+    messages: MessageItem[]
 }
 
 export type Dialogs = {

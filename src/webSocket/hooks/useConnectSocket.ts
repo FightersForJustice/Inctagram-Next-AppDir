@@ -8,7 +8,7 @@ type useConnectSocketProps = {
   accessToken: string;
   setNotifications?: React.Dispatch<React.SetStateAction<NotificationItem[]>>;
   setAmount?: React.Dispatch<React.SetStateAction<number>>;
-  setDialog?: React.Dispatch<React.SetStateAction<MessageItem[]>>;
+  setDialog?: React.Dispatch<React.SetStateAction<ItemDialogs | null>>;
   setDialogs?: React.Dispatch<React.SetStateAction<ItemDialogs[]>>;
 };
 
@@ -22,33 +22,42 @@ export const useConnectSocket = ({
 
   const [socket, setSocket] = useState<Socket | null>(null);
 
-  const updateDialogs = (message: MessageItem, messageUpdated?: boolean) => {
+  const updateDialogs = (message: MessageItem) => {
 
     const messageIds = [message.receiverId, message.ownerId].sort().join(';');
 
+    const messageUpdated = Date.now() - new Date(message.createdAt).getTime() > 2000;
+
     if (setDialog) {
-      setDialog((prevMessages) => {
+      setDialog((dialog) => {
 
-        if (!prevMessages.length) return prevMessages;
+        if (!dialog) return dialog;
 
-        const dialogIds = [prevMessages[0].receiverId, prevMessages[0].ownerId].sort().join(';');
+        const dialogIds = [dialog.receiverId, dialog.ownerId].sort().join(';');
 
-        if (dialogIds !== messageIds) return prevMessages;
+        if (dialogIds !== messageIds) return dialog;
+
+        let messages = dialog.messages;
 
         if (messageUpdated) {
-          return prevMessages.map((m) => {
+          messages = messages.map((m) => {
             if (m.id === message.id) {
               return message;
             }
             return m;
-          })
+          });
         } else {
-          return [message, ...prevMessages];
+          messages = [message, ...messages];
         }
+
+        return {
+          ...dialog,
+          messages,
+        };
       });
     }
 
-    if (setDialogs && !messageUpdated) {
+    if (setDialogs) {
       setDialogs((prevDialogs) => {
         if (!prevDialogs) return prevDialogs;
 
@@ -57,6 +66,11 @@ export const useConnectSocket = ({
           const dialogIds = [d.receiverId, d.ownerId].sort().join(';');
 
           if (dialogIds === messageIds) {
+
+            if (messageUpdated && message.createdAt !== d.createdAt) {
+              return d;
+            }
+
             return {
               ...d,
               messageText: message.messageText,
@@ -107,12 +121,7 @@ export const useConnectSocket = ({
     socketInstance.on(SocketEvents.RECEIVE_MESSAGE, (message: MessageItem) => {
       console.log('Новое сообщение отправлено: ', message);
 
-
-
-
-      const messageUpdated = message.createdAt !== message.updatedAt;
-
-      updateDialogs(message, messageUpdated);
+      updateDialogs(message);
     });
 
     socketInstance.on(SocketEvents.MESSAGE_SENT, (message: MessageItem, acknowledge) => {
@@ -131,10 +140,15 @@ export const useConnectSocket = ({
     socketInstance.on(SocketEvents.MESSAGE_DELETED , (messageId: number) => {
       console.log('Сообщение удалено: ', messageId);
 
-      setDialog && setDialog((prevMessages) => {
-        if (!prevMessages) return prevMessages;
+      setDialog && setDialog((dialog) => {
+        if (!dialog || !dialog.messages) return dialog;
 
-        return prevMessages.filter((m) => m.id !== messageId);
+        const messages = dialog.messages.filter((m) => m.id !== messageId);
+
+        return {
+          ...dialog,
+          messages,
+        }
       });
     });
 

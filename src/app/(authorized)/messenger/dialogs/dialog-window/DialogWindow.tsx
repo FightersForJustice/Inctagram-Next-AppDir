@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { MessageItem, ItemDialogs } from '@/api/messenger.api';
+import { MessageItem, ItemDialogs, updateMessages } from '@/api/messenger.api';
 import { Message } from '@/app/(authorized)/messenger/dialogs/dialog-window/message/Message';
 import Link from 'next/link';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -9,19 +9,31 @@ import { ROUTES } from '@/appRoutes/routes';
 import s from './DialogWindow.module.scss';
 
 type PropsType = {
-  dialog: MessageItem[];
-  receiverData: ItemDialogs | null;
+  dialog: ItemDialogs | null;
   id: string | null;
   sendMessage: (value: string) => void;
   showDialog: boolean;
   removeMessage: (id: number, dialogId: number) => void;
   updateMessage: (id: number, value: string) => void;
+  fetchDialog: (partnerId: number) => void;
+  accessToken: string;
 }
 
-export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog, removeMessage, updateMessage }: PropsType) => {
+export const DialogWindow = ({
+                               dialog,
+                               id,
+                               sendMessage,
+                               showDialog,
+                               removeMessage,
+                               updateMessage,
+                               fetchDialog,
+                               accessToken,
+                             }: PropsType) => {
 
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Messenger.${key}`);
+
+  const dialogMassagesRef = useRef<HTMLDivElement | null>(null);
 
   const [textareaValue, setTextareaValue] = useState<string>('');
   const [messageToChange, setMessageToChange] = useState<MessageItem | null>(null);
@@ -37,14 +49,59 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
     if (showDialog) {
       scrollToBottom();
     }
-  }, [dialog, showDialog]);
+  }, [dialog?.id, showDialog]);
+
+  useEffect(() => {
+    let scrollTimeout: string | number | NodeJS.Timeout | undefined;
+    const handleScroll = () => {
+      if (!dialog) return;
+
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        if (dialogMassagesRef.current) {
+          const scrollTop = dialogMassagesRef.current.scrollTop;
+          const scrollHeight = dialogMassagesRef.current.scrollHeight;
+          const clientHeight = dialogMassagesRef.current.clientHeight;
+
+          if (scrollTop <= 100) {
+            console.log({ scrollTop, scrollHeight, clientHeight, dialog });
+
+            fetchDialog(id && +id === dialog.receiverId ? dialog.ownerId : dialog.receiverId);
+          }
+        }
+      }, 200);
+    };
+
+    const scrollableElement = dialogMassagesRef.current;
+    scrollableElement?.addEventListener('scroll', handleScroll);
+
+    return () => {
+      scrollableElement?.removeEventListener('scroll', handleScroll);
+    };
+  }, [dialog]);
+
+
+  useEffect(() => {
+
+    if (!id || !dialog) return;
+    const notReadMessages = dialog.messages
+      .filter(message => message.status === 'SENT' && message.receiverId === +id)
+      .map(message => message.id);
+
+    if (!notReadMessages.length) return;
+
+    updateMessages(accessToken, notReadMessages)
+
+  }, [dialog]);
+
 
   const onTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.currentTarget.value);
   };
 
   const onSendMessage = () => {
-    if (textareaValue && receiverData) {
+    if (textareaValue && dialog) {
 
       if (messageToChange) {
         updateMessage(messageToChange.id, textareaValue);
@@ -59,10 +116,10 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
   };
 
   const onDeleteMessages = async () => {
-    if (!receiverData) return;
+    if (!dialog) return;
 
     for (const messageId of selectedMessages) {
-      await removeMessage(messageId, receiverData.id);
+      await removeMessage(messageId, dialog.id);
     }
     setSelectedMessages([]);
   };
@@ -71,7 +128,7 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
 
     if (!dialog) return;
 
-    const message = dialog.find(message => message.id === selectedMessages[0]);
+    const message = dialog.messages.find(message => message.id === selectedMessages[0]);
 
     if (!message) return;
 
@@ -88,17 +145,17 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
 
   const toggleMessageSelection = (messageId: number) => {
 
-    const message = dialog.find(message => message.id === messageId && id && message.ownerId === +id);
+    const message = dialog?.messages.find(message => message.id === messageId && id && message.ownerId === +id);
     if (!message) return;
 
     !messageToChange && setSelectedMessages(prev =>
       prev.includes(messageId)
         ? prev.filter(id => id !== messageId)
-        : [...prev, messageId]
+        : [...prev, messageId],
     );
   };
 
-  const receiverId = id && +id === receiverData?.receiverId ? receiverData.ownerId : receiverData?.receiverId;
+  const receiverId = id && +id === dialog?.receiverId ? dialog.ownerId : dialog?.receiverId;
 
   return (
     <div className={s.window}>
@@ -106,13 +163,13 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
         {showDialog &&
           <Link href={ROUTES.PROFILE + `${'/' + receiverId}`} className={s.header_content}>
             <Image
-              src={receiverData?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+              src={dialog?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
               alt="avatar"
               width={48}
               height={48}
               className={s.avatar}
             />
-            <div className={s.name}>{receiverData?.userName}</div>
+            <div className={s.name}>{dialog?.userName}</div>
           </Link>
         }
         {selectedMessages.length > 0 && !messageToChange &&
@@ -127,16 +184,16 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
           </div>
         }
       </div>
-      <div className={s.messages}>
+      <div className={s.messages} ref={dialogMassagesRef}>
         {showDialog ?
-          dialog
+          dialog?.messages
             .slice()
             .reverse()
             .map(message => (
               <Message
                 message={message}
                 key={message.id}
-                receiverData={receiverData}
+                receiverData={dialog}
                 id={id}
                 onSelectMessage={toggleMessageSelection}
                 isSelected={selectedMessages.includes(message.id)}
@@ -167,7 +224,7 @@ export const DialogWindow = ({ dialog, receiverData, id, sendMessage, showDialog
             onChange={onTextareaHandler}
             value={textareaValue}
           />
-          <button onClick={onSendMessage}>{translate(messageToChange ? 'dialog.edit' : 'dialog.send')}</button>
+            <button onClick={onSendMessage}>{translate(messageToChange ? 'dialog.edit' : 'dialog.send')}</button>
           </div>
         </div>}
     </div>
