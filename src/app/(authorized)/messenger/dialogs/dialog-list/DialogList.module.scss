@@ -1,7 +1,15 @@
-.list {
+.list_wrapper {
   border-right: 1px solid var(--dark-300);
   background-color: var(--dark-500);
   width: 269px;
+  display: flex;
+  flex-direction: column;
+
+  .list {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   .dialog {
     display: flex;

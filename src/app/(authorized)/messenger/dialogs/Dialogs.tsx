@@ -3,7 +3,7 @@
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import {useEffect, useState} from 'react';
 import { SocketEvents } from '@/webSocket/hooks/SocketEvents';
-import { deleteMessage, getDialog, getDialogs, MessageItem, ItemDialogs } from '@/api/messenger.api';
+import { deleteMessage, getDialog, getDialogs, ItemDialogs } from '@/api/messenger.api';
 import { DialogList } from '@/app/(authorized)/messenger/dialogs/dialog-list/DialogList';
 import { DialogWindow } from '@/app/(authorized)/messenger/dialogs/dialog-window/DialogWindow';
 import { Loader } from '@/components/Loader';
@@ -28,8 +28,9 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
 
   const [loading, setLoading] = useState(false);
   const [dialogs, setDialogs] = useState<ItemDialogs[]>([]);
-  const [dialog, setDialog] = useState<MessageItem[]>([]);
-  const [receiverData, setReceiverData] = useState<ItemDialogs | null>(null);
+  const [dialog, setDialog] = useState<ItemDialogs | null>(null);
+  const [dialogsCount, setDialogsCount] = useState(-1);
+  const [dialogMessagesCount, setDialogMessagesCount] = useState(-1);
   const [showDialog, setShowDialog] = useState<boolean>(false);
 
   const socket = useConnectSocket({ accessToken, setDialog, setDialogs });
@@ -40,8 +41,8 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       return;
     }
 
-    if (id && receiverData) {
-      const receiverId = +id === receiverData.receiverId ? receiverData.ownerId : receiverData.receiverId;
+    if (id && dialog) {
+      const receiverId = +id === dialog.receiverId ? dialog.ownerId : dialog.receiverId;
       socket.emit(SocketEvents.RECEIVE_MESSAGE, { message: value, receiverId }, (response: any) => {
         console.log('Сообщение отправлено:', response);
       });
@@ -60,23 +61,61 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   };
 
   const fetchDialogs = async () => {
+    if (dialogsCount !== -1 && dialogs.length >= dialogsCount) return;
+
     setLoading(true);
-    const data = await getDialogs(accessToken);
+
+    const cursor = dialogs.length > 0 ? dialogs[dialogs.length - 1].id : 0;
+
+    const data = await getDialogs(accessToken, cursor);
+
     if (data && data.items.length > 0) {
-      setDialogs(data.items);
+      const dialogs = data.items.map(dialog => {
+        return {
+          ...dialog,
+          messages: []
+        }
+      });
+
+      setDialogs((prev) => [...prev, ...dialogs]);
+      setDialogsCount(data.totalCount);
     }
     setLoading(false);
   };
 
   const fetchDialog = async (partnerId: number) => {
+    let cursor = 0;
 
-    const data = await getDialog(accessToken, partnerId);
+    const isCurrentDialog = dialog && (dialog.receiverId === partnerId || dialog.ownerId === partnerId);
+
+    if (isCurrentDialog) {
+      cursor = dialog && dialog.messages.length > 0 ? dialog.messages[dialog.messages.length - 1].id : 0;
+
+      if (dialogMessagesCount !== -1 && dialog.messages.length >= dialogMessagesCount) return;
+    }
+
+    const data = await getDialog(accessToken, partnerId, cursor);
+
     if (data) {
-      setDialog(data.items);
+      setDialogMessagesCount(data.totalCount);
 
-      const foundDialog = dialogs.find((d) => d.receiverId === partnerId || d.ownerId === partnerId);
+      if (isCurrentDialog) {
+        setDialog({
+          ...dialog,
+          messages: [...dialog.messages, ...data.items],
+        });
 
-      setReceiverData(foundDialog ? foundDialog : await createDialog(partnerId));
+        return;
+      }
+
+      let foundDialog = dialogs.find((d) => d.receiverId === partnerId || d.ownerId === partnerId);
+
+      foundDialog = foundDialog ? foundDialog : await createDialog(partnerId)
+
+      setDialog( {
+        ...foundDialog,
+        messages: data.items,
+      });
     }
 
     setShowDialog(true);
@@ -97,6 +136,7 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       status: 'pending',
       userName: userData.userName,
       avatars: userData.avatars,
+      messages: [],
     }
 
     setDialogs((prevDialogs) => {
@@ -116,16 +156,26 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     const data = await deleteMessage(accessToken, messageId);
 
     if (data === 204) {
-      const messages = dialog.filter((m) => m.id !== messageId);
+      const messages = dialog?.messages.filter((m) => m.id !== messageId);
 
-      if (!messages.length) {
-        setDialog([]);
+      if (!messages || !messages.length) {
+        setDialog(dialog => {
+          if (dialog) {
+            dialog.messages = [];
+          }
+          return dialog;
+        });
         setShowDialog(false);
         setDialogs((prevDialogs) => prevDialogs.filter((d) => d.id !== dialogId));
         return;
       }
 
-      setDialog(messages);
+      setDialog(dialog => {
+        if (dialog) {
+          dialog.messages = messages;
+        }
+        return dialog;
+      });
 
       setDialogs((prevDialogs) => {
         return prevDialogs.map((d) => {
@@ -145,8 +195,10 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   }, []);
 
   useEffect(() => {
-    !loading && idFromUrl && fetchDialog(+idFromUrl);
-  }, []);
+    if (idFromUrl && dialogs.length && !dialog) {
+      fetchDialog(+idFromUrl);
+    }
+  }, [dialogs]);
 
   if (loading) return <Loader />;
 
@@ -154,9 +206,9 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     <div className={s.wrapper}>
       <h1 className={s.title}>{translate('messenger')}</h1>
       <div className={s.dialogs}>
-        <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} />
-        <DialogWindow dialog={dialog} receiverData={receiverData} id={id} sendMessage={sendMessage}
-                      showDialog={showDialog} removeMessage={removeMessage} updateMessage={updateMessage} />
+        <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} fetchDialogs={fetchDialogs} />
+        <DialogWindow dialog={dialog} id={id} sendMessage={sendMessage}
+                      showDialog={showDialog} removeMessage={removeMessage} updateMessage={updateMessage} fetchDialog={fetchDialog} accessToken={accessToken}/>
       </div>
     </div>
   );
