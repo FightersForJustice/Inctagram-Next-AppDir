@@ -38,14 +38,16 @@ export const HomePagePost = () => {
     try {
       const res = await getFollowersPosts(endCursorPostId);
 
-      if (res.items.length === 0) {
+      if (res.totalCount === postsData?.items.length) {
         setHasMorePosts(false);
         return;
       }
 
+      const newPosts = res.items.slice(1, res.items.length);
+
       setPostsData((prev) => ({
         ...res,
-        items: prev ? [...prev.items, ...res.items] : res.items,
+        items: prev ? [...prev.items, ...newPosts] : newPosts,
       }));
 
       // Обновляем ID последнего поста
