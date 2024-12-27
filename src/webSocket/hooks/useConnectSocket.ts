@@ -26,7 +26,7 @@ export const useConnectSocket = ({
 
     const messageIds = [message.receiverId, message.ownerId].sort().join(';');
 
-    const messageUpdated = Date.now() - new Date(message.createdAt).getTime() > 2000;
+    const messageUpdated = Date.now() - new Date(message.createdAt).getTime() > 66000;
 
     if (setDialog) {
       setDialog((dialog) => {
