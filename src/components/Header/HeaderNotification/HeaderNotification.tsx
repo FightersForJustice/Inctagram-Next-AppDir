@@ -9,7 +9,8 @@ import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
 import {
   deleteNotification,
   getNotifications,
-  NotificationItem, updateStatusNotifications,
+  NotificationItem,
+  updateStatusNotifications,
 } from '@/api/notification.api';
 
 import { $Dictionary } from 'i18next/typescript/helpers';
@@ -29,24 +30,27 @@ export const HeaderNotification = ({ accessToken }: Props) => {
   useConnectSocket({ accessToken, setNotifications, setAmount });
 
   const { t } = useTranslation();
-  const language = useGetLanguage()
+  const language = useGetLanguage();
 
-  const translateNotification = (key: string, params?: $Dictionary): string => t(`Header.${key}`, params);
-  const translateTime = (key: string): string => t(`Time.${key}`)
+  const translateNotification = (key: string, params?: $Dictionary): string =>
+    t(`Header.${key}`, params);
+  const translateTime = (key: string): string => t(`Time.${key}`);
   const fetchNotifications = async (cursor: number) => {
     const data = await getNotifications(accessToken, cursor);
     if (data) {
       console.log('Fetched notifications:', data.items);
       setNotifications(data.items);
-      setAmount(data.items.filter((item: NotificationItem) => !item.isRead).length);
+      setAmount(
+        data.items.filter((item: NotificationItem) => !item.isRead).length
+      );
     }
   };
 
   useEffect(() => {
-      fetchNotifications(0);
+    fetchNotifications(0);
   }, []);
 
-  console.log('notifications: ', notifications);
+  // console.log('notifications: ', notifications);
 
   const onOpenPopup = async (open: boolean) => {
     setShowPopup(open);
@@ -54,29 +58,39 @@ export const HeaderNotification = ({ accessToken }: Props) => {
       setAmount(0);
 
       if (amount > 0) {
-        const isNotReadIds = notifications.filter(notification => !notification.isRead)
-          .map(notification => notification.id);
+        const isNotReadIds = notifications
+          .filter((notification) => !notification.isRead)
+          .map((notification) => notification.id);
         const data = await updateStatusNotifications(accessToken, isNotReadIds);
       }
     }
   };
 
   const removeNotification = async (id: number) => {
-    setNotifications((prevState) => prevState.filter(notification => notification.id !== id));
+    setNotifications((prevState) =>
+      prevState.filter((notification) => notification.id !== id)
+    );
     const data = await deleteNotification(accessToken, id);
-  }
+  };
 
   const formatMessage = (message: string) => {
     if (message === 'Your subscription-ws ends in 1 day') {
       return translateNotification('messages.subscriptionEndsIn1Day');
     } else if (message === 'Your subscription ends in 7 days') {
       return translateNotification('messages.subscriptionEndsIn7Days');
-    } else if (message === 'The next subscription payment will be debited from your account after 1 day.') {
+    } else if (
+      message ===
+      'The next subscription payment will be debited from your account after 1 day.'
+    ) {
       return translateNotification('messages.nextSubscriptionPaymentDebited');
-    } else if (message.startsWith('Your subscription has been activated and is valid until')) {
+    } else if (
+      message.startsWith(
+        'Your subscription has been activated and is valid until'
+      )
+    ) {
       const validUntil = new Date(message);
       return translateNotification('messages.subscriptionActivated', {
-        date: validUntil.toLocaleDateString()
+        date: validUntil.toLocaleDateString(),
       });
     }
   };
@@ -104,22 +118,42 @@ export const HeaderNotification = ({ accessToken }: Props) => {
                     <div key={notification.id} className={s.popup__item}>
                       <div className={s.popup__item__title}>
                         <div className={s.popup__item__title}>
-                          <h3>{translateNotification('notifications.newNotifications')}</h3>
+                          <h3>
+                            {translateNotification(
+                              'notifications.newNotifications'
+                            )}
+                          </h3>
                           {!notification.isRead && (
                             <h3 className={s.popup__item__title__wrapper__new}>
                               {translateNotification('notifications.new')}
                             </h3>
                           )}
                         </div>
-                        <button onClick={() => {removeNotification(notification.id)}}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
-                        </svg>
+                        <button
+                          onClick={() => {
+                            removeNotification(notification.id);
+                          }}
+                        >
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" />
+                          </svg>
                         </button>
                       </div>
-                      <p className={s.popup__desc}>{formatMessage(notification.message)}</p>
+                      <p className={s.popup__desc}>
+                        {formatMessage(notification.message)}
+                      </p>
                       <p className={s.popup__time}>
-                        {getTimeAgoText(notification.notifyAt, language, translateTime)}
+                        {getTimeAgoText(
+                          notification.notifyAt,
+                          language,
+                          translateTime
+                        )}
                       </p>
                     </div>
                   ))
