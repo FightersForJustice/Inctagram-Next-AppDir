@@ -11,58 +11,121 @@ export type GetCurrentPostsQueryVariables = Types.Exact<{
   searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
-
-export type GetCurrentPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'PostsPaginationModel', pagesCount: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'Post', id: number, ownerId: number, description: string, createdAt: any, updatedAt: any, images?: Array<{ __typename?: 'ImagePost', id?: number | null, createdAt?: any | null, url?: string | null, width?: number | null, height?: number | null, fileSize?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', id: number, userName: string, avatars?: Array<{ __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null, fileSize?: number | null }> | null } }> } };
+export type GetCurrentPostsQuery = {
+  __typename?: 'Query';
+  getPosts: {
+    __typename?: 'PostsPaginationModel';
+    pagesCount: number;
+    pageSize: number;
+    totalCount: number;
+    items: Array<{
+      __typename?: 'Post';
+      id: number;
+      ownerId: number;
+      description: string;
+      createdAt: any;
+      updatedAt: any;
+      userBan: {
+        reason: string;
+      } | null;
+      images?: Array<{
+        __typename?: 'ImagePost';
+        id?: number | null;
+        createdAt?: any | null;
+        url?: string | null;
+        width?: number | null;
+        height?: number | null;
+        fileSize?: number | null;
+      }> | null;
+      postOwner: {
+        __typename?: 'PostOwnerModel';
+        id: number;
+        userName: string;
+        avatars?: Array<{
+          __typename?: 'Avatar';
+          url?: string | null;
+          width?: number | null;
+          height?: number | null;
+          fileSize?: number | null;
+        }> | null;
+      };
+    }>;
+  };
+};
 
 export type GetCurrentUserPostsQueryVariables = Types.Exact<{
   userId: Types.Scalars['Int']['input'];
   endCursorId?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
-
-export type GetCurrentUserPostsQuery = { __typename?: 'Query', getPostsByUser: { __typename?: 'PostsByUserModel', pagesCount: number, pageSize: number, totalCount: number, items?: Array<{ __typename?: 'ImagePost', id?: number | null, createdAt?: any | null, url?: string | null, width?: number | null, height?: number | null, fileSize?: number | null }> | null } };
-
+export type GetCurrentUserPostsQuery = {
+  __typename?: 'Query';
+  getPostsByUser: {
+    __typename?: 'PostsByUserModel';
+    pagesCount: number;
+    pageSize: number;
+    totalCount: number;
+    items?: Array<{
+      __typename?: 'ImagePost';
+      id?: number | null;
+      createdAt?: any | null;
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      fileSize?: number | null;
+    }> | null;
+  };
+};
 
 export const GetCurrentPostsDocument = gql`
-    query GetCurrentPosts($pageSize: Int, $endCursorPostId: Int, $sortBy: String, $sortDirection: SortDirection, $searchTerm: String) {
-  getPosts(
-    pageSize: $pageSize
-    endCursorPostId: $endCursorPostId
-    sortBy: $sortBy
-    sortDirection: $sortDirection
-    searchTerm: $searchTerm
+  query GetCurrentPosts(
+    $pageSize: Int
+    $endCursorPostId: Int
+    $sortBy: String
+    $sortDirection: SortDirection
+    $searchTerm: String
   ) {
-    pagesCount
-    pageSize
-    totalCount
-    items {
-      images {
-        id
-        createdAt
-        url
-        width
-        height
-        fileSize
-      }
-      id
-      ownerId
-      description
-      createdAt
-      updatedAt
-      postOwner {
-        id
-        userName
-        avatars {
+    getPosts(
+      pageSize: $pageSize
+      endCursorPostId: $endCursorPostId
+      sortBy: $sortBy
+      sortDirection: $sortDirection
+      searchTerm: $searchTerm
+    ) {
+      pagesCount
+      pageSize
+      totalCount
+      items {
+        images {
+          id
+          createdAt
           url
           width
           height
           fileSize
         }
+        id
+        ownerId
+        description
+        createdAt
+        updatedAt
+        userBan {
+          reason
+        }
+        postOwner {
+          id
+          userName
+          avatars {
+            url
+            width
+            height
+            fileSize
+          }
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetCurrentPostsQuery__
@@ -84,39 +147,72 @@ export const GetCurrentPostsDocument = gql`
  *   },
  * });
  */
-export function useGetCurrentPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>(GetCurrentPostsDocument, options);
-      }
-export function useGetCurrentPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>(GetCurrentPostsDocument, options);
-        }
-export function useGetCurrentPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>(GetCurrentPostsDocument, options);
-        }
-export type GetCurrentPostsQueryHookResult = ReturnType<typeof useGetCurrentPostsQuery>;
-export type GetCurrentPostsLazyQueryHookResult = ReturnType<typeof useGetCurrentPostsLazyQuery>;
-export type GetCurrentPostsSuspenseQueryHookResult = ReturnType<typeof useGetCurrentPostsSuspenseQuery>;
-export type GetCurrentPostsQueryResult = Apollo.QueryResult<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>;
+export function useGetCurrentPostsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCurrentPostsQuery,
+    GetCurrentPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetCurrentPostsQuery, GetCurrentPostsQueryVariables>(
+    GetCurrentPostsDocument,
+    options
+  );
+}
+export function useGetCurrentPostsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCurrentPostsQuery,
+    GetCurrentPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetCurrentPostsQuery,
+    GetCurrentPostsQueryVariables
+  >(GetCurrentPostsDocument, options);
+}
+export function useGetCurrentPostsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetCurrentPostsQuery,
+    GetCurrentPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    GetCurrentPostsQuery,
+    GetCurrentPostsQueryVariables
+  >(GetCurrentPostsDocument, options);
+}
+export type GetCurrentPostsQueryHookResult = ReturnType<
+  typeof useGetCurrentPostsQuery
+>;
+export type GetCurrentPostsLazyQueryHookResult = ReturnType<
+  typeof useGetCurrentPostsLazyQuery
+>;
+export type GetCurrentPostsSuspenseQueryHookResult = ReturnType<
+  typeof useGetCurrentPostsSuspenseQuery
+>;
+export type GetCurrentPostsQueryResult = Apollo.QueryResult<
+  GetCurrentPostsQuery,
+  GetCurrentPostsQueryVariables
+>;
 export const GetCurrentUserPostsDocument = gql`
-    query GetCurrentUserPosts($userId: Int!, $endCursorId: Int) {
-  getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
-    pagesCount
-    pageSize
-    totalCount
-    items {
-      id
-      createdAt
-      url
-      width
-      height
-      fileSize
+  query GetCurrentUserPosts($userId: Int!, $endCursorId: Int) {
+    getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
+      pagesCount
+      pageSize
+      totalCount
+      items {
+        id
+        createdAt
+        url
+        width
+        height
+        fileSize
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetCurrentUserPostsQuery__
@@ -135,19 +231,56 @@ export const GetCurrentUserPostsDocument = gql`
  *   },
  * });
  */
-export function useGetCurrentUserPostsQuery(baseOptions: Apollo.QueryHookOptions<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables> & ({ variables: GetCurrentUserPostsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>(GetCurrentUserPostsDocument, options);
-      }
-export function useGetCurrentUserPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>(GetCurrentUserPostsDocument, options);
-        }
-export function useGetCurrentUserPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>(GetCurrentUserPostsDocument, options);
-        }
-export type GetCurrentUserPostsQueryHookResult = ReturnType<typeof useGetCurrentUserPostsQuery>;
-export type GetCurrentUserPostsLazyQueryHookResult = ReturnType<typeof useGetCurrentUserPostsLazyQuery>;
-export type GetCurrentUserPostsSuspenseQueryHookResult = ReturnType<typeof useGetCurrentUserPostsSuspenseQuery>;
-export type GetCurrentUserPostsQueryResult = Apollo.QueryResult<GetCurrentUserPostsQuery, GetCurrentUserPostsQueryVariables>;
+export function useGetCurrentUserPostsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  > &
+    (
+      | { variables: GetCurrentUserPostsQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  >(GetCurrentUserPostsDocument, options);
+}
+export function useGetCurrentUserPostsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  >(GetCurrentUserPostsDocument, options);
+}
+export function useGetCurrentUserPostsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    GetCurrentUserPostsQuery,
+    GetCurrentUserPostsQueryVariables
+  >(GetCurrentUserPostsDocument, options);
+}
+export type GetCurrentUserPostsQueryHookResult = ReturnType<
+  typeof useGetCurrentUserPostsQuery
+>;
+export type GetCurrentUserPostsLazyQueryHookResult = ReturnType<
+  typeof useGetCurrentUserPostsLazyQuery
+>;
+export type GetCurrentUserPostsSuspenseQueryHookResult = ReturnType<
+  typeof useGetCurrentUserPostsSuspenseQuery
+>;
+export type GetCurrentUserPostsQueryResult = Apollo.QueryResult<
+  GetCurrentUserPostsQuery,
+  GetCurrentUserPostsQueryVariables
+>;

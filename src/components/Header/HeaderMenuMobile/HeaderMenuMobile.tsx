@@ -8,7 +8,10 @@ import { PrimaryBtn } from '@/components/Buttons/PrimaryBtn';
 import { TransparentBtn } from '@/components/Buttons/TransparentBtn';
 import { MenuImage } from '@/components/Header/HeaderMenuMobile/components/MenuImage';
 import { MenuOption } from '@/components/Header/HeaderMenuMobile/components/MenuOption';
-import { menuOptions } from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
+import {
+  adminMenuOptions,
+  menuOptions,
+} from '@/components/Header/HeaderMenuMobile/components/mobileMenuData';
 import { Modal } from '@/components/Modals/Modal';
 import { logout } from '@/features/customHooks/useLogout';
 
@@ -16,8 +19,10 @@ import s from './HeaderMenuMobile.module.scss';
 
 export const HeaderMenuMobile = ({
   userEmail = 'mocked',
+  isAdmin = false,
 }: {
   userEmail: string | null;
+  isAdmin: boolean;
 }) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Navigation.${key}`);
@@ -32,6 +37,9 @@ export const HeaderMenuMobile = ({
     }
     setModal(false);
   };
+
+  const finalUserEmail = userEmail === null ? 'admin@gmail.com' : userEmail;
+  const finalMenuOptions = isAdmin ? adminMenuOptions : menuOptions;
 
   const keyDownHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Escape') {
@@ -67,14 +75,11 @@ export const HeaderMenuMobile = ({
   };
 
   return (
-    <button
-      className={s.container}
-      id="mobileMenu"
-    >
+    <button className={s.container} id="mobileMenu">
       <MenuImage modal={modal} setModal={modalHandler} />
       {modal && (
         <ul className={s.settingsList}>
-          {menuOptions.map(({ ref, img }) => {
+          {finalMenuOptions.map(({ ref, img }) => {
             return (
               <MenuOption
                 key={ref}
@@ -108,7 +113,7 @@ export const HeaderMenuMobile = ({
         >
           <div>
             {translate('LogoutModal.question')}{' '}
-            <strong>{`"${userEmail}"`}</strong>?
+            <strong>{`"${finalUserEmail}"`}</strong>?
           </div>
           <div className={s.modal__btn}>
             <TransparentBtn

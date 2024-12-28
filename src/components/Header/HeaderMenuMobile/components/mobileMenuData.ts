@@ -16,3 +16,10 @@ export const menuOptions = [
     img: '/img/log-out-outline.svg',
   },
 ];
+
+export const adminMenuOptions = [
+  {
+    ref: 'logOut',
+    img: '/img/log-out-outline.svg',
+  },
+];

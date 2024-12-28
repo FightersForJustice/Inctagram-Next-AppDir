@@ -15,6 +15,11 @@ export type UserProfile = {
   aboutMe: string | null;
   createdAt: string;
   avatars: Avatar[];
+  userMetadata: {
+    following: number;
+    followers: number;
+    publications: number;
+  };
 };
 
 export interface postImage {
@@ -26,14 +31,14 @@ export interface postImage {
 }
 
 export interface PostType {
-  id: number;//
+  id: number; //
   userName: string;
-  ownerId: number;//
-  description: string;//
+  ownerId: number; //
+  description: string; //
   location: string;
   images: postImage[];
-  createdAt: string;//
-  updatedAt: string;//
+  createdAt: string; //
+  updatedAt: string; //
   avatarOwner: string;
   owner: {
     firstName: string;
@@ -108,11 +113,11 @@ export type FollowerType = {
 
 export type PostLikesDataType = {
   isLiked: boolean;
-  items: FollowerType[]
+  items: FollowerType[];
   nextCursor: null | number;
   page: number;
-  pageSize: number,
+  pageSize: number;
   pagesCount: number;
   prevCursor: number;
-  totalCount: number,
+  totalCount: number;
 };
