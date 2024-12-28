@@ -111,6 +111,14 @@ export const DialogWindow = ({
     }
   };
 
+  const onTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onSendMessage();
+    }
+  };
+
+
   const onDeleteMessages = async () => {
     if (!dialog) return;
 
@@ -218,6 +226,7 @@ export const DialogWindow = ({
             placeholder={translate('dialog.placeholder')}
             maxLength={500}
             onChange={onTextareaHandler}
+            onKeyDown={onTextareaKeyDown}
             value={textareaValue}
           />
             <button onClick={onSendMessage}>{translate(messageToChange ? 'dialog.edit' : 'dialog.send')}</button>
