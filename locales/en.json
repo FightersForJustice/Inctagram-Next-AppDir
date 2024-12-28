@@ -138,10 +138,12 @@
     "messenger": "Messenger",
     "search": {
       "placeholder": "Input search",
-      "noUser": "No user found"
+      "noUser": "Oops! This place looks empty!",
+      "noRequests": "No recent requests"
     },
     "dialogs": {
       "noDialogs": "No active dialogs",
+      "noRequests": "No recent requests",
       "you": "You: "
     },
     "dialog": {

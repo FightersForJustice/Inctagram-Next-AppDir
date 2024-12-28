@@ -207,8 +207,8 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       <h1 className={s.title}>{translate('messenger')}</h1>
       <div className={s.dialogs}>
         <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} fetchDialogs={fetchDialogs} />
-        <DialogWindow dialog={dialog} id={id} sendMessage={sendMessage}
-                      showDialog={showDialog} removeMessage={removeMessage} updateMessage={updateMessage} fetchDialog={fetchDialog} accessToken={accessToken}/>
+        <DialogWindow dialog={dialog} id={id} sendMessage={sendMessage} showDialog={showDialog} removeMessage={removeMessage}
+                      updateMessage={updateMessage} fetchDialog={fetchDialog} accessToken={accessToken}/>
       </div>
     </div>
   );

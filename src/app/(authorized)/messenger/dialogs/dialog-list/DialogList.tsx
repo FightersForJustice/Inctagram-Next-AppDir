@@ -46,7 +46,7 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken, fetchDialogs
     const data = await getUsers({
       search: searchInputHandler,
       pageNumber: 1,
-      pageSize: 5,
+      pageSize: 200,
     });
 
     if (data) {
@@ -113,21 +113,24 @@ export const DialogList = ({ dialogs, fetchDialog, id, accessToken, fetchDialogs
           <div className={s.search_users}>
             {users.length > 0 ?
               users.map((user) => (
-              <button key={user.id} onClick={() => selectUser(user.id)}>
-                <div className={s.search_user}>
-                  <Image
-                    src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-                    alt="avatar"
-                    width={48}
-                    height={48}
-                    className={s.avatar}
-                  />
-                  <p>{user.userName}</p>
-                </div>
-              </button>
-            ))
-            :
-              <p className={s.no_user}>{translate('search.noUser')}</p>
+                <button key={user.id} onClick={() => selectUser(user.id)}>
+                  <div className={s.search_user}>
+                    <Image
+                      src={user?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                      alt="avatar"
+                      width={48}
+                      height={48}
+                      className={s.avatar}
+                    />
+                    <p>{user.userName}</p>
+                  </div>
+                </button>
+              ))
+              :
+              <div className={s.no_user}>
+                <p>{translate('search.noUser')}</p>
+                <p>{translate('search.noRequests')}</p>
+              </div>
             }
           </div>}
       </div>
