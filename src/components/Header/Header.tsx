@@ -39,7 +39,10 @@ export const Header = ({
           {isAuth && <HeaderNotification accessToken={accessToken} />}
           <HeaderClient />
           {isAuth && (
-            <HeaderMenuMobile userEmail={headers().get('userEmail')} />
+            <HeaderMenuMobile
+              userEmail={headers().get('userEmail')}
+              isAdmin={isAdmin}
+            />
           )}
           {isPublicInfo && <HeaderButton />}
         </div>
