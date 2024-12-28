@@ -129,11 +129,19 @@ export const ProfileInfo = ({
               <div className={s.name}>{userData?.userName}</div>
               <div className={s.statistics}>
                 <div className={s.following} onClick={openFollowingModal}>
-                  <p>{!isPublic && followingCount}</p>
+                  <p>
+                    {isPublic
+                      ? userData.userMetadata.following
+                      : followingCount}
+                  </p>
                   <p>{translate('subscriptions')}</p>
                 </div>
                 <div className={s.followers} onClick={openFollowersModal}>
-                  <p>{!isPublic && followersCount}</p>
+                  <p>
+                    {isPublic
+                      ? userData.userMetadata.followers
+                      : followersCount}
+                  </p>
                   <p>{translate('subscribers')}</p>
                 </div>
                 <div>
@@ -156,8 +164,10 @@ export const ProfileInfo = ({
                   >
                     {translate(subBtnName)}
                   </Link>
-                  <Link href={`/messenger?id=${userData.id}`}
-                        className={s.message}>
+                  <Link
+                    href={`/messenger?id=${userData.id}`}
+                    className={s.message}
+                  >
                     {translate('btnSendMessage')}
                   </Link>
                 </>
