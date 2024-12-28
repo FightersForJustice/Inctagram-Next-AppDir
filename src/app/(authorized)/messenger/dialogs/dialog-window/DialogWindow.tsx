@@ -61,12 +61,8 @@ export const DialogWindow = ({
       scrollTimeout = setTimeout(() => {
         if (dialogMassagesRef.current) {
           const scrollTop = dialogMassagesRef.current.scrollTop;
-          const scrollHeight = dialogMassagesRef.current.scrollHeight;
-          const clientHeight = dialogMassagesRef.current.clientHeight;
 
           if (scrollTop <= 100) {
-            console.log({ scrollTop, scrollHeight, clientHeight, dialog });
-
             fetchDialog(id && +id === dialog.receiverId ? dialog.ownerId : dialog.receiverId);
           }
         }

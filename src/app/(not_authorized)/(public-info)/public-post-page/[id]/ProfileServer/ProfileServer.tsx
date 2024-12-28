@@ -26,7 +26,7 @@ const ProfileServer = async ({
 }: Props) => {
   const userdata: UserProfile = await getProfile(id);
   const followingData: UserFollowingDataType | null = await getUserInfo(
-    userdata.userName
+    userdata.userName || ''
   );
   const postsData: ApiResponsePosts = await getPosts(id, 0);
 
