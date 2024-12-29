@@ -48,9 +48,15 @@
         text-align: right;
         color: var(--primary-100);
       }
+    }
+  }
 
-      svg {
+  .text_receiver {
+    background-color: var(--dark-300);
 
+    .status {
+      .text_time {
+        color: var(--light-900);
       }
     }
   }

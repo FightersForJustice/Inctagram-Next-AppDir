@@ -17,6 +17,8 @@ type PropsType = {
   updateMessage: (id: number, value: string) => void;
   fetchDialog: (partnerId: number) => void;
   accessToken: string;
+  handleBackToList?: () => void;
+  isMobile: boolean | null;
 }
 
 export const DialogWindow = ({
@@ -28,6 +30,8 @@ export const DialogWindow = ({
                                updateMessage,
                                fetchDialog,
                                accessToken,
+                               handleBackToList,
+                               isMobile,
                              }: PropsType) => {
 
   const { t } = useTranslation();
@@ -87,7 +91,7 @@ export const DialogWindow = ({
 
     if (!notReadMessages.length) return;
 
-    updateMessages(accessToken, notReadMessages)
+    updateMessages(accessToken, notReadMessages);
 
   }, [dialog]);
 
@@ -165,16 +169,25 @@ export const DialogWindow = ({
     <div className={s.window}>
       <div className={s.header}>
         {showDialog &&
-          <Link href={ROUTES.PROFILE + `${'/' + receiverId}`} className={s.header_content}>
-            <Image
-              src={dialog?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
-              alt="avatar"
-              width={48}
-              height={48}
-              className={s.avatar}
-            />
-            <div className={s.name}>{dialog?.userName}</div>
-          </Link>
+          <div className={s.header_content}>
+            <Link href={ROUTES.PROFILE + `${'/' + receiverId}`}>
+              <Image
+                src={dialog?.avatars[0]?.url ?? '/img/create-post/no-image.png'}
+                alt="avatar"
+                width={48}
+                height={48}
+                className={s.avatar}
+              />
+            </Link>
+            <Link href={ROUTES.PROFILE + `${'/' + receiverId}`}>
+              <div className={s.name}>{dialog?.userName}</div>
+            </Link>
+            {handleBackToList &&
+              <button onClick={handleBackToList}>
+                <Image src={'/img/arrow-left.svg'} onClick={handleBackToList} alt="back" width={24} height={24} />
+              </button>
+            }
+          </div>
         }
         {selectedMessages.length > 0 && !messageToChange &&
           <div className={s.button_block}>
@@ -202,10 +215,12 @@ export const DialogWindow = ({
                 onSelectMessage={toggleMessageSelection}
                 isSelected={selectedMessages.includes(message.id)}
                 messageToChange={messageToChange}
+                isMobile={isMobile}
               />
             ))
           :
-          <p className={s.no_dialogs}>{translate('dialog.choose')}</p>}
+          <p className={s.no_dialogs}>{translate('dialog.choose')}</p>
+        }
         <div ref={messagesEndRef} />
       </div>
       {showDialog &&
@@ -214,11 +229,7 @@ export const DialogWindow = ({
             <div className={s.change_message}>
               <p>{messageToChange.messageText}</p>
               <button onClick={clearMessageToChange}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
-                    fill="white" />
-                </svg>
+                <Image src={'/img/close.svg'} alt="close" width={24} height={24} />
               </button>
             </div>}
           <div className={s.textarea}>

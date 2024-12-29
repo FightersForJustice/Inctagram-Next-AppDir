@@ -1,9 +1,11 @@
+@use '@/app/mixins.scss' as s;
+
 .wrapper {
   display: flex;
   flex-direction: column;
   gap: 13px;
   justify-content: flex-start;
-  padding: 35px 60px 43px 24px;
+  padding: 35px 60px 120px 24px;
 
   .title {
     font-size: 20px;
@@ -17,6 +19,18 @@
     flex-direction: row;
     border: 1px solid var(--dark-300);
     height: 648px;
+  }
+}
+
+@include s.devices(tablet) {
+  .wrapper {
+    height: calc(100vh - 120px);
+    padding: 0;
+
+    .dialogs {
+      height: 100vh;
+      border: none;
+    }
   }
 }
 
