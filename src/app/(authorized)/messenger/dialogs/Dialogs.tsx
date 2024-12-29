@@ -1,18 +1,19 @@
 'use client';
 
 import { useConnectSocket } from '@/webSocket/hooks/useConnectSocket';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { SocketEvents } from '@/webSocket/hooks/SocketEvents';
 import { deleteMessage, getDialog, getDialogs, ItemDialogs } from '@/api/messenger.api';
 import { DialogList } from '@/app/(authorized)/messenger/dialogs/dialog-list/DialogList';
 import { DialogWindow } from '@/app/(authorized)/messenger/dialogs/dialog-window/DialogWindow';
 import { Loader } from '@/components/Loader';
 import { useTranslation } from 'react-i18next';
-
-import s from './Dialogs.module.scss';
 import { getProfile } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/actions';
 import { UserType } from '@/app/(not_authorized)/(public-info)/public-post-page/[id]/types';
-import {useSearchParams} from "next/navigation";
+import { useSearchParams } from 'next/navigation';
+
+import s from './Dialogs.module.scss';
+
 
 type PropsType = {
   accessToken: string;
@@ -26,12 +27,16 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
   const { t } = useTranslation();
   const translate = (key: string): string => t(`Messenger.${key}`);
 
-  const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [isDialogListVisible, setIsDialogListVisible] = useState<boolean>(true);
+
+  const [loading, setLoading] = useState<boolean>(false);
   const [dialogs, setDialogs] = useState<ItemDialogs[]>([]);
   const [dialog, setDialog] = useState<ItemDialogs | null>(null);
   const [dialogsCount, setDialogsCount] = useState(-1);
   const [dialogMessagesCount, setDialogMessagesCount] = useState(-1);
   const [showDialog, setShowDialog] = useState<boolean>(false);
+
 
   const socket = useConnectSocket({ accessToken, setDialog, setDialogs });
 
@@ -73,8 +78,8 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       const dialogs = data.items.map(dialog => {
         return {
           ...dialog,
-          messages: []
-        }
+          messages: [],
+        };
       });
 
       setDialogs((prev) => [...prev, ...dialogs]);
@@ -110,9 +115,9 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
 
       let foundDialog = dialogs.find((d) => d.receiverId === partnerId || d.ownerId === partnerId);
 
-      foundDialog = foundDialog ? foundDialog : await createDialog(partnerId)
+      foundDialog = foundDialog ? foundDialog : await createDialog(partnerId);
 
-      setDialog( {
+      setDialog({
         ...foundDialog,
         messages: data.items,
       });
@@ -137,20 +142,20 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
       userName: userData.userName,
       avatars: userData.avatars,
       messages: [],
-    }
+    };
 
     setDialogs((prevDialogs) => {
 
       const foundDialog = prevDialogs.find((d) => d.receiverId === partnerId);
 
-      if(!foundDialog){
+      if (!foundDialog) {
         return [newDialog, ...prevDialogs];
       }
-      return prevDialogs
-    })
+      return prevDialogs;
+    });
 
     return newDialog;
-  }
+  };
 
   const removeMessage = async (messageId: number, dialogId: number) => {
     const data = await deleteMessage(accessToken, messageId);
@@ -190,6 +195,31 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     }
   };
 
+
+  const handleDialogSelection = (partnerId: number) => {
+    fetchDialog(partnerId);
+    setIsDialogListVisible(false);
+  };
+
+  const handleBackToList = () => {
+    setIsDialogListVisible(true);
+    setShowDialog(false);
+    setDialog(null);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     fetchDialogs();
   }, []);
@@ -200,15 +230,56 @@ export const Dialogs = ({ accessToken, id }: PropsType) => {
     }
   }, [dialogs]);
 
-  if (loading) return <Loader />;
+  if (loading || isMobile === null) return <Loader />;
 
   return (
     <div className={s.wrapper}>
-      <h1 className={s.title}>{translate('messenger')}</h1>
+      {!isMobile && <h1 className={s.title}>{translate('messenger')}</h1>}
       <div className={s.dialogs}>
-        <DialogList dialogs={dialogs} fetchDialog={fetchDialog} id={id} accessToken={accessToken} fetchDialogs={fetchDialogs} />
-        <DialogWindow dialog={dialog} id={id} sendMessage={sendMessage} showDialog={showDialog} removeMessage={removeMessage}
-                      updateMessage={updateMessage} fetchDialog={fetchDialog} accessToken={accessToken}/>
+        {isMobile ? (
+          isDialogListVisible ?
+            <DialogList
+              dialogs={dialogs}
+              fetchDialog={handleDialogSelection}
+              id={id}
+              accessToken={accessToken}
+              fetchDialogs={fetchDialogs}
+            />
+            :
+            <DialogWindow
+              dialog={dialog}
+              id={id}
+              sendMessage={sendMessage}
+              showDialog={showDialog}
+              removeMessage={removeMessage}
+              updateMessage={updateMessage}
+              fetchDialog={fetchDialog}
+              accessToken={accessToken}
+              handleBackToList={handleBackToList}
+              isMobile={isMobile}
+            />
+        ) : (
+          <>
+            <DialogList
+              dialogs={dialogs}
+              fetchDialog={handleDialogSelection}
+              id={id}
+              accessToken={accessToken}
+              fetchDialogs={fetchDialogs}
+            />
+            <DialogWindow
+              dialog={dialog}
+              id={id}
+              sendMessage={sendMessage}
+              showDialog={showDialog}
+              removeMessage={removeMessage}
+              updateMessage={updateMessage}
+              fetchDialog={fetchDialog}
+              accessToken={accessToken}
+              isMobile={isMobile}
+            />
+          </>
+        )}
       </div>
     </div>
   );

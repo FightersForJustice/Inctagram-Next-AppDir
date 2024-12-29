@@ -14,9 +14,18 @@ type PropsType = {
   onSelectMessage: (id: number) => void;
   isSelected: boolean;
   messageToChange: MessageItem | null;
+  isMobile: boolean | null;
 }
 
-export const Message = ({ message, receiverData, id, onSelectMessage, isSelected, messageToChange }: PropsType) => {
+export const Message = ({
+                          message,
+                          receiverData,
+                          id,
+                          onSelectMessage,
+                          isSelected,
+                          messageToChange,
+                          isMobile,
+                        }: PropsType) => {
 
   const { t } = useTranslation();
   const language = useGetLanguage();
@@ -24,11 +33,9 @@ export const Message = ({ message, receiverData, id, onSelectMessage, isSelected
 
   return (
     <div className={clsx(s.message, id && +id === message.ownerId && s.owner)}>
-      {id && +id !== message.ownerId && (
+      {id && +id !== message.ownerId && !isMobile && (
         <Image
-          src={
-            receiverData?.avatars[0]?.url || '/img/create-post/no-image.png'
-          }
+          src={receiverData?.avatars[0]?.url || '/img/create-post/no-image.png'}
           alt="avatar"
           width={48}
           height={48}
@@ -36,32 +43,17 @@ export const Message = ({ message, receiverData, id, onSelectMessage, isSelected
         />
       )}
       <button onClick={() => onSelectMessage(message.id)}>
-        <div className={clsx(s.text, isSelected && s.selected, messageToChange && s.not_alowed)}>
+        <div className={clsx(s.text, id && +id !== message.ownerId && s.text_receiver, isSelected && s.selected, messageToChange && s.not_alowed)}>
           <p className={s.text_message}>{message.messageText}</p>
           <div className={s.status}>
           <span className={s.text_time}>{formatDialogsDate(
             message.createdAt, language, translateTime)}</span>
             {id && +id === message.ownerId &&
               (message.status === 'READ' ?
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11.0793 4.13995C11.0103 4.08531 10.9312 4.04488 10.8465 4.02099C10.7617 3.9971 10.6731 3.99023 10.5857 4.00077C10.4983 4.0113 10.4139 4.03904 10.3373 4.08238C10.2607 4.12572 10.1934 4.18381 10.1393 4.25328L5.47268 10.2533L3.18601 7.46662C3.13238 7.39522 3.06494 7.33533 2.98771 7.29049C2.91048 7.24565 2.82503 7.21679 2.73644 7.20561C2.64784 7.19444 2.5579 7.20117 2.47195 7.22543C2.38601 7.24968 2.30581 7.29095 2.23612 7.34679C2.16644 7.40263 2.10868 7.4719 2.06628 7.55049C2.02387 7.62908 1.99769 7.71539 1.98929 7.80429C1.98088 7.8932 1.99042 7.98288 2.01735 8.06803C2.04427 8.15317 2.08802 8.23204 2.14601 8.29995L4.92601 11.7533C4.98876 11.8306 5.06804 11.8929 5.15802 11.9356C5.24801 11.9783 5.34641 12.0003 5.44601 12C5.55173 12.0047 5.65705 11.9842 5.75327 11.9401C5.84949 11.8961 5.93384 11.8297 5.99934 11.7466L11.2193 5.07995C11.2726 5.0093 11.3112 4.92877 11.333 4.84304C11.3548 4.75732 11.3593 4.66811 11.3462 4.58062C11.3332 4.49314 11.3029 4.40912 11.2571 4.33346C11.2113 4.25781 11.1508 4.19202 11.0793 4.13995Z"
-                    fill="#73A5FF" />
-                  <path
-                    d="M14.4139 4.13995C14.3449 4.08531 14.2657 4.04488 14.181 4.02099C14.0963 3.9971 14.0077 3.99023 13.9203 4.00077C13.8329 4.0113 13.7484 4.03904 13.6718 4.08238C13.5952 4.12572 13.5279 4.18381 13.4739 4.25328L8.80721 10.2533L8.40055 9.75328L7.56055 10.8333L8.29388 11.7466C8.35663 11.824 8.4359 11.8863 8.52589 11.929C8.61588 11.9716 8.71428 11.9936 8.81388 11.9933C8.91402 11.9928 9.01276 11.9698 9.10279 11.926C9.19281 11.8821 9.2718 11.8185 9.33388 11.74L14.5539 5.07328C14.6061 5.00284 14.6438 4.9228 14.665 4.83774C14.6862 4.75268 14.6905 4.66427 14.6775 4.57758C14.6645 4.49089 14.6345 4.40761 14.5893 4.33251C14.544 4.25742 14.4844 4.19198 14.4139 4.13995Z"
-                    fill="#73A5FF" />
-                  <path
-                    d="M5.8059 8.70668L6.6659 7.62667L6.53256 7.46667C6.47993 7.39376 6.41309 7.33224 6.33606 7.28583C6.25903 7.23941 6.17341 7.20907 6.08434 7.19661C5.99528 7.18416 5.90462 7.18985 5.81781 7.21334C5.731 7.23684 5.64985 7.27766 5.57923 7.33334C5.51074 7.38836 5.45381 7.45636 5.41169 7.53346C5.36958 7.61055 5.34311 7.6952 5.33382 7.78255C5.32453 7.86991 5.33259 7.95823 5.35754 8.04246C5.3825 8.12669 5.42385 8.20515 5.47923 8.27334L5.8059 8.70668Z"
-                    fill="#73A5FF" />
-                </svg>
+                <Image src={'/img/double_check.svg'} alt="delete" width={16} height={16} />
                 :
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M6.57339 11.9999C6.48198 11.9996 6.39161 11.9806 6.30788 11.9439C6.22416 11.9072 6.14888 11.8536 6.08672 11.7866L2.84672 8.33994C2.72561 8.21087 2.66073 8.03897 2.66635 7.86206C2.67198 7.68515 2.74765 7.51772 2.87672 7.39661C3.0058 7.27549 3.17769 7.21061 3.3546 7.21624C3.53151 7.22186 3.69894 7.29753 3.82006 7.42661L6.56672 10.3533L12.1734 4.21994C12.2303 4.14909 12.3011 4.09062 12.3814 4.04812C12.4617 4.00562 12.5499 3.97998 12.6404 3.97279C12.731 3.9656 12.8221 3.97701 12.9081 4.00631C12.9942 4.03561 13.0733 4.08218 13.1406 4.14317C13.208 4.20416 13.2622 4.27828 13.2999 4.36097C13.3375 4.44366 13.3579 4.53318 13.3597 4.62403C13.3615 4.71488 13.3448 4.80515 13.3104 4.88928C13.2761 4.97341 13.2249 5.04964 13.1601 5.11327L7.06672 11.7799C7.00515 11.8482 6.93013 11.9029 6.84638 11.9408C6.76263 11.9787 6.67196 11.9988 6.58006 11.9999H6.57339Z"
-                    fill="#73A5FF" />
-                </svg>
-              )
-            }
+                <Image src={'/img/check.svg'} alt="delete" width={16} height={16} />
+              )}
           </div>
         </div>
       </button>

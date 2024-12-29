@@ -1,3 +1,5 @@
+@use '@/app/mixins.scss' as s;
+
 .window {
   display: flex;
   flex-direction: column;
@@ -5,6 +7,7 @@
   flex: 1;
 
   .header {
+    position: relative;
     width: 100%;
     min-height: 72px;
     border-bottom: 1px solid var(--dark-300);
@@ -38,11 +41,19 @@
     }
 
     .button_block {
+      position: absolute;
+      left: 0;
+      top: 72px;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       gap: 12px;
+      width: 100%;
+      min-height: 60px;
+      border-bottom: 1px solid var(--dark-300);
+      background-color: var(--dark-500);
+      padding: 0 15px;
 
       .button {
         width: 100px;
@@ -61,10 +72,7 @@
           background-color: var(--dark-100);
         }
       }
-
     }
-
-
   }
 
   .messages {
@@ -87,7 +95,6 @@
       padding: 12px;
       border-radius: 8px;
       background-color: var(--dark-300);
-
     }
 
     & > *:first-child {
@@ -119,7 +126,6 @@
         display: flex;
         align-items: flex-start;
       }
-
     }
 
     .textarea {
@@ -147,10 +153,6 @@
         &::placeholder {
           color: var(--light-900);
         }
-
-        &:focus {
-          border: 1px solid var(--primary-500);
-        }
       }
 
       button {
@@ -171,3 +173,45 @@
   }
 }
 
+@include s.devices(tablet) {
+  .window {
+    height: calc(100vh - 120px);
+
+    .header {
+      min-height: 60px;
+      padding: 13px 15px;
+
+      .header_content {
+        width: 100%;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        padding: 0;
+
+        .avatar {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      .button_block {
+        top: 60px;
+      }
+    }
+
+    .messages {
+      padding: 18px 15px;
+    }
+
+    .footer {
+      background-color: var(--dark-300);
+
+      .change_message {
+        padding: 13px 15px 11px 15px;
+      }
+
+      .textarea {
+        padding: 13px 15px 11px 15px;
+      }
+    }
+  }
+}

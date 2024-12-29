@@ -13,10 +13,10 @@ import { User } from '@/types';
 const ProfileInfo = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
   const currentId = pathname.split('/')
-  console.log()
+
   const { t } = useTranslation();
   const translate = (key: string): string => t(`NotFoundPage.${key}`);
-  const translateProfile = (key: string): string => t(`Admin.profile.${key}`);
+
   const { data, loading, error } = useGetCurrentUserQuery({
     variables: { userId: Number(currentId[currentId.length - 1]) },
   });

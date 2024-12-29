@@ -21,9 +21,9 @@ type PropsType = {
 export const DialogList = ({ dialogs, fetchDialog, id, accessToken, fetchDialogs }: PropsType) => {
 
   const { t } = useTranslation();
-  const language = useGetLanguage()
+  const language = useGetLanguage();
   const translate = (key: string): string => t(`Messenger.${key}`);
-  const translateTime = (key: string): string => t(`Time.${key}`)
+  const translateTime = (key: string): string => t(`Time.${key}`);
 
   const dialogsListRef = useRef<HTMLDivElement | null>(null);
 
