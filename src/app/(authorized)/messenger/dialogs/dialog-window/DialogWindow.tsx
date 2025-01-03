@@ -112,6 +112,11 @@ export const DialogWindow = ({
       }
 
       setTextareaValue('');
+
+
+      setTimeout(() => {
+        scrollToBottom();
+      }, 500)
     }
   };
 
@@ -121,7 +126,6 @@ export const DialogWindow = ({
       onSendMessage();
     }
   };
-
 
   const onDeleteMessages = async () => {
     if (!dialog) return;
