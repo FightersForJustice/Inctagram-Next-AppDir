@@ -3,7 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { routes } from './api/routes';
 import { requestMeOptions } from './app/lib/actionOptions';
 import { updateTokensAndContinue } from './app/lib/actions';
-import { ADMIN_ROUTES_ARRAY, AUTH_ROUTES, AUTH_ROUTES_ARRAY, ROUTES } from './appRoutes/routes';
+import {
+  ADMIN_ROUTES_ARRAY,
+  AUTH_ROUTES,
+  AUTH_ROUTES_ARRAY,
+  ROUTES,
+} from './appRoutes/routes';
 
 export function getUserPreferredLanguage(acceptLanguage: string | null) {
   try {
@@ -40,11 +45,12 @@ export async function middleware(request: NextRequest) {
     return AUTH_ROUTES_ARRAY.some((route) => pathname.includes(route));
   };
 
-  const isNotAdminPath = (pathname: string) => {
+  const isAdminPathCheck = (pathname: string) => {
     return ADMIN_ROUTES_ARRAY.some((route) => pathname.includes(route));
   };
-  const isAdminPath = isNotAdminPath(pathname)
-  const openProfileByUrl = pathname.match('/profile') && !searchParams.has('post');
+  const isAdminPath = isAdminPathCheck(pathname);
+  const openProfileByUrl =
+    pathname.match('/profile') && !searchParams.has('post');
   const openPostByUrl = pathname.match('/profile') && searchParams.has('post');
 
   const isAuthPath = pathname && isValidAuthPath(pathname);
@@ -54,7 +60,7 @@ export async function middleware(request: NextRequest) {
     );
   }
   if (corn && isAdminPath) {
-    return NextResponse.next()
+    return NextResponse.next();
   }
 
   if (!refreshToken) {
@@ -70,11 +76,11 @@ export async function middleware(request: NextRequest) {
         pathname.replace('/profile', '/public-profile') + `?post=${postId}`;
       return NextResponse.redirect(new URL(newURL, request.url));
     } else {
-    return isAuthPath && !isAdminPath
-      ? NextResponse.next()
-      : NextResponse.redirect(
-          new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
-        );
+      return isAuthPath && !isAdminPath
+        ? NextResponse.next()
+        : NextResponse.redirect(
+            new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
+          );
     }
   }
 
@@ -111,7 +117,9 @@ export async function middleware(request: NextRequest) {
         }
       case 400:
         console.log('7Middleware (Not Authorized)', isAuthPath);
-          NextResponse.redirect(new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url));
+        NextResponse.redirect(
+          new URL(AUTH_ROUTES.PUBLIC_POST_PAGE, request.url)
+        );
       default:
         console.log('1Middleware (Not Authorized)', isAuthPath);
         return !isAuthPath
