@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { AUTH_ROUTES } from 'src/appRoutes/routes';
+import { ADMIN_ROUTES, AUTH_ROUTES } from 'src/appRoutes/routes';
 import { PostType } from '../types';
 
 import s from './Posts.module.scss';
@@ -95,7 +95,7 @@ export function Post({
         scroll: false,
       });
     } else if (type === 'admin') {
-      router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}?post=${id}`, {
+      router.push(`${ADMIN_ROUTES.ADMIN_POSTS_LIST}?post=${id}`, {
         scroll: false,
       });
     } else if (type === 'publicProfile') {
@@ -111,7 +111,7 @@ export function Post({
     if (type === 'publicPage') {
       router.push(AUTH_ROUTES.PUBLIC_POST_PAGE, { scroll: false });
     } else if (type === 'admin') {
-      router.push(`${AUTH_ROUTES.ADMIN_POSTS_LIST}`, { scroll: false });
+      router.push(`${ADMIN_ROUTES.ADMIN_POSTS_LIST}`, { scroll: false });
     } else if (type === 'publicProfile') {
       router.push(`${AUTH_ROUTES.PUBLIC_PROFILE}/${post.ownerId}`, {
         scroll: false,

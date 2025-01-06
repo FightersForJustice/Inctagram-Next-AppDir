@@ -14,11 +14,6 @@ export const AUTH_ROUTES = Object.freeze({
   PUBLIC_PROFILE: '/public-profile',
   PUBLIC_POST_PAGE: '/public-post-page',
   PUBLIC_PROFILE_PAGE: '/public-post-page',
-  ADMIN_USERS_LIST: '/admin/userslist',
-  ADMIN_STATISTICS: '/admin/statistics',
-  ADMIN_PAYMENTS_LIST: '/admin/paymentslist',
-  ADMIN_POSTS_LIST: '/admin/postslist',
-  ADMIN_USER_PROFILE: '/admin/profile',
 });
 
 export const ROUTES = Object.freeze({
