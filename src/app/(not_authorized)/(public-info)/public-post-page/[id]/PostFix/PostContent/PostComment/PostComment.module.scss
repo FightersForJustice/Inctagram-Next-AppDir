@@ -12,10 +12,15 @@
     }
 
     &__avatar {
+      cursor: pointer;
       width: 36px;
       min-width: 36px;
       height: 36px;
       border-radius: 50%;
+
+      &:hover {
+        border: 1px solid var(--primary-500)
+      }
     }
 
     &__wrapper {
@@ -26,9 +31,14 @@
     }
 
     &__name {
+      cursor: pointer;
       font-size: 14px;
       font-weight: 700;
       line-height: 24px;
+
+      &:hover {
+        color: var(--primary-500)
+      }
     }
 
     &__text {

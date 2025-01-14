@@ -74,7 +74,7 @@ export const PostCommentHOC = ({
   const [loading, setLoading] = useState(true);
   const [postsData, setData] = useState<PostCommentsResponse>();
   const [submit, setSubmit] = useState(false);
-  const [answerTo, setAnsverTo] = useState(0);
+  const [answerTo, setAnswerTo] = useState(0);
   const [commentAuthors, setAuthors] = useState(['']);
   const ref = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
@@ -94,7 +94,7 @@ export const PostCommentHOC = ({
         fetchComments();
         setSubmit(true);
         setValue('');
-        setAnsverTo(0);
+        setAnswerTo(0);
         toast.success(translate('publicationsCreated'));
         return;
       }
@@ -104,7 +104,7 @@ export const PostCommentHOC = ({
         toast.error('Error');
       } else {
         fetchComments();
-        setAnsverTo(0);
+        setAnswerTo(0);
         toast.success(translate('publicationsCreated'));
       }
     }
@@ -114,7 +114,7 @@ export const PostCommentHOC = ({
     try {
       const res = await getPostComments(postId);
       setData(res);
-      setAuthors(res.items.map((el: any) => el.from.username));
+      setAuthors(res.items.map((el: any) => el.from.username)); // any?
       setLoading(false);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -162,7 +162,7 @@ export const PostCommentHOC = ({
 
   const answerHandler = (id: number) => {
     ref.current?.focus();
-    setAnsverTo(id);
+    setAnswerTo(id);
     const tempValue = value.split(',')[0];
     const currentName = tempValue.split('@')[1];
     if (value.length && value.split(',') && currentName) {
@@ -193,6 +193,8 @@ export const PostCommentHOC = ({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);
   };
+
+  const viewWriteCommentForm = myId !== 0;
 
   return (
     <>
@@ -228,12 +230,7 @@ export const PostCommentHOC = ({
           />
         );
       })}
-      {!type && (
-        <PostLikes
-          toggleLike={toggleLike}
-          isLiked={isLiked}
-        />
-      )}
+      {!type && <PostLikes toggleLike={toggleLike} isLiked={isLiked} />}
       {type !== 'admin' && (
         <PostAmount
           likes={likes}
@@ -242,7 +239,7 @@ export const PostCommentHOC = ({
           openLikesModal={openLikesModal}
         />
       )}
-      {myProfile && (
+      {viewWriteCommentForm && (
         <div className={s.post__form}>
           <div className="flex w-full">
             <input

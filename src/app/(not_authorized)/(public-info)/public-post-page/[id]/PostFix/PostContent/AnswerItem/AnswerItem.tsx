@@ -9,15 +9,26 @@ type Props = {
   data: PostCommentType;
   myProfile: boolean;
   onLikeHandler: () => void;
+  goToProfile: (userId: number) => void;
 };
 
 export const AnswerItem = (props: Props) => {
-  const { data, myProfile = false, onLikeHandler = () => {} } = props;
+  const {
+    data,
+    myProfile = false,
+    onLikeHandler = () => {},
+    goToProfile,
+  } = props;
   const { t } = useTranslation();
   const translate = (key: string): string => t(`CreatePost.EditPost.${key}`);
   const translateTime = (key: string): string => t(`Time.${key}`);
   const language = useGetLanguage();
   const time = getTimeAgoText(data.createdAt, language, translateTime);
+
+  const toProfile = () => {
+    goToProfile(data.from.id);
+  };
+
   return (
     <div
       className={s.post__comment}
@@ -33,11 +44,14 @@ export const AnswerItem = (props: Props) => {
           alt={'ava'}
           width={36}
           height={36}
+          onClick={toProfile}
           className={s.post__comment__avatar}
         />
         <div className="flex flex-col gap-1">
           <p className={s.post__comment__text}>
-            <span className={s.post__comment__name}>{data.from.username} </span>
+            <span className={s.post__comment__name} onClick={toProfile}>
+              {data.from.username}{' '}
+            </span>
             {data.content}
           </p>
           <div className={s.post__comment__container}>

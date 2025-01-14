@@ -8,6 +8,7 @@ import { getCommentAnswers } from '@/app/lib/actions';
 import { AnswerItem } from '../AnswerItem/AnswerItem';
 import { getTimeAgoText } from '@/utils';
 import { useGetLanguage } from '@/redux/hooks/useGetLanguage';
+import { useRouter } from 'next/navigation';
 
 type PostCommentPropsType = {
   myProfile: boolean;
@@ -28,6 +29,7 @@ export const PostComment = ({
   submit,
   setSubmit,
 }: PostCommentPropsType) => {
+  const router = useRouter();
   const { t } = useTranslation();
   const translateTime = (key: string): string => t(`Time.${key}`);
   const language = useGetLanguage();
@@ -46,6 +48,11 @@ export const PostComment = ({
       console.error('Error fetching posts:', error);
     }
   };
+
+  const goToProfile = (userId: number) => {
+    router.push(`/profile/${userId}`);
+  };
+
   useEffect(() => {
     fetchAnswers();
     if (submit) {
@@ -58,18 +65,22 @@ export const PostComment = ({
         <div className={s.post__comment__wrapper}>
           <Image
             src={
-              data.from.avatars[0].url
+              data.from.avatars[0]?.url
                 ? data.from.avatars[0].url
                 : '/img/modal/post.png'
             }
             alt={'ava'}
             width={36}
             height={36}
+            onClick={() => goToProfile(data.from.id)}
             className={s.post__comment__avatar}
           />
           <div className="flex flex-col gap-1">
             <p className={s.post__comment__text}>
-              <span className={s.post__comment__name}>
+              <span
+                className={s.post__comment__name}
+                onClick={() => goToProfile(data.from.id)}
+              >
                 {data.from.username}{' '}
               </span>
               {data.content}
@@ -81,14 +92,9 @@ export const PostComment = ({
                   {translate('like')}: {data.likeCount}
                 </p>
               )}
-              {myProfile && (
-                <p
-                  className={s.post__comment__answer}
-                  onClick={onAnswerHandler}
-                >
-                  {translate('answer')}
-                </p>
-              )}
+              <p className={s.post__comment__answer} onClick={onAnswerHandler}>
+                {translate('answer')}
+              </p>
             </div>
           </div>
         </div>
@@ -127,12 +133,13 @@ export const PostComment = ({
         )}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {answers.map((el) => (
+        {answers?.map((el) => (
           <AnswerItem
             key={el.id}
             myProfile={!el.isLiked}
             data={el}
             onLikeHandler={() => onAnswerLikeHandler(el.id, el.isLiked)}
+            goToProfile={goToProfile}
           />
         ))}
       </div>
